@@ -129,7 +129,7 @@ export default function Home() {
       {/* Skip Navigation */}
       <a
         href="#upload-section"
-        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[--color-accent-cyan] focus:text-black focus:rounded-lg focus:text-sm focus:font-semibold"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#2AABEE] focus:text-white focus:rounded-xl focus:text-sm focus:font-semibold"
       >
         Skip to main content
       </a>
@@ -144,10 +144,10 @@ export default function Home() {
       <header className="relative z-10 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto" role="banner">
         <div className="flex items-center gap-3">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center logo-gradient"
+            className="w-11 h-11 rounded-2xl flex items-center justify-center logo-gradient"
             aria-hidden="true"
           >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
               <path d="M9 12l2 2 4-4" />
             </svg>
@@ -162,7 +162,7 @@ export default function Home() {
             href="https://github.com/quangminh1212/SourceVerify"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-[--color-text-secondary] hover:text-[--color-text-primary] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-accent-cyan] rounded-md"
+            className="text-sm text-[--color-text-secondary] hover:text-[#2AABEE] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2AABEE] rounded-md"
             aria-label="View SourceVerify on GitHub (opens in new tab)"
           >
             GitHub
@@ -173,8 +173,8 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative z-10 text-center px-6 pt-12 pb-8 max-w-4xl mx-auto" aria-labelledby="hero-heading">
         <div className="animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-light text-xs font-medium text-[--color-accent-cyan] mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-[--color-accent-green] animate-pulse-glow" aria-hidden="true"></span>
+          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-light text-xs font-semibold text-[#2AABEE] mb-6 tracking-wide">
+            <span className="status-dot" aria-hidden="true"></span>
             Multi-Signal Analysis Engine
           </div>
           <h2 id="hero-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
@@ -222,7 +222,7 @@ export default function Home() {
               </p>
               <div className="flex flex-wrap justify-center gap-2" aria-label="Supported file formats">
                 {["JPEG", "PNG", "WebP", "GIF", "MP4", "WebM"].map((fmt) => (
-                  <span key={fmt} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.03] text-[--color-text-muted] border border-white/[0.05]">
+                  <span key={fmt} className="text-[10px] font-mono px-2.5 py-1 rounded-lg bg-[#2AABEE]/[0.06] text-[--color-text-secondary] border border-[#2AABEE]/[0.1]">
                     {fmt}
                   </span>
                 ))}
@@ -263,7 +263,7 @@ export default function Home() {
                   </div>
                   <button
                     onClick={handleReset}
-                    className="btn-secondary text-xs px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-accent-cyan]"
+                    className="btn-secondary text-xs px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#2AABEE]"
                     aria-label="Remove current file and upload a new one"
                   >
                     Upload New
@@ -275,7 +275,7 @@ export default function Home() {
               {isAnalyzing && (
                 <div className="glass p-6 animate-fade-in-up" role="status" aria-live="polite">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-5 h-5 border-2 border-[--color-accent-cyan] border-t-transparent rounded-full animate-rotate" aria-hidden="true" />
+                    <div className="w-5 h-5 border-2 border-[#2AABEE] border-t-transparent rounded-full animate-rotate" aria-hidden="true" />
                     <span className="text-sm font-medium">Analyzing content...</span>
                   </div>
                   <div className="confidence-bar" role="progressbar" aria-label={`Analysis progress: ${Math.round(Math.min(progress, 100))}%`}>
@@ -310,7 +310,7 @@ export default function Home() {
 
           {/* Verdict Card */}
           <div className="animate-fade-in-up mb-6">
-            <div className="glass p-8 text-center glow-cyan">
+            <div className="glass p-8 text-center glow-blue animate-blue-pulse">
               <VerdictBadge verdict={result.verdict} />
               <div className="mt-6">
                 <ScoreRing score={result.aiScore} size={160} />
@@ -334,7 +334,7 @@ export default function Home() {
 
           {/* Signal Details Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4" role="list" aria-label="Analysis signal details">
-            {result.signals.map((signal, idx) => (
+            {result.signals.map((signal) => (
               <div
                 key={signal.name}
                 className="analysis-card animate-fade-in-up"
@@ -424,10 +424,10 @@ export default function Home() {
                 title: "Metadata Forensics",
                 desc: "Inspects file metadata, EXIF data, and compression artifacts for signatures of AI generation tools.",
               },
-            ].map((item, idx) => (
+            ].map((item) => (
               <div
                 key={item.title}
-                className="analysis-card how-it-works-card text-center p-6 animate-fade-in-up"
+                className="analysis-card how-it-works-card td-feature-card text-center p-6 animate-fade-in-up"
                 role="listitem"
               >
                 <div className="text-3xl mb-4" aria-hidden="true">{item.icon}</div>
@@ -442,7 +442,7 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/[0.04] mt-0" role="contentinfo">
+      <footer className="relative z-10 footer-divider mt-0" role="contentinfo">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <p className="text-xs text-[--color-text-muted]">
             © {new Date().getFullYear()} SourceVerify. All media processed locally in your browser.
