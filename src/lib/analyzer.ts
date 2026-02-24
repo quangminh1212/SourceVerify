@@ -153,7 +153,7 @@ export async function analyzeMedia(
 async function analyzeImageFile(
     file: File
 ): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
-    const { canvas, ctx, img } = await loadImage(file);
+    const { canvas, ctx } = await loadImage(file);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
 
@@ -439,8 +439,6 @@ function analyzeEdgeCoherence(
 
     for (let y = 1; y < height - 1; y += step) {
         for (let x = 1; x < width - 1; x += step) {
-            const idx = (y * width + x) * 4;
-
             // Simplified grayscale Sobel
             const getGray = (px: number, py: number) => {
                 const i = (py * width + px) * 4;
