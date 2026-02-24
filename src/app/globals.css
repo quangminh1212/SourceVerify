@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
+  --font-sans: var(--font-inter), "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", "Fira Code", "Cascadia Code", monospace;
 
   --color-bg-primary: #0a0a0f;
   --color-bg-secondary: #12121a;
@@ -338,6 +338,44 @@ body {
   background: rgba(255, 255, 255, 0.2);
 }
 
+/* === Screen Reader Only === */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* === Focus Styles === */
+*:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.upload-zone:focus-visible {
+  outline: 2px solid var(--color-accent-cyan);
+  outline-offset: 4px;
+  border-color: rgba(0, 212, 255, 0.6);
+}
+
+/* === Reduced Motion === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* === Responsive === */
 @media (max-width: 768px) {
   .glass {
@@ -400,6 +438,71 @@ body {
   background: rgba(245, 158, 11, 0.15);
   color: var(--color-accent-amber);
   border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* === Hero Glow === */
+.hero-glow {
+  background: radial-gradient(ellipse, rgba(0,212,255,0.12) 0%, rgba(139,92,246,0.08) 30%, transparent 70%);
+}
+
+/* === Logo Gradient === */
+.logo-gradient {
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+}
+
+/* === Animation Delays === */
+.animate-delay-200 {
+  animation-delay: 0.2s;
+}
+
+/* === Preview Container === */
+.preview-max-height {
+  max-height: 400px;
+}
+
+/* === Progress Fill (analyzing) === */
+.progress-fill-gradient {
+  background: linear-gradient(90deg, var(--color-accent-cyan), var(--color-accent-purple));
+  transition: width 0.3s ease;
+  width: var(--progress-width, 0%);
+}
+
+/* === Signal Card Animation Delays === */
+.analysis-card:nth-child(1) { animation-delay: 0s; }
+.analysis-card:nth-child(2) { animation-delay: 0.1s; }
+.analysis-card:nth-child(3) { animation-delay: 0.2s; }
+.analysis-card:nth-child(4) { animation-delay: 0.3s; }
+.analysis-card:nth-child(5) { animation-delay: 0.4s; }
+.analysis-card:nth-child(6) { animation-delay: 0.5s; }
+.analysis-card:nth-child(7) { animation-delay: 0.6s; }
+.analysis-card:nth-child(8) { animation-delay: 0.7s; }
+
+/* === How It Works Card Delays === */
+.how-it-works-card:nth-child(1) { animation-delay: 0s; }
+.how-it-works-card:nth-child(2) { animation-delay: 0.15s; }
+.how-it-works-card:nth-child(3) { animation-delay: 0.3s; }
+
+/* === Score Ring Overlay === */
+.score-ring-overlay {
+  width: var(--ring-size, 160px);
+  height: var(--ring-size, 160px);
+}
+
+/* === Score Color === */
+.score-color-text {
+  color: var(--score-color);
+}
+
+/* === Signal Score Badge === */
+.signal-score-badge {
+  color: var(--signal-color);
+  background: color-mix(in srgb, var(--signal-color) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--signal-color) 20%, transparent);
+}
+
+/* === Confidence Fill Width === */
+.confidence-fill-dynamic {
+  width: var(--confidence-width, 0%);
 }
 
 /* === Video Preview === */

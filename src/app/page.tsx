@@ -33,6 +33,13 @@ export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
+  // Clean up object URL on unmount or file change
+  useEffect(() => {
+    return () => {
+      if (preview) URL.revokeObjectURL(preview);
+    };
+  }, [preview]);
+
   const handleFile = useCallback(async (selectedFile: File) => {
     setError(null);
     setResult(null);
@@ -107,6 +114,7 @@ export default function Home() {
   const handleDragLeave = useCallback(() => setDragOver(false), []);
 
   const handleReset = useCallback(() => {
+    if (preview) URL.revokeObjectURL(preview);
     setFile(null);
     setPreview(null);
     setResult(null);
@@ -114,21 +122,32 @@ export default function Home() {
     setProgress(0);
     setIsAnalyzing(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
-  }, []);
+  }, [preview]);
 
   return (
     <main className="relative min-h-screen">
+      {/* Skip Navigation */}
+      <a
+        href="#upload-section"
+        className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[--color-accent-cyan] focus:text-black focus:rounded-lg focus:text-sm focus:font-semibold"
+      >
+        Skip to main content
+      </a>
+
       {/* Hero Glow */}
-      <div className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-30 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse, rgba(0,212,255,0.12) 0%, rgba(139,92,246,0.08) 30%, transparent 70%)" }}
+      <div
+        className="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] opacity-30 pointer-events-none hero-glow"
+        aria-hidden="true"
       />
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto">
+      <header className="relative z-10 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto" role="banner">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ background: "linear-gradient(135deg, #00d4ff, #8b5cf6)" }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center logo-gradient"
+            aria-hidden="true"
+          >
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" />
               <path d="M9 12l2 2 4-4" />
             </svg>
@@ -138,22 +157,27 @@ export default function Home() {
             <p className="text-xs text-[--color-text-muted]">AI Content Detector</p>
           </div>
         </div>
-        <nav className="flex items-center gap-4">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer"
-            className="text-sm text-[--color-text-secondary] hover:text-[--color-text-primary] transition-colors">
+        <nav className="flex items-center gap-4" aria-label="Main navigation">
+          <a
+            href="https://github.com/quangminh1212/SourceVerify"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-[--color-text-secondary] hover:text-[--color-text-primary] transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-accent-cyan] rounded-md"
+            aria-label="View SourceVerify on GitHub (opens in new tab)"
+          >
             GitHub
           </a>
         </nav>
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 text-center px-6 pt-12 pb-8 max-w-4xl mx-auto">
+      <section className="relative z-10 text-center px-6 pt-12 pb-8 max-w-4xl mx-auto" aria-labelledby="hero-heading">
         <div className="animate-fade-in-up">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-light text-xs font-medium text-[--color-accent-cyan] mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-[--color-accent-green] animate-pulse-glow"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[--color-accent-green] animate-pulse-glow" aria-hidden="true"></span>
             Multi-Signal Analysis Engine
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+          <h2 id="hero-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
             Detect <span className="gradient-text">AI-Generated</span> Content
           </h2>
           <p className="text-lg text-[--color-text-secondary] max-w-2xl mx-auto leading-relaxed">
@@ -164,15 +188,15 @@ export default function Home() {
       </section>
 
       {/* Upload Zone */}
-      <section className="relative z-10 px-6 max-w-3xl mx-auto">
-        <div className="animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
+      <section id="upload-section" className="relative z-10 px-6 max-w-3xl mx-auto" aria-labelledby="upload-heading">
+        <h3 id="upload-heading" className="sr-only">Upload media for analysis</h3>
+        <div className="animate-fade-in-up animate-delay-200">
           {!file ? (
-            <div
-              className={`upload-zone p-12 text-center ${dragOver ? "drag-over" : ""}`}
+            <label
+              className={`upload-zone p-12 text-center block ${dragOver ? "drag-over" : ""}`}
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
-              onClick={() => fileInputRef.current?.click()}
             >
               <input
                 ref={fileInputRef}
@@ -185,7 +209,7 @@ export default function Home() {
                   if (f) handleFile(f);
                 }}
               />
-              <div className="animate-float mb-6">
+              <div className="animate-float mb-6" aria-hidden="true">
                 <svg width="56" height="56" viewBox="0 0 24 24" fill="none" className="mx-auto opacity-40">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -194,36 +218,37 @@ export default function Home() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Drop your file here</h3>
               <p className="text-sm text-[--color-text-secondary] mb-4">
-                or click to browse · Images & Videos up to 100MB
+                or click to browse · Images &amp; Videos up to 100MB
               </p>
-              <div className="flex flex-wrap justify-center gap-2">
+              <div className="flex flex-wrap justify-center gap-2" aria-label="Supported file formats">
                 {["JPEG", "PNG", "WebP", "GIF", "MP4", "WebM"].map((fmt) => (
                   <span key={fmt} className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-white/[0.03] text-[--color-text-muted] border border-white/[0.05]">
                     {fmt}
                   </span>
                 ))}
               </div>
-            </div>
+            </label>
           ) : (
             <div className="relative">
               {/* Preview */}
               <div className="glass p-4 mb-4">
-                <div className="relative video-preview bg-black/30 rounded-xl overflow-hidden" style={{ maxHeight: "400px" }}>
+                <div className="relative video-preview bg-black/30 rounded-xl overflow-hidden preview-max-height">
                   {file.type.startsWith("video/") ? (
                     <video
                       src={preview!}
                       controls
                       className="w-full max-h-[400px] object-contain"
+                      aria-label={`Video preview: ${file.name}`}
                     />
                   ) : (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={preview!}
-                      alt="Preview"
+                      alt={`Preview of ${file.name}`}
                       className="w-full max-h-[400px] object-contain"
                     />
                   )}
-                  {isAnalyzing && <div className="scan-overlay" />}
+                  {isAnalyzing && <div className="scan-overlay" aria-hidden="true" />}
                 </div>
 
                 {/* File info bar */}
@@ -236,7 +261,11 @@ export default function Home() {
                       {formatFileSize(file.size)}
                     </span>
                   </div>
-                  <button onClick={handleReset} className="btn-secondary text-xs px-3 py-1.5">
+                  <button
+                    onClick={handleReset}
+                    className="btn-secondary text-xs px-3 py-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-accent-cyan]"
+                    aria-label="Remove current file and upload a new one"
+                  >
                     Upload New
                   </button>
                 </div>
@@ -244,19 +273,15 @@ export default function Home() {
 
               {/* Progress */}
               {isAnalyzing && (
-                <div className="glass p-6 animate-fade-in-up">
+                <div className="glass p-6 animate-fade-in-up" role="status" aria-live="polite">
                   <div className="flex items-center gap-3 mb-4">
-                    <div className="w-5 h-5 border-2 border-[--color-accent-cyan] border-t-transparent rounded-full animate-rotate" />
+                    <div className="w-5 h-5 border-2 border-[--color-accent-cyan] border-t-transparent rounded-full animate-rotate" aria-hidden="true" />
                     <span className="text-sm font-medium">Analyzing content...</span>
                   </div>
-                  <div className="confidence-bar">
+                  <div className="confidence-bar" role="progressbar" aria-label={`Analysis progress: ${Math.round(Math.min(progress, 100))}%`}>
                     <div
-                      className="confidence-fill"
-                      style={{
-                        width: `${Math.min(progress, 100)}%`,
-                        background: "linear-gradient(90deg, var(--color-accent-cyan), var(--color-accent-purple))",
-                        transition: "width 0.3s ease",
-                      }}
+                      className="confidence-fill progress-fill-gradient"
+                      ref={(el) => { if (el) el.style.setProperty('--progress-width', `${Math.min(progress, 100)}%`); }}
                     />
                   </div>
                   <div className="flex justify-between mt-2">
@@ -271,7 +296,7 @@ export default function Home() {
           )}
 
           {error && (
-            <div className="mt-4 glass p-4 border-l-4 border-[--color-accent-red] animate-fade-in-up">
+            <div className="mt-4 glass p-4 border-l-4 border-[--color-accent-red] animate-fade-in-up" role="alert">
               <p className="text-sm text-[--color-accent-red]">{error}</p>
             </div>
           )}
@@ -280,7 +305,9 @@ export default function Home() {
 
       {/* Results */}
       {result && (
-        <section ref={resultRef} className="relative z-10 px-6 max-w-5xl mx-auto mt-8 pb-20">
+        <section ref={resultRef} className="relative z-10 px-6 max-w-5xl mx-auto mt-8 pb-20" aria-labelledby="results-heading">
+          <h3 id="results-heading" className="sr-only">Analysis Results</h3>
+
           {/* Verdict Card */}
           <div className="animate-fade-in-up mb-6">
             <div className="glass p-8 text-center glow-cyan">
@@ -297,25 +324,25 @@ export default function Home() {
               </p>
               <div className="flex items-center justify-center gap-6 mt-6 text-xs text-[--color-text-muted]">
                 <span>Confidence: {result.confidence}%</span>
-                <span>•</span>
+                <span aria-hidden="true">•</span>
                 <span>AI Score: {result.aiScore}/100</span>
-                <span>•</span>
+                <span aria-hidden="true">•</span>
                 <span>Processed in {result.processingTimeMs}ms</span>
               </div>
             </div>
           </div>
 
           {/* Signal Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" role="list" aria-label="Analysis signal details">
             {result.signals.map((signal, idx) => (
               <div
                 key={signal.name}
                 className="analysis-card animate-fade-in-up"
-                style={{ animationDelay: `${idx * 0.1}s` }}
+                role="listitem"
               >
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center gap-2.5">
-                    <span className="text-xl">{signal.icon}</span>
+                    <span className="text-xl" aria-hidden="true">{signal.icon}</span>
                     <div>
                       <h4 className="text-sm font-semibold">{signal.name}</h4>
                       <span className="text-[10px] font-mono text-[--color-text-muted] uppercase tracking-wider">
@@ -328,10 +355,13 @@ export default function Home() {
                 <p className="text-xs text-[--color-text-secondary] leading-relaxed mb-3">
                   {signal.description}
                 </p>
-                <div className="confidence-bar">
+                <div
+                  className="confidence-bar"
+                  aria-label={`${signal.name} score: ${signal.score} out of 100`}
+                >
                   <div
-                    className={`confidence-fill ${signal.score > 55 ? "ai" : "real"}`}
-                    style={{ width: `${signal.score}%` }}
+                    className={`confidence-fill confidence-fill-dynamic ${signal.score > 55 ? "ai" : "real"}`}
+                    ref={(el) => { if (el) el.style.setProperty('--confidence-width', `${signal.score}%`); }}
                   />
                 </div>
                 {signal.details && (
@@ -347,7 +377,7 @@ export default function Home() {
           {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
             <div className="analysis-card mt-4 animate-fade-in-up">
               <h4 className="text-sm font-semibold mb-3 flex items-center gap-2">
-                <span>📋</span> File Metadata
+                <span aria-hidden="true">📋</span> File Metadata
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2">
                 {Object.entries(result.metadata.exifData).map(([key, value]) => (
@@ -373,11 +403,11 @@ export default function Home() {
 
       {/* How It Works */}
       {!result && !isAnalyzing && (
-        <section className="relative z-10 px-6 max-w-5xl mx-auto mt-16 pb-20">
-          <h3 className="text-2xl font-bold text-center mb-10 animate-fade-in-up">
+        <section className="relative z-10 px-6 max-w-5xl mx-auto mt-16 pb-20" aria-labelledby="how-it-works-heading">
+          <h3 id="how-it-works-heading" className="text-2xl font-bold text-center mb-10 animate-fade-in-up">
             How It <span className="gradient-text">Works</span>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" role="list">
             {[
               {
                 icon: "📊",
@@ -397,10 +427,10 @@ export default function Home() {
             ].map((item, idx) => (
               <div
                 key={item.title}
-                className="analysis-card text-center p-6 animate-fade-in-up"
-                style={{ animationDelay: `${idx * 0.15}s` }}
+                className="analysis-card how-it-works-card text-center p-6 animate-fade-in-up"
+                role="listitem"
               >
-                <div className="text-3xl mb-4">{item.icon}</div>
+                <div className="text-3xl mb-4" aria-hidden="true">{item.icon}</div>
                 <h4 className="text-base font-semibold mb-2">{item.title}</h4>
                 <p className="text-xs text-[--color-text-secondary] leading-relaxed">
                   {item.desc}
@@ -412,10 +442,10 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/[0.04] mt-0">
+      <footer className="relative z-10 border-t border-white/[0.04] mt-0" role="contentinfo">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <p className="text-xs text-[--color-text-muted]">
-            © 2026 SourceVerify. All media processed locally in your browser.
+            © {new Date().getFullYear()} SourceVerify. All media processed locally in your browser.
           </p>
           <p className="text-xs text-[--color-text-muted]">
             Privacy-first · No data uploaded
@@ -438,8 +468,8 @@ function VerdictBadge({ verdict }: { verdict: "ai" | "real" | "uncertain" }) {
   };
 
   return (
-    <div className={`verdict-badge ${verdict}`}>
-      <span>{config[verdict].icon}</span>
+    <div className={`verdict-badge ${verdict}`} role="status" aria-label={`Verdict: ${config[verdict].label}`}>
+      <span aria-hidden="true">{config[verdict].icon}</span>
       <span>{config[verdict].label}</span>
     </div>
   );
@@ -453,7 +483,8 @@ function ScoreRing({ score, size }: { score: number; size: number }) {
   const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setAnimated(true), 100);
+    const timer = setTimeout(() => setAnimated(true), 100);
+    return () => clearTimeout(timer);
   }, []);
 
   const color =
@@ -464,8 +495,8 @@ function ScoreRing({ score, size }: { score: number; size: number }) {
         : "var(--color-accent-amber)";
 
   return (
-    <div className="inline-flex flex-col items-center">
-      <svg width={size} height={size} className="score-ring">
+    <div className="inline-flex flex-col items-center" role="img" aria-label={`AI Score: ${score} out of 100`}>
+      <svg width={size} height={size} className="score-ring" aria-hidden="true">
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -487,8 +518,8 @@ function ScoreRing({ score, size }: { score: number; size: number }) {
           className="score-ring-fill"
         />
       </svg>
-      <div className="absolute flex flex-col items-center justify-center" style={{ width: size, height: size }}>
-        <span className="text-3xl font-bold" style={{ color }}>
+      <div className="absolute flex flex-col items-center justify-center score-ring-overlay" ref={(el) => { if (el) el.style.setProperty('--ring-size', `${size}px`); }}>
+        <span className="text-3xl font-bold score-color-text" ref={(el) => { if (el) el.style.setProperty('--score-color', color); }}>
           {score}
         </span>
         <span className="text-[10px] text-[--color-text-muted] uppercase tracking-wider mt-0.5">
@@ -511,12 +542,9 @@ function SignalScore({ score }: { score: number }) {
 
   return (
     <div
-      className="text-sm font-bold px-2.5 py-1 rounded-lg"
-      style={{
-        color,
-        background: `color-mix(in srgb, ${color} 10%, transparent)`,
-        border: `1px solid color-mix(in srgb, ${color} 20%, transparent)`,
-      }}
+      className="text-sm font-bold px-2.5 py-1 rounded-lg signal-score-badge"
+      ref={(el) => { if (el) el.style.setProperty('--signal-color', color); }}
+      aria-label={`Signal score: ${score}`}
     >
       {score}
     </div>
