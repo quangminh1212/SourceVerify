@@ -17,7 +17,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0f1724",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
   maximumScale: 5,
@@ -109,7 +109,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-noise bg-grid">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }
