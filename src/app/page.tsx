@@ -125,7 +125,7 @@ export default function Home() {
   }, [preview]);
 
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen flex flex-col">
       {/* Skip Navigation */}
       <a
         href="#upload-section"
@@ -141,7 +141,7 @@ export default function Home() {
       />
 
       {/* Header */}
-      <header className="relative z-10 flex items-center justify-between px-6 py-5 max-w-6xl mx-auto" role="banner">
+      <header className="relative z-10 flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 max-w-6xl mx-auto w-full" role="banner">
         <div className="flex items-center gap-3">
           <div
             className="w-11 h-11 rounded-2xl flex items-center justify-center logo-gradient"
@@ -171,16 +171,16 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 text-center px-6 pt-12 pb-8 max-w-4xl mx-auto" aria-labelledby="hero-heading">
+      <section className="relative z-10 text-center px-4 sm:px-6 pt-8 sm:pt-12 pb-6 sm:pb-8 max-w-4xl mx-auto" aria-labelledby="hero-heading">
         <div className="animate-fade-in-up">
-          <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-light text-xs font-semibold text-[#2AABEE] mb-6 tracking-wide">
+          <div className="inline-flex items-center gap-2 px-4 sm:px-5 py-1.5 sm:py-2 rounded-full glass-light text-[10px] sm:text-xs font-semibold text-[#2AABEE] mb-4 sm:mb-6 tracking-wide">
             <span className="status-dot" aria-hidden="true"></span>
             Multi-Signal Analysis Engine
           </div>
-          <h2 id="hero-heading" className="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight mb-4">
+          <h2 id="hero-heading" className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight mb-3 sm:mb-4">
             Detect <span className="gradient-text">AI-Generated</span> Content
           </h2>
-          <p className="text-lg text-[--color-text-secondary] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-[--color-text-secondary] max-w-2xl mx-auto leading-relaxed px-2 sm:px-0">
             Upload any image or video to analyze whether it was created by AI. Our engine examines
             metadata, pixel patterns, frequency domains, and structural artifacts.
           </p>
@@ -188,12 +188,12 @@ export default function Home() {
       </section>
 
       {/* Upload Zone */}
-      <section id="upload-section" className="relative z-10 px-6 max-w-3xl mx-auto" aria-labelledby="upload-heading">
+      <section id="upload-section" className="relative z-10 px-4 sm:px-6 max-w-3xl mx-auto" aria-labelledby="upload-heading">
         <h3 id="upload-heading" className="sr-only">Upload media for analysis</h3>
         <div className="animate-fade-in-up animate-delay-200">
           {!file ? (
             <label
-              className={`upload-zone p-12 text-center block ${dragOver ? "drag-over" : ""}`}
+              className={`upload-zone p-6 sm:p-8 md:p-12 text-center block ${dragOver ? "drag-over" : ""}`}
               onDrop={handleDrop}
               onDragOver={handleDragOver}
               onDragLeave={handleDragLeave}
@@ -209,15 +209,15 @@ export default function Home() {
                   if (f) handleFile(f);
                 }}
               />
-              <div className="animate-float mb-6" aria-hidden="true">
-                <svg width="56" height="56" viewBox="0 0 24 24" fill="none" className="mx-auto opacity-40">
+              <div className="animate-float mb-4 sm:mb-6 flex justify-center" aria-hidden="true">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" className="opacity-40 sm:w-14 sm:h-14">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold mb-2">Drop your file here</h3>
-              <p className="text-sm text-[--color-text-secondary] mb-4">
+              <h3 className="text-base sm:text-lg md:text-xl font-semibold mb-1.5 sm:mb-2">Drop your file here</h3>
+              <p className="text-xs sm:text-sm text-[--color-text-secondary] mb-3 sm:mb-4">
                 or click to browse · Images &amp; Videos up to 100MB
               </p>
               <div className="flex flex-wrap justify-center gap-2" aria-label="Supported file formats">
@@ -305,7 +305,7 @@ export default function Home() {
 
       {/* Results */}
       {result && (
-        <section ref={resultRef} className="relative z-10 px-6 max-w-5xl mx-auto mt-8 pb-20" aria-labelledby="results-heading">
+        <section ref={resultRef} className="relative z-10 px-4 sm:px-6 max-w-5xl mx-auto mt-6 sm:mt-8 pb-12 sm:pb-20" aria-labelledby="results-heading">
           <h3 id="results-heading" className="sr-only">Analysis Results</h3>
 
           {/* Verdict Card */}
@@ -322,18 +322,18 @@ export default function Home() {
                     ? "This content appears to be authentic and captured by a real device."
                     : "The analysis is inconclusive. The content shows mixed signals."}
               </p>
-              <div className="flex items-center justify-center gap-6 mt-6 text-xs text-[--color-text-muted]">
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mt-4 sm:mt-6 text-[10px] sm:text-xs text-[--color-text-muted]">
                 <span>Confidence: {result.confidence}%</span>
-                <span aria-hidden="true">•</span>
+                <span className="hidden sm:inline" aria-hidden="true">•</span>
                 <span>AI Score: {result.aiScore}/100</span>
-                <span aria-hidden="true">•</span>
+                <span className="hidden sm:inline" aria-hidden="true">•</span>
                 <span>Processed in {result.processingTimeMs}ms</span>
               </div>
             </div>
           </div>
 
           {/* Signal Details Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4" role="list" aria-label="Analysis signal details">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4" role="list" aria-label="Analysis signal details">
             {result.signals.map((signal) => (
               <div
                 key={signal.name}
@@ -403,11 +403,11 @@ export default function Home() {
 
       {/* How It Works */}
       {!result && !isAnalyzing && (
-        <section className="relative z-10 px-6 max-w-5xl mx-auto mt-16 pb-20" aria-labelledby="how-it-works-heading">
-          <h3 id="how-it-works-heading" className="text-2xl font-bold text-center mb-10 animate-fade-in-up">
+        <section className="relative z-10 px-4 sm:px-6 max-w-5xl mx-auto mt-10 sm:mt-16 pb-12 sm:pb-20" aria-labelledby="how-it-works-heading">
+          <h3 id="how-it-works-heading" className="text-xl sm:text-2xl font-bold text-center mb-6 sm:mb-10 animate-fade-in-up">
             How It <span className="gradient-text">Works</span>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6" role="list">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6" role="list">
             {[
               {
                 icon: "📊",
@@ -427,7 +427,7 @@ export default function Home() {
             ].map((item) => (
               <div
                 key={item.title}
-                className="analysis-card how-it-works-card td-feature-card text-center p-6 animate-fade-in-up"
+                className="analysis-card how-it-works-card td-feature-card text-center p-4 sm:p-6 animate-fade-in-up"
                 role="listitem"
               >
                 <div className="text-3xl mb-4" aria-hidden="true">{item.icon}</div>
@@ -442,12 +442,12 @@ export default function Home() {
       )}
 
       {/* Footer */}
-      <footer className="relative z-10 footer-divider mt-0" role="contentinfo">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-          <p className="text-xs text-[--color-text-muted]">
+      <footer className="relative z-10 footer-divider mt-auto" role="contentinfo">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
+          <p className="text-[10px] sm:text-xs text-[--color-text-muted] text-center sm:text-left">
             © {new Date().getFullYear()} SourceVerify. All media processed locally in your browser.
           </p>
-          <p className="text-xs text-[--color-text-muted]">
+          <p className="text-[10px] sm:text-xs text-[--color-text-muted]">
             Privacy-first · No data uploaded
           </p>
         </div>
