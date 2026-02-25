@@ -36,7 +36,7 @@ export default function HowItWorksPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-left">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-center">
                         {STEP_KEYS.map((step, i) => (
                             <div
                                 key={step.num}

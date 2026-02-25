@@ -36,7 +36,7 @@ export default function ProductPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5 text-left">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5 text-center">
                         {cards.map((item, i) => (
                             <div
                                 key={item.titleKey}
