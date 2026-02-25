@@ -1,5 +1,6 @@
 @echo off
 chcp 65001 >nul 2>&1
+cd /d "%~dp0"
 title SourceVerify - AI-Generated Content Detector
 
 echo ============================================
@@ -36,10 +37,10 @@ for /f "tokens=5" %%a in ('netstat -ano ^| findstr ":3000 " ^| findstr "LISTENIN
     taskkill /F /PID %%a >nul 2>&1
 )
 
-:: Remove stale lock file and cache
-if exist ".next\dev\lock" (
-    echo [INFO] Removing stale lock file...
-    del /f /q ".next\dev\lock" >nul 2>&1
+:: Remove stale cache
+if exist ".next" (
+    echo [INFO] Clearing build cache...
+    rmdir /s /q ".next" >nul 2>&1
 )
 
 timeout /t 2 /nobreak >nul
