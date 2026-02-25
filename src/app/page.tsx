@@ -288,44 +288,43 @@ export default function Home() {
 
         {/* Results */}
         {result && (
-          <div ref={resultRef} className="w-full max-w-3xl mx-auto animate-fade-in-up py-8">
-            <div className="text-center mb-10">
-              <div className={`verdict-badge ${result.verdict} mb-6 mx-auto`}>
+          <div ref={resultRef} className="w-full max-w-2xl mx-auto animate-fade-in-up py-6">
+            <div className="text-center mb-8">
+              <ScoreRing score={result.aiScore} label={t("home.score")} />
+              <div className={`verdict-badge ${result.verdict} mt-4 mb-2 mx-auto`}>
                 {result.verdict === "ai" ? t("home.aiGenerated") : result.verdict === "real" ? t("home.authentic") : t("home.uncertain")}
               </div>
-              <ScoreRing score={result.aiScore} label={t("home.score")} />
-              <div className="flex items-center justify-center gap-4 mt-4 text-xs text-[--color-text-muted]">
+              <div className="flex items-center justify-center gap-3 text-[11px] text-[--color-text-muted]">
                 <span>{result.confidence}% {t("home.confidence")}</span>
                 <span>·</span>
                 <span>{result.processingTimeMs}ms</span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div className="space-y-2">
               {result.signals.map(signal => (
-                <div key={signal.name} className="analysis-card">
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-medium text-[--color-text-primary]">
-                      <span className="mr-1.5">{signal.icon}</span>{signal.name}
-                    </span>
-                    <span className={`text-xs font-bold ${signal.score >= 70 ? 'signal-score-high' : signal.score >= 55 ? 'signal-score-medium' : 'signal-score-low'}`}>{signal.score}</span>
+                <div key={signal.name} className="analysis-card-compact">
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm shrink-0">{signal.icon}</span>
+                    <span className="text-[13px] font-semibold text-[--color-text-primary] flex-1 truncate">{signal.name}</span>
+                    <span className={`text-xs font-bold tabular-nums ${signal.score >= 70 ? 'signal-score-high' : signal.score >= 55 ? 'signal-score-medium' : 'signal-score-low'}`}>{signal.score}</span>
                   </div>
-                  <div className="confidence-bar">
-                    <div className={`confidence-fill confidence-fill-dynamic ${signal.score > 55 ? "ai" : "real"}`} ref={el => { if (el) el.style.setProperty('--confidence-width', `${signal.score}%`); }} />
+                  <div className="confidence-bar-slim mt-1.5">
+                    <div className={`confidence-fill-slim ${signal.score > 55 ? "ai" : "real"}`} ref={el => { if (el) el.style.setProperty('--confidence-width', `${signal.score}%`); }} />
                   </div>
-                  <p className="text-[11px] text-[--color-text-muted] mt-1.5 leading-relaxed">{signal.description}</p>
+                  <p className="text-[11px] text-[--color-text-muted] mt-1 leading-snug">{signal.description}</p>
                 </div>
               ))}
             </div>
 
             {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
-              <details className="mt-4 analysis-card">
-                <summary className="text-sm font-medium text-[--color-text-primary] cursor-pointer">
+              <details className="mt-3 analysis-card-compact">
+                <summary className="text-[13px] font-semibold text-[--color-text-primary] cursor-pointer">
                   {t("home.metadata")}
                 </summary>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-0.5 mt-2">
                   {Object.entries(result.metadata.exifData).map(([k, v]) => (
-                    <div key={k} className="flex gap-2 py-1 border-b border-[--color-border-subtle] text-[11px]">
+                    <div key={k} className="flex gap-2 py-0.5 border-b border-[--color-border-subtle] text-[11px]">
                       <span className="text-[--color-text-muted] w-24 shrink-0">{k}</span>
                       <span className="text-[--color-text-primary] font-mono truncate">{v}</span>
                     </div>
@@ -334,7 +333,7 @@ export default function Home() {
               </details>
             )}
 
-            <div className="text-center mt-8">
+            <div className="text-center mt-6">
               <button onClick={handleReset} className="btn-primary">
                 {t("home.analyzeAnother")}
               </button>
