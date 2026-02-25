@@ -22,9 +22,9 @@ export default function FeaturesPage() {
 
             <Header active="/features" />
 
-            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-14">
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16">
                 <div className="w-full max-w-5xl mx-auto text-center">
-                    <div className="mb-6 lg:mb-8">
+                    <div className="mb-8 lg:mb-10">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] text-center mb-4 animate-fade-in-up">
                             {t("features.headline")}{" "}
                             <span className="gradient-text">{t("features.headlineHighlight")}</span>
@@ -50,7 +50,7 @@ export default function FeaturesPage() {
                         ))}
                     </div>
 
-                    <div className="mt-6 lg:mt-8 animate-fade-in-up">
+                    <div className="mt-8 lg:mt-10 animate-fade-in-up">
                         <Link href="/" className="btn-primary inline-flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                             {t("features.cta")}

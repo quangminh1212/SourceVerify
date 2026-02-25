@@ -19,9 +19,9 @@ export default function AboutPage() {
 
             <Header active="/about" />
 
-            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-8 sm:py-10 lg:py-14">
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-10 sm:py-12 lg:py-16">
                 <div className="w-full max-w-5xl mx-auto text-center">
-                    <div className="mb-4 lg:mb-6">
+                    <div className="mb-6 lg:mb-8">
                         <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up whitespace-nowrap">
                             {t("about.headline")}{" "}
                             <span className="gradient-text">{t("about.headlineHighlight")}</span>
@@ -29,7 +29,7 @@ export default function AboutPage() {
                         </h1>
                     </div>
 
-                    <div className="mb-6 animate-fade-in-up">
+                    <div className="mb-8 animate-fade-in-up">
                         <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] mb-5">
                             {t("about.p1")}
                         </p>
@@ -44,7 +44,7 @@ export default function AboutPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-6 animate-fade-in-up animate-delay-1">
+                    <div className="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-8 animate-fade-in-up animate-delay-1">
                         {stats.map((stat) => (
                             <div
                                 key={stat.labelKey}
