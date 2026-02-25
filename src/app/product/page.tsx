@@ -9,19 +9,20 @@ export const metadata: Metadata = {
 
 export default function ProductPage() {
     return (
-        <main className="relative min-h-screen flex flex-col">
+        <main className="subpage-main">
             <div className="edge-glow" aria-hidden="true" />
             <div className="fixed inset-0 top-glow -z-10" aria-hidden="true" />
+            <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
 
             {/* Header */}
             <header className="header-bar">
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
-                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} priority />
+                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
                         <span className="header-brand">SourceVerify</span>
                     </Link>
-                    <nav className="header-nav">
-                        <Link href="/product" className="header-nav-link" style={{ color: 'var(--color-text-primary)' }}>Product</Link>
+                    <nav className="header-nav" aria-label="Main navigation">
+                        <Link href="/product" className="header-nav-link header-nav-active">Product</Link>
                         <Link href="/features" className="header-nav-link">Features</Link>
                         <Link href="/how-it-works" className="header-nav-link">How it works</Link>
                         <Link href="/about" className="header-nav-link">About</Link>
@@ -35,40 +36,46 @@ export default function ProductPage() {
                 </div>
             </header>
 
-            {/* Content */}
-            <section className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-20">
-                <div className="max-w-2xl mx-auto text-center animate-fade-in-up">
-                    <p className="text-xs font-medium uppercase tracking-[0.2em] text-[--color-text-muted] mb-6">Product</p>
-                    <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text-primary] mb-4">
-                        Verify media <span className="gradient-text">authenticity</span>
-                    </h1>
-                    <p className="text-base text-[--color-text-secondary] leading-relaxed mb-12 max-w-lg mx-auto">
-                        SourceVerify is an open-source tool that detects AI-generated images and videos using multi-signal analysis — entirely in your browser, with zero data leaving your device.
-                    </p>
+            {/* Hero */}
+            <section className="subpage-hero">
+                <div className="subpage-badge animate-fade-in-up">
+                    <span className="subpage-badge-dot" />
+                    Product
+                </div>
+                <h1 className="subpage-title animate-fade-in-up">
+                    Verify media <span className="gradient-text">authenticity</span>
+                </h1>
+                <p className="subpage-desc animate-fade-in-up">
+                    An open-source tool that detects AI-generated images and videos using multi-signal analysis — entirely in your browser, with zero data leaving your device.
+                </p>
+            </section>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-14">
-                        {[
-                            { icon: "🔬", title: "Multi-signal", desc: "6+ detection algorithms running in parallel" },
-                            { icon: "🔒", title: "Private", desc: "Everything stays on your device" },
-                            { icon: "⚡", title: "Instant", desc: "Results in milliseconds" },
-                        ].map((item) => (
-                            <div key={item.title} className="text-center">
-                                <div className="text-2xl mb-2">{item.icon}</div>
-                                <div className="text-sm font-semibold text-[--color-text-primary] mb-1">{item.title}</div>
-                                <div className="text-xs text-[--color-text-muted]">{item.desc}</div>
-                            </div>
-                        ))}
-                    </div>
+            {/* Product Highlights */}
+            <section className="subpage-content">
+                <div className="product-highlights">
+                    {[
+                        { icon: "🔬", title: "Multi-signal engine", desc: "6+ detection algorithms running in parallel — frequency analysis, noise patterns, edge detection, metadata inspection and more." },
+                        { icon: "🔒", title: "Privacy by design", desc: "Every computation happens on your device. No uploads, no servers, no tracking. Your files never leave your browser." },
+                        { icon: "⚡", title: "Real-time results", desc: "Analysis completes in milliseconds. No queues, no waiting — just instant, detailed feedback on any image or video." },
+                    ].map((item, i) => (
+                        <div key={item.title} className={`product-card animate-fade-in-up animate-delay-${i}`}>
+                            <div className="product-card-icon">{item.icon}</div>
+                            <h3 className="product-card-title">{item.title}</h3>
+                            <p className="product-card-desc">{item.desc}</p>
+                        </div>
+                    ))}
+                </div>
 
-                    <Link href="/" className="btn-primary inline-flex items-center gap-2">
+                <div className="subpage-cta animate-fade-in-up">
+                    <Link href="/" className="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                         Try SourceVerify
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
                     </Link>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="relative z-10 footer-divider">
+            <footer className="relative z-10 footer-divider mt-auto">
                 <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-2">

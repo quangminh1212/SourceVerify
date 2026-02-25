@@ -8,28 +8,29 @@ export const metadata: Metadata = {
 };
 
 const STEPS = [
-    { num: "1", title: "Upload your file", desc: "Drag and drop or click to upload any image or video. We support JPEG, PNG, WebP, GIF, MP4, WebM and more — up to 100MB.", icon: "📁" },
-    { num: "2", title: "Multi-signal analysis", desc: "Our engine runs 6+ detection algorithms in parallel — analyzing frequency patterns, noise signatures, edge artifacts and metadata — all locally in your browser.", icon: "🔬" },
-    { num: "3", title: "Get your results", desc: "View a detailed breakdown with an overall confidence score, individual signal analysis, and clear verdict on whether the content appears AI-generated.", icon: "📊" },
+    { num: "01", title: "Upload your file", desc: "Drag and drop or click to upload any image or video. We support JPEG, PNG, WebP, GIF, MP4, WebM and more — up to 100MB.", icon: "📁" },
+    { num: "02", title: "Multi-signal analysis", desc: "Our engine runs 6+ detection algorithms in parallel — analyzing frequency patterns, noise signatures, edge artifacts and metadata — all locally in your browser.", icon: "🔬" },
+    { num: "03", title: "Get your results", desc: "View a detailed breakdown with an overall confidence score, individual signal analysis, and clear verdict on whether the content appears AI-generated.", icon: "📊" },
 ];
 
 export default function HowItWorksPage() {
     return (
-        <main className="relative min-h-screen flex flex-col">
+        <main className="subpage-main">
             <div className="edge-glow" aria-hidden="true" />
             <div className="fixed inset-0 top-glow -z-10" aria-hidden="true" />
+            <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
 
             {/* Header */}
             <header className="header-bar">
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
-                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} priority />
+                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
                         <span className="header-brand">SourceVerify</span>
                     </Link>
-                    <nav className="header-nav">
+                    <nav className="header-nav" aria-label="Main navigation">
                         <Link href="/product" className="header-nav-link">Product</Link>
                         <Link href="/features" className="header-nav-link">Features</Link>
-                        <Link href="/how-it-works" className="header-nav-link" style={{ color: 'var(--color-text-primary)' }}>How it works</Link>
+                        <Link href="/how-it-works" className="header-nav-link header-nav-active">How it works</Link>
                         <Link href="/about" className="header-nav-link">About</Link>
                     </nav>
                     <div className="header-actions">
@@ -41,50 +42,46 @@ export default function HowItWorksPage() {
                 </div>
             </header>
 
-            {/* Content */}
-            <section className="relative z-10 flex-1 px-6 py-20">
-                <div className="max-w-2xl mx-auto">
-                    <div className="text-center mb-14 animate-fade-in-up">
-                        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[--color-text-muted] mb-6">Process</p>
-                        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text-primary] mb-4">
-                            Three simple <span className="gradient-text">steps</span>
-                        </h1>
-                        <p className="text-base text-[--color-text-secondary] max-w-md mx-auto">
-                            From upload to verdict in seconds — no setup, no account, no data collection.
-                        </p>
-                    </div>
+            {/* Hero */}
+            <section className="subpage-hero">
+                <div className="subpage-badge animate-fade-in-up">
+                    <span className="subpage-badge-dot" />
+                    Process
+                </div>
+                <h1 className="subpage-title animate-fade-in-up">
+                    Three simple <span className="gradient-text">steps</span>
+                </h1>
+                <p className="subpage-desc animate-fade-in-up">
+                    From upload to verdict in seconds — no setup, no account, no data collection.
+                </p>
+            </section>
 
-                    <div className="space-y-6">
-                        {STEPS.map((step, i) => (
-                            <div key={step.num} className={`flex gap-5 animate-fade-in-up animate-delay-${i}`}>
-                                <div className="flex flex-col items-center">
-                                    <div className="step-num step-num-lg">{step.num}</div>
-                                    {i < STEPS.length - 1 && <div className="w-px flex-1 bg-[--color-border-subtle] mt-2" />}
-                                </div>
-                                <div className="card p-5 flex-1">
-                                    <div className="flex items-start gap-3">
-                                        <span className="text-xl">{step.icon}</span>
-                                        <div>
-                                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-1">{step.title}</h3>
-                                            <p className="text-xs text-[--color-text-secondary] leading-relaxed">{step.desc}</p>
-                                        </div>
-                                    </div>
-                                </div>
+            {/* Steps */}
+            <section className="subpage-content">
+                <div className="steps-timeline">
+                    {STEPS.map((step, i) => (
+                        <div key={step.num} className={`step-card animate-fade-in-up animate-delay-${i}`}>
+                            <div className="step-card-header">
+                                <span className="step-card-num">{step.num}</span>
+                                <span className="step-card-icon">{step.icon}</span>
                             </div>
-                        ))}
-                    </div>
+                            <h3 className="step-card-title">{step.title}</h3>
+                            <p className="step-card-desc">{step.desc}</p>
+                            {i < STEPS.length - 1 && <div className="step-connector" aria-hidden="true" />}
+                        </div>
+                    ))}
+                </div>
 
-                    <div className="text-center mt-14 animate-fade-in-up">
-                        <Link href="/" className="btn-primary inline-flex items-center gap-2">
-                            Start detecting
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        </Link>
-                    </div>
+                <div className="subpage-cta animate-fade-in-up">
+                    <Link href="/" className="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+                        Start detecting
+                    </Link>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="relative z-10 footer-divider">
+            <footer className="relative z-10 footer-divider mt-auto">
                 <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-2">

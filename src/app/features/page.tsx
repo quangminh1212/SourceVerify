@@ -8,30 +8,31 @@ export const metadata: Metadata = {
 };
 
 const FEATURES = [
-    { icon: "🔬", title: "Multi-signal Analysis", desc: "6+ detection algorithms analyze frequency, noise, edge patterns and more simultaneously." },
-    { icon: "🔒", title: "100% Private", desc: "All processing runs locally in your browser. No data is ever uploaded to any server." },
-    { icon: "⚡", title: "Instant Results", desc: "Get detailed analysis results in milliseconds — no waiting for server-side processing." },
-    { icon: "🎯", title: "High Accuracy", desc: "Advanced heuristic-based detection with confidence scoring across multiple dimensions." },
-    { icon: "🎬", title: "Images & Video", desc: "Support for all major formats: JPEG, PNG, WebP, GIF, MP4, WebM and more." },
-    { icon: "📊", title: "Detailed Reports", desc: "Visual breakdown of each detection signal with score analysis and metadata extraction." },
+    { icon: "🔬", title: "Multi-signal Analysis", desc: "6+ detection algorithms analyze frequency, noise, edge patterns and more simultaneously for comprehensive coverage." },
+    { icon: "🔒", title: "100% Private", desc: "All processing runs locally in your browser. Zero data is ever uploaded — your files never leave your device." },
+    { icon: "⚡", title: "Instant Results", desc: "Get detailed analysis results in milliseconds with on-device processing — no server round-trips needed." },
+    { icon: "🎯", title: "High Accuracy", desc: "Advanced heuristic-based detection with confidence scoring across multiple signal dimensions." },
+    { icon: "🎬", title: "Images & Video", desc: "Full support for JPEG, PNG, WebP, GIF, AVIF, MP4, WebM — analyze any visual media format." },
+    { icon: "📊", title: "Detailed Reports", desc: "Visual breakdown of every detection signal with score analysis, metadata extraction and clear verdicts." },
 ];
 
 export default function FeaturesPage() {
     return (
-        <main className="relative min-h-screen flex flex-col">
+        <main className="subpage-main">
             <div className="edge-glow" aria-hidden="true" />
             <div className="fixed inset-0 top-glow -z-10" aria-hidden="true" />
+            <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
 
             {/* Header */}
             <header className="header-bar">
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
-                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} priority />
+                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
                         <span className="header-brand">SourceVerify</span>
                     </Link>
-                    <nav className="header-nav">
+                    <nav className="header-nav" aria-label="Main navigation">
                         <Link href="/product" className="header-nav-link">Product</Link>
-                        <Link href="/features" className="header-nav-link" style={{ color: 'var(--color-text-primary)' }}>Features</Link>
+                        <Link href="/features" className="header-nav-link header-nav-active">Features</Link>
                         <Link href="/how-it-works" className="header-nav-link">How it works</Link>
                         <Link href="/about" className="header-nav-link">About</Link>
                     </nav>
@@ -44,40 +45,42 @@ export default function FeaturesPage() {
                 </div>
             </header>
 
-            {/* Content */}
-            <section className="relative z-10 flex-1 px-6 py-20">
-                <div className="max-w-3xl mx-auto">
-                    <div className="text-center mb-14 animate-fade-in-up">
-                        <p className="text-xs font-medium uppercase tracking-[0.2em] text-[--color-text-muted] mb-6">Features</p>
-                        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-[--color-text-primary] mb-4">
-                            Everything you need to <span className="gradient-text">detect</span>
-                        </h1>
-                        <p className="text-base text-[--color-text-secondary] max-w-md mx-auto">
-                            A comprehensive toolkit for verifying media authenticity — built for transparency.
-                        </p>
-                    </div>
+            {/* Hero */}
+            <section className="subpage-hero">
+                <div className="subpage-badge animate-fade-in-up">
+                    <span className="subpage-badge-dot" />
+                    Features
+                </div>
+                <h1 className="subpage-title animate-fade-in-up">
+                    Everything you need to <span className="gradient-text">detect</span>
+                </h1>
+                <p className="subpage-desc animate-fade-in-up">
+                    A comprehensive toolkit for verifying media authenticity — built for transparency and trust.
+                </p>
+            </section>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        {FEATURES.map((feat, i) => (
-                            <div key={feat.title} className={`card p-6 animate-fade-in-up animate-delay-${i}`}>
-                                <div className="text-xl mb-3">{feat.icon}</div>
-                                <h3 className="text-sm font-semibold text-[--color-text-primary] mb-1.5">{feat.title}</h3>
-                                <p className="text-xs text-[--color-text-secondary] leading-relaxed">{feat.desc}</p>
-                            </div>
-                        ))}
-                    </div>
+            {/* Features Grid */}
+            <section className="subpage-content">
+                <div className="feature-grid">
+                    {FEATURES.map((feat, i) => (
+                        <div key={feat.title} className={`feature-card-v2 animate-fade-in-up animate-delay-${Math.min(i, 5)}`}>
+                            <div className="feature-card-icon">{feat.icon}</div>
+                            <h3 className="feature-card-title">{feat.title}</h3>
+                            <p className="feature-card-desc">{feat.desc}</p>
+                        </div>
+                    ))}
+                </div>
 
-                    <div className="text-center mt-12 animate-fade-in-up">
-                        <Link href="/" className="btn-primary inline-flex items-center gap-2">
-                            Try it now
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                        </Link>
-                    </div>
+                <div className="subpage-cta animate-fade-in-up">
+                    <Link href="/" className="btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+                        Try it now
+                    </Link>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="relative z-10 footer-divider">
+            <footer className="relative z-10 footer-divider mt-auto">
                 <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-2">
