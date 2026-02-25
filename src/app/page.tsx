@@ -335,7 +335,7 @@ export default function Home() {
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {FEATURES.map((feat, i) => (
-                <div key={feat.title} className="feature-card analysis-card animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                <div key={feat.title} className={`feature-card analysis-card animate-fade-in-up animate-delay-${i}`}>
                   <div className="text-2xl mb-3">{feat.icon}</div>
                   <h3 className="text-sm font-semibold text-[--color-text-primary] mb-1.5">{feat.title}</h3>
                   <p className="text-xs text-[--color-text-secondary] leading-relaxed">{feat.desc}</p>
@@ -361,7 +361,7 @@ export default function Home() {
                 { step: "02", title: "Analyze", desc: "Our engine runs 6+ detection algorithms in parallel, right in your browser." },
                 { step: "03", title: "Results", desc: "Get a detailed breakdown with confidence scores and signal analysis." },
               ].map((item, i) => (
-                <div key={item.step} className="text-center animate-fade-in-up" style={{ animationDelay: `${i * 0.15}s` }}>
+                <div key={item.step} className={`text-center animate-fade-in-up animate-delay-${i}`}>
                   <div className="how-step-number">{item.step}</div>
                   <h3 className="text-base font-semibold text-[--color-text-primary] mb-2">{item.title}</h3>
                   <p className="text-sm text-[--color-text-secondary] leading-relaxed">{item.desc}</p>
