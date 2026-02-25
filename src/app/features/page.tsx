@@ -19,11 +19,6 @@ export default function FeaturesPage() {
 
     return (
         <main className="relative min-h-screen flex flex-col">
-            <div className="edge-glow" aria-hidden="true" />
-            <div className="fixed inset-0 -z-10" aria-hidden="true">
-                <div className="absolute inset-0 top-glow" />
-                <div className="absolute top-0 left-0 right-0 h-[500px] top-glow opacity-60" />
-            </div>
 
             <Header active="/features" />
 

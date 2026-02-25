@@ -101,9 +101,7 @@ export default function Home() {
     <main className="relative min-h-screen flex flex-col">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">{t("home.skipToContent")}</a>
 
-      {/* Edge glow */}
-      <div className="edge-glow" aria-hidden="true" />
-      <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
+      {/* Edge glow removed for clean white background */}
 
       {/* ===== Header — Antigravity Style ===== */}
       <header className="header-bar">
