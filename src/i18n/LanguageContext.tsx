@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 import translations, { type Locale, LOCALE_NAMES } from "./translations";
 
 type LanguageContextType = {
@@ -8,6 +8,20 @@ type LanguageContextType = {
     setLocale: (l: Locale) => void;
     t: (key: string, vars?: Record<string, string>) => string;
 };
+
+const STORAGE_KEY = "sv-locale";
+
+function detectLocale(): Locale {
+    if (typeof window === "undefined") return "en";
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved && saved in LOCALE_NAMES) return saved as Locale;
+    const nav = navigator.language?.toLowerCase() ?? "";
+    if (nav.startsWith("vi")) return "vi";
+    if (nav.startsWith("zh")) return "zh";
+    if (nav.startsWith("ja")) return "ja";
+    if (nav.startsWith("ko")) return "ko";
+    return "en";
+}
 
 const fallbackT = (key: string, vars?: Record<string, string>) => {
     let val = translations.en[key] ?? key;
@@ -27,28 +41,10 @@ const defaultValue: LanguageContextType = {
 
 const LanguageContext = createContext<LanguageContextType>(defaultValue);
 
-const STORAGE_KEY = "sv-locale";
-
-function detectLocale(): Locale {
-    if (typeof window === "undefined") return "en";
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved && saved in LOCALE_NAMES) return saved as Locale;
-    const nav = navigator.language?.toLowerCase() ?? "";
-    if (nav.startsWith("vi")) return "vi";
-    if (nav.startsWith("zh")) return "zh";
-    if (nav.startsWith("ja")) return "ja";
-    if (nav.startsWith("ko")) return "ko";
-    return "en";
-}
-
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    const [locale, setLocaleState] = useState<Locale>("en");
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setLocaleState(detectLocale());
-        setMounted(true);
-    }, []);
+    // Use lazy initializer to avoid setState-in-effect lint error
+    const [locale, setLocaleState] = useState<Locale>(detectLocale);
+    const [mounted] = useState(() => typeof window !== "undefined");
 
     const setLocale = useCallback((l: Locale) => {
         setLocaleState(l);
