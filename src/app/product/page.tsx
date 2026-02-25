@@ -9,9 +9,9 @@ export default function ProductPage() {
     const { t } = useLanguage();
 
     const cards = [
-        { icon: "🔬", titleKey: "product.card1.title", descKey: "product.card1.desc", gradient: "from-blue-500/10 to-cyan-500/10" },
-        { icon: "🔒", titleKey: "product.card2.title", descKey: "product.card2.desc", gradient: "from-green-500/10 to-emerald-500/10" },
-        { icon: "⚡", titleKey: "product.card3.title", descKey: "product.card3.desc", gradient: "from-amber-500/10 to-yellow-500/10" },
+        { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></svg>, titleKey: "product.card1.title", descKey: "product.card1.desc", gradient: "from-blue-500/10 to-cyan-500/10" },
+        { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>, titleKey: "product.card2.title", descKey: "product.card2.desc", gradient: "from-green-500/10 to-emerald-500/10" },
+        { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>, titleKey: "product.card3.title", descKey: "product.card3.desc", gradient: "from-amber-500/10 to-yellow-500/10" },
     ];
 
     return (

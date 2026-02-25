@@ -6,12 +6,12 @@ import Header from "@/components/Header";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const FEATURE_KEYS = [
-    { icon: "🔬", titleKey: "features.item1.title", descKey: "features.item1.desc", accent: "from-blue-500/10 to-cyan-500/10" },
-    { icon: "🔒", titleKey: "features.item2.title", descKey: "features.item2.desc", accent: "from-green-500/10 to-emerald-500/10" },
-    { icon: "⚡", titleKey: "features.item3.title", descKey: "features.item3.desc", accent: "from-amber-500/10 to-yellow-500/10" },
-    { icon: "🎯", titleKey: "features.item4.title", descKey: "features.item4.desc", accent: "from-rose-500/10 to-pink-500/10" },
-    { icon: "🎬", titleKey: "features.item5.title", descKey: "features.item5.desc", accent: "from-purple-500/10 to-violet-500/10" },
-    { icon: "📊", titleKey: "features.item6.title", descKey: "features.item6.desc", accent: "from-indigo-500/10 to-blue-500/10" },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></svg>, titleKey: "features.item1.title", descKey: "features.item1.desc", accent: "from-blue-500/10 to-cyan-500/10" },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /><path d="m9 12 2 2 4-4" /></svg>, titleKey: "features.item2.title", descKey: "features.item2.desc", accent: "from-green-500/10 to-emerald-500/10" },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" /></svg>, titleKey: "features.item3.title", descKey: "features.item3.desc", accent: "from-amber-500/10 to-yellow-500/10" },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="m9 12 2 2 4-4" /></svg>, titleKey: "features.item4.title", descKey: "features.item4.desc", accent: "from-rose-500/10 to-pink-500/10" },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18" /><line x1="7" y1="2" x2="7" y2="22" /><line x1="17" y1="2" x2="17" y2="22" /><line x1="2" y1="12" x2="22" y2="12" /><line x1="2" y1="7" x2="7" y2="7" /><line x1="2" y1="17" x2="7" y2="17" /><line x1="17" y1="7" x2="22" y2="7" /><line x1="17" y1="17" x2="22" y2="17" /></svg>, titleKey: "features.item5.title", descKey: "features.item5.desc", accent: "from-purple-500/10 to-violet-500/10" },
+    { icon: <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>, titleKey: "features.item6.title", descKey: "features.item6.desc", accent: "from-indigo-500/10 to-blue-500/10" },
 ];
 
 export default function FeaturesPage() {

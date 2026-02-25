@@ -6,9 +6,9 @@ import Header from "@/components/Header";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const STEP_KEYS = [
-    { num: "01", titleKey: "howItWorks.step1.title", descKey: "howItWorks.step1.desc", icon: "📁" },
-    { num: "02", titleKey: "howItWorks.step2.title", descKey: "howItWorks.step2.desc", icon: "🔬" },
-    { num: "03", titleKey: "howItWorks.step3.title", descKey: "howItWorks.step3.desc", icon: "📊" },
+    { num: "01", titleKey: "howItWorks.step1.title", descKey: "howItWorks.step1.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg> },
+    { num: "02", titleKey: "howItWorks.step2.title", descKey: "howItWorks.step2.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></svg> },
+    { num: "03", titleKey: "howItWorks.step3.title", descKey: "howItWorks.step3.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg> },
 ];
 
 export default function HowItWorksPage() {
