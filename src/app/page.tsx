@@ -89,8 +89,8 @@ export default function Home() {
       <div className="edge-glow" aria-hidden="true" />
       <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
 
-      {/* Header — glassmorphism */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-xl bg-white/80 border-b border-[--color-border-subtle]">
+      {/* Header */}
+      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/60">
         <div className="flex items-center justify-between px-6 sm:px-10 py-4 max-w-5xl mx-auto w-full">
           <div className="flex items-center gap-3">
             <Image src="/logo.png" alt="SourceVerify" width={30} height={30} className="logo-img" priority />
