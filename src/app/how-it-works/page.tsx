@@ -42,9 +42,9 @@ export default function HowItWorksPage() {
             <Header active="/how-it-works" />
 
             {/* Content wrapper — centers vertically */}
-            <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+            <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
                 {/* Hero */}
-                <section className="text-center mb-10 lg:mb-14">
+                <section className="w-full text-center mb-10 lg:mb-14">
                     <div className="max-w-3xl mx-auto">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             Three simple{" "}
@@ -57,7 +57,7 @@ export default function HowItWorksPage() {
                 </section>
 
                 {/* Steps — horizontal on lg, vertical on mobile */}
-                <section className="w-full max-w-5xl mx-auto">
+                <section className="w-full max-w-5xl">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
                         {STEPS.map((step, i) => (
                             <div
