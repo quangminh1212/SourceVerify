@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useEffect, type ReactNode } from "react";
 import translations, { type Locale, LOCALE_NAMES } from "./translations";
 
 type LanguageContextType = {
@@ -44,7 +44,9 @@ const LanguageContext = createContext<LanguageContextType>(defaultValue);
 export function LanguageProvider({ children }: { children: ReactNode }) {
     // Use lazy initializer to avoid setState-in-effect lint error
     const [locale, setLocaleState] = useState<Locale>(detectLocale);
-    const [mounted] = useState(() => typeof window !== "undefined");
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => { setMounted(true); }, []);
 
     const setLocale = useCallback((l: Locale) => {
         setLocaleState(l);
