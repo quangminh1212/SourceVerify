@@ -313,50 +313,8 @@ export default function Home() {
         )}
       </section>
 
-      {/* ===== Highlights — minimal row ===== */}
-      {!file && !result && (
-        <section id="features" className="relative z-10 py-16 px-6 sm:px-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="highlights-row">
-              {[
-                { icon: "🔬", text: "6+ detection signals" },
-                { icon: "🔒", text: "100% local processing" },
-                { icon: "⚡", text: "Instant results" },
-                { icon: "🎬", text: "Images & video" },
-              ].map((item, i) => (
-                <div key={item.text} className={`highlight-item animate-fade-in-up animate-delay-${i}`}>
-                  <span className="highlight-icon">{item.icon}</span>
-                  <span className="highlight-text">{item.text}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
 
-      {/* ===== How It Works — elegant flow ===== */}
-      {!file && !result && (
-        <section id="how-it-works" className="relative z-10 pt-4 pb-20 px-6 sm:px-10">
-          <div className="max-w-3xl mx-auto">
-            <p className="text-center text-xs font-medium uppercase tracking-[0.2em] text-[--color-text-muted] mb-10">How it works</p>
-            <div className="steps-flow">
-              {[
-                { num: "1", title: "Upload", desc: "Drop any image or video" },
-                { num: "2", title: "Analyze", desc: "6+ algorithms run locally" },
-                { num: "3", title: "Results", desc: "Detailed signal breakdown" },
-              ].map((item, i) => (
-                <div key={item.num} className={`step-item animate-fade-in-up animate-delay-${i}`}>
-                  <div className="step-num">{item.num}</div>
-                  <div>
-                    <div className="step-title">{item.title}</div>
-                    <div className="step-desc">{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+
 
       {/* ===== Footer ===== */}
       <footer className="relative z-10 footer-divider">
