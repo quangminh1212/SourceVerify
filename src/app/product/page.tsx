@@ -35,13 +35,13 @@ export default function ProductPage() {
                         {cards.map((item, i) => (
                             <div
                                 key={item.titleKey}
-                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i}`}
+                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i} flex flex-col`}
                             >
                                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                                <div className="relative">
+                                <div className="relative flex flex-col flex-1">
                                     <div className="text-3xl lg:text-4xl mb-4">{item.icon}</div>
                                     <h3 className="text-base lg:text-lg font-bold text-[--color-text-primary] mb-2">{t(item.titleKey)}</h3>
-                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary]">{t(item.descKey)}</p>
+                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary] flex-1">{t(item.descKey)}</p>
                                 </div>
                             </div>
                         ))}

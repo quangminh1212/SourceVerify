@@ -34,17 +34,19 @@ export default function FeaturesPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
                         {FEATURE_KEYS.map((feat, i) => (
                             <div
                                 key={feat.titleKey}
-                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${Math.min(i, 5)}`}
+                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${Math.min(i, 5)} flex flex-col`}
                             >
                                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feat.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
-                                <div className="relative">
-                                    <div className="text-2xl lg:text-3xl mb-4">{feat.icon}</div>
-                                    <h3 className="text-sm lg:text-base font-bold text-[--color-text-primary] mb-2">{t(feat.titleKey)}</h3>
-                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary]">{t(feat.descKey)}</p>
+                                <div className="relative flex flex-col flex-1">
+                                    <div className="flex items-center gap-2 mb-3">
+                                        <span className="text-2xl lg:text-3xl">{feat.icon}</span>
+                                        <h3 className="text-sm lg:text-base font-bold text-[--color-text-primary]">{t(feat.titleKey)}</h3>
+                                    </div>
+                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary] flex-1">{t(feat.descKey)}</p>
                                 </div>
                             </div>
                         ))}

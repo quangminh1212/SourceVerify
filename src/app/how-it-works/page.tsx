@@ -35,18 +35,18 @@ export default function HowItWorksPage() {
                         {STEP_KEYS.map((step, i) => (
                             <div
                                 key={step.num}
-                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i}`}
+                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i} flex flex-col`}
                             >
-                                <div className="lg:mb-5 mb-0 flex lg:flex-col items-start gap-4 lg:gap-0">
+                                <div className="lg:mb-5 mb-0 flex lg:flex-col items-start gap-4 lg:gap-0 flex-1">
                                     <span className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center text-xs lg:text-sm font-extrabold text-blue-600 tracking-wide flex-shrink-0 lg:mb-5">
                                         {step.num}
                                     </span>
-                                    <div>
+                                    <div className="flex flex-col flex-1">
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xl lg:text-2xl">{step.icon}</span>
                                             <h3 className="text-sm sm:text-base lg:text-lg font-bold text-[--color-text-primary]">{t(step.titleKey)}</h3>
                                         </div>
-                                        <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary]">{t(step.descKey)}</p>
+                                        <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary] flex-1">{t(step.descKey)}</p>
                                     </div>
                                 </div>
                             </div>
