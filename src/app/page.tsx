@@ -21,14 +21,6 @@ const NAV_LINKS = [
   { label: "About", href: "#about" },
 ];
 
-const FEATURES = [
-  { icon: "🔬", title: "Multi-signal Analysis", desc: "6+ detection algorithms analyze frequency, noise, edge patterns and more simultaneously." },
-  { icon: "🔒", title: "100% Private", desc: "All processing runs locally in your browser. No data is ever uploaded to any server." },
-  { icon: "⚡", title: "Instant Results", desc: "Get detailed analysis results in milliseconds — no waiting for server-side processing." },
-  { icon: "🎯", title: "High Accuracy", desc: "Advanced heuristic-based detection with confidence scoring across multiple dimensions." },
-  { icon: "🎬", title: "Images & Video", desc: "Support for all major formats: JPEG, PNG, WebP, GIF, MP4, WebM and more." },
-  { icon: "📊", title: "Detailed Reports", desc: "Visual breakdown of each detection signal with score analysis and metadata extraction." },
-];
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -321,24 +313,20 @@ export default function Home() {
         )}
       </section>
 
-      {/* ===== Features Section ===== */}
+      {/* ===== Highlights — minimal row ===== */}
       {!file && !result && (
-        <section id="features" className="relative z-10 py-20 px-6 sm:px-10">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-14">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[--color-text-primary] mb-3">
-                Why <span className="gradient-text">SourceVerify</span>?
-              </h2>
-              <p className="text-sm sm:text-base text-[--color-text-secondary] max-w-lg mx-auto">
-                A comprehensive toolkit for verifying media authenticity — built for transparency.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {FEATURES.map((feat, i) => (
-                <div key={feat.title} className={`feature-card analysis-card animate-fade-in-up animate-delay-${i}`}>
-                  <div className="text-2xl mb-3">{feat.icon}</div>
-                  <h3 className="text-sm font-semibold text-[--color-text-primary] mb-1.5">{feat.title}</h3>
-                  <p className="text-xs text-[--color-text-secondary] leading-relaxed">{feat.desc}</p>
+        <section id="features" className="relative z-10 py-16 px-6 sm:px-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="highlights-row">
+              {[
+                { icon: "🔬", text: "6+ detection signals" },
+                { icon: "🔒", text: "100% local processing" },
+                { icon: "⚡", text: "Instant results" },
+                { icon: "🎬", text: "Images & video" },
+              ].map((item, i) => (
+                <div key={item.text} className={`highlight-item animate-fade-in-up animate-delay-${i}`}>
+                  <span className="highlight-icon">{item.icon}</span>
+                  <span className="highlight-text">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -346,25 +334,23 @@ export default function Home() {
         </section>
       )}
 
-      {/* ===== How It Works ===== */}
+      {/* ===== How It Works — elegant flow ===== */}
       {!file && !result && (
-        <section id="how-it-works" className="relative z-10 py-16 px-6 sm:px-10">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[--color-text-primary] mb-3">
-                How it works
-              </h2>
-            </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <section id="how-it-works" className="relative z-10 pt-4 pb-20 px-6 sm:px-10">
+          <div className="max-w-3xl mx-auto">
+            <p className="text-center text-xs font-medium uppercase tracking-[0.2em] text-[--color-text-muted] mb-10">How it works</p>
+            <div className="steps-flow">
               {[
-                { step: "01", title: "Upload", desc: "Drop your image or video — supports all major formats up to 100MB." },
-                { step: "02", title: "Analyze", desc: "Our engine runs 6+ detection algorithms in parallel, right in your browser." },
-                { step: "03", title: "Results", desc: "Get a detailed breakdown with confidence scores and signal analysis." },
+                { num: "1", title: "Upload", desc: "Drop any image or video" },
+                { num: "2", title: "Analyze", desc: "6+ algorithms run locally" },
+                { num: "3", title: "Results", desc: "Detailed signal breakdown" },
               ].map((item, i) => (
-                <div key={item.step} className={`text-center animate-fade-in-up animate-delay-${i}`}>
-                  <div className="how-step-number">{item.step}</div>
-                  <h3 className="text-base font-semibold text-[--color-text-primary] mb-2">{item.title}</h3>
-                  <p className="text-sm text-[--color-text-secondary] leading-relaxed">{item.desc}</p>
+                <div key={item.num} className={`step-item animate-fade-in-up animate-delay-${i}`}>
+                  <div className="step-num">{item.num}</div>
+                  <div>
+                    <div className="step-title">{item.title}</div>
+                    <div className="step-desc">{item.desc}</div>
+                  </div>
                 </div>
               ))}
             </div>
