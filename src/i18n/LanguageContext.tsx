@@ -42,11 +42,13 @@ const defaultValue: LanguageContextType = {
 const LanguageContext = createContext<LanguageContextType>(defaultValue);
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
-    // Use lazy initializer to avoid setState-in-effect lint error
-    const [locale, setLocaleState] = useState<Locale>(detectLocale);
+    const [locale, setLocaleState] = useState<Locale>("en");
     const [mounted, setMounted] = useState(false);
 
-    useEffect(() => { setMounted(true); }, []);
+    useEffect(() => {
+        setLocaleState(detectLocale());
+        setMounted(true);
+    }, []);
 
     const setLocale = useCallback((l: Locale) => {
         setLocaleState(l);
