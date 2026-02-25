@@ -4,24 +4,63 @@ import Image from "next/image";
 
 export const metadata: Metadata = {
     title: "Features",
-    description: "Explore all detection features of SourceVerify — multi-signal analysis, privacy-first, instant results and more.",
+    description:
+        "Explore all detection features of SourceVerify — multi-signal analysis, privacy-first, instant results.",
 };
 
 const FEATURES = [
-    { icon: "🔬", title: "Multi-signal Analysis", desc: "6+ detection algorithms analyze frequency, noise, edge patterns and more simultaneously for comprehensive coverage." },
-    { icon: "🔒", title: "100% Private", desc: "All processing runs locally in your browser. Zero data is ever uploaded — your files never leave your device." },
-    { icon: "⚡", title: "Instant Results", desc: "Get detailed analysis results in milliseconds with on-device processing — no server round-trips needed." },
-    { icon: "🎯", title: "High Accuracy", desc: "Advanced heuristic-based detection with confidence scoring across multiple signal dimensions." },
-    { icon: "🎬", title: "Images & Video", desc: "Full support for JPEG, PNG, WebP, GIF, AVIF, MP4, WebM — analyze any visual media format." },
-    { icon: "📊", title: "Detailed Reports", desc: "Visual breakdown of every detection signal with score analysis, metadata extraction and clear verdicts." },
+    {
+        icon: "🔬",
+        title: "Multi-signal Analysis",
+        desc: "6+ detection algorithms analyze frequency, noise, edge patterns and more simultaneously.",
+        accent: "from-blue-500/10 to-cyan-500/10",
+        border: "hover:border-blue-400/40",
+    },
+    {
+        icon: "🔒",
+        title: "100% Private",
+        desc: "All processing runs locally in your browser. Zero data is ever uploaded to any server.",
+        accent: "from-green-500/10 to-emerald-500/10",
+        border: "hover:border-green-400/40",
+    },
+    {
+        icon: "⚡",
+        title: "Instant Results",
+        desc: "Get detailed analysis results in milliseconds — no waiting for server-side processing.",
+        accent: "from-amber-500/10 to-yellow-500/10",
+        border: "hover:border-amber-400/40",
+    },
+    {
+        icon: "🎯",
+        title: "High Accuracy",
+        desc: "Advanced heuristic-based detection with confidence scoring across multiple dimensions.",
+        accent: "from-rose-500/10 to-pink-500/10",
+        border: "hover:border-rose-400/40",
+    },
+    {
+        icon: "🎬",
+        title: "Images & Video",
+        desc: "Full support for JPEG, PNG, WebP, GIF, AVIF, MP4, WebM — any visual media format.",
+        accent: "from-purple-500/10 to-violet-500/10",
+        border: "hover:border-purple-400/40",
+    },
+    {
+        icon: "📊",
+        title: "Detailed Reports",
+        desc: "Visual breakdown of every detection signal with score analysis and metadata extraction.",
+        accent: "from-indigo-500/10 to-blue-500/10",
+        border: "hover:border-indigo-400/40",
+    },
 ];
 
 export default function FeaturesPage() {
     return (
-        <main className="subpage-main">
+        <main className="relative min-h-screen flex flex-col">
             <div className="edge-glow" aria-hidden="true" />
-            <div className="fixed inset-0 top-glow -z-10" aria-hidden="true" />
-            <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
+            <div className="fixed inset-0 -z-10" aria-hidden="true">
+                <div className="absolute inset-0 top-glow" />
+                <div className="absolute top-0 left-0 right-0 h-[500px] top-glow opacity-60" />
+            </div>
 
             {/* Header */}
             <header className="header-bar">
@@ -32,7 +71,7 @@ export default function FeaturesPage() {
                     </Link>
                     <nav className="header-nav" aria-label="Main navigation">
                         <Link href="/product" className="header-nav-link">Product</Link>
-                        <Link href="/features" className="header-nav-link header-nav-active">Features</Link>
+                        <Link href="/features" className="header-nav-link font-semibold text-[--color-text-primary]">Features</Link>
                         <Link href="/how-it-works" className="header-nav-link">How it works</Link>
                         <Link href="/about" className="header-nav-link">About</Link>
                     </nav>
@@ -46,33 +85,42 @@ export default function FeaturesPage() {
             </header>
 
             {/* Hero */}
-            <section className="subpage-hero">
-                <div className="subpage-badge animate-fade-in-up">
-                    <span className="subpage-badge-dot" />
-                    Features
+            <section className="relative z-10 text-center pt-32 pb-12 px-6">
+                <div className="max-w-2xl mx-auto">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium tracking-wide text-[--color-text-secondary] bg-white/60 border border-[--color-border-subtle] backdrop-blur-xl mb-6 animate-fade-in-up">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[--color-accent-green]" />
+                        Features
+                    </div>
+                    <h1 className="text-[clamp(1.75rem,5vw,3rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
+                        Everything you need to{" "}
+                        <span className="gradient-text">detect</span>
+                    </h1>
+                    <p className="text-base text-[--color-text-secondary] leading-relaxed max-w-lg mx-auto animate-fade-in-up">
+                        A comprehensive toolkit for verifying media authenticity — built for transparency and trust.
+                    </p>
                 </div>
-                <h1 className="subpage-title animate-fade-in-up">
-                    Everything you need to <span className="gradient-text">detect</span>
-                </h1>
-                <p className="subpage-desc animate-fade-in-up">
-                    A comprehensive toolkit for verifying media authenticity — built for transparency and trust.
-                </p>
             </section>
 
             {/* Features Grid */}
-            <section className="subpage-content">
-                <div className="feature-grid">
+            <section className="relative z-10 px-6 pb-16">
+                <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {FEATURES.map((feat, i) => (
-                        <div key={feat.title} className={`feature-card-v2 animate-fade-in-up animate-delay-${Math.min(i, 5)}`}>
-                            <div className="feature-card-icon">{feat.icon}</div>
-                            <h3 className="feature-card-title">{feat.title}</h3>
-                            <p className="feature-card-desc">{feat.desc}</p>
+                        <div
+                            key={feat.title}
+                            className={`group relative rounded-2xl border border-[--color-border-subtle] bg-white/50 backdrop-blur-2xl p-7 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_40px_rgba(66,133,244,0.10)] ${feat.border} animate-fade-in-up animate-delay-${Math.min(i, 5)}`}
+                        >
+                            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feat.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                            <div className="relative">
+                                <div className="text-2xl mb-4">{feat.icon}</div>
+                                <h3 className="text-sm font-bold text-[--color-text-primary] mb-2">{feat.title}</h3>
+                                <p className="text-[13px] leading-relaxed text-[--color-text-secondary]">{feat.desc}</p>
+                            </div>
                         </div>
                     ))}
                 </div>
 
-                <div className="subpage-cta animate-fade-in-up">
-                    <Link href="/" className="btn-primary">
+                <div className="text-center mt-12 animate-fade-in-up">
+                    <Link href="/" className="btn-primary inline-flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                         Try it now
                     </Link>
