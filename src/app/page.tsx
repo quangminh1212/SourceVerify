@@ -159,7 +159,7 @@ export default function Home() {
               {isAnalyzing && (
                 <div className="mt-4" role="status">
                   <div className="confidence-bar">
-                    <div className="confidence-fill progress-fill-gradient" style={{ width: `${Math.min(progress, 100)}%` }} />
+                    <div className="confidence-fill progress-fill-gradient" style={{ '--progress-width': `${Math.min(progress, 100)}%` } as React.CSSProperties} />
                   </div>
                   <p className="text-xs text-[--color-text-muted] mt-2 text-center">
                     {progress < 30 ? "Loading..." : progress < 60 ? "Analyzing pixels..." : progress < 85 ? "Frequency scan..." : "Finalizing..."}
@@ -194,12 +194,10 @@ export default function Home() {
                     <span className="text-sm font-medium text-[--color-text-primary]">
                       <span className="mr-1.5">{signal.icon}</span>{signal.name}
                     </span>
-                    <span className="text-xs font-bold" style={{
-                      color: signal.score >= 70 ? "var(--color-accent-red)" : signal.score >= 55 ? "#e37400" : "var(--color-accent-green)"
-                    }}>{signal.score}</span>
+                    <span className="text-xs font-bold signal-score-badge" style={{ '--signal-color': signal.score >= 70 ? 'var(--color-accent-red)' : signal.score >= 55 ? '#e37400' : 'var(--color-accent-green)' } as React.CSSProperties}>{signal.score}</span>
                   </div>
                   <div className="confidence-bar">
-                    <div className={`confidence-fill ${signal.score > 55 ? "ai" : "real"}`} style={{ width: `${signal.score}%` }} />
+                    <div className={`confidence-fill confidence-fill-dynamic ${signal.score > 55 ? "ai" : "real"}`} style={{ '--confidence-width': `${signal.score}%` } as React.CSSProperties} />
                   </div>
                   <p className="text-[11px] text-[--color-text-muted] mt-1.5 leading-relaxed">{signal.description}</p>
                 </div>
@@ -261,14 +259,14 @@ function ScoreRing({ score }: { score: number }) {
   const color = score >= 70 ? "var(--color-accent-red)" : score <= 30 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
 
   return (
-    <div className="relative inline-flex items-center justify-center" style={{ width: size, height: size }}>
+    <div className="relative inline-flex items-center justify-center score-ring-overlay" style={{ '--ring-size': `${size}px` } as React.CSSProperties}>
       <svg width={size} height={size} className="score-ring" aria-hidden="true">
         <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" className="score-ring-bg" />
         <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" stroke={color}
           strokeDasharray={c} strokeDashoffset={on ? offset : c} strokeLinecap="round" className="score-ring-fill" />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className="text-2xl font-bold" style={{ color }}>{score}</span>
+        <span className="text-2xl font-bold score-color-text" style={{ '--score-color': color } as React.CSSProperties}>{score}</span>
         <span className="text-[9px] text-[--color-text-muted] uppercase tracking-widest">Score</span>
       </div>
     </div>
