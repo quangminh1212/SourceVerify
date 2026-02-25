@@ -41,61 +41,58 @@ export default function HowItWorksPage() {
 
             <Header active="/how-it-works" />
 
-            {/* Hero */}
-            <section className="relative z-10 text-center pt-32 pb-12 px-6">
-                <div className="max-w-2xl mx-auto">
-                    <h1 className="text-[clamp(1.75rem,5vw,3rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
-                        Three simple{" "}
-                        <span className="gradient-text">steps</span>
-                    </h1>
-                    <p className="text-sm sm:text-base text-[--color-text-secondary] leading-relaxed max-w-lg mx-auto animate-fade-in-up">
-                        From upload to verdict in seconds — no setup, no account, no data collection.
-                    </p>
-                </div>
-            </section>
+            {/* Content wrapper — centers vertically */}
+            <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                {/* Hero */}
+                <section className="text-center mb-10 lg:mb-14">
+                    <div className="max-w-3xl mx-auto">
+                        <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
+                            Three simple{" "}
+                            <span className="gradient-text">steps</span>
+                        </h1>
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed max-w-xl mx-auto animate-fade-in-up">
+                            From upload to verdict in seconds — no setup, no account, no data collection.
+                        </p>
+                    </div>
+                </section>
 
-            {/* Steps */}
-            <section className="relative z-10 px-4 sm:px-6 pb-16">
-                <div className="max-w-2xl mx-auto flex flex-col gap-3">
-                    {STEPS.map((step, i) => (
-                        <div key={step.num} className="relative">
+                {/* Steps — horizontal on lg, vertical on mobile */}
+                <section className="w-full max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+                        {STEPS.map((step, i) => (
                             <div
-                                className={`group relative rounded-2xl bg-transparent p-6 sm:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i}`}
+                                key={step.num}
+                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i}`}
                             >
-                                <div className="flex items-start gap-4 sm:gap-5">
-                                    <div className="flex-shrink-0">
-                                        <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center text-xs font-extrabold text-blue-600 tracking-wide">
+                                <div className="flex lg:flex-col items-start gap-4 lg:gap-0">
+                                    <div className="flex-shrink-0 lg:mb-5">
+                                        <span className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center text-xs lg:text-sm font-extrabold text-blue-600 tracking-wide">
                                             {step.num}
                                         </span>
                                     </div>
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xl">{step.icon}</span>
-                                            <h3 className="text-sm sm:text-base font-bold text-[--color-text-primary]">{step.title}</h3>
+                                            <span className="text-xl lg:text-2xl">{step.icon}</span>
+                                            <h3 className="text-sm sm:text-base lg:text-lg font-bold text-[--color-text-primary]">{step.title}</h3>
                                         </div>
-                                        <p className="text-[13px] leading-relaxed text-[--color-text-secondary]">{step.desc}</p>
+                                        <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary]">{step.desc}</p>
                                     </div>
                                 </div>
                             </div>
-                            {i < STEPS.length - 1 && (
-                                <div className="flex justify-center py-1">
-                                    <div className="w-px h-5 bg-gradient-to-b from-[--color-border-subtle] to-transparent" />
-                                </div>
-                            )}
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
 
-                <div className="text-center mt-12 animate-fade-in-up">
-                    <Link href="/" className="btn-primary inline-flex items-center gap-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
-                        Start detecting
-                    </Link>
-                </div>
-            </section>
+                    <div className="text-center mt-10 lg:mt-14 animate-fade-in-up">
+                        <Link href="/" className="btn-primary inline-flex items-center gap-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
+                            Start detecting
+                        </Link>
+                    </div>
+                </section>
+            </div>
 
             {/* Footer */}
-            <footer className="relative z-10 footer-divider mt-auto">
+            <footer className="relative z-10 footer-divider">
                 <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-2">

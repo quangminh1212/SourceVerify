@@ -20,37 +20,38 @@ export default function AboutPage() {
 
             <Header active="/about" />
 
-            {/* Hero */}
-            <section className="relative z-10 text-center pt-32 pb-8 px-6">
-                <div className="max-w-2xl mx-auto">
-                    <h1 className="text-[clamp(1.75rem,5vw,3rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
-                        Building{" "}
-                        <span className="gradient-text">trust</span>{" "}
-                        in digital media
-                    </h1>
-                </div>
-            </section>
+            {/* Content wrapper — centers vertically */}
+            <div className="flex-1 flex flex-col justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                {/* Hero */}
+                <section className="text-center mb-8 lg:mb-12">
+                    <div className="max-w-3xl mx-auto">
+                        <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
+                            Building{" "}
+                            <span className="gradient-text">trust</span>{" "}
+                            in digital media
+                        </h1>
+                    </div>
+                </section>
 
-            {/* Content */}
-            <section className="relative z-10 px-4 sm:px-6 pb-16">
-                <div className="max-w-xl mx-auto">
+                {/* Content */}
+                <section className="w-full max-w-2xl lg:max-w-3xl mx-auto">
                     <div className="text-center mb-10 animate-fade-in-up">
-                        <p className="text-sm sm:text-[15px] leading-[1.8] text-[--color-text-secondary] mb-5">
+                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] mb-5">
                             As AI-generated content becomes increasingly indistinguishable from real media, the need for reliable detection tools has never been greater.
                         </p>
-                        <p className="text-sm sm:text-[15px] leading-[1.8] text-[--color-text-secondary] mb-5">
+                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] mb-5">
                             SourceVerify is our answer — an{" "}
                             <strong className="text-[--color-text-primary] font-semibold">open-source</strong>,{" "}
                             <strong className="text-[--color-text-primary] font-semibold">privacy-first</strong>{" "}
                             detection engine that empowers anyone to verify content authenticity.
                         </p>
-                        <p className="text-sm sm:text-[15px] leading-[1.8] text-[--color-text-secondary]">
+                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary]">
                             Every analysis runs entirely in your browser — no uploads, no tracking, no compromise.
                         </p>
                     </div>
 
                     {/* Stats */}
-                    <div className="grid grid-cols-3 gap-3 sm:gap-4 mb-12 animate-fade-in-up animate-delay-1">
+                    <div className="grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 mb-12 animate-fade-in-up animate-delay-1">
                         {[
                             { value: "100%", label: "Open source" },
                             { value: "0", label: "Data collected" },
@@ -58,10 +59,10 @@ export default function AboutPage() {
                         ].map((stat) => (
                             <div
                                 key={stat.label}
-                                className="rounded-2xl bg-white/30 py-5 sm:py-6 px-3 sm:px-4 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-white/50 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)]"
+                                className="rounded-2xl bg-white/30 py-5 sm:py-6 lg:py-8 px-3 sm:px-4 lg:px-6 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-white/50 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)]"
                             >
-                                <div className="text-xl sm:text-2xl font-extrabold gradient-text mb-1 tracking-tight">{stat.value}</div>
-                                <div className="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.12em] text-[--color-text-muted]">{stat.label}</div>
+                                <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold gradient-text mb-1 tracking-tight">{stat.value}</div>
+                                <div className="text-[10px] sm:text-[11px] lg:text-xs font-medium uppercase tracking-[0.12em] text-[--color-text-muted]">{stat.label}</div>
                             </div>
                         ))}
                     </div>
@@ -82,11 +83,11 @@ export default function AboutPage() {
                             View on GitHub
                         </a>
                     </div>
-                </div>
-            </section>
+                </section>
+            </div>
 
             {/* Footer */}
-            <footer className="relative z-10 footer-divider mt-auto">
+            <footer className="relative z-10 footer-divider">
                 <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
                     <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-2">
