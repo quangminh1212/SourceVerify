@@ -72,6 +72,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://sourceverify.app",
   },
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
