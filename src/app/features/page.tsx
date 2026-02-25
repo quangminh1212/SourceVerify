@@ -34,7 +34,7 @@ export default function FeaturesPage() {
                             {t("features.headline")}{" "}
                             <span className="gradient-text">{t("features.headlineHighlight")}</span>
                         </h1>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed text-center max-w-2xl mx-auto animate-fade-in-up">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed text-center animate-fade-in-up">
                             {t("features.subtitle")}
                         </p>
                     </div>
