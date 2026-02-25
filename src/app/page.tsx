@@ -64,6 +64,23 @@ export default function Home() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [preview]);
 
+  // Ctrl+V paste support
+  useEffect(() => {
+    const handlePaste = (e: ClipboardEvent) => {
+      if (file || isAnalyzing) return;
+      const items = e.clipboardData?.items;
+      if (!items) return;
+      for (const item of Array.from(items)) {
+        if (item.type.startsWith('image/') || item.type.startsWith('video/')) {
+          const pastedFile = item.getAsFile();
+          if (pastedFile) { e.preventDefault(); handleFile(pastedFile); return; }
+        }
+      }
+    };
+    window.addEventListener('paste', handlePaste);
+    return () => window.removeEventListener('paste', handlePaste);
+  }, [file, isAnalyzing, handleFile]);
+
   return (
     <main className="relative min-h-screen flex flex-col">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">Skip to content</a>
@@ -90,13 +107,13 @@ export default function Home() {
         {!file && !result && (
           <div className="text-center max-w-2xl mx-auto animate-fade-in-up">
             {/* Brand mark */}
-            <div className="flex items-center justify-center gap-4 mb-12">
+            <div className="flex items-center justify-center gap-4 mb-20">
               <Image src="/logo.png" alt="SourceVerify" width={52} height={52} className="logo-img" priority />
               <span className="text-2xl font-semibold gradient-text tracking-wide">SourceVerify</span>
             </div>
 
             {/* Single big headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-[--color-text-primary] mb-14 whitespace-nowrap">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-[--color-text-primary] mb-20 whitespace-nowrap">
               Detect <span className="gradient-text">AI-generated</span> content
             </h1>
 
@@ -123,7 +140,7 @@ export default function Home() {
             </div>
 
             <p className="text-xs text-[--color-text-muted] mt-6">
-              Images &amp; videos · up to 100MB · processed locally
+              Images & videos · up to 100MB · processed locally · or <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">Ctrl+V</kbd> to paste
             </p>
           </div>
         )}
