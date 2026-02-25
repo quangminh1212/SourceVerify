@@ -41,11 +41,11 @@ export default function HowItWorksPage() {
 
             <Header active="/how-it-works" />
 
-            {/* Content wrapper — centers vertically */}
-            <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-                {/* Hero */}
-                <section className="w-full text-center mb-10 lg:mb-14">
-                    <div className="max-w-3xl mx-auto">
+            {/* Centered content */}
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                <div className="w-full max-w-5xl text-center">
+                    {/* Hero */}
+                    <div className="max-w-3xl mx-auto mb-10 lg:mb-14">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             Three simple{" "}
                             <span className="gradient-text">steps</span>
@@ -54,22 +54,18 @@ export default function HowItWorksPage() {
                             From upload to verdict in seconds — no setup, no account, no data collection.
                         </p>
                     </div>
-                </section>
 
-                {/* Steps — horizontal on lg, vertical on mobile */}
-                <section className="w-full max-w-5xl">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6">
+                    {/* Steps */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-left">
                         {STEPS.map((step, i) => (
                             <div
                                 key={step.num}
                                 className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i}`}
                             >
-                                <div className="flex lg:flex-col items-start gap-4 lg:gap-0">
-                                    <div className="flex-shrink-0 lg:mb-5">
-                                        <span className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center text-xs lg:text-sm font-extrabold text-blue-600 tracking-wide">
-                                            {step.num}
-                                        </span>
-                                    </div>
+                                <div className="lg:mb-5 mb-0 flex lg:flex-col items-start gap-4 lg:gap-0">
+                                    <span className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center text-xs lg:text-sm font-extrabold text-blue-600 tracking-wide flex-shrink-0 lg:mb-5">
+                                        {step.num}
+                                    </span>
                                     <div>
                                         <div className="flex items-center gap-2 mb-2">
                                             <span className="text-xl lg:text-2xl">{step.icon}</span>
@@ -82,13 +78,13 @@ export default function HowItWorksPage() {
                         ))}
                     </div>
 
-                    <div className="text-center mt-10 lg:mt-14 animate-fade-in-up">
+                    <div className="mt-10 lg:mt-14 animate-fade-in-up">
                         <Link href="/" className="btn-primary inline-flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                             Start detecting
                         </Link>
                     </div>
-                </section>
+                </div>
             </div>
 
             {/* Footer */}

@@ -20,11 +20,11 @@ export default function ProductPage() {
 
             <Header active="/product" />
 
-            {/* Content wrapper — centers vertically */}
-            <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-                {/* Hero */}
-                <section className="w-full text-center mb-10 lg:mb-14">
-                    <div className="max-w-3xl mx-auto">
+            {/* Centered content */}
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                <div className="w-full max-w-4xl text-center">
+                    {/* Hero */}
+                    <div className="max-w-3xl mx-auto mb-10 lg:mb-14">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             Verify media{" "}
                             <span className="gradient-text">authenticity</span>
@@ -33,11 +33,9 @@ export default function ProductPage() {
                             An open-source detection engine that analyzes images and videos for signs of AI generation — entirely in your browser.
                         </p>
                     </div>
-                </section>
 
-                {/* Product Cards — wider on large screens */}
-                <section className="w-full max-w-4xl">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5">
+                    {/* Product Cards */}
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5 text-left">
                         {[
                             { icon: "🔬", title: "Multi-signal engine", desc: "6+ detection algorithms running in parallel — frequency analysis, noise patterns, edge detection, metadata inspection and more.", gradient: "from-blue-500/10 to-cyan-500/10" },
                             { icon: "🔒", title: "Privacy by design", desc: "Every computation happens on your device. No uploads, no servers, no tracking. Your files never leave your browser.", gradient: "from-green-500/10 to-emerald-500/10" },
@@ -57,13 +55,13 @@ export default function ProductPage() {
                         ))}
                     </div>
 
-                    <div className="text-center mt-10 lg:mt-14 animate-fade-in-up">
+                    <div className="mt-10 lg:mt-14 animate-fade-in-up">
                         <Link href="/" className="btn-primary inline-flex items-center gap-2">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
                             Try SourceVerify
                         </Link>
                     </div>
-                </section>
+                </div>
             </div>
 
             {/* Footer */}

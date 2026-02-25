@@ -20,22 +20,20 @@ export default function AboutPage() {
 
             <Header active="/about" />
 
-            {/* Content wrapper — centers vertically */}
-            <div className="flex-1 flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-                {/* Hero */}
-                <section className="w-full text-center mb-8 lg:mb-12">
-                    <div className="max-w-3xl mx-auto">
+            {/* Centered content */}
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
+                <div className="w-full max-w-3xl text-center">
+                    {/* Hero */}
+                    <div className="mb-8 lg:mb-12">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             Building{" "}
                             <span className="gradient-text">trust</span>{" "}
                             in digital media
                         </h1>
                     </div>
-                </section>
 
-                {/* Content */}
-                <section className="w-full max-w-2xl lg:max-w-3xl">
-                    <div className="text-center mb-10 animate-fade-in-up">
+                    {/* Content */}
+                    <div className="mb-10 animate-fade-in-up">
                         <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] mb-5">
                             As AI-generated content becomes increasingly indistinguishable from real media, the need for reliable detection tools has never been greater.
                         </p>
@@ -83,7 +81,7 @@ export default function AboutPage() {
                             View on GitHub
                         </a>
                     </div>
-                </section>
+                </div>
             </div>
 
             {/* Footer */}
