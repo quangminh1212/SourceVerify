@@ -90,18 +90,18 @@ export default function Home() {
         {!file && !result && (
           <div className="text-center max-w-2xl mx-auto animate-fade-in-up">
             {/* Brand mark */}
-            <div className="flex items-center justify-center gap-3 mb-8">
-              <Image src="/logo.png" alt="SourceVerify" width={48} height={48} className="logo-img" priority />
-              <span className="text-xl font-medium text-[--color-text-primary] tracking-tight">SourceVerify</span>
+            <div className="flex items-center justify-center gap-4 mb-12">
+              <Image src="/logo.png" alt="SourceVerify" width={52} height={52} className="logo-img" priority />
+              <span className="text-2xl font-semibold gradient-text tracking-wide">SourceVerify</span>
             </div>
 
             {/* Single big headline */}
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.1] text-[--color-text-primary] mb-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-[--color-text-primary] mb-14 whitespace-nowrap">
               Detect <span className="gradient-text">AI-generated</span> content
             </h1>
 
             {/* Upload area — just two buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <label className="btn-primary flex items-center gap-2.5 cursor-pointer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
