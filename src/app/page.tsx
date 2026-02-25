@@ -7,6 +7,8 @@ import {
   formatFileSize,
   type AnalysisResult,
 } from "@/lib/analyzer";
+import { useLanguage } from "@/i18n/LanguageContext";
+import { LOCALE_LABELS, type Locale } from "@/i18n/translations";
 
 const ACCEPTED_TYPES = [
   "image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp", "image/avif",
@@ -14,13 +16,14 @@ const ACCEPTED_TYPES = [
 ];
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
-const NAV_LINKS = [
-  { label: "Product", href: "/product" },
-  { label: "Features", href: "/features" },
-  { label: "How it works", href: "/how-it-works" },
-  { label: "About", href: "/about" },
+const NAV_KEYS = [
+  { key: "nav.product", href: "/product" },
+  { key: "nav.features", href: "/features" },
+  { key: "nav.howItWorks", href: "/how-it-works" },
+  { key: "nav.about", href: "/about" },
 ];
 
+const LOCALES: Locale[] = ["en", "zh", "vi", "ja", "ko"];
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -31,16 +34,18 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [langOpen, setLangOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
+  const { locale, setLocale, t } = useLanguage();
 
   useEffect(() => { return () => { if (preview) URL.revokeObjectURL(preview); }; }, [preview]);
 
   const handleFile = useCallback(async (selectedFile: File) => {
     setError(null);
     setResult(null);
-    if (!ACCEPTED_TYPES.includes(selectedFile.type)) { setError("Unsupported format. Use JPEG, PNG, WebP, GIF, MP4, or WebM."); return; }
-    if (selectedFile.size > MAX_FILE_SIZE) { setError("File too large. Max 100MB."); return; }
+    if (!ACCEPTED_TYPES.includes(selectedFile.type)) { setError(t("home.errorUnsupported")); return; }
+    if (selectedFile.size > MAX_FILE_SIZE) { setError(t("home.errorTooLarge")); return; }
 
     setFile(selectedFile);
     setPreview(URL.createObjectURL(selectedFile));
@@ -62,9 +67,10 @@ export default function Home() {
     } catch {
       clearInterval(iv);
       setIsAnalyzing(false);
-      setError("Analysis failed. Try a different file.");
+      setError(t("home.errorFailed"));
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [t]);
 
   const handleDrop = useCallback((e: React.DragEvent) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }, [handleFile]);
   const handleReset = useCallback(() => {
@@ -93,7 +99,7 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen flex flex-col">
-      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">Skip to content</a>
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">{t("home.skipToContent")}</a>
 
       {/* Edge glow */}
       <div className="edge-glow" aria-hidden="true" />
@@ -110,15 +116,45 @@ export default function Home() {
 
           {/* Nav — desktop */}
           <nav className="header-nav" aria-label="Main navigation">
-            {NAV_LINKS.map(link => (
-              <a key={link.label} href={link.href} className="header-nav-link">
-                {link.label}
+            {NAV_KEYS.map(link => (
+              <a key={link.key} href={link.href} className="header-nav-link">
+                {t(link.key)}
               </a>
             ))}
           </nav>
 
-          {/* GitHub */}
+          {/* Actions */}
           <div className="header-actions">
+            {/* Language Switcher */}
+            <div className="lang-switcher">
+              <button
+                className="lang-switcher-btn"
+                onClick={() => setLangOpen(!langOpen)}
+                aria-label="Change language"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="2" y1="12" x2="22" y2="12" />
+                  <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
+                </svg>
+                {LOCALE_LABELS[locale]}
+              </button>
+              {langOpen && (
+                <div className="lang-dropdown">
+                  {LOCALES.map((l) => (
+                    <button
+                      key={l}
+                      className={`lang-option ${l === locale ? "active" : ""}`}
+                      onClick={() => { setLocale(l); setLangOpen(false); }}
+                    >
+                      {LOCALE_LABELS[l]}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* GitHub */}
             <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer"
               className="header-github-link">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -143,11 +179,22 @@ export default function Home() {
         {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="header-mobile-menu">
-            {NAV_LINKS.map(link => (
-              <a key={link.label} href={link.href} className="header-mobile-link" onClick={() => setMobileMenuOpen(false)}>
-                {link.label}
+            {NAV_KEYS.map(link => (
+              <a key={link.key} href={link.href} className="header-mobile-link" onClick={() => setMobileMenuOpen(false)}>
+                {t(link.key)}
               </a>
             ))}
+            <div className="header-mobile-lang">
+              {LOCALES.map((l) => (
+                <button
+                  key={l}
+                  className={`lang-mobile-btn ${l === locale ? "active" : ""}`}
+                  onClick={() => { setLocale(l); setMobileMenuOpen(false); }}
+                >
+                  {LOCALE_LABELS[l]}
+                </button>
+              ))}
+            </div>
             <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="header-mobile-link">
               GitHub
             </a>
@@ -164,16 +211,16 @@ export default function Home() {
             {/* Tagline chip */}
             <div className="hero-chip">
               <span className="hero-chip-dot" />
-              Privacy-first AI detection — runs 100% locally
+              {t("home.chip")}
             </div>
 
             {/* Big headline */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-[--color-text-primary]">
-              Detect <span className="gradient-text">AI-generated</span> content<br className="hidden sm:block" /> in seconds
+              {t("home.headline")} <span className="gradient-text">{t("home.headlineHighlight")}</span><br className="hidden sm:block" /> {t("home.headlineSuffix")}
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] max-w-xl leading-relaxed">
-              Upload an image or video and let our multi-signal engine analyze it for signs of AI generation — all within your browser.
+              {t("home.subtitle")}
             </p>
 
             {/* Upload area */}
@@ -184,7 +231,7 @@ export default function Home() {
                   <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                Upload file
+                {t("home.uploadFile")}
                 <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES.join(",")} className="hidden"
                   onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
               </label>
@@ -194,12 +241,12 @@ export default function Home() {
                 onDragOver={e => { e.preventDefault(); setDragOver(true); }}
                 onDragLeave={() => setDragOver(false)}
               >
-                or drop here
+                {t("home.orDropHere")}
               </div>
             </div>
 
             <p className="text-xs text-[--color-text-muted] hidden sm:block">
-              Images & videos · up to 100MB · or <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">Ctrl+V</kbd> to paste
+              {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
             </p>
           </div>
         )}
@@ -223,7 +270,7 @@ export default function Home() {
                   {file.name} <span className="text-[--color-text-muted]">· {formatFileSize(file.size)}</span>
                 </div>
                 <button onClick={handleReset} className="text-sm text-[--color-text-muted] hover:text-[--color-text-primary] transition-colors">
-                  Cancel
+                  {t("home.cancel")}
                 </button>
               </div>
 
@@ -233,7 +280,7 @@ export default function Home() {
                     <div className="confidence-fill progress-fill-gradient" ref={el => { if (el) el.style.setProperty('--progress-width', `${Math.min(progress, 100)}%`); }} />
                   </div>
                   <p className="text-xs text-[--color-text-muted] mt-2 text-center">
-                    {progress < 30 ? "Loading..." : progress < 60 ? "Analyzing pixels..." : progress < 85 ? "Frequency scan..." : "Finalizing..."}
+                    {progress < 30 ? t("home.loading") : progress < 60 ? t("home.analyzingPixels") : progress < 85 ? t("home.frequencyScan") : t("home.finalizing")}
                   </p>
                 </div>
               )}
@@ -246,11 +293,11 @@ export default function Home() {
           <div ref={resultRef} className="w-full max-w-3xl mx-auto animate-fade-in-up py-8">
             <div className="text-center mb-10">
               <div className={`verdict-badge ${result.verdict} mb-6 mx-auto`}>
-                {result.verdict === "ai" ? "🤖 AI Generated" : result.verdict === "real" ? "✅ Authentic" : "❓ Uncertain"}
+                {result.verdict === "ai" ? t("home.aiGenerated") : result.verdict === "real" ? t("home.authentic") : t("home.uncertain")}
               </div>
-              <ScoreRing score={result.aiScore} />
+              <ScoreRing score={result.aiScore} label={t("home.score")} />
               <div className="flex items-center justify-center gap-4 mt-4 text-xs text-[--color-text-muted]">
-                <span>{result.confidence}% confidence</span>
+                <span>{result.confidence}% {t("home.confidence")}</span>
                 <span>·</span>
                 <span>{result.processingTimeMs}ms</span>
               </div>
@@ -276,7 +323,7 @@ export default function Home() {
             {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
               <details className="mt-4 analysis-card">
                 <summary className="text-sm font-medium text-[--color-text-primary] cursor-pointer">
-                  📋 Metadata
+                  {t("home.metadata")}
                 </summary>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 mt-3">
                   {Object.entries(result.metadata.exifData).map(([k, v]) => (
@@ -291,12 +338,12 @@ export default function Home() {
 
             <div className="text-center mt-8">
               <button onClick={handleReset} className="btn-primary">
-                Analyze another file
+                {t("home.analyzeAnother")}
               </button>
             </div>
 
             <p className="text-[10px] text-[--color-text-muted] text-center mt-6 max-w-md mx-auto">
-              Results are heuristic-based indicators, not definitive proof.
+              {t("home.disclaimer")}
             </p>
           </div>
         )}
@@ -308,9 +355,6 @@ export default function Home() {
         )}
       </section>
 
-
-
-
       {/* ===== Footer ===== */}
       <footer className="relative z-10 footer-divider">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 py-10">
@@ -320,12 +364,12 @@ export default function Home() {
               <span className="text-sm font-semibold text-[--color-text-primary]">SourceVerify</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-[--color-text-muted]">
-              <a href="/product" className="hover:text-[--color-text-primary] transition-colors">Product</a>
-              <a href="/features" className="hover:text-[--color-text-primary] transition-colors">Features</a>
+              <a href="/product" className="hover:text-[--color-text-primary] transition-colors">{t("nav.product")}</a>
+              <a href="/features" className="hover:text-[--color-text-primary] transition-colors">{t("nav.features")}</a>
               <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">GitHub</a>
             </div>
             <p className="text-[11px] text-[--color-text-muted]">
-              © {new Date().getFullYear()} SourceVerify · Privacy-first
+              {t("footer.copyright", { year: new Date().getFullYear().toString() })}
             </p>
           </div>
         </div>
@@ -334,7 +378,7 @@ export default function Home() {
   );
 }
 
-function ScoreRing({ score }: { score: number }) {
+function ScoreRing({ score, label }: { score: number; label: string }) {
   const size = 120, sw = 6, r = (size - sw) / 2, c = 2 * Math.PI * r;
   const offset = c - (score / 100) * c;
   const [on, setOn] = useState(false);
@@ -350,7 +394,7 @@ function ScoreRing({ score }: { score: number }) {
       </svg>
       <div className="absolute flex flex-col items-center">
         <span className={`text-2xl font-bold ${score >= 70 ? 'score-color-high' : score <= 30 ? 'score-color-low' : 'score-color-medium'}`}>{score}</span>
-        <span className="text-[9px] text-[--color-text-muted] uppercase tracking-widest">Score</span>
+        <span className="text-[9px] text-[--color-text-muted] uppercase tracking-widest">{label}</span>
       </div>
     </div>
   );
