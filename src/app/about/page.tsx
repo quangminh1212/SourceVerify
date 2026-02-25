@@ -25,7 +25,7 @@ export default function AboutPage() {
             <Header active="/about" />
 
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
-                <div className="w-full max-w-3xl text-center">
+                <div className="w-full max-w-3xl mx-auto text-center">
                     <div className="mb-8 lg:mb-12">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             {t("about.headline")}{" "}
