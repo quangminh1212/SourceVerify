@@ -98,9 +98,6 @@ export default function Home() {
     return () => window.removeEventListener('paste', handlePaste);
   }, [file, isAnalyzing, handleFile]);
 
-  const scrollToUpload = () => {
-    document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <main className="relative min-h-screen flex flex-col">
@@ -133,7 +130,7 @@ export default function Home() {
             ))}
           </nav>
 
-          {/* CTA + GitHub */}
+          {/* GitHub */}
           <div className="header-actions">
             <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer"
               className="header-github-link">
@@ -142,12 +139,6 @@ export default function Home() {
               </svg>
               GitHub
             </a>
-            <button onClick={scrollToUpload} className="header-cta">
-              Try now
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
           </div>
 
           {/* Mobile hamburger */}
