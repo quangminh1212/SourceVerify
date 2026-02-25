@@ -106,11 +106,7 @@ export default function Home() {
 
         {!file && !result && (
           <div className="flex flex-col items-center gap-8 text-center max-w-2xl mx-auto animate-fade-in-up">
-            {/* Brand mark */}
-            <div className="flex items-center justify-center gap-4">
-              <Image src="/logo.png" alt="SourceVerify" width={52} height={52} className="logo-img" priority />
-              <span className="text-2xl font-semibold gradient-text tracking-wide">SourceVerify</span>
-            </div>
+
 
             {/* Single big headline */}
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-[--color-text-primary] whitespace-nowrap">
