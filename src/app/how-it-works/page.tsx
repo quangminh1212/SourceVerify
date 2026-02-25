@@ -26,12 +26,12 @@ export default function HowItWorksPage() {
 
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
-                    <div className="max-w-3xl mx-auto mb-10 lg:mb-14">
-                        <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
+                    <div className="mb-10 lg:mb-14">
+                        <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] text-center mb-4 animate-fade-in-up">
                             {t("howItWorks.headline")}{" "}
                             <span className="gradient-text">{t("howItWorks.headlineHighlight")}</span>
                         </h1>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed max-w-xl mx-auto animate-fade-in-up">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed text-center max-w-2xl mx-auto animate-fade-in-up">
                             {t("howItWorks.subtitle")}
                         </p>
                     </div>
