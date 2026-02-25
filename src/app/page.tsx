@@ -168,11 +168,11 @@ export default function Home() {
             </div>
 
             {/* Big headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.1] text-[--color-text-primary]">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-[--color-text-primary]">
               Detect <span className="gradient-text">AI-generated</span> content<br className="hidden sm:block" /> in seconds
             </h1>
 
-            <p className="text-base sm:text-lg text-[--color-text-secondary] max-w-xl leading-relaxed">
+            <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] max-w-xl leading-relaxed">
               Upload an image or video and let our multi-signal engine analyze it for signs of AI generation — all within your browser.
             </p>
 
@@ -198,7 +198,7 @@ export default function Home() {
               </div>
             </div>
 
-            <p className="text-xs text-[--color-text-muted]">
+            <p className="text-xs text-[--color-text-muted] hidden sm:block">
               Images & videos · up to 100MB · or <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">Ctrl+V</kbd> to paste
             </p>
           </div>
@@ -278,7 +278,7 @@ export default function Home() {
                 <summary className="text-sm font-medium text-[--color-text-primary] cursor-pointer">
                   📋 Metadata
                 </summary>
-                <div className="grid grid-cols-2 gap-x-6 gap-y-1 mt-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1 mt-3">
                   {Object.entries(result.metadata.exifData).map(([k, v]) => (
                     <div key={k} className="flex gap-2 py-1 border-b border-[--color-border-subtle] text-[11px]">
                       <span className="text-[--color-text-muted] w-24 shrink-0">{k}</span>
@@ -314,12 +314,12 @@ export default function Home() {
       {/* ===== Footer ===== */}
       <footer className="relative z-10 footer-divider">
         <div className="max-w-6xl mx-auto px-6 sm:px-10 py-10">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
             <div className="flex items-center gap-2.5">
               <Image src="/logo.png" alt="SourceVerify" width={22} height={22} priority />
               <span className="text-sm font-semibold text-[--color-text-primary]">SourceVerify</span>
             </div>
-            <div className="flex items-center gap-6 text-xs text-[--color-text-muted]">
+            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-[--color-text-muted]">
               <a href="/product" className="hover:text-[--color-text-primary] transition-colors">Product</a>
               <a href="/features" className="hover:text-[--color-text-primary] transition-colors">Features</a>
               <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">GitHub</a>
