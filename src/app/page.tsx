@@ -14,6 +14,22 @@ const ACCEPTED_TYPES = [
 ];
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
+const NAV_LINKS = [
+  { label: "Product", href: "#product" },
+  { label: "Features", href: "#features", hasDropdown: true },
+  { label: "How it works", href: "#how-it-works" },
+  { label: "About", href: "#about" },
+];
+
+const FEATURES = [
+  { icon: "🔬", title: "Multi-signal Analysis", desc: "6+ detection algorithms analyze frequency, noise, edge patterns and more simultaneously." },
+  { icon: "🔒", title: "100% Private", desc: "All processing runs locally in your browser. No data is ever uploaded to any server." },
+  { icon: "⚡", title: "Instant Results", desc: "Get detailed analysis results in milliseconds — no waiting for server-side processing." },
+  { icon: "🎯", title: "High Accuracy", desc: "Advanced heuristic-based detection with confidence scoring across multiple dimensions." },
+  { icon: "🎬", title: "Images & Video", desc: "Support for all major formats: JPEG, PNG, WebP, GIF, MP4, WebM and more." },
+  { icon: "📊", title: "Detailed Reports", desc: "Visual breakdown of each detection signal with score analysis and metadata extraction." },
+];
+
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -22,6 +38,7 @@ export default function Home() {
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
 
@@ -81,6 +98,10 @@ export default function Home() {
     return () => window.removeEventListener('paste', handlePaste);
   }, [file, isAnalyzing, handleFile]);
 
+  const scrollToUpload = () => {
+    document.getElementById('main-content')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <main className="relative min-h-screen flex flex-col">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">Skip to content</a>
@@ -89,37 +110,96 @@ export default function Home() {
       <div className="edge-glow" aria-hidden="true" />
       <div className="fixed top-0 left-0 right-0 h-[400px] pointer-events-none top-glow opacity-50" aria-hidden="true" />
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 w-full backdrop-blur-md bg-white/60">
-        <div className="flex items-center justify-between px-8 sm:px-12 py-3 max-w-7xl mx-auto w-full">
-          <div className="flex items-center gap-2.5">
-            <Image src="/logo.png" alt="SourceVerify" width={26} height={26} className="logo-img" priority />
-            <span className="text-sm font-semibold tracking-tight gradient-text">SourceVerify</span>
+      {/* ===== Header — Antigravity Style ===== */}
+      <header className="header-bar">
+        <div className="header-inner">
+          {/* Logo */}
+          <div className="header-logo">
+            <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
+            <span className="header-brand">SourceVerify</span>
           </div>
-          <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-xs font-medium text-[--color-text-secondary] hover:text-[--color-text-primary] transition-colors">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+
+          {/* Nav — desktop */}
+          <nav className="header-nav" aria-label="Main navigation">
+            {NAV_LINKS.map(link => (
+              <a key={link.label} href={link.href} className="header-nav-link">
+                {link.label}
+                {link.hasDropdown && (
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true" className="header-nav-chevron">
+                    <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </a>
+            ))}
+          </nav>
+
+          {/* CTA + GitHub */}
+          <div className="header-actions">
+            <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer"
+              className="header-github-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+              </svg>
+              GitHub
+            </a>
+            <button onClick={scrollToUpload} className="header-cta">
+              Try now
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile hamburger */}
+          <button className="header-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              {mobileMenuOpen ? (
+                <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
+              ) : (
+                <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>
+              )}
             </svg>
-            GitHub
-          </a>
+          </button>
         </div>
+
+        {/* Mobile menu */}
+        {mobileMenuOpen && (
+          <div className="header-mobile-menu">
+            {NAV_LINKS.map(link => (
+              <a key={link.label} href={link.href} className="header-mobile-link" onClick={() => setMobileMenuOpen(false)}>
+                {link.label}
+              </a>
+            ))}
+            <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="header-mobile-link">
+              GitHub
+            </a>
+          </div>
+        )}
       </header>
 
-      {/* Hero — Antigravity style: logo + big headline + action area */}
-      <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 sm:px-10 -mt-10">
+      {/* ===== Hero ===== */}
+      <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 sm:px-10 pt-8 pb-12">
 
         {!file && !result && (
-          <div className="flex flex-col items-center gap-8 text-center max-w-2xl mx-auto animate-fade-in-up">
+          <div className="flex flex-col items-center gap-6 text-center max-w-3xl mx-auto animate-fade-in-up">
 
+            {/* Tagline chip */}
+            <div className="hero-chip">
+              <span className="hero-chip-dot" />
+              Privacy-first AI detection — runs 100% locally
+            </div>
 
-            {/* Single big headline */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight leading-[1.1] text-[--color-text-primary] whitespace-nowrap">
-              Detect <span className="gradient-text">AI-generated</span> content
+            {/* Big headline */}
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.5rem] font-bold tracking-tight leading-[1.1] text-[--color-text-primary]">
+              Detect <span className="gradient-text">AI-generated</span> content<br className="hidden sm:block" /> in seconds
             </h1>
 
-            {/* Upload area — just two buttons */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 pt-2">
+            <p className="text-base sm:text-lg text-[--color-text-secondary] max-w-xl leading-relaxed">
+              Upload an image or video and let our multi-signal engine analyze it for signs of AI generation — all within your browser.
+            </p>
+
+            {/* Upload area */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
               <label className="btn-primary flex items-center gap-2.5 cursor-pointer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -141,12 +221,12 @@ export default function Home() {
             </div>
 
             <p className="text-xs text-[--color-text-muted]">
-              Images & videos · up to 100MB · processed locally · or <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">Ctrl+V</kbd> to paste
+              Images & videos · up to 100MB · or <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">Ctrl+V</kbd> to paste
             </p>
           </div>
         )}
 
-        {/* File loaded — minimal preview + progress */}
+        {/* File loaded — preview + progress */}
         {file && !result && (
           <div className="w-full max-w-2xl mx-auto animate-fade-in-up">
             <div className="card p-4 sm:p-6">
@@ -183,10 +263,9 @@ export default function Home() {
           </div>
         )}
 
-        {/* Results — clean and minimal */}
+        {/* Results */}
         {result && (
           <div ref={resultRef} className="w-full max-w-3xl mx-auto animate-fade-in-up py-8">
-            {/* Verdict — centred, big */}
             <div className="text-center mb-10">
               <div className={`verdict-badge ${result.verdict} mb-6 mx-auto`}>
                 {result.verdict === "ai" ? "🤖 AI Generated" : result.verdict === "real" ? "✅ Authentic" : "❓ Uncertain"}
@@ -199,7 +278,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Signal grid — compact */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {result.signals.map(signal => (
                 <div key={signal.name} className="analysis-card">
@@ -217,7 +295,6 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Metadata — if exists */}
             {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
               <details className="mt-4 analysis-card">
                 <summary className="text-sm font-medium text-[--color-text-primary] cursor-pointer">
@@ -234,7 +311,6 @@ export default function Home() {
               </details>
             )}
 
-            {/* New scan */}
             <div className="text-center mt-8">
               <button onClick={handleReset} className="btn-primary">
                 Analyze another file
@@ -254,11 +330,75 @@ export default function Home() {
         )}
       </section>
 
-      {/* Footer — one line */}
-      <footer className="relative z-10 py-5 text-center">
-        <p className="text-[11px] text-[--color-text-muted]">
-          © {new Date().getFullYear()} SourceVerify · Privacy-first · All processing done locally
-        </p>
+      {/* ===== Features Section ===== */}
+      {!file && !result && (
+        <section id="features" className="relative z-10 py-20 px-6 sm:px-10">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-14">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[--color-text-primary] mb-3">
+                Why <span className="gradient-text">SourceVerify</span>?
+              </h2>
+              <p className="text-sm sm:text-base text-[--color-text-secondary] max-w-lg mx-auto">
+                A comprehensive toolkit for verifying media authenticity — built for transparency.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {FEATURES.map((feat, i) => (
+                <div key={feat.title} className="feature-card analysis-card animate-fade-in-up" style={{ animationDelay: `${i * 0.1}s` }}>
+                  <div className="text-2xl mb-3">{feat.icon}</div>
+                  <h3 className="text-sm font-semibold text-[--color-text-primary] mb-1.5">{feat.title}</h3>
+                  <p className="text-xs text-[--color-text-secondary] leading-relaxed">{feat.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ===== How It Works ===== */}
+      {!file && !result && (
+        <section id="how-it-works" className="relative z-10 py-16 px-6 sm:px-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[--color-text-primary] mb-3">
+                How it works
+              </h2>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+              {[
+                { step: "01", title: "Upload", desc: "Drop your image or video — supports all major formats up to 100MB." },
+                { step: "02", title: "Analyze", desc: "Our engine runs 6+ detection algorithms in parallel, right in your browser." },
+                { step: "03", title: "Results", desc: "Get a detailed breakdown with confidence scores and signal analysis." },
+              ].map((item, i) => (
+                <div key={item.step} className="text-center animate-fade-in-up" style={{ animationDelay: `${i * 0.15}s` }}>
+                  <div className="how-step-number">{item.step}</div>
+                  <h3 className="text-base font-semibold text-[--color-text-primary] mb-2">{item.title}</h3>
+                  <p className="text-sm text-[--color-text-secondary] leading-relaxed">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ===== Footer ===== */}
+      <footer className="relative z-10 footer-divider">
+        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="flex items-center gap-2.5">
+              <Image src="/logo.png" alt="SourceVerify" width={22} height={22} priority />
+              <span className="text-sm font-semibold text-[--color-text-primary]">SourceVerify</span>
+            </div>
+            <div className="flex items-center gap-6 text-xs text-[--color-text-muted]">
+              <a href="#product" className="hover:text-[--color-text-primary] transition-colors">Product</a>
+              <a href="#features" className="hover:text-[--color-text-primary] transition-colors">Features</a>
+              <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">GitHub</a>
+            </div>
+            <p className="text-[11px] text-[--color-text-muted]">
+              © {new Date().getFullYear()} SourceVerify · Privacy-first
+            </p>
+          </div>
+        </div>
       </footer>
     </main>
   );
