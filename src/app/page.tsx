@@ -213,8 +213,8 @@ export default function Home() {
             </div>
 
             {/* Big headline */}
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-[--color-text-primary]">
-              {t("home.headline")} <span className="gradient-text">{t("home.headlineHighlight")}</span><br className="hidden sm:block" /> {t("home.headlineSuffix")}
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-[--color-text-primary] whitespace-nowrap">
+              {t("home.headline")} <span className="gradient-text">{t("home.headlineHighlight")}</span> {t("home.headlineSuffix")}
             </h1>
 
             <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] max-w-xl leading-relaxed">
