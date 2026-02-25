@@ -15,10 +15,10 @@ const ACCEPTED_TYPES = [
 const MAX_FILE_SIZE = 100 * 1024 * 1024;
 
 const NAV_LINKS = [
-  { label: "Product", href: "#product" },
-  { label: "Features", href: "#features", hasDropdown: true },
-  { label: "How it works", href: "#how-it-works" },
-  { label: "About", href: "#about" },
+  { label: "Product", href: "/product" },
+  { label: "Features", href: "/features" },
+  { label: "How it works", href: "/how-it-works" },
+  { label: "About", href: "/about" },
 ];
 
 
@@ -113,11 +113,6 @@ export default function Home() {
             {NAV_LINKS.map(link => (
               <a key={link.label} href={link.href} className="header-nav-link">
                 {link.label}
-                {link.hasDropdown && (
-                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true" className="header-nav-chevron">
-                    <path d="M2.5 4L5 6.5L7.5 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                )}
               </a>
             ))}
           </nav>
@@ -325,8 +320,8 @@ export default function Home() {
               <span className="text-sm font-semibold text-[--color-text-primary]">SourceVerify</span>
             </div>
             <div className="flex items-center gap-6 text-xs text-[--color-text-muted]">
-              <a href="#product" className="hover:text-[--color-text-primary] transition-colors">Product</a>
-              <a href="#features" className="hover:text-[--color-text-primary] transition-colors">Features</a>
+              <a href="/product" className="hover:text-[--color-text-primary] transition-colors">Product</a>
+              <a href="/features" className="hover:text-[--color-text-primary] transition-colors">Features</a>
               <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">GitHub</a>
             </div>
             <p className="text-[11px] text-[--color-text-muted]">
