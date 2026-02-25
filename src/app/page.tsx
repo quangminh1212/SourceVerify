@@ -201,10 +201,10 @@ export default function Home() {
       </header>
 
       {/* ===== Hero ===== */}
-      <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 sm:px-10 pt-8 pb-12">
+      <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 sm:px-10 pt-12 pb-16">
 
         {!file && !result && (
-          <div className="flex flex-col items-center gap-6 text-center max-w-3xl mx-auto animate-fade-in-up">
+          <div className="flex flex-col items-center gap-9 text-center max-w-3xl mx-auto animate-fade-in-up">
 
             {/* Tagline chip */}
             <div className="hero-chip">
@@ -222,7 +222,7 @@ export default function Home() {
             </p>
 
             {/* Upload area */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <label className="btn-primary flex items-center gap-2.5 cursor-pointer">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
