@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import {
   analyzeMedia,
   formatFileSize,
@@ -69,7 +70,6 @@ export default function Home() {
       setIsAnalyzing(false);
       setError(t("home.errorFailed"));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [t]);
 
   const handleDrop = useCallback((e: React.DragEvent) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }, [handleFile]);
@@ -117,9 +117,9 @@ export default function Home() {
           {/* Nav — desktop */}
           <nav className="header-nav" aria-label="Main navigation">
             {NAV_KEYS.map(link => (
-              <a key={link.key} href={link.href} className="header-nav-link">
+              <Link key={link.key} href={link.href} className="header-nav-link">
                 {t(link.key)}
-              </a>
+              </Link>
             ))}
           </nav>
 
@@ -180,9 +180,9 @@ export default function Home() {
         {mobileMenuOpen && (
           <div className="header-mobile-menu">
             {NAV_KEYS.map(link => (
-              <a key={link.key} href={link.href} className="header-mobile-link" onClick={() => setMobileMenuOpen(false)}>
+              <Link key={link.key} href={link.href} className="header-mobile-link" onClick={() => setMobileMenuOpen(false)}>
                 {t(link.key)}
-              </a>
+              </Link>
             ))}
             <div className="header-mobile-lang">
               {LOCALES.map((l) => (
@@ -364,8 +364,8 @@ export default function Home() {
               <span className="text-sm font-semibold text-[--color-text-primary]">SourceVerify</span>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-[--color-text-muted]">
-              <a href="/product" className="hover:text-[--color-text-primary] transition-colors">{t("nav.product")}</a>
-              <a href="/features" className="hover:text-[--color-text-primary] transition-colors">{t("nav.features")}</a>
+              <Link href="/product" className="hover:text-[--color-text-primary] transition-colors">{t("nav.product")}</Link>
+              <Link href="/features" className="hover:text-[--color-text-primary] transition-colors">{t("nav.features")}</Link>
               <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">GitHub</a>
             </div>
             <p className="text-[11px] text-[--color-text-muted]">
