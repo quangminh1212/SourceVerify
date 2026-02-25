@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
+import Image from "next/image";
 import {
   analyzeMedia,
   formatFileSize,
@@ -74,10 +75,7 @@ export default function Home() {
       {/* Header — ultra minimal */}
       <header className="relative z-10 flex items-center justify-between px-6 sm:px-10 py-5 max-w-5xl mx-auto w-full">
         <div className="flex items-center gap-2.5">
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <circle cx="12" cy="12" r="10" stroke="#4285f4" strokeWidth="2" />
-            <path d="M9 12l2 2 4-4" stroke="#4285f4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
           <span className="text-base font-semibold tracking-tight text-[--color-text-primary]">SourceVerify</span>
         </div>
         <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer"
@@ -93,10 +91,7 @@ export default function Home() {
           <div className="text-center max-w-2xl mx-auto animate-fade-in-up">
             {/* Brand mark */}
             <div className="flex items-center justify-center gap-3 mb-8">
-              <svg width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" stroke="#4285f4" strokeWidth="1.5" />
-                <path d="M9 12l2 2 4-4" stroke="#4285f4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
+              <Image src="/logo.png" alt="SourceVerify" width={48} height={48} className="logo-img" priority />
               <span className="text-xl font-medium text-[--color-text-primary] tracking-tight">SourceVerify</span>
             </div>
 
