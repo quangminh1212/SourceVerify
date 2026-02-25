@@ -341,7 +341,7 @@ function analyzeMetadataSignal(
         score,
         weight: 2.5,
         description,
-        icon: "🔍",
+        icon: "◎",
         details,
     };
 }
@@ -422,7 +422,7 @@ function analyzeNoiseUniformity(
             coeffVar < 0.5
                 ? "Noise pattern is unusually uniform — common in AI-generated images"
                 : "Noise varies naturally across the image — consistent with real photography",
-        icon: "📊",
+        icon: "◫",
         details: `Noise coefficient of variation: ${coeffVar.toFixed(3)}. AI images typically have values below 0.5, while real photos show higher variation (>0.8).`,
     };
 }
@@ -497,7 +497,7 @@ function analyzeEdgeCoherence(
             score > 55
                 ? "Edge patterns are unusually smooth — may indicate AI generation"
                 : "Edge patterns show natural variation — consistent with real content",
-        icon: "🔲",
+        icon: "▣",
         details: `Median edge: ${median.toFixed(1)}, Edge range (P90-P10): ${edgeRange.toFixed(1)}, Mean edge: ${edgeMeanValue.toFixed(1)}`,
     };
 }
@@ -564,7 +564,7 @@ function analyzeColorDistribution(pixels: Uint8ClampedArray): AnalysisSignal {
             score > 55
                 ? "Color distribution shows patterns common in AI-generated imagery"
                 : "Color distribution appears natural",
-        icon: "🎨",
+        icon: "◉",
         details: `Avg entropy: ${avgEntropy.toFixed(2)}/8.0, Avg unique values: ${avgUsed.toFixed(0)}/256, R: ${rEntropy.toFixed(2)}, G: ${gEntropy.toFixed(2)}, B: ${bEntropy.toFixed(2)}`,
     };
 }
@@ -647,7 +647,7 @@ function analyzeFrequencyDomain(
             score > 55
                 ? "Low high-frequency content detected — characteristic of AI generation"
                 : "Frequency spectrum consistent with real camera capture",
-        icon: "📡",
+        icon: "◈",
         details: `High/Low freq ratio: ${ratio.toFixed(3)}, Blocks analyzed: ${blockCount}. Real photos typically show ratio > 1.5.`,
     };
 }
@@ -720,7 +720,7 @@ function analyzeTextureConsistency(
             score > 55
                 ? "Texture detail is unusually consistent across regions — may indicate AI"
                 : "Texture detail varies naturally across the image",
-        icon: "🧩",
+        icon: "◇",
         details: `Region variance CV: ${regionCV.toFixed(3)}, Corner/center detail levels: ${regions.map((r) => r.toFixed(1)).join(", ")}`,
     };
 }
@@ -775,7 +775,7 @@ function analyzeCompression(
         score,
         weight: 0.8,
         description,
-        icon: "📦",
+        icon: "▢",
         details: `Bits per pixel: ${bitsPerPixel.toFixed(2)}, File size: ${formatFileSize(file.size)}, Resolution: ${width}×${height}`,
     };
 }
@@ -831,7 +831,7 @@ function analyzeSymmetryPatterns(
             score > 55
                 ? "Unusually high symmetry detected — potentially AI-generated"
                 : "Natural asymmetry — consistent with real content",
-        icon: "🪞",
+        icon: "◎",
         details: `Symmetry ratio: ${(symmetryRatio * 100).toFixed(1)}%, Samples checked: ${totalChecks}`,
     };
 }
@@ -893,7 +893,7 @@ function analyzeVideoSpecific(
         score,
         weight: 1.5,
         description,
-        icon: "🎬",
+        icon: "▶",
         details,
     };
 }
