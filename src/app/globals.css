@@ -638,22 +638,21 @@ body {
   transform: translateY(-2px);
 }
 
-/* === Result Header === */
-.result-header {
+/* === Result Row (Score + Radar side by side) === */
+.result-row {
   display: flex;
   align-items: center;
   gap: 2rem;
-  justify-content: center;
-  margin-bottom: 2.5rem;
-  padding: 2.5rem 2rem;
-  overflow: visible;
-  min-width: 0;
+  margin-bottom: 1.5rem;
 }
 
-.result-header-info {
+.result-score-panel {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+  min-width: 160px;
 }
 
 /* === Signals List === */
@@ -729,7 +728,9 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
+  flex: 1;
+  min-width: 0;
 }
 
 .radar-container {
@@ -1044,11 +1045,14 @@ body {
 
 /* Results responsive — switch to stacked layout early */
 @media (max-width: 640px) {
-  .result-header {
+  .result-row {
     flex-direction: column;
     text-align: center;
-    padding: 1.25rem 0;
-    gap: 0.75rem;
+    gap: 1rem;
+  }
+
+  .result-score-panel {
+    min-width: auto;
   }
 
   .result-header-info {

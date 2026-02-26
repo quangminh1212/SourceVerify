@@ -288,24 +288,22 @@ export default function Home() {
 
         {/* Results */}
         {result && (
-          <div ref={resultRef} className="w-full max-w-3xl mx-auto animate-fade-in-up py-6">
-            {/* Score Header */}
-            <div className="result-header">
-              <ScoreRing score={result.aiScore} label={t("home.score")} />
-              <div className="result-header-info">
+          <div ref={resultRef} className="w-full max-w-5xl mx-auto animate-fade-in-up py-6">
+            {/* Score + Radar side by side */}
+            <div className="result-row">
+              <div className="result-score-panel">
+                <ScoreRing score={result.aiScore} label={t("home.score")} />
                 <div className={`verdict-badge ${result.verdict}`}>
                   {result.verdict === "ai" ? t("home.aiGenerated") : result.verdict === "real" ? t("home.authentic") : t("home.uncertain")}
                 </div>
-                <div className="flex items-center gap-3 text-[12px] text-[--color-text-muted] mt-2">
+                <div className="flex items-center gap-3 text-[12px] text-[--color-text-muted] mt-1">
                   <span>{result.confidence}% {t("home.confidence")}</span>
                   <span className="opacity-40">·</span>
                   <span>{result.processingTimeMs}ms</span>
                 </div>
               </div>
+              <RadarChart signals={result.signals} t={t} />
             </div>
-
-            {/* Radar Chart + Signal Details */}
-            <RadarChart signals={result.signals} t={t} />
 
             {/* Metadata */}
             {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
