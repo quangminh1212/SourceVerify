@@ -1,6 +1,7 @@
 /**
  * Signal 9: Texture Consistency
  * Cross-region texture variance analysis
+ * v4: Wider scoring range with 6 grades
  */
 
 import type { AnalysisSignal } from "../types";
@@ -32,15 +33,16 @@ export function analyzeTextureConsistency(pixels: Uint8ClampedArray, width: numb
     const regionCV = avg > 0 ? Math.sqrt(regionVar) / avg : 0;
 
     let score: number;
-    if (regionCV < 0.15) score = 78;
-    else if (regionCV < 0.3) score = 65;
-    else if (regionCV < 0.5) score = 45;
-    else if (regionCV < 0.7) score = 30;
-    else score = 15;
+    if (regionCV < 0.10) score = 85;
+    else if (regionCV < 0.18) score = 72;
+    else if (regionCV < 0.30) score = 58;
+    else if (regionCV < 0.45) score = 42;
+    else if (regionCV < 0.65) score = 28;
+    else score = 12;
 
     return {
         name: "Texture Consistency", nameKey: "signal.textureConsistency",
-        category: "texture", score, weight: 2.5,
+        category: "texture", score, weight: 1.0,
         description: score > 55
             ? "Texture is unusually consistent across regions — common in AI generation"
             : "Texture varies naturally across regions",

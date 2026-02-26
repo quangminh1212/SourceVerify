@@ -109,7 +109,7 @@ export function analyzeSpectralNyquist(pixels: Uint8ClampedArray, width: number,
 
     return {
         name: "Spectral Nyquist Analysis", nameKey: "signal.spectralNyquist",
-        category: "spectral", score, weight: 2.0,
+        category: "spectral", score, weight: 3.0,
         description: score > 55
             ? "Spectral peaks at Nyquist frequencies detected — characteristic of AI upsampling artifacts"
             : "Spectral distribution is smooth — consistent with natural photography",

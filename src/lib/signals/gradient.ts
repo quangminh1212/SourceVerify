@@ -1,6 +1,7 @@
 /**
  * Signal 6: Gradient Micro-Texture
  * Second-order derivatives in smooth regions
+ * v4: Enhanced separation
  */
 
 import type { AnalysisSignal } from "../types";
@@ -52,20 +53,25 @@ export function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: nu
 
     let score = 50;
 
-    if (smoothFraction > 0.5) score += 15;
+    // Smooth block fraction — AI has more smooth areas
+    if (smoothFraction > 0.6) score += 20;
+    else if (smoothFraction > 0.45) score += 12;
     else if (smoothFraction > 0.3) score += 5;
-    else if (smoothFraction < 0.1) score -= 10;
+    else if (smoothFraction < 0.08) score -= 15;
+    else if (smoothFraction < 0.15) score -= 8;
 
-    if (avgMicroRatio < 0.5) score += 15;
-    else if (avgMicroRatio < 1.0) score += 5;
-    else if (avgMicroRatio > 2.0) score -= 15;
-    else if (avgMicroRatio > 1.5) score -= 5;
+    // Micro-texture ratio — lower = less micro-texture = AI
+    if (avgMicroRatio < 0.3) score += 20;
+    else if (avgMicroRatio < 0.6) score += 12;
+    else if (avgMicroRatio < 1.0) score += 3;
+    else if (avgMicroRatio > 2.5) score -= 18;
+    else if (avgMicroRatio > 1.8) score -= 10;
 
-    score = Math.max(10, Math.min(90, score));
+    score = Math.max(5, Math.min(95, score));
 
     return {
         name: "Gradient Micro-Texture", nameKey: "signal.gradientSmoothness",
-        category: "texture", score, weight: 2.0,
+        category: "texture", score, weight: 1.5,
         description: score > 55
             ? "Smooth regions lack natural micro-texture — AI images miss sensor-level noise"
             : "Smooth regions contain natural micro-texture from camera sensor",

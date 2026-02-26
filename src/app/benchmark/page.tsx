@@ -86,9 +86,14 @@ export default function BenchmarkPage() {
             allResults.push(testResult);
             setResults([...allResults]);
 
+
             if (i % 10 === 0 || !testResult.correct) {
                 const emoji = testResult.correct ? "✅" : "❌";
                 addLog(`${emoji} AI#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
+                if (!testResult.correct) {
+                    const sigs = testResult.signals.map(s => `${s.name.substring(0, 8)}=${s.score}`).join(', ');
+                    addLog(`   Signals: ${sigs}`);
+                }
             }
         }
 
@@ -112,6 +117,10 @@ export default function BenchmarkPage() {
             if (i % 10 === 0 || !testResult.correct) {
                 const emoji = testResult.correct ? "✅" : "❌";
                 addLog(`${emoji} REAL#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
+                if (!testResult.correct) {
+                    const sigs = testResult.signals.map(s => `${s.name.substring(0, 8)}=${s.score}`).join(', ');
+                    addLog(`   Signals: ${sigs}`);
+                }
             }
         }
 

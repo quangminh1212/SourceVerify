@@ -1,6 +1,7 @@
 /**
  * Signal 5: Edge Coherence
  * Sobel edge distribution and direction entropy analysis
+ * v4: Wider scoring range for better separation
  */
 
 import type { AnalysisSignal } from "../types";
@@ -52,22 +53,30 @@ export function analyzeEdgeCoherence(pixels: Uint8ClampedArray, width: number, h
 
     let score = 50;
 
-    if (p50 < 5 && edgeRange < 30) score += 25;
-    else if (p50 < 8) score += 15;
-    else if (p50 > 20) score -= 15;
-    else if (p50 > 15) score -= 5;
+    // Edge magnitude — AI tends to have smoother edges
+    if (p50 < 4 && edgeRange < 25) score += 28;
+    else if (p50 < 6) score += 18;
+    else if (p50 < 10) score += 8;
+    else if (p50 > 25) score -= 20;
+    else if (p50 > 18) score -= 10;
 
-    if (sharpnessRatio < 3) score += 10;
-    else if (sharpnessRatio > 8) score -= 10;
+    // Sharpness ratio
+    if (sharpnessRatio < 2.5) score += 12;
+    else if (sharpnessRatio < 4) score += 5;
+    else if (sharpnessRatio > 10) score -= 12;
+    else if (sharpnessRatio > 7) score -= 5;
 
-    if (normalizedEntropy > 0.9) score += 10;
-    else if (normalizedEntropy < 0.65) score -= 10;
+    // Direction entropy
+    if (normalizedEntropy > 0.92) score += 10;
+    else if (normalizedEntropy > 0.85) score += 4;
+    else if (normalizedEntropy < 0.6) score -= 12;
+    else if (normalizedEntropy < 0.7) score -= 5;
 
-    score = Math.max(10, Math.min(90, score));
+    score = Math.max(5, Math.min(95, score));
 
     return {
         name: "Edge Coherence", nameKey: "signal.edgeCoherence",
-        category: "structure", score, weight: 2.5,
+        category: "structure", score, weight: 1.5,
         description: score > 55
             ? "Edges are unusually smooth with uniform directions — common in AI generation"
             : "Edge patterns show natural variation — consistent with real content",

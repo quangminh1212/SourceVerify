@@ -1,6 +1,7 @@
 /**
  * Signal 8: Chromatic Aberration
  * Lens color fringing at image borders
+ * v4: Wider scoring range
  */
 
 import type { AnalysisSignal } from "../types";
@@ -30,15 +31,16 @@ export function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: num
     const avgShift = shiftCount > 0 ? totalShift / shiftCount : 0;
 
     let score: number;
-    if (avgShift < 0.8) score = 75;
-    else if (avgShift < 1.5) score = 60;
-    else if (avgShift < 3.0) score = 42;
-    else if (avgShift < 6.0) score = 25;
-    else score = 12;
+    if (avgShift < 0.5) score = 82;
+    else if (avgShift < 1.0) score = 68;
+    else if (avgShift < 2.0) score = 52;
+    else if (avgShift < 4.0) score = 35;
+    else if (avgShift < 7.0) score = 20;
+    else score = 10;
 
     return {
         name: "Chromatic Aberration", nameKey: "signal.chromaticAberration",
-        category: "optics", score, weight: 1.5,
+        category: "optics", score, weight: 1.0,
         description: score > 55
             ? "No chromatic aberration — real camera lenses produce color fringing"
             : "Chromatic aberration present — consistent with real camera optics",

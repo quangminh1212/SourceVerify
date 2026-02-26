@@ -2,6 +2,7 @@
  * Signal 10: CFA Pattern Detection
  * Bayer filter demosaicing artifacts (camera fingerprint)
  * Real cameras create subtle 2x2 periodic patterns
+ * v4: Wider scoring range with 6 grades
  */
 
 import type { AnalysisSignal } from "../types";
@@ -36,11 +37,12 @@ export function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, heig
     const cfaRatio = count > 0 && totalEnergy > 0 ? periodicEnergy / totalEnergy : 0;
 
     let score: number;
-    if (cfaRatio < 0.1) score = 78;
-    else if (cfaRatio < 0.2) score = 62;
-    else if (cfaRatio < 0.35) score = 42;
-    else if (cfaRatio < 0.5) score = 25;
-    else score = 12;
+    if (cfaRatio < 0.08) score = 85;
+    else if (cfaRatio < 0.15) score = 70;
+    else if (cfaRatio < 0.25) score = 55;
+    else if (cfaRatio < 0.38) score = 38;
+    else if (cfaRatio < 0.52) score = 22;
+    else score = 10;
 
     return {
         name: "CFA Pattern Detection", nameKey: "signal.cfaPattern",

@@ -3,6 +3,8 @@
  * Analyzes noise patterns via Laplacian high-pass filter
  * Real cameras: noise ∝ √brightness (Poisson/shot noise)
  * AI: noise is uniform or absent
+ *
+ * v4: Wider scoring range, more aggressive separation
  */
 
 import type { AnalysisSignal } from "../types";
@@ -52,7 +54,7 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
     const variance = blockStdDevs.reduce((a, b) => a + (b - mean) ** 2, 0) / blockStdDevs.length;
     const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    // Shot noise correlation
+    // Shot noise correlation — critical discriminator
     const meanBright = blockBrightness.reduce((a, b) => a + b, 0) / blockBrightness.length;
     let covBN = 0, varB = 0, varN = 0;
     for (let i = 0; i < blockStdDevs.length; i++) {
@@ -67,22 +69,28 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
 
     let score = 50;
 
-    if (shotCorrelation > 0.3) score -= 25;
-    else if (shotCorrelation > 0.1) score -= 12;
-    else if (shotCorrelation < -0.1) score += 12;
+    // Shot noise correlation — strongest discriminator
+    if (shotCorrelation > 0.35) score -= 30;
+    else if (shotCorrelation > 0.2) score -= 20;
+    else if (shotCorrelation > 0.1) score -= 10;
+    else if (shotCorrelation < -0.15) score += 18;
+    else if (shotCorrelation < 0) score += 12;
     else score += 8;
 
-    if (cv < 0.15) score += 25;
-    else if (cv < 0.25) score += 15;
-    else if (cv < 0.35) score += 8;
-    else if (cv > 0.8) score -= 15;
-    else if (cv > 0.5) score -= 8;
+    // Noise uniformity (CV)
+    if (cv < 0.12) score += 28;
+    else if (cv < 0.2) score += 18;
+    else if (cv < 0.3) score += 8;
+    else if (cv > 0.8) score -= 18;
+    else if (cv > 0.5) score -= 10;
 
-    if (noiseLevel < 1.5) score += 12;
-    else if (noiseLevel < 2.5) score += 5;
-    else if (noiseLevel > 6.0) score -= 8;
+    // Noise level
+    if (noiseLevel < 1.2) score += 14;
+    else if (noiseLevel < 2.0) score += 7;
+    else if (noiseLevel > 7.0) score -= 12;
+    else if (noiseLevel > 5.0) score -= 6;
 
-    score = Math.max(10, Math.min(90, score));
+    score = Math.max(5, Math.min(95, score));
 
     return {
         name: "Noise Residual", nameKey: "signal.noiseResidual",

@@ -1,6 +1,8 @@
 /**
  * Signal 3: Multi-scale Reconstruction Discrepancy
  * Improved ELA: re-encode at 3 quality levels, analyze variance pattern
+ * 
+ * v4: Wider scoring range (5-95) for better separation
  */
 
 import type { AnalysisSignal } from "../types";
@@ -54,7 +56,6 @@ export async function analyzeMultiscaleReconstruction(
     }
 
     // Cross-scale consistency analysis
-    let totalCV = 0;
     let crossScaleVariance = 0;
 
     for (let b = 0; b < totalBlocks; b++) {
@@ -68,16 +69,19 @@ export async function analyzeMultiscaleReconstruction(
     const midErrors = scaleErrors[1];
     const midMean = midErrors.reduce((a, b) => a + b, 0) / midErrors.length;
     const midVar = midErrors.reduce((a, b) => a + (b - midMean) ** 2, 0) / midErrors.length;
-    totalCV = midMean > 0 ? Math.sqrt(midVar) / midMean : 0;
+    const totalCV = midMean > 0 ? Math.sqrt(midVar) / midMean : 0;
 
     const combined = totalCV * 0.6 + crossScaleVariance * 0.4;
 
+    // v4: Wider scoring with more granularity
     let score: number;
-    if (combined < 0.15) score = 80;
-    else if (combined < 0.25) score = 65;
-    else if (combined < 0.4) score = 50;
-    else if (combined < 0.6) score = 35;
-    else score = 18;
+    if (combined < 0.10) score = 88;
+    else if (combined < 0.15) score = 78;
+    else if (combined < 0.20) score = 68;
+    else if (combined < 0.30) score = 55;
+    else if (combined < 0.45) score = 42;
+    else if (combined < 0.60) score = 28;
+    else score = 15;
 
     return {
         name: "Multi-scale Reconstruction", nameKey: "signal.multiScaleReconstruction",
