@@ -288,7 +288,7 @@ export default function Home() {
 
         {/* Results */}
         {result && (
-          <div ref={resultRef} className="w-full max-w-5xl mx-auto animate-fade-in-up py-6">
+          <div ref={resultRef} className="w-full max-w-4xl mx-auto animate-fade-in-up py-4">
             {/* Score + Radar side by side */}
             <div className="result-row">
               <div className="result-score-panel">
@@ -368,9 +368,9 @@ function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").Analysis
   const [on, setOn] = useState(false);
   useEffect(() => { const timer = setTimeout(() => setOn(true), 300); return () => clearTimeout(timer); }, []);
 
-  const size = 300, cx = size / 2, cy = size / 2, maxR = 110;
+  const size = 240, cx = size / 2, cy = size / 2, maxR = 85;
   const n = signals.length;
-  const levels = [20, 40, 60, 80, 100];
+  const levels = [25, 50, 75, 100];
 
   const angleFor = (i: number) => (Math.PI * 2 * i) / n - Math.PI / 2;
   const pointAt = (i: number, val: number) => {
@@ -385,7 +385,7 @@ function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").Analysis
   const dataPoints = signals.map((s, i) => pointAt(i, on ? s.score : 0));
   const dataPolygon = dataPoints.map(p => `${p.x},${p.y}`).join(" ");
 
-  const labelR = maxR + 24;
+  const labelR = maxR + 20;
 
   return (
     <div className="radar-section">
@@ -408,7 +408,7 @@ function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").Analysis
           {dataPoints.map((p, i) => {
             const score = signals[i].score;
             const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
-            return <circle key={i} cx={p.x} cy={p.y} r={3.5} fill={color} className="radar-dot" />;
+            return <circle key={i} cx={p.x} cy={p.y} r={3} fill={color} className="radar-dot" />;
           })}
           {/* Labels */}
           {signals.map((s, i) => {
@@ -425,18 +425,6 @@ function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").Analysis
           })}
         </svg>
       </div>
-      {/* Compact signal details */}
-      <div className="signal-details-grid">
-        {signals.map(s => {
-          const color = s.score >= 70 ? "var(--color-accent-red)" : s.score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
-          return (
-            <div key={s.name} className="signal-detail-item">
-              <span className="signal-detail-dot" style={{ background: color }} />
-              <span className="signal-detail-text">{t(s.descriptionKey) || s.description}</span>
-            </div>
-          );
-        })}
-      </div>
     </div>
   );
 }
@@ -444,7 +432,7 @@ function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").Analysis
 
 
 function ScoreRing({ score, label }: { score: number; label: string }) {
-  const size = 120, sw = 6, r = (size - sw) / 2, c = 2 * Math.PI * r;
+  const size = 100, sw = 5, r = (size - sw) / 2, c = 2 * Math.PI * r;
   const offset = c - (score / 100) * c;
   const [on, setOn] = useState(false);
   useEffect(() => { const t = setTimeout(() => setOn(true), 100); return () => clearTimeout(t); }, []);
@@ -458,8 +446,8 @@ function ScoreRing({ score, label }: { score: number; label: string }) {
           strokeDasharray={c} strokeDashoffset={on ? offset : c} strokeLinecap="round" className="score-ring-fill" />
       </svg>
       <div className="absolute flex flex-col items-center">
-        <span className={`text-2xl font-bold ${score >= 70 ? 'score-color-high' : score <= 30 ? 'score-color-low' : 'score-color-medium'}`}>{score}</span>
-        <span className="text-[9px] text-[--color-text-muted] uppercase tracking-widest">{label}</span>
+        <span className={`text-xl font-bold ${score >= 70 ? 'score-color-high' : score <= 30 ? 'score-color-low' : 'score-color-medium'}`}>{score}</span>
+        <span className="text-[8px] text-[--color-text-muted] uppercase tracking-widest">{label}</span>
       </div>
     </div>
   );
