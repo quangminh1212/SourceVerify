@@ -94,16 +94,51 @@ export async function analyzeMedia(file: File): Promise<AnalysisResult> {
         totalWeight += signal.weight;
         weightedSum += signal.score * signal.weight;
     }
-    const aiScore = Math.round(totalWeight > 0 ? weightedSum / totalWeight : 50);
+    let aiScore = Math.round(totalWeight > 0 ? weightedSum / totalWeight : 50);
+
+    // PEAK SIGNAL AMPLIFICATION + CONSENSUS BOOST
+    // Strategy 1: If any single signal is very confident, amplify
+    // Strategy 2: If MANY signals agree (>55 or <45), that consensus should boost/reduce
+    let peakBoost = 0;
+    let peakPenalty = 0;
+    let highCount = 0;  // signals > 55
+    let lowCount = 0;   // signals < 45
+    
+    for (const signal of signals) {
+        // Peak boost for strong AI indicators
+        if (signal.score >= 75 && signal.weight >= 1.5) {
+            peakBoost = Math.max(peakBoost, (signal.score - 60) * signal.weight * 0.12);
+        } else if (signal.score >= 65 && signal.weight >= 2.0) {
+            peakBoost = Math.max(peakBoost, (signal.score - 55) * signal.weight * 0.06);
+        }
+        // Peak penalty for strong Real indicators  
+        if (signal.score <= 20 && signal.weight >= 2.0) {
+            peakPenalty = Math.max(peakPenalty, (30 - signal.score) * signal.weight * 0.12);
+        } else if (signal.score <= 25 && signal.weight >= 1.5) {
+            peakPenalty = Math.max(peakPenalty, (35 - signal.score) * signal.weight * 0.06);
+        }
+        // Count consensus
+        if (signal.score > 55 && signal.weight >= 1.0) highCount++;
+        if (signal.score < 45 && signal.weight >= 1.0) lowCount++;
+    }
+    
+    // Consensus boost: if 4+ signals agree it's AI, boost
+    if (highCount >= 5) peakBoost += 8;
+    else if (highCount >= 4) peakBoost += 5;
+    // Consensus penalty: if 4+ signals agree it's Real
+    if (lowCount >= 5) peakPenalty += 8;
+    else if (lowCount >= 4) peakPenalty += 5;
+    
+    aiScore = Math.round(Math.max(5, Math.min(95, aiScore + peakBoost - peakPenalty)));
 
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
-    if (aiScore >= 70) {
+    if (aiScore >= 65) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 70) * 1.67));
-    } else if (aiScore <= 30) {
+        confidence = Math.min(100, Math.round(50 + (aiScore - 65) * 1.43));
+    } else if (aiScore <= 35) {
         verdict = "real";
-        confidence = Math.min(100, Math.round(50 + (30 - aiScore) * 1.67));
+        confidence = Math.min(100, Math.round(50 + (35 - aiScore) * 1.43));
     } else {
         verdict = "uncertain";
         confidence = Math.round(100 - Math.abs(aiScore - 50) * 2);
@@ -413,7 +448,7 @@ function analyzeSpectralNyquist(pixels: Uint8ClampedArray, width: number, height
 
     return {
         name: "Spectral Nyquist Analysis", nameKey: "signal.spectralNyquist",
-        category: "spectral", score, weight: 1.0,
+        category: "spectral", score, weight: 0.5,
         description: score > 55
             ? "Spectral peaks at Nyquist frequencies detected — characteristic of AI upsampling artifacts"
             : "Spectral distribution is smooth — consistent with natural photography",
@@ -832,7 +867,7 @@ function analyzeBenfordsLaw(pixels: Uint8ClampedArray, width: number, height: nu
 
     return {
         name: "Benford's Law", nameKey: "signal.benfordsLaw",
-        category: "statistical", score, weight: 1.0,
+        category: "statistical", score, weight: 0.3,
         description: score > 55
             ? "Pixel gradients deviate from Benford's Law — characteristic of AI generation"
             : "Pixel gradients follow natural statistical distribution",
@@ -879,7 +914,7 @@ function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: number, he
 
     return {
         name: "Chromatic Aberration", nameKey: "signal.chromaticAberration",
-        category: "optics", score, weight: 0.8,
+        category: "optics", score, weight: 0.5,
         description: score > 55
             ? "No chromatic aberration — real camera lenses produce color fringing"
             : "Chromatic aberration present — consistent with real camera optics",
@@ -990,7 +1025,7 @@ function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, height: num
 
     return {
         name: "CFA Pattern Detection", nameKey: "signal.cfaPattern",
-        category: "optics", score, weight: 3.0,
+        category: "optics", score, weight: 1.5,
         description: score > 55
             ? "No Bayer CFA demosaicing pattern found — real cameras leave this fingerprint"
             : "CFA demosaicing artifacts present — characteristic of real camera sensors",
