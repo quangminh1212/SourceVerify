@@ -389,7 +389,7 @@ function ScoreRing({ score, label }: { score: number; label: string }) {
   const color = score >= 70 ? "var(--color-accent-red)" : score <= 30 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
 
   return (
-    <div className="relative inline-flex items-center justify-center score-ring-overlay">
+    <div className="relative inline-flex items-center justify-center score-ring-overlay shrink-0">
       <svg width={size} height={size} className="score-ring" aria-hidden="true">
         <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" className="score-ring-bg" />
         <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" stroke={color}
