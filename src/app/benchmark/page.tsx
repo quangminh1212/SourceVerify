@@ -4,11 +4,15 @@ import { useState, useCallback, useRef } from "react";
 import { analyzeMedia, type AnalysisResult } from "@/lib/analyzer";
 import "./benchmark.css";
 
-const TOTAL_IMAGES = 100;
+const AI_COUNT = 100;
+const REAL_COUNT = 100;
+const TOTAL = AI_COUNT + REAL_COUNT;
 
 interface TestResult {
     file: string;
+    category: "ai" | "real"; // ground truth
     verdict: string;
+    correct: boolean;
     aiScore: number;
     confidence: number;
     timeMs: number;
@@ -19,11 +23,43 @@ export default function BenchmarkPage() {
     const [running, setRunning] = useState(false);
     const [results, setResults] = useState<TestResult[]>([]);
     const [current, setCurrent] = useState(0);
+    const [phase, setPhase] = useState<"idle" | "ai" | "real" | "done">("idle");
     const [log, setLog] = useState<string[]>([]);
     const abortRef = useRef(false);
 
     const addLog = useCallback((msg: string) => {
         setLog(prev => [...prev, `[${new Date().toLocaleTimeString()}] ${msg}`]);
+    }, []);
+
+    const analyzeImage = useCallback(async (
+        fileName: string,
+        category: "ai" | "real",
+        allResults: TestResult[],
+    ): Promise<TestResult | null> => {
+        try {
+            const resp = await fetch(`/benchmark/${fileName}`);
+            if (!resp.ok) return null;
+            const blob = await resp.blob();
+            const file = new File([blob], fileName, { type: "image/jpeg" });
+            const result: AnalysisResult = await analyzeMedia(file);
+
+            const correct = category === "ai"
+                ? result.verdict === "ai"
+                : result.verdict === "real";
+
+            return {
+                file: fileName,
+                category,
+                verdict: result.verdict,
+                correct,
+                aiScore: result.aiScore,
+                confidence: result.confidence,
+                timeMs: result.processingTimeMs,
+                signals: result.signals.map(s => ({ name: s.name, score: s.score, weight: s.weight })),
+            };
+        } catch {
+            return null;
+        }
     }, []);
 
     const runBenchmark = useCallback(async () => {
@@ -34,96 +70,146 @@ export default function BenchmarkPage() {
         abortRef.current = false;
 
         const allResults: TestResult[] = [];
-        addLog(`Starting benchmark with ${TOTAL_IMAGES} AI-generated images...`);
 
-        for (let i = 1; i <= TOTAL_IMAGES; i++) {
-            if (abortRef.current) { addLog("Aborted by user."); break; }
+        // ============ PHASE 1: AI Images ============
+        setPhase("ai");
+        addLog(`🤖 Phase 1: Testing ${AI_COUNT} AI-generated images...`);
 
+        for (let i = 1; i <= AI_COUNT; i++) {
+            if (abortRef.current) { addLog("⏹ Aborted."); break; }
             const fileName = `ai_face_${String(i).padStart(3, "0")}.jpg`;
             setCurrent(i);
 
-            try {
-                const resp = await fetch(`/benchmark/${fileName}`);
-                if (!resp.ok) { addLog(`SKIP ${fileName}: HTTP ${resp.status}`); continue; }
-                const blob = await resp.blob();
-                const file = new File([blob], fileName, { type: "image/jpeg" });
+            const testResult = await analyzeImage(fileName, "ai", allResults);
+            if (!testResult) { addLog(`SKIP ${fileName}`); continue; }
 
-                const result: AnalysisResult = await analyzeMedia(file);
+            allResults.push(testResult);
+            setResults([...allResults]);
 
-                const testResult: TestResult = {
-                    file: fileName,
-                    verdict: result.verdict,
-                    aiScore: result.aiScore,
-                    confidence: result.confidence,
-                    timeMs: result.processingTimeMs,
-                    signals: result.signals.map(s => ({ name: s.name, score: s.score, weight: s.weight })),
-                };
-
-                allResults.push(testResult);
-                setResults([...allResults]);
-
-                const emoji = result.verdict === "ai" ? "✅" : result.verdict === "uncertain" ? "⚠️" : "❌";
-                if (i % 10 === 0 || result.verdict !== "ai") {
-                    addLog(`${emoji} #${i} ${fileName}: ${result.verdict} (score=${result.aiScore}, conf=${result.confidence}%)`);
-                }
-            } catch (err) {
-                addLog(`ERROR ${fileName}: ${err}`);
+            if (i % 10 === 0 || !testResult.correct) {
+                const emoji = testResult.correct ? "✅" : "❌";
+                addLog(`${emoji} AI#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
             }
         }
 
-        // Summary
-        const aiCount = allResults.filter(r => r.verdict === "ai").length;
-        const uncertainCount = allResults.filter(r => r.verdict === "uncertain").length;
-        const realCount = allResults.filter(r => r.verdict === "real").length;
-        const total = allResults.length;
-        const detectionRate = total > 0 ? ((aiCount / total) * 100).toFixed(1) : "0";
-        const avgScore = total > 0 ? (allResults.reduce((a, r) => a + r.aiScore, 0) / total).toFixed(1) : "0";
-        const avgTime = total > 0 ? (allResults.reduce((a, r) => a + r.timeMs, 0) / total).toFixed(0) : "0";
+        if (abortRef.current) { setRunning(false); setPhase("done"); return; }
 
-        addLog(`\n========== RESULTS ==========`);
-        addLog(`Total tested: ${total}`);
-        addLog(`Detected as AI: ${aiCount} (${detectionRate}%)`);
-        addLog(`Uncertain: ${uncertainCount}`);
-        addLog(`Detected as Real (FALSE NEGATIVE): ${realCount}`);
-        addLog(`Average AI Score: ${avgScore}`);
-        addLog(`Average Processing Time: ${avgTime}ms`);
-        addLog(`Detection Rate: ${detectionRate}%`);
+        // ============ PHASE 2: Real Images ============
+        setPhase("real");
+        addLog(`\n📸 Phase 2: Testing ${REAL_COUNT} real photos...`);
 
-        // Signal breakdown
-        if (total > 0) {
-            addLog(`\n--- Signal Averages ---`);
-            const signalNames = allResults[0].signals.map(s => s.name);
-            for (const name of signalNames) {
-                const avgSig = allResults.reduce((a, r) => {
-                    const sig = r.signals.find(s => s.name === name);
-                    return a + (sig ? sig.score : 0);
-                }, 0) / total;
-                addLog(`  ${name}: ${avgSig.toFixed(1)}`);
+        for (let i = 1; i <= REAL_COUNT; i++) {
+            if (abortRef.current) { addLog("⏹ Aborted."); break; }
+            const fileName = `real_photo_${String(i).padStart(3, "0")}.jpg`;
+            setCurrent(AI_COUNT + i);
+
+            const testResult = await analyzeImage(fileName, "real", allResults);
+            if (!testResult) { addLog(`SKIP ${fileName}`); continue; }
+
+            allResults.push(testResult);
+            setResults([...allResults]);
+
+            if (i % 10 === 0 || !testResult.correct) {
+                const emoji = testResult.correct ? "✅" : "❌";
+                addLog(`${emoji} REAL#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
             }
         }
 
-        // Export results as JSON
-        const jsonStr = JSON.stringify({ summary: { total, aiCount, uncertainCount, realCount, detectionRate: parseFloat(detectionRate), avgScore: parseFloat(avgScore) }, results: allResults }, null, 2);
+        // ============ SUMMARY ============
+        const aiResults = allResults.filter(r => r.category === "ai");
+        const realResults = allResults.filter(r => r.category === "real");
+
+        const tp = aiResults.filter(r => r.verdict === "ai").length;        // True Positive
+        const fn = aiResults.filter(r => r.verdict === "real").length;       // False Negative
+        const aiUncertain = aiResults.filter(r => r.verdict === "uncertain").length;
+
+        const tn = realResults.filter(r => r.verdict === "real").length;     // True Negative
+        const fp = realResults.filter(r => r.verdict === "ai").length;       // False Positive
+        const realUncertain = realResults.filter(r => r.verdict === "uncertain").length;
+
+        const totalTested = allResults.length;
+        const totalCorrect = allResults.filter(r => r.correct).length;
+        const accuracy = totalTested > 0 ? ((totalCorrect / totalTested) * 100).toFixed(1) : "0";
+        const tpr = aiResults.length > 0 ? ((tp / aiResults.length) * 100).toFixed(1) : "0";
+        const tnr = realResults.length > 0 ? ((tn / realResults.length) * 100).toFixed(1) : "0";
+        const fpr = realResults.length > 0 ? ((fp / realResults.length) * 100).toFixed(1) : "0";
+        const fnr = aiResults.length > 0 ? ((fn / aiResults.length) * 100).toFixed(1) : "0";
+        const precision = (tp + fp) > 0 ? ((tp / (tp + fp)) * 100).toFixed(1) : "0";
+        const recall = (tp + fn) > 0 ? ((tp / (tp + fn)) * 100).toFixed(1) : "0";
+        const f1 = (parseFloat(precision) + parseFloat(recall)) > 0
+            ? ((2 * parseFloat(precision) * parseFloat(recall)) / (parseFloat(precision) + parseFloat(recall))).toFixed(1) : "0";
+
+        const avgTime = totalTested > 0 ? (allResults.reduce((a, r) => a + r.timeMs, 0) / totalTested).toFixed(0) : "0";
+
+        addLog(`\n${"=".repeat(50)}`);
+        addLog(`📊 BENCHMARK RESULTS (${totalTested} images)`);
+        addLog(`${"=".repeat(50)}`);
+        addLog(`✅ Overall Accuracy: ${accuracy}% (${totalCorrect}/${totalTested})`);
+        addLog(``);
+        addLog(`🤖 AI Detection (${aiResults.length} AI images):`);
+        addLog(`   True Positive (AI→AI): ${tp} (${tpr}%)`);
+        addLog(`   False Negative (AI→Real): ${fn} (${fnr}%)`);
+        addLog(`   Uncertain: ${aiUncertain}`);
+        addLog(``);
+        addLog(`📸 Real Detection (${realResults.length} Real images):`);
+        addLog(`   True Negative (Real→Real): ${tn} (${tnr}%)`);
+        addLog(`   False Positive (Real→AI): ${fp} (${fpr}%)`);
+        addLog(`   Uncertain: ${realUncertain}`);
+        addLog(``);
+        addLog(`📐 Metrics:`);
+        addLog(`   Precision: ${precision}%`);
+        addLog(`   Recall (Sensitivity): ${recall}%`);
+        addLog(`   F1-Score: ${f1}%`);
+        addLog(`   Avg Time: ${avgTime}ms/image`);
+
+        // Export
+        const jsonStr = JSON.stringify({
+            timestamp: new Date().toISOString(),
+            summary: {
+                totalTested, totalCorrect,
+                accuracy: parseFloat(accuracy),
+                tp, fp, tn, fn,
+                aiUncertain, realUncertain,
+                tpr: parseFloat(tpr), tnr: parseFloat(tnr),
+                fpr: parseFloat(fpr), fnr: parseFloat(fnr),
+                precision: parseFloat(precision),
+                recall: parseFloat(recall),
+                f1: parseFloat(f1),
+                avgTimeMs: parseFloat(avgTime),
+            },
+            results: allResults,
+        }, null, 2);
         const blob = new Blob([jsonStr], { type: "application/json" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `benchmark_results_${new Date().toISOString().slice(0, 10)}.json`;
+        a.download = `benchmark_full_${new Date().toISOString().slice(0, 10)}.json`;
         a.click();
         URL.revokeObjectURL(url);
 
+        setPhase("done");
         setRunning(false);
-    }, [addLog]);
+    }, [addLog, analyzeImage]);
 
-    const aiCount = results.filter(r => r.verdict === "ai").length;
-    const uncertainCount = results.filter(r => r.verdict === "uncertain").length;
-    const realCount = results.filter(r => r.verdict === "real").length;
-    const detectionRate = results.length > 0 ? ((aiCount / results.length) * 100).toFixed(1) : "—";
+    // Live stats
+    const aiResults = results.filter(r => r.category === "ai");
+    const realResults = results.filter(r => r.category === "real");
+    const tp = aiResults.filter(r => r.verdict === "ai").length;
+    const tn = realResults.filter(r => r.verdict === "real").length;
+    const fp = realResults.filter(r => r.verdict === "ai").length;
+    const fn = aiResults.filter(r => r.verdict === "real").length;
+    const totalCorrect = results.filter(r => r.correct).length;
+    const accuracy = results.length > 0 ? ((totalCorrect / results.length) * 100).toFixed(1) : "—";
 
     return (
         <main className="bm-main">
-            <h1 className="bm-title">🔬 SourceVerify Benchmark</h1>
-            <p className="bm-subtitle">Testing {TOTAL_IMAGES} AI-generated images from thispersondoesnotexist.com</p>
+            <h1 className="bm-title">🔬 SourceVerify Full Benchmark</h1>
+            <p className="bm-subtitle">
+                Testing {AI_COUNT} AI images + {REAL_COUNT} real photos = {TOTAL} total
+                {phase === "ai" && " — 🤖 Phase 1: AI Images"}
+                {phase === "real" && " — 📸 Phase 2: Real Photos"}
+                {phase === "done" && " — ✅ Complete"}
+            </p>
 
             <div className="bm-actions">
                 <button
@@ -131,7 +217,7 @@ export default function BenchmarkPage() {
                     disabled={running}
                     className={`bm-btn ${running ? "bm-btn--running" : "bm-btn--start"}`}
                 >
-                    {running ? `Running... ${current}/${TOTAL_IMAGES}` : "▶ Start Benchmark"}
+                    {running ? `Running... ${current}/${TOTAL}` : "▶ Start Full Benchmark"}
                 </button>
                 {running && (
                     <button
@@ -143,19 +229,20 @@ export default function BenchmarkPage() {
                 )}
             </div>
 
-            {/* Live Stats */}
+            {/* Confusion Matrix Stats */}
             <div className="bm-stats">
                 <StatBox label="Tested" value={results.length} color="#4285f4" />
-                <StatBox label="AI ✅" value={aiCount} color="#0f9d58" />
-                <StatBox label="Uncertain ⚠️" value={uncertainCount} color="#f4b400" />
-                <StatBox label="Real ❌" value={realCount} color="#e74c3c" />
-                <StatBox label="Detection %" value={detectionRate} color={parseFloat(detectionRate) >= 90 ? "#0f9d58" : "#e74c3c"} />
+                <StatBox label="Accuracy" value={`${accuracy}%`} color={parseFloat(accuracy) >= 80 ? "#0f9d58" : "#e74c3c"} />
+                <StatBox label="TP (AI→AI)" value={tp} color="#0f9d58" />
+                <StatBox label="TN (Real→Real)" value={tn} color="#0f9d58" />
+                <StatBox label="FP (Real→AI)" value={fp} color="#e74c3c" />
+                <StatBox label="FN (AI→Real)" value={fn} color="#e74c3c" />
             </div>
 
             {/* Progress */}
             {running && (
                 <div className="bm-progress-track">
-                    <div className="bm-progress-fill" data-progress={`${Math.round((current / TOTAL_IMAGES) * 100)}`} />
+                    <div className="bm-progress-fill" data-progress={`${Math.round((current / TOTAL) * 100)}`} />
                 </div>
             )}
 
@@ -167,7 +254,9 @@ export default function BenchmarkPage() {
                             <tr>
                                 <th>#</th>
                                 <th>File</th>
+                                <th className="center">Truth</th>
                                 <th className="center">Verdict</th>
+                                <th className="center">Correct</th>
                                 <th className="center">AI Score</th>
                                 <th className="center">Confidence</th>
                                 <th className="center">Time</th>
@@ -175,14 +264,20 @@ export default function BenchmarkPage() {
                         </thead>
                         <tbody>
                             {results.map((r, i) => (
-                                <tr key={r.file} className={r.verdict === "real" ? "bm-row--real" : r.verdict === "uncertain" ? "bm-row--uncertain" : ""}>
+                                <tr key={r.file} className={!r.correct ? "bm-row--wrong" : ""}>
                                     <td>{i + 1}</td>
                                     <td>{r.file}</td>
                                     <td className="center">
-                                        <span className={r.verdict === "ai" ? "bm-verdict--ai" : r.verdict === "uncertain" ? "bm-verdict--uncertain" : "bm-verdict--real"}>
-                                            {r.verdict === "ai" ? "✅ AI" : r.verdict === "uncertain" ? "⚠️ UNC" : "❌ REAL"}
+                                        <span className={r.category === "ai" ? "bm-tag--ai" : "bm-tag--real"}>
+                                            {r.category === "ai" ? "🤖 AI" : "📸 Real"}
                                         </span>
                                     </td>
+                                    <td className="center">
+                                        <span className={r.verdict === "ai" ? "bm-verdict--ai" : r.verdict === "uncertain" ? "bm-verdict--uncertain" : "bm-verdict--real"}>
+                                            {r.verdict === "ai" ? "AI" : r.verdict === "uncertain" ? "UNC" : "REAL"}
+                                        </span>
+                                    </td>
+                                    <td className="center">{r.correct ? "✅" : "❌"}</td>
                                     <td className="center bold">{r.aiScore}</td>
                                     <td className="center">{r.confidence}%</td>
                                     <td className="center">{r.timeMs}ms</td>
@@ -195,7 +290,7 @@ export default function BenchmarkPage() {
 
             {/* Log */}
             <div className="bm-log">
-                {log.length === 0 ? "Press 'Start Benchmark' to begin testing..." : log.join("\n")}
+                {log.length === 0 ? "Press 'Start Full Benchmark' to test 100 AI + 100 Real images..." : log.join("\n")}
             </div>
         </main>
     );
