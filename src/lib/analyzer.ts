@@ -117,25 +117,27 @@ export async function analyzeMedia(file: File): Promise<AnalysisResult> {
         } else if (signal.score <= 25 && signal.weight >= 1.5) {
             peakPenalty = Math.max(peakPenalty, (35 - signal.score) * signal.weight * 0.06);
         }
-        // Count consensus
-        if (signal.score > 55 && signal.weight >= 1.0) highCount++;
-        if (signal.score < 45 && signal.weight >= 1.0) lowCount++;
+        // Count consensus (include all signals regardless of weight)
+        if (signal.score > 55) highCount++;
+        if (signal.score < 45) lowCount++;
     }
     
-    // Consensus boost: if 4+ signals agree it's AI, boost
-    if (highCount >= 5) peakBoost += 8;
-    else if (highCount >= 4) peakBoost += 5;
-    // Consensus penalty: if 4+ signals agree it's Real
-    if (lowCount >= 5) peakPenalty += 8;
-    else if (lowCount >= 4) peakPenalty += 5;
+    // Consensus boost: if multiple signals agree on direction
+    if (highCount >= 5) peakBoost += 10;
+    else if (highCount >= 4) peakBoost += 7;
+    else if (highCount >= 3) peakBoost += 3;
+    // Consensus penalty: if many signals say Real
+    if (lowCount >= 5) peakPenalty += 10;
+    else if (lowCount >= 4) peakPenalty += 7;
+    else if (lowCount >= 3) peakPenalty += 3;
     
     aiScore = Math.round(Math.max(5, Math.min(95, aiScore + peakBoost - peakPenalty)));
 
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
-    if (aiScore >= 65) {
+    if (aiScore >= 60) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 65) * 1.43));
+        confidence = Math.min(100, Math.round(50 + (aiScore - 60) * 1.25));
     } else if (aiScore <= 35) {
         verdict = "real";
         confidence = Math.min(100, Math.round(50 + (35 - aiScore) * 1.43));
