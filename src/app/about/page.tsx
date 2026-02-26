@@ -50,8 +50,8 @@ export default function AboutPage() {
                                 key={stat.labelKey}
                                 className="rounded-2xl bg-white/30 py-5 sm:py-6 lg:py-8 px-3 sm:px-4 lg:px-6 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-white/50 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)]"
                             >
-                                <div className="text-xl sm:text-2xl lg:text-3xl font-extrabold gradient-text mb-1 tracking-tight">{t(stat.valueKey)}</div>
-                                <div className="text-[10px] sm:text-[11px] lg:text-xs font-medium uppercase tracking-[0.12em] text-[--color-text-muted]">{t(stat.labelKey)}</div>
+                                <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold gradient-text mb-1 tracking-tight">{t(stat.valueKey)}</div>
+                                <div className="text-xs sm:text-sm lg:text-sm font-medium uppercase tracking-[0.12em] text-[--color-text-muted]">{t(stat.labelKey)}</div>
                             </div>
                         ))}
                     </div>
