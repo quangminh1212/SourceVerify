@@ -108,6 +108,8 @@ export default function Home() {
     return () => window.removeEventListener('paste', handlePaste);
   }, [file, isAnalyzing, handleFile]);
 
+  const langExpandedStr: "true" | "false" = langOpen ? "true" : "false";
+  const menuExpandedStr: "true" | "false" = mobileMenuOpen ? "true" : "false";
 
   return (
     <main className="relative min-h-screen flex flex-col">
@@ -139,7 +141,7 @@ export default function Home() {
                 className="lang-switcher-btn"
                 onClick={() => setLangOpen(!langOpen)}
                 aria-label="Change language"
-                aria-expanded={langOpen ? "true" : "false"}
+                aria-expanded={langExpandedStr}
                 aria-haspopup="listbox"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -155,7 +157,7 @@ export default function Home() {
                     <button
                       key={l}
                       role="option"
-                      aria-selected={l === locale ? "true" : "false"}
+                      aria-selected={l === locale ? "true" as const : "false" as const}
                       className={`lang-option ${l === locale ? "active" : ""}`}
                       onClick={() => { setLocale(l); setLangOpen(false); }}
                     >
@@ -177,7 +179,7 @@ export default function Home() {
           </div>
 
           {/* Mobile hamburger */}
-          <button className="header-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu" aria-expanded={mobileMenuOpen ? "true" : "false"}>
+          <button className="header-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu" aria-expanded={menuExpandedStr}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {mobileMenuOpen ? (
                 <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>

@@ -155,7 +155,7 @@ export default function BenchmarkPage() {
             {/* Progress */}
             {running && (
                 <div className="bm-progress-track">
-                    <div className="bm-progress-fill" style={{ width: `${(current / TOTAL_IMAGES) * 100}%` }} />
+                    <div className="bm-progress-fill" data-progress={`${Math.round((current / TOTAL_IMAGES) * 100)}`} />
                 </div>
             )}
 
@@ -202,9 +202,13 @@ export default function BenchmarkPage() {
 }
 
 function StatBox({ label, value, color }: { label: string; value: string | number; color: string }) {
+    const colorClass = color === "#4285f4" ? "bm-color-blue"
+        : color === "#0f9d58" ? "bm-color-green"
+            : color === "#f4b400" ? "bm-color-yellow"
+                : "bm-color-red";
     return (
         <div className="bm-stat-box">
-            <div className="bm-stat-value" style={{ color }}>{value}</div>
+            <div className={`bm-stat-value ${colorClass}`}>{value}</div>
             <div className="bm-stat-label">{label}</div>
         </div>
     );
