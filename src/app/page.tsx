@@ -304,19 +304,15 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Signals Grid */}
-            <div className="signals-grid">
+            {/* Signals */}
+            <div className="signals-list">
               {result.signals.map(signal => (
-                <div key={signal.name} className="signal-card">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="signal-icon">{signal.icon}</span>
-                    <span className="text-[13px] font-semibold text-[--color-text-primary] flex-1 truncate">{t(signal.nameKey) || signal.name}</span>
-                    <span className={`signal-score ${signal.score >= 70 ? 'high' : signal.score >= 55 ? 'medium' : 'low'}`}>{signal.score}</span>
+                <div key={signal.name} className="signal-row">
+                  <MiniGauge score={signal.score} />
+                  <div className="signal-info">
+                    <span className="signal-name">{t(signal.nameKey) || signal.name}</span>
+                    <span className="signal-desc">{t(signal.descriptionKey) || signal.description}</span>
                   </div>
-                  <div className="confidence-bar-slim">
-                    <div className={`confidence-fill-slim ${signal.score > 55 ? "ai" : "real"}`} ref={el => { if (el) el.style.setProperty('--confidence-width', `${signal.score}%`); }} />
-                  </div>
-                  <p className="text-[11px] text-[--color-text-muted] mt-1.5 leading-relaxed">{t(signal.descriptionKey) || signal.description}</p>
                 </div>
               ))}
             </div>
@@ -378,6 +374,25 @@ export default function Home() {
         </div>
       </footer>
     </main>
+  );
+}
+
+function MiniGauge({ score }: { score: number }) {
+  const size = 36, sw = 3, r = (size - sw) / 2, c = 2 * Math.PI * r;
+  const offset = c - (score / 100) * c;
+  const [on, setOn] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setOn(true), 200); return () => clearTimeout(t); }, []);
+  const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
+
+  return (
+    <div className="mini-gauge">
+      <svg width={size} height={size} className="score-ring" aria-hidden="true">
+        <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" className="score-ring-bg" />
+        <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" stroke={color}
+          strokeDasharray={c} strokeDashoffset={on ? offset : c} strokeLinecap="round" className="score-ring-fill" />
+      </svg>
+      <span className="mini-gauge-label" style={{ color }}>{score}</span>
+    </div>
   );
 }
 

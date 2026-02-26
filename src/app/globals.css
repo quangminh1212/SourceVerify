@@ -656,80 +656,72 @@ body {
   align-items: flex-start;
 }
 
-/* === Signals Grid === */
-.signals-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.5rem;
+/* === Signals List === */
+.signals-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-/* === Signal Card === */
-.signal-card {
-  background: transparent;
-  border: none;
-  border-left: 3px solid var(--color-border-subtle);
-  border-radius: 0;
-  padding: 0.75rem 1rem;
-  transition: all 0.2s ease;
+.signal-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: background 0.15s ease;
 }
 
-.signal-card:hover {
-  border-left-color: #4285f4;
+.signal-row:last-child {
+  border-bottom: none;
+}
+
+.signal-row:hover {
   background: rgba(66, 133, 244, 0.03);
+  border-radius: 8px;
 }
 
-.signal-icon {
-  font-size: 0.875rem;
+/* === Mini Gauge === */
+.mini-gauge {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
   flex-shrink: 0;
-  width: 20px;
-  text-align: center;
 }
 
-.signal-score {
-  font-size: 0.6875rem;
+.mini-gauge svg {
+  overflow: visible;
+}
+
+.mini-gauge-label {
+  position: absolute;
+  font-size: 0.625rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
-  padding: 0.125rem 0.5rem;
-  border-radius: 100px;
-  line-height: 1.4;
+  line-height: 1;
 }
 
-.signal-score.high {
-  background: rgba(234, 67, 53, 0.08);
-  color: var(--color-accent-red);
+.signal-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  min-width: 0;
 }
 
-.signal-score.medium {
-  background: rgba(251, 188, 4, 0.08);
-  color: #e37400;
+.signal-name {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.3;
 }
 
-.signal-score.low {
-  background: rgba(52, 168, 83, 0.08);
-  color: var(--color-accent-green);
-}
-
-/* === Slim Progress Bar === */
-.confidence-bar-slim {
-  height: 3px;
-  border-radius: 2px;
-  background: var(--color-border-subtle);
-  overflow: hidden;
-}
-
-.confidence-fill-slim {
-  height: 100%;
-  border-radius: 2px;
-  width: var(--confidence-width, 0%);
-  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.confidence-fill-slim.ai {
-  background: linear-gradient(90deg, #ef4444, #f59e0b);
-}
-
-.confidence-fill-slim.real {
-  background: linear-gradient(90deg, #22c55e, #3b82f6);
+.signal-desc {
+  font-size: 0.6875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
 }
 
 /* === Metadata Panel === */
