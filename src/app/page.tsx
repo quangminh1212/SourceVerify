@@ -36,6 +36,7 @@ export default function Home() {
   const [progress, setProgress] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
+  const [viewMode, setViewMode] = useState<'basic' | 'advanced'>('basic');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const { locale, setLocale, t } = useLanguage();
@@ -289,29 +290,89 @@ export default function Home() {
         {/* Results */}
         {result && (
           <div ref={resultRef} className="w-full max-w-4xl mx-auto animate-fade-in-up py-4">
-            {/* Score + Radar side by side */}
-            <div className="result-row">
-              <div className="result-score-panel">
-                <ScoreRing score={result.aiScore} label={t("home.score")} />
+            {/* Tab Toggle */}
+            <div className="result-tabs">
+              <button className={`result-tab ${viewMode === 'basic' ? 'active' : ''}`} onClick={() => setViewMode('basic')}>
+                {t('home.basicView') || 'Cơ bản'}
+              </button>
+              <button className={`result-tab ${viewMode === 'advanced' ? 'active' : ''}`} onClick={() => setViewMode('advanced')}>
+                {t('home.advancedView') || 'Nâng cao'}
+              </button>
+            </div>
+
+            {viewMode === 'basic' ? (
+              /* === BASIC VIEW === */
+              <div className="basic-view">
+                <ScoreRing score={result.aiScore} label={t('home.score')} />
                 <div className={`verdict-badge ${result.verdict}`}>
-                  {result.verdict === "ai" ? t("home.aiGenerated") : result.verdict === "real" ? t("home.authentic") : t("home.uncertain")}
+                  {result.verdict === 'ai' ? t('home.aiGenerated') : result.verdict === 'real' ? t('home.authentic') : t('home.uncertain')}
                 </div>
-                <div className="flex items-center gap-3 text-[12px] text-[--color-text-muted] mt-1">
-                  <span>{result.confidence}% {t("home.confidence")}</span>
-                  <span className="opacity-40">·</span>
-                  <span>{result.processingTimeMs}ms</span>
+                <p className="basic-summary">
+                  {result.verdict === 'ai'
+                    ? t('home.summaryAi') || `Nội dung này có ${result.aiScore}% khả năng được tạo bởi AI. Phát hiện nhiều dấu hiệu bất thường trong cấu trúc ảnh.`
+                    : result.verdict === 'real'
+                      ? t('home.summaryReal') || `Nội dung này có vẻ là ảnh thật với độ tin cậy ${result.confidence}%. Các chỉ số phân tích phù hợp với ảnh chụp tự nhiên.`
+                      : t('home.summaryUncertain') || `Không thể xác định rõ ràng. Điểm ${result.aiScore}/100 cho thấy nội dung cần được xem xét kỹ hơn.`}
+                </p>
+                <div className="basic-stats">
+                  <div className="basic-stat">
+                    <span className="basic-stat-label">{t('home.confidence')}</span>
+                    <span className="basic-stat-value">{result.confidence}%</span>
+                  </div>
+                  <div className="basic-stat-divider" />
+                  <div className="basic-stat">
+                    <span className="basic-stat-label">{t('home.signalsAnalyzed') || 'Tín hiệu'}</span>
+                    <span className="basic-stat-value">{result.signals.length}</span>
+                  </div>
+                  <div className="basic-stat-divider" />
+                  <div className="basic-stat">
+                    <span className="basic-stat-label">{t('home.processingTime') || 'Thời gian'}</span>
+                    <span className="basic-stat-value">{result.processingTimeMs}ms</span>
+                  </div>
+                </div>
+                {/* Top signals */}
+                <div className="basic-signals">
+                  {[...result.signals].sort((a, b) => Math.abs(b.score - 50) - Math.abs(a.score - 50)).slice(0, 4).map(s => {
+                    const color = s.score >= 70 ? 'var(--color-accent-red)' : s.score <= 40 ? 'var(--color-accent-green)' : 'var(--color-accent-amber)';
+                    return (
+                      <div key={s.name} className="basic-signal-bar">
+                        <div className="basic-signal-header">
+                          <span className="basic-signal-name">{t(s.nameKey) || s.name}</span>
+                          <span className="basic-signal-score" style={{ color }}>{s.score}/100</span>
+                        </div>
+                        <div className="basic-bar-bg">
+                          <div className="basic-bar-fill" style={{ width: `${s.score}%`, background: color }} />
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-              <RadarChart signals={result.signals} t={t} />
-            </div>
+            ) : (
+              /* === ADVANCED VIEW === */
+              <div className="result-row">
+                <div className="result-score-panel">
+                  <ScoreRing score={result.aiScore} label={t('home.score')} />
+                  <div className={`verdict-badge ${result.verdict}`}>
+                    {result.verdict === 'ai' ? t('home.aiGenerated') : result.verdict === 'real' ? t('home.authentic') : t('home.uncertain')}
+                  </div>
+                  <div className="flex items-center gap-3 text-[12px] text-[--color-text-muted] mt-1">
+                    <span>{result.confidence}% {t('home.confidence')}</span>
+                    <span className="opacity-40">·</span>
+                    <span>{result.processingTimeMs}ms</span>
+                  </div>
+                </div>
+                <RadarChart signals={result.signals} t={t} />
+              </div>
+            )}
 
             {/* Result Footer */}
             <div className="result-footer">
-              {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
+              {viewMode === 'advanced' && result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
                 <details className="metadata-panel">
                   <summary className="metadata-summary">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
-                    {t("home.metadata")}
+                    {t('home.metadata')}
                   </summary>
                   <div className="metadata-grid">
                     {Object.entries(result.metadata.exifData).map(([k, v]) => (
@@ -324,9 +385,9 @@ export default function Home() {
                 </details>
               )}
               <button onClick={handleReset} className="btn-primary">
-                {t("home.analyzeAnother")}
+                {t('home.analyzeAnother')}
               </button>
-              <p className="result-disclaimer">{t("home.disclaimer")}</p>
+              <p className="result-disclaimer">{t('home.disclaimer')}</p>
             </div>
           </div>
         )}
