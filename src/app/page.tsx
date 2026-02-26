@@ -310,13 +310,13 @@ export default function Home() {
                 <div key={signal.name} className="signal-card">
                   <div className="flex items-center gap-2 mb-2">
                     <span className="signal-icon">{signal.icon}</span>
-                    <span className="text-[13px] font-semibold text-[--color-text-primary] flex-1 truncate">{signal.name}</span>
+                    <span className="text-[13px] font-semibold text-[--color-text-primary] flex-1 truncate">{t(signal.nameKey) || signal.name}</span>
                     <span className={`signal-score ${signal.score >= 70 ? 'high' : signal.score >= 55 ? 'medium' : 'low'}`}>{signal.score}</span>
                   </div>
                   <div className="confidence-bar-slim">
                     <div className={`confidence-fill-slim ${signal.score > 55 ? "ai" : "real"}`} ref={el => { if (el) el.style.setProperty('--confidence-width', `${signal.score}%`); }} />
                   </div>
-                  <p className="text-[11px] text-[--color-text-muted] mt-1.5 leading-relaxed">{signal.description}</p>
+                  <p className="text-[11px] text-[--color-text-muted] mt-1.5 leading-relaxed">{t(signal.descriptionKey) || signal.description}</p>
                 </div>
               ))}
             </div>

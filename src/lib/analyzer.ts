@@ -22,10 +22,12 @@ export interface AnalysisResult {
 
 export interface AnalysisSignal {
     name: string;
+    nameKey: string;
     category: string;
     score: number; // 0-100
     weight: number;
     description: string;
+    descriptionKey: string;
     icon: string;
     details?: string;
 }
@@ -335,12 +337,21 @@ function analyzeMetadataSignal(
         }
     }
 
+    // Determine descriptionKey based on outcome
+    let descriptionKey = "signal.metadata.inconclusive";
+    if (score >= 90) descriptionKey = "signal.metadata.aiDetected";
+    else if (score <= 20) descriptionKey = "signal.metadata.cameraDetected";
+    else if (description.includes("naming pattern")) descriptionKey = "signal.metadata.namingPattern";
+    else if (description.includes("Resolution matches")) descriptionKey = "signal.metadata.aiResolution";
+
     return {
         name: "Metadata Analysis",
+        nameKey: "signal.metadataAnalysis",
         category: "metadata",
         score,
         weight: 2.5,
         description,
+        descriptionKey,
         icon: "◎",
         details,
     };
@@ -415,6 +426,7 @@ function analyzeNoiseUniformity(
 
     return {
         name: "Noise Uniformity",
+        nameKey: "signal.noiseUniformity",
         category: "pixel",
         score,
         weight: 2.0,
@@ -422,6 +434,7 @@ function analyzeNoiseUniformity(
             coeffVar < 0.5
                 ? "Noise pattern is unusually uniform — common in AI-generated images"
                 : "Noise varies naturally across the image — consistent with real photography",
+        descriptionKey: coeffVar < 0.5 ? "signal.noise.ai" : "signal.noise.real",
         icon: "◫",
         details: `Noise coefficient of variation: ${coeffVar.toFixed(3)}. AI images typically have values below 0.5, while real photos show higher variation (>0.8).`,
     };
@@ -490,6 +503,7 @@ function analyzeEdgeCoherence(
 
     return {
         name: "Edge Coherence",
+        nameKey: "signal.edgeCoherence",
         category: "structure",
         score,
         weight: 1.5,
@@ -497,6 +511,7 @@ function analyzeEdgeCoherence(
             score > 55
                 ? "Edge patterns are unusually smooth — may indicate AI generation"
                 : "Edge patterns show natural variation — consistent with real content",
+        descriptionKey: score > 55 ? "signal.edge.ai" : "signal.edge.real",
         icon: "▣",
         details: `Median edge: ${median.toFixed(1)}, Edge range (P90-P10): ${edgeRange.toFixed(1)}, Mean edge: ${edgeMeanValue.toFixed(1)}`,
     };
@@ -557,6 +572,7 @@ function analyzeColorDistribution(pixels: Uint8ClampedArray): AnalysisSignal {
 
     return {
         name: "Color Distribution",
+        nameKey: "signal.colorDistribution",
         category: "color",
         score,
         weight: 1.2,
@@ -564,6 +580,7 @@ function analyzeColorDistribution(pixels: Uint8ClampedArray): AnalysisSignal {
             score > 55
                 ? "Color distribution shows patterns common in AI-generated imagery"
                 : "Color distribution appears natural",
+        descriptionKey: score > 55 ? "signal.color.ai" : "signal.color.real",
         icon: "◉",
         details: `Avg entropy: ${avgEntropy.toFixed(2)}/8.0, Avg unique values: ${avgUsed.toFixed(0)}/256, R: ${rEntropy.toFixed(2)}, G: ${gEntropy.toFixed(2)}, B: ${bEntropy.toFixed(2)}`,
     };
@@ -640,6 +657,7 @@ function analyzeFrequencyDomain(
 
     return {
         name: "Frequency Analysis",
+        nameKey: "signal.frequencyAnalysis",
         category: "frequency",
         score,
         weight: 2.0,
@@ -647,6 +665,7 @@ function analyzeFrequencyDomain(
             score > 55
                 ? "Low high-frequency content detected — characteristic of AI generation"
                 : "Frequency spectrum consistent with real camera capture",
+        descriptionKey: score > 55 ? "signal.frequency.ai" : "signal.frequency.real",
         icon: "◈",
         details: `High/Low freq ratio: ${ratio.toFixed(3)}, Blocks analyzed: ${blockCount}. Real photos typically show ratio > 1.5.`,
     };
@@ -713,6 +732,7 @@ function analyzeTextureConsistency(
 
     return {
         name: "Texture Consistency",
+        nameKey: "signal.textureConsistency",
         category: "texture",
         score,
         weight: 1.5,
@@ -720,6 +740,7 @@ function analyzeTextureConsistency(
             score > 55
                 ? "Texture detail is unusually consistent across regions — may indicate AI"
                 : "Texture detail varies naturally across the image",
+        descriptionKey: score > 55 ? "signal.texture.ai" : "signal.texture.real",
         icon: "◇",
         details: `Region variance CV: ${regionCV.toFixed(3)}, Corner/center detail levels: ${regions.map((r) => r.toFixed(1)).join(", ")}`,
     };
@@ -769,12 +790,26 @@ function analyzeCompression(
         description = "Standard compression";
     }
 
+    // Determine descriptionKey for compression
+    let descriptionKey = "signal.compression.standard";
+    if (file.type === "image/png") {
+        descriptionKey = bitsPerPixel > 20 ? "signal.compression.largePng" : "signal.compression.normalPng";
+    } else if (file.type === "image/jpeg" || file.type === "image/jpg") {
+        if (bitsPerPixel > 4) descriptionKey = "signal.compression.highJpeg";
+        else if (bitsPerPixel < 0.5) descriptionKey = "signal.compression.heavyJpeg";
+        else descriptionKey = "signal.compression.normalJpeg";
+    } else if (file.type === "image/webp") {
+        descriptionKey = "signal.compression.webp";
+    }
+
     return {
         name: "Compression Analysis",
+        nameKey: "signal.compressionAnalysis",
         category: "file",
         score,
         weight: 0.8,
         description,
+        descriptionKey,
         icon: "▢",
         details: `Bits per pixel: ${bitsPerPixel.toFixed(2)}, File size: ${formatFileSize(file.size)}, Resolution: ${width}×${height}`,
     };
@@ -824,6 +859,7 @@ function analyzeSymmetryPatterns(
 
     return {
         name: "Symmetry Patterns",
+        nameKey: "signal.symmetryPatterns",
         category: "structure",
         score,
         weight: 1.0,
@@ -831,6 +867,7 @@ function analyzeSymmetryPatterns(
             score > 55
                 ? "Unusually high symmetry detected — potentially AI-generated"
                 : "Natural asymmetry — consistent with real content",
+        descriptionKey: score > 55 ? "signal.symmetry.ai" : "signal.symmetry.real",
         icon: "◎",
         details: `Symmetry ratio: ${(symmetryRatio * 100).toFixed(1)}%, Samples checked: ${totalChecks}`,
     };
@@ -887,12 +924,18 @@ function analyzeVideoSpecific(
 
     score = Math.max(0, Math.min(100, score));
 
+    let descriptionKey = "signal.video.analysis";
+    if (duration <= 5) descriptionKey = "signal.video.short";
+    else if (duration > 60) descriptionKey = "signal.video.long";
+
     return {
         name: "Video Properties",
+        nameKey: "signal.videoProperties",
         category: "video",
         score,
         weight: 1.5,
         description,
+        descriptionKey,
         icon: "▶",
         details,
     };
