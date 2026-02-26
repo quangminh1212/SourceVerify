@@ -10,12 +10,10 @@ import {
 } from "@/lib/analyzer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { LOCALE_LABELS, type Locale } from "@/i18n/translations";
-
-const ACCEPTED_TYPES = [
-  "image/jpeg", "image/png", "image/webp", "image/gif", "image/bmp", "image/avif",
-  "video/mp4", "video/webm", "video/quicktime", "video/x-msvideo",
-];
-const MAX_FILE_SIZE = 100 * 1024 * 1024;
+import { ACCEPTED_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
+import Footer from "@/components/Footer";
+import ScoreRing from "@/components/ScoreRing";
+import RadarChart from "@/components/RadarChart";
 
 const NAV_KEYS = [
   { key: "nav.product", href: "/product" },
@@ -39,9 +37,22 @@ export default function Home() {
   const [viewMode, setViewMode] = useState<'basic' | 'advanced'>('basic');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
+  const langRef = useRef<HTMLDivElement>(null);
   const { locale, setLocale, t } = useLanguage();
 
   useEffect(() => { return () => { if (preview) URL.revokeObjectURL(preview); }; }, [preview]);
+
+  // Click-outside handler for language dropdown
+  useEffect(() => {
+    if (!langOpen) return;
+    const handleClickOutside = (e: MouseEvent) => {
+      if (langRef.current && !langRef.current.contains(e.target as Node)) {
+        setLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [langOpen]);
 
   const handleFile = useCallback(async (selectedFile: File) => {
     setError(null);
@@ -102,9 +113,7 @@ export default function Home() {
     <main className="relative min-h-screen flex flex-col">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">{t("home.skipToContent")}</a>
 
-      {/* Edge glow removed for clean white background */}
-
-      {/* ===== Header — Antigravity Style ===== */}
+      {/* ===== Header ===== */}
       <header className="header-bar">
         <div className="header-inner">
           {/* Logo */}
@@ -125,11 +134,13 @@ export default function Home() {
           {/* Actions */}
           <div className="header-actions">
             {/* Language Switcher */}
-            <div className="lang-switcher">
+            <div className="lang-switcher" ref={langRef}>
               <button
                 className="lang-switcher-btn"
                 onClick={() => setLangOpen(!langOpen)}
                 aria-label="Change language"
+                aria-expanded={langOpen}
+                aria-haspopup="listbox"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="12" cy="12" r="10" />
@@ -139,10 +150,12 @@ export default function Home() {
                 {LOCALE_LABELS[locale]}
               </button>
               {langOpen && (
-                <div className="lang-dropdown">
+                <div className="lang-dropdown" role="listbox" aria-label="Language selection">
                   {LOCALES.map((l) => (
                     <button
                       key={l}
+                      role="option"
+                      aria-selected={l === locale}
                       className={`lang-option ${l === locale ? "active" : ""}`}
                       onClick={() => { setLocale(l); setLangOpen(false); }}
                     >
@@ -164,7 +177,7 @@ export default function Home() {
           </div>
 
           {/* Mobile hamburger */}
-          <button className="header-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
+          <button className="header-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu" aria-expanded={mobileMenuOpen}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
               {mobileMenuOpen ? (
                 <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
@@ -407,112 +420,7 @@ export default function Home() {
       </section>
 
       {/* ===== Footer ===== */}
-      <footer className="relative z-10 footer-divider">
-        <div className="max-w-6xl mx-auto px-6 sm:px-10 py-10">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2.5">
-              <Image src="/logo.png" alt="SourceVerify" width={22} height={22} priority />
-              <span className="text-sm font-semibold text-[--color-text-primary]">SourceVerify</span>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-[--color-text-muted]">
-              <Link href="/product" className="hover:text-[--color-text-primary] transition-colors">{t("nav.product")}</Link>
-              <Link href="/features" className="hover:text-[--color-text-primary] transition-colors">{t("nav.features")}</Link>
-              <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">GitHub</a>
-            </div>
-            <p className="text-[11px] text-[--color-text-muted]">
-              {t("footer.copyright", { year: new Date().getFullYear().toString() })}
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer showLinks />
     </main>
-  );
-}
-function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").AnalysisSignal[]; t: (k: string) => string }) {
-  const [on, setOn] = useState(false);
-  useEffect(() => { const timer = setTimeout(() => setOn(true), 300); return () => clearTimeout(timer); }, []);
-
-  const size = 240, cx = size / 2, cy = size / 2, maxR = 85;
-  const n = signals.length;
-  const levels = [25, 50, 75, 100];
-
-  const angleFor = (i: number) => (Math.PI * 2 * i) / n - Math.PI / 2;
-  const pointAt = (i: number, val: number) => {
-    const a = angleFor(i), r = (val / 100) * maxR;
-    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
-  };
-
-  const gridPolygons = levels.map(lv =>
-    Array.from({ length: n }, (_, i) => pointAt(i, lv)).map(p => `${p.x},${p.y}`).join(" ")
-  );
-
-  const dataPoints = signals.map((s, i) => pointAt(i, on ? s.score : 0));
-  const dataPolygon = dataPoints.map(p => `${p.x},${p.y}`).join(" ");
-
-  const labelR = maxR + 20;
-
-  return (
-    <div className="radar-section">
-      <div className="radar-container">
-        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="radar-svg">
-          {/* Grid levels */}
-          {gridPolygons.map((pts, i) => (
-            <polygon key={i} points={pts} fill="none" stroke="var(--color-border-subtle)" strokeWidth="0.7" opacity={0.5 + i * 0.1} />
-          ))}
-          {/* Axis lines */}
-          {signals.map((_, i) => {
-            const end = pointAt(i, 100);
-            return <line key={i} x1={cx} y1={cy} x2={end.x} y2={end.y} stroke="var(--color-border-subtle)" strokeWidth="0.5" opacity="0.4" />;
-          })}
-          {/* Data fill */}
-          <polygon points={dataPolygon} className="radar-fill" />
-          {/* Data stroke */}
-          <polygon points={dataPolygon} fill="none" className="radar-stroke" />
-          {/* Data dots */}
-          {dataPoints.map((p, i) => {
-            const score = signals[i].score;
-            const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
-            return <circle key={i} cx={p.x} cy={p.y} r={3} fill={color} className="radar-dot" />;
-          })}
-          {/* Labels */}
-          {signals.map((s, i) => {
-            const a = angleFor(i);
-            const lx = cx + labelR * Math.cos(a), ly = cy + labelR * Math.sin(a);
-            const anchor = Math.abs(Math.cos(a)) < 0.1 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
-            const score = s.score;
-            const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
-            return (
-              <text key={i} x={lx} y={ly} textAnchor={anchor} dominantBaseline="central" className="radar-label">
-                {t(s.nameKey) || s.name} <tspan fill={color} fontWeight="700">{s.score}</tspan>
-              </text>
-            );
-          })}
-        </svg>
-      </div>
-    </div>
-  );
-}
-
-
-
-function ScoreRing({ score, label }: { score: number; label: string }) {
-  const size = 100, sw = 5, r = (size - sw) / 2, c = 2 * Math.PI * r;
-  const offset = c - (score / 100) * c;
-  const [on, setOn] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setOn(true), 100); return () => clearTimeout(t); }, []);
-  const color = score >= 70 ? "var(--color-accent-red)" : score <= 30 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
-
-  return (
-    <div className="relative inline-flex items-center justify-center score-ring-overlay shrink-0">
-      <svg width={size} height={size} className="score-ring" aria-hidden="true">
-        <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" className="score-ring-bg" />
-        <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" stroke={color}
-          strokeDasharray={c} strokeDashoffset={on ? offset : c} strokeLinecap="round" className="score-ring-fill" />
-      </svg>
-      <div className="absolute flex flex-col items-center">
-        <span className={`text-xl font-bold ${score >= 70 ? 'score-color-high' : score <= 30 ? 'score-color-low' : 'score-color-medium'}`}>{score}</span>
-        <span className="text-[8px] text-[--color-text-muted] uppercase tracking-widest">{label}</span>
-      </div>
-    </div>
   );
 }
