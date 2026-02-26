@@ -93,33 +93,55 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     let aiScore = Math.round(totalWeight > 0 ? weightedSum / totalWeight : 50);
 
     // ============================
-    // ADAPTIVE SIGNAL AMPLIFICATION
+    // PEAK ANOMALY DETECTION
     // ============================
+    // Key forensic insight: a single very strong AI signal is MORE diagnostic
+    // than many absent signals. AI generators leave specific artifacts that
+    // only appear in AI images — if ONE signal fires strongly, it IS evidence.
 
-    // Tier-based amplification: strong signals with extreme values get amplified
     let peakBoost = 0;
     let peakPenalty = 0;
-    let highCount = 0; // signals indicating AI
-    let lowCount = 0;  // signals indicating real
-    let strongHighCount = 0; // strong signals (weight >= 2.5) indicating AI
-    let strongLowCount = 0;  // strong signals indicating real
+    let highCount = 0;
+    let lowCount = 0;
+    let strongHighCount = 0;
+    let strongLowCount = 0;
+
+    // Track peak AI signals for anomaly detection
+    let maxAiSignalScore = 0;
+    let maxAiSignalWeight = 0;
+    let cumulativePeakBoost = 0;  // accumulate boost from ALL peak signals
 
     for (const signal of signals) {
-        // AI indicators
-        if (signal.score >= 75 && signal.weight >= 2.0) {
-            peakBoost = Math.max(peakBoost, (signal.score - 60) * signal.weight * 0.14);
+        // AI indicators — cumulative stacking instead of max-only
+        if (signal.score >= 85 && signal.weight >= 2.0) {
+            // Very strong AI artifact detected
+            const boost = (signal.score - 50) * signal.weight * 0.18;
+            cumulativePeakBoost += boost;
             strongHighCount++;
-        } else if (signal.score >= 65 && signal.weight >= 2.5) {
-            peakBoost = Math.max(peakBoost, (signal.score - 55) * signal.weight * 0.08);
+            if (signal.score > maxAiSignalScore) {
+                maxAiSignalScore = signal.score;
+                maxAiSignalWeight = signal.weight;
+            }
+        } else if (signal.score >= 70 && signal.weight >= 2.0) {
+            const boost = (signal.score - 50) * signal.weight * 0.12;
+            cumulativePeakBoost += boost;
+            strongHighCount++;
+            if (signal.score > maxAiSignalScore) {
+                maxAiSignalScore = signal.score;
+                maxAiSignalWeight = signal.weight;
+            }
+        } else if (signal.score >= 60 && signal.weight >= 2.5) {
+            const boost = (signal.score - 45) * signal.weight * 0.07;
+            cumulativePeakBoost += boost;
             strongHighCount++;
         }
 
         // Real indicators
-        if (signal.score <= 20 && signal.weight >= 2.0) {
-            peakPenalty = Math.max(peakPenalty, (30 - signal.score) * signal.weight * 0.14);
+        if (signal.score <= 15 && signal.weight >= 2.0) {
+            peakPenalty += (25 - signal.score) * signal.weight * 0.06;
             strongLowCount++;
         } else if (signal.score <= 25 && signal.weight >= 2.5) {
-            peakPenalty = Math.max(peakPenalty, (35 - signal.score) * signal.weight * 0.08);
+            peakPenalty += (30 - signal.score) * signal.weight * 0.04;
             strongLowCount++;
         }
 
@@ -127,13 +149,32 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
         if (signal.score < 42) lowCount++;
     }
 
+    peakBoost = cumulativePeakBoost;
+
+    // ============================
+    // DOMINANT SIGNAL FLOOR
+    // ============================
+    // If any single signal is extremely high (>=80), it sets a minimum floor
+    // for the aiScore. This prevents a single strong AI artifact from being
+    // diluted by many neutral/low signals.
+    // Forensic rationale: Edge artifacts at 90 means AI generated edges were
+    // detected — this alone is strong evidence regardless of other signals.
+
+    let dominantFloor = 0;
+    if (maxAiSignalScore >= 90) {
+        // A signal at 90+ is nearly definitive AI evidence
+        dominantFloor = 60 + Math.round((maxAiSignalScore - 90) * 2);
+    } else if (maxAiSignalScore >= 80) {
+        // Strong AI evidence
+        dominantFloor = 52 + Math.round((maxAiSignalScore - 80) * 0.8);
+    } else if (maxAiSignalScore >= 70) {
+        // Moderate AI evidence — set floor at uncertain range
+        dominantFloor = 42 + Math.round((maxAiSignalScore - 70) * 0.5);
+    }
+
     // ============================
     // MULTI-SIGNAL CONSENSUS BOOST
     // ============================
-    // When many independent signals agree, confidence should increase dramatically
-    // This is the key insight from ensemble forensics research
-
-    const totalSignals = signals.length;
 
     // AI consensus
     if (highCount >= 10) peakBoost += 22;
@@ -142,35 +183,42 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     else if (highCount >= 5) peakBoost += 10;
     else if (highCount >= 4) peakBoost += 6;
 
-    // Real consensus
-    if (lowCount >= 8) peakPenalty += 20;
-    else if (lowCount >= 6) peakPenalty += 16;
-    else if (lowCount >= 5) peakPenalty += 12;
-    else if (lowCount >= 4) peakPenalty += 8;
-    else if (lowCount >= 3) peakPenalty += 4;
+    // Real consensus — reduced power when dominant AI signal exists
+    const realConsensusFactor = dominantFloor > 0 ? 0.5 : 1.0;
+    if (lowCount >= 8) peakPenalty += 20 * realConsensusFactor;
+    else if (lowCount >= 6) peakPenalty += 16 * realConsensusFactor;
+    else if (lowCount >= 5) peakPenalty += 12 * realConsensusFactor;
+    else if (lowCount >= 4) peakPenalty += 8 * realConsensusFactor;
+    else if (lowCount >= 3) peakPenalty += 4 * realConsensusFactor;
 
-    // Strong signal consensus (weight >= 2.5 signals agreeing)
-    if (strongHighCount >= 5) peakBoost += 10;
-    else if (strongHighCount >= 3) peakBoost += 5;
-    if (strongLowCount >= 5) peakPenalty += 10;
-    else if (strongLowCount >= 3) peakPenalty += 5;
+    // Strong signal consensus
+    if (strongHighCount >= 5) peakBoost += 12;
+    else if (strongHighCount >= 3) peakBoost += 7;
+    else if (strongHighCount >= 2) peakBoost += 3;
+    if (strongLowCount >= 5) peakPenalty += 10 * realConsensusFactor;
+    else if (strongLowCount >= 3) peakPenalty += 5 * realConsensusFactor;
 
     // ============================
     // DEFINITIVE EVIDENCE OVERRIDE
     // ============================
-    // Metadata with AI software signature is definitive evidence
     const metadataSignal = signals.find(s => s.nameKey === "signal.metadataAnalysis");
     if (metadataSignal) {
         if (metadataSignal.score >= 90) {
-            // AI software detected in metadata — near-definitive
             peakBoost += 20;
+            dominantFloor = Math.max(dominantFloor, 70);
         } else if (metadataSignal.score <= 15) {
-            // Real camera detected in metadata — near-definitive
-            peakPenalty += 20;
+            peakPenalty += 15;
         }
     }
 
+    // Apply boosts and penalties
     aiScore = Math.round(Math.max(3, Math.min(97, aiScore + peakBoost - peakPenalty)));
+
+    // Apply dominant signal floor — ensures high-confidence AI signals
+    // don't get drowned out by many neutral/low signals
+    if (dominantFloor > 0 && aiScore < dominantFloor) {
+        aiScore = dominantFloor;
+    }
 
     // ============================
     // VERDICT WITH ADAPTIVE THRESHOLDS
