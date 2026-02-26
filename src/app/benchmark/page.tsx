@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useRef } from "react";
 import { analyzeMedia, type AnalysisResult } from "@/lib/analyzer";
+import "./benchmark.css";
 
 const TOTAL_IMAGES = 100;
 
@@ -120,22 +121,22 @@ export default function BenchmarkPage() {
     const detectionRate = results.length > 0 ? ((aiCount / results.length) * 100).toFixed(1) : "—";
 
     return (
-        <main style={{ fontFamily: "monospace", padding: "20px", maxWidth: "1200px", margin: "0 auto", background: "#1a1a2e", color: "#e0e0e0", minHeight: "100vh" }}>
-            <h1 style={{ color: "#4285f4", marginBottom: 8 }}>🔬 SourceVerify Benchmark</h1>
-            <p style={{ color: "#888", marginBottom: 20 }}>Testing {TOTAL_IMAGES} AI-generated images from thispersondoesnotexist.com</p>
+        <main className="bm-main">
+            <h1 className="bm-title">🔬 SourceVerify Benchmark</h1>
+            <p className="bm-subtitle">Testing {TOTAL_IMAGES} AI-generated images from thispersondoesnotexist.com</p>
 
-            <div style={{ display: "flex", gap: 12, marginBottom: 20 }}>
+            <div className="bm-actions">
                 <button
                     onClick={runBenchmark}
                     disabled={running}
-                    style={{ padding: "10px 24px", background: running ? "#333" : "#4285f4", color: "#fff", border: "none", borderRadius: 8, cursor: running ? "default" : "pointer", fontFamily: "monospace", fontSize: 14 }}
+                    className={`bm-btn ${running ? "bm-btn--running" : "bm-btn--start"}`}
                 >
                     {running ? `Running... ${current}/${TOTAL_IMAGES}` : "▶ Start Benchmark"}
                 </button>
                 {running && (
                     <button
                         onClick={() => { abortRef.current = true; }}
-                        style={{ padding: "10px 24px", background: "#e74c3c", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer", fontFamily: "monospace", fontSize: 14 }}
+                        className="bm-btn bm-btn--stop"
                     >
                         ⏹ Stop
                     </button>
@@ -143,7 +144,7 @@ export default function BenchmarkPage() {
             </div>
 
             {/* Live Stats */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, marginBottom: 20 }}>
+            <div className="bm-stats">
                 <StatBox label="Tested" value={results.length} color="#4285f4" />
                 <StatBox label="AI ✅" value={aiCount} color="#0f9d58" />
                 <StatBox label="Uncertain ⚠️" value={uncertainCount} color="#f4b400" />
@@ -153,38 +154,38 @@ export default function BenchmarkPage() {
 
             {/* Progress */}
             {running && (
-                <div style={{ background: "#222", borderRadius: 8, height: 6, marginBottom: 20 }}>
-                    <div style={{ width: `${(current / TOTAL_IMAGES) * 100}%`, height: "100%", background: "#4285f4", borderRadius: 8, transition: "width 0.3s" }} />
+                <div className="bm-progress-track">
+                    <div className="bm-progress-fill" style={{ width: `${(current / TOTAL_IMAGES) * 100}%` }} />
                 </div>
             )}
 
             {/* Results Table */}
             {results.length > 0 && (
-                <div style={{ maxHeight: 400, overflow: "auto", marginBottom: 20, border: "1px solid #333", borderRadius: 8 }}>
-                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                <div className="bm-table-wrap">
+                    <table className="bm-table">
                         <thead>
-                            <tr style={{ background: "#222", position: "sticky", top: 0 }}>
-                                <th style={{ padding: "8px", textAlign: "left" }}>#</th>
-                                <th style={{ padding: "8px", textAlign: "left" }}>File</th>
-                                <th style={{ padding: "8px", textAlign: "center" }}>Verdict</th>
-                                <th style={{ padding: "8px", textAlign: "center" }}>AI Score</th>
-                                <th style={{ padding: "8px", textAlign: "center" }}>Confidence</th>
-                                <th style={{ padding: "8px", textAlign: "center" }}>Time</th>
+                            <tr>
+                                <th>#</th>
+                                <th>File</th>
+                                <th className="center">Verdict</th>
+                                <th className="center">AI Score</th>
+                                <th className="center">Confidence</th>
+                                <th className="center">Time</th>
                             </tr>
                         </thead>
                         <tbody>
                             {results.map((r, i) => (
-                                <tr key={r.file} style={{ borderTop: "1px solid #333", background: r.verdict === "real" ? "rgba(231,76,60,0.1)" : r.verdict === "uncertain" ? "rgba(244,180,0,0.1)" : "transparent" }}>
-                                    <td style={{ padding: "6px 8px" }}>{i + 1}</td>
-                                    <td style={{ padding: "6px 8px" }}>{r.file}</td>
-                                    <td style={{ padding: "6px 8px", textAlign: "center" }}>
-                                        <span style={{ color: r.verdict === "ai" ? "#0f9d58" : r.verdict === "uncertain" ? "#f4b400" : "#e74c3c", fontWeight: "bold" }}>
+                                <tr key={r.file} className={r.verdict === "real" ? "bm-row--real" : r.verdict === "uncertain" ? "bm-row--uncertain" : ""}>
+                                    <td>{i + 1}</td>
+                                    <td>{r.file}</td>
+                                    <td className="center">
+                                        <span className={r.verdict === "ai" ? "bm-verdict--ai" : r.verdict === "uncertain" ? "bm-verdict--uncertain" : "bm-verdict--real"}>
                                             {r.verdict === "ai" ? "✅ AI" : r.verdict === "uncertain" ? "⚠️ UNC" : "❌ REAL"}
                                         </span>
                                     </td>
-                                    <td style={{ padding: "6px 8px", textAlign: "center", fontWeight: "bold" }}>{r.aiScore}</td>
-                                    <td style={{ padding: "6px 8px", textAlign: "center" }}>{r.confidence}%</td>
-                                    <td style={{ padding: "6px 8px", textAlign: "center" }}>{r.timeMs}ms</td>
+                                    <td className="center bold">{r.aiScore}</td>
+                                    <td className="center">{r.confidence}%</td>
+                                    <td className="center">{r.timeMs}ms</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -193,7 +194,7 @@ export default function BenchmarkPage() {
             )}
 
             {/* Log */}
-            <div style={{ background: "#111", border: "1px solid #333", borderRadius: 8, padding: 12, maxHeight: 300, overflow: "auto", fontSize: 12, whiteSpace: "pre-wrap" }}>
+            <div className="bm-log">
                 {log.length === 0 ? "Press 'Start Benchmark' to begin testing..." : log.join("\n")}
             </div>
         </main>
@@ -202,9 +203,9 @@ export default function BenchmarkPage() {
 
 function StatBox({ label, value, color }: { label: string; value: string | number; color: string }) {
     return (
-        <div style={{ background: "#222", borderRadius: 8, padding: "12px 16px", textAlign: "center" }}>
-            <div style={{ color, fontSize: 24, fontWeight: "bold" }}>{value}</div>
-            <div style={{ color: "#888", fontSize: 11, marginTop: 4 }}>{label}</div>
+        <div className="bm-stat-box">
+            <div className="bm-stat-value" style={{ color }}>{value}</div>
+            <div className="bm-stat-label">{label}</div>
         </div>
     );
 }
