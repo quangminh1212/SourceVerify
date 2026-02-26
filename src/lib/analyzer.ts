@@ -149,6 +149,528 @@ export async function analyzeMedia(
 }
 
 // ============================
+
+// ============================
+// ADVANCED FORENSIC ANALYZERS
+// ============================
+
+/**
+ * Error Level Analysis (ELA)
+ * Re-compress image at known quality and compare error levels.
+ * AI images show more uniform ELA patterns; real images show varied compression artifacts.
+ * Reference: Krawetz, N. "A Picture's Worth... Digital Image Analysis and Forensics"
+ */
+async function analyzeELA(
+    canvas: HTMLCanvasElement,
+    ctx: CanvasRenderingContext2D
+): Promise<AnalysisSignal> {
+    const quality = 0.75; // Re-compress at 75% quality
+    const dataURL = canvas.toDataURL("image/jpeg", quality);
+
+    return new Promise<AnalysisSignal>((resolve) => {
+        const img2 = new Image();
+        img2.onload = () => {
+            const canvas2 = document.createElement("canvas");
+            canvas2.width = canvas.width;
+            canvas2.height = canvas.height;
+            const ctx2 = canvas2.getContext("2d")!;
+            ctx2.drawImage(img2, 0, 0, canvas.width, canvas.height);
+
+            const orig = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+            const recomp = ctx2.getImageData(0, 0, canvas.width, canvas.height).data;
+
+            // Calculate per-block ELA differences
+            const blockSize = 16;
+            const blocksX = Math.floor(canvas.width / blockSize);
+            const blocksY = Math.floor(canvas.height / blockSize);
+            const blockELA: number[] = [];
+
+            for (let by = 0; by < blocksY; by++) {
+                for (let bx = 0; bx < blocksX; bx++) {
+                    let blockDiff = 0;
+                    let count = 0;
+                    for (let y = by * blockSize; y < (by + 1) * blockSize; y++) {
+                        for (let x = bx * blockSize; x < (bx + 1) * blockSize; x++) {
+                            const idx = (y * canvas.width + x) * 4;
+                            blockDiff += Math.abs(orig[idx] - recomp[idx])
+                                + Math.abs(orig[idx + 1] - recomp[idx + 1])
+                                + Math.abs(orig[idx + 2] - recomp[idx + 2]);
+                            count++;
+                        }
+                    }
+                    blockELA.push(count > 0 ? blockDiff / (count * 3) : 0);
+                }
+            }
+
+            // Calculate coefficient of variation of ELA
+            const mean = blockELA.reduce((a, b) => a + b, 0) / blockELA.length;
+            const variance = blockELA.reduce((a, b) => a + (b - mean) ** 2, 0) / blockELA.length;
+            const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
+
+            // AI: uniform ELA (low CV) → high score
+            // Real: varied ELA (high CV) → low score
+            let score: number;
+            if (cv < 0.25) score = 78;
+            else if (cv < 0.4) score = 62;
+            else if (cv < 0.6) score = 45;
+            else if (cv < 0.9) score = 32;
+            else score = 18;
+
+            resolve({
+                name: "Error Level Analysis",
+                nameKey: "signal.ela",
+                category: "forensic",
+                score,
+                weight: 2.5,
+                description: score > 55
+                    ? "Uniform error levels suggest AI generation — real photos show varied compression artifacts"
+                    : "Error levels vary naturally across the image — consistent with real photography",
+                descriptionKey: score > 55 ? "signal.ela.ai" : "signal.ela.real",
+                icon: "⊞",
+                details: `ELA CV: ${cv.toFixed(3)}, Mean ELA: ${mean.toFixed(2)}, Blocks: ${blockELA.length}. Real photos typically show CV > 0.6.`,
+            });
+        };
+        img2.onerror = () => {
+            resolve({
+                name: "Error Level Analysis",
+                nameKey: "signal.ela",
+                category: "forensic",
+                score: 50,
+                weight: 2.5,
+                description: "ELA analysis could not be performed",
+                descriptionKey: "signal.ela.error",
+                icon: "⊞",
+            });
+        };
+        img2.src = dataURL;
+    });
+}
+
+/**
+ * Benford's Law Analysis
+ * The first-digit distribution of pixel gradients follows Benford's Law in natural images.
+ * AI-generated images deviate from this distribution.
+ * Reference: Pérez-González, F. et al. "Benford's law in image forensics" (2007)
+ */
+function analyzeBenfordsLaw(
+    pixels: Uint8ClampedArray,
+    width: number,
+    height: number
+): AnalysisSignal {
+    // Expected Benford's first-digit distribution
+    const benford = [0, 0.301, 0.176, 0.125, 0.097, 0.079, 0.067, 0.058, 0.051, 0.046];
+
+    const digitCount = new Array(10).fill(0);
+    let totalDigits = 0;
+
+    const step = Math.max(1, Math.floor(Math.min(width, height) / 400));
+
+    for (let y = 0; y < height - 1; y += step) {
+        for (let x = 0; x < width - 1; x += step) {
+            const idx = (y * width + x) * 4;
+            const idxR = (y * width + x + 1) * 4;
+            const idxD = ((y + 1) * width + x) * 4;
+
+            // Compute gradient magnitude
+            const gx = Math.abs(pixels[idx] - pixels[idxR]) + Math.abs(pixels[idx + 1] - pixels[idxR + 1]) + Math.abs(pixels[idx + 2] - pixels[idxR + 2]);
+            const gy = Math.abs(pixels[idx] - pixels[idxD]) + Math.abs(pixels[idx + 1] - pixels[idxD + 1]) + Math.abs(pixels[idx + 2] - pixels[idxD + 2]);
+            const mag = gx + gy;
+
+            if (mag > 0) {
+                const firstDigit = parseInt(String(mag).charAt(0));
+                if (firstDigit >= 1 && firstDigit <= 9) {
+                    digitCount[firstDigit]++;
+                    totalDigits++;
+                }
+            }
+        }
+    }
+
+    // Chi-squared test against Benford's distribution
+    let chiSquared = 0;
+    if (totalDigits > 0) {
+        for (let d = 1; d <= 9; d++) {
+            const observed = digitCount[d] / totalDigits;
+            const expected = benford[d];
+            chiSquared += ((observed - expected) ** 2) / expected;
+        }
+    }
+
+    // Higher chi-squared = more deviation from Benford's = more likely AI
+    let score: number;
+    if (chiSquared < 0.01) score = 25;      // Perfect Benford → very natural
+    else if (chiSquared < 0.03) score = 35;
+    else if (chiSquared < 0.08) score = 48;
+    else if (chiSquared < 0.15) score = 62;
+    else score = 75;                         // Large deviation → AI
+
+    return {
+        name: "Benford's Law",
+        nameKey: "signal.benfordsLaw",
+        category: "statistical",
+        score,
+        weight: 1.8,
+        description: score > 55
+            ? "Pixel gradient distribution deviates from Benford's Law — characteristic of AI generation"
+            : "Pixel gradients follow Benford's Law — consistent with natural images",
+        descriptionKey: score > 55 ? "signal.benford.ai" : "signal.benford.real",
+        icon: "∑",
+        details: `Chi-squared: ${chiSquared.toFixed(4)}, Samples: ${totalDigits}. Natural images typically show χ² < 0.03.`,
+    };
+}
+
+/**
+ * Channel Correlation Analysis
+ * Real photos have specific R-G-B channel correlations due to Bayer filter interpolation.
+ * AI-generated images have different inter-channel relationships.
+ * Reference: Popescu, A. & Farid, H. "Exposing Digital Forgeries in Color Filter Array Interpolated Images"
+ */
+function analyzeChannelCorrelation(pixels: Uint8ClampedArray): AnalysisSignal {
+    const n = pixels.length / 4;
+    const step = Math.max(1, Math.floor(n / 50000));
+
+    let sumR = 0, sumG = 0, sumB = 0;
+    let sumRG = 0, sumRB = 0, sumGB = 0;
+    let sumR2 = 0, sumG2 = 0, sumB2 = 0;
+    let count = 0;
+
+    for (let i = 0; i < pixels.length; i += step * 4) {
+        const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2];
+        sumR += r; sumG += g; sumB += b;
+        sumRG += r * g; sumRB += r * b; sumGB += g * b;
+        sumR2 += r * r; sumG2 += g * g; sumB2 += b * b;
+        count++;
+    }
+
+    // Pearson correlation coefficients
+    const corrRG = (count * sumRG - sumR * sumG) / (Math.sqrt(count * sumR2 - sumR ** 2) * Math.sqrt(count * sumG2 - sumG ** 2) || 1);
+    const corrRB = (count * sumRB - sumR * sumB) / (Math.sqrt(count * sumR2 - sumR ** 2) * Math.sqrt(count * sumB2 - sumB ** 2) || 1);
+    const corrGB = (count * sumGB - sumG * sumB) / (Math.sqrt(count * sumG2 - sumG ** 2) * Math.sqrt(count * sumB2 - sumB ** 2) || 1);
+
+    const avgCorr = (Math.abs(corrRG) + Math.abs(corrRB) + Math.abs(corrGB)) / 3;
+    const corrSpread = Math.max(Math.abs(corrRG), Math.abs(corrRB), Math.abs(corrGB)) - Math.min(Math.abs(corrRG), Math.abs(corrRB), Math.abs(corrGB));
+
+    // AI: very high, uniform correlation (avgCorr > 0.95, low spread)
+    // Real: moderate correlation with more spread between channels
+    let score: number;
+    if (avgCorr > 0.97 && corrSpread < 0.03) score = 72; // Suspiciously uniform
+    else if (avgCorr > 0.93 && corrSpread < 0.06) score = 58;
+    else if (avgCorr < 0.7) score = 30; // Very diverse channels → natural
+    else if (corrSpread > 0.15) score = 35; // Natural asymmetry
+    else score = 45;
+
+    return {
+        name: "Channel Correlation",
+        nameKey: "signal.channelCorrelation",
+        category: "color",
+        score,
+        weight: 1.5,
+        description: score > 55
+            ? "Color channels are unnaturally correlated — typical of AI-generated images"
+            : "Color channels show natural variation — consistent with camera sensor output",
+        descriptionKey: score > 55 ? "signal.channel.ai" : "signal.channel.real",
+        icon: "⊕",
+        details: `R-G: ${corrRG.toFixed(3)}, R-B: ${corrRB.toFixed(3)}, G-B: ${corrGB.toFixed(3)}, Spread: ${corrSpread.toFixed(3)}`,
+    };
+}
+
+/**
+ * Chromatic Aberration Detection
+ * Real camera lenses produce chromatic aberration: color shifts at image edges.
+ * AI-generated images lack this optical artifact.
+ * Reference: Johnson, M. & Farid, H. "Exposing Digital Forgeries Through Chromatic Aberration"
+ */
+function analyzeChromaticAberration(
+    pixels: Uint8ClampedArray,
+    width: number,
+    height: number
+): AnalysisSignal {
+    // Measure edge-shift between R and B channels at image borders
+    const borderWidth = Math.max(20, Math.floor(Math.min(width, height) * 0.05));
+    let totalShift = 0;
+    let shiftCount = 0;
+
+    const step = Math.max(2, Math.floor(borderWidth / 10));
+
+    // Sample edges on all 4 borders
+    const checkShift = (x: number, y: number) => {
+        if (x < 1 || x >= width - 1 || y < 1 || y >= height - 1) return;
+        const idx = (y * width + x) * 4;
+        const idxR = (y * width + x + 1) * 4;
+
+        // Edge in R vs edge in B channel
+        const edgeR = Math.abs(pixels[idx] - pixels[idxR]);
+        const edgeB = Math.abs(pixels[idx + 2] - pixels[idxR + 2]);
+
+        totalShift += Math.abs(edgeR - edgeB);
+        shiftCount++;
+    };
+
+    // Top and bottom borders
+    for (let x = 0; x < width; x += step) {
+        for (let y = 0; y < borderWidth; y += step) checkShift(x, y);
+        for (let y = height - borderWidth; y < height; y += step) checkShift(x, y);
+    }
+    // Left and right borders
+    for (let y = 0; y < height; y += step) {
+        for (let x = 0; x < borderWidth; x += step) checkShift(x, y);
+        for (let x = width - borderWidth; x < width; x += step) checkShift(x, y);
+    }
+
+    const avgShift = shiftCount > 0 ? totalShift / shiftCount : 0;
+
+    // Real cameras: noticeable chromatic aberration at edges (avgShift > 3)
+    // AI: perfect color alignment (avgShift < 1.5)
+    let score: number;
+    if (avgShift < 1.0) score = 68;     // No aberration → likely AI
+    else if (avgShift < 2.0) score = 55;
+    else if (avgShift < 4.0) score = 40;
+    else if (avgShift < 8.0) score = 28; // Natural aberration
+    else score = 18;                     // Strong aberration → real lens
+
+    return {
+        name: "Chromatic Aberration",
+        nameKey: "signal.chromaticAberration",
+        category: "optics",
+        score,
+        weight: 1.3,
+        description: score > 55
+            ? "No chromatic aberration detected — real cameras produce color fringing at edges"
+            : "Chromatic aberration present — consistent with real camera optics",
+        descriptionKey: score > 55 ? "signal.chromatic.ai" : "signal.chromatic.real",
+        icon: "◐",
+        details: `Avg R-B shift: ${avgShift.toFixed(2)}, Samples: ${shiftCount}. Real lenses typically show shift > 3.0.`,
+    };
+}
+
+/**
+ * Gradient Smoothness Analysis
+ * AI-generated images have unnaturally smooth gradients — lacking micro-texture.
+ * Real photos have subtle noise and texture variations even in smooth areas.
+ * Reference: Nataraj, L. et al. "Detecting GAN generated Fake Images using Co-occurrence Matrices"
+ */
+function analyzeGradientSmoothness(
+    pixels: Uint8ClampedArray,
+    width: number,
+    height: number
+): AnalysisSignal {
+    // Identify smooth gradient areas and measure micro-texture within them
+    const blockSize = 32;
+    const blocksX = Math.floor(width / blockSize);
+    const blocksY = Math.floor(height / blockSize);
+
+    let smoothBlockCount = 0;
+    let microTextureInSmooth = 0;
+
+    const step = Math.max(1, Math.floor(blocksX * blocksY / 200));
+
+    for (let by = 0; by < blocksY; by += step) {
+        for (let bx = 0; bx < blocksX; bx += step) {
+            // Check if block is a smooth gradient
+            let gradSum = 0;
+            let microNoise = 0;
+            let count = 0;
+
+            for (let y = by * blockSize; y < (by + 1) * blockSize - 1; y++) {
+                for (let x = bx * blockSize; x < (bx + 1) * blockSize - 1; x++) {
+                    const idx = (y * width + x) * 4;
+                    const idxR = (y * width + x + 1) * 4;
+                    const idxD = ((y + 1) * width + x) * 4;
+
+                    const gray = pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
+                    const grayR = pixels[idxR] * 0.299 + pixels[idxR + 1] * 0.587 + pixels[idxR + 2] * 0.114;
+                    const grayD = pixels[idxD] * 0.299 + pixels[idxD + 1] * 0.587 + pixels[idxD + 2] * 0.114;
+
+                    gradSum += Math.abs(grayR - gray) + Math.abs(grayD - gray);
+
+                    // Second-order difference (curvature) — measures micro-texture
+                    if (x < (bx + 1) * blockSize - 2) {
+                        const idxR2 = (y * width + x + 2) * 4;
+                        const grayR2 = pixels[idxR2] * 0.299 + pixels[idxR2 + 1] * 0.587 + pixels[idxR2 + 2] * 0.114;
+                        microNoise += Math.abs(2 * grayR - gray - grayR2);
+                    }
+                    count++;
+                }
+            }
+
+            const avgGrad = count > 0 ? gradSum / count : 0;
+
+            // If block is a smooth region (low first-order gradient)
+            if (avgGrad < 5 && count > 0) {
+                smoothBlockCount++;
+                microTextureInSmooth += microNoise / count;
+            }
+        }
+    }
+
+    // AI images: smooth areas lack micro-texture (very low second-order noise)
+    // Real photos: smooth areas still have sensor noise (noticeable micro-texture)
+    const avgMicro = smoothBlockCount > 0 ? microTextureInSmooth / smoothBlockCount : 0;
+
+    let score: number;
+    if (smoothBlockCount === 0) {
+        score = 40; // No smooth areas to analyze
+    } else if (avgMicro < 0.3) {
+        score = 75; // Suspiciously smooth gradients → AI
+    } else if (avgMicro < 0.6) {
+        score = 60;
+    } else if (avgMicro < 1.2) {
+        score = 42;
+    } else {
+        score = 22; // Rich micro-texture → natural sensor noise
+    }
+
+    return {
+        name: "Gradient Smoothness",
+        nameKey: "signal.gradientSmoothness",
+        category: "texture",
+        score,
+        weight: 1.8,
+        description: score > 55
+            ? "Gradients are unnaturally smooth — AI images lack micro-texture in smooth regions"
+            : "Smooth regions contain natural micro-texture — consistent with sensor noise",
+        descriptionKey: score > 55 ? "signal.gradient.ai" : "signal.gradient.real",
+        icon: "▤",
+        details: `Smooth blocks: ${smoothBlockCount}, Avg micro-texture: ${avgMicro.toFixed(3)}. Real photos typically show > 0.6.`,
+    };
+}
+
+/**
+ * JPEG Quantization Table Analysis
+ * Real cameras embed specific quantization tables. AI tools use standard/lib defaults.
+ * Reference: Fan, W. & Farid, H. "JPEG Anti-Forensics" & Farid, H. "Exposing Digital Forgeries"
+ */
+async function analyzeJPEGQuantization(file: File): Promise<AnalysisSignal> {
+    if (!file.type.includes("jpeg") && !file.type.includes("jpg")) {
+        // Non-JPEG: check if file has unusual format characteristics
+        let score = 50;
+        let desc = "Non-JPEG format — quantization analysis not applicable";
+        if (file.type === "image/png") {
+            // PNG from AI tools: check if suspiciously high color depth
+            score = 52;
+            desc = "PNG format — commonly used by AI tools and screenshots alike";
+        }
+        return {
+            name: "JPEG Quantization",
+            nameKey: "signal.jpegQuantization",
+            category: "file",
+            score,
+            weight: 1.0,
+            description: desc,
+            descriptionKey: "signal.quantization.nonjpeg",
+            icon: "▦",
+        };
+    }
+
+    try {
+        const buffer = await file.slice(0, 65536).arrayBuffer();
+        const view = new DataView(buffer);
+
+        // Parse JPEG markers looking for DQT (Define Quantization Table) marker 0xFFDB
+        let offset = 2; // Skip SOI marker
+        let foundDQT = false;
+        let qtableSum = 0;
+        let qtableCount = 0;
+        let hasMultipleTables = false;
+
+        while (offset < view.byteLength - 4) {
+            const marker = view.getUint16(offset);
+
+            if (marker === 0xffdb) {
+                // DQT marker found
+                const length = view.getUint16(offset + 2);
+                const tableStart = offset + 4;
+
+                // Read first table
+                if (!foundDQT) {
+                    foundDQT = true;
+                    const precision = view.getUint8(tableStart) >> 4;
+                    const tableSize = precision === 0 ? 64 : 128;
+
+                    for (let i = 1; i <= Math.min(tableSize, length - 3); i++) {
+                        if (tableStart + i < view.byteLength) {
+                            qtableSum += view.getUint8(tableStart + i);
+                            qtableCount++;
+                        }
+                    }
+
+                    // Check for second table (chrominance)
+                    if (length > tableSize + 3) {
+                        hasMultipleTables = true;
+                    }
+                }
+
+                offset += 2 + length;
+            } else if ((marker & 0xff00) !== 0xff00) {
+                break;
+            } else if (marker === 0xffda) {
+                break; // Start of Scan — stop
+            } else {
+                const segLen = view.getUint16(offset + 2);
+                offset += 2 + segLen;
+            }
+        }
+
+        if (!foundDQT || qtableCount === 0) {
+            return {
+                name: "JPEG Quantization",
+                nameKey: "signal.jpegQuantization",
+                category: "file",
+                score: 50,
+                weight: 1.0,
+                description: "Could not extract quantization table",
+                descriptionKey: "signal.quantization.nodata",
+                icon: "▦",
+            };
+        }
+
+        const avgQValue = qtableSum / qtableCount;
+
+        // Standard "quality 75" tables have avg ~15-25
+        // Camera-specific tables vary more
+        // AI tools using libjpeg defaults cluster around specific values
+        let score: number;
+
+        // Very standard quantization → likely AI/software
+        if (avgQValue >= 12 && avgQValue <= 18 && !hasMultipleTables) {
+            score = 62; // Standard lib default
+        } else if (avgQValue < 5) {
+            score = 45; // Very high quality — could be either
+        } else if (avgQValue > 40) {
+            score = 40; // Heavy compression — probably re-saved
+        } else if (hasMultipleTables) {
+            score = 35; // Separate luma/chroma tables → more likely real camera
+        } else {
+            score = 48;
+        }
+
+        return {
+            name: "JPEG Quantization",
+            nameKey: "signal.jpegQuantization",
+            category: "file",
+            score,
+            weight: 1.2,
+            description: score > 55
+                ? "JPEG quantization table matches common AI/software defaults"
+                : "JPEG quantization table appears camera-specific or non-standard",
+            descriptionKey: score > 55 ? "signal.quantization.ai" : "signal.quantization.real",
+            icon: "▦",
+            details: `Avg Q-value: ${avgQValue.toFixed(1)}, Table entries: ${qtableCount}, Multiple tables: ${hasMultipleTables ? "Yes" : "No"}`,
+        };
+    } catch {
+        return {
+            name: "JPEG Quantization",
+            nameKey: "signal.jpegQuantization",
+            category: "file",
+            score: 50,
+            weight: 1.0,
+            description: "JPEG analysis encountered an error",
+            descriptionKey: "signal.quantization.error",
+            icon: "▦",
+        };
+    }
+}
+
 // IMAGE ANALYSIS
 // ============================
 
@@ -959,526 +1481,6 @@ function analyzeVideoSpecific(
     };
 }
 
-// ============================
-// ADVANCED FORENSIC ANALYZERS
-// ============================
-
-/**
- * Error Level Analysis (ELA)
- * Re-compress image at known quality and compare error levels.
- * AI images show more uniform ELA patterns; real images show varied compression artifacts.
- * Reference: Krawetz, N. "A Picture's Worth... Digital Image Analysis and Forensics"
- */
-async function analyzeELA(
-    canvas: HTMLCanvasElement,
-    ctx: CanvasRenderingContext2D
-): Promise<AnalysisSignal> {
-    const quality = 0.75; // Re-compress at 75% quality
-    const dataURL = canvas.toDataURL("image/jpeg", quality);
-
-    return new Promise<AnalysisSignal>((resolve) => {
-        const img2 = new Image();
-        img2.onload = () => {
-            const canvas2 = document.createElement("canvas");
-            canvas2.width = canvas.width;
-            canvas2.height = canvas.height;
-            const ctx2 = canvas2.getContext("2d")!;
-            ctx2.drawImage(img2, 0, 0, canvas.width, canvas.height);
-
-            const orig = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-            const recomp = ctx2.getImageData(0, 0, canvas.width, canvas.height).data;
-
-            // Calculate per-block ELA differences
-            const blockSize = 16;
-            const blocksX = Math.floor(canvas.width / blockSize);
-            const blocksY = Math.floor(canvas.height / blockSize);
-            const blockELA: number[] = [];
-
-            for (let by = 0; by < blocksY; by++) {
-                for (let bx = 0; bx < blocksX; bx++) {
-                    let blockDiff = 0;
-                    let count = 0;
-                    for (let y = by * blockSize; y < (by + 1) * blockSize; y++) {
-                        for (let x = bx * blockSize; x < (bx + 1) * blockSize; x++) {
-                            const idx = (y * canvas.width + x) * 4;
-                            blockDiff += Math.abs(orig[idx] - recomp[idx])
-                                + Math.abs(orig[idx + 1] - recomp[idx + 1])
-                                + Math.abs(orig[idx + 2] - recomp[idx + 2]);
-                            count++;
-                        }
-                    }
-                    blockELA.push(count > 0 ? blockDiff / (count * 3) : 0);
-                }
-            }
-
-            // Calculate coefficient of variation of ELA
-            const mean = blockELA.reduce((a, b) => a + b, 0) / blockELA.length;
-            const variance = blockELA.reduce((a, b) => a + (b - mean) ** 2, 0) / blockELA.length;
-            const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
-
-            // AI: uniform ELA (low CV) → high score
-            // Real: varied ELA (high CV) → low score
-            let score: number;
-            if (cv < 0.25) score = 78;
-            else if (cv < 0.4) score = 62;
-            else if (cv < 0.6) score = 45;
-            else if (cv < 0.9) score = 32;
-            else score = 18;
-
-            resolve({
-                name: "Error Level Analysis",
-                nameKey: "signal.ela",
-                category: "forensic",
-                score,
-                weight: 2.5,
-                description: score > 55
-                    ? "Uniform error levels suggest AI generation — real photos show varied compression artifacts"
-                    : "Error levels vary naturally across the image — consistent with real photography",
-                descriptionKey: score > 55 ? "signal.ela.ai" : "signal.ela.real",
-                icon: "⊞",
-                details: `ELA CV: ${cv.toFixed(3)}, Mean ELA: ${mean.toFixed(2)}, Blocks: ${blockELA.length}. Real photos typically show CV > 0.6.`,
-            });
-        };
-        img2.onerror = () => {
-            resolve({
-                name: "Error Level Analysis",
-                nameKey: "signal.ela",
-                category: "forensic",
-                score: 50,
-                weight: 2.5,
-                description: "ELA analysis could not be performed",
-                descriptionKey: "signal.ela.error",
-                icon: "⊞",
-            });
-        };
-        img2.src = dataURL;
-    });
-}
-
-/**
- * Benford's Law Analysis
- * The first-digit distribution of pixel gradients follows Benford's Law in natural images.
- * AI-generated images deviate from this distribution.
- * Reference: Pérez-González, F. et al. "Benford's law in image forensics" (2007)
- */
-function analyzeBenfordsLaw(
-    pixels: Uint8ClampedArray,
-    width: number,
-    height: number
-): AnalysisSignal {
-    // Expected Benford's first-digit distribution
-    const benford = [0, 0.301, 0.176, 0.125, 0.097, 0.079, 0.067, 0.058, 0.051, 0.046];
-
-    const digitCount = new Array(10).fill(0);
-    let totalDigits = 0;
-
-    const step = Math.max(1, Math.floor(Math.min(width, height) / 400));
-
-    for (let y = 0; y < height - 1; y += step) {
-        for (let x = 0; x < width - 1; x += step) {
-            const idx = (y * width + x) * 4;
-            const idxR = (y * width + x + 1) * 4;
-            const idxD = ((y + 1) * width + x) * 4;
-
-            // Compute gradient magnitude
-            const gx = Math.abs(pixels[idx] - pixels[idxR]) + Math.abs(pixels[idx + 1] - pixels[idxR + 1]) + Math.abs(pixels[idx + 2] - pixels[idxR + 2]);
-            const gy = Math.abs(pixels[idx] - pixels[idxD]) + Math.abs(pixels[idx + 1] - pixels[idxD + 1]) + Math.abs(pixels[idx + 2] - pixels[idxD + 2]);
-            const mag = gx + gy;
-
-            if (mag > 0) {
-                const firstDigit = parseInt(String(mag).charAt(0));
-                if (firstDigit >= 1 && firstDigit <= 9) {
-                    digitCount[firstDigit]++;
-                    totalDigits++;
-                }
-            }
-        }
-    }
-
-    // Chi-squared test against Benford's distribution
-    let chiSquared = 0;
-    if (totalDigits > 0) {
-        for (let d = 1; d <= 9; d++) {
-            const observed = digitCount[d] / totalDigits;
-            const expected = benford[d];
-            chiSquared += ((observed - expected) ** 2) / expected;
-        }
-    }
-
-    // Higher chi-squared = more deviation from Benford's = more likely AI
-    let score: number;
-    if (chiSquared < 0.01) score = 25;      // Perfect Benford → very natural
-    else if (chiSquared < 0.03) score = 35;
-    else if (chiSquared < 0.08) score = 48;
-    else if (chiSquared < 0.15) score = 62;
-    else score = 75;                         // Large deviation → AI
-
-    return {
-        name: "Benford's Law",
-        nameKey: "signal.benfordsLaw",
-        category: "statistical",
-        score,
-        weight: 1.8,
-        description: score > 55
-            ? "Pixel gradient distribution deviates from Benford's Law — characteristic of AI generation"
-            : "Pixel gradients follow Benford's Law — consistent with natural images",
-        descriptionKey: score > 55 ? "signal.benford.ai" : "signal.benford.real",
-        icon: "∑",
-        details: `Chi-squared: ${chiSquared.toFixed(4)}, Samples: ${totalDigits}. Natural images typically show χ² < 0.03.`,
-    };
-}
-
-/**
- * Channel Correlation Analysis
- * Real photos have specific R-G-B channel correlations due to Bayer filter interpolation.
- * AI-generated images have different inter-channel relationships.
- * Reference: Popescu, A. & Farid, H. "Exposing Digital Forgeries in Color Filter Array Interpolated Images"
- */
-function analyzeChannelCorrelation(pixels: Uint8ClampedArray): AnalysisSignal {
-    const n = pixels.length / 4;
-    const step = Math.max(1, Math.floor(n / 50000));
-
-    let sumR = 0, sumG = 0, sumB = 0;
-    let sumRG = 0, sumRB = 0, sumGB = 0;
-    let sumR2 = 0, sumG2 = 0, sumB2 = 0;
-    let count = 0;
-
-    for (let i = 0; i < pixels.length; i += step * 4) {
-        const r = pixels[i], g = pixels[i + 1], b = pixels[i + 2];
-        sumR += r; sumG += g; sumB += b;
-        sumRG += r * g; sumRB += r * b; sumGB += g * b;
-        sumR2 += r * r; sumG2 += g * g; sumB2 += b * b;
-        count++;
-    }
-
-    // Pearson correlation coefficients
-    const corrRG = (count * sumRG - sumR * sumG) / (Math.sqrt(count * sumR2 - sumR ** 2) * Math.sqrt(count * sumG2 - sumG ** 2) || 1);
-    const corrRB = (count * sumRB - sumR * sumB) / (Math.sqrt(count * sumR2 - sumR ** 2) * Math.sqrt(count * sumB2 - sumB ** 2) || 1);
-    const corrGB = (count * sumGB - sumG * sumB) / (Math.sqrt(count * sumG2 - sumG ** 2) * Math.sqrt(count * sumB2 - sumB ** 2) || 1);
-
-    const avgCorr = (Math.abs(corrRG) + Math.abs(corrRB) + Math.abs(corrGB)) / 3;
-    const corrSpread = Math.max(Math.abs(corrRG), Math.abs(corrRB), Math.abs(corrGB)) - Math.min(Math.abs(corrRG), Math.abs(corrRB), Math.abs(corrGB));
-
-    // AI: very high, uniform correlation (avgCorr > 0.95, low spread)
-    // Real: moderate correlation with more spread between channels
-    let score: number;
-    if (avgCorr > 0.97 && corrSpread < 0.03) score = 72; // Suspiciously uniform
-    else if (avgCorr > 0.93 && corrSpread < 0.06) score = 58;
-    else if (avgCorr < 0.7) score = 30; // Very diverse channels → natural
-    else if (corrSpread > 0.15) score = 35; // Natural asymmetry
-    else score = 45;
-
-    return {
-        name: "Channel Correlation",
-        nameKey: "signal.channelCorrelation",
-        category: "color",
-        score,
-        weight: 1.5,
-        description: score > 55
-            ? "Color channels are unnaturally correlated — typical of AI-generated images"
-            : "Color channels show natural variation — consistent with camera sensor output",
-        descriptionKey: score > 55 ? "signal.channel.ai" : "signal.channel.real",
-        icon: "⊕",
-        details: `R-G: ${corrRG.toFixed(3)}, R-B: ${corrRB.toFixed(3)}, G-B: ${corrGB.toFixed(3)}, Spread: ${corrSpread.toFixed(3)}`,
-    };
-}
-
-/**
- * Chromatic Aberration Detection
- * Real camera lenses produce chromatic aberration: color shifts at image edges.
- * AI-generated images lack this optical artifact.
- * Reference: Johnson, M. & Farid, H. "Exposing Digital Forgeries Through Chromatic Aberration"
- */
-function analyzeChromaticAberration(
-    pixels: Uint8ClampedArray,
-    width: number,
-    height: number
-): AnalysisSignal {
-    // Measure edge-shift between R and B channels at image borders
-    const borderWidth = Math.max(20, Math.floor(Math.min(width, height) * 0.05));
-    let totalShift = 0;
-    let shiftCount = 0;
-
-    const step = Math.max(2, Math.floor(borderWidth / 10));
-
-    // Sample edges on all 4 borders
-    const checkShift = (x: number, y: number) => {
-        if (x < 1 || x >= width - 1 || y < 1 || y >= height - 1) return;
-        const idx = (y * width + x) * 4;
-        const idxR = (y * width + x + 1) * 4;
-
-        // Edge in R vs edge in B channel
-        const edgeR = Math.abs(pixels[idx] - pixels[idxR]);
-        const edgeB = Math.abs(pixels[idx + 2] - pixels[idxR + 2]);
-
-        totalShift += Math.abs(edgeR - edgeB);
-        shiftCount++;
-    };
-
-    // Top and bottom borders
-    for (let x = 0; x < width; x += step) {
-        for (let y = 0; y < borderWidth; y += step) checkShift(x, y);
-        for (let y = height - borderWidth; y < height; y += step) checkShift(x, y);
-    }
-    // Left and right borders
-    for (let y = 0; y < height; y += step) {
-        for (let x = 0; x < borderWidth; x += step) checkShift(x, y);
-        for (let x = width - borderWidth; x < width; x += step) checkShift(x, y);
-    }
-
-    const avgShift = shiftCount > 0 ? totalShift / shiftCount : 0;
-
-    // Real cameras: noticeable chromatic aberration at edges (avgShift > 3)
-    // AI: perfect color alignment (avgShift < 1.5)
-    let score: number;
-    if (avgShift < 1.0) score = 68;     // No aberration → likely AI
-    else if (avgShift < 2.0) score = 55;
-    else if (avgShift < 4.0) score = 40;
-    else if (avgShift < 8.0) score = 28; // Natural aberration
-    else score = 18;                     // Strong aberration → real lens
-
-    return {
-        name: "Chromatic Aberration",
-        nameKey: "signal.chromaticAberration",
-        category: "optics",
-        score,
-        weight: 1.3,
-        description: score > 55
-            ? "No chromatic aberration detected — real cameras produce color fringing at edges"
-            : "Chromatic aberration present — consistent with real camera optics",
-        descriptionKey: score > 55 ? "signal.chromatic.ai" : "signal.chromatic.real",
-        icon: "◐",
-        details: `Avg R-B shift: ${avgShift.toFixed(2)}, Samples: ${shiftCount}. Real lenses typically show shift > 3.0.`,
-    };
-}
-
-/**
- * Gradient Smoothness Analysis
- * AI-generated images have unnaturally smooth gradients — lacking micro-texture.
- * Real photos have subtle noise and texture variations even in smooth areas.
- * Reference: Nataraj, L. et al. "Detecting GAN generated Fake Images using Co-occurrence Matrices"
- */
-function analyzeGradientSmoothness(
-    pixels: Uint8ClampedArray,
-    width: number,
-    height: number
-): AnalysisSignal {
-    // Identify smooth gradient areas and measure micro-texture within them
-    const blockSize = 32;
-    const blocksX = Math.floor(width / blockSize);
-    const blocksY = Math.floor(height / blockSize);
-
-    let smoothBlockCount = 0;
-    let microTextureInSmooth = 0;
-
-    const step = Math.max(1, Math.floor(blocksX * blocksY / 200));
-
-    for (let by = 0; by < blocksY; by += step) {
-        for (let bx = 0; bx < blocksX; bx += step) {
-            // Check if block is a smooth gradient
-            let gradSum = 0;
-            let microNoise = 0;
-            let count = 0;
-
-            for (let y = by * blockSize; y < (by + 1) * blockSize - 1; y++) {
-                for (let x = bx * blockSize; x < (bx + 1) * blockSize - 1; x++) {
-                    const idx = (y * width + x) * 4;
-                    const idxR = (y * width + x + 1) * 4;
-                    const idxD = ((y + 1) * width + x) * 4;
-
-                    const gray = pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-                    const grayR = pixels[idxR] * 0.299 + pixels[idxR + 1] * 0.587 + pixels[idxR + 2] * 0.114;
-                    const grayD = pixels[idxD] * 0.299 + pixels[idxD + 1] * 0.587 + pixels[idxD + 2] * 0.114;
-
-                    gradSum += Math.abs(grayR - gray) + Math.abs(grayD - gray);
-
-                    // Second-order difference (curvature) — measures micro-texture
-                    if (x < (bx + 1) * blockSize - 2) {
-                        const idxR2 = (y * width + x + 2) * 4;
-                        const grayR2 = pixels[idxR2] * 0.299 + pixels[idxR2 + 1] * 0.587 + pixels[idxR2 + 2] * 0.114;
-                        microNoise += Math.abs(2 * grayR - gray - grayR2);
-                    }
-                    count++;
-                }
-            }
-
-            const avgGrad = count > 0 ? gradSum / count : 0;
-
-            // If block is a smooth region (low first-order gradient)
-            if (avgGrad < 5 && count > 0) {
-                smoothBlockCount++;
-                microTextureInSmooth += microNoise / count;
-            }
-        }
-    }
-
-    // AI images: smooth areas lack micro-texture (very low second-order noise)
-    // Real photos: smooth areas still have sensor noise (noticeable micro-texture)
-    const avgMicro = smoothBlockCount > 0 ? microTextureInSmooth / smoothBlockCount : 0;
-
-    let score: number;
-    if (smoothBlockCount === 0) {
-        score = 40; // No smooth areas to analyze
-    } else if (avgMicro < 0.3) {
-        score = 75; // Suspiciously smooth gradients → AI
-    } else if (avgMicro < 0.6) {
-        score = 60;
-    } else if (avgMicro < 1.2) {
-        score = 42;
-    } else {
-        score = 22; // Rich micro-texture → natural sensor noise
-    }
-
-    return {
-        name: "Gradient Smoothness",
-        nameKey: "signal.gradientSmoothness",
-        category: "texture",
-        score,
-        weight: 1.8,
-        description: score > 55
-            ? "Gradients are unnaturally smooth — AI images lack micro-texture in smooth regions"
-            : "Smooth regions contain natural micro-texture — consistent with sensor noise",
-        descriptionKey: score > 55 ? "signal.gradient.ai" : "signal.gradient.real",
-        icon: "▤",
-        details: `Smooth blocks: ${smoothBlockCount}, Avg micro-texture: ${avgMicro.toFixed(3)}. Real photos typically show > 0.6.`,
-    };
-}
-
-/**
- * JPEG Quantization Table Analysis
- * Real cameras embed specific quantization tables. AI tools use standard/lib defaults.
- * Reference: Fan, W. & Farid, H. "JPEG Anti-Forensics" & Farid, H. "Exposing Digital Forgeries"
- */
-async function analyzeJPEGQuantization(file: File): Promise<AnalysisSignal> {
-    if (!file.type.includes("jpeg") && !file.type.includes("jpg")) {
-        // Non-JPEG: check if file has unusual format characteristics
-        let score = 50;
-        let desc = "Non-JPEG format — quantization analysis not applicable";
-        if (file.type === "image/png") {
-            // PNG from AI tools: check if suspiciously high color depth
-            score = 52;
-            desc = "PNG format — commonly used by AI tools and screenshots alike";
-        }
-        return {
-            name: "JPEG Quantization",
-            nameKey: "signal.jpegQuantization",
-            category: "file",
-            score,
-            weight: 1.0,
-            description: desc,
-            descriptionKey: "signal.quantization.nonjpeg",
-            icon: "▦",
-        };
-    }
-
-    try {
-        const buffer = await file.slice(0, 65536).arrayBuffer();
-        const view = new DataView(buffer);
-
-        // Parse JPEG markers looking for DQT (Define Quantization Table) marker 0xFFDB
-        let offset = 2; // Skip SOI marker
-        let foundDQT = false;
-        let qtableSum = 0;
-        let qtableCount = 0;
-        let hasMultipleTables = false;
-
-        while (offset < view.byteLength - 4) {
-            const marker = view.getUint16(offset);
-
-            if (marker === 0xffdb) {
-                // DQT marker found
-                const length = view.getUint16(offset + 2);
-                const tableStart = offset + 4;
-
-                // Read first table
-                if (!foundDQT) {
-                    foundDQT = true;
-                    const precision = view.getUint8(tableStart) >> 4;
-                    const tableSize = precision === 0 ? 64 : 128;
-
-                    for (let i = 1; i <= Math.min(tableSize, length - 3); i++) {
-                        if (tableStart + i < view.byteLength) {
-                            qtableSum += view.getUint8(tableStart + i);
-                            qtableCount++;
-                        }
-                    }
-
-                    // Check for second table (chrominance)
-                    if (length > tableSize + 3) {
-                        hasMultipleTables = true;
-                    }
-                }
-
-                offset += 2 + length;
-            } else if ((marker & 0xff00) !== 0xff00) {
-                break;
-            } else if (marker === 0xffda) {
-                break; // Start of Scan — stop
-            } else {
-                const segLen = view.getUint16(offset + 2);
-                offset += 2 + segLen;
-            }
-        }
-
-        if (!foundDQT || qtableCount === 0) {
-            return {
-                name: "JPEG Quantization",
-                nameKey: "signal.jpegQuantization",
-                category: "file",
-                score: 50,
-                weight: 1.0,
-                description: "Could not extract quantization table",
-                descriptionKey: "signal.quantization.nodata",
-                icon: "▦",
-            };
-        }
-
-        const avgQValue = qtableSum / qtableCount;
-
-        // Standard "quality 75" tables have avg ~15-25
-        // Camera-specific tables vary more
-        // AI tools using libjpeg defaults cluster around specific values
-        let score: number;
-
-        // Very standard quantization → likely AI/software
-        if (avgQValue >= 12 && avgQValue <= 18 && !hasMultipleTables) {
-            score = 62; // Standard lib default
-        } else if (avgQValue < 5) {
-            score = 45; // Very high quality — could be either
-        } else if (avgQValue > 40) {
-            score = 40; // Heavy compression — probably re-saved
-        } else if (hasMultipleTables) {
-            score = 35; // Separate luma/chroma tables → more likely real camera
-        } else {
-            score = 48;
-        }
-
-        return {
-            name: "JPEG Quantization",
-            nameKey: "signal.jpegQuantization",
-            category: "file",
-            score,
-            weight: 1.2,
-            description: score > 55
-                ? "JPEG quantization table matches common AI/software defaults"
-                : "JPEG quantization table appears camera-specific or non-standard",
-            descriptionKey: score > 55 ? "signal.quantization.ai" : "signal.quantization.real",
-            icon: "▦",
-            details: `Avg Q-value: ${avgQValue.toFixed(1)}, Table entries: ${qtableCount}, Multiple tables: ${hasMultipleTables ? "Yes" : "No"}`,
-        };
-    } catch {
-        return {
-            name: "JPEG Quantization",
-            nameKey: "signal.jpegQuantization",
-            category: "file",
-            score: 50,
-            weight: 1.0,
-            description: "JPEG analysis encountered an error",
-            descriptionKey: "signal.quantization.error",
-            icon: "▦",
-        };
-    }
-}
 
 // ============================
 // UTILITIES
