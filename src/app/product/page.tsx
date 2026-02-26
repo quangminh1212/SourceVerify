@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function ProductPage() {
@@ -58,17 +58,7 @@ export default function ProductPage() {
                 </div>
             </div>
 
-            <footer className="relative z-10 footer-divider">
-                <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
-                    <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                        <Link href="/" className="flex items-center gap-2">
-                            <Image src="/logo.png" alt="SourceVerify" width={18} height={18} />
-                            <span className="text-xs font-semibold text-[--color-text-primary]">SourceVerify</span>
-                        </Link>
-                        <p className="text-[11px] text-[--color-text-muted]">{t("footer.copyright", { year: new Date().getFullYear().toString() })}</p>
-                    </div>
-                </div>
-            </footer>
+            <Footer />
         </main>
     );
 }
