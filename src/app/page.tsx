@@ -304,18 +304,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Signals */}
-            <div className="signals-list">
-              {result.signals.map(signal => (
-                <div key={signal.name} className="signal-row">
-                  <MiniGauge score={signal.score} />
-                  <div className="signal-info">
-                    <span className="signal-name">{t(signal.nameKey) || signal.name}</span>
-                    <span className="signal-desc">{t(signal.descriptionKey) || signal.description}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
+            {/* Radar Chart + Signal Details */}
+            <RadarChart signals={result.signals} t={t} />
 
             {/* Metadata */}
             {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
@@ -376,25 +366,84 @@ export default function Home() {
     </main>
   );
 }
-
-function MiniGauge({ score }: { score: number }) {
-  const size = 36, sw = 3, r = (size - sw) / 2, c = 2 * Math.PI * r;
-  const offset = c - (score / 100) * c;
+function RadarChart({ signals, t }: { signals: import("@/lib/analyzer").AnalysisSignal[]; t: (k: string) => string }) {
   const [on, setOn] = useState(false);
-  useEffect(() => { const t = setTimeout(() => setOn(true), 200); return () => clearTimeout(t); }, []);
-  const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
+  useEffect(() => { const timer = setTimeout(() => setOn(true), 300); return () => clearTimeout(timer); }, []);
+
+  const size = 300, cx = size / 2, cy = size / 2, maxR = 110;
+  const n = signals.length;
+  const levels = [20, 40, 60, 80, 100];
+
+  const angleFor = (i: number) => (Math.PI * 2 * i) / n - Math.PI / 2;
+  const pointAt = (i: number, val: number) => {
+    const a = angleFor(i), r = (val / 100) * maxR;
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a) };
+  };
+
+  const gridPolygons = levels.map(lv =>
+    Array.from({ length: n }, (_, i) => pointAt(i, lv)).map(p => `${p.x},${p.y}`).join(" ")
+  );
+
+  const dataPoints = signals.map((s, i) => pointAt(i, on ? s.score : 0));
+  const dataPolygon = dataPoints.map(p => `${p.x},${p.y}`).join(" ");
+
+  const labelR = maxR + 24;
 
   return (
-    <div className="mini-gauge">
-      <svg width={size} height={size} className="score-ring" aria-hidden="true">
-        <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" className="score-ring-bg" />
-        <circle cx={size / 2} cy={size / 2} r={r} strokeWidth={sw} fill="none" stroke={color}
-          strokeDasharray={c} strokeDashoffset={on ? offset : c} strokeLinecap="round" className="score-ring-fill" />
-      </svg>
-      <span className="mini-gauge-label" style={{ color }}>{score}</span>
+    <div className="radar-section">
+      <div className="radar-container">
+        <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="radar-svg">
+          {/* Grid levels */}
+          {gridPolygons.map((pts, i) => (
+            <polygon key={i} points={pts} fill="none" stroke="var(--color-border-subtle)" strokeWidth="0.7" opacity={0.5 + i * 0.1} />
+          ))}
+          {/* Axis lines */}
+          {signals.map((_, i) => {
+            const end = pointAt(i, 100);
+            return <line key={i} x1={cx} y1={cy} x2={end.x} y2={end.y} stroke="var(--color-border-subtle)" strokeWidth="0.5" opacity="0.4" />;
+          })}
+          {/* Data fill */}
+          <polygon points={dataPolygon} className="radar-fill" />
+          {/* Data stroke */}
+          <polygon points={dataPolygon} fill="none" className="radar-stroke" />
+          {/* Data dots */}
+          {dataPoints.map((p, i) => {
+            const score = signals[i].score;
+            const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
+            return <circle key={i} cx={p.x} cy={p.y} r={3.5} fill={color} className="radar-dot" />;
+          })}
+          {/* Labels */}
+          {signals.map((s, i) => {
+            const a = angleFor(i);
+            const lx = cx + labelR * Math.cos(a), ly = cy + labelR * Math.sin(a);
+            const anchor = Math.abs(Math.cos(a)) < 0.1 ? "middle" : Math.cos(a) > 0 ? "start" : "end";
+            const score = s.score;
+            const color = score >= 70 ? "var(--color-accent-red)" : score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
+            return (
+              <text key={i} x={lx} y={ly} textAnchor={anchor} dominantBaseline="central" className="radar-label">
+                {t(s.nameKey) || s.name} <tspan fill={color} fontWeight="700">{s.score}</tspan>
+              </text>
+            );
+          })}
+        </svg>
+      </div>
+      {/* Compact signal details */}
+      <div className="signal-details-grid">
+        {signals.map(s => {
+          const color = s.score >= 70 ? "var(--color-accent-red)" : s.score <= 40 ? "var(--color-accent-green)" : "var(--color-accent-amber)";
+          return (
+            <div key={s.name} className="signal-detail-item">
+              <span className="signal-detail-dot" style={{ background: color }} />
+              <span className="signal-detail-text">{t(s.descriptionKey) || s.description}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
+
+
 
 function ScoreRing({ score, label }: { score: number; label: string }) {
   const size = 120, sw = 6, r = (size - sw) / 2, c = 2 * Math.PI * r;
