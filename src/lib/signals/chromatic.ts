@@ -38,7 +38,7 @@ export function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: num
 
     return {
         name: "Chromatic Aberration", nameKey: "signal.chromaticAberration",
-        category: "optics", score, weight: 0.5,
+        category: "optics", score, weight: 1.5,
         description: score > 55
             ? "No chromatic aberration — real camera lenses produce color fringing"
             : "Chromatic aberration present — consistent with real camera optics",

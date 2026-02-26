@@ -48,7 +48,7 @@ export function analyzeBenfordsLaw(pixels: Uint8ClampedArray, width: number, hei
 
     return {
         name: "Benford's Law", nameKey: "signal.benfordsLaw",
-        category: "statistical", score, weight: 0.3,
+        category: "statistical", score, weight: 0.5,
         description: score > 55
             ? "Pixel gradients deviate from Benford's Law — characteristic of AI generation"
             : "Pixel gradients follow natural statistical distribution",
