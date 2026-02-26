@@ -36,15 +36,15 @@ export function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, heig
     const cfaRatio = count > 0 && totalEnergy > 0 ? periodicEnergy / totalEnergy : 0;
 
     let score: number;
-    if (cfaRatio < 0.1) score = 72;
-    else if (cfaRatio < 0.2) score = 58;
+    if (cfaRatio < 0.1) score = 78;
+    else if (cfaRatio < 0.2) score = 62;
     else if (cfaRatio < 0.35) score = 42;
-    else if (cfaRatio < 0.5) score = 28;
-    else score = 15;
+    else if (cfaRatio < 0.5) score = 25;
+    else score = 12;
 
     return {
         name: "CFA Pattern Detection", nameKey: "signal.cfaPattern",
-        category: "optics", score, weight: 1.5,
+        category: "optics", score, weight: 2.5,
         description: score > 55
             ? "No Bayer CFA demosaicing pattern found — real cameras leave this fingerprint"
             : "CFA demosaicing artifacts present — characteristic of real camera sensors",

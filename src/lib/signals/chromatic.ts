@@ -30,11 +30,11 @@ export function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: num
     const avgShift = shiftCount > 0 ? totalShift / shiftCount : 0;
 
     let score: number;
-    if (avgShift < 1.0) score = 70;
-    else if (avgShift < 2.0) score = 55;
-    else if (avgShift < 4.0) score = 38;
-    else if (avgShift < 8.0) score = 25;
-    else score = 15;
+    if (avgShift < 0.8) score = 75;
+    else if (avgShift < 1.5) score = 60;
+    else if (avgShift < 3.0) score = 42;
+    else if (avgShift < 6.0) score = 25;
+    else score = 12;
 
     return {
         name: "Chromatic Aberration", nameKey: "signal.chromaticAberration",

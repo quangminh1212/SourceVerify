@@ -32,14 +32,15 @@ export function analyzeTextureConsistency(pixels: Uint8ClampedArray, width: numb
     const regionCV = avg > 0 ? Math.sqrt(regionVar) / avg : 0;
 
     let score: number;
-    if (regionCV < 0.2) score = 70;
-    else if (regionCV < 0.4) score = 52;
-    else if (regionCV < 0.7) score = 36;
-    else score = 20;
+    if (regionCV < 0.15) score = 78;
+    else if (regionCV < 0.3) score = 65;
+    else if (regionCV < 0.5) score = 45;
+    else if (regionCV < 0.7) score = 30;
+    else score = 15;
 
     return {
         name: "Texture Consistency", nameKey: "signal.textureConsistency",
-        category: "texture", score, weight: 1.5,
+        category: "texture", score, weight: 2.5,
         description: score > 55
             ? "Texture is unusually consistent across regions — common in AI generation"
             : "Texture varies naturally across regions",

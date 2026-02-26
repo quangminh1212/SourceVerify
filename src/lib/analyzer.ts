@@ -92,25 +92,26 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
         } else if (signal.score <= 25 && signal.weight >= 1.5) {
             peakPenalty = Math.max(peakPenalty, (35 - signal.score) * signal.weight * 0.06);
         }
-        if (signal.score > 55) highCount++;
+        if (signal.score > 52) highCount++;
         if (signal.score < 45) lowCount++;
     }
 
-    // Consensus boost
-    if (highCount >= 5) peakBoost += 10;
-    else if (highCount >= 4) peakBoost += 7;
-    else if (highCount >= 3) peakBoost += 3;
-    if (lowCount >= 5) peakPenalty += 10;
-    else if (lowCount >= 4) peakPenalty += 7;
-    else if (lowCount >= 3) peakPenalty += 3;
+    // Consensus boost — stronger amplification for multi-signal agreement
+    if (highCount >= 7) peakBoost += 15;
+    else if (highCount >= 5) peakBoost += 12;
+    else if (highCount >= 4) peakBoost += 8;
+    else if (highCount >= 3) peakBoost += 4;
+    if (lowCount >= 5) peakPenalty += 12;
+    else if (lowCount >= 4) peakPenalty += 8;
+    else if (lowCount >= 3) peakPenalty += 4;
 
     aiScore = Math.round(Math.max(5, Math.min(95, aiScore + peakBoost - peakPenalty)));
 
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
-    if (aiScore >= 60) {
+    if (aiScore >= 55) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 60) * 1.25));
+        confidence = Math.min(100, Math.round(50 + (aiScore - 55) * 1.12));
     } else if (aiScore <= 35) {
         verdict = "real";
         confidence = Math.min(100, Math.round(50 + (35 - aiScore) * 1.43));

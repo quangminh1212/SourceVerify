@@ -49,30 +49,34 @@ export function analyzeMetadata(metadata: FileMetadata, exifData: Record<string,
 
     for (const [rw, rh] of TYPICAL_AI_RESOLUTIONS) {
         if (metadata.width === rw && metadata.height === rh) {
-            score = Math.max(score, 70);
+            score = Math.max(score, 75);
             details += ` Resolution ${rw}×${rh} matches typical AI output.`;
         }
     }
 
     // Square aspect ratio heuristic
-    if (score >= 40 && score <= 60 && metadata.width === metadata.height) {
+    if (metadata.width === metadata.height) {
         const isPow2 = (n: number) => n > 0 && (n & (n - 1)) === 0;
         if (isPow2(metadata.width) || [768, 1536].includes(metadata.width)) {
-            score = Math.max(score, 68);
+            score = Math.max(score, 74);
             details += ` Square ${metadata.width}×${metadata.height} power-of-2 — typical AI output.`;
+        } else if (metadata.width >= 512) {
+            score = Math.max(score, 65);
+            details += ` Square ${metadata.width}×${metadata.height} — unusual for real cameras.`;
         }
     }
 
-    // EXIF richness
-    if (score >= 40 && score <= 60) {
-        const exifKeys = Object.keys(exifData).length;
-        if (exifKeys >= 5) {
-            score = Math.min(score, 35);
-            details += ` Rich EXIF data (${exifKeys} fields) — likely real camera.`;
-        } else if (exifKeys <= 1) {
-            score = Math.max(score, 62);
-            details += ` Minimal EXIF — AI images typically lack metadata.`;
-        }
+    // EXIF richness — strong indicator
+    const exifKeys = Object.keys(exifData).length;
+    if (exifKeys >= 5) {
+        score = Math.min(score, 30);
+        details += ` Rich EXIF data (${exifKeys} fields) — likely real camera.`;
+    } else if (exifKeys <= 1) {
+        score = Math.max(score, 66);
+        details += ` Minimal EXIF — AI images typically lack metadata.`;
+    } else if (exifKeys <= 3 && score >= 40) {
+        score = Math.max(score, 60);
+        details += ` Sparse EXIF (${exifKeys} fields) — not typical of real cameras.`;
     }
 
     const descriptionKey = score >= 90 ? "signal.metadata.aiDetected"

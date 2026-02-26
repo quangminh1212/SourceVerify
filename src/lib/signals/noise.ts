@@ -67,18 +67,20 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
 
     let score = 50;
 
-    if (shotCorrelation > 0.3) score -= 20;
-    else if (shotCorrelation > 0.1) score -= 10;
-    else if (shotCorrelation < -0.1) score += 10;
-    else score += 5;
+    if (shotCorrelation > 0.3) score -= 25;
+    else if (shotCorrelation > 0.1) score -= 12;
+    else if (shotCorrelation < -0.1) score += 12;
+    else score += 8;
 
-    if (cv < 0.2) score += 20;
-    else if (cv < 0.35) score += 10;
+    if (cv < 0.15) score += 25;
+    else if (cv < 0.25) score += 15;
+    else if (cv < 0.35) score += 8;
     else if (cv > 0.8) score -= 15;
-    else if (cv > 0.5) score -= 5;
+    else if (cv > 0.5) score -= 8;
 
-    if (noiseLevel < 2.0) score += 10;
-    else if (noiseLevel > 6.0) score -= 5;
+    if (noiseLevel < 1.5) score += 12;
+    else if (noiseLevel < 2.5) score += 5;
+    else if (noiseLevel > 6.0) score -= 8;
 
     score = Math.max(10, Math.min(90, score));
 
