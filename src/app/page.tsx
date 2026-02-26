@@ -307,13 +307,27 @@ export default function Home() {
                 <div className={`verdict-badge ${result.verdict}`}>
                   {result.verdict === 'ai' ? t('home.aiGenerated') : result.verdict === 'real' ? t('home.authentic') : t('home.uncertain')}
                 </div>
-                <p className="basic-summary">
-                  {result.verdict === 'ai'
-                    ? t('home.summaryAi') || `Nội dung này có ${result.aiScore}% khả năng được tạo bởi AI. Phát hiện nhiều dấu hiệu bất thường trong cấu trúc ảnh.`
-                    : result.verdict === 'real'
-                      ? t('home.summaryReal') || `Nội dung này có vẻ là ảnh thật với độ tin cậy ${result.confidence}%. Các chỉ số phân tích phù hợp với ảnh chụp tự nhiên.`
-                      : t('home.summaryUncertain') || `Không thể xác định rõ ràng. Điểm ${result.aiScore}/100 cho thấy nội dung cần được xem xét kỹ hơn.`}
-                </p>
+                {/* AI Probability Explanation */}
+                <div className="ai-probability">
+                  <span className="ai-probability-value">
+                    {result.aiScore}% <span className="ai-probability-label">{t('home.aiProbLabel') || 'khả năng do AI tạo'}</span>
+                  </span>
+                  <div className="ai-probability-bar">
+                    <div className="ai-probability-track" />
+                    <div className="ai-probability-dot" style={{ left: `${result.aiScore}%` }} />
+                  </div>
+                  <div className="ai-probability-range">
+                    <span>0% — {t('home.authentic') || 'Ảnh thật'}</span>
+                    <span>100% — AI</span>
+                  </div>
+                  <p className="ai-probability-explain">
+                    {result.aiScore >= 70
+                      ? t('home.explainHigh') || 'Điểm cao cho thấy nhiều đặc điểm phổ biến của ảnh AI — cạnh mượt bất thường, mẫu lặp, thiếu nhiễu tự nhiên.'
+                      : result.aiScore <= 30
+                        ? t('home.explainLow') || 'Điểm thấp cho thấy ảnh có đặc điểm tự nhiên — nhiễu cảm biến, biến đổi cạnh và metadata phù hợp ảnh chụp thật.'
+                        : t('home.explainMid') || 'Điểm trung bình — ảnh có một số đặc điểm giống AI nhưng chưa đủ để kết luận rõ ràng. Nên kiểm tra thêm.'}
+                  </p>
+                </div>
                 <div className="basic-stats">
                   <div className="basic-stat">
                     <span className="basic-stat-label">{t('home.confidence')}</span>
