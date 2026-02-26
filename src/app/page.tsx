@@ -302,64 +302,57 @@ export default function Home() {
 
             {viewMode === 'basic' ? (
               /* === BASIC VIEW === */
-              <div className="basic-view">
-                <ScoreRing score={result.aiScore} label={t('home.score')} />
-                <div className={`verdict-badge ${result.verdict}`}>
-                  {result.verdict === 'ai' ? t('home.aiGenerated') : result.verdict === 'real' ? t('home.authentic') : t('home.uncertain')}
-                </div>
-                {/* AI Probability Explanation */}
-                <div className="ai-probability">
-                  <span className="ai-probability-value">
-                    {result.aiScore}% <span className="ai-probability-label">{t('home.aiProbLabel') || 'khả năng do AI tạo'}</span>
-                  </span>
-                  <div className="ai-probability-bar">
-                    <div className="ai-probability-track" />
-                    <div className="ai-probability-dot" style={{ left: `${result.aiScore}%` }} />
+              <div className="result-row">
+                <div className="result-score-panel">
+                  <ScoreRing score={result.aiScore} label={t('home.score')} />
+                  <div className={`verdict-badge ${result.verdict}`}>
+                    {result.verdict === 'ai' ? t('home.aiGenerated') : result.verdict === 'real' ? t('home.authentic') : t('home.uncertain')}
                   </div>
-                  <div className="ai-probability-range">
-                    <span>0% — {t('home.authentic') || 'Ảnh thật'}</span>
-                    <span>100% — AI</span>
-                  </div>
-                  <p className="ai-probability-explain">
-                    {result.aiScore >= 70
-                      ? t('home.explainHigh') || 'Điểm cao cho thấy nhiều đặc điểm phổ biến của ảnh AI — cạnh mượt bất thường, mẫu lặp, thiếu nhiễu tự nhiên.'
-                      : result.aiScore <= 30
-                        ? t('home.explainLow') || 'Điểm thấp cho thấy ảnh có đặc điểm tự nhiên — nhiễu cảm biến, biến đổi cạnh và metadata phù hợp ảnh chụp thật.'
-                        : t('home.explainMid') || 'Điểm trung bình — ảnh có một số đặc điểm giống AI nhưng chưa đủ để kết luận rõ ràng. Nên kiểm tra thêm.'}
-                  </p>
-                </div>
-                <div className="basic-stats">
-                  <div className="basic-stat">
-                    <span className="basic-stat-label">{t('home.confidence')}</span>
-                    <span className="basic-stat-value">{result.confidence}%</span>
-                  </div>
-                  <div className="basic-stat-divider" />
-                  <div className="basic-stat">
-                    <span className="basic-stat-label">{t('home.signalsAnalyzed') || 'Tín hiệu'}</span>
-                    <span className="basic-stat-value">{result.signals.length}</span>
-                  </div>
-                  <div className="basic-stat-divider" />
-                  <div className="basic-stat">
-                    <span className="basic-stat-label">{t('home.processingTime') || 'Thời gian'}</span>
-                    <span className="basic-stat-value">{result.processingTimeMs}ms</span>
+                  <div className="flex items-center gap-3 text-[12px] text-[--color-text-muted] mt-1">
+                    <span>{result.confidence}% {t('home.confidence')}</span>
+                    <span className="opacity-40">·</span>
+                    <span>{result.processingTimeMs}ms</span>
                   </div>
                 </div>
-                {/* Top signals */}
-                <div className="basic-signals">
-                  {[...result.signals].sort((a, b) => Math.abs(b.score - 50) - Math.abs(a.score - 50)).slice(0, 4).map(s => {
-                    const color = s.score >= 70 ? 'var(--color-accent-red)' : s.score <= 40 ? 'var(--color-accent-green)' : 'var(--color-accent-amber)';
-                    return (
-                      <div key={s.name} className="basic-signal-bar">
-                        <div className="basic-signal-header">
-                          <span className="basic-signal-name">{t(s.nameKey) || s.name}</span>
-                          <span className="basic-signal-score" style={{ color }}>{s.score}/100</span>
+                <div className="basic-detail-panel">
+                  {/* AI Probability */}
+                  <div className="ai-probability">
+                    <span className="ai-probability-value">
+                      {result.aiScore}% <span className="ai-probability-label">{t('home.aiProbLabel') || 'khả năng do AI tạo'}</span>
+                    </span>
+                    <div className="ai-probability-bar">
+                      <div className="ai-probability-track" />
+                      <div className="ai-probability-dot" style={{ left: `${result.aiScore}%` }} />
+                    </div>
+                    <div className="ai-probability-range">
+                      <span>0% — {t('home.authentic') || 'Ảnh thật'}</span>
+                      <span>100% — AI</span>
+                    </div>
+                    <p className="ai-probability-explain">
+                      {result.aiScore >= 70
+                        ? t('home.explainHigh') || 'Điểm cao cho thấy nhiều đặc điểm phổ biến của ảnh AI.'
+                        : result.aiScore <= 30
+                          ? t('home.explainLow') || 'Điểm thấp cho thấy ảnh có đặc điểm tự nhiên.'
+                          : t('home.explainMid') || 'Điểm trung bình — chưa đủ để kết luận rõ ràng.'}
+                    </p>
+                  </div>
+                  {/* Top signals */}
+                  <div className="basic-signals">
+                    {[...result.signals].sort((a, b) => Math.abs(b.score - 50) - Math.abs(a.score - 50)).slice(0, 4).map(s => {
+                      const color = s.score >= 70 ? 'var(--color-accent-red)' : s.score <= 40 ? 'var(--color-accent-green)' : 'var(--color-accent-amber)';
+                      return (
+                        <div key={s.name} className="basic-signal-bar">
+                          <div className="basic-signal-header">
+                            <span className="basic-signal-name">{t(s.nameKey) || s.name}</span>
+                            <span className="basic-signal-score" style={{ color }}>{s.score}/100</span>
+                          </div>
+                          <div className="basic-bar-bg">
+                            <div className="basic-bar-fill" style={{ width: `${s.score}%`, background: color }} />
+                          </div>
                         </div>
-                        <div className="basic-bar-bg">
-                          <div className="basic-bar-fill" style={{ width: `${s.score}%`, background: color }} />
-                        </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             ) : (
