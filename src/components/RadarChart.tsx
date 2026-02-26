@@ -12,7 +12,7 @@ export default function RadarChart({ signals, t }: RadarChartProps) {
     const [on, setOn] = useState(false);
     useEffect(() => { const timer = setTimeout(() => setOn(true), 300); return () => clearTimeout(timer); }, []);
 
-    const size = 240, cx = size / 2, cy = size / 2, maxR = 85;
+    const size = 280, cx = size / 2, cy = size / 2, maxR = 100;
     const n = signals.length;
     const levels = [25, 50, 75, 100];
 
@@ -29,7 +29,7 @@ export default function RadarChart({ signals, t }: RadarChartProps) {
     const dataPoints = signals.map((s, i) => pointAt(i, on ? s.score : 0));
     const dataPolygon = dataPoints.map(p => `${p.x},${p.y}`).join(" ");
 
-    const labelR = maxR + 20;
+    const labelR = maxR + 24;
 
     return (
         <div className="radar-section">
