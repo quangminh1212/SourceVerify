@@ -322,7 +322,7 @@ export default function Home() {
                     </span>
                     <div className="ai-probability-bar">
                       <div className="ai-probability-track" />
-                      <div className="ai-probability-dot" style={{ left: `${result.aiScore}%` }} />
+                      <div className="ai-probability-dot" ref={el => { if (el) el.style.left = `${result.aiScore}%`; }} />
                     </div>
                     <div className="ai-probability-range">
                       <span>0% — {t('home.authentic') || 'Ảnh thật'}</span>
@@ -339,15 +339,15 @@ export default function Home() {
                   {/* Top signals */}
                   <div className="basic-signals">
                     {[...result.signals].sort((a, b) => Math.abs(b.score - 50) - Math.abs(a.score - 50)).slice(0, 4).map(s => {
-                      const color = s.score >= 70 ? 'var(--color-accent-red)' : s.score <= 40 ? 'var(--color-accent-green)' : 'var(--color-accent-amber)';
+                      const level = s.score >= 70 ? 'high' : s.score <= 40 ? 'low' : 'mid';
                       return (
-                        <div key={s.name} className="basic-signal-bar">
+                        <div key={s.name} className="basic-signal-bar" data-level={level}>
                           <div className="basic-signal-header">
                             <span className="basic-signal-name">{t(s.nameKey) || s.name}</span>
-                            <span className="basic-signal-score" style={{ color }}>{s.score}/100</span>
+                            <span className="basic-signal-score">{s.score}/100</span>
                           </div>
                           <div className="basic-bar-bg">
-                            <div className="basic-bar-fill" style={{ width: `${s.score}%`, background: color }} />
+                            <div className="basic-bar-fill" ref={el => { if (el) { el.style.width = `${s.score}%`; el.style.background = level === 'high' ? 'var(--color-accent-red)' : level === 'low' ? 'var(--color-accent-green)' : 'var(--color-accent-amber)'; } }} />
                           </div>
                         </div>
                       );
