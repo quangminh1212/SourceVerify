@@ -288,58 +288,64 @@ export default function Home() {
 
         {/* Results */}
         {result && (
-          <div ref={resultRef} className="w-full max-w-2xl mx-auto animate-fade-in-up py-6">
-            <div className="text-center mb-8">
+          <div ref={resultRef} className="w-full max-w-3xl mx-auto animate-fade-in-up py-6">
+            {/* Score Header */}
+            <div className="result-header">
               <ScoreRing score={result.aiScore} label={t("home.score")} />
-              <div className={`verdict-badge ${result.verdict} mt-4 mb-2 mx-auto`}>
-                {result.verdict === "ai" ? t("home.aiGenerated") : result.verdict === "real" ? t("home.authentic") : t("home.uncertain")}
-              </div>
-              <div className="flex items-center justify-center gap-3 text-[11px] text-[--color-text-muted]">
-                <span>{result.confidence}% {t("home.confidence")}</span>
-                <span>·</span>
-                <span>{result.processingTimeMs}ms</span>
+              <div className="result-header-info">
+                <div className={`verdict-badge ${result.verdict}`}>
+                  {result.verdict === "ai" ? t("home.aiGenerated") : result.verdict === "real" ? t("home.authentic") : t("home.uncertain")}
+                </div>
+                <div className="flex items-center gap-3 text-[12px] text-[--color-text-muted] mt-2">
+                  <span>{result.confidence}% {t("home.confidence")}</span>
+                  <span className="opacity-40">·</span>
+                  <span>{result.processingTimeMs}ms</span>
+                </div>
               </div>
             </div>
 
-            <div className="space-y-2">
+            {/* Signals Grid */}
+            <div className="signals-grid">
               {result.signals.map(signal => (
-                <div key={signal.name} className="analysis-card-compact">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm shrink-0">{signal.icon}</span>
+                <div key={signal.name} className="signal-card">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="signal-icon">{signal.icon}</span>
                     <span className="text-[13px] font-semibold text-[--color-text-primary] flex-1 truncate">{signal.name}</span>
-                    <span className={`text-xs font-bold tabular-nums ${signal.score >= 70 ? 'signal-score-high' : signal.score >= 55 ? 'signal-score-medium' : 'signal-score-low'}`}>{signal.score}</span>
+                    <span className={`signal-score ${signal.score >= 70 ? 'high' : signal.score >= 55 ? 'medium' : 'low'}`}>{signal.score}</span>
                   </div>
-                  <div className="confidence-bar-slim mt-1.5">
+                  <div className="confidence-bar-slim">
                     <div className={`confidence-fill-slim ${signal.score > 55 ? "ai" : "real"}`} ref={el => { if (el) el.style.setProperty('--confidence-width', `${signal.score}%`); }} />
                   </div>
-                  <p className="text-[11px] text-[--color-text-muted] mt-1 leading-snug">{signal.description}</p>
+                  <p className="text-[11px] text-[--color-text-muted] mt-1.5 leading-relaxed">{signal.description}</p>
                 </div>
               ))}
             </div>
 
+            {/* Metadata */}
             {result.metadata.exifData && Object.keys(result.metadata.exifData).length > 0 && (
-              <details className="mt-3 analysis-card-compact">
-                <summary className="text-[13px] font-semibold text-[--color-text-primary] cursor-pointer">
+              <details className="metadata-panel">
+                <summary className="metadata-summary">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
                   {t("home.metadata")}
                 </summary>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-0.5 mt-2">
+                <div className="metadata-grid">
                   {Object.entries(result.metadata.exifData).map(([k, v]) => (
-                    <div key={k} className="flex gap-2 py-0.5 border-b border-[--color-border-subtle] text-[11px]">
-                      <span className="text-[--color-text-muted] w-24 shrink-0">{k}</span>
-                      <span className="text-[--color-text-primary] font-mono truncate">{v}</span>
+                    <div key={k} className="metadata-row">
+                      <span className="metadata-key">{k}</span>
+                      <span className="metadata-value">{String(v)}</span>
                     </div>
                   ))}
                 </div>
               </details>
             )}
 
-            <div className="text-center mt-6">
+            <div className="text-center mt-8">
               <button onClick={handleReset} className="btn-primary">
                 {t("home.analyzeAnother")}
               </button>
             </div>
 
-            <p className="text-[10px] text-[--color-text-muted] text-center mt-6 max-w-md mx-auto">
+            <p className="text-[11px] text-[--color-text-muted] text-center mt-5 max-w-md mx-auto leading-relaxed">
               {t("home.disclaimer")}
             </p>
           </div>
