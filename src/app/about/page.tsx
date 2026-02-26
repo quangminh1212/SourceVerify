@@ -9,9 +9,9 @@ export default function AboutPage() {
     const { t } = useLanguage();
 
     const stats = [
-        { valueKey: "about.stat1.value", labelKey: "about.stat1.label", color: "#4285f4" },
-        { valueKey: "about.stat2.value", labelKey: "about.stat2.label", color: "#0f9d58" },
-        { valueKey: "about.stat3.value", labelKey: "about.stat3.label", color: "#f4b400" },
+        { valueKey: "about.stat1.value", labelKey: "about.stat1.label", colorClass: "text-[#4285f4]" },
+        { valueKey: "about.stat2.value", labelKey: "about.stat2.label", colorClass: "text-[#0f9d58]" },
+        { valueKey: "about.stat3.value", labelKey: "about.stat3.label", colorClass: "text-[#f4b400]" },
     ];
 
     return (
@@ -50,7 +50,7 @@ export default function AboutPage() {
                                 key={stat.labelKey}
                                 className="rounded-2xl bg-white/30 py-5 sm:py-6 lg:py-8 px-3 sm:px-4 lg:px-6 text-center transition-all duration-300 hover:-translate-y-1 hover:bg-white/50 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)]"
                             >
-                                <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-1 tracking-tight" style={{ color: stat.color }}>{t(stat.valueKey)}</div>
+                                <div className={`text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-1 tracking-tight ${stat.colorClass}`}>{t(stat.valueKey)}</div>
                                 <div className="text-xs sm:text-sm lg:text-sm font-medium uppercase tracking-[0.12em] text-[--color-text-muted]">{t(stat.labelKey)}</div>
                             </div>
                         ))}
