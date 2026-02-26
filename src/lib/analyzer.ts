@@ -251,8 +251,30 @@ function analyzeMetadata(metadata: FileMetadata, exifData: Record<string, string
     const typicalAIResolutions = [[512, 512], [768, 768], [1024, 1024], [1024, 1792], [1792, 1024], [1024, 576], [576, 1024], [512, 768], [768, 512]];
     for (const [rw, rh] of typicalAIResolutions) {
         if (metadata.width === rw && metadata.height === rh) {
-            score = Math.max(score, 65);
-            details += ` Resolution ${rw}×${rh} matches AI output.`;
+            score = Math.max(score, 70);
+            details += ` Resolution ${rw}×${rh} matches typical AI output.`;
+        }
+    }
+
+    // Square aspect ratio heuristic: 1:1 images are very common in AI generators
+    if (score >= 40 && score <= 60 && metadata.width === metadata.height) {
+        const isPow2 = (n: number) => n > 0 && (n & (n - 1)) === 0;
+        if (isPow2(metadata.width) || [768, 1536].includes(metadata.width)) {
+            score = Math.max(score, 68);
+            details += ` Square ${metadata.width}×${metadata.height} power-of-2 — typical AI output.`;
+        }
+    }
+
+    // EXIF richness: real camera photos have rich EXIF data
+    // AI-generated images typically have minimal or no EXIF
+    if (score >= 40 && score <= 60) {
+        const exifKeys = Object.keys(exifData).length;
+        if (exifKeys >= 5) {
+            score = Math.min(score, 35);
+            details += ` Rich EXIF data (${exifKeys} fields) — likely real camera.`;
+        } else if (exifKeys <= 1) {
+            score = Math.max(score, 62);
+            details += ` Minimal EXIF — AI images typically lack metadata.`;
         }
     }
 
@@ -263,7 +285,7 @@ function analyzeMetadata(metadata: FileMetadata, exifData: Record<string, string
 
     return {
         name: "Metadata Analysis", nameKey: "signal.metadataAnalysis",
-        category: "metadata", score, weight: 2.5,
+        category: "metadata", score, weight: 3.0,
         description, descriptionKey, icon: "◎", details,
     };
 }
@@ -363,7 +385,7 @@ function analyzeSpectralNyquist(pixels: Uint8ClampedArray, width: number, height
     // Scoring: combine multiple spectral indicators
     let score = 50; // Start neutral
 
-    // Nyquist peak strongly indicates AI
+    // Nyquist peak strongly indicates AI upsampling
     if (peakRatio > 1.5) score += 20;
     else if (peakRatio > 1.2) score += 10;
     else if (peakRatio < 0.9) score -= 15;
@@ -377,11 +399,21 @@ function analyzeSpectralNyquist(pixels: Uint8ClampedArray, width: number, height
     else if (rolloffRatio < 0.15) score -= 15;
     else if (rolloffRatio < 0.2) score -= 5;
 
+    // HEURISTIC: Images from web CDNs get resized to arbitrary dimensions,
+    // creating false Nyquist peaks. AI generators typically output power-of-2 or standard sizes.
+    // If dimensions suggest web resize, discount the spectral score.
+    const isPow2OrStd = (d: number) => (d & (d - 1)) === 0 || [512, 768, 1024, 1536, 2048, 4096].includes(d);
+    const likelyResized = !isPow2OrStd(width) && !isPow2OrStd(height) && (width % 100 !== 0 || height % 100 !== 0);
+    if (likelyResized && score > 50) {
+        // Reduce AI score — spectral peaks are likely from CDN resize, not AI
+        score = Math.round(50 + (score - 50) * 0.3);
+    }
+
     score = Math.max(10, Math.min(90, score));
 
     return {
         name: "Spectral Nyquist Analysis", nameKey: "signal.spectralNyquist",
-        category: "spectral", score, weight: 3.0,
+        category: "spectral", score, weight: 1.0,
         description: score > 55
             ? "Spectral peaks at Nyquist frequencies detected — characteristic of AI upsampling artifacts"
             : "Spectral distribution is smooth — consistent with natural photography",
@@ -477,7 +509,7 @@ async function analyzeMultiscaleReconstruction(
 
     return {
         name: "Multi-scale Reconstruction", nameKey: "signal.multiScaleReconstruction",
-        category: "forensic", score, weight: 2.5,
+        category: "forensic", score, weight: 4.0,
         description: score > 55
             ? "Reconstruction errors are unnaturally uniform — typical of AI-generated content"
             : "Reconstruction shows natural variation — consistent with real photography",
@@ -493,24 +525,23 @@ async function analyzeMultiscaleReconstruction(
 // ============================
 
 function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
-    // Apply 3x3 Laplacian high-pass filter to extract noise residual
-    // Then analyze its statistical properties across blocks
+    // Apply Laplacian high-pass + shot noise correlation analysis
+    // Real cameras: noise ∝ √brightness (Poisson/shot noise)
+    // AI: noise is uniform or absent regardless of brightness
     const blockSize = 32;
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);
     const blockStdDevs: number[] = [];
+    const blockBrightness: number[] = [];
 
     const step = Math.max(1, Math.floor(blocksX * blocksY / 300));
 
     for (let by = 0; by < blocksY; by += step) {
         for (let bx = 0; bx < blocksX; bx += step) {
-            let sumResidual = 0;
-            let sumResidual2 = 0;
-            let count = 0;
+            let sumResidual = 0, sumResidual2 = 0, sumBright = 0, count = 0;
 
             for (let y = by * blockSize + 1; y < (by + 1) * blockSize - 1; y++) {
                 for (let x = bx * blockSize + 1; x < (bx + 1) * blockSize - 1; x++) {
-                    // Laplacian: center*4 - top - bottom - left - right
                     const getGray = (px: number, py: number) => {
                         const i = (py * width + px) * 4;
                         return pixels[i] * 0.299 + pixels[i + 1] * 0.587 + pixels[i + 2] * 0.114;
@@ -519,6 +550,7 @@ function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, height: 
                     const laplacian = 4 * center - getGray(x - 1, y) - getGray(x + 1, y) - getGray(x, y - 1) - getGray(x, y + 1);
                     sumResidual += laplacian;
                     sumResidual2 += laplacian * laplacian;
+                    sumBright += center;
                     count++;
                 }
             }
@@ -527,43 +559,66 @@ function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, height: 
                 const mean = sumResidual / count;
                 const variance = sumResidual2 / count - mean * mean;
                 blockStdDevs.push(Math.sqrt(Math.max(0, variance)));
+                blockBrightness.push(sumBright / count);
             }
         }
     }
 
-    if (blockStdDevs.length === 0) {
-        return { name: "Noise Residual", nameKey: "signal.noiseResidual", category: "pixel", score: 50, weight: 2.5, description: "Insufficient data", descriptionKey: "signal.noise.error", icon: "◫" };
+    if (blockStdDevs.length < 4) {
+        return { name: "Noise Residual", nameKey: "signal.noiseResidual", category: "pixel", score: 50, weight: 3.5, description: "Insufficient data", descriptionKey: "signal.noise.error", icon: "◫" };
     }
 
-    // Coefficient of variation of noise residual across blocks
+    // CV analysis
     const mean = blockStdDevs.reduce((a, b) => a + b, 0) / blockStdDevs.length;
     const variance = blockStdDevs.reduce((a, b) => a + (b - mean) ** 2, 0) / blockStdDevs.length;
     const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    // Kurtosis of noise residual (AI noise tends to have lower kurtosis)
-    const sortedStd = [...blockStdDevs].sort((a, b) => a - b);
-    const median = sortedStd[Math.floor(sortedStd.length / 2)];
-    const iqr = sortedStd[Math.floor(sortedStd.length * 0.75)] - sortedStd[Math.floor(sortedStd.length * 0.25)];
-    const robustCV = median > 0 ? iqr / median : 0;
+    // Shot noise correlation: Pearson correlation between brightness and noise
+    // Real cameras: positive correlation (bright = more photon noise)
+    const meanBright = blockBrightness.reduce((a, b) => a + b, 0) / blockBrightness.length;
+    let covBN = 0, varB = 0, varN = 0;
+    for (let i = 0; i < blockStdDevs.length; i++) {
+        const db = blockBrightness[i] - meanBright;
+        const dn = blockStdDevs[i] - mean;
+        covBN += db * dn;
+        varB += db * db;
+        varN += dn * dn;
+    }
+    const shotCorrelation = (varB > 0 && varN > 0) ? covBN / Math.sqrt(varB * varN) : 0;
 
-    // AI: uniform noise (low CV, low robustCV) → high score
-    // Real: varying noise due to ISO, lighting → high CV
-    let score: number;
-    if (cv < 0.25 && robustCV < 0.3) score = 78;
-    else if (cv < 0.4 && robustCV < 0.5) score = 62;
-    else if (cv < 0.6) score = 45;
-    else if (cv < 0.9) score = 30;
-    else score = 18;
+    // Mean noise level (AI images often have very low noise)
+    const noiseLevel = mean;
+
+    // Combined scoring
+    let score = 50;
+
+    // Shot noise correlation: strong indicator
+    if (shotCorrelation > 0.3) score -= 20;       // Real: positive correlation
+    else if (shotCorrelation > 0.1) score -= 10;
+    else if (shotCorrelation < -0.1) score += 10;  // AI: no/negative correlation
+    else score += 5;                               // Near zero = suspicious
+
+    // Noise uniformity
+    if (cv < 0.2) score += 20;                     // Very uniform = AI
+    else if (cv < 0.35) score += 10;
+    else if (cv > 0.8) score -= 15;                // Highly varied = real
+    else if (cv > 0.5) score -= 5;
+
+    // Very low noise = probably AI (no sensor)
+    if (noiseLevel < 2.0) score += 10;
+    else if (noiseLevel > 6.0) score -= 5;
+
+    score = Math.max(10, Math.min(90, score));
 
     return {
         name: "Noise Residual", nameKey: "signal.noiseResidual",
-        category: "pixel", score, weight: 2.5,
+        category: "pixel", score, weight: 3.5,
         description: score > 55
             ? "Noise residual is unnaturally uniform — AI images lack natural sensor noise variation"
             : "Noise varies naturally — consistent with real camera sensor behavior",
         descriptionKey: score > 55 ? "signal.noise.ai" : "signal.noise.real",
         icon: "◫",
-        details: `Noise CV: ${cv.toFixed(3)}, Robust CV (IQR/median): ${robustCV.toFixed(3)}, Mean noise: ${mean.toFixed(1)}, Blocks: ${blockStdDevs.length}.`,
+        details: `Noise CV: ${cv.toFixed(3)}, Shot correlation: ${shotCorrelation.toFixed(3)}, Mean noise: ${noiseLevel.toFixed(1)}. Real cameras show positive shot correlation (>0.2).`,
     };
 }
 
@@ -617,22 +672,36 @@ function analyzeEdgeCoherence(pixels: Uint8ClampedArray, width: number, height: 
 
     // AI: smooth edges (low median, low range), high direction entropy
     // Real: varied edges, natural direction distribution
-    let score: number;
-    if (p50 < 5 && edgeRange < 30) score = 72;
-    else if (p50 < 10 && normalizedEntropy > 0.85) score = 60;
-    else if (p50 > 20 || edgeRange > 100) score = 25;
-    else if (normalizedEntropy < 0.7) score = 35;
-    else score = 42;
+    // Edge sharpness ratio: p90/p50 — AI has more uniform edge strengths
+    const sharpnessRatio = p50 > 0 ? p90 / p50 : 1;
+
+    let score = 50;
+
+    // Very smooth edges = AI (StyleGAN, Midjourney)
+    if (p50 < 5 && edgeRange < 30) score += 25;
+    else if (p50 < 8) score += 15;
+    else if (p50 > 20) score -= 15;
+    else if (p50 > 15) score -= 5;
+
+    // Low sharpness ratio = uniform edges = AI
+    if (sharpnessRatio < 3) score += 10;
+    else if (sharpnessRatio > 8) score -= 10;
+
+    // High direction entropy = overly regularized = AI
+    if (normalizedEntropy > 0.9) score += 10;
+    else if (normalizedEntropy < 0.65) score -= 10;
+
+    score = Math.max(10, Math.min(90, score));
 
     return {
         name: "Edge Coherence", nameKey: "signal.edgeCoherence",
-        category: "structure", score, weight: 1.5,
+        category: "structure", score, weight: 2.5,
         description: score > 55
             ? "Edges are unusually smooth with uniform directions — common in AI generation"
             : "Edge patterns show natural variation — consistent with real content",
         descriptionKey: score > 55 ? "signal.edge.ai" : "signal.edge.real",
         icon: "▣",
-        details: `Median edge: ${p50.toFixed(1)}, Range: ${edgeRange.toFixed(1)}, Dir entropy: ${normalizedEntropy.toFixed(3)} (max 1.0).`,
+        details: `Median edge: ${p50.toFixed(1)}, Range: ${edgeRange.toFixed(1)}, Sharpness ratio: ${sharpnessRatio.toFixed(1)}, Dir entropy: ${normalizedEntropy.toFixed(3)}.`,
     };
 }
 
@@ -646,7 +715,8 @@ function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: number, h
     const blocksY = Math.floor(height / blockSize);
 
     let smoothBlockCount = 0;
-    let microTextureSum = 0;
+    let totalBlockCount = 0;
+    let microRatioSum = 0;
     const step = Math.max(1, Math.floor(blocksX * blocksY / 200));
 
     for (let by = 0; by < blocksY; by += step) {
@@ -664,28 +734,44 @@ function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: number, h
                     const g2 = pixels[idxR2] * 0.299 + pixels[idxR2 + 1] * 0.587 + pixels[idxR2 + 2] * 0.114;
 
                     gradSum += Math.abs(g1 - g0);
-                    // Second-order difference = curvature = micro-texture
                     microNoise += Math.abs(2 * g1 - g0 - g2);
                     count++;
                 }
             }
 
+            totalBlockCount++;
             const avgGrad = count > 0 ? gradSum / count : 0;
+            const avgMicro = count > 0 ? microNoise / count : 0;
+
+            // "Smooth" block: low gradient (flat region like skin, sky)
             if (avgGrad < 5 && count > 0) {
                 smoothBlockCount++;
-                microTextureSum += microNoise / count;
+                // Micro-to-gradient ratio: AI has very low ratio in smooth areas
+                // Real cameras: even smooth areas have micro-noise from sensor
+                const ratio = avgGrad > 0.5 ? avgMicro / avgGrad : avgMicro;
+                microRatioSum += ratio;
             }
         }
     }
 
-    const avgMicro = smoothBlockCount > 0 ? microTextureSum / smoothBlockCount : 0;
+    // Fraction of smooth blocks (AI often has more smooth regions)
+    const smoothFraction = totalBlockCount > 0 ? smoothBlockCount / totalBlockCount : 0;
+    const avgMicroRatio = smoothBlockCount > 0 ? microRatioSum / smoothBlockCount : 0;
 
-    let score: number;
-    if (smoothBlockCount === 0) score = 40;
-    else if (avgMicro < 0.3) score = 78;
-    else if (avgMicro < 0.6) score = 62;
-    else if (avgMicro < 1.2) score = 40;
-    else score = 20;
+    let score = 50;
+
+    // High fraction of smooth blocks = likely AI (very clean gradients)
+    if (smoothFraction > 0.5) score += 15;
+    else if (smoothFraction > 0.3) score += 5;
+    else if (smoothFraction < 0.1) score -= 10;
+
+    // Low micro-ratio in smooth areas = AI (no sensor noise)
+    if (avgMicroRatio < 0.5) score += 15;
+    else if (avgMicroRatio < 1.0) score += 5;
+    else if (avgMicroRatio > 2.0) score -= 15;
+    else if (avgMicroRatio > 1.5) score -= 5;
+
+    score = Math.max(10, Math.min(90, score));
 
     return {
         name: "Gradient Micro-Texture", nameKey: "signal.gradientSmoothness",
@@ -695,7 +781,7 @@ function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: number, h
             : "Smooth regions contain natural micro-texture from camera sensor",
         descriptionKey: score > 55 ? "signal.gradient.ai" : "signal.gradient.real",
         icon: "▤",
-        details: `Smooth blocks: ${smoothBlockCount}, Avg micro-texture: ${avgMicro.toFixed(3)}. Real photos typically > 0.6.`,
+        details: `Smooth blocks: ${smoothBlockCount}/${totalBlockCount} (${(smoothFraction * 100).toFixed(0)}%), Micro ratio: ${avgMicroRatio.toFixed(3)}.`,
     };
 }
 
@@ -746,7 +832,7 @@ function analyzeBenfordsLaw(pixels: Uint8ClampedArray, width: number, height: nu
 
     return {
         name: "Benford's Law", nameKey: "signal.benfordsLaw",
-        category: "statistical", score, weight: 1.5,
+        category: "statistical", score, weight: 1.0,
         description: score > 55
             ? "Pixel gradients deviate from Benford's Law — characteristic of AI generation"
             : "Pixel gradients follow natural statistical distribution",
@@ -793,7 +879,7 @@ function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: number, he
 
     return {
         name: "Chromatic Aberration", nameKey: "signal.chromaticAberration",
-        category: "optics", score, weight: 1.3,
+        category: "optics", score, weight: 0.8,
         description: score > 55
             ? "No chromatic aberration — real camera lenses produce color fringing"
             : "Chromatic aberration present — consistent with real camera optics",
@@ -904,7 +990,7 @@ function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, height: num
 
     return {
         name: "CFA Pattern Detection", nameKey: "signal.cfaPattern",
-        category: "optics", score, weight: 2.0,
+        category: "optics", score, weight: 3.0,
         description: score > 55
             ? "No Bayer CFA demosaicing pattern found — real cameras leave this fingerprint"
             : "CFA demosaicing artifacts present — characteristic of real camera sensors",
