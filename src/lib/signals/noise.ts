@@ -91,18 +91,19 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
     else if (shotCorrelation < 0) score += 8;       // slightly negative
     else score += 5;                                 // near zero — slight AI indicator
 
-    // Noise uniformity (CV)
-    if (cv < 0.12) score += 22;
-    else if (cv < 0.2) score += 14;
-    else if (cv < 0.3) score += 6;
-    else if (cv > 0.8) score -= 14;
-    else if (cv > 0.5) score -= 8;
+    // Noise uniformity (CV) — v5: AI ~0.73, Real ~1.0
+    if (cv < 0.2) score += 22;
+    else if (cv < 0.4) score += 12;
+    else if (cv < 0.6) score += 4;
+    else if (cv > 1.0) score -= 18;
+    else if (cv > 0.8) score -= 10;
 
-    // Noise level
-    if (noiseLevel < 1.2) score += 10;
-    else if (noiseLevel < 2.0) score += 5;
-    else if (noiseLevel > 7.0) score -= 10;
-    else if (noiseLevel > 5.0) score -= 5;
+    // Noise level — v5: AI ~7.8, Real ~25
+    if (noiseLevel < 3.0) score += 12;
+    else if (noiseLevel < 6.0) score += 5;
+    else if (noiseLevel > 15.0) score -= 18;
+    else if (noiseLevel > 10.0) score -= 10;
+    else if (noiseLevel > 8.0) score -= 3;
 
     // Kurtosis: AI noise often deviates from Gaussian (kurtosis ≠ 3)
     if (kurtDeviation > 3.0) score += 8;            // far from Gaussian — AI
