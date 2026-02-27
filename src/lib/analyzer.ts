@@ -123,8 +123,8 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     // Step 4: Directional amplification with quadratic component
     const deviation = aiScore - 50;
     if (Math.abs(deviation) > 1) {
-        const linear = deviation * 0.9;
-        const quadratic = Math.sign(deviation) * (deviation * deviation) * 0.02;
+        const linear = deviation * 1.1;
+        const quadratic = Math.sign(deviation) * (deviation * deviation) * 0.025;
         adjustment += Math.round(linear + quadratic);
     }
 
@@ -158,12 +158,12 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
 
-    if (aiScore >= 51) {
+    if (aiScore >= 50) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 51) * 1.0));
-    } else if (aiScore <= 44) {
+        confidence = Math.min(100, Math.round(50 + (aiScore - 50) * 1.0));
+    } else if (aiScore <= 46) {
         verdict = "real";
-        confidence = Math.min(100, Math.round(50 + (44 - aiScore) * 1.3));
+        confidence = Math.min(100, Math.round(50 + (46 - aiScore) * 1.3));
     } else {
         verdict = "uncertain";
         confidence = Math.round(100 - Math.abs(aiScore - 47) * 8);
