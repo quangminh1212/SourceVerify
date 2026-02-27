@@ -162,28 +162,28 @@ print(await response.stream.bytesToString());`,
             case "overview":
                 return (
                     <div className="animate-fade-in-up">
-                        <p className="text-xs text-[rgba(255,255,255,0.35)] mb-3 uppercase tracking-wider font-medium">Getting Started</p>
-                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white mb-3">
+                        <p className="text-xs mb-3 uppercase tracking-wider font-medium" style={{ color: 'var(--color-text-muted)' }}>Getting Started</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3" style={{ color: 'var(--color-text-primary)' }}>
                             SourceVerify <span className="gradient-text">API</span>
                         </h1>
-                        <p className="text-sm leading-[1.8] text-[rgba(255,255,255,0.55)] mb-10">
+                        <p className="text-sm leading-[1.8] mb-8" style={{ color: 'var(--color-text-secondary)' }}>
                             Integrate AI-generated content detection into your applications with a simple REST API.
                         </p>
-                        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                            <div className="p-5 rounded-xl bg-[rgba(255,255,255,0.03)]">
-                                <div className="text-2xl mb-3">🔍</div>
-                                <h3 className="text-sm font-semibold text-white mb-1">Image Analysis</h3>
-                                <p className="text-xs text-[rgba(255,255,255,0.4)]">Detect AI-generated images with advanced signal analysis</p>
+                        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                            <div className="p-4 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
+                                <div className="text-xl mb-2">🔍</div>
+                                <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>Detect AI-generated images with advanced signal analysis</p>
                             </div>
-                            <div className="p-5 rounded-xl bg-[rgba(255,255,255,0.03)]">
-                                <div className="text-2xl mb-3">⚡</div>
-                                <h3 className="text-sm font-semibold text-white mb-1">Fast & Reliable</h3>
-                                <p className="text-xs text-[rgba(255,255,255,0.4)]">Average response time under 500ms with 99.9% uptime</p>
+                            <div className="p-4 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
+                                <div className="text-xl mb-2">⚡</div>
+                                <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>Average response time under 500ms with 99.9% uptime</p>
                             </div>
-                            <div className="p-5 rounded-xl bg-[rgba(255,255,255,0.03)]">
-                                <div className="text-2xl mb-3">🔗</div>
-                                <h3 className="text-sm font-semibold text-white mb-1">REST API</h3>
-                                <p className="text-xs text-[rgba(255,255,255,0.4)]">Simple HTTP endpoints with JSON responses and SDKs</p>
+                            <div className="p-4 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
+                                <div className="text-xl mb-2">🔗</div>
+                                <h3 className="text-sm font-semibold mb-1" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>Simple HTTP endpoints with JSON responses and SDKs</p>
                             </div>
                         </div>
                     </div>
@@ -192,8 +192,8 @@ print(await response.stream.bytesToString());`,
             case "auth":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Authentication</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">All API requests require an API key sent via the <code className="text-xs bg-[rgba(255,255,255,0.03)] px-1.5 py-0.5 rounded">X-API-Key</code> header.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Authentication</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>All API requests require an API key sent via the <code className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'var(--color-bg-tertiary)' }}>X-API-Key</code> header.</p>
                         {user ? (
                             <div className="api-user-card">
                                 <div className="api-user-info">
@@ -227,7 +227,7 @@ print(await response.stream.bytesToString());`,
                             </div>
                         ) : (
                             <div className="api-signin-card">
-                                <p className="text-sm text-[rgba(255,255,255,0.55)] mb-2">Sign in with Google to get your API key.</p>
+                                <p className="text-sm mb-2" style={{ color: 'var(--color-text-secondary)' }}>Sign in with Google to get your API key.</p>
                                 <div id="google-signin-btn"></div>
                                 {!googleClientId && (
                                     <p className="api-note">
@@ -242,8 +242,8 @@ print(await response.stream.bytesToString());`,
             case "rate-limits":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Rate Limits</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">API rate limits vary by plan. Exceeding them returns <code className="text-xs bg-[rgba(255,255,255,0.03)] px-1.5 py-0.5 rounded">429 Too Many Requests</code>.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Rate Limits</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>API rate limits vary by plan. Exceeding them returns <code className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'var(--color-bg-tertiary)' }}>429 Too Many Requests</code>.</p>
                         <table className="api-table">
                             <thead><tr><th>Plan</th><th>Requests / min</th><th>Daily Limit</th><th>Max File Size</th></tr></thead>
                             <tbody>
@@ -252,9 +252,9 @@ print(await response.stream.bytesToString());`,
                                 <tr><td>Enterprise</td><td>300</td><td>Unlimited</td><td>25 MB</td></tr>
                             </tbody>
                         </table>
-                        <div className="mt-6 p-4 rounded-lg border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)]">
-                            <h3 className="text-sm font-semibold text-white mb-2">Rate Limit Headers</h3>
-                            <p className="text-xs text-[rgba(255,255,255,0.4)] mb-3">Each response includes headers to track your usage:</p>
+                        <div className="mt-6 p-4 rounded-lg border" style={{ borderColor: 'var(--color-border-subtle)', background: 'var(--color-bg-secondary)' }}>
+                            <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>Rate Limit Headers</h3>
+                            <p className="text-xs mb-3" style={{ color: 'var(--color-text-secondary)' }}>Each response includes headers to track your usage:</p>
                             <table className="api-table">
                                 <thead><tr><th>Header</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -270,14 +270,14 @@ print(await response.stream.bytesToString());`,
             case "endpoint":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Analyze Image</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Upload an image file to analyze whether it was AI-generated or authentic.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Analyze Image</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Upload an image file to analyze whether it was AI-generated or authentic.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/analyze</code>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Headers</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Headers</h3>
                             <table className="api-table">
                                 <thead><tr><th>Header</th><th>Required</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -287,7 +287,7 @@ print(await response.stream.bytesToString());`,
                             </table>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Request Body</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Request Body</h3>
                             <table className="api-table">
                                 <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -297,7 +297,7 @@ print(await response.stream.bytesToString());`,
                             </table>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Example Request</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Example Request</h3>
                             <pre className="api-code-block">{codeExamples.curl}</pre>
                         </div>
                     </div>
@@ -306,14 +306,14 @@ print(await response.stream.bytesToString());`,
             case "url-analysis":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Analyze by URL</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Analyze an image by providing its public URL instead of uploading a file.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Analyze by URL</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Analyze an image by providing its public URL instead of uploading a file.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/analyze-url</code>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Request Body</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Request Body</h3>
                             <table className="api-table">
                                 <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -323,7 +323,7 @@ print(await response.stream.bytesToString());`,
                             </table>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Example Request</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Example Request</h3>
                             <pre className="api-code-block">{`curl -X POST ${apiDocsUrl}/api/analyze-url \\
   -H "X-API-Key: ${apiKey}" \\
   -H "Content-Type: application/json" \\
@@ -335,14 +335,14 @@ print(await response.stream.bytesToString());`,
             case "batch-analysis":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Batch Analysis</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Analyze up to 10 images in a single request. Results are returned in the same order as the input.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Batch Analysis</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Analyze up to 10 images in a single request. Results are returned in the same order as the input.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/analyze-batch</code>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Request Body</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Request Body</h3>
                             <table className="api-table">
                                 <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -352,7 +352,7 @@ print(await response.stream.bytesToString());`,
                             </table>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Example Response</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Example Response</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 success: true,
                                 data: {
@@ -371,14 +371,14 @@ print(await response.stream.bytesToString());`,
             case "analysis-history":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Analysis History</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Retrieve your past analysis results with pagination and filtering support.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Analysis History</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Retrieve your past analysis results with pagination and filtering support.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method api-method-get">GET</div>
                             <code className="api-url">/api/history</code>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Query Parameters</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Query Parameters</h3>
                             <table className="api-table">
                                 <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -391,7 +391,7 @@ print(await response.stream.bytesToString());`,
                             </table>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Example Response</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Example Response</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 success: true,
                                 data: {
@@ -409,8 +409,8 @@ print(await response.stream.bytesToString());`,
             case "response":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Response Format</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">All endpoints return JSON with a consistent structure.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Response Format</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>All endpoints return JSON with a consistent structure.</p>
                         <pre className="api-response-example">{JSON.stringify({
                             success: true,
                             data: {
@@ -422,7 +422,7 @@ print(await response.stream.bytesToString());`,
                             },
                         }, null, 2)}</pre>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Response Fields</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Response Fields</h3>
                             <table className="api-table">
                                 <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -441,8 +441,8 @@ print(await response.stream.bytesToString());`,
             case "verdict-values":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Verdict Values</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">The <code className="text-xs bg-[rgba(255,255,255,0.03)] px-1.5 py-0.5 rounded">verdict</code> field indicates the classification result.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Verdict Values</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>The <code className="text-xs px-1.5 py-0.5 rounded" style={{ background: 'var(--color-bg-tertiary)' }}>verdict</code> field indicates the classification result.</p>
                         <table className="api-table">
                             <thead><tr><th>Value</th><th>Meaning</th><th>Score Range</th></tr></thead>
                             <tbody>
@@ -451,9 +451,9 @@ print(await response.stream.bytesToString());`,
                                 <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41–54</td></tr>
                             </tbody>
                         </table>
-                        <div className="mt-8 p-4 rounded-lg border border-[rgba(255,255,255,0.08)] bg-[rgba(255,255,255,0.03)]">
-                            <h3 className="text-sm font-semibold text-white mb-2">💡 Best Practice</h3>
-                            <p className="text-xs text-[rgba(255,255,255,0.4)]">For production use, treat &quot;uncertain&quot; results as requiring human review. Consider using the confidence score alongside the verdict for nuanced decision-making.</p>
+                        <div className="mt-6 p-4 rounded-lg border" style={{ borderColor: 'var(--color-border-subtle)', background: 'var(--color-bg-secondary)' }}>
+                            <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>💡 Best Practice</h3>
+                            <p className="text-xs" style={{ color: 'var(--color-text-secondary)' }}>For production use, treat &quot;uncertain&quot; results as requiring human review. Consider using the confidence score alongside the verdict for nuanced decision-making.</p>
                         </div>
                     </div>
                 );
@@ -461,8 +461,8 @@ print(await response.stream.bytesToString());`,
             case "error-codes":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Error Codes</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">When an error occurs, the API returns an appropriate HTTP status code with details.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Error Codes</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>When an error occurs, the API returns an appropriate HTTP status code with details.</p>
                         <table className="api-table">
                             <thead><tr><th>Status</th><th>Code</th><th>Description</th></tr></thead>
                             <tbody>
@@ -476,7 +476,7 @@ print(await response.stream.bytesToString());`,
                             </tbody>
                         </table>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Error Response Format</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Error Response Format</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 success: false,
                                 error: {
@@ -492,14 +492,14 @@ print(await response.stream.bytesToString());`,
             case "webhooks":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Webhooks</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Receive real-time notifications when an analysis completes. Register a webhook URL to get POST requests with results.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Webhooks</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Receive real-time notifications when an analysis completes. Register a webhook URL to get POST requests with results.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/webhooks</code>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Register Webhook</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Register Webhook</h3>
                             <table className="api-table">
                                 <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
                                 <tbody>
@@ -510,7 +510,7 @@ print(await response.stream.bytesToString());`,
                             </table>
                         </div>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Webhook Payload</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Webhook Payload</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 event: "analysis.complete",
                                 data: {
@@ -529,8 +529,8 @@ print(await response.stream.bytesToString());`,
             case "sdks":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">SDKs & Libraries</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Official and community SDKs for popular languages.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>SDKs & Libraries</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Official and community SDKs for popular languages.</p>
                         <table className="api-table">
                             <thead><tr><th>Language</th><th>Package</th><th>Install</th></tr></thead>
                             <tbody>
@@ -543,7 +543,7 @@ print(await response.stream.bytesToString());`,
                             </tbody>
                         </table>
                         <div className="mt-8">
-                            <h3 className="text-sm font-semibold text-white mb-3">Python SDK Example</h3>
+                            <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Python SDK Example</h3>
                             <pre className="api-code-block">{`from sourceverify import SourceVerify
 
 client = SourceVerify(api_key="${apiKey}")
@@ -565,8 +565,8 @@ results = client.analyze_batch(["img1.jpg", "img2.jpg", "img3.jpg"])`}</pre>
             case "examples":
                 return (
                     <div className="animate-fade-in-up">
-                        <h2 className="text-xl font-bold text-white mb-6 pb-3 border-b border-[rgba(255,255,255,0.08)]">Code Examples</h2>
-                        <p className="text-sm text-[rgba(255,255,255,0.55)] mb-6">Quick start examples in 12 programming languages.</p>
+                        <h2 className="text-xl font-bold mb-6 pb-3 border-b" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>Code Examples</h2>
+                        <p className="text-sm mb-6" style={{ color: 'var(--color-text-secondary)' }}>Quick start examples in 12 programming languages.</p>
                         <div className="api-tabs">
                             {Object.entries({
                                 curl: "cURL", python: "Python", javascript: "JS", go: "Go",
@@ -592,8 +592,8 @@ results = client.analyze_batch(["img1.jpg", "img2.jpg", "img3.jpg"])`}</pre>
     };
 
     return (
-        <div className="flex-1 min-w-0 py-8 sm:py-10 lg:py-12">
-            <div className="w-full max-w-5xl px-6 sm:px-10 lg:px-14">
+        <div className="flex-1 min-w-0 py-6 sm:py-8 lg:py-10">
+            <div className="w-full max-w-4xl px-6 sm:px-8 lg:px-12">
                 {renderSection()}
             </div>
         </div>
