@@ -32,9 +32,6 @@ export default function Footer({ showLinks = false }: FooterProps) {
                                     {t(link.key)}
                                 </Link>
                             ))}
-                            <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="hover:text-[--color-text-primary] transition-colors">
-                                GitHub
-                            </a>
                         </div>
                     )}
                     <p className="text-[11px] text-[--color-text-muted]">
