@@ -9,20 +9,11 @@ import {
   type AnalysisResult,
 } from "@/lib/analyzer";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { LOCALE_LABELS, type Locale } from "@/i18n/translations";
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
 import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import ScoreRing from "@/components/ScoreRing";
 import RadarChart from "@/components/RadarChart";
-
-const NAV_KEYS = [
-  { key: "nav.product", href: "/product" },
-  { key: "nav.features", href: "/features" },
-  { key: "nav.howItWorks", href: "/how-it-works" },
-  { key: "nav.about", href: "/about" },
-];
-
-const LOCALES: Locale[] = ["en", "zh", "vi", "ja", "ko"];
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -32,27 +23,12 @@ export default function Home() {
   const [dragOver, setDragOver] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'basic' | 'advanced'>('basic');
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-  const langRef = useRef<HTMLDivElement>(null);
-  const { locale, setLocale, t } = useLanguage();
+  const { t } = useLanguage();
 
   useEffect(() => { return () => { if (preview) URL.revokeObjectURL(preview); }; }, [preview]);
-
-  // Click-outside handler for language dropdown
-  useEffect(() => {
-    if (!langOpen) return;
-    const handleClickOutside = (e: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(e.target as Node)) {
-        setLangOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [langOpen]);
 
   const handleFile = useCallback(async (selectedFile: File) => {
     setError(null);
@@ -108,113 +84,12 @@ export default function Home() {
     return () => window.removeEventListener('paste', handlePaste);
   }, [file, isAnalyzing, handleFile]);
 
-  const langExpandedStr: "true" | "false" = langOpen ? "true" : "false";
-  const menuExpandedStr: "true" | "false" = mobileMenuOpen ? "true" : "false";
-
   return (
     <main className="relative min-h-screen flex flex-col">
       <a href="#main-content" className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-[#4285f4] focus:text-white focus:rounded-full focus:text-sm">{t("home.skipToContent")}</a>
 
-      {/* ===== Header ===== */}
-      <header className="header-bar">
-        <div className="header-inner">
-          {/* Logo */}
-          <div className="header-logo">
-            <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
-            <span className="header-brand">SourceVerify</span>
-          </div>
-
-          {/* Nav — desktop */}
-          <nav className="header-nav" aria-label="Main navigation">
-            {NAV_KEYS.map(link => (
-              <Link key={link.key} href={link.href} className="header-nav-link">
-                {t(link.key)}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Actions */}
-          <div className="header-actions">
-            {/* Language Switcher */}
-            <div className="lang-switcher" ref={langRef}>
-              <button
-                className="lang-switcher-btn"
-                onClick={() => setLangOpen(!langOpen)}
-                aria-label="Change language"
-                {...{ "aria-expanded": langExpandedStr }}
-                aria-haspopup="listbox"
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10" />
-                  <line x1="2" y1="12" x2="22" y2="12" />
-                  <path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" />
-                </svg>
-                {LOCALE_LABELS[locale]}
-              </button>
-              {langOpen && (
-                <div className="lang-dropdown" role="listbox" aria-label="Language selection">
-                  {LOCALES.map((l) => (
-                    <button
-                      key={l}
-                      role="option"
-                      {...{ "aria-selected": l === locale ? "true" : "false" }}
-                      className={`lang-option ${l === locale ? "active" : ""}`}
-                      onClick={() => { setLocale(l); setLangOpen(false); }}
-                    >
-                      {LOCALE_LABELS[l]}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
-            {/* GitHub */}
-            <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer"
-              className="header-github-link">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-              </svg>
-              GitHub
-            </a>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button className="header-mobile-toggle" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu" {...{ "aria-expanded": menuExpandedStr }}>
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-              {mobileMenuOpen ? (
-                <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></>
-              ) : (
-                <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>
-              )}
-            </svg>
-          </button>
-        </div>
-
-        {/* Mobile menu */}
-        {mobileMenuOpen && (
-          <div className="header-mobile-menu">
-            {NAV_KEYS.map(link => (
-              <Link key={link.key} href={link.href} className="header-mobile-link" onClick={() => setMobileMenuOpen(false)}>
-                {t(link.key)}
-              </Link>
-            ))}
-            <div className="header-mobile-lang">
-              {LOCALES.map((l) => (
-                <button
-                  key={l}
-                  className={`lang-mobile-btn ${l === locale ? "active" : ""}`}
-                  onClick={() => { setLocale(l); setMobileMenuOpen(false); }}
-                >
-                  {LOCALE_LABELS[l]}
-                </button>
-              ))}
-            </div>
-            <a href="https://github.com/quangminh1212/SourceVerify" target="_blank" rel="noopener noreferrer" className="header-mobile-link">
-              GitHub
-            </a>
-          </div>
-        )}
-      </header>
+      {/* ===== Header (shared component) ===== */}
+      <Header />
 
       {/* ===== Hero ===== */}
       <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 sm:px-10 pt-12 pb-16">
