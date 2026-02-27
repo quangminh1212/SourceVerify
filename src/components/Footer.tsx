@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const FOOTER_LINKS = [
@@ -20,11 +19,7 @@ export default function Footer({ showLinks = false }: FooterProps) {
     return (
         <footer className="relative z-10 footer-divider">
             <div className="max-w-6xl mx-auto px-6 sm:px-10 py-8">
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-                    <Link href="/" className="flex items-center gap-2">
-                        <Image src="/logo.png" alt="SourceVerify" width={showLinks ? 22 : 18} height={showLinks ? 22 : 18} priority />
-                        <span className={`${showLinks ? 'text-sm' : 'text-xs'} font-semibold text-[--color-text-primary]`}>SourceVerify</span>
-                    </Link>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                     {showLinks && (
                         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs text-[--color-text-muted]">
                             {FOOTER_LINKS.map(link => (
