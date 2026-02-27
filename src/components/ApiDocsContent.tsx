@@ -161,10 +161,10 @@ print(await response.stream.bytesToString());`,
 
                 {/* Overview */}
                 <div id="overview" className="mb-24 scroll-mt-24 animate-fade-in-up">
-                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-3">
+                    <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-5">
                         SourceVerify <span className="gradient-text">API</span>
                     </h1>
-                    <p className="text-sm sm:text-base leading-[1.8] text-[--color-text-secondary]">
+                    <p className="text-sm sm:text-base leading-[1.8] text-[--color-text-secondary] mb-4">
                         Integrate AI-generated content detection into your applications with a simple REST API.
                     </p>
                 </div>
