@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 
@@ -160,7 +160,7 @@ print(await response.stream.bytesToString());`,
             <div className="w-full max-w-4xl px-8 sm:px-12 lg:px-16">
 
                 {/* Overview */}
-                <div id="overview" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                <div id="overview" className="mb-24 scroll-mt-24 animate-fade-in-up">
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-3">
                         SourceVerify <span className="gradient-text">API</span>
                     </h1>
@@ -170,8 +170,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Authentication */}
-                <div id="auth" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Authentication</h2>
+                <div id="auth" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Authentication</h2>
                     {user ? (
                         <div className="api-user-card">
                             <div className="api-user-info">
@@ -211,8 +211,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Rate Limits */}
-                <div id="rate-limits" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Rate Limits</h2>
+                <div id="rate-limits" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Rate Limits</h2>
                     <table className="api-table">
                         <thead><tr><th>Plan</th><th>Requests / min</th><th>Daily Limit</th></tr></thead>
                         <tbody>
@@ -225,8 +225,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Endpoint */}
-                <div id="endpoint" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Endpoint</h2>
+                <div id="endpoint" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Endpoint</h2>
                     <div className="api-endpoint-card">
                         <div className="api-method">POST</div>
                         <code className="api-url">/api/v1/analyze</code>
@@ -256,8 +256,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Response */}
-                <div id="response" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Response</h2>
+                <div id="response" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Response</h2>
                     <pre className="api-response-example">{JSON.stringify({
                         success: true,
                         data: {
@@ -276,15 +276,15 @@ print(await response.stream.bytesToString());`,
                             <tbody>
                                 <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>Likely AI-generated</td><td>&ge; 55</td></tr>
                                 <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>Likely authentic</td><td>&le; 40</td></tr>
-                                <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41–54</td></tr>
+                                <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41â€“54</td></tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 {/* Error Codes */}
-                <div id="error-codes" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Error Codes</h2>
+                <div id="error-codes" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Error Codes</h2>
                     <table className="api-table">
                         <thead><tr><th>Status</th><th>Code</th><th>Description</th></tr></thead>
                         <tbody>
@@ -298,8 +298,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Analyze by URL */}
-                <div id="url-analysis" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Analyze by URL</h2>
+                <div id="url-analysis" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Analyze by URL</h2>
                     <p className="text-sm text-[--color-text-secondary] mb-4">Analyze an image by providing its URL instead of uploading a file.</p>
                     <div className="api-endpoint-card">
                         <div className="api-method">POST</div>
@@ -322,8 +322,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Batch Analysis */}
-                <div id="batch-analysis" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Batch Analysis</h2>
+                <div id="batch-analysis" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Batch Analysis</h2>
                     <p className="text-sm text-[--color-text-secondary] mb-4">Analyze up to 10 images in a single request. Results are returned in the same order as the input.</p>
                     <div className="api-endpoint-card">
                         <div className="api-method">POST</div>
@@ -353,8 +353,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Analysis History */}
-                <div id="analysis-history" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Analysis History</h2>
+                <div id="analysis-history" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Analysis History</h2>
                     <p className="text-sm text-[--color-text-secondary] mb-4">Retrieve your past analysis results with pagination support.</p>
                     <div className="api-endpoint-card">
                         <div className="api-method api-method-get">GET</div>
@@ -386,8 +386,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* Webhooks */}
-                <div id="webhooks" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Webhooks</h2>
+                <div id="webhooks" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Webhooks</h2>
                     <p className="text-sm text-[--color-text-secondary] mb-4">Receive real-time notifications when an analysis completes. Register a webhook URL to get POST requests with results.</p>
                     <div className="api-endpoint-card">
                         <div className="api-method">POST</div>
@@ -421,8 +421,8 @@ print(await response.stream.bytesToString());`,
                 </div>
 
                 {/* SDKs */}
-                <div id="sdks" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">SDKs & Libraries</h2>
+                <div id="sdks" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">SDKs & Libraries</h2>
                     <p className="text-sm text-[--color-text-secondary] mb-4">Official and community SDKs for popular languages.</p>
                     <table className="api-table">
                         <thead><tr><th>Language</th><th>Package</th><th>Install</th></tr></thead>
@@ -445,8 +445,8 @@ print(result.confidence)  # 0-100`}</pre>
                 </div>
 
                 {/* Code Examples */}
-                <div id="examples" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Examples</h2>
+                <div id="examples" className="mb-24 scroll-mt-24 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Examples</h2>
                     <div className="api-tabs">
                         {Object.entries({
                             curl: "cURL", python: "Python", javascript: "JS", go: "Go",
@@ -467,8 +467,8 @@ print(result.confidence)  # 0-100`}</pre>
 
                 {/* Test Result */}
                 {testResult && (
-                    <div className="mb-12 animate-fade-in-up">
-                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Test Result</h2>
+                    <div className="mb-20 animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-6 pb-3 border-b border-[--color-border-subtle]">Test Result</h2>
                         <pre className="api-response-example">{testResult}</pre>
                     </div>
                 )}
