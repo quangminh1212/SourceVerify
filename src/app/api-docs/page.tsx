@@ -4,7 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const API_BASE = typeof window !== "undefined" ? window.location.origin : "";
+const API_DOCS_URL = "https://sourceverify.app";
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "";
 
 interface UserInfo {
@@ -118,14 +118,14 @@ export default function ApiDocsPage() {
     const apiKey = user?.apiKey || "YOUR_API_KEY";
 
     const codeExamples: Record<string, string> = {
-        curl: `curl -X POST ${API_BASE}/api/v1/analyze \\
+        curl: `curl -X POST ${API_DOCS_URL}/api/v1/analyze \\
   -H "X-API-Key: ${apiKey}" \\
   -F "image=@photo.jpg"`,
 
         python: `import requests
 
 response = requests.post(
-    "${API_BASE}/api/v1/analyze",
+    "${API_DOCS_URL}/api/v1/analyze",
     headers={"X-API-Key": "${apiKey}"},
     files={"image": open("photo.jpg", "rb")}
 )
@@ -134,7 +134,7 @@ print(response.json())`,
         javascript: `const formData = new FormData();
 formData.append("image", fileInput.files[0]);
 
-const res = await fetch("${API_BASE}/api/v1/analyze", {
+const res = await fetch("${API_DOCS_URL}/api/v1/analyze", {
   method: "POST",
   headers: { "X-API-Key": "${apiKey}" },
   body: formData,
@@ -148,7 +148,7 @@ part, _ := writer.CreateFormFile("image", "photo.jpg")
 io.Copy(part, file)
 writer.Close()
 
-req, _ := http.NewRequest("POST", "${API_BASE}/api/v1/analyze", body)
+req, _ := http.NewRequest("POST", "${API_DOCS_URL}/api/v1/analyze", body)
 req.Header.Set("X-API-Key", "${apiKey}")
 req.Header.Set("Content-Type", writer.FormDataContentType())
 resp, _ := http.DefaultClient.Do(req)`,
