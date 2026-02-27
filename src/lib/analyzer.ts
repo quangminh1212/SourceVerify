@@ -1,14 +1,15 @@
 /**
- * SourceVerify AI Detection Engine v4
+ * SourceVerify AI Detection Engine v5
  * Main orchestrator — imports and coordinates all 13 signal modules
  *
- * v4 Changes (calibrated against 200-image benchmark):
- * - Metadata weight reduced 3.0→1.5 (web images lack EXIF equally)
- * - Verdict thresholds widened: AI≥60, Real≤35 (from 52/38)
- * - Peak boost reduced — require STRONGER evidence before boosting
- * - Dominant signal floor removed — was causing FP cascade
- * - Consensus thresholds raised — need MORE signals to agree
- * - Conservative approach: when in doubt, say "uncertain" not "AI"
+ * v5 Changes (calibrated against 2000-image benchmark):
+ * - Raised signal agreement thresholds (strongAI >= 70, veryStrong >= 82)
+ * - Reduced directional amplification (1.1→0.5, quadratic 0.025→0.008)
+ * - Reduced weighted majority coefficient (14→8)
+ * - Widened verdict thresholds: AI >= 56, Real <= 44 (from 50/46)
+ * - Stronger anti-FP guard (-5 instead of -3)
+ * - Reduced weights: CFA 2.5→1.5, DCT 3.0→2.0, Chromatic 1.0→0.5
+ * - Conservative approach: prioritize reducing false positives on web images
  */
 
 export type { AnalysisResult, AnalysisSignal, FileMetadata } from "./types";
@@ -81,50 +82,47 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     }
     let aiScore = Math.round(totalWeight > 0 ? weightedSum / totalWeight : 50);
 
-    // Step 2: Count and weight signal agreement
-    let aiLeaningWeight = 0;    // total weight of signals leaning AI
-    let realLeaningWeight = 0;  // total weight leaning Real
-    let strongAI = 0;           // count of strong AI signals (score >= 65)
-    let strongReal = 0;         // count of strong Real signals (score <= 35)
+    // Step 2: Count signal agreement (v5: raised thresholds)
+    let aiLeaningWeight = 0;
+    let realLeaningWeight = 0;
+    let strongAI = 0;
+    let strongReal = 0;
     let veryStrongAI = 0;
     let veryStrongReal = 0;
 
     for (const signal of signals) {
-        if (signal.score > 50) aiLeaningWeight += signal.weight;
-        if (signal.score < 50) realLeaningWeight += signal.weight;
-        if (signal.score >= 65) strongAI++;
-        if (signal.score <= 35) strongReal++;
-        if (signal.score >= 78) veryStrongAI++;
-        if (signal.score <= 22) veryStrongReal++;
+        if (signal.score > 55) aiLeaningWeight += signal.weight;
+        if (signal.score < 45) realLeaningWeight += signal.weight;
+        if (signal.score >= 70) strongAI++;
+        if (signal.score <= 30) strongReal++;
+        if (signal.score >= 82) veryStrongAI++;
+        if (signal.score <= 18) veryStrongReal++;
     }
 
-    // Step 3: Consensus amplification
+    // Step 3: Consensus amplification (v5: more conservative)
     let adjustment = 0;
 
-    // Strong signal boost
-    if (veryStrongAI >= 3) adjustment += 14;
-    else if (strongAI >= 5) adjustment += 12;
-    else if (strongAI >= 3) adjustment += 8;
-    else if (strongAI >= 2) adjustment += 5;
-    else if (strongAI >= 1) adjustment += 2;
+    if (veryStrongAI >= 4) adjustment += 12;
+    else if (strongAI >= 6) adjustment += 10;
+    else if (strongAI >= 4) adjustment += 6;
+    else if (strongAI >= 2) adjustment += 3;
 
-    if (veryStrongReal >= 3) adjustment -= 14;
-    else if (strongReal >= 5) adjustment -= 12;
-    else if (strongReal >= 3) adjustment -= 8;
-    else if (strongReal >= 2) adjustment -= 5;
-    else if (strongReal >= 1) adjustment -= 2;
+    if (veryStrongReal >= 4) adjustment -= 12;
+    else if (strongReal >= 6) adjustment -= 10;
+    else if (strongReal >= 4) adjustment -= 6;
+    else if (strongReal >= 2) adjustment -= 3;
 
-    // Weighted majority vote
+    // Weighted majority vote (v5: reduced from 14 to 8)
     const weightRatio = totalWeight > 0
         ? (aiLeaningWeight - realLeaningWeight) / totalWeight
         : 0;
-    adjustment += Math.round(weightRatio * 14);
+    adjustment += Math.round(weightRatio * 8);
 
-    // Step 4: Directional amplification with quadratic component
+    // Step 4: Directional amplification (v5: much weaker)
     const deviation = aiScore - 50;
-    if (Math.abs(deviation) > 1) {
-        const linear = deviation * 1.1;
-        const quadratic = Math.sign(deviation) * (deviation * deviation) * 0.025;
+    if (Math.abs(deviation) > 3) {
+        const linear = deviation * 0.5;
+        const quadratic = Math.sign(deviation) * (deviation * deviation) * 0.008;
         adjustment += Math.round(linear + quadratic);
     }
 
@@ -135,38 +133,34 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
         else if (metadataSignal.score <= 15) adjustment -= 25;
     }
 
-    // Step 5b: Anti-FP guard (soft)
-    // Only activate when heavy signals strongly disagree with AI verdict
+    // Step 5b: Anti-FP guard (v5: stronger)
     let heavyRealCount = 0;
     let heavyAICount = 0;
     for (const signal of signals) {
-        if (signal.weight >= 3.0) {  // only highest-weight signals
+        if (signal.weight >= 3.0) {
             if (signal.score < 40) heavyRealCount++;
             if (signal.score > 60) heavyAICount++;
         }
     }
-    // Only apply when there's a clear heavy-signal consensus toward real
     if (heavyRealCount >= 2 && heavyAICount === 0 && aiScore + adjustment > 50) {
-        adjustment -= 3;
+        adjustment -= 5;
     }
-
-
 
     aiScore = Math.round(Math.max(3, Math.min(97, aiScore + adjustment)));
 
-    // Step 6: Verdict
+    // Step 6: Verdict (v5: widened thresholds)
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
 
-    if (aiScore >= 50) {
+    if (aiScore >= 56) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 50) * 1.0));
-    } else if (aiScore <= 46) {
+        confidence = Math.min(100, Math.round(50 + (aiScore - 56) * 1.1));
+    } else if (aiScore <= 44) {
         verdict = "real";
-        confidence = Math.min(100, Math.round(50 + (46 - aiScore) * 1.3));
+        confidence = Math.min(100, Math.round(50 + (44 - aiScore) * 1.1));
     } else {
         verdict = "uncertain";
-        confidence = Math.round(100 - Math.abs(aiScore - 47) * 8);
+        confidence = Math.round(100 - Math.abs(aiScore - 50) * 6);
     }
 
     return { aiScore, verdict, confidence };
