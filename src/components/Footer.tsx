@@ -18,7 +18,7 @@ export default function Footer({ showLinks = false }: FooterProps) {
 
     return (
         <footer className="relative z-10 border-t border-[--color-border-subtle]">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-10 py-6 sm:py-8">
+            <div className="footer-inner">
                 <div className="flex flex-col items-center justify-center gap-3 sm:gap-4">
                     {showLinks && (
                         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-[--color-text-muted]">
