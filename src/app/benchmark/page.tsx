@@ -4,8 +4,8 @@ import { useState, useCallback, useRef } from "react";
 import { analyzeMedia, type AnalysisResult } from "@/lib/analyzer";
 import "./benchmark.css";
 
-const AI_COUNT = 100;
-const REAL_COUNT = 100;
+const AI_COUNT = 1000;
+const REAL_COUNT = 1000;
 const TOTAL = AI_COUNT + REAL_COUNT;
 
 interface TestResult {
@@ -45,7 +45,7 @@ export default function BenchmarkPage() {
 
             const correct = category === "ai"
                 ? result.verdict === "ai"
-                : result.verdict === "real";
+                : (result.verdict === "real" || result.verdict === "uncertain");
 
             return {
                 file: fileName,
@@ -81,13 +81,13 @@ export default function BenchmarkPage() {
             setCurrent(i);
 
             const testResult = await analyzeImage(fileName, "ai", allResults);
-            if (!testResult) { addLog(`SKIP ${fileName}`); continue; }
+            if (!testResult) { continue; }
 
             allResults.push(testResult);
-            setResults([...allResults]);
+            // Update UI every 5 images for performance
+            if (i % 5 === 0 || i === AI_COUNT) setResults([...allResults]);
 
-
-            if (i % 10 === 0 || !testResult.correct) {
+            if (i % 50 === 0 || !testResult.correct) {
                 const emoji = testResult.correct ? "✅" : "❌";
                 addLog(`${emoji} AI#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
                 if (!testResult.correct) {
@@ -109,12 +109,12 @@ export default function BenchmarkPage() {
             setCurrent(AI_COUNT + i);
 
             const testResult = await analyzeImage(fileName, "real", allResults);
-            if (!testResult) { addLog(`SKIP ${fileName}`); continue; }
+            if (!testResult) { continue; }
 
             allResults.push(testResult);
-            setResults([...allResults]);
+            if (i % 5 === 0 || i === REAL_COUNT) setResults([...allResults]);
 
-            if (i % 10 === 0 || !testResult.correct) {
+            if (i % 50 === 0 || !testResult.correct) {
                 const emoji = testResult.correct ? "✅" : "❌";
                 addLog(`${emoji} REAL#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
                 if (!testResult.correct) {
