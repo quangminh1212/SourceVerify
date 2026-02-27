@@ -40,13 +40,11 @@ export default function ApiDocsPage() {
     }, []);
 
     useEffect(() => {
-        // Restore from localStorage
         const saved = localStorage.getItem("sv_user");
         if (saved) {
             try { setUser(JSON.parse(saved)); } catch { /* ignore */ }
         }
 
-        // Load Google Identity Services
         if (!GOOGLE_CLIENT_ID) return;
         const script = document.createElement("script");
         script.src = "https://accounts.google.com/gsi/client";
@@ -54,20 +52,22 @@ export default function ApiDocsPage() {
         script.defer = true;
         script.onload = () => {
             if (typeof window !== "undefined" && (window as unknown as Record<string, unknown>).google) {
-                const google = (window as unknown as Record<string, { initialize: (config: unknown) => void; renderButton: (el: HTMLElement | null, config: unknown) => void }>).google;
-                google.accounts.id.initialize({
-                    client_id: GOOGLE_CLIENT_ID,
-                    callback: handleGoogleCallback,
-                });
-                const btnEl = document.getElementById("google-signin-btn");
-                if (btnEl) {
-                    google.accounts.id.renderButton(btnEl, {
-                        theme: "filled_black",
-                        size: "large",
-                        text: "signin_with",
-                        shape: "rectangular",
-                        width: 280,
+                const google = (window as unknown as Record<string, Record<string, { initialize: (c: unknown) => void; renderButton: (e: HTMLElement | null, c: unknown) => void }>>).google;
+                if (google?.accounts?.id) {
+                    google.accounts.id.initialize({
+                        client_id: GOOGLE_CLIENT_ID,
+                        callback: handleGoogleCallback,
                     });
+                    const btnEl = document.getElementById("google-signin-btn");
+                    if (btnEl) {
+                        google.accounts.id.renderButton(btnEl, {
+                            theme: "filled_black",
+                            size: "large",
+                            text: "signin_with",
+                            shape: "rectangular",
+                            width: 280,
+                        });
+                    }
                 }
             }
         };
@@ -93,7 +93,6 @@ export default function ApiDocsPage() {
         setTesting(true);
         setTestResult("Analyzing...");
         try {
-            // Create a simple test image (1x1 red pixel PNG)
             const canvas = document.createElement("canvas");
             canvas.width = 100; canvas.height = 100;
             const ctx = canvas.getContext("2d")!;
@@ -119,250 +118,162 @@ export default function ApiDocsPage() {
     const apiKey = user?.apiKey || "YOUR_API_KEY";
 
     const codeExamples: Record<string, string> = {
-        curl: `# Upload image file
-curl -X POST ${API_BASE}/api/v1/analyze \\
+        curl: `curl -X POST ${API_BASE}/api/v1/analyze \\
   -H "X-API-Key: ${apiKey}" \\
-  -F "image=@photo.jpg"
-
-# Or with base64 JSON
-curl -X POST ${API_BASE}/api/v1/analyze \\
-  -H "X-API-Key: ${apiKey}" \\
-  -H "Content-Type: application/json" \\
-  -d '{"image": "data:image/jpeg;base64,...", "fileName": "photo.jpg"}'`,
+  -F "image=@photo.jpg"`,
 
         python: `import requests
 
-API_KEY = "${apiKey}"
-API_URL = "${API_BASE}/api/v1/analyze"
-
-# Method 1: Upload file
-with open("photo.jpg", "rb") as f:
-    response = requests.post(
-        API_URL,
-        headers={"X-API-Key": API_KEY},
-        files={"image": ("photo.jpg", f, "image/jpeg")}
-    )
-
-result = response.json()
-print(f"Verdict: {result['data']['verdict']}")
-print(f"AI Score: {result['data']['aiScore']}")
-print(f"Confidence: {result['data']['confidence']}%")
-
-# Method 2: Base64
-import base64
-with open("photo.jpg", "rb") as f:
-    b64 = base64.b64encode(f.read()).decode()
-
 response = requests.post(
-    API_URL,
-    headers={"X-API-Key": API_KEY, "Content-Type": "application/json"},
-    json={"image": f"data:image/jpeg;base64,{b64}", "fileName": "photo.jpg"}
-)`,
+    "${API_BASE}/api/v1/analyze",
+    headers={"X-API-Key": "${apiKey}"},
+    files={"image": open("photo.jpg", "rb")}
+)
+print(response.json())`,
 
-        javascript: `// Node.js / Browser
-const API_KEY = "${apiKey}";
-const API_URL = "${API_BASE}/api/v1/analyze";
-
-// Method 1: FormData (Browser)
-const formData = new FormData();
+        javascript: `const formData = new FormData();
 formData.append("image", fileInput.files[0]);
 
-const response = await fetch(API_URL, {
+const res = await fetch("${API_BASE}/api/v1/analyze", {
   method: "POST",
-  headers: { "X-API-Key": API_KEY },
+  headers: { "X-API-Key": "${apiKey}" },
   body: formData,
 });
-const result = await response.json();
-console.log("Verdict:", result.data.verdict);
-console.log("AI Score:", result.data.aiScore);
+console.log(await res.json());`,
 
-// Method 2: Node.js with fs
-const fs = require("fs");
-const image = fs.readFileSync("photo.jpg").toString("base64");
+        go: `file, _ := os.Open("photo.jpg")
+body := &bytes.Buffer{}
+writer := multipart.NewWriter(body)
+part, _ := writer.CreateFormFile("image", "photo.jpg")
+io.Copy(part, file)
+writer.Close()
 
-const res = await fetch(API_URL, {
-  method: "POST",
-  headers: {
-    "X-API-Key": API_KEY,
-    "Content-Type": "application/json",
-  },
-  body: JSON.stringify({
-    image: \`data:image/jpeg;base64,\${image}\`,
-    fileName: "photo.jpg",
-  }),
-});`,
-
-        go: `package main
-
-import (
-    "bytes"
-    "encoding/json"
-    "fmt"
-    "io"
-    "mime/multipart"
-    "net/http"
-    "os"
-)
-
-func main() {
-    apiKey := "${apiKey}"
-    apiURL := "${API_BASE}/api/v1/analyze"
-
-    // Open file
-    file, _ := os.Open("photo.jpg")
-    defer file.Close()
-
-    // Create multipart form
-    body := &bytes.Buffer{}
-    writer := multipart.NewWriter(body)
-    part, _ := writer.CreateFormFile("image", "photo.jpg")
-    io.Copy(part, file)
-    writer.Close()
-
-    // Send request
-    req, _ := http.NewRequest("POST", apiURL, body)
-    req.Header.Set("X-API-Key", apiKey)
-    req.Header.Set("Content-Type", writer.FormDataContentType())
-
-    resp, _ := http.DefaultClient.Do(req)
-    defer resp.Body.Close()
-
-    var result map[string]interface{}
-    json.NewDecoder(resp.Body).Decode(&result)
-    fmt.Printf("Result: %+v\\n", result)
-}`,
+req, _ := http.NewRequest("POST", "${API_BASE}/api/v1/analyze", body)
+req.Header.Set("X-API-Key", "${apiKey}")
+req.Header.Set("Content-Type", writer.FormDataContentType())
+resp, _ := http.DefaultClient.Do(req)`,
     };
 
     return (
-        <>
-            <Header active="/api-docs" />
-            <main className="api-docs-page">
-                {/* Hero */}
-                <section className="api-hero">
-                    <div className="api-hero-badge">API v1</div>
-                    <h1>SourceVerify API</h1>
-                    <p className="api-hero-desc">
-                        Integrate AI-generated content detection into your applications.
-                        Analyze images programmatically with our powerful multi-signal detection engine.
-                    </p>
-                </section>
+        <main className="relative min-h-screen flex flex-col">
+            <Header />
 
-                <div className="api-docs-container">
-                    {/* Auth Section */}
-                    <section className="api-section" id="authentication">
-                        <h2>🔐 Authentication</h2>
-                        <p>Sign in with Google to get your personal API key. Each user receives a unique key for tracking usage.</p>
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
+                <div className="w-full max-w-3xl mx-auto">
 
+                    {/* Hero */}
+                    <div className="text-center section-gap animate-fade-in-up">
+                        <div className="subpage-badge">API v1</div>
+                        <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4">
+                            SourceVerify <span className="gradient-text">API</span>
+                        </h1>
+                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] max-w-xl mx-auto">
+                            Integrate AI-generated content detection into your applications with a simple REST API.
+                        </p>
+                    </div>
+
+                    {/* Authentication */}
+                    <div className="section-gap animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Authentication</h2>
                         {user ? (
                             <div className="api-user-card">
                                 <div className="api-user-info">
-                                    {user.picture && <img src={user.picture} alt="" className="api-user-avatar" />}
+                                    {user.picture && <img src={user.picture} alt="" className="api-user-avatar" referrerPolicy="no-referrer" />}
                                     <div>
                                         <div className="api-user-name">{user.name}</div>
                                         <div className="api-user-email">{user.email}</div>
-                                        <div className="api-user-usage">API calls: {user.usageCount}</div>
                                     </div>
                                 </div>
                                 <div className="api-key-box">
-                                    <label>Your API Key</label>
+                                    <label>API Key</label>
                                     <div className="api-key-row">
                                         <code className="api-key-value">{user.apiKey}</code>
                                         <button onClick={copyKey} className="api-copy-btn">
-                                            {copied ? "✓ Copied" : "📋 Copy"}
+                                            {copied ? "Copied" : "Copy"}
                                         </button>
                                     </div>
                                 </div>
                                 <div className="api-user-actions">
                                     <button onClick={testApi} className="api-test-btn" disabled={testing}>
-                                        {testing ? "⏳ Testing..." : "🧪 Test API"}
+                                        {testing ? "Testing..." : "Test API"}
                                     </button>
                                     <button onClick={logout} className="api-logout-btn">Sign Out</button>
                                 </div>
                             </div>
                         ) : (
                             <div className="api-signin-card">
+                                <p className="text-sm text-[--color-text-secondary] mb-2">Sign in with Google to get your API key.</p>
                                 <div id="google-signin-btn"></div>
                                 {!GOOGLE_CLIENT_ID && (
                                     <p className="api-note">
-                                        ⚠️ Google Client ID not configured. Set <code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code> in your environment.
+                                        Google Client ID not configured. Set <code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code> in your environment.
                                     </p>
                                 )}
                             </div>
                         )}
-                    </section>
+                    </div>
 
                     {/* Endpoint */}
-                    <section className="api-section" id="endpoint">
-                        <h2>📡 Endpoint</h2>
+                    <div className="section-gap animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Endpoint</h2>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/v1/analyze</code>
                         </div>
 
-                        <h3>Headers</h3>
-                        <table className="api-table">
-                            <thead><tr><th>Header</th><th>Required</th><th>Description</th></tr></thead>
-                            <tbody>
-                                <tr><td><code>X-API-Key</code></td><td>✅</td><td>Your API key</td></tr>
-                                <tr><td><code>Content-Type</code></td><td>❌</td><td><code>multipart/form-data</code> or <code>application/json</code></td></tr>
-                            </tbody>
-                        </table>
+                        <div className="mt-4">
+                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Headers</h3>
+                            <table className="api-table">
+                                <thead><tr><th>Header</th><th>Required</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>X-API-Key</code></td><td>Yes</td><td>Your API key</td></tr>
+                                    <tr><td><code>Content-Type</code></td><td>No</td><td><code>multipart/form-data</code> or <code>application/json</code></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
 
-                        <h3>Request Body</h3>
-                        <table className="api-table">
-                            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
-                            <tbody>
-                                <tr><td><code>image</code></td><td>File / Base64</td><td>Image to analyze (max 10MB, JPEG/PNG/WebP)</td></tr>
-                                <tr><td><code>fileName</code></td><td>String</td><td>Optional filename (for JSON requests)</td></tr>
-                            </tbody>
-                        </table>
-                    </section>
+                        <div className="mt-4">
+                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Request Body</h3>
+                            <table className="api-table">
+                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>image</code></td><td>File / Base64</td><td>Image to analyze (max 10MB)</td></tr>
+                                    <tr><td><code>fileName</code></td><td>String</td><td>Optional filename (JSON requests)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     {/* Response */}
-                    <section className="api-section" id="response">
-                        <h2>📦 Response</h2>
+                    <div className="section-gap animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Response</h2>
                         <pre className="api-response-example">{JSON.stringify({
                             success: true,
                             data: {
                                 verdict: "ai",
                                 confidence: 87,
                                 aiScore: 78,
-                                signals: [
-                                    { name: "Noise Residual", score: 82, weight: 3.5 },
-                                    { name: "Spectral Nyquist", score: 75, weight: 3.0 },
-                                    { name: "Edge Coherence", score: 70, weight: 1.5 },
-                                ],
+                                signals: [{ name: "Noise Residual", score: 82 }],
                                 processingTimeMs: 245,
-                                imageInfo: { width: 1024, height: 768, format: "JPEG" },
                             },
-                            meta: { apiVersion: "v1", timestamp: "2026-02-27T12:00:00Z" },
                         }, null, 2)}</pre>
 
-                        <h3>Verdict Values</h3>
-                        <table className="api-table">
-                            <thead><tr><th>Value</th><th>Meaning</th><th>AI Score Range</th></tr></thead>
-                            <tbody>
-                                <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>Likely AI-generated</td><td>≥ 55</td></tr>
-                                <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>Likely authentic</td><td>≤ 40</td></tr>
-                                <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41-54</td></tr>
-                            </tbody>
-                        </table>
-
-                        <h3>Error Responses</h3>
-                        <table className="api-table">
-                            <thead><tr><th>Code</th><th>Meaning</th></tr></thead>
-                            <tbody>
-                                <tr><td>401</td><td>Missing API key</td></tr>
-                                <tr><td>403</td><td>Invalid API key</td></tr>
-                                <tr><td>413</td><td>Image too large (&gt;10MB)</td></tr>
-                                <tr><td>500</td><td>Analysis failed</td></tr>
-                            </tbody>
-                        </table>
-                    </section>
+                        <div className="mt-4">
+                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Verdict Values</h3>
+                            <table className="api-table">
+                                <thead><tr><th>Value</th><th>Meaning</th><th>Score</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>Likely AI-generated</td><td>&ge; 55</td></tr>
+                                    <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>Likely authentic</td><td>&le; 40</td></tr>
+                                    <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41–54</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
                     {/* Code Examples */}
-                    <section className="api-section" id="examples">
-                        <h2>💻 Code Examples</h2>
+                    <div className="section-gap animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Examples</h2>
                         <div className="api-tabs">
                             {(["curl", "python", "javascript", "go"] as const).map((tab) => (
                                 <button
@@ -370,37 +281,24 @@ func main() {
                                     className={`api-tab ${activeTab === tab ? "active" : ""}`}
                                     onClick={() => setActiveTab(tab)}
                                 >
-                                    {tab === "curl" ? "cURL" : tab === "python" ? "Python" : tab === "javascript" ? "JavaScript" : "Go"}
+                                    {tab === "curl" ? "cURL" : tab === "python" ? "Python" : tab === "javascript" ? "JS" : "Go"}
                                 </button>
                             ))}
                         </div>
                         <pre className="api-code-block">{codeExamples[activeTab]}</pre>
-                    </section>
+                    </div>
 
                     {/* Test Result */}
                     {testResult && (
-                        <section className="api-section" id="test-result">
-                            <h2>🧪 Test Result</h2>
+                        <div className="section-gap animate-fade-in-up">
+                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Test Result</h2>
                             <pre className="api-response-example">{testResult}</pre>
-                        </section>
+                        </div>
                     )}
-
-                    {/* Rate Limits */}
-                    <section className="api-section" id="limits">
-                        <h2>⚡ Rate Limits & Info</h2>
-                        <table className="api-table">
-                            <thead><tr><th>Limit</th><th>Value</th></tr></thead>
-                            <tbody>
-                                <tr><td>Max image size</td><td>10 MB</td></tr>
-                                <tr><td>Supported formats</td><td>JPEG, PNG, WebP, BMP, GIF</td></tr>
-                                <tr><td>Processing time</td><td>~200-500ms per image</td></tr>
-                                <tr><td>Signals analyzed</td><td>6 core signals (server-side)</td></tr>
-                            </tbody>
-                        </table>
-                    </section>
                 </div>
-            </main>
+            </div>
+
             <Footer />
-        </>
+        </main>
     );
 }
