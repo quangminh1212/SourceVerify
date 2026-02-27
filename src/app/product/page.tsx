@@ -26,7 +26,7 @@ export default function ProductPage() {
                             {t("product.headline")}{" "}
                             <span className="gradient-text">{t("product.headlineHighlight")}</span>
                         </h1>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed text-center animate-fade-in-up">
+                        <p className="text-xs sm:text-sm lg:text-[15px] text-[--color-text-secondary] leading-relaxed text-center animate-fade-in-up whitespace-nowrap">
                             {t("product.subtitle")}
                         </p>
                     </div>
