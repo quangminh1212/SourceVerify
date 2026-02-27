@@ -158,12 +158,12 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
 
-    if (aiScore >= 52) {
+    if (aiScore >= 51) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 52) * 1.0));
-    } else if (aiScore <= 43) {
+        confidence = Math.min(100, Math.round(50 + (aiScore - 51) * 1.0));
+    } else if (aiScore <= 44) {
         verdict = "real";
-        confidence = Math.min(100, Math.round(50 + (43 - aiScore) * 1.3));
+        confidence = Math.min(100, Math.round(50 + (44 - aiScore) * 1.3));
     } else {
         verdict = "uncertain";
         confidence = Math.round(100 - Math.abs(aiScore - 47) * 8);
