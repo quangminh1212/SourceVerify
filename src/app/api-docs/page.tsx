@@ -18,7 +18,7 @@ interface UserInfo {
 export default function ApiDocsPage() {
     const [user, setUser] = useState<UserInfo | null>(null);
     const [copied, setCopied] = useState(false);
-    const [activeTab, setActiveTab] = useState<"curl" | "python" | "javascript" | "go">("curl");
+    const [activeTab, setActiveTab] = useState<string>("curl");
     const [testResult, setTestResult] = useState<string>("");
     const [testing, setTesting] = useState(false);
 
@@ -152,6 +152,88 @@ req, _ := http.NewRequest("POST", "${API_DOCS_URL}/api/v1/analyze", body)
 req.Header.Set("X-API-Key", "${apiKey}")
 req.Header.Set("Content-Type", writer.FormDataContentType())
 resp, _ := http.DefaultClient.Do(req)`,
+
+        ruby: `require 'net/http'
+require 'uri'
+
+uri = URI("${API_DOCS_URL}/api/v1/analyze")
+req = Net::HTTP::Post.new(uri)
+req["X-API-Key"] = "${apiKey}"
+form = [["image", File.open("photo.jpg")]]
+req.set_form(form, "multipart/form-data")
+res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |h| h.request(req) }
+puts res.body`,
+
+        php: `$ch = curl_init("${API_DOCS_URL}/api/v1/analyze");
+curl_setopt_array($ch, [
+    CURLOPT_POST => true,
+    CURLOPT_RETURNTRANSFER => true,
+    CURLOPT_HTTPHEADER => ["X-API-Key: ${apiKey}"],
+    CURLOPT_POSTFIELDS => [
+        "image" => new CURLFile("photo.jpg")
+    ]
+]);
+$response = json_decode(curl_exec($ch));
+curl_close($ch);`,
+
+        java: `HttpClient client = HttpClient.newHttpClient();
+MultipartBodyPublisher body = MultipartBodyPublisher.newBuilder()
+    .addFile("image", Path.of("photo.jpg"))
+    .build();
+HttpRequest request = HttpRequest.newBuilder()
+    .uri(URI.create("${API_DOCS_URL}/api/v1/analyze"))
+    .header("X-API-Key", "${apiKey}")
+    .header("Content-Type", body.contentType())
+    .POST(body)
+    .build();
+HttpResponse<String> res = client.send(request, BodyHandlers.ofString());`,
+
+        csharp: `using var client = new HttpClient();
+client.DefaultRequestHeaders.Add("X-API-Key", "${apiKey}");
+using var content = new MultipartFormDataContent();
+content.Add(new StreamContent(File.OpenRead("photo.jpg")), "image", "photo.jpg");
+var res = await client.PostAsync("${API_DOCS_URL}/api/v1/analyze", content);
+var json = await res.Content.ReadAsStringAsync();`,
+
+        rust: `let form = reqwest::multipart::Form::new()
+    .file("image", "photo.jpg").await?;
+let res = reqwest::Client::new()
+    .post("${API_DOCS_URL}/api/v1/analyze")
+    .header("X-API-Key", "${apiKey}")
+    .multipart(form)
+    .send().await?
+    .json::<serde_json::Value>().await?;`,
+
+        kotlin: `val file = File("photo.jpg")
+val body = MultipartBody.Builder().setType(MultipartBody.FORM)
+    .addFormDataPart("image", file.name, file.asRequestBody())
+    .build()
+val request = Request.Builder()
+    .url("${API_DOCS_URL}/api/v1/analyze")
+    .addHeader("X-API-Key", "${apiKey}")
+    .post(body).build()
+val response = OkHttpClient().newCall(request).execute()`,
+
+        swift: `var request = URLRequest(url: URL(string: "${API_DOCS_URL}/api/v1/analyze")!)
+request.httpMethod = "POST"
+request.setValue("${apiKey}", forHTTPHeaderField: "X-API-Key")
+let boundary = UUID().uuidString
+request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+var data = Data()
+data.append("--\(boundary)\r\nContent-Disposition: form-data; name=\"image\"; filename=\"photo.jpg\"\r\n\r\n".data(using: .utf8)!)
+data.append(try! Data(contentsOf: URL(fileURLWithPath: "photo.jpg")))
+data.append("\r\n--\(boundary)--\r\n".data(using: .utf8)!)
+request.httpBody = data
+let (responseData, _) = try await URLSession.shared.upload(for: request, from: data)`,
+
+        dart: `import 'package:http/http.dart' as http;
+
+var request = http.MultipartRequest('POST',
+    Uri.parse('${API_DOCS_URL}/api/v1/analyze'));
+request.headers['X-API-Key'] = '${apiKey}';
+request.files.add(await http.MultipartFile.fromPath('image', 'photo.jpg'));
+var response = await request.send();
+print(await response.stream.bytesToString());`,
     };
 
     return (
@@ -275,13 +357,17 @@ resp, _ := http.DefaultClient.Do(req)`,
                     <div className="section-gap animate-fade-in-up">
                         <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Examples</h2>
                         <div className="api-tabs">
-                            {(["curl", "python", "javascript", "go"] as const).map((tab) => (
+                            {Object.entries({
+                                curl: "cURL", python: "Python", javascript: "JS", go: "Go",
+                                ruby: "Ruby", php: "PHP", java: "Java", csharp: "C#",
+                                rust: "Rust", kotlin: "Kotlin", swift: "Swift", dart: "Dart",
+                            }).map(([key, label]) => (
                                 <button
-                                    key={tab}
-                                    className={`api-tab ${activeTab === tab ? "active" : ""}`}
-                                    onClick={() => setActiveTab(tab)}
+                                    key={key}
+                                    className={`api-tab ${activeTab === key ? "active" : ""}`}
+                                    onClick={() => setActiveTab(key)}
                                 >
-                                    {tab === "curl" ? "cURL" : tab === "python" ? "Python" : tab === "javascript" ? "JS" : "Go"}
+                                    {label}
                                 </button>
                             ))}
                         </div>
