@@ -1,3 +1,8 @@
+
+const { createCanvas, loadImage } = require('canvas');
+const path = require('path');
+const MAX = 1024;
+
 /**
  * SourceVerify Node.js Headless Benchmark
  * Ports all 12 pixel-based signals to node-canvas for headless testing
@@ -140,10 +145,9 @@ function analyzeNoiseResidual(pixels, width, height) {
     const kurtDeviation = Math.abs(meanKurt - 3);
     let score = 50;
     if (shotCorrelation > 0.45) score -= 18; else if (shotCorrelation > 0.3) score -= 12; else if (shotCorrelation > 0.15) score -= 6; else if (shotCorrelation < -0.15) score += 15; else if (shotCorrelation < 0) score += 8; else score += 5;
-    // CV: AI ~0.73, Real ~1.0 → high CV = more real
-    if (cv < 0.2) score += 22; else if (cv < 0.4) score += 12; else if (cv < 0.6) score += 4; else if (cv > 1.0) score -= 18; else if (cv > 0.8) score -= 10;
-    // noiseLevel: AI ~7.8, Real ~25 → high noise = more real
-    if (noiseLevel < 3.0) score += 12; else if (noiseLevel < 6.0) score += 5; else if (noiseLevel > 15.0) score -= 18; else if (noiseLevel > 10.0) score -= 10; else if (noiseLevel > 8.0) score -= 3;
+    if (cv < 0.12) score += 22; else if (cv < 0.2) score += 14; else if (cv < 0.3) score += 6; else if (cv > 0.8) score -= 14; else if (cv > 0.5) score -= 8;
+    if (noiseLevel < 1.2) score += 10; else if (noiseLevel < 2.0) score += 5; else if (noiseLevel > 7.0) score -= 10; else if (noiseLevel > 5.0) score -= 5;
+    if (kurtDeviation > 3.0) score += 8; else if (kurtDeviation > 1.5) score += 4; else if (kurtDeviation < 0.5) score -= 4;
     return { name: "Noise Residual", score: Math.max(5, Math.min(95, score)), weight: 3.5 };
 }
 
@@ -463,132 +467,51 @@ function calculateVerdict(signals) {
     return { aiScore, verdict, confidence };
 }
 
-// ============ MAIN BENCHMARK ============
 
-async function analyzeImageFile(filePath) {
-    const img = await loadImage(filePath);
+
+async function analyze(fp) {
+    const img = await loadImage(fp);
     let w = img.width, h = img.height;
-    if (w > MAX_PROCESS_DIMENSION || h > MAX_PROCESS_DIMENSION) {
-        const scale = MAX_PROCESS_DIMENSION / Math.max(w, h);
-        w = Math.round(w * scale); h = Math.round(h * scale);
-    }
-    const canvas = createCanvas(w, h);
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(img, 0, 0, w, h);
-    const imageData = ctx.getImageData(0, 0, w, h);
-    const pixels = imageData.data;
-    const fileName = path.basename(filePath);
-    const signals = [
-        analyzeMetadata(fileName, 0),
-        analyzeSpectralNyquist(pixels, w, h),
-        analyzeNoiseResidual(pixels, w, h),
-        analyzeEdgeCoherence(pixels, w, h),
-        analyzeGradientMicroTexture(pixels, w, h),
-        analyzeBenfordsLaw(pixels, w, h),
-        analyzeChromaticAberration(pixels, w, h),
-        analyzeTextureConsistency(pixels, w, h),
-        analyzeCFAPattern(pixels, w, h),
-        analyzeDCTBlockArtifacts(pixels, w, h),
-        analyzeColorChannelCorrelation(pixels, w, h),
-        analyzePRNUPattern(pixels, w, h),
+    if (w > MAX || h > MAX) { const s = MAX / Math.max(w,h); w = Math.round(w*s); h = Math.round(h*s); }
+    const c = createCanvas(w,h), ctx = c.getContext('2d');
+    ctx.drawImage(img,0,0,w,h);
+    const px = ctx.getImageData(0,0,w,h).data;
+    const fn = path.basename(fp);
+    return [
+        analyzeMetadata(fn, 0),
+        analyzeSpectralNyquist(px, w, h),
+        analyzeNoiseResidual(px, w, h),
+        analyzeEdgeCoherence(px, w, h),
+        analyzeGradientMicroTexture(px, w, h),
+        analyzeBenfordsLaw(px, w, h),
+        analyzeChromaticAberration(px, w, h),
+        analyzeTextureConsistency(px, w, h),
+        analyzeCFAPattern(px, w, h),
+        analyzeDCTBlockArtifacts(px, w, h),
+        analyzeColorChannelCorrelation(px, w, h),
+        analyzePRNUPattern(px, w, h),
     ];
-    return { signals, ...calculateVerdict(signals) };
 }
 
-async function runBenchmark() {
-    const benchmarkDir = path.join(__dirname, '..', 'public', 'benchmark');
-    const aiFiles = [], realFiles = [];
-
-    const files = fs.readdirSync(benchmarkDir);
-    for (const f of files) {
-        if (f.startsWith('ai_face_') && f.endsWith('.jpg')) aiFiles.push(f);
-        else if (f.startsWith('real_photo_') && f.endsWith('.jpg')) realFiles.push(f);
+async function run() {
+    const dir = path.join(__dirname, '..', 'public', 'benchmark');
+    const aiFiles = ['ai_face_001.jpg','ai_face_050.jpg','ai_face_100.jpg','ai_face_200.jpg','ai_face_500.jpg'];
+    const realFiles = ['real_photo_001.jpg','real_photo_050.jpg','real_photo_100.jpg','real_photo_200.jpg','real_photo_500.jpg'];
+    
+    console.log('\n=== AI IMAGE SIGNALS ===');
+    for (const f of aiFiles) {
+        const signals = await analyze(path.join(dir, f));
+        const v = calculateVerdict(signals);
+        console.log('\n' + f + ' => score=' + v.aiScore + ' verdict=' + v.verdict);
+        for (const s of signals) console.log('  ' + s.name.padEnd(25) + ' score=' + String(s.score).padStart(3) + ' weight=' + s.weight);
     }
-    aiFiles.sort(); realFiles.sort();
-
-    console.log(`\n🔬 SourceVerify Node.js Benchmark`);
-    console.log(`   AI images: ${aiFiles.length}, Real images: ${realFiles.length}`);
-    console.log(`   Total: ${aiFiles.length + realFiles.length}\n`);
-
-    let tp = 0, fn = 0, fp = 0, tn = 0, aiUncertain = 0, realUncertain = 0;
-    const errors = [];
-    const startTime = Date.now();
-
-    // Phase 1: AI images
-    console.log('🤖 Phase 1: Testing AI images...');
-    console.log('  Starting loop, count:', aiFiles.length);
-    for (let i = 0; i < aiFiles.length; i++) {
-        if (i === 0) console.log('  Processing first file:', aiFiles[i]);
-        try {
-            const result = await analyzeImageFile(path.join(benchmarkDir, aiFiles[i]));
-            if (i === 0) console.log('  First result:', result.verdict, result.aiScore);
-            if (result.verdict === 'ai') tp++;
-            else if (result.verdict === 'real') { fn++; errors.push({ file: aiFiles[i], truth: 'ai', verdict: result.verdict, score: result.aiScore }); }
-            else { aiUncertain++; }
-            if ((i + 1) % 10 === 0) process.stdout.write(`  ${i + 1}/${aiFiles.length} (TP=${tp}, FN=${fn}, Unc=${aiUncertain})\r`);
-        } catch (e) { console.error(`\n  Error on ${aiFiles[i]}:`, e.message); }
+    
+    console.log('\n=== REAL IMAGE SIGNALS ===');
+    for (const f of realFiles) {
+        const signals = await analyze(path.join(dir, f));
+        const v = calculateVerdict(signals);
+        console.log('\n' + f + ' => score=' + v.aiScore + ' verdict=' + v.verdict);
+        for (const s of signals) console.log('  ' + s.name.padEnd(25) + ' score=' + String(s.score).padStart(3) + ' weight=' + s.weight);
     }
-    console.log(`\n  AI Done: TP=${tp}, FN=${fn}, Uncertain=${aiUncertain}`);
-
-    // Phase 2: Real images
-    console.log('\n📸 Phase 2: Testing Real images...');
-    for (let i = 0; i < realFiles.length; i++) {
-        try {
-            const result = await analyzeImageFile(path.join(benchmarkDir, realFiles[i]));
-            if (result.verdict === 'real') tn++;
-            else if (result.verdict === 'ai') { fp++; errors.push({ file: realFiles[i], truth: 'real', verdict: result.verdict, score: result.aiScore }); }
-            else { realUncertain++; }
-            if ((i + 1) % 10 === 0) process.stdout.write(`  ${i + 1}/${realFiles.length} (TN=${tn}, FP=${fp}, Unc=${realUncertain})\r`);
-        } catch (e) { console.error(`\n  Error on ${realFiles[i]}:`, e.message); }
-    }
-    console.log(`\n  Real Done: TN=${tn}, FP=${fp}, Uncertain=${realUncertain}`);
-
-    // Summary
-    const total = tp + fn + fp + tn + aiUncertain + realUncertain;
-    const correct = tp + tn + aiUncertain + realUncertain; // uncertain counted as correct for real, wrong for AI
-    // Strict: only ai→ai and real→real count
-    const strictCorrect = tp + tn;
-    const strictTotal = tp + fn + fp + tn;
-    const elapsedMs = Date.now() - startTime;
-
-    console.log(`\n${'='.repeat(60)}`);
-    console.log(`📊 BENCHMARK RESULTS`);
-    console.log(`${'='.repeat(60)}`);
-    console.log(`Total images tested: ${total}`);
-    console.log(`Time: ${(elapsedMs / 1000).toFixed(1)}s (${(elapsedMs / total).toFixed(0)}ms/image)`);
-    console.log(``);
-    console.log(`🤖 AI Detection (${aiFiles.length} AI images):`);
-    console.log(`   TP (AI→AI): ${tp} (${(tp / aiFiles.length * 100).toFixed(1)}%)`);
-    console.log(`   FN (AI→Real): ${fn} (${(fn / aiFiles.length * 100).toFixed(1)}%)`);
-    console.log(`   Uncertain: ${aiUncertain}`);
-    console.log(``);
-    console.log(`📸 Real Detection (${realFiles.length} Real images):`);
-    console.log(`   TN (Real→Real): ${tn} (${(tn / realFiles.length * 100).toFixed(1)}%)`);
-    console.log(`   FP (Real→AI): ${fp} (${(fp / realFiles.length * 100).toFixed(1)}%)`);
-    console.log(`   Uncertain: ${realUncertain}`);
-    console.log(``);
-    console.log(`📐 Metrics:`);
-    const precision = (tp + fp) > 0 ? tp / (tp + fp) : 0;
-    const recall = (tp + fn) > 0 ? tp / (tp + fn) : 0;
-    const f1 = (precision + recall) > 0 ? 2 * precision * recall / (precision + recall) : 0;
-    console.log(`   Strict Accuracy: ${(strictCorrect / strictTotal * 100).toFixed(1)}% (${strictCorrect}/${strictTotal})`);
-    console.log(`   Precision: ${(precision * 100).toFixed(1)}%`);
-    console.log(`   Recall: ${(recall * 100).toFixed(1)}%`);
-    console.log(`   F1-Score: ${(f1 * 100).toFixed(1)}%`);
-    console.log(``);
-
-    if (errors.length > 0) {
-        console.log(`\n❌ MISCLASSIFIED (${errors.length}):`);
-        for (const e of errors.slice(0, 30)) {
-            console.log(`   ${e.file}: truth=${e.truth}, verdict=${e.verdict}, score=${e.score}`);
-        }
-        if (errors.length > 30) console.log(`   ... and ${errors.length - 30} more`);
-    }
-
-    // Save results
-    const resultFile = path.join(__dirname, '..', 'benchmark_results.json');
-    fs.writeFileSync(resultFile, JSON.stringify({ timestamp: new Date().toISOString(), tp, fn, fp, tn, aiUncertain, realUncertain, strictAccuracy: strictCorrect / strictTotal, precision, recall, f1, errors, elapsedMs }, null, 2));
-    console.log(`\n💾 Results saved: ${resultFile}`);
 }
-
-runBenchmark().catch(console.error);
+run().catch(e => console.error(e));
