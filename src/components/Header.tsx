@@ -30,7 +30,24 @@ export default function Header({ active }: { active?: string }) {
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [user, setUser] = useState<GoogleUser | null>(null);
     const [gsiLoaded, setGsiLoaded] = useState(false);
+    const [isDark, setIsDark] = useState(false);
     const { locale, setLocale, t } = useLanguage();
+
+    // Dark mode initialization
+    useEffect(() => {
+        const stored = localStorage.getItem("sv_theme");
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const dark = stored ? stored === "dark" : prefersDark;
+        setIsDark(dark);
+        document.documentElement.classList.toggle("dark", dark);
+    }, []);
+
+    const toggleTheme = () => {
+        const next = !isDark;
+        setIsDark(next);
+        document.documentElement.classList.toggle("dark", next);
+        localStorage.setItem("sv_theme", next ? "dark" : "light");
+    };
 
     const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         try {
@@ -129,6 +146,32 @@ export default function Header({ active }: { active?: string }) {
                 </nav>
 
                 <div className="header-actions">
+                    {/* Theme Toggle */}
+                    <button
+                        className="theme-toggle-btn"
+                        onClick={toggleTheme}
+                        aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+                        title={isDark ? "Light mode" : "Dark mode"}
+                    >
+                        {isDark ? (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <circle cx="12" cy="12" r="5" />
+                                <line x1="12" y1="1" x2="12" y2="3" />
+                                <line x1="12" y1="21" x2="12" y2="23" />
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                                <line x1="1" y1="12" x2="3" y2="12" />
+                                <line x1="21" y1="12" x2="23" y2="12" />
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                            </svg>
+                        ) : (
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                            </svg>
+                        )}
+                    </button>
+
                     {/* Language Switcher */}
                     <div className="lang-switcher">
                         <button
@@ -191,14 +234,40 @@ export default function Header({ active }: { active?: string }) {
                         <>
                             <div id="header-google-btn" className={`header-google-signin ${gsiLoaded ? '' : 'hidden'}`}></div>
                             {!gsiLoaded && (
-                                <Link href="/api-docs" className="header-signin-fallback">
+                                <button
+                                    className="header-signin-fallback"
+                                    onClick={() => {
+                                        const g = (window as unknown as Record<string, Record<string, { prompt: () => void }>>).google;
+                                        if (g?.accounts?.id) {
+                                            g.accounts.id.prompt();
+                                        } else if (!GOOGLE_CLIENT_ID) {
+                                            alert("Google Sign In is not configured. Please set NEXT_PUBLIC_GOOGLE_CLIENT_ID environment variable.");
+                                        } else {
+                                            // GSI script might not be loaded yet, try loading it
+                                            const script = document.createElement("script");
+                                            script.src = "https://accounts.google.com/gsi/client";
+                                            script.async = true;
+                                            script.onload = () => {
+                                                const gg = (window as unknown as Record<string, Record<string, { initialize: (c: unknown) => void; prompt: () => void }>>).google;
+                                                if (gg?.accounts?.id) {
+                                                    gg.accounts.id.initialize({
+                                                        client_id: GOOGLE_CLIENT_ID,
+                                                        callback: handleGoogleCallback,
+                                                    });
+                                                    gg.accounts.id.prompt();
+                                                }
+                                            };
+                                            document.body.appendChild(script);
+                                        }
+                                    }}
+                                >
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
                                         <polyline points="10 17 15 12 10 7" />
                                         <line x1="15" y1="12" x2="3" y2="12" />
                                     </svg>
                                     Sign In
-                                </Link>
+                                </button>
                             )}
                         </>
                     )}
@@ -239,8 +308,14 @@ export default function Header({ active }: { active?: string }) {
                             <div id="mobile-google-btn"></div>
                         </div>
                     )}
-                    {/* Mobile language switcher */}
+                    {/* Mobile theme toggle + language switcher */}
                     <div className="header-mobile-lang">
+                        <button
+                            className={`lang-mobile-btn ${isDark ? "active" : ""}`}
+                            onClick={toggleTheme}
+                        >
+                            {isDark ? "☀️ Light" : "🌙 Dark"}
+                        </button>
                         {LOCALES.map((l) => (
                             <button
                                 key={l}
