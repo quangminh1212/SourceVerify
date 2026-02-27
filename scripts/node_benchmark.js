@@ -8,6 +8,9 @@ const { createCanvas, loadImage } = require('canvas');
 const fs = require('fs');
 const path = require('path');
 
+const PROGRESS_LOG = path.join(__dirname, '..', 'benchmark_progress.log');
+function flog(msg) { fs.appendFileSync(PROGRESS_LOG, `[${new Date().toLocaleTimeString()}] ${msg}\n`); console.log(msg); }
+
 process.on('unhandledRejection', (e) => { console.error('UNHANDLED:', e); process.exit(1); });
 process.on('uncaughtException', (e) => { console.error('UNCAUGHT:', e); process.exit(1); });
 
@@ -506,9 +509,10 @@ async function runBenchmark() {
     }
     aiFiles.sort(); realFiles.sort();
 
-    console.log(`\n🔬 SourceVerify Node.js Benchmark`);
-    console.log(`   AI images: ${aiFiles.length}, Real images: ${realFiles.length}`);
-    console.log(`   Total: ${aiFiles.length + realFiles.length}\n`);
+    fs.writeFileSync(PROGRESS_LOG, '');  // clear log
+    flog(`🔬 SourceVerify Node.js Benchmark`);
+    flog(`   AI images: ${aiFiles.length}, Real images: ${realFiles.length}`);
+    flog(`   Total: ${aiFiles.length + realFiles.length}`);
 
     let tp = 0, fn = 0, fp = 0, tn = 0, aiUncertain = 0, realUncertain = 0;
     const errors = [];
@@ -525,7 +529,7 @@ async function runBenchmark() {
             if (result.verdict === 'ai') tp++;
             else if (result.verdict === 'real') { fn++; errors.push({ file: aiFiles[i], truth: 'ai', verdict: result.verdict, score: result.aiScore }); }
             else { aiUncertain++; }
-            if ((i + 1) % 10 === 0) process.stdout.write(`  ${i + 1}/${aiFiles.length} (TP=${tp}, FN=${fn}, Unc=${aiUncertain})\r`);
+            if ((i + 1) % 100 === 0) flog(`AI ${i + 1}/${aiFiles.length} TP=${tp} FN=${fn} Unc=${aiUncertain}`);
         } catch (e) { console.error(`\n  Error on ${aiFiles[i]}:`, e.message); }
     }
     console.log(`\n  AI Done: TP=${tp}, FN=${fn}, Uncertain=${aiUncertain}`);
@@ -538,7 +542,7 @@ async function runBenchmark() {
             if (result.verdict === 'real') tn++;
             else if (result.verdict === 'ai') { fp++; errors.push({ file: realFiles[i], truth: 'real', verdict: result.verdict, score: result.aiScore }); }
             else { realUncertain++; }
-            if ((i + 1) % 10 === 0) process.stdout.write(`  ${i + 1}/${realFiles.length} (TN=${tn}, FP=${fp}, Unc=${realUncertain})\r`);
+            if ((i + 1) % 100 === 0) flog(`Real ${i + 1}/${realFiles.length} TN=${tn} FP=${fp} Unc=${realUncertain}`);
         } catch (e) { console.error(`\n  Error on ${realFiles[i]}:`, e.message); }
     }
     console.log(`\n  Real Done: TN=${tn}, FP=${fp}, Uncertain=${realUncertain}`);

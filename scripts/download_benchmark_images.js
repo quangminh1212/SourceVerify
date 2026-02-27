@@ -12,8 +12,8 @@ const fs = require('fs');
 const path = require('path');
 
 const BENCHMARK_DIR = path.join(__dirname, '..', 'public', 'benchmark');
-const AI_TARGET = 1000;
-const REAL_TARGET = 1000;
+const AI_TARGET = 5000;
+const REAL_TARGET = 5000;
 const CONCURRENT_DOWNLOADS = 8;
 const RETRY_MAX = 5;
 const DELAY_BETWEEN_REQUESTS = 150;
