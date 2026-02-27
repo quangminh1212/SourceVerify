@@ -39,14 +39,14 @@ export default function ApiDocsContent({
     const apiKey = user?.apiKey || "YOUR_API_KEY";
 
     const codeExamples: Record<string, string> = {
-        curl: `curl -X POST ${apiDocsUrl}/api/v1/analyze \\
+        curl: `curl -X POST ${apiDocsUrl}/api/analyze \\
   -H "X-API-Key: ${apiKey}" \\
   -F "image=@photo.jpg"`,
 
         python: `import requests
 
 response = requests.post(
-    "${apiDocsUrl}/api/v1/analyze",
+    "${apiDocsUrl}/api/analyze",
     headers={"X-API-Key": "${apiKey}"},
     files={"image": open("photo.jpg", "rb")}
 )
@@ -55,7 +55,7 @@ print(response.json())`,
         javascript: `const formData = new FormData();
 formData.append("image", fileInput.files[0]);
 
-const res = await fetch("${apiDocsUrl}/api/v1/analyze", {
+const res = await fetch("${apiDocsUrl}/api/analyze", {
   method: "POST",
   headers: { "X-API-Key": "${apiKey}" },
   body: formData,
@@ -69,7 +69,7 @@ part, _ := writer.CreateFormFile("image", "photo.jpg")
 io.Copy(part, file)
 writer.Close()
 
-req, _ := http.NewRequest("POST", "${apiDocsUrl}/api/v1/analyze", body)
+req, _ := http.NewRequest("POST", "${apiDocsUrl}/api/analyze", body)
 req.Header.Set("X-API-Key", "${apiKey}")
 req.Header.Set("Content-Type", writer.FormDataContentType())
 resp, _ := http.DefaultClient.Do(req)`,
@@ -77,7 +77,7 @@ resp, _ := http.DefaultClient.Do(req)`,
         ruby: `require 'net/http'
 require 'uri'
 
-uri = URI("${apiDocsUrl}/api/v1/analyze")
+uri = URI("${apiDocsUrl}/api/analyze")
 req = Net::HTTP::Post.new(uri)
 req["X-API-Key"] = "${apiKey}"
 form = [["image", File.open("photo.jpg")]]
@@ -85,7 +85,7 @@ req.set_form(form, "multipart/form-data")
 res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |h| h.request(req) }
 puts res.body`,
 
-        php: `$ch = curl_init("${apiDocsUrl}/api/v1/analyze");
+        php: `$ch = curl_init("${apiDocsUrl}/api/analyze");
 curl_setopt_array($ch, [
     CURLOPT_POST => true,
     CURLOPT_RETURNTRANSFER => true,
@@ -102,7 +102,7 @@ MultipartBodyPublisher body = MultipartBodyPublisher.newBuilder()
     .addFile("image", Path.of("photo.jpg"))
     .build();
 HttpRequest request = HttpRequest.newBuilder()
-    .uri(URI.create("${apiDocsUrl}/api/v1/analyze"))
+    .uri(URI.create("${apiDocsUrl}/api/analyze"))
     .header("X-API-Key", "${apiKey}")
     .header("Content-Type", body.contentType())
     .POST(body)
@@ -113,13 +113,13 @@ HttpResponse<String> res = client.send(request, BodyHandlers.ofString());`,
 client.DefaultRequestHeaders.Add("X-API-Key", "${apiKey}");
 using var content = new MultipartFormDataContent();
 content.Add(new StreamContent(File.OpenRead("photo.jpg")), "image", "photo.jpg");
-var res = await client.PostAsync("${apiDocsUrl}/api/v1/analyze", content);
+var res = await client.PostAsync("${apiDocsUrl}/api/analyze", content);
 var json = await res.Content.ReadAsStringAsync();`,
 
         rust: `let form = reqwest::multipart::Form::new()
     .file("image", "photo.jpg").await?;
 let res = reqwest::Client::new()
-    .post("${apiDocsUrl}/api/v1/analyze")
+    .post("${apiDocsUrl}/api/analyze")
     .header("X-API-Key", "${apiKey}")
     .multipart(form)
     .send().await?
@@ -130,12 +130,12 @@ val body = MultipartBody.Builder().setType(MultipartBody.FORM)
     .addFormDataPart("image", file.name, file.asRequestBody())
     .build()
 val request = Request.Builder()
-    .url("${apiDocsUrl}/api/v1/analyze")
+    .url("${apiDocsUrl}/api/analyze")
     .addHeader("X-API-Key", "${apiKey}")
     .post(body).build()
 val response = OkHttpClient().newCall(request).execute()`,
 
-        swift: `var request = URLRequest(url: URL(string: "${apiDocsUrl}/api/v1/analyze")!)
+        swift: `var request = URLRequest(url: URL(string: "${apiDocsUrl}/api/analyze")!)
 request.httpMethod = "POST"
 request.setValue("${apiKey}", forHTTPHeaderField: "X-API-Key")
 let boundary = UUID().uuidString
@@ -150,7 +150,7 @@ let (responseData, _) = try await URLSession.shared.upload(for: request, from: d
         dart: `import 'package:http/http.dart' as http;
 
 var request = http.MultipartRequest('POST',
-    Uri.parse('${apiDocsUrl}/api/v1/analyze'));
+    Uri.parse('${apiDocsUrl}/api/analyze'));
 request.headers['X-API-Key'] = '${apiKey}';
 request.files.add(await http.MultipartFile.fromPath('image', 'photo.jpg'));
 var response = await request.send();
@@ -273,7 +273,7 @@ print(await response.stream.bytesToString());`,
                         <p className="text-sm text-[--color-text-secondary] mb-6">Upload an image file to analyze whether it was AI-generated or authentic.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
-                            <code className="api-url">/api/v1/analyze</code>
+                            <code className="api-url">/api/analyze</code>
                         </div>
                         <div className="mt-8">
                             <h3 className="text-sm font-semibold text-[--color-text-primary] mb-3">Headers</h3>
@@ -309,7 +309,7 @@ print(await response.stream.bytesToString());`,
                         <p className="text-sm text-[--color-text-secondary] mb-6">Analyze an image by providing its public URL instead of uploading a file.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
-                            <code className="api-url">/api/v1/analyze-url</code>
+                            <code className="api-url">/api/analyze-url</code>
                         </div>
                         <div className="mt-8">
                             <h3 className="text-sm font-semibold text-[--color-text-primary] mb-3">Request Body</h3>
@@ -323,7 +323,7 @@ print(await response.stream.bytesToString());`,
                         </div>
                         <div className="mt-8">
                             <h3 className="text-sm font-semibold text-[--color-text-primary] mb-3">Example Request</h3>
-                            <pre className="api-code-block">{`curl -X POST ${apiDocsUrl}/api/v1/analyze-url \\
+                            <pre className="api-code-block">{`curl -X POST ${apiDocsUrl}/api/analyze-url \\
   -H "X-API-Key: ${apiKey}" \\
   -H "Content-Type: application/json" \\
   -d '{"url": "https://example.com/photo.jpg"}'`}</pre>
@@ -338,7 +338,7 @@ print(await response.stream.bytesToString());`,
                         <p className="text-sm text-[--color-text-secondary] mb-6">Analyze up to 10 images in a single request. Results are returned in the same order as the input.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
-                            <code className="api-url">/api/v1/analyze-batch</code>
+                            <code className="api-url">/api/analyze-batch</code>
                         </div>
                         <div className="mt-8">
                             <h3 className="text-sm font-semibold text-[--color-text-primary] mb-3">Request Body</h3>
@@ -374,7 +374,7 @@ print(await response.stream.bytesToString());`,
                         <p className="text-sm text-[--color-text-secondary] mb-6">Retrieve your past analysis results with pagination and filtering support.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method api-method-get">GET</div>
-                            <code className="api-url">/api/v1/history</code>
+                            <code className="api-url">/api/history</code>
                         </div>
                         <div className="mt-8">
                             <h3 className="text-sm font-semibold text-[--color-text-primary] mb-3">Query Parameters</h3>
@@ -495,7 +495,7 @@ print(await response.stream.bytesToString());`,
                         <p className="text-sm text-[--color-text-secondary] mb-6">Receive real-time notifications when an analysis completes. Register a webhook URL to get POST requests with results.</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
-                            <code className="api-url">/api/v1/webhooks</code>
+                            <code className="api-url">/api/webhooks</code>
                         </div>
                         <div className="mt-8">
                             <h3 className="text-sm font-semibold text-[--color-text-primary] mb-3">Register Webhook</h3>

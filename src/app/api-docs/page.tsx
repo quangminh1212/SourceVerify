@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import Header from "@/components/Header";
@@ -26,7 +26,7 @@ export default function ApiDocsPage() {
 
     const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         try {
-            const res = await fetch("/api/v1/auth", {
+            const res = await fetch("/api/auth", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ credential: response.credential }),
@@ -104,7 +104,7 @@ export default function ApiDocsPage() {
             const formData = new FormData();
             formData.append("image", blob, "test.png");
 
-            const res = await fetch("/api/v1/analyze", {
+            const res = await fetch("/api/analyze", {
                 method: "POST",
                 headers: { "X-API-Key": user.apiKey },
                 body: formData,

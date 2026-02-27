@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
@@ -52,7 +52,7 @@ export default function Header() {
 
     const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         try {
-            const res = await fetch("/api/v1/auth", {
+            const res = await fetch("/api/auth", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ credential: response.credential }),
@@ -315,7 +315,7 @@ export default function Header() {
                             className={`lang-mobile-btn ${isDark ? "active" : ""}`}
                             onClick={toggleTheme}
                         >
-                            {isDark ? "☀️ Light" : "🌙 Dark"}
+                            {isDark ? "â˜€ï¸ Light" : "ðŸŒ™ Dark"}
                         </button>
                         {LOCALES.map((l) => (
                             <button
