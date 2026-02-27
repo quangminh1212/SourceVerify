@@ -17,10 +17,10 @@ const SECTIONS = [
     {
         title: "Endpoints",
         items: [
-            { id: "endpoint", label: "Analyze Image" },
-            { id: "url-analysis", label: "Analyze by URL" },
-            { id: "batch-analysis", label: "Batch Analysis" },
-            { id: "analysis-history", label: "Analysis History" },
+            { id: "endpoint", label: "Analyze Image", method: "POST" },
+            { id: "url-analysis", label: "Analyze by URL", method: "POST" },
+            { id: "batch-analysis", label: "Batch Analysis", method: "POST" },
+            { id: "analysis-history", label: "Analysis History", method: "GET" },
         ],
     },
     {
@@ -49,9 +49,9 @@ const SECTIONS = [
 export default function ApiDocsSidebar({ activeSection, onSectionChange }: ApiDocsSidebarProps) {
     return (
         <aside className="api-docs-sidebar">
-            <nav className="sticky top-16 py-6 px-4">
+            <nav className="sticky top-16 py-5 overflow-y-auto max-h-[calc(100vh-4rem)]">
                 {SECTIONS.map((group) => (
-                    <div key={group.title}>
+                    <div key={group.title} className="mb-1">
                         <p className="api-sidebar-title">{group.title}</p>
                         <div className="api-sidebar-group">
                             {group.items.map((item) => (
@@ -65,6 +65,11 @@ export default function ApiDocsSidebar({ activeSection, onSectionChange }: ApiDo
                                         window.scrollTo({ top: 0, behavior: "smooth" });
                                     }}
                                 >
+                                    {"method" in item && item.method && (
+                                        <span className={`api-sidebar-badge ${item.method === "GET" ? "get" : "post"}`}>
+                                            {item.method}
+                                        </span>
+                                    )}
                                     {item.label}
                                 </a>
                             ))}
