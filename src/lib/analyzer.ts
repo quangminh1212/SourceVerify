@@ -135,21 +135,22 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
         else if (metadataSignal.score <= 15) adjustment -= 25;
     }
 
-    // Step 5b: Anti-FP guard
-    // If majority of high-weight signals say "real" but aggregate is borderline AI,
-    // add negative adjustment to prevent FP
+    // Step 5b: Anti-FP guard (soft)
+    // Only activate when heavy signals strongly disagree with AI verdict
     let heavyRealCount = 0;
     let heavyAICount = 0;
     for (const signal of signals) {
-        if (signal.weight >= 2.5) {
-            if (signal.score < 48) heavyRealCount++;
-            if (signal.score > 52) heavyAICount++;
+        if (signal.weight >= 3.0) {  // only highest-weight signals
+            if (signal.score < 40) heavyRealCount++;
+            if (signal.score > 60) heavyAICount++;
         }
     }
-    // If high-weight signals predominantly say "real" but overall score leans AI
-    if (heavyRealCount > heavyAICount && aiScore + adjustment > 50) {
-        adjustment -= 4;
+    // Only apply when there's a clear heavy-signal consensus toward real
+    if (heavyRealCount >= 2 && heavyAICount === 0 && aiScore + adjustment > 50) {
+        adjustment -= 3;
     }
+
+
 
     aiScore = Math.round(Math.max(3, Math.min(97, aiScore + adjustment)));
 
