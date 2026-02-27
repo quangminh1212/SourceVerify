@@ -244,30 +244,38 @@ print(await response.stream.bytesToString());`,
                 {/* Sidebar */}
                 <aside className="api-docs-sidebar">
                     <nav className="sticky top-16 py-6 px-4">
-                        <p className="text-[11px] font-bold text-[--color-text-muted] uppercase tracking-widest mb-4">API Reference</p>
-                        <div className="space-y-0.5">
-                            {[
-                                { id: "overview", label: "Overview", indent: false },
-                                { id: "auth", label: "Authentication", indent: false },
-                                { id: "endpoint", label: "Endpoint", indent: false },
-                                { id: "headers", label: "Headers", indent: true },
-                                { id: "request-body", label: "Request Body", indent: true },
-                                { id: "response", label: "Response", indent: false },
-                                { id: "verdict-values", label: "Verdict Values", indent: true },
-                                { id: "examples", label: "Examples", indent: false },
-                            ].map((item) => (
-                                <a
-                                    key={item.id}
-                                    href={`#${item.id}`}
-                                    className={`api-sidebar-link ${item.indent ? "api-sidebar-sub" : ""}`}
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        document.getElementById(item.id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                                    }}
-                                >
-                                    {item.label}
-                                </a>
-                            ))}
+                        {/* Getting Started */}
+                        <p className="api-sidebar-title">Getting Started</p>
+                        <div className="api-sidebar-group">
+                            <a href="#overview" className="api-sidebar-link" onClick={(e) => { e.preventDefault(); document.getElementById("overview")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Overview</a>
+                            <a href="#auth" className="api-sidebar-link" onClick={(e) => { e.preventDefault(); document.getElementById("auth")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Authentication</a>
+                            <a href="#auth" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("auth")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>API Key</a>
+                            <a href="#rate-limits" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("rate-limits")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Rate Limits</a>
+                        </div>
+
+                        {/* Endpoint */}
+                        <p className="api-sidebar-title">Endpoint</p>
+                        <div className="api-sidebar-group">
+                            <a href="#endpoint" className="api-sidebar-link" onClick={(e) => { e.preventDefault(); document.getElementById("endpoint")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Base URL</a>
+                            <a href="#headers" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("headers")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Headers</a>
+                            <a href="#request-body" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("request-body")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Request Body</a>
+                        </div>
+
+                        {/* Response */}
+                        <p className="api-sidebar-title">Response</p>
+                        <div className="api-sidebar-group">
+                            <a href="#response" className="api-sidebar-link" onClick={(e) => { e.preventDefault(); document.getElementById("response")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Response Format</a>
+                            <a href="#verdict-values" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("verdict-values")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Verdict Values</a>
+                            <a href="#error-codes" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("error-codes")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Error Codes</a>
+                        </div>
+
+                        {/* Code Examples */}
+                        <p className="api-sidebar-title">Code Examples</p>
+                        <div className="api-sidebar-group">
+                            <a href="#examples" className="api-sidebar-link" onClick={(e) => { e.preventDefault(); document.getElementById("examples")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Quick Start</a>
+                            <a href="#examples" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("examples")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>cURL / Python / JS</a>
+                            <a href="#examples" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("examples")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Go / Ruby / PHP</a>
+                            <a href="#examples" className="api-sidebar-link api-sidebar-sub" onClick={(e) => { e.preventDefault(); document.getElementById("examples")?.scrollIntoView({ behavior: "smooth", block: "start" }); }}>Java / C# / Rust</a>
                         </div>
                     </nav>
                 </aside>
@@ -328,6 +336,20 @@ print(await response.stream.bytesToString());`,
                             )}
                         </div>
 
+                        {/* Rate Limits */}
+                        <div id="rate-limits" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Rate Limits</h2>
+                            <table className="api-table">
+                                <thead><tr><th>Plan</th><th>Requests / min</th><th>Daily Limit</th></tr></thead>
+                                <tbody>
+                                    <tr><td>Free</td><td>10</td><td>100</td></tr>
+                                    <tr><td>Pro</td><td>60</td><td>5,000</td></tr>
+                                    <tr><td>Enterprise</td><td>300</td><td>Unlimited</td></tr>
+                                </tbody>
+                            </table>
+                            <p className="text-xs text-[--color-text-muted] mt-3">Exceeding the rate limit will return a <code>429 Too Many Requests</code> response.</p>
+                        </div>
+
                         {/* Endpoint */}
                         <div id="endpoint" className="mb-12 scroll-mt-20 animate-fade-in-up">
                             <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Endpoint</h2>
@@ -384,6 +406,21 @@ print(await response.stream.bytesToString());`,
                                     </tbody>
                                 </table>
                             </div>
+                        </div>
+
+                        {/* Error Codes */}
+                        <div id="error-codes" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Error Codes</h2>
+                            <table className="api-table">
+                                <thead><tr><th>Status</th><th>Code</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>400</code></td><td>INVALID_IMAGE</td><td>Image is invalid or corrupted</td></tr>
+                                    <tr><td><code>401</code></td><td>UNAUTHORIZED</td><td>Missing or invalid API key</td></tr>
+                                    <tr><td><code>413</code></td><td>FILE_TOO_LARGE</td><td>Image exceeds 10MB limit</td></tr>
+                                    <tr><td><code>429</code></td><td>RATE_LIMITED</td><td>Too many requests</td></tr>
+                                    <tr><td><code>500</code></td><td>INTERNAL_ERROR</td><td>Server error</td></tr>
+                                </tbody>
+                            </table>
                         </div>
 
                         {/* Code Examples */}
