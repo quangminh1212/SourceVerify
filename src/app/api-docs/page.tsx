@@ -249,7 +249,7 @@ print(await response.stream.bytesToString());`,
                         <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4">
                             SourceVerify <span className="gradient-text">API</span>
                         </h1>
-                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] max-w-xl mx-auto">
+                        <p className="text-xs sm:text-sm lg:text-base leading-[1.8] text-[--color-text-secondary] whitespace-nowrap">
                             Integrate AI-generated content detection into your applications with a simple REST API.
                         </p>
                     </div>
