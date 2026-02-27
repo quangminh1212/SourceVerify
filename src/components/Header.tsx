@@ -222,10 +222,10 @@ export default function Header({ active }: { active?: string }) {
                                         <div className="user-dropdown-email">{user.email}</div>
                                     </div>
                                     <Link href="/api-docs" className="user-dropdown-item" onClick={() => setUserMenuOpen(false)}>
-                                        🔑 API Key
+                                        API Key
                                     </Link>
                                     <button className="user-dropdown-item user-dropdown-logout" onClick={logout}>
-                                        🚪 Sign Out
+                                        Sign Out
                                     </button>
                                 </div>
                             )}
@@ -300,8 +300,8 @@ export default function Header({ active }: { active?: string }) {
                                 {user.picture && <img src={user.picture} alt="" className="mobile-user-avatar" referrerPolicy="no-referrer" />}
                                 <span className="mobile-user-name">{user.name}</span>
                             </div>
-                            <Link href="/api-docs" className="header-mobile-link" onClick={() => setOpen(false)}>🔑 API Key</Link>
-                            <button className="header-mobile-link mobile-logout-btn" onClick={() => { logout(); setOpen(false); }}>🚪 Sign Out</button>
+                            <Link href="/api-docs" className="header-mobile-link" onClick={() => setOpen(false)}>API Key</Link>
+                            <button className="header-mobile-link mobile-logout-btn" onClick={() => { logout(); setOpen(false); }}>Sign Out</button>
                         </div>
                     ) : (
                         <div className="mobile-google-wrapper">
