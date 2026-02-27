@@ -26,7 +26,7 @@ export default function ProductPage() {
                             {t("product.headline")}{" "}
                             <span className="gradient-text">{t("product.headlineHighlight")}</span>
                         </h1>
-                        <p className="text-xs sm:text-sm lg:text-[15px] text-[--color-text-secondary] leading-relaxed text-center animate-fade-in-up whitespace-nowrap">
+                        <p className="text-xs sm:text-sm lg:text-[15px] text-[--color-text-secondary] leading-relaxed text-center animate-fade-in-up">
                             {t("product.subtitle")}
                         </p>
                     </div>
@@ -39,7 +39,7 @@ export default function ProductPage() {
                             >
                                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${item.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                                 <div className="relative flex flex-col flex-1">
-                                    <div className="flex items-center gap-2 mb-3">
+                                    <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
                                         <span className="text-3xl lg:text-4xl">{item.icon}</span>
                                         <h3 className="text-base lg:text-lg font-bold text-[--color-text-primary]">{t(item.titleKey)}</h3>
                                     </div>
