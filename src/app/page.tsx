@@ -92,7 +92,7 @@ export default function Home() {
       <Header />
 
       {/* ===== Hero ===== */}
-      <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 sm:px-10 pt-12 pb-16">
+      <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-8 pt-12 pb-16">
 
         {!file && !result && (
           <div className="flex flex-col items-center gap-9 text-center max-w-3xl mx-auto animate-fade-in-up">
