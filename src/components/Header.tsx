@@ -10,7 +10,6 @@ const NAV_KEYS = [
     { key: "nav.product", href: "/product" },
     { key: "nav.features", href: "/features" },
     { key: "nav.howItWorks", href: "/how-it-works" },
-    { key: "nav.apiDocs", href: "/api-docs" },
     { key: "nav.about", href: "/about" },
 ];
 
