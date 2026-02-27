@@ -297,6 +297,153 @@ print(await response.stream.bytesToString());`,
                     </table>
                 </div>
 
+                {/* Analyze by URL */}
+                <div id="url-analysis" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Analyze by URL</h2>
+                    <p className="text-sm text-[--color-text-secondary] mb-4">Analyze an image by providing its URL instead of uploading a file.</p>
+                    <div className="api-endpoint-card">
+                        <div className="api-method">POST</div>
+                        <code className="api-url">/api/v1/analyze-url</code>
+                    </div>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Request Body</h3>
+                        <table className="api-table">
+                            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>url</code></td><td>String</td><td>Public URL of the image to analyze</td></tr>
+                                <tr><td><code>followRedirects</code></td><td>Boolean</td><td>Follow redirects (default: true)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pre className="api-code-block mt-4">{`curl -X POST ${apiDocsUrl}/api/v1/analyze-url \\
+  -H "X-API-Key: ${apiKey}" \\
+  -H "Content-Type: application/json" \\
+  -d '{"url": "https://example.com/photo.jpg"}'`}</pre>
+                </div>
+
+                {/* Batch Analysis */}
+                <div id="batch-analysis" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Batch Analysis</h2>
+                    <p className="text-sm text-[--color-text-secondary] mb-4">Analyze up to 10 images in a single request. Results are returned in the same order as the input.</p>
+                    <div className="api-endpoint-card">
+                        <div className="api-method">POST</div>
+                        <code className="api-url">/api/v1/analyze-batch</code>
+                    </div>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Request Body</h3>
+                        <table className="api-table">
+                            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>images</code></td><td>File[]</td><td>Up to 10 image files</td></tr>
+                                <tr><td><code>urls</code></td><td>String[]</td><td>Array of image URLs (alternative)</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pre className="api-response-example mt-4">{JSON.stringify({
+                        success: true,
+                        data: {
+                            results: [
+                                { index: 0, verdict: "ai", confidence: 87, aiScore: 78 },
+                                { index: 1, verdict: "real", confidence: 92, aiScore: 15 },
+                                { index: 2, verdict: "uncertain", confidence: 45, aiScore: 48 },
+                            ],
+                            totalProcessingTimeMs: 720,
+                        },
+                    }, null, 2)}</pre>
+                </div>
+
+                {/* Analysis History */}
+                <div id="analysis-history" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Analysis History</h2>
+                    <p className="text-sm text-[--color-text-secondary] mb-4">Retrieve your past analysis results with pagination support.</p>
+                    <div className="api-endpoint-card">
+                        <div className="api-method api-method-get">GET</div>
+                        <code className="api-url">/api/v1/history</code>
+                    </div>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Query Parameters</h3>
+                        <table className="api-table">
+                            <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>page</code></td><td>Number</td><td>Page number (default: 1)</td></tr>
+                                <tr><td><code>limit</code></td><td>Number</td><td>Results per page (default: 20, max: 100)</td></tr>
+                                <tr><td><code>verdict</code></td><td>String</td><td>Filter by verdict: ai, real, uncertain</td></tr>
+                                <tr><td><code>from</code></td><td>ISO Date</td><td>Start date filter</td></tr>
+                                <tr><td><code>to</code></td><td>ISO Date</td><td>End date filter</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pre className="api-response-example mt-4">{JSON.stringify({
+                        success: true,
+                        data: {
+                            results: [
+                                { id: "an_abc123", verdict: "ai", confidence: 87, createdAt: "2026-02-27T10:30:00Z" },
+                                { id: "an_def456", verdict: "real", confidence: 92, createdAt: "2026-02-27T09:15:00Z" },
+                            ],
+                            pagination: { page: 1, limit: 20, total: 42, totalPages: 3 },
+                        },
+                    }, null, 2)}</pre>
+                </div>
+
+                {/* Webhooks */}
+                <div id="webhooks" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Webhooks</h2>
+                    <p className="text-sm text-[--color-text-secondary] mb-4">Receive real-time notifications when an analysis completes. Register a webhook URL to get POST requests with results.</p>
+                    <div className="api-endpoint-card">
+                        <div className="api-method">POST</div>
+                        <code className="api-url">/api/v1/webhooks</code>
+                    </div>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Register Webhook</h3>
+                        <table className="api-table">
+                            <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>url</code></td><td>String</td><td>Your webhook endpoint URL (HTTPS required)</td></tr>
+                                <tr><td><code>events</code></td><td>String[]</td><td>Events to subscribe: analysis.complete, analysis.failed</td></tr>
+                                <tr><td><code>secret</code></td><td>String</td><td>Signing secret for verifying webhook payloads</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="mt-4">
+                        <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Webhook Payload</h3>
+                        <pre className="api-response-example">{JSON.stringify({
+                            event: "analysis.complete",
+                            data: {
+                                id: "an_abc123",
+                                verdict: "ai",
+                                confidence: 87,
+                                aiScore: 78,
+                                processingTimeMs: 245,
+                            },
+                            timestamp: "2026-02-27T10:30:00Z",
+                        }, null, 2)}</pre>
+                    </div>
+                </div>
+
+                {/* SDKs */}
+                <div id="sdks" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                    <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">SDKs & Libraries</h2>
+                    <p className="text-sm text-[--color-text-secondary] mb-4">Official and community SDKs for popular languages.</p>
+                    <table className="api-table">
+                        <thead><tr><th>Language</th><th>Package</th><th>Install</th></tr></thead>
+                        <tbody>
+                            <tr><td>Python</td><td><code>sourceverify</code></td><td><code>pip install sourceverify</code></td></tr>
+                            <tr><td>JavaScript</td><td><code>@sourceverify/sdk</code></td><td><code>npm install @sourceverify/sdk</code></td></tr>
+                            <tr><td>Go</td><td><code>sourceverify-go</code></td><td><code>go get github.com/sourceverify/sourceverify-go</code></td></tr>
+                            <tr><td>Ruby</td><td><code>sourceverify</code></td><td><code>gem install sourceverify</code></td></tr>
+                            <tr><td>PHP</td><td><code>sourceverify/sdk</code></td><td><code>composer require sourceverify/sdk</code></td></tr>
+                            <tr><td>Java</td><td><code>sourceverify-java</code></td><td><code>Maven / Gradle</code></td></tr>
+                        </tbody>
+                    </table>
+                    <pre className="api-code-block mt-4">{`# Python SDK Example
+from sourceverify import SourceVerify
+
+client = SourceVerify(api_key="${apiKey}")
+result = client.analyze("photo.jpg")
+print(result.verdict)  # "ai" | "real" | "uncertain"
+print(result.confidence)  # 0-100`}</pre>
+                </div>
+
                 {/* Code Examples */}
                 <div id="examples" className="mb-12 scroll-mt-20 animate-fade-in-up">
                     <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Examples</h2>

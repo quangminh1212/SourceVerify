@@ -18,12 +18,15 @@ export default function ApiDocsSidebar() {
                     <a href="#rate-limits" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("rate-limits")}>Rate Limits</a>
                 </div>
 
-                {/* Endpoint */}
-                <p className="api-sidebar-title">Endpoint</p>
+                {/* Endpoints */}
+                <p className="api-sidebar-title">Endpoints</p>
                 <div className="api-sidebar-group">
-                    <a href="#endpoint" className="api-sidebar-link" onClick={scrollTo("endpoint")}>Base URL</a>
+                    <a href="#endpoint" className="api-sidebar-link" onClick={scrollTo("endpoint")}>Analyze Image</a>
                     <a href="#headers" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("headers")}>Headers</a>
                     <a href="#request-body" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("request-body")}>Request Body</a>
+                    <a href="#url-analysis" className="api-sidebar-link" onClick={scrollTo("url-analysis")}>Analyze by URL</a>
+                    <a href="#batch-analysis" className="api-sidebar-link" onClick={scrollTo("batch-analysis")}>Batch Analysis</a>
+                    <a href="#analysis-history" className="api-sidebar-link" onClick={scrollTo("analysis-history")}>Analysis History</a>
                 </div>
 
                 {/* Response */}
@@ -32,6 +35,13 @@ export default function ApiDocsSidebar() {
                     <a href="#response" className="api-sidebar-link" onClick={scrollTo("response")}>Response Format</a>
                     <a href="#verdict-values" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("verdict-values")}>Verdict Values</a>
                     <a href="#error-codes" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("error-codes")}>Error Codes</a>
+                </div>
+
+                {/* Advanced */}
+                <p className="api-sidebar-title">Advanced</p>
+                <div className="api-sidebar-group">
+                    <a href="#webhooks" className="api-sidebar-link" onClick={scrollTo("webhooks")}>Webhooks</a>
+                    <a href="#sdks" className="api-sidebar-link" onClick={scrollTo("sdks")}>SDKs & Libraries</a>
                 </div>
 
                 {/* Code Examples */}
