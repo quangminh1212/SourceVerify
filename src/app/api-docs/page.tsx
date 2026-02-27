@@ -121,7 +121,40 @@ export default function ApiDocsPage() {
         <main className="relative min-h-screen flex flex-col">
             <Header />
 
-            <div className="flex-1 flex">
+            <div className="flex-1 flex flex-col lg:flex-row">
+                {/* Mobile section nav */}
+                <div className="lg:hidden px-4 py-3 border-b border-[rgba(255,255,255,0.06)] bg-[#0a0a0a]">
+                    <select
+                        value={activeSection}
+                        onChange={(e) => setActiveSection(e.target.value)}
+                        aria-label="Navigate API docs sections"
+                        className="w-full px-3 py-2 rounded-lg bg-[rgba(255,255,255,0.06)] text-white text-sm border border-[rgba(255,255,255,0.1)] outline-none"
+                    >
+                        <optgroup label="Getting Started">
+                            <option value="overview">Overview</option>
+                            <option value="auth">Authentication</option>
+                            <option value="rate-limits">Rate Limits</option>
+                        </optgroup>
+                        <optgroup label="Endpoints">
+                            <option value="endpoint">Analyze Image</option>
+                            <option value="url-analysis">Analyze by URL</option>
+                            <option value="batch-analysis">Batch Analysis</option>
+                            <option value="analysis-history">Analysis History</option>
+                        </optgroup>
+                        <optgroup label="Response">
+                            <option value="response">Response Format</option>
+                            <option value="verdict-values">Verdict Values</option>
+                            <option value="error-codes">Error Codes</option>
+                        </optgroup>
+                        <optgroup label="Advanced">
+                            <option value="webhooks">Webhooks</option>
+                            <option value="sdks">SDKs & Libraries</option>
+                        </optgroup>
+                        <optgroup label="Code Examples">
+                            <option value="examples">Quick Start</option>
+                        </optgroup>
+                    </select>
+                </div>
                 <ApiDocsSidebar activeSection={activeSection} onSectionChange={setActiveSection} />
                 <ApiDocsContent
                     activeSection={activeSection}
