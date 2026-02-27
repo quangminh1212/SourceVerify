@@ -156,8 +156,8 @@ print(await response.stream.bytesToString());`,
     };
 
     return (
-        <div className="flex-1 min-w-0 py-10 sm:py-14 lg:py-16 flex justify-center">
-            <div className="w-full max-w-4xl px-8 sm:px-12 lg:px-16">
+        <div className="flex-1 min-w-0 py-10 sm:py-14 lg:py-16">
+            <div className="w-full max-w-6xl px-8 sm:px-12 lg:px-16">
 
                 {/* Overview */}
                 <div id="overview" className="mb-24 scroll-mt-24 animate-fade-in-up">
