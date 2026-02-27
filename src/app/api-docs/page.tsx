@@ -240,14 +240,14 @@ print(await response.stream.bytesToString());`,
         <main className="relative min-h-screen flex flex-col">
             <Header />
 
-            <div className="flex-1 px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
-                <div className="w-full max-w-6xl mx-auto flex gap-8">
-
-                    {/* Sidebar */}
-                    <aside className="hidden xl:block w-48 flex-shrink-0">
-                        <nav className="sticky top-24 space-y-1">
-                            <p className="text-xs font-semibold text-[--color-text-muted] uppercase tracking-wider mb-3 px-3">On this page</p>
+            <div className="flex-1 flex">
+                {/* Sidebar */}
+                <aside className="api-docs-sidebar">
+                    <nav className="sticky top-16 py-6 px-4">
+                        <p className="text-[11px] font-bold text-[--color-text-muted] uppercase tracking-widest mb-4">API Reference</p>
+                        <div className="space-y-0.5">
                             {[
+                                { id: "overview", label: "Overview" },
                                 { id: "auth", label: "Authentication" },
                                 { id: "endpoint", label: "Endpoint" },
                                 { id: "response", label: "Response" },
@@ -265,151 +265,151 @@ print(await response.stream.bytesToString());`,
                                     {item.label}
                                 </a>
                             ))}
-                        </nav>
-                    </aside>
-
-                    {/* Content */}
-                    <div className="flex-1 min-w-0 max-w-3xl">
-
-                        {/* Hero */}
-                        <div className="text-center section-gap animate-fade-in-up">
-                            <div className="subpage-badge">API v1</div>
-                            <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4">
-                                SourceVerify <span className="gradient-text">API</span>
-                            </h1>
-                            <p className="text-xs sm:text-sm lg:text-base leading-[1.8] text-[--color-text-secondary] whitespace-nowrap">
-                                Integrate AI-generated content detection into your applications with a simple REST API.
-                            </p>
                         </div>
+                    </nav>
+                </aside>
 
-                        {/* Authentication */}
-                        <div id="auth" className="section-gap animate-fade-in-up scroll-mt-24">
-                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Authentication</h2>
-                            {user ? (
-                                <div className="api-user-card">
-                                    <div className="api-user-info">
-                                        {user.picture && <img src={user.picture} alt="" className="api-user-avatar" referrerPolicy="no-referrer" />}
-                                        <div>
-                                            <div className="api-user-name">{user.name}</div>
-                                            <div className="api-user-email">{user.email}</div>
-                                        </div>
+                {/* Content */}
+                <div className="flex-1 min-w-0 px-6 sm:px-8 lg:px-12 py-10 sm:py-14 lg:py-16 max-w-4xl">
+
+                    {/* Overview */}
+                    <div id="overview" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                        <div className="subpage-badge">API v1</div>
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-3">
+                            SourceVerify <span className="gradient-text">API</span>
+                        </h1>
+                        <p className="text-sm sm:text-base leading-[1.8] text-[--color-text-secondary]">
+                            Integrate AI-generated content detection into your applications with a simple REST API.
+                        </p>
+                    </div>
+
+                    {/* Authentication */}
+                    <div id="auth" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Authentication</h2>
+                        {user ? (
+                            <div className="api-user-card">
+                                <div className="api-user-info">
+                                    {user.picture && <img src={user.picture} alt="" className="api-user-avatar" referrerPolicy="no-referrer" />}
+                                    <div>
+                                        <div className="api-user-name">{user.name}</div>
+                                        <div className="api-user-email">{user.email}</div>
                                     </div>
-                                    <div className="api-key-box">
-                                        <label>API Key</label>
-                                        <div className="api-key-row">
-                                            <code className="api-key-value">{user.apiKey}</code>
-                                            <button onClick={copyKey} className="api-copy-btn">
-                                                {copied ? "Copied" : "Copy"}
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div className="api-user-actions">
-                                        <button onClick={testApi} className="api-test-btn" disabled={testing}>
-                                            {testing ? "Testing..." : "Test API"}
+                                </div>
+                                <div className="api-key-box">
+                                    <label>API Key</label>
+                                    <div className="api-key-row">
+                                        <code className="api-key-value">{user.apiKey}</code>
+                                        <button onClick={copyKey} className="api-copy-btn">
+                                            {copied ? "Copied" : "Copy"}
                                         </button>
-                                        <button onClick={logout} className="api-logout-btn">Sign Out</button>
                                     </div>
                                 </div>
-                            ) : (
-                                <div className="api-signin-card">
-                                    <p className="text-sm text-[--color-text-secondary] mb-2">Sign in with Google to get your API key.</p>
-                                    <div id="google-signin-btn"></div>
-                                    {!GOOGLE_CLIENT_ID && (
-                                        <p className="api-note">
-                                            Google Client ID not configured. Set <code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code> in your environment.
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                        </div>
-
-                        {/* Endpoint */}
-                        <div id="endpoint" className="section-gap animate-fade-in-up scroll-mt-24">
-                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Endpoint</h2>
-                            <div className="api-endpoint-card">
-                                <div className="api-method">POST</div>
-                                <code className="api-url">/api/v1/analyze</code>
-                            </div>
-
-                            <div className="mt-4">
-                                <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Headers</h3>
-                                <table className="api-table">
-                                    <thead><tr><th>Header</th><th>Required</th><th>Description</th></tr></thead>
-                                    <tbody>
-                                        <tr><td><code>X-API-Key</code></td><td>Yes</td><td>Your API key</td></tr>
-                                        <tr><td><code>Content-Type</code></td><td>No</td><td><code>multipart/form-data</code> or <code>application/json</code></td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            <div className="mt-4">
-                                <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Request Body</h3>
-                                <table className="api-table">
-                                    <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
-                                    <tbody>
-                                        <tr><td><code>image</code></td><td>File / Base64</td><td>Image to analyze (max 10MB)</td></tr>
-                                        <tr><td><code>fileName</code></td><td>String</td><td>Optional filename (JSON requests)</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        {/* Response */}
-                        <div id="response" className="section-gap animate-fade-in-up scroll-mt-24">
-                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Response</h2>
-                            <pre className="api-response-example">{JSON.stringify({
-                                success: true,
-                                data: {
-                                    verdict: "ai",
-                                    confidence: 87,
-                                    aiScore: 78,
-                                    signals: [{ name: "Noise Residual", score: 82 }],
-                                    processingTimeMs: 245,
-                                },
-                            }, null, 2)}</pre>
-
-                            <div className="mt-4">
-                                <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Verdict Values</h3>
-                                <table className="api-table">
-                                    <thead><tr><th>Value</th><th>Meaning</th><th>Score</th></tr></thead>
-                                    <tbody>
-                                        <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>Likely AI-generated</td><td>&ge; 55</td></tr>
-                                        <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>Likely authentic</td><td>&le; 40</td></tr>
-                                        <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41–54</td></tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                        {/* Code Examples */}
-                        <div id="examples" className="section-gap animate-fade-in-up scroll-mt-24">
-                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Examples</h2>
-                            <div className="api-tabs">
-                                {Object.entries({
-                                    curl: "cURL", python: "Python", javascript: "JS", go: "Go",
-                                    ruby: "Ruby", php: "PHP", java: "Java", csharp: "C#",
-                                    rust: "Rust", kotlin: "Kotlin", swift: "Swift", dart: "Dart",
-                                }).map(([key, label]) => (
-                                    <button
-                                        key={key}
-                                        className={`api-tab ${activeTab === key ? "active" : ""}`}
-                                        onClick={() => setActiveTab(key)}
-                                    >
-                                        {label}
+                                <div className="api-user-actions">
+                                    <button onClick={testApi} className="api-test-btn" disabled={testing}>
+                                        {testing ? "Testing..." : "Test API"}
                                     </button>
-                                ))}
+                                    <button onClick={logout} className="api-logout-btn">Sign Out</button>
+                                </div>
                             </div>
-                            <pre className="api-code-block">{codeExamples[activeTab]}</pre>
-                        </div>
-
-                        {/* Test Result */}
-                        {testResult && (
-                            <div className="section-gap animate-fade-in-up">
-                                <h2 className="text-lg font-bold text-[--color-text-primary] mb-3">Test Result</h2>
-                                <pre className="api-response-example">{testResult}</pre>
+                        ) : (
+                            <div className="api-signin-card">
+                                <p className="text-sm text-[--color-text-secondary] mb-2">Sign in with Google to get your API key.</p>
+                                <div id="google-signin-btn"></div>
+                                {!GOOGLE_CLIENT_ID && (
+                                    <p className="api-note">
+                                        Google Client ID not configured. Set <code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code> in your environment.
+                                    </p>
+                                )}
                             </div>
                         )}
                     </div>
+
+                    {/* Endpoint */}
+                    <div id="endpoint" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Endpoint</h2>
+                        <div className="api-endpoint-card">
+                            <div className="api-method">POST</div>
+                            <code className="api-url">/api/v1/analyze</code>
+                        </div>
+
+                        <div className="mt-5">
+                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Headers</h3>
+                            <table className="api-table">
+                                <thead><tr><th>Header</th><th>Required</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>X-API-Key</code></td><td>Yes</td><td>Your API key</td></tr>
+                                    <tr><td><code>Content-Type</code></td><td>No</td><td><code>multipart/form-data</code> or <code>application/json</code></td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div className="mt-5">
+                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Request Body</h3>
+                            <table className="api-table">
+                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code>image</code></td><td>File / Base64</td><td>Image to analyze (max 10MB)</td></tr>
+                                    <tr><td><code>fileName</code></td><td>String</td><td>Optional filename (JSON requests)</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Response */}
+                    <div id="response" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Response</h2>
+                        <pre className="api-response-example">{JSON.stringify({
+                            success: true,
+                            data: {
+                                verdict: "ai",
+                                confidence: 87,
+                                aiScore: 78,
+                                signals: [{ name: "Noise Residual", score: 82 }],
+                                processingTimeMs: 245,
+                            },
+                        }, null, 2)}</pre>
+
+                        <div className="mt-5">
+                            <h3 className="text-sm font-semibold text-[--color-text-primary] mb-2">Verdict Values</h3>
+                            <table className="api-table">
+                                <thead><tr><th>Value</th><th>Meaning</th><th>Score</th></tr></thead>
+                                <tbody>
+                                    <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>Likely AI-generated</td><td>&ge; 55</td></tr>
+                                    <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>Likely authentic</td><td>&le; 40</td></tr>
+                                    <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41–54</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    {/* Code Examples */}
+                    <div id="examples" className="mb-12 scroll-mt-20 animate-fade-in-up">
+                        <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Examples</h2>
+                        <div className="api-tabs">
+                            {Object.entries({
+                                curl: "cURL", python: "Python", javascript: "JS", go: "Go",
+                                ruby: "Ruby", php: "PHP", java: "Java", csharp: "C#",
+                                rust: "Rust", kotlin: "Kotlin", swift: "Swift", dart: "Dart",
+                            }).map(([key, label]) => (
+                                <button
+                                    key={key}
+                                    className={`api-tab ${activeTab === key ? "active" : ""}`}
+                                    onClick={() => setActiveTab(key)}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                        <pre className="api-code-block">{codeExamples[activeTab]}</pre>
+                    </div>
+
+                    {/* Test Result */}
+                    {testResult && (
+                        <div className="mb-12 animate-fade-in-up">
+                            <h2 className="text-lg font-bold text-[--color-text-primary] mb-4 pb-2 border-b border-[--color-border-subtle]">Test Result</h2>
+                            <pre className="api-response-example">{testResult}</pre>
+                        </div>
+                    )}
                 </div>
             </div>
 
