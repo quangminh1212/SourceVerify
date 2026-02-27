@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -23,7 +24,8 @@ interface GoogleUser {
     apiKey?: string;
 }
 
-export default function Header({ active }: { active?: string }) {
+export default function Header() {
+    const pathname = usePathname();
     const [open, setOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
@@ -137,7 +139,7 @@ export default function Header({ active }: { active?: string }) {
                         <Link
                             key={link.key}
                             href={link.href}
-                            className={`header-nav-link ${active === link.href ? "font-semibold text-[--color-text-primary]" : ""}`}
+                            className={`header-nav-link ${pathname === link.href ? "header-nav-link-active" : ""}`}
                         >
                             {t(link.key)}
                         </Link>
@@ -288,7 +290,7 @@ export default function Header({ active }: { active?: string }) {
             {open && (
                 <div className="header-mobile-menu">
                     {NAV_KEYS.map((link) => (
-                        <Link key={link.key} href={link.href} className="header-mobile-link" onClick={() => setOpen(false)}>
+                        <Link key={link.key} href={link.href} className={`header-mobile-link ${pathname === link.href ? "header-mobile-link-active" : ""}`} onClick={() => setOpen(false)}>
                             {t(link.key)}
                         </Link>
                     ))}
