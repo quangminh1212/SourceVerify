@@ -34,6 +34,27 @@
   --gradient-edge-glow: conic-gradient(from 180deg, rgba(66, 133, 244, 0.04), rgba(15, 157, 88, 0.02), rgba(244, 180, 0, 0.01), rgba(234, 67, 53, 0.02), rgba(66, 133, 244, 0.04));
 }
 
+/* === Dark Mode Overrides === */
+html.dark {
+  --color-bg-primary: #1a1a2e;
+  --color-bg-secondary: #16213e;
+  --color-bg-tertiary: #0f3460;
+  --color-bg-card: #1e1e3a;
+  --color-bg-card-hover: #252547;
+
+  --color-text-primary: #e8e8f0;
+  --color-text-secondary: #a0a0b8;
+  --color-text-muted: #6c6c88;
+
+  --color-border-subtle: #2a2a4a;
+  --color-border-accent: rgba(100, 160, 255, 0.3);
+
+  --gradient-blue-glow: linear-gradient(180deg, rgba(66, 133, 244, 0.06) 0%, transparent 60%);
+  --gradient-edge-glow: conic-gradient(from 180deg, rgba(66, 133, 244, 0.08), rgba(15, 157, 88, 0.04), rgba(244, 180, 0, 0.02), rgba(234, 67, 53, 0.04), rgba(66, 133, 244, 0.08));
+
+  color-scheme: dark;
+}
+
 /* === Base Styles === */
 * {
   box-sizing: border-box;
@@ -46,6 +67,10 @@ html {
   color-scheme: light;
 }
 
+html.dark {
+  color-scheme: dark;
+}
+
 body {
   font-family: var(--font-sans);
   background: var(--color-bg-primary);
@@ -54,11 +79,17 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
   background: rgba(66, 133, 244, 0.2);
   color: #202124;
+}
+
+html.dark ::selection {
+  background: rgba(100, 160, 255, 0.3);
+  color: #e8e8f0;
 }
 
 /* === Edge Glow (Antigravity signature) === */
@@ -108,6 +139,11 @@ body {
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--color-border-subtle);
+  transition: background-color 0.3s ease;
+}
+
+html.dark .header-bar {
+  background: rgba(26, 26, 46, 0.92);
 }
 
 .header-inner {
@@ -212,6 +248,16 @@ body {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+html.dark .header-cta {
+  background: #e8e8f0;
+  color: #1a1a2e;
+}
+
+html.dark .header-cta:hover {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
 .header-mobile-toggle {
   display: none;
   align-items: center;
@@ -305,6 +351,13 @@ body {
   border: 1px solid var(--color-border-subtle);
   border-radius: 14px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+}
+
+html.dark .user-dropdown {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+}
+
+.user-dropdown {
   padding: 0.5rem;
   z-index: 100;
   display: flex;
@@ -2506,4 +2559,184 @@ body {
   .api-tabs {
     overflow-x: auto;
   }
+}
+
+/* ============================================ */
+/* === DARK MODE — Global Overrides          === */
+/* ============================================ */
+
+/* Buttons */
+html.dark .btn-primary {
+  background: #e8e8f0;
+  color: #1a1a2e;
+}
+
+html.dark .btn-primary:hover {
+  background: #fff;
+  box-shadow: 0 4px 16px rgba(255, 255, 255, 0.1);
+}
+
+/* Upload Zone */
+html.dark .upload-zone {
+  border-color: var(--color-border-subtle);
+  background: var(--color-bg-secondary);
+}
+
+html.dark .upload-zone:hover,
+html.dark .upload-zone.drag-over {
+  border-color: var(--color-accent-blue);
+  background: rgba(66, 133, 244, 0.06);
+  box-shadow: 0 8px 32px rgba(66, 133, 244, 0.15);
+}
+
+html.dark .upload-zone::before {
+  background: radial-gradient(circle at center, rgba(66, 133, 244, 0.1), transparent 70%);
+}
+
+/* Cards */
+html.dark .card {
+  background: rgba(30, 30, 58, 0.6);
+}
+
+html.dark .card:hover {
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.12);
+}
+
+html.dark .analysis-card:hover {
+  box-shadow: 0 4px 24px rgba(66, 133, 244, 0.12);
+}
+
+/* Signal rows */
+html.dark .signal-row {
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+html.dark .signal-row:hover {
+  background: rgba(66, 133, 244, 0.06);
+}
+
+/* Probability dot */
+html.dark .ai-probability-dot {
+  background: var(--color-text-primary);
+  border-color: var(--color-bg-primary);
+}
+
+/* Scrollbar */
+html.dark ::-webkit-scrollbar-thumb {
+  background: #3a3a5a;
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4a4a6a;
+}
+
+/* Highlight items */
+html.dark .highlight-item {
+  background: var(--color-bg-secondary);
+}
+
+html.dark .highlight-item:hover {
+  background: var(--color-bg-card-hover);
+  box-shadow: 0 2px 12px rgba(66, 133, 244, 0.12);
+}
+
+/* Subpage glass cards */
+html.dark .subpage-badge {
+  background: rgba(30, 30, 58, 0.6);
+}
+
+html.dark .feature-card-v2,
+html.dark .product-card,
+html.dark .step-card {
+  background: rgba(30, 30, 58, 0.5);
+}
+
+html.dark .feature-card-v2:hover,
+html.dark .product-card:hover,
+html.dark .step-card:hover {
+  border-color: rgba(100, 160, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(66, 133, 244, 0.12);
+}
+
+/* Lang dropdown */
+html.dark .lang-dropdown {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* API Docs */
+html.dark .api-hero {
+  background: linear-gradient(180deg, rgba(66, 133, 244, 0.08) 0%, transparent 100%);
+}
+
+html.dark .api-test-btn {
+  background: #e8e8f0;
+  color: #1a1a2e;
+}
+
+html.dark .api-test-btn:hover:not(:disabled) {
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Scan overlay */
+html.dark .scan-overlay::after {
+  background: linear-gradient(90deg, transparent, #8ab4f8, transparent);
+  box-shadow: 0 0 20px #8ab4f8, 0 0 60px rgba(138, 180, 248, 0.3);
+}
+
+/* Status dot */
+html.dark .status-dot {
+  box-shadow: 0 0 8px rgba(52, 168, 83, 0.4);
+}
+
+/* Metadata summary hover */
+html.dark .metadata-summary:hover {
+  background: rgba(66, 133, 244, 0.08);
+}
+
+/* Dark mode toggle button */
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  background: none;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--color-text-secondary);
+  transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  color: var(--color-accent-blue);
+  border-color: var(--color-accent-blue);
+  background: rgba(66, 133, 244, 0.04);
+}
+
+html.dark .theme-toggle-btn:hover {
+  background: rgba(100, 160, 255, 0.08);
+}
+
+/* Footer dark mode */
+html.dark .footer-divider {
+  border-top-color: var(--color-border-subtle);
+}
+
+/* Shimmer animation dark mode */
+html.dark .animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(100, 160, 255, 0.08), transparent);
+  background-size: 200% 100%;
+}
+
+/* Focus styles dark mode */
+html.dark *:focus-visible {
+  outline-color: #8ab4f8;
+}
+
+/* Progress fill */
+html.dark .progress-fill-gradient {
+  background: linear-gradient(90deg, #8ab4f8, #34a853);
 }
