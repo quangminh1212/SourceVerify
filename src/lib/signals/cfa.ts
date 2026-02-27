@@ -46,7 +46,7 @@ export function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, heig
 
     return {
         name: "CFA Pattern Detection", nameKey: "signal.cfaPattern",
-        category: "optics", score, weight: 2.5,
+        category: "optics", score, weight: 1.5,
         description: score > 55
             ? "No Bayer CFA demosaicing pattern found — real cameras leave this fingerprint"
             : "CFA demosaicing artifacts present — characteristic of real camera sensors",

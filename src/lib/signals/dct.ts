@@ -179,7 +179,7 @@ export function analyzeDCTBlockArtifacts(pixels: Uint8ClampedArray, width: numbe
 
     return {
         name: "DCT Block Artifacts", nameKey: "signal.dctBlock",
-        category: "forensic", score, weight: 3.0,
+        category: "forensic", score, weight: 2.0,
         description: score > 55
             ? "No or uniform JPEG block artifacts — AI images lack natural compression fingerprints"
             : "Natural JPEG block artifacts present — consistent with real camera compression",

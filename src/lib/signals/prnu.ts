@@ -57,7 +57,7 @@ export function analyzePRNUPattern(pixels: Uint8ClampedArray, width: number, hei
     if (residuals.length < 200) {
         return {
             name: "Sensor Pattern Noise", nameKey: "signal.prnuPattern",
-            category: "sensor", score: 50, weight: 2.5,
+            category: "sensor", score: 50, weight: 1.5,
             description: "Insufficient data for PRNU analysis", descriptionKey: "signal.prnu.error", icon: "⊕",
         };
     }
@@ -173,7 +173,7 @@ export function analyzePRNUPattern(pixels: Uint8ClampedArray, width: number, hei
 
     return {
         name: "Sensor Pattern Noise", nameKey: "signal.prnuPattern",
-        category: "sensor", score, weight: 2.5,
+        category: "sensor", score, weight: 1.5,
         description: score > 55
             ? "No consistent sensor pattern noise detected — AI images lack camera PRNU fingerprint"
             : "Sensor pattern noise detected — consistent with real camera PRNU fingerprint",
