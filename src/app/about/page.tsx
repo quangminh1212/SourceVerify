@@ -22,7 +22,7 @@ export default function AboutPage() {
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
                     <div className="section-gap">
-                        <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up whitespace-nowrap">
+                        <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             {t("about.headline")}{" "}
                             <span className="gradient-text">{t("about.headlineHighlight")}</span>
                             {t("about.headlineSuffix") ? ` ${t("about.headlineSuffix")}` : ""}
@@ -44,7 +44,7 @@ export default function AboutPage() {
                         </p>
                     </div>
 
-                    <div className="section-gap grid grid-cols-3 gap-3 sm:gap-4 lg:gap-6 animate-fade-in-up animate-delay-1">
+                    <div className="section-gap grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-6 animate-fade-in-up animate-delay-1">
                         {stats.map((stat) => (
                             <div
                                 key={stat.labelKey}
