@@ -1,57 +1,76 @@
 "use client";
 
-const scrollTo = (id: string) => (e: React.MouseEvent) => {
-    e.preventDefault();
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
-};
+interface ApiDocsSidebarProps {
+    activeSection: string;
+    onSectionChange: (section: string) => void;
+}
 
-export default function ApiDocsSidebar() {
+const SECTIONS = [
+    {
+        title: "Getting Started",
+        items: [
+            { id: "overview", label: "Overview" },
+            { id: "auth", label: "Authentication" },
+            { id: "rate-limits", label: "Rate Limits" },
+        ],
+    },
+    {
+        title: "Endpoints",
+        items: [
+            { id: "endpoint", label: "Analyze Image" },
+            { id: "url-analysis", label: "Analyze by URL" },
+            { id: "batch-analysis", label: "Batch Analysis" },
+            { id: "analysis-history", label: "Analysis History" },
+        ],
+    },
+    {
+        title: "Response",
+        items: [
+            { id: "response", label: "Response Format" },
+            { id: "verdict-values", label: "Verdict Values" },
+            { id: "error-codes", label: "Error Codes" },
+        ],
+    },
+    {
+        title: "Advanced",
+        items: [
+            { id: "webhooks", label: "Webhooks" },
+            { id: "sdks", label: "SDKs & Libraries" },
+        ],
+    },
+    {
+        title: "Code Examples",
+        items: [
+            { id: "examples", label: "Quick Start" },
+        ],
+    },
+];
+
+export default function ApiDocsSidebar({ activeSection, onSectionChange }: ApiDocsSidebarProps) {
     return (
         <aside className="api-docs-sidebar">
             <nav className="sticky top-16 py-6 px-4">
-                {/* Getting Started */}
-                <p className="api-sidebar-title">Getting Started</p>
-                <div className="api-sidebar-group">
-                    <a href="#overview" className="api-sidebar-link" onClick={scrollTo("overview")}>Overview</a>
-                    <a href="#auth" className="api-sidebar-link" onClick={scrollTo("auth")}>Authentication</a>
-                    <a href="#auth" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("auth")}>API Key</a>
-                    <a href="#rate-limits" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("rate-limits")}>Rate Limits</a>
-                </div>
-
-                {/* Endpoints */}
-                <p className="api-sidebar-title">Endpoints</p>
-                <div className="api-sidebar-group">
-                    <a href="#endpoint" className="api-sidebar-link" onClick={scrollTo("endpoint")}>Analyze Image</a>
-                    <a href="#headers" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("headers")}>Headers</a>
-                    <a href="#request-body" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("request-body")}>Request Body</a>
-                    <a href="#url-analysis" className="api-sidebar-link" onClick={scrollTo("url-analysis")}>Analyze by URL</a>
-                    <a href="#batch-analysis" className="api-sidebar-link" onClick={scrollTo("batch-analysis")}>Batch Analysis</a>
-                    <a href="#analysis-history" className="api-sidebar-link" onClick={scrollTo("analysis-history")}>Analysis History</a>
-                </div>
-
-                {/* Response */}
-                <p className="api-sidebar-title">Response</p>
-                <div className="api-sidebar-group">
-                    <a href="#response" className="api-sidebar-link" onClick={scrollTo("response")}>Response Format</a>
-                    <a href="#verdict-values" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("verdict-values")}>Verdict Values</a>
-                    <a href="#error-codes" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("error-codes")}>Error Codes</a>
-                </div>
-
-                {/* Advanced */}
-                <p className="api-sidebar-title">Advanced</p>
-                <div className="api-sidebar-group">
-                    <a href="#webhooks" className="api-sidebar-link" onClick={scrollTo("webhooks")}>Webhooks</a>
-                    <a href="#sdks" className="api-sidebar-link" onClick={scrollTo("sdks")}>SDKs & Libraries</a>
-                </div>
-
-                {/* Code Examples */}
-                <p className="api-sidebar-title">Code Examples</p>
-                <div className="api-sidebar-group">
-                    <a href="#examples" className="api-sidebar-link" onClick={scrollTo("examples")}>Quick Start</a>
-                    <a href="#examples" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("examples")}>cURL / Python / JS</a>
-                    <a href="#examples" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("examples")}>Go / Ruby / PHP</a>
-                    <a href="#examples" className="api-sidebar-link api-sidebar-sub" onClick={scrollTo("examples")}>Java / C# / Rust</a>
-                </div>
+                {SECTIONS.map((group) => (
+                    <div key={group.title}>
+                        <p className="api-sidebar-title">{group.title}</p>
+                        <div className="api-sidebar-group">
+                            {group.items.map((item) => (
+                                <a
+                                    key={item.id}
+                                    href={`#${item.id}`}
+                                    className={`api-sidebar-link ${activeSection === item.id ? "active" : ""}`}
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onSectionChange(item.id);
+                                        window.scrollTo({ top: 0, behavior: "smooth" });
+                                    }}
+                                >
+                                    {item.label}
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                ))}
             </nav>
         </aside>
     );

@@ -22,6 +22,7 @@ export default function ApiDocsPage() {
     const [copied, setCopied] = useState(false);
     const [testResult, setTestResult] = useState<string>("");
     const [testing, setTesting] = useState(false);
+    const [activeSection, setActiveSection] = useState("overview");
 
     const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         try {
@@ -121,8 +122,9 @@ export default function ApiDocsPage() {
             <Header />
 
             <div className="flex-1 flex">
-                <ApiDocsSidebar />
+                <ApiDocsSidebar activeSection={activeSection} onSectionChange={setActiveSection} />
                 <ApiDocsContent
+                    activeSection={activeSection}
                     user={user}
                     copied={copied}
                     testing={testing}
