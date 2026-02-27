@@ -6,9 +6,9 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const STEP_KEYS = [
-    { num: "01", titleKey: "howItWorks.step1.title", descKey: "howItWorks.step1.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg> },
-    { num: "02", titleKey: "howItWorks.step2.title", descKey: "howItWorks.step2.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></svg> },
-    { num: "03", titleKey: "howItWorks.step3.title", descKey: "howItWorks.step3.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg> },
+    { titleKey: "howItWorks.step1.title", descKey: "howItWorks.step1.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg> },
+    { titleKey: "howItWorks.step2.title", descKey: "howItWorks.step2.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /><path d="M11 8v6" /><path d="M8 11h6" /></svg> },
+    { titleKey: "howItWorks.step3.title", descKey: "howItWorks.step3.desc", icon: <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg> },
 ];
 
 export default function HowItWorksPage() {
@@ -31,23 +31,21 @@ export default function HowItWorksPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-6 text-center">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-0 text-center">
                         {STEP_KEYS.map((step, i) => (
-                            <div
-                                key={step.num}
-                                className={`group relative rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i} flex flex-col`}
-                            >
-                                <div className="lg:mb-5 mb-0 flex lg:flex-col items-start gap-4 lg:gap-0 flex-1">
-                                    <span className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center text-xs lg:text-sm font-extrabold text-blue-600 tracking-wide flex-shrink-0 lg:mb-5">
-                                        {step.num}
-                                    </span>
-                                    <div className="flex flex-col flex-1">
-                                        <div className="flex items-center gap-2 mb-2">
-                                            <span className="text-xl lg:text-2xl">{step.icon}</span>
-                                            <h3 className="text-sm sm:text-base lg:text-lg font-bold text-[--color-text-primary]">{t(step.titleKey)}</h3>
-                                        </div>
-                                        <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary] flex-1">{t(step.descKey)}</p>
+                            <div key={step.titleKey} className="relative flex flex-col items-center">
+                                {/* Arrow connector between steps (desktop only) */}
+                                {i < STEP_KEYS.length - 1 && (
+                                    <svg className="hidden lg:block absolute -right-3 top-10 z-10 text-[--color-text-muted] opacity-40" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M5 12h14" /><path d="m12 5 7 7-7 7" />
+                                    </svg>
+                                )}
+                                <div className={`group rounded-2xl bg-transparent p-6 lg:p-8 transition-all duration-300 hover:-translate-y-1 hover:bg-white/40 hover:shadow-[0_8px_40px_rgba(66,133,244,0.08)] animate-fade-in-up animate-delay-${i} flex flex-col items-center`}>
+                                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-blue-500/10 to-cyan-500/10 flex items-center justify-center mb-5 text-[--color-accent-blue]">
+                                        {step.icon}
                                     </div>
+                                    <h3 className="text-sm sm:text-base lg:text-lg font-bold text-[--color-text-primary] mb-2">{t(step.titleKey)}</h3>
+                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary]">{t(step.descKey)}</p>
                                 </div>
                             </div>
                         ))}
