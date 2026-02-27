@@ -82,7 +82,7 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     }
     let aiScore = Math.round(totalWeight > 0 ? weightedSum / totalWeight : 50);
 
-    // Step 2: Count signal agreement (v5: raised thresholds)
+    // Step 2: Count signal agreement (v4 thresholds, proven better recall)
     let aiLeaningWeight = 0;
     let realLeaningWeight = 0;
     let strongAI = 0;
@@ -91,38 +91,40 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     let veryStrongReal = 0;
 
     for (const signal of signals) {
-        if (signal.score > 55) aiLeaningWeight += signal.weight;
-        if (signal.score < 45) realLeaningWeight += signal.weight;
-        if (signal.score >= 70) strongAI++;
-        if (signal.score <= 30) strongReal++;
-        if (signal.score >= 82) veryStrongAI++;
-        if (signal.score <= 18) veryStrongReal++;
+        if (signal.score > 50) aiLeaningWeight += signal.weight;
+        if (signal.score < 50) realLeaningWeight += signal.weight;
+        if (signal.score >= 65) strongAI++;
+        if (signal.score <= 35) strongReal++;
+        if (signal.score >= 78) veryStrongAI++;
+        if (signal.score <= 22) veryStrongReal++;
     }
 
-    // Step 3: Consensus amplification (v5: more conservative)
+    // Step 3: Consensus amplification (v4 power, proven with benchmark)
     let adjustment = 0;
 
-    if (veryStrongAI >= 4) adjustment += 12;
-    else if (strongAI >= 6) adjustment += 10;
-    else if (strongAI >= 4) adjustment += 6;
-    else if (strongAI >= 2) adjustment += 3;
+    if (veryStrongAI >= 3) adjustment += 14;
+    else if (strongAI >= 5) adjustment += 12;
+    else if (strongAI >= 3) adjustment += 8;
+    else if (strongAI >= 2) adjustment += 5;
+    else if (strongAI >= 1) adjustment += 2;
 
-    if (veryStrongReal >= 4) adjustment -= 12;
-    else if (strongReal >= 6) adjustment -= 10;
-    else if (strongReal >= 4) adjustment -= 6;
-    else if (strongReal >= 2) adjustment -= 3;
+    if (veryStrongReal >= 3) adjustment -= 14;
+    else if (strongReal >= 5) adjustment -= 12;
+    else if (strongReal >= 3) adjustment -= 8;
+    else if (strongReal >= 2) adjustment -= 5;
+    else if (strongReal >= 1) adjustment -= 2;
 
-    // Weighted majority vote (v5: reduced from 14 to 8)
+    // Weighted majority vote (v4 strength)
     const weightRatio = totalWeight > 0
         ? (aiLeaningWeight - realLeaningWeight) / totalWeight
         : 0;
-    adjustment += Math.round(weightRatio * 8);
+    adjustment += Math.round(weightRatio * 14);
 
-    // Step 4: Directional amplification (v5: much weaker)
+    // Step 4: Directional amplification (v4 strength)
     const deviation = aiScore - 50;
-    if (Math.abs(deviation) > 3) {
-        const linear = deviation * 0.5;
-        const quadratic = Math.sign(deviation) * (deviation * deviation) * 0.008;
+    if (Math.abs(deviation) > 1) {
+        const linear = deviation * 1.1;
+        const quadratic = Math.sign(deviation) * (deviation * deviation) * 0.025;
         adjustment += Math.round(linear + quadratic);
     }
 
@@ -148,19 +150,19 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
 
     aiScore = Math.round(Math.max(3, Math.min(97, aiScore + adjustment)));
 
-    // Step 6: Verdict (v5: widened thresholds)
+    // Step 6: Verdict (v5.1: threshold 55/40 — best balance from benchmark)
     let verdict: "ai" | "real" | "uncertain";
     let confidence: number;
 
-    if (aiScore >= 56) {
+    if (aiScore >= 55) {
         verdict = "ai";
-        confidence = Math.min(100, Math.round(50 + (aiScore - 56) * 1.1));
-    } else if (aiScore <= 44) {
+        confidence = Math.min(100, Math.round(50 + (aiScore - 55) * 1.1));
+    } else if (aiScore <= 40) {
         verdict = "real";
-        confidence = Math.min(100, Math.round(50 + (44 - aiScore) * 1.1));
+        confidence = Math.min(100, Math.round(50 + (40 - aiScore) * 1.3));
     } else {
         verdict = "uncertain";
-        confidence = Math.round(100 - Math.abs(aiScore - 50) * 6);
+        confidence = Math.round(100 - Math.abs(aiScore - 47) * 6);
     }
 
     return { aiScore, verdict, confidence };
