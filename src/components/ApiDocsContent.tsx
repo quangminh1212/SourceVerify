@@ -161,7 +161,6 @@ print(await response.stream.bytesToString());`,
 
                 {/* Overview */}
                 <div id="overview" className="mb-12 scroll-mt-20 animate-fade-in-up">
-                    <div className="subpage-badge">API v1</div>
                     <h1 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-3">
                         SourceVerify <span className="gradient-text">API</span>
                     </h1>
