@@ -123,12 +123,12 @@ export default function ApiDocsPage() {
 
             <div className="flex-1 flex flex-col lg:flex-row">
                 {/* Mobile section nav */}
-                <div className="lg:hidden px-4 py-3 border-b border-[rgba(255,255,255,0.06)] bg-[#0a0a0a]">
+                <div className="lg:hidden px-4 py-3 border-b border-[--color-border-subtle] bg-[--color-bg-primary]">
                     <select
                         value={activeSection}
                         onChange={(e) => setActiveSection(e.target.value)}
                         aria-label="Navigate API docs sections"
-                        className="w-full px-3 py-2 rounded-lg bg-[rgba(255,255,255,0.06)] text-white text-sm border border-[rgba(255,255,255,0.1)] outline-none"
+                        className="w-full px-3 py-2 rounded-lg bg-[--color-bg-secondary] text-[--color-text-primary] text-sm border border-[--color-border-subtle] outline-none"
                     >
                         <optgroup label="Getting Started">
                             <option value="overview">Overview</option>
