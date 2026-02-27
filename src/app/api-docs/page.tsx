@@ -273,8 +273,8 @@ print(await response.stream.bytesToString());`,
                 </aside>
 
                 {/* Content */}
-                <div className="flex-1 min-w-0 py-10 sm:py-14 lg:py-16">
-                    <div className="max-w-3xl mx-auto px-6 sm:px-8 lg:px-12">
+                <div className="flex-1 min-w-0 py-10 sm:py-14 lg:py-16 flex justify-center">
+                    <div className="w-full max-w-4xl px-8 sm:px-12 lg:px-16">
 
                         {/* Overview */}
                         <div id="overview" className="mb-12 scroll-mt-20 animate-fade-in-up">
