@@ -31,7 +31,6 @@ export default function Header() {
     const [langOpen, setLangOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [user, setUser] = useState<GoogleUser | null>(null);
-    const [gsiLoaded, setGsiLoaded] = useState(false);
     const [isDark, setIsDark] = useState(false);
     const { locale, setLocale, t } = useLanguage();
 
@@ -51,12 +50,12 @@ export default function Header() {
         localStorage.setItem("sv_theme", next ? "dark" : "light");
     };
 
-    const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
+    const handleCredential = useCallback(async (credential: string) => {
         try {
             const res = await fetch("/api/auth", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ credential: response.credential }),
+                body: JSON.stringify({ credential }),
             });
             const data = await res.json();
             if (data.success) {
@@ -74,6 +73,27 @@ export default function Header() {
         }
     }, []);
 
+    // Open Google OAuth popup (Implicit Flow)
+    const openGoogleLogin = useCallback(() => {
+        if (!GOOGLE_CLIENT_ID) {
+            alert("Google Sign-In is not configured.");
+            return;
+        }
+        const redirectUri = `${window.location.origin}/api/auth/callback/google`;
+        const nonce = Math.random().toString(36).substring(2);
+        const params = new URLSearchParams({
+            client_id: GOOGLE_CLIENT_ID,
+            redirect_uri: redirectUri,
+            response_type: "id_token",
+            scope: "openid email profile",
+            nonce,
+        });
+        const url = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+        const w = 480, h = 640;
+        const left = (screen.width - w) / 2, top = (screen.height - h) / 2;
+        window.open(url, "google_login", `width=${w},height=${h},left=${left},top=${top}`);
+    }, []);
+
     useEffect(() => {
         // Restore user from localStorage
         const saved = localStorage.getItem("sv_user");
@@ -81,34 +101,16 @@ export default function Header() {
             try { setUser(JSON.parse(saved)); } catch { /* ignore */ }
         }
 
-        // Load Google Identity Services
-        if (!GOOGLE_CLIENT_ID) return;
-        const existing = document.getElementById("gsi-script");
-        if (existing) return;
-
-        const script = document.createElement("script");
-        script.id = "gsi-script";
-        script.src = "https://accounts.google.com/gsi/client";
-        script.async = true;
-        script.defer = true;
-        script.onload = () => {
-            const g = (window as unknown as Record<string, Record<string, Record<string, { initialize: (c: unknown) => void; renderButton: (e: HTMLElement | null, c: unknown) => void }>>>).google;
-            if (g?.accounts?.id) {
-                g.accounts.id.initialize({
-                    client_id: GOOGLE_CLIENT_ID,
-                    callback: handleGoogleCallback,
-                });
-                // Render buttons for both desktop and mobile
-                const desktopBtn = document.getElementById("header-google-btn");
-                const mobileBtn = document.getElementById("mobile-google-btn");
-                const btnConfig = { theme: "outline", size: "medium", text: "signin", shape: "pill", width: 200 };
-                if (desktopBtn) g.accounts.id.renderButton(desktopBtn, btnConfig);
-                if (mobileBtn) g.accounts.id.renderButton(mobileBtn, { ...btnConfig, width: 280 });
-                setGsiLoaded(true);
+        // Listen for OAuth callback message from popup
+        const onMessage = (e: MessageEvent) => {
+            if (e.origin !== window.location.origin) return;
+            if (e.data?.type === "google-auth" && e.data.id_token) {
+                handleCredential(e.data.id_token);
             }
         };
-        document.body.appendChild(script);
-    }, [handleGoogleCallback]);
+        window.addEventListener("message", onMessage);
+        return () => window.removeEventListener("message", onMessage);
+    }, [handleCredential]);
 
     const logout = () => {
         setUser(null);
@@ -233,45 +235,17 @@ export default function Header() {
                             )}
                         </div>
                     ) : (
-                        <>
-                            <div id="header-google-btn" className={`header-google-signin ${gsiLoaded ? '' : 'hidden'}`}></div>
-                            {!gsiLoaded && (
-                                <button
-                                    className="header-signin-fallback"
-                                    onClick={() => {
-                                        const g = (window as unknown as Record<string, Record<string, Record<string, { prompt: () => void }>>>).google;
-                                        if (g?.accounts?.id) {
-                                            g.accounts.id.prompt();
-                                        } else if (!GOOGLE_CLIENT_ID) {
-                                            alert("Google Sign In is not configured. Please set NEXT_PUBLIC_GOOGLE_CLIENT_ID environment variable.");
-                                        } else {
-                                            // GSI script might not be loaded yet, try loading it
-                                            const script = document.createElement("script");
-                                            script.src = "https://accounts.google.com/gsi/client";
-                                            script.async = true;
-                                            script.onload = () => {
-                                                const gg = (window as unknown as Record<string, Record<string, Record<string, { initialize: (c: unknown) => void; prompt: () => void }>>>).google;
-                                                if (gg?.accounts?.id) {
-                                                    gg.accounts.id.initialize({
-                                                        client_id: GOOGLE_CLIENT_ID,
-                                                        callback: handleGoogleCallback,
-                                                    });
-                                                    gg.accounts.id.prompt();
-                                                }
-                                            };
-                                            document.body.appendChild(script);
-                                        }
-                                    }}
-                                >
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                                        <polyline points="10 17 15 12 10 7" />
-                                        <line x1="15" y1="12" x2="3" y2="12" />
-                                    </svg>
-                                    {t("header.signIn")}
-                                </button>
-                            )}
-                        </>
+                        <button
+                            className="header-signin-fallback"
+                            onClick={openGoogleLogin}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                                <polyline points="10 17 15 12 10 7" />
+                                <line x1="15" y1="12" x2="3" y2="12" />
+                            </svg>
+                            {t("header.signIn")}
+                        </button>
                     )}
                 </div>
 
@@ -307,7 +281,14 @@ export default function Header() {
                         </div>
                     ) : (
                         <div className="mobile-google-wrapper">
-                            <div id="mobile-google-btn"></div>
+                            <button className="header-mobile-link mobile-signin-btn" onClick={() => { openGoogleLogin(); setOpen(false); }}>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                                    <polyline points="10 17 15 12 10 7" />
+                                    <line x1="15" y1="12" x2="3" y2="12" />
+                                </svg>
+                                {t("header.signIn")}
+                            </button>
                         </div>
                     )}
                     {/* Mobile theme toggle */}
