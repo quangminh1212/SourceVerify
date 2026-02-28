@@ -188,7 +188,7 @@ print(await response.stream.bytesToString());`,
                                     <button
                                         onClick={() => onSectionChange?.("auth")}
                                         className="text-xs font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg"
-                                        style={{ color: '#fff', background: 'var(--color-accent-blue)' }}
+                                        style={{ color: '#fff', background: 'var(--color-accent-blue)', border: 'none', outline: 'none' }}
                                     >
                                         Get API Key →
                                     </button>
