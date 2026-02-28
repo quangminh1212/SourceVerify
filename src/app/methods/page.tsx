@@ -63,7 +63,7 @@ export default function MethodsPage() {
                             >
                                 {t(cat.labelKey)}
                                 {cat.key !== "all" && (
-                                    <span className="methods-cat-tab-count">
+                                    <span className="methods-cat-tab-count" style={{ color: CAT_HEX[cat.key] }}>
                                         {METHODS.filter(m => m.category === cat.key).length}
                                     </span>
                                 )}
