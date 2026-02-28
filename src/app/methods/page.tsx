@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -31,8 +32,15 @@ function MethodIcon({ id, category }: { id: string; category: Category }) {
 
 export default function MethodsPage() {
     const { t } = useLanguage();
+    const searchParams = useSearchParams();
     const [activeCat, setActiveCat] = useState<Category>("all");
     const [showMethods, setShowMethods] = useState(false);
+
+    useEffect(() => {
+        if (searchParams.get("view") === "grid") {
+            setShowMethods(true);
+        }
+    }, [searchParams]);
 
     const filtered = activeCat === "all"
         ? METHODS
