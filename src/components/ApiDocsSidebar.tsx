@@ -35,7 +35,6 @@ const SECTIONS = [
         title: "Advanced",
         items: [
             { id: "webhooks", label: "Webhooks" },
-            { id: "sdks", label: "SDKs & Libraries" },
         ],
     },
     {

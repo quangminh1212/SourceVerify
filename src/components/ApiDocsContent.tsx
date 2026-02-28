@@ -532,41 +532,6 @@ print(await response.stream.bytesToString());`,
                     </div>
                 );
 
-            case "sdks":
-                return (
-                    <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5]" style={{ color: 'var(--color-text-primary)', borderColor: 'var(--color-border-subtle)' }}>SDKs & Libraries</h2>
-                        <p className="text-sm mb-8 leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Official and community SDKs for popular languages.</p>
-                        <table className="api-table">
-                            <thead><tr><th>Language</th><th>Package</th><th>Install</th></tr></thead>
-                            <tbody>
-                                <tr><td>Python</td><td><code>sourceverify</code></td><td><code>pip install sourceverify</code></td></tr>
-                                <tr><td>JavaScript</td><td><code>@sourceverify/sdk</code></td><td><code>npm install @sourceverify/sdk</code></td></tr>
-                                <tr><td>Go</td><td><code>sourceverify-go</code></td><td><code>go get github.com/sourceverify/sourceverify-go</code></td></tr>
-                                <tr><td>Ruby</td><td><code>sourceverify</code></td><td><code>gem install sourceverify</code></td></tr>
-                                <tr><td>PHP</td><td><code>sourceverify/sdk</code></td><td><code>composer require sourceverify/sdk</code></td></tr>
-                                <tr><td>Java</td><td><code>sourceverify-java</code></td><td><code>Maven / Gradle</code></td></tr>
-                            </tbody>
-                        </table>
-                        <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3]" style={{ color: 'var(--color-text-primary)' }}>Python SDK Example</h3>
-                            <pre className="api-code-block">{`from sourceverify import SourceVerify
-
-client = SourceVerify(api_key="${apiKey}")
-
-# Analyze a local file
-result = client.analyze("photo.jpg")
-print(result.verdict)     # "ai" | "real" | "uncertain"
-print(result.confidence)  # 0-100
-
-# Analyze by URL
-result = client.analyze_url("https://example.com/photo.jpg")
-
-# Batch analysis
-results = client.analyze_batch(["img1.jpg", "img2.jpg", "img3.jpg"])`}</pre>
-                        </div>
-                    </div>
-                );
 
             case "examples":
                 return (

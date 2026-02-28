@@ -148,7 +148,6 @@ export default function ApiDocsPage() {
                         </optgroup>
                         <optgroup label="Advanced">
                             <option value="webhooks">Webhooks</option>
-                            <option value="sdks">SDKs & Libraries</option>
                         </optgroup>
                         <optgroup label="Code Examples">
                             <option value="examples">Quick Start</option>
