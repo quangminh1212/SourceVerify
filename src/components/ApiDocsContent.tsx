@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { getMethodTranslation } from "@/app/methods/methodsI18n";
 
 interface UserInfo {
     apiKey: string;
@@ -39,7 +40,7 @@ export default function ApiDocsContent({
     onSectionChange,
 }: ApiDocsContentProps) {
     const [activeTab, setActiveTab] = useState<string>("curl");
-    const { t } = useLanguage();
+    const { t, locale } = useLanguage();
     const apiKey = user?.apiKey || "YOUR_API_KEY";
 
     const codeExamples: Record<string, string> = {
@@ -608,14 +609,14 @@ print(await response.stream.bytesToString());`,
                                     <div className="api-method-card-header">
                                         <div className="api-method-card-title">
                                             <span className={`api-method-icon ${m.cat}`}>{m.icon}</span>
-                                            {t(m.nameKey)}
+                                            {getMethodTranslation(m.id, locale).name}
                                         </div>
                                         <label className="api-toggle">
-                                            <input type="checkbox" defaultChecked aria-label={t(m.nameKey)} />
+                                            <input type="checkbox" defaultChecked aria-label={getMethodTranslation(m.id, locale).name} />
                                             <span className="api-toggle-slider" />
                                         </label>
                                     </div>
-                                    <p className="api-method-card-desc">{t(m.descKey)}</p>
+                                    <p className="api-method-card-desc">{getMethodTranslation(m.id, locale).description}</p>
                                     <div className="api-method-card-meta">
                                         <span className={`api-method-badge cat-${m.cat}`}>{catLabel[m.cat]}</span>
                                         <span className="api-method-weight">{t("api.methods.weight")}: {m.weight}</span>
