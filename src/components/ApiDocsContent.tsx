@@ -163,23 +163,23 @@ print(await response.stream.bytesToString());`,
         switch (activeSection) {
             case "overview":
                 return (
-                    <div className="animate-fade-in-up pt-8">
+                    <div className="animate-fade-in-up" style={{ paddingTop: '24px' }}>
                         {/* Hero Section */}
-                        <div className="mb-12">
+                        <div style={{ marginBottom: '48px' }}>
                             <div>
-                                <div className="flex items-center gap-3 mb-6">
+                                <div className="flex items-center gap-3" style={{ marginBottom: '24px' }}>
                                     <span className="text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full" style={{ color: 'var(--color-accent-blue)', background: 'rgba(66, 133, 244, 0.08)' }}>Getting Started</span>
                                     <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>v1.0</span>
                                 </div>
-                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-6" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3' }}>
+                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3', marginBottom: '24px' }}>
                                     SourceVerify <span className="gradient-text">API</span>
                                 </h1>
-                                <p className="text-sm max-w-2xl mb-8" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>
+                                <p className="text-sm max-w-2xl" style={{ color: 'var(--color-text-secondary)', lineHeight: '1.8', marginBottom: '32px' }}>
                                     Integrate AI-generated content detection into your applications with a simple REST API. Analyze images in milliseconds with industry-leading accuracy.
                                 </p>
 
                                 {/* Base URL inline */}
-                                <div className="flex items-center gap-2 mb-8 text-xs">
+                                <div className="flex items-center gap-2 text-xs" style={{ marginBottom: '32px' }}>
                                     <span className="font-mono px-2 py-1 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>BASE URL</span>
                                     <code className="font-mono" style={{ color: 'var(--color-accent-blue)' }}>{apiDocsUrl}</code>
                                 </div>
@@ -208,31 +208,31 @@ print(await response.stream.bytesToString());`,
                         </div>
 
                         {/* Divider */}
-                        <div className="mb-10" style={{ borderTop: '1px solid var(--color-border-subtle)' }} />
+                        <div style={{ marginTop: '24px', marginBottom: '48px', borderTop: '1px solid var(--color-border-subtle)' }} />
 
                         {/* Features */}
-                        <h2 className="text-xs uppercase tracking-wider font-semibold mb-8" style={{ color: 'var(--color-text-muted)' }}>Key Features</h2>
-                        <div className="grid gap-10 sm:grid-cols-3">
+                        <h2 className="text-xs uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-muted)', marginBottom: '32px' }}>Key Features</h2>
+                        <div className="grid gap-12 sm:grid-cols-3">
                             <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(66, 133, 244, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-blue)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                                 </div>
                                 <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>Detect AI-generated images with advanced multi-signal analysis and deep learning models.</p>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '1.8' }}>Detect AI-generated images with advanced multi-signal analysis and deep learning models.</p>
                             </div>
                             <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(52, 168, 83, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-green)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
                                 </div>
                                 <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>Average response time under 500ms with 99.9% uptime guarantee and global CDN.</p>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '1.8' }}>Average response time under 500ms with 99.9% uptime guarantee and global CDN.</p>
                             </div>
                             <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(251, 188, 4, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-amber)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
                                 </div>
                                 <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>Simple HTTP endpoints with JSON responses. Easy to integrate with any language.</p>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '1.8' }}>Simple HTTP endpoints with JSON responses. Easy to integrate with any language.</p>
                             </div>
                         </div>
                     </div>
@@ -606,7 +606,7 @@ print(await response.stream.bytesToString());`,
     };
 
     return (
-        <div className="flex-1 min-w-0 py-6 sm:py-8 lg:py-10 flex justify-center">
+        <div className="flex-1 min-w-0 flex justify-center" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
             <div className="w-full max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
                 {renderSection()}
             </div>

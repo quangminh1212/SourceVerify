@@ -48,7 +48,7 @@ const SECTIONS = [
 export default function ApiDocsSidebar({ activeSection, onSectionChange }: ApiDocsSidebarProps) {
     return (
         <aside className="api-docs-sidebar">
-            <nav className="sticky top-16 py-5 overflow-y-auto max-h-[calc(100vh-4rem)]">
+            <nav className="sticky top-16 py-8 overflow-y-auto max-h-[calc(100vh-4rem)]">
                 {SECTIONS.map((group) => (
                     <div key={group.title} className="mb-1">
                         <p className="api-sidebar-title">{group.title}</p>
