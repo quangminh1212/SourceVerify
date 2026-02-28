@@ -144,7 +144,7 @@ export default function ApiDocsPage() {
                         </svg>
                     </button>
                     {mobileNavOpen && (
-                        <nav className="mt-2 rounded-lg overflow-hidden" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
+                        <nav className="mt-2 rounded-lg overflow-hidden" style={{ background: 'var(--color-bg-secondary)' }}>
                             {[
                                 { title: "Getting Started", items: [{ id: "overview", label: "Overview" }, { id: "auth", label: "Authentication" }, { id: "rate-limits", label: "Rate Limits" }] },
                                 { title: "Endpoints", items: [{ id: "endpoint", label: "Analyze Image", method: "POST" }, { id: "url-analysis", label: "Analyze by URL", method: "POST" }, { id: "batch-analysis", label: "Batch Analysis", method: "POST" }, { id: "analysis-history", label: "Analysis History", method: "GET" }] },
