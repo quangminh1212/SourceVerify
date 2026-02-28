@@ -168,8 +168,8 @@ print(await response.stream.bytesToString());`,
                         <div style={{ marginBottom: '48px' }}>
                             <div>
                                 <div className="flex items-center gap-3" style={{ marginBottom: '24px' }}>
-                                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full" style={{ color: 'var(--color-accent-blue)', background: 'rgba(66, 133, 244, 0.08)' }}>Getting Started</span>
-                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>v1.0</span>
+                                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold" style={{ color: 'var(--color-accent-blue)' }}>Getting Started</span>
+                                    <span className="text-[10px] font-mono" style={{ color: 'var(--color-text-muted)' }}>v1.0</span>
                                 </div>
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3', marginBottom: '24px' }}>
                                     SourceVerify <span className="gradient-text">API</span>
@@ -180,7 +180,7 @@ print(await response.stream.bytesToString());`,
 
                                 {/* Base URL inline */}
                                 <div className="flex items-center gap-2 text-xs" style={{ marginBottom: '32px' }}>
-                                    <span className="font-mono px-2 py-1 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>BASE URL</span>
+                                    <span className="font-mono" style={{ color: 'var(--color-text-muted)' }}>BASE URL</span>
                                     <code className="font-mono" style={{ color: 'var(--color-accent-blue)' }}>{apiDocsUrl}</code>
                                 </div>
 
