@@ -1,10 +1,18 @@
 {
-    "useCase":  "Detecting localized manipulations, AI inpainting, and inconsistent compression regions",
-    "mechanism":  "Re-compresses the image at a fixed JPEG quality level and computes the absolute difference between the original and re-compressed version. Manipulated or AI-generated regions show distinct error level patterns compared to authentic content.",
-    "accuracy":  "High - 88-94% for JPEG images with detectable compression history",
-    "name":  "Error Level Analysis (ELA)",
-    "source":  "Krawetz, N. (2007) - A Picture\u0027s Worth: Digital Image Analysis and Forensics",
-    "algorithm":  "JPEG Re-compression Differential",
-    "parameters":  "Quality level: 95, Color space: YCbCr, Block size: 8x8 DCT, Threshold: adaptive",
-    "description":  "Resaves image at known JPEG quality and compares error levels. AI-generated images show uniform error patterns, while authentic photos exhibit variable compression artifacts."
+    "name": "Error Level Analysis (ELA)",
+    "description": "Error Level Analysis resaves an image at a known JPEG quality and compares the error levels between the original and re-compressed version. AI-generated images show abnormally uniform error patterns, while authentic photos exhibit varying compression artifacts across different regions.",
+    "algorithm": "JPEG Re-compression Differential Analysis",
+    "mechanism": "The ELA analysis process:\n\n1. **Re-compression**: The image is re-saved at a fixed JPEG quality level (typically 95%).\n\n2. **Difference calculation**: Pixel-by-pixel comparison between the original and re-compressed image, creating an absolute difference map.\n\n3. **Error pattern analysis**: In an unmodified JPEG, the entire image has undergone the same compression, so error levels are relatively uniform. Manipulated or AI-generated regions show different error levels because they've undergone different compression histories.\n\n4. **Uniformity assessment**: AI images typically show abnormally uniform error levels across the entire image because all pixels were generated, not captured.",
+    "parameters": "Re-compression quality: 95%, Color space: YCbCr, DCT block size: 8x8\nAnalysis: absolute pixel difference, regional error level variance\nThreshold: adaptive based on global error distribution",
+    "accuracy": "High - 88-94% for JPEG images. Effectiveness significantly decreases for PNG images or multiply-compressed JPEGs.",
+    "source": "Krawetz, N. (2007) — A Picture's Worth: Digital Image Analysis and Forensics. Hacker Factor Solutions.",
+    "useCase": "Detection of local manipulation (cut-paste, editing), AI inpainting, and regions with inconsistent compression history. Widely used in digital image forensics and content verification.",
+    "strengths": "• Intuitive and easy to understand for non-experts\n• Good detection of local manipulation and splicing\n• Low computational cost, fast analysis\n• Particularly effective with single-compression JPEGs",
+    "limitations": "• Only effective for JPEG images, not applicable to PNG/WebP\n• Multiple JPEG compressions introduce noise into results\n• Resized or cropped images may produce false positives\n• Cannot distinguish AI from heavily post-processed real images",
+    "references": [
+        {"title": "Krawetz, N. (2007). A Picture's Worth: Digital Image Analysis and Forensics. Hacker Factor.", "url": "https://fotoforensics.com/tutorial-ela.php"},
+        {"title": "Krawetz, N. (2012). A Picture's Worth — More on ELA. Black Hat USA.", "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"},
+        {"title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.", "url": "https://doi.org/10.1109/MSP.2008.931079"},
+        {"title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.", "url": "https://doi.org/10.1109/TSP.2004.839932"}
+    ]
 }

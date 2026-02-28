@@ -1,10 +1,18 @@
 {
     "name": "Spectral Nyquist Analysis",
-    "description": "Analyzes the frequency spectrum at Nyquist boundaries to detect upsampling artifacts. AI models often produce spectral peaks at these frequencies that are absent in real photos.",
-    "algorithm": "Nyquist Frequency Spectral Analysis (2D FFT)",
-    "mechanism": "Applies 2D Fast Fourier Transform to convert the image from spatial domain to frequency domain. AI-generated images exhibit characteristic spectral peaks at Nyquist frequency boundaries due to upsampling operations in generative models.",
-    "parameters": "FFT size: adaptive, Window: Hann, Analysis: radial power spectrum, peak detection at f/2",
-    "accuracy": "High - 80-90% for GAN-generated images with upsampling artifacts",
-    "source": "Durall et al. (2020) Watch your Up-Convolution, CVPR 2020",
-    "useCase": "Detecting GAN/diffusion model artifacts from upsampling layers"
+    "description": "Analyzes the frequency spectrum at Nyquist boundaries to detect upsampling artifacts. AI models often produce anomalous spectral peaks at these frequencies that are absent in real photographs, caused by upsampling operations in neural network architectures.",
+    "algorithm": "2D Fast Fourier Transform (FFT) Nyquist Boundary Analysis",
+    "mechanism": "The analysis process involves several stages:\n\n1. **2D FFT Transform**: Converts the image from spatial domain to frequency domain using 2D Fast Fourier Transform.\n\n2. **High-frequency spectrum analysis**: Examines spectral energy around the Nyquist frequency (f/2). Neural network image generators (GANs, Diffusion models) use upsampling layers (bilinear, nearest-neighbor, transposed convolution) that create characteristic frequency artifacts.\n\n3. **Periodic peak detection**: Identifies periodic energy peaks in the frequency spectrum — a hallmark signature of upsampling in decoder/generator architectures.\n\n4. **Spectral comparison**: Compares the frequency energy distribution against natural spectral models. Camera images have natural high-frequency rolloff due to optics, while AI images show abnormal energy distributions.",
+    "parameters": "Transform: 2D FFT (radix-2), Analysis region: Nyquist band ±10%, Metrics: high/low frequency energy ratio, periodic peak coefficient, spectral gradient\n\nAnalysis size: full image + 256x256 blocks\nNormalization: logarithmic spectrum, azimuthal averaging",
+    "accuracy": "High - 80-90% for AI images with upsampling artifacts. Particularly effective for GAN-generated images (StyleGAN, ProGAN) due to heavy use of upsampling layers.",
+    "source": "Zhang et al. (2019) - Detecting and Simulating Artifacts in GAN Fake Images, Durall et al. (2020) - Watch your Up-Convolution",
+    "useCase": "Detection of frequency artifacts from generative networks and upsampling. Especially effective with GAN images and AI-upscaled images.",
+    "strengths": "• Effectively detects GAN-specific upsampling artifacts\n• Content-independent analysis\n• Difficult to forge as it relates to fundamental frequency characteristics\n• Works well with uncompressed or lightly compressed images",
+    "limitations": "• Effectiveness decreases with heavy JPEG compression\n• Some newer Diffusion models produce fewer spectral artifacts\n• Real images that have been resized may produce false positives\n• Not effective with small images (< 256x256)",
+    "references": [
+        {"title": "Zhang, X. et al. (2019). Detecting and Simulating Artifacts in GAN Fake Images. IEEE WIFS.", "url": "https://doi.org/10.1109/WIFS47025.2019.9035107"},
+        {"title": "Durall, R. et al. (2020). Watch your Up-Convolution: CNN Based Generative Deep Neural Networks are Failing to Reproduce Spectral Distributions. CVPR.", "url": "https://arxiv.org/abs/2003.01826"},
+        {"title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML.", "url": "https://arxiv.org/abs/2003.08685"},
+        {"title": "Dzanic, T. et al. (2020). Fourier Spectrum Discrepancies in Deep Network Generated Images. NeurIPS.", "url": "https://arxiv.org/abs/1911.06465"}
+    ]
 }

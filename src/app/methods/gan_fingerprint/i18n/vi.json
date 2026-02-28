@@ -1,10 +1,18 @@
 {
-    "useCase":  "Xác định ảnh GAN và quy kết mô hình AI cụ thể",
-    "mechanism":  "Trích xuất đặc trưng phổ từ miền tần số đặc trưng cho từng kiến trúc GAN.",
-    "accuracy":  "Rất cao - 92-98% cho kiến trúc GAN đã biết",
-    "name":  "Phát hiện vân GAN",
-    "source":  "Marra et al. (2019); Yu et al. (2019)",
-    "algorithm":  "Bộ phân loại vân kiến trúc GAN",
-    "parameters":  "FFT: 256x256, Trích xuất: trung bình azimuthal, Bộ phân loại: SVM đa lớp",
-    "description":  "Xác định dấu vân tay đặc trưng của mạng GAN. Mỗi kiến trúc GAN tạo ra mẫu phổ riêng biệt."
+    "name": "Phát hiện vân GAN",
+    "description": "Xác định dấu vân tay phổ đặc trưng do mạng đối kháng sinh tạo (GAN) để lại. Mỗi kiến trúc GAN tạo ra mẫu miền tần số riêng biệt trong ảnh sinh, đóng vai trò như định danh pháp y đáng tin cậy.",
+    "algorithm": "Bộ phân loại vân kiến trúc GAN (Trích xuất đặc trưng phổ + SVM đa lớp)",
+    "mechanism": "Quy trình phát hiện:\n\n1. **Trích xuất đặc trưng phổ**: Tính phổ công suất FFT 2D và trích xuất profile tần số trung bình azimuthal đặc trưng cho từng kiến trúc GAN.\n\n2. **Mẫu theo kiến trúc**: Các kiến trúc GAN khác nhau (StyleGAN, ProGAN, BigGAN, CycleGAN) tạo vân phổ riêng biệt do các lớp upsampling và chuẩn hóa đặc thù.\n\n3. **Phân loại vân**: Bộ phân loại SVM đa lớp được huấn luyện trên đặc trưng phổ để nhận dạng.\n\n4. **Xác nhận chéo**: Kết quả được xác nhận với cơ sở dữ liệu chữ ký phổ GAN đã biết.",
+    "parameters": "FFT: phổ công suất 256x256\nTrích xuất: trung bình azimuthal + profile hướng tâm\nBộ phân loại: SVM đa lớp, kernel RBF\nKiến trúc đã biết: StyleGAN1/2/3, ProGAN, BigGAN, CycleGAN, StarGAN, DCGAN",
+    "accuracy": "Rất cao - 92-98% cho kiến trúc GAN đã biết. Độ chính xác giảm với kiến trúc mới.",
+    "source": "Marra et al. (2019), Yu et al. (2019) - Attributing Fake Images to GANs",
+    "useCase": "Nhận dạng ảnh GAN và quy kết cho kiến trúc mô hình AI cụ thể. Quan trọng cho phát hiện deepfake.",
+    "strengths": "• Độ chính xác cực cao cho họ GAN đã biết\n• Có thể quy kết ảnh cho kiến trúc GAN cụ thể\n• Bền vững trước các biến đổi ảnh phổ biến\n• Hoạt động không cần mô hình gốc",
+    "limitations": "• Kém hiệu quả với kiến trúc GAN mới/chưa biết\n• Mô hình tinh chỉnh có thể thay đổi vân\n• Mô hình Diffusion có đặc trưng vân khác\n• Hậu xử lý nặng có thể làm suy giảm vân",
+    "references": [
+        {"title": "Marra, F. et al. (2019). Do GANs Leave Artificial Fingerprints? IEEE MIPR.", "url": "https://doi.org/10.1109/MIPR.2019.00083"},
+        {"title": "Yu, N. et al. (2019). Attributing Fake Images to GANs. ICCV.", "url": "https://arxiv.org/abs/1811.08180"},
+        {"title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML.", "url": "https://arxiv.org/abs/2003.08685"},
+        {"title": "Gragnaniello, D. et al. (2021). Are GAN Generated Images Easy to Detect? IEEE MMSP.", "url": "https://arxiv.org/abs/2104.02617"}
+    ]
 }

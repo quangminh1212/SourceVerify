@@ -1,10 +1,18 @@
 {
     "name": "Phân tích phổ Nyquist",
-    "description": "Phân tích phổ tần số tại biên Nyquist để phát hiện lỗi upsampling. Mô hình AI thường tạo đỉnh phổ tại các tần số này mà ảnh thật không có.",
-    "algorithm": "Phân tích biên Nyquist bằng FFT",
-    "mechanism": "Tính biến đổi Fourier nhanh (FFT) 2D và kiểm tra năng lượng phổ xung quanh tần số Nyquist. Ảnh AI có chứa hiện vật từ mạng nơ-ron thường có đỉnh bất thường ở dải tần cao.",
-    "parameters": "FFT: 2D, Vùng phân tích: dải tần Nyquist, Chỉ số: tỷ lệ năng lượng cao/thấp tần",
-    "accuracy": "Cao - 80-90% cho ảnh AI có hiện vật upsampling",
-    "source": "Zhang et al. (2019) - Detecting and Simulating Artifacts in GAN Fake Images",
-    "useCase": "Phát hiện hiện vật tần số từ mạng sinh ảnh và upsampling"
+    "description": "Phân tích phổ tần số tại biên Nyquist để phát hiện lỗi upsampling. Mô hình AI thường tạo đỉnh phổ bất thường tại các tần số Nyquist mà ảnh chụp thật không có, do quá trình upsampling trong kiến trúc mạng nơ-ron.",
+    "algorithm": "Phân tích biên Nyquist bằng biến đổi Fourier nhanh (FFT) 2D",
+    "mechanism": "Quy trình phân tích gồm các bước:\n\n1. **Biến đổi FFT 2D**: Chuyển ảnh từ miền không gian sang miền tần số bằng biến đổi Fourier nhanh 2D.\n\n2. **Phân tích phổ tần số cao**: Kiểm tra năng lượng phổ quanh tần số Nyquist (f/2). Mạng nơ-ron sinh ảnh (GAN, Diffusion) sử dụng các lớp upsampling (bilinear, nearest-neighbor, transposed convolution) tạo ra hiện vật tần số đặc trưng.\n\n3. **Phát hiện đỉnh chu kỳ**: Tìm các đỉnh năng lượng tuần hoàn trong phổ tần — dấu hiệu đặc trưng của upsampling trong decoder/generator.\n\n4. **So sánh phổ**: Đối chiếu phân bố năng lượng tần số với mô hình phổ tự nhiên. Ảnh camera có suy giảm tần số cao tự nhiên do quang học, trong khi ảnh AI có phân bố năng lượng bất thường.",
+    "parameters": "Biến đổi: FFT 2D (radix-2), Vùng phân tích: dải tần Nyquist ±10%, Chỉ số: tỷ lệ năng lượng cao/thấp tần, hệ số đỉnh chu kỳ, gradient phổ\n\nKích thước phân tích: toàn ảnh + khối 256x256\nChuẩn hóa: phổ logarit, trung bình azimuthal",
+    "accuracy": "Cao - 80-90% cho ảnh AI có hiện vật upsampling. Hiệu quả đặc biệt với ảnh từ GAN (StyleGAN, ProGAN) do sử dụng nhiều lớp upsampling.",
+    "source": "Zhang et al. (2019) - Detecting and Simulating Artifacts in GAN Fake Images, Durall et al. (2020) - Watch your Up-Convolution: CNN Based Generative Deep Neural Networks are Failing to Reproduce Spectral Distributions",
+    "useCase": "Phát hiện hiện vật tần số từ mạng sinh ảnh và upsampling. Đặc biệt hiệu quả với ảnh GAN và ảnh đã được phóng đại bằng AI.",
+    "strengths": "• Phát hiện hiệu quả hiện vật upsampling đặc trưng của GAN\n• Phân tích không phụ thuộc vào nội dung ảnh\n• Khó giả mạo vì liên quan đến đặc tính tần số cơ bản\n• Hoạt động tốt với ảnh chưa nén hoặc nén nhẹ",
+    "limitations": "• Hiệu quả giảm khi ảnh bị nén JPEG mạnh\n• Một số mô hình Diffusion mới ít tạo hiện vật phổ\n• Ảnh thật bị resize cũng có thể tạo dương tính giả\n• Không hiệu quả với ảnh kích thước nhỏ (< 256x256)",
+    "references": [
+        {"title": "Zhang, X. et al. (2019). Detecting and Simulating Artifacts in GAN Fake Images. IEEE WIFS.", "url": "https://doi.org/10.1109/WIFS47025.2019.9035107"},
+        {"title": "Durall, R. et al. (2020). Watch your Up-Convolution: CNN Based Generative Deep Neural Networks are Failing to Reproduce Spectral Distributions. CVPR.", "url": "https://arxiv.org/abs/2003.01826"},
+        {"title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML.", "url": "https://arxiv.org/abs/2003.08685"},
+        {"title": "Dzanic, T. et al. (2020). Fourier Spectrum Discrepancies in Deep Network Generated Images. NeurIPS.", "url": "https://arxiv.org/abs/1911.06465"}
+    ]
 }
