@@ -46,6 +46,41 @@ function MethodIcon({ category, size = 28 }: { category: Category; size?: number
     );
 }
 
+/** Renders text with \n as line breaks and **text** as bold */
+function FormattedText({ text }: { text: string }) {
+    const paragraphs = text.split(/\n\n+/);
+    return (
+        <>
+            {paragraphs.map((para, pi) => {
+                const lines = para.split(/\n/);
+                return (
+                    <span key={pi} className="method-detail-paragraph">
+                        {lines.map((line, li) => {
+                            // Parse **bold** markers
+                            const parts = line.split(/(\*\*[^*]+\*\*)/g);
+                            return (
+                                <span key={li}>
+                                    {li > 0 && <br />}
+                                    {parts.map((part, i) => {
+                                        if (part.startsWith("**") && part.endsWith("**")) {
+                                            return <strong key={i}>{part.slice(2, -2)}</strong>;
+                                        }
+                                        // Parse bullet points
+                                        if (part.startsWith("• ")) {
+                                            return <span key={i} className="method-detail-bullet">{part}</span>;
+                                        }
+                                        return <span key={i}>{part}</span>;
+                                    })}
+                                </span>
+                            );
+                        })}
+                    </span>
+                );
+            })}
+        </>
+    );
+}
+
 const SECTION_LABELS = [
     { key: "algorithm" as const, label: "Algorithm / Model", style: "algo" },
     { key: "mechanism" as const, label: "How it works", style: "" },
@@ -121,9 +156,9 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                             return (
                                 <div key={s.key} className="method-detail-section">
                                     <h3 className="method-detail-section-label">{s.label}</h3>
-                                    <p className={`method-detail-section-value ${s.style === "algo" ? "method-detail-algo" : ""} ${s.style === "mono" ? "method-detail-mono" : ""} ${s.style === "ref" ? "method-detail-ref" : ""}`}>
-                                        {value}
-                                    </p>
+                                    <div className={`method-detail-section-value ${s.style === "algo" ? "method-detail-algo" : ""} ${s.style === "mono" ? "method-detail-mono" : ""} ${s.style === "ref" ? "method-detail-ref" : ""}`}>
+                                        <FormattedText text={value} />
+                                    </div>
                                 </div>
                             );
                         })}
