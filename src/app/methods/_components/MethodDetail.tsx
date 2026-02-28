@@ -60,7 +60,7 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
         <main className="relative min-h-screen flex flex-col">
             <Header />
 
-            <div className="flex-1 px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
                 <div className="w-full max-w-3xl mx-auto">
 
                     {/* Breadcrumb */}
