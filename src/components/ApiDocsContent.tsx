@@ -301,18 +301,16 @@ print(await response.stream.bytesToString());`,
                                 <tr><td>Enterprise</td><td>300</td><td>Unlimited</td><td>25 MB</td></tr>
                             </tbody>
                         </table>
-                        <div className="mt-8 p-6 rounded-lg border" style={{ borderColor: 'var(--color-border-subtle)', background: 'var(--color-bg-secondary)' }}>
-                            <h3 className="text-sm font-semibold mb-4 leading-[3]" style={{ color: 'var(--color-text-primary)' }}>Rate Limit Headers</h3>
-                            <p className="text-xs mb-4 leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Each response includes headers to track your usage:</p>
-                            <table className="api-table">
-                                <thead><tr><th>Header</th><th>Description</th></tr></thead>
-                                <tbody>
-                                    <tr><td><code>X-RateLimit-Limit</code></td><td>Max requests per minute</td></tr>
-                                    <tr><td><code>X-RateLimit-Remaining</code></td><td>Remaining requests in current window</td></tr>
-                                    <tr><td><code>X-RateLimit-Reset</code></td><td>Unix timestamp when the window resets</td></tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <h3 className="text-sm font-semibold mb-4 leading-[3]" style={{ color: 'var(--color-text-primary)', marginTop: '32px' }}>Rate Limit Headers</h3>
+                        <p className="text-xs mb-4 leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Each response includes headers to track your usage:</p>
+                        <table className="api-table">
+                            <thead><tr><th>Header</th><th>Description</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>X-RateLimit-Limit</code></td><td>Max requests per minute</td></tr>
+                                <tr><td><code>X-RateLimit-Remaining</code></td><td>Remaining requests in current window</td></tr>
+                                <tr><td><code>X-RateLimit-Reset</code></td><td>Unix timestamp when the window resets</td></tr>
+                            </tbody>
+                        </table>
                     </div>
                 );
 
