@@ -65,7 +65,7 @@ export default function MethodsPage() {
                         <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
                             {t("methods.subtitle1")}
                         </p>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center mt-1">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center mt-3">
                             {t("methods.subtitle2")}
                         </p>
                     </div>
