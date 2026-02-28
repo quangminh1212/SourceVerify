@@ -16,7 +16,7 @@ interface TestResult {
     aiScore: number;
     confidence: number;
     timeMs: number;
-    signals: { name: string; score: number; weight: number }[];
+    methods: { name: string; score: number; weight: number }[];
 }
 
 export default function BenchmarkPage() {
@@ -55,7 +55,7 @@ export default function BenchmarkPage() {
                 aiScore: result.aiScore,
                 confidence: result.confidence,
                 timeMs: result.processingTimeMs,
-                signals: result.signals.map(s => ({ name: s.name, score: s.score, weight: s.weight })),
+                methods: result.methods.map(s => ({ name: s.name, score: s.score, weight: s.weight })),
             };
         } catch {
             return null;
@@ -91,8 +91,8 @@ export default function BenchmarkPage() {
                 const emoji = testResult.correct ? "✅" : "❌";
                 addLog(`${emoji} AI#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
                 if (!testResult.correct) {
-                    const sigs = testResult.signals.map(s => `${s.name.substring(0, 8)}=${s.score}`).join(', ');
-                    addLog(`   Signals: ${sigs}`);
+                    const sigs = testResult.methods.map(s => `${s.name.substring(0, 8)}=${s.score}`).join(', ');
+                    addLog(`   Methods: ${sigs}`);
                 }
             }
         }
@@ -118,8 +118,8 @@ export default function BenchmarkPage() {
                 const emoji = testResult.correct ? "✅" : "❌";
                 addLog(`${emoji} REAL#${i}: ${testResult.verdict} (score=${testResult.aiScore})`);
                 if (!testResult.correct) {
-                    const sigs = testResult.signals.map(s => `${s.name.substring(0, 8)}=${s.score}`).join(', ');
-                    addLog(`   Signals: ${sigs}`);
+                    const sigs = testResult.methods.map(s => `${s.name.substring(0, 8)}=${s.score}`).join(', ');
+                    addLog(`   Methods: ${sigs}`);
                 }
             }
         }

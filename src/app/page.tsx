@@ -228,7 +228,7 @@ export default function Home() {
                   </div>
                   {/* Top signals */}
                   <div className="basic-signals">
-                    {[...result.signals].sort((a, b) => Math.abs(b.score - 50) - Math.abs(a.score - 50)).slice(0, 4).map(s => {
+                    {[...result.methods].sort((a, b) => Math.abs(b.score - 50) - Math.abs(a.score - 50)).slice(0, 4).map(s => {
                       const level = s.score >= 70 ? 'high' : s.score <= 40 ? 'low' : 'mid';
                       return (
                         <div key={s.name} className="basic-signal-bar" data-level={level}>
@@ -259,7 +259,7 @@ export default function Home() {
                     <span>{result.processingTimeMs}ms</span>
                   </div>
                 </div>
-                <RadarChart signals={result.signals} t={t} />
+                <RadarChart signals={result.methods} t={t} />
               </div>
             )}
 
