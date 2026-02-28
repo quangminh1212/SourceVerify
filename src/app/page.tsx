@@ -12,6 +12,7 @@ import {
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
 import { METHODS } from "@/app/methods/data";
+import { loadSettings, type AnalysisSettings } from "@/components/Header";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ScoreRing from "@/components/ScoreRing";
@@ -52,6 +53,7 @@ export default function Home() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const { locale, t } = useLanguage();
+  const [analysisSettings, setAnalysisSettings] = useState<AnalysisSettings | null>(null);
 
   // Check auth state from localStorage
   useEffect(() => {
@@ -69,7 +71,12 @@ export default function Home() {
     if (savedMethod && METHODS.some(m => m.id === savedMethod)) {
       setSelectedMethod(savedMethod);
     }
-    return () => { window.removeEventListener("storage", checkAuth); clearInterval(iv); };
+    // Load analysis settings
+    setAnalysisSettings(loadSettings());
+    // Listen for settings changes from header modal
+    const onSettingsChange = () => setAnalysisSettings(loadSettings());
+    window.addEventListener('sv_settings_changed', onSettingsChange);
+    return () => { window.removeEventListener("storage", checkAuth); clearInterval(iv); window.removeEventListener('sv_settings_changed', onSettingsChange); };
   }, []);
 
   useEffect(() => { return () => { if (preview) URL.revokeObjectURL(preview); }; }, [preview]);
@@ -91,7 +98,14 @@ export default function Home() {
 
     try {
       // If not logged in, only run the single selected method
-      const enabledMethods = isLoggedIn ? undefined : (DISPLAY_TO_ANALYZER[selectedMethod] || [selectedMethod]);
+      // If logged in, use settings-configured methods (or all if no settings)
+      let enabledMethods: string[] | undefined;
+      if (!isLoggedIn) {
+        enabledMethods = DISPLAY_TO_ANALYZER[selectedMethod] || [selectedMethod];
+      } else if (analysisSettings && analysisSettings.enabledMethods.length < METHODS.length) {
+        // User has customized which methods are enabled
+        enabledMethods = analysisSettings.enabledMethods.flatMap(id => DISPLAY_TO_ANALYZER[id] || [id]);
+      }
       const r = await analyzeMedia(selectedFile, enabledMethods);
       clearInterval(iv);
       setProgress(100);
@@ -104,7 +118,7 @@ export default function Home() {
       setIsAnalyzing(false);
       setError(t("home.errorFailed"));
     }
-  }, [t, isLoggedIn, selectedMethod]);
+  }, [t, isLoggedIn, selectedMethod, analysisSettings]);
 
   const handleDrop = useCallback((e: React.DragEvent) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }, [handleFile]);
   const handleReset = useCallback(() => {
