@@ -6,6 +6,11 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { METHODS, CAT_HEX, CAT_COLORS, CAT_ICON_PATHS, type Category } from "../data";
 
+export type Reference = {
+    title: string;
+    url?: string;
+};
+
 export type MethodTranslations = {
     name: string;
     description: string;
@@ -15,6 +20,9 @@ export type MethodTranslations = {
     accuracy: string;
     source: string;
     useCase: string;
+    references?: Reference[];
+    limitations?: string;
+    strengths?: string;
 };
 
 type MethodI18n = Record<string, MethodTranslations>;
@@ -43,6 +51,8 @@ const SECTION_LABELS = [
     { key: "mechanism" as const, label: "How it works", style: "" },
     { key: "parameters" as const, label: "Technical Parameters", style: "mono" },
     { key: "accuracy" as const, label: "Accuracy & Reliability", style: "" },
+    { key: "strengths" as const, label: "Strengths", style: "" },
+    { key: "limitations" as const, label: "Limitations", style: "" },
     { key: "useCase" as const, label: "Use Case", style: "" },
     { key: "source" as const, label: "Academic Reference", style: "ref" },
 ];
@@ -105,15 +115,44 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
 
                     {/* Detail sections */}
                     <div className="method-detail-sections animate-fade-in-up">
-                        {SECTION_LABELS.map(s => (
-                            <div key={s.key} className="method-detail-section">
-                                <h3 className="method-detail-section-label">{s.label}</h3>
-                                <p className={`method-detail-section-value ${s.style === "algo" ? "method-detail-algo" : ""} ${s.style === "mono" ? "method-detail-mono" : ""} ${s.style === "ref" ? "method-detail-ref" : ""}`}>
-                                    {tr[s.key]}
-                                </p>
-                            </div>
-                        ))}
+                        {SECTION_LABELS.map(s => {
+                            const value = tr[s.key as keyof MethodTranslations];
+                            if (!value || typeof value !== "string") return null;
+                            return (
+                                <div key={s.key} className="method-detail-section">
+                                    <h3 className="method-detail-section-label">{s.label}</h3>
+                                    <p className={`method-detail-section-value ${s.style === "algo" ? "method-detail-algo" : ""} ${s.style === "mono" ? "method-detail-mono" : ""} ${s.style === "ref" ? "method-detail-ref" : ""}`}>
+                                        {value}
+                                    </p>
+                                </div>
+                            );
+                        })}
                     </div>
+
+                    {/* References with links */}
+                    {tr.references && tr.references.length > 0 && (
+                        <div className="method-detail-section method-detail-references animate-fade-in-up">
+                            <h3 className="method-detail-section-label">📚 References & Citations</h3>
+                            <ol className="method-detail-ref-list">
+                                {tr.references.map((ref, i) => (
+                                    <li key={i} className="method-detail-ref-item">
+                                        {ref.url ? (
+                                            <a href={ref.url} target="_blank" rel="noopener noreferrer" className="method-detail-ref-link">
+                                                {ref.title}
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="method-detail-ref-icon">
+                                                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                                    <polyline points="15 3 21 3 21 9" />
+                                                    <line x1="10" y1="14" x2="21" y2="3" />
+                                                </svg>
+                                            </a>
+                                        ) : (
+                                            <span>{ref.title}</span>
+                                        )}
+                                    </li>
+                                ))}
+                            </ol>
+                        </div>
+                    )}
 
                     {/* Back link */}
                     <div className="method-detail-back animate-fade-in-up">
