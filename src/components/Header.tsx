@@ -437,8 +437,13 @@ function SettingsModal({
                 {/* Header */}
                 <div className="settings-header">
                     <div className="settings-title-row">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
-                        <h2>{t('header.settings')}</h2>
+                        <div className="settings-title-icon">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
+                        </div>
+                        <div>
+                            <h2>{t('header.settings')}</h2>
+                            <p className="settings-subtitle">{t('settings.subtitle') || 'Chọn phương pháp phân tích bạn muốn sử dụng'}</p>
+                        </div>
                     </div>
                     <button className="settings-close-btn" onClick={onClose} aria-label="Close">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
@@ -453,6 +458,7 @@ function SettingsModal({
                             className={`settings-filter-btn ${filter === c.key ? 'active' : ''}`}
                             onClick={() => onFilterChange(c.key)}
                         >
+                            {c.key !== 'all' && <span className="settings-filter-dot" style={{ background: CAT_HEX[c.key] }} />}
                             {t(c.labelKey)}
                         </button>
                     ))}
@@ -461,10 +467,16 @@ function SettingsModal({
                 {/* Select All / Count */}
                 <div className="settings-toolbar">
                     <button className="settings-toggle-all" onClick={toggleAll}>
-                        <span className={`settings-checkbox ${filteredAllEnabled ? 'checked' : ''}`} />
+                        <span className={`settings-toggle-switch ${filteredAllEnabled ? 'on' : ''}`}>
+                            <span className="settings-toggle-knob" />
+                        </span>
                         {filteredAllEnabled ? t('settings.deselectAll') : t('settings.selectAll')}
                     </button>
-                    <span className="settings-count">{enabledCount} / {METHODS.length} {t('settings.enabled')}</span>
+                    <span className="settings-count">
+                        <span className="settings-count-num">{enabledCount}</span>
+                        <span className="settings-count-sep">/</span>
+                        <span>{METHODS.length}</span>
+                    </span>
                 </div>
 
                 {/* Methods List */}
@@ -472,17 +484,26 @@ function SettingsModal({
                     {filteredMethods.map(m => {
                         const enabled = local.enabledMethods.includes(m.id);
                         const tr = getMethodTranslation(m.id, locale);
+                        const catColor = CAT_HEX[m.category];
                         return (
-                            <div key={m.id} className={`settings-method-row ${enabled ? '' : 'disabled'}`}>
+                            <div
+                                key={m.id}
+                                className={`settings-method-row ${enabled ? 'enabled' : 'disabled'}`}
+                                onClick={() => toggleMethod(m.id)}
+                                role="button"
+                                tabIndex={0}
+                                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMethod(m.id); } }}
+                            >
                                 <div className="settings-method-left">
-                                    <button className="settings-method-check" onClick={() => toggleMethod(m.id)} aria-label={`Toggle ${tr.name}`}>
-                                        <span className={`settings-checkbox ${enabled ? 'checked' : ''}`} />
-                                    </button>
+                                    <span className="settings-cat-dot" style={{ background: catColor }} />
                                     <div className="settings-method-info">
                                         <span className="settings-method-name">{tr.name}</span>
-                                        <span className="settings-method-cat">{t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}`)}</span>
+                                        <span className="settings-method-cat" style={{ color: catColor }}>{t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}`)}</span>
                                     </div>
                                 </div>
+                                <span className={`settings-toggle-switch ${enabled ? 'on' : ''}`}>
+                                    <span className="settings-toggle-knob" />
+                                </span>
                             </div>
                         );
                     })}
@@ -491,6 +512,7 @@ function SettingsModal({
                 {/* Footer */}
                 <div className="settings-footer">
                     <button className="settings-reset-btn" onClick={resetDefaults}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" /><path d="M3 3v5h5" /></svg>
                         {t('settings.reset')}
                     </button>
                     <button className="settings-save-btn" onClick={() => onSave(local)}>
