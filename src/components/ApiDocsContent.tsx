@@ -187,15 +187,15 @@ print(await response.stream.bytesToString());`,
                                 <div className="flex items-center gap-4 flex-wrap">
                                     <button
                                         onClick={() => onSectionChange?.("auth")}
-                                        className="text-xs font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg"
-                                        style={{ color: '#fff', background: 'var(--color-accent-blue)', border: 'none', outline: 'none' }}
+                                        className="text-xs font-semibold transition-all duration-200"
+                                        style={{ color: 'var(--color-accent-blue)', background: 'none', border: 'none', outline: 'none' }}
                                     >
                                         Get API Key →
                                     </button>
                                     <button
                                         onClick={() => onSectionChange?.("examples")}
-                                        className="text-xs font-semibold px-5 py-2.5 rounded-lg transition-all duration-200"
-                                        style={{ color: 'var(--color-text-secondary)', background: 'var(--color-bg-tertiary)' }}
+                                        className="text-xs font-semibold transition-all duration-200"
+                                        style={{ color: 'var(--color-text-secondary)', background: 'none', border: 'none', outline: 'none' }}
                                     >
                                         View Examples
                                     </button>
