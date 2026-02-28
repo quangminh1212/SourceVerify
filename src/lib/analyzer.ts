@@ -1,15 +1,12 @@
 /**
- * SourceVerify AI Detection Engine v5
- * Main orchestrator — imports and coordinates all 13 signal modules
+ * SourceVerify AI Detection Engine v6
+ * Main orchestrator — imports and coordinates all 43 signal modules
  *
- * v5 Changes (calibrated against 2000-image benchmark):
- * - Raised signal agreement thresholds (strongAI >= 70, veryStrong >= 82)
- * - Reduced directional amplification (1.1→0.5, quadratic 0.025→0.008)
- * - Reduced weighted majority coefficient (14→8)
- * - Widened verdict thresholds: AI >= 56, Real <= 44 (from 50/46)
- * - Stronger anti-FP guard (-5 instead of -3)
- * - Reduced weights: CFA 2.5→1.5, DCT 3.0→2.0, Chromatic 1.0→0.5
- * - Conservative approach: prioritize reducing false positives on web images
+ * v6 Changes:
+ * - Added 30 new forensic signals (total 43) from peer-reviewed research
+ * - Categories: spatial, frequency, statistical, compression, generative, geometric, color
+ * - New signals have lower weights (0.3-0.6) to supplement rather than dominate existing signals
+ * - Verdict engine unchanged — thresholds calibrated from v5.1
  */
 
 export type { AnalysisResult, AnalysisSignal, FileMetadata } from "./types";
@@ -18,6 +15,7 @@ export { formatFileSize } from "./utils";
 import type { AnalysisResult, AnalysisSignal, FileMetadata } from "./types";
 import { loadImage, extractBasicMetadata, validateFileMagicBytes } from "./utils";
 import {
+    // Original 13 signals
     analyzeMetadata,
     analyzeSpectralNyquist,
     analyzeMultiscaleReconstruction,
@@ -32,6 +30,43 @@ import {
     analyzeDCTBlockArtifacts,
     analyzeColorChannelCorrelation,
     analyzePRNUPattern,
+    // New: Spatial Domain (6)
+    analyzeLocalBinaryPattern,
+    analyzeHOGAnomaly,
+    analyzeGLCM,
+    analyzeLocalVarianceMap,
+    analyzeMorphologicalGradient,
+    analyzeWeberDescriptor,
+    // New: Frequency Domain (6)
+    analyzeWaveletStatistics,
+    analyzeGaborResponse,
+    analyzePowerSpectralDensity,
+    analyzePhaseCongruency,
+    analyzeRadialSpectrum,
+    analyzeFrequencyBandRatio,
+    // New: Statistical (6)
+    analyzeEntropyMap,
+    analyzeHigherOrderStatistics,
+    analyzeZipfLaw,
+    analyzeChiSquareUniformity,
+    analyzeMarkovTransition,
+    analyzeSaturationDistribution,
+    // New: Compression (4)
+    analyzeJPEGGhost,
+    analyzeQuantizationFingerprint,
+    analyzeErrorLevel,
+    analyzeColorBanding,
+    // New: Generative (3)
+    analyzeGANFingerprint,
+    analyzeUpsamplingArtifact,
+    analyzeDiffusionArtifact,
+    // New: Geometric (3)
+    analyzePerspectiveConsistency,
+    analyzeLightingConsistency,
+    analyzeShadowConsistency,
+    // New: Advanced Color (2)
+    analyzeColorGamut,
+    analyzeWhiteBalance,
 } from "./signals";
 
 // ============================
@@ -170,11 +205,12 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
 }
 
 // ============================
-// IMAGE ANALYSIS (13 signals)
+// IMAGE ANALYSIS (43 signals)
 // ============================
 
 // Signal ID to analysis function mapping
 const SIGNAL_MAP: Record<string, string> = {
+    // Original 13
     metadata: "signal.metadataAnalysis",
     spectral: "signal.spectralNyquist",
     reconstruction: "signal.multiScaleReconstruction",
@@ -188,6 +224,43 @@ const SIGNAL_MAP: Record<string, string> = {
     dct: "signal.dctBlock",
     color: "signal.colorCorrelation",
     prnu: "signal.prnuPattern",
+    // Spatial Domain (6)
+    lbp: "signal.localBinaryPattern",
+    hog: "signal.hogAnomaly",
+    glcm: "signal.glcmTexture",
+    localVariance: "signal.localVarianceMap",
+    morphGradient: "signal.morphGradient",
+    weber: "signal.weberDescriptor",
+    // Frequency Domain (6)
+    wavelet: "signal.waveletStats",
+    gabor: "signal.gaborResponse",
+    psd: "signal.psdSlope",
+    phase: "signal.phaseCongruency",
+    radial: "signal.radialSpectrum",
+    freqBand: "signal.freqBandRatio",
+    // Statistical (6)
+    entropy: "signal.entropyMap",
+    hos: "signal.higherOrderStats",
+    zipf: "signal.zipfLaw",
+    chiSquare: "signal.chiSquareUniformity",
+    markov: "signal.markovTransition",
+    saturation: "signal.saturationDist",
+    // Compression (4)
+    jpegGhost: "signal.jpegGhost",
+    quantization: "signal.quantFingerprint",
+    ela: "signal.errorLevel",
+    banding: "signal.colorBanding",
+    // Generative (3)
+    ganFingerprint: "signal.ganFingerprint",
+    upsampling: "signal.upsamplingArtifact",
+    diffusion: "signal.diffusionArtifact",
+    // Geometric (3)
+    perspective: "signal.perspectiveConsistency",
+    lighting: "signal.lightingConsistency",
+    shadow: "signal.shadowConsistency",
+    // Advanced Color (2)
+    gamut: "signal.colorGamut",
+    whiteBalance: "signal.whiteBalance",
 };
 
 export const ALL_SIGNAL_IDS = Object.keys(SIGNAL_MAP);
@@ -207,6 +280,7 @@ async function analyzeImageFile(file: File, enabledSignals?: string[]): Promise<
     const enabled = new Set(enabledSignals || ALL_SIGNAL_IDS);
 
     const allSignals: AnalysisSignal[] = [
+        // Original 13
         analyzeMetadata(metadata, exifData),
         analyzeSpectralNyquist(pixels, w, h),
         await analyzeMultiscaleReconstruction(canvas, ctx),
@@ -220,6 +294,43 @@ async function analyzeImageFile(file: File, enabledSignals?: string[]): Promise<
         analyzeDCTBlockArtifacts(pixels, w, h),
         analyzeColorChannelCorrelation(pixels, w, h),
         analyzePRNUPattern(pixels, w, h),
+        // Spatial Domain (6)
+        analyzeLocalBinaryPattern(pixels, w, h),
+        analyzeHOGAnomaly(pixels, w, h),
+        analyzeGLCM(pixels, w, h),
+        analyzeLocalVarianceMap(pixels, w, h),
+        analyzeMorphologicalGradient(pixels, w, h),
+        analyzeWeberDescriptor(pixels, w, h),
+        // Frequency Domain (6)
+        analyzeWaveletStatistics(pixels, w, h),
+        analyzeGaborResponse(pixels, w, h),
+        analyzePowerSpectralDensity(pixels, w, h),
+        analyzePhaseCongruency(pixels, w, h),
+        analyzeRadialSpectrum(pixels, w, h),
+        analyzeFrequencyBandRatio(pixels, w, h),
+        // Statistical (6)
+        analyzeEntropyMap(pixels, w, h),
+        analyzeHigherOrderStatistics(pixels, w, h),
+        analyzeZipfLaw(pixels, w, h),
+        analyzeChiSquareUniformity(pixels, w, h),
+        analyzeMarkovTransition(pixels, w, h),
+        analyzeSaturationDistribution(pixels, w, h),
+        // Compression (4)
+        analyzeJPEGGhost(pixels, w, h),
+        analyzeQuantizationFingerprint(pixels, w, h),
+        analyzeErrorLevel(pixels, w, h),
+        analyzeColorBanding(pixels, w, h),
+        // Generative (3)
+        analyzeGANFingerprint(pixels, w, h),
+        analyzeUpsamplingArtifact(pixels, w, h),
+        analyzeDiffusionArtifact(pixels, w, h),
+        // Geometric (3)
+        analyzePerspectiveConsistency(pixels, w, h),
+        analyzeLightingConsistency(pixels, w, h),
+        analyzeShadowConsistency(pixels, w, h),
+        // Advanced Color (2)
+        analyzeColorGamut(pixels, w, h),
+        analyzeWhiteBalance(pixels, w, h),
     ];
 
     // Filter signals based on enabled set
@@ -266,6 +377,7 @@ async function analyzeVideoFile(file: File, enabledSignals?: string[]): Promise<
                 metadata.exifData = exifData;
 
                 const allSignals: AnalysisSignal[] = [
+                    // Original 13 (without CFA for video)
                     analyzeMetadata(metadata, exifData),
                     analyzeSpectralNyquist(pixels, w, h),
                     await analyzeMultiscaleReconstruction(canvas, ctx),
@@ -279,6 +391,43 @@ async function analyzeVideoFile(file: File, enabledSignals?: string[]): Promise<
                     analyzeColorChannelCorrelation(pixels, w, h),
                     analyzePRNUPattern(pixels, w, h),
                     analyzeVideoSpecific(file, video),
+                    // Spatial Domain (6)
+                    analyzeLocalBinaryPattern(pixels, w, h),
+                    analyzeHOGAnomaly(pixels, w, h),
+                    analyzeGLCM(pixels, w, h),
+                    analyzeLocalVarianceMap(pixels, w, h),
+                    analyzeMorphologicalGradient(pixels, w, h),
+                    analyzeWeberDescriptor(pixels, w, h),
+                    // Frequency Domain (6)
+                    analyzeWaveletStatistics(pixels, w, h),
+                    analyzeGaborResponse(pixels, w, h),
+                    analyzePowerSpectralDensity(pixels, w, h),
+                    analyzePhaseCongruency(pixels, w, h),
+                    analyzeRadialSpectrum(pixels, w, h),
+                    analyzeFrequencyBandRatio(pixels, w, h),
+                    // Statistical (6)
+                    analyzeEntropyMap(pixels, w, h),
+                    analyzeHigherOrderStatistics(pixels, w, h),
+                    analyzeZipfLaw(pixels, w, h),
+                    analyzeChiSquareUniformity(pixels, w, h),
+                    analyzeMarkovTransition(pixels, w, h),
+                    analyzeSaturationDistribution(pixels, w, h),
+                    // Compression (4)
+                    analyzeJPEGGhost(pixels, w, h),
+                    analyzeQuantizationFingerprint(pixels, w, h),
+                    analyzeErrorLevel(pixels, w, h),
+                    analyzeColorBanding(pixels, w, h),
+                    // Generative (3)
+                    analyzeGANFingerprint(pixels, w, h),
+                    analyzeUpsamplingArtifact(pixels, w, h),
+                    analyzeDiffusionArtifact(pixels, w, h),
+                    // Geometric (3)
+                    analyzePerspectiveConsistency(pixels, w, h),
+                    analyzeLightingConsistency(pixels, w, h),
+                    analyzeShadowConsistency(pixels, w, h),
+                    // Advanced Color (2)
+                    analyzeColorGamut(pixels, w, h),
+                    analyzeWhiteBalance(pixels, w, h),
                 ];
 
                 const signals = allSignals.filter(s => {
