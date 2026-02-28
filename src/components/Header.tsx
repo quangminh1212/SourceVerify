@@ -29,12 +29,10 @@ interface GoogleUser {
 
 export interface AnalysisSettings {
     enabledMethods: string[];
-    weights: Record<string, number>;
 }
 
 const DEFAULT_SETTINGS: AnalysisSettings = {
     enabledMethods: METHODS.map(m => m.id),
-    weights: Object.fromEntries(METHODS.map(m => [m.id, m.weight])),
 };
 
 export function loadSettings(): AnalysisSettings {
@@ -45,7 +43,6 @@ export function loadSettings(): AnalysisSettings {
         const parsed = JSON.parse(raw);
         return {
             enabledMethods: parsed.enabledMethods ?? DEFAULT_SETTINGS.enabledMethods,
-            weights: { ...DEFAULT_SETTINGS.weights, ...(parsed.weights ?? {}) },
         };
     } catch { return DEFAULT_SETTINGS; }
 }
@@ -390,7 +387,6 @@ function SettingsModal({
 }) {
     const [local, setLocal] = useState<AnalysisSettings>(() => ({
         enabledMethods: [...settings.enabledMethods],
-        weights: { ...settings.weights },
     }));
 
     const filteredMethods = useMemo(() =>
@@ -417,14 +413,11 @@ function SettingsModal({
         }));
     };
 
-    const setWeight = (id: string, w: number) => {
-        setLocal(prev => ({ ...prev, weights: { ...prev.weights, [id]: w } }));
-    };
+
 
     const resetDefaults = () => {
         setLocal({
             enabledMethods: METHODS.map(m => m.id),
-            weights: Object.fromEntries(METHODS.map(m => [m.id, m.weight])),
         });
     };
 
@@ -472,7 +465,6 @@ function SettingsModal({
                     {filteredMethods.map(m => {
                         const enabled = local.enabledMethods.includes(m.id);
                         const tr = getMethodTranslation(m.id, locale);
-                        const w = local.weights[m.id] ?? m.weight;
                         return (
                             <div key={m.id} className={`settings-method-row ${enabled ? '' : 'disabled'}`}>
                                 <div className="settings-method-left">
@@ -483,20 +475,6 @@ function SettingsModal({
                                         <span className="settings-method-name">{tr.name}</span>
                                         <span className="settings-method-cat">{t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}`)}</span>
                                     </div>
-                                </div>
-                                <div className="settings-method-right">
-                                    <input
-                                        type="range"
-                                        min="0.01"
-                                        max="0.15"
-                                        step="0.01"
-                                        value={w}
-                                        onChange={e => setWeight(m.id, parseFloat(e.target.value))}
-                                        className="settings-weight-slider"
-                                        disabled={!enabled}
-                                        title={tr.name}
-                                    />
-                                    <span className="settings-weight-value">{(w * 100).toFixed(0)}%</span>
                                 </div>
                             </div>
                         );

@@ -131,7 +131,6 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                             <h1 className="method-detail-title">{tr.name}</h1>
                             <div className="method-detail-meta">
                                 <span className={`methods-card-badge ${CAT_COLORS[method.category]}`}>{catLabel}</span>
-                                <span className="method-detail-weight">{t("methods.weightLabel")}: {Math.round(method.weight * 100)}%</span>
                             </div>
                         </div>
                     </div>
@@ -139,14 +138,7 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                     {/* Description */}
                     <p className="method-detail-desc animate-fade-in-up">{tr.description}</p>
 
-                    {/* Weight bar */}
-                    <div className="method-detail-bar-section animate-fade-in-up">
-                        <div className="method-detail-bar-label">{t("methods.weightLabel")}</div>
-                        <div className="methods-card-bar-track method-detail-bar">
-                            <div className={`methods-card-bar-fill methods-bar-w-${Math.round(method.weight * 100)}`} />
-                        </div>
-                        <div className="method-detail-bar-value">{Math.round(method.weight * 100)}%</div>
-                    </div>
+
 
                     {/* Detail sections */}
                     <div className="method-detail-sections animate-fade-in-up">

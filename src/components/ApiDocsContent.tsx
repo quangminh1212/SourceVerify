@@ -619,7 +619,6 @@ print(await response.stream.bytesToString());`,
                                     <p className="api-method-card-desc">{getMethodTranslation(m.id, locale).description}</p>
                                     <div className="api-method-card-meta">
                                         <span className={`api-method-badge cat-${m.cat}`}>{catLabel[m.cat]}</span>
-                                        <span className="api-method-weight">{t("api.methods.weight")}: {m.weight}</span>
                                     </div>
                                 </div>
                             ))}
