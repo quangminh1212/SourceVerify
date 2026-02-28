@@ -48,12 +48,12 @@ const SECTION_LABELS = [
 ];
 
 export default function MethodDetail({ methodId, translations }: { methodId: string; translations: MethodI18n }) {
-    const { t, language } = useLanguage();
+    const { t, locale } = useLanguage();
 
     const method = METHODS.find(m => m.id === methodId);
     if (!method) return null;
 
-    const tr = translations[language] || translations.en;
+    const tr = translations[locale] || translations.en;
     const catLabel = t(`methods.cat${method.category.charAt(0).toUpperCase() + method.category.slice(1)}` as string);
 
     return (
