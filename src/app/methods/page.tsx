@@ -62,10 +62,10 @@ export default function MethodsPage() {
                             {t("methods.headline")}{" "}
                             <span className="gradient-text">{t("methods.headlineHighlight")}</span>
                         </h1>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed max-w-2xl mx-auto">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
                             {t("methods.subtitle1")}
                         </p>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed max-w-2xl mx-auto mt-1">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center mt-1">
                             {t("methods.subtitle2")}
                         </p>
                     </div>
