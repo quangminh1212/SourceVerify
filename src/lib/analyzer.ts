@@ -72,7 +72,7 @@ import {
     // New: Advanced Color (2)
     analyzeColorGamut,
     analyzeWhiteBalance,
-} from "./signals";
+} from "./methods";
 
 // ============================
 // MAIN ENTRY
