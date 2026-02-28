@@ -44,14 +44,6 @@ export default function MethodsPage() {
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
 
-                    {/* Title */}
-                    <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] animate-fade-in-up mt-24">
-                        {t("methods.headline")}{" "}
-                        <span className="gradient-text">{t("methods.headlineHighlight")}</span>
-                    </h1>
-                    <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center animate-fade-in-up">
-                        {t("methods.subtitle1")}
-                    </p>
 
                     {/* Category Tabs */}
                     <div className="methods-cat-tabs animate-fade-in-up">
