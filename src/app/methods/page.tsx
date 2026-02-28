@@ -45,6 +45,7 @@ const CAT_COLORS: Record<Category, string> = {
 export default function MethodsPage() {
     const { t } = useLanguage();
     const [activeCat, setActiveCat] = useState<Category>("all");
+    const [showMethods, setShowMethods] = useState(false);
 
     const filtered = activeCat === "all"
         ? METHODS
@@ -70,54 +71,83 @@ export default function MethodsPage() {
                         </p>
                     </div>
 
-                    {/* Category Tabs */}
-                    <div className="methods-cat-tabs animate-fade-in-up">
-                        {CATEGORIES.map(cat => (
-                            <button
-                                key={cat.key}
-                                className={`methods-cat-tab ${activeCat === cat.key ? "active" : ""}`}
-                                onClick={() => setActiveCat(cat.key)}
+                    {/* Toggle Button */}
+                    <div className="text-center animate-fade-in-up" style={{ marginBottom: '40px' }}>
+                        <button
+                            className="methods-toggle-btn"
+                            onClick={() => setShowMethods(!showMethods)}
+                        >
+                            <span>{showMethods ? t("methods.hideMethods") : t("methods.showMethods")}</span>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className={`methods-toggle-icon ${showMethods ? "rotated" : ""}`}
                             >
-                                {t(cat.labelKey)}
-                                {cat.key !== "all" && (
-                                    <span className="methods-cat-tab-count">
-                                        {METHODS.filter(m => m.category === cat.key).length}
-                                    </span>
-                                )}
-                            </button>
-                        ))}
+                                <polyline points="6 9 12 15 18 9" />
+                            </svg>
+                        </button>
                     </div>
 
-                    {/* Methods Grid */}
-                    <div className="methods-grid animate-fade-in-up">
-                        {filtered.map((m, i) => (
-                            <div
-                                key={m.id}
-                                className={`methods-card animate-fade-in-up animate-delay-${Math.min(i, 5)}`}
-                            >
-                                <div className="methods-card-header">
-                                    <span className="methods-card-icon">{m.icon}</span>
-                                    <div className="methods-card-meta">
-                                        <span className={`methods-card-badge ${CAT_COLORS[m.category]}`}>
-                                            {t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}` as string)}
-                                        </span>
-                                        <span className="methods-card-weight">
-                                            {t("methods.weightLabel")}: {Math.round(m.weight * 100)}%
-                                        </span>
-                                    </div>
-                                </div>
-                                <h3 className="methods-card-name">{t(m.nameKey)}</h3>
-                                <p className="methods-card-desc">{t(m.descKey)}</p>
-
-                                {/* Weight bar */}
-                                <div className="methods-card-bar-track">
-                                    <div
-                                        className={`methods-card-bar-fill methods-bar-w-${Math.round(m.weight * 100)}`}
-                                    />
-                                </div>
+                    {/* Collapsible Methods Section */}
+                    {showMethods && (
+                        <>
+                            {/* Category Tabs */}
+                            <div className="methods-cat-tabs animate-fade-in-up">
+                                {CATEGORIES.map(cat => (
+                                    <button
+                                        key={cat.key}
+                                        className={`methods-cat-tab ${activeCat === cat.key ? "active" : ""}`}
+                                        onClick={() => setActiveCat(cat.key)}
+                                    >
+                                        {t(cat.labelKey)}
+                                        {cat.key !== "all" && (
+                                            <span className="methods-cat-tab-count">
+                                                {METHODS.filter(m => m.category === cat.key).length}
+                                            </span>
+                                        )}
+                                    </button>
+                                ))}
                             </div>
-                        ))}
-                    </div>
+
+                            {/* Methods Grid */}
+                            <div className="methods-grid animate-fade-in-up">
+                                {filtered.map((m, i) => (
+                                    <div
+                                        key={m.id}
+                                        className={`methods-card animate-fade-in-up animate-delay-${Math.min(i, 5)}`}
+                                    >
+                                        <div className="methods-card-header">
+                                            <span className="methods-card-icon">{m.icon}</span>
+                                            <div className="methods-card-meta">
+                                                <span className={`methods-card-badge ${CAT_COLORS[m.category]}`}>
+                                                    {t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}` as string)}
+                                                </span>
+                                                <span className="methods-card-weight">
+                                                    {t("methods.weightLabel")}: {Math.round(m.weight * 100)}%
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <h3 className="methods-card-name">{t(m.nameKey)}</h3>
+                                        <p className="methods-card-desc">{t(m.descKey)}</p>
+
+                                        {/* Weight bar */}
+                                        <div className="methods-card-bar-track">
+                                            <div
+                                                className={`methods-card-bar-fill methods-bar-w-${Math.round(m.weight * 100)}`}
+                                            />
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </>
+                    )}
 
                     {/* CTA */}
                     <div className="text-center mt-12 sm:mt-16 animate-fade-in-up">
