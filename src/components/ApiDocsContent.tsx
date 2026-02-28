@@ -165,18 +165,25 @@ print(await response.stream.bytesToString());`,
                 return (
                     <div className="animate-fade-in-up pt-8">
                         {/* Hero Section */}
-                        <div className="mb-10">
+                        <div className="mb-12">
                             <div>
-                                <div className="flex items-center gap-3 mb-8">
+                                <div className="flex items-center gap-3 mb-6">
                                     <span className="text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full" style={{ color: 'var(--color-accent-blue)', background: 'rgba(66, 133, 244, 0.08)' }}>Getting Started</span>
                                     <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>v1.0</span>
                                 </div>
-                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-8" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3' }}>
+                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-6" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3' }}>
                                     SourceVerify <span className="gradient-text">API</span>
                                 </h1>
-                                <p className="text-sm max-w-xl mb-10" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>
+                                <p className="text-sm max-w-2xl mb-8" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>
                                     Integrate AI-generated content detection into your applications with a simple REST API. Analyze images in milliseconds with industry-leading accuracy.
                                 </p>
+
+                                {/* Base URL inline */}
+                                <div className="flex items-center gap-2 mb-8 text-xs">
+                                    <span className="font-mono px-2 py-1 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>BASE URL</span>
+                                    <code className="font-mono" style={{ color: 'var(--color-accent-blue)' }}>{apiDocsUrl}</code>
+                                </div>
+
                                 <div className="flex items-center gap-4 flex-wrap">
                                     <button
                                         onClick={() => onSectionChange?.("auth")}
@@ -192,45 +199,41 @@ print(await response.stream.bytesToString());`,
                                     >
                                         View Examples
                                     </button>
+                                    <div className="flex items-center gap-2 ml-auto text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                                        <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--color-accent-green)' }} />
+                                        All systems operational
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Base URL */}
-                        <div className="flex items-center gap-3 mb-10 p-4 rounded-lg" style={{ background: 'var(--color-bg-secondary)' }}>
-                            <span className="text-[10px] uppercase tracking-wider font-semibold shrink-0" style={{ color: 'var(--color-text-muted)' }}>Base URL</span>
-                            <code className="text-xs font-mono" style={{ color: 'var(--color-accent-blue)' }}>{apiDocsUrl}</code>
-                        </div>
+                        {/* Divider */}
+                        <div className="mb-10" style={{ borderTop: '1px solid var(--color-border-subtle)' }} />
 
                         {/* Features */}
-                        <div className="grid gap-8 sm:grid-cols-3 mt-16">
-                            <div className="group p-6 rounded-xl transition-all duration-200">
+                        <h2 className="text-xs uppercase tracking-wider font-semibold mb-8" style={{ color: 'var(--color-text-muted)' }}>Key Features</h2>
+                        <div className="grid gap-10 sm:grid-cols-3">
+                            <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(66, 133, 244, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-blue)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>Detect AI-generated images with advanced signal analysis</p>
+                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>Detect AI-generated images with advanced multi-signal analysis and deep learning models.</p>
                             </div>
-                            <div className="group p-6 rounded-xl transition-all duration-200">
+                            <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(52, 168, 83, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-green)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>Average response time under 500ms with 99.9% uptime</p>
+                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>Average response time under 500ms with 99.9% uptime guarantee and global CDN.</p>
                             </div>
-                            <div className="group p-6 rounded-xl transition-all duration-200">
+                            <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(251, 188, 4, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-amber)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>Simple HTTP endpoints with JSON responses</p>
+                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.8' }}>Simple HTTP endpoints with JSON responses. Easy to integrate with any language.</p>
                             </div>
-                        </div>
-
-                        {/* Status */}
-                        <div className="flex items-center gap-2 mt-8 text-xs" style={{ color: 'var(--color-text-muted)' }}>
-                            <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--color-accent-green)' }} />
-                            All systems operational
                         </div>
                     </div>
                 );
