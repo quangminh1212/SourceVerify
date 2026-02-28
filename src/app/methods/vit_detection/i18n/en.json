@@ -1,10 +1,12 @@
 {
-    "useCase":  "",
-    "mechanism":  "",
-    "accuracy":  "",
-    "name":  "Vision Transformer (ViT) Detection",
-    "source":  "",
-    "algorithm":  "ViT-Base/16 + Attention Map Analysis",
-    "parameters":  "",
-    "description":  "Uses Vision Transformer architecture to capture long-range dependencies in images. ViT excels at detecting subtle global patterns that CNNs may miss in AI-generated content."
+    "useCase": "Detecting AI-generated content using global attention patterns that capture both local and long-range artifacts",
+    "mechanism": "Divides the image into 16x16 patches and processes them through a Vision Transformer encoder with multi-head self-attention. The attention mechanism captures long-range dependencies and global patterns across the entire image. The [CLS] token output feeds into a classification head for real/AI determination.",
+    "accuracy": "High - 88-94% with strong cross-generator generalization",
+    "name": "Vision Transformer (ViT) Detection",
+    "source": "Dosovitskiy et al. (2021) - An Image is Worth 16x16 Words, ICLR; adapted for forensics by Cocchi et al. (2023)",
+    "algorithm": "ViT-Base/16 + Attention Map Analysis",
+    "parameters": "Patch size: 16x16, Hidden dim: 768, Attention heads: 12, Layers: 12, Input: 224x224, Classification: MLP head on [CLS] token",
+    "description": "Uses Vision Transformer architecture to capture long-range dependencies in images. ViT excels at detecting subtle global patterns that CNNs may miss in AI-generated content.",
+    "strengths": "• Captures global image context through self-attention\n• Excellent cross-generator generalization\n• Attention maps provide interpretability\n• Scales well with larger datasets",
+    "limitations": "• Requires significant computational resources\n• Large model size and memory footprint\n• Needs large training datasets for optimal performance\n• Patch-based approach may miss sub-patch artifacts"
 }

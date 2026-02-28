@@ -1,22 +1,22 @@
 {
-    "useCase":  "Detecting hidden information, compression irregularities, and AI-generated JPEG anomalies",
-    "mechanism":  "Analyzes the distribution of quantized DCT coefficients using chi-square statistics. Expected distributions follow predictable patterns for natural images; deviations indicate manipulation, AI generation, or hidden data embedding.",
-    "accuracy":  "Medium - 72-83% for detecting compression anomalies and AI artifacts",
-    "name":  "Chi-Square Analysis",
-    "source":  "Westfeld \u0026 Pfitzmann (2000) - Attacks on Steganographic Systems; Fridrich et al. (2003)",
-    "algorithm":  "Chi-Square Goodness-of-Fit Test on DCT Coefficients",
-    "parameters":  "Block size: 8x8 DCT, Test: chi-square goodness-of-fit, Significance: p \u003c 0.05, Coefficients: AC components",
-    "description":  "Applies chi-square statistical test to DCT coefficient distributions to detect steganographic embedding and compression anomalies common in AI outputs.",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1007/3-540-44499-8_5",
-                           "title":  "Westfeld, A. \u0026 Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1007/978-3-540-39929-3_7",
-                           "title":  "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
-                       }
-                   ],
-    "strengths":  "",
-    "limitations":  ""
+    "useCase": "Detecting hidden information, compression irregularities, and AI-generated JPEG anomalies",
+    "mechanism": "Analyzes the distribution of quantized DCT coefficients using chi-square statistics. Expected distributions follow predictable patterns for natural images; deviations indicate manipulation, AI generation, or hidden data embedding.",
+    "accuracy": "Medium - 72-83% for detecting compression anomalies and AI artifacts",
+    "name": "Chi-Square Analysis",
+    "source": "Westfeld & Pfitzmann (2000) - Attacks on Steganographic Systems; Fridrich et al. (2003)",
+    "algorithm": "Chi-Square Goodness-of-Fit Test on DCT Coefficients",
+    "parameters": "Block size: 8x8 DCT, Test: chi-square goodness-of-fit, Significance: p < 0.05, Coefficients: AC components",
+    "description": "Applies chi-square statistical test to DCT coefficient distributions to detect steganographic embedding and compression anomalies common in AI outputs.",
+    "references": [
+        {
+            "url": "https://doi.org/10.1007/3-540-44499-8_5",
+            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
+        },
+        {
+            "url": "https://doi.org/10.1007/978-3-540-39929-3_7",
+            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
+        }
+    ],
+    "strengths": "• Well-established statistical framework\n• Detects both steganography and AI artifacts\n• Fast computation on DCT coefficients\n• Quantifiable p-value for confidence",
+    "limitations": "• Only works on JPEG compressed images\n• Sensitive to image quality and size\n• High compression can mask anomalies\n• Limited effectiveness on PNG/WebP formats"
 }

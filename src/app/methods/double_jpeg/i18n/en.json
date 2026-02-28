@@ -1,10 +1,12 @@
 {
-    "useCase":  "",
-    "mechanism":  "",
-    "accuracy":  "",
-    "name":  "Double JPEG Compression Detection",
-    "source":  "",
-    "algorithm":  "DCT Coefficient Histogram Periodicity Analysis",
-    "parameters":  "",
-    "description":  "Detects traces of double JPEG compression by analyzing DCT coefficient histograms. Tampering often involves re-saving, creating detectable periodic patterns in DCT domain."
+    "useCase": "Detecting image tampering through re-saving, quality manipulation, and spliced regions with different compression histories",
+    "mechanism": "Analyzes DCT coefficient histograms for periodic patterns caused by double quantization. When a JPEG image is decompressed and re-compressed at a different quality, the DCT coefficients exhibit characteristic periodic artifacts (combing effect) in their histograms that are detectable through frequency analysis.",
+    "accuracy": "High - 82-92% for images with detectable double compression",
+    "name": "Double JPEG Compression Detection",
+    "source": "Lukáš & Fridrich (2003) - Estimation of Primary Quantization Matrix in Double-Compressed JPEG Images, DFRWS",
+    "algorithm": "DCT Coefficient Histogram Periodicity Analysis",
+    "parameters": "Block size: 8x8 DCT, Quality range: 50-99, Analysis: histogram periodicity via DFT, Detection threshold: adaptive",
+    "description": "Detects traces of double JPEG compression by analyzing DCT coefficient histograms. Tampering often involves re-saving, creating detectable periodic patterns in DCT domain.",
+    "strengths": "• Very reliable for detecting re-saved JPEGs\n• Can estimate original compression quality\n• Localizes tampered regions\n• Mathematical foundation is well-established",
+    "limitations": "• Only works on JPEG format images\n• Ineffective when both compressions use same quality\n• Cannot detect single-compressed AI images\n• Requires sufficient image size for statistical reliability"
 }

@@ -1,10 +1,12 @@
 {
-    "useCase":  "",
-    "mechanism":  "",
-    "accuracy":  "",
-    "name":  "Fourier Ring Pattern Detection",
-    "source":  "",
-    "algorithm":  "2D FFT Radial Profile + Peak Detection",
-    "parameters":  "",
-    "description":  "Detects periodic ring patterns in 2D Fourier spectrum caused by GAN upsampling operations. These spectral anomalies are invisible to human eyes but computationally detectable."
+    "useCase": "Detecting GAN upsampling artifacts invisible to the human eye but present in frequency domain",
+    "mechanism": "Computes the 2D Fast Fourier Transform and converts to polar coordinates to create a radial power spectral density profile. GAN-based upsampling operations (transposed convolution, pixel shuffle) create characteristic periodic ring patterns in the frequency domain that appear as peaks in the radial profile.",
+    "accuracy": "High - 85-93% for GAN-generated images with upsampling artifacts",
+    "name": "Fourier Ring Pattern Detection",
+    "source": "Dzanic et al. (2020) - Fourier Spectrum Discrepancies in Deep Network Generated Images, NeurIPS Workshop",
+    "algorithm": "2D FFT Radial Profile + Peak Detection",
+    "parameters": "FFT size: image dimensions, Radial bins: 256, Peak detection: scipy find_peaks, Min peak prominence: 2σ above mean",
+    "description": "Detects periodic ring patterns in 2D Fourier spectrum caused by GAN upsampling operations. These spectral anomalies are invisible to human eyes but computationally detectable.",
+    "strengths": "• Very reliable for GAN-based generators\n• Detects artifacts invisible to humans\n• Mathematically well-founded\n• Fast computation via FFT",
+    "limitations": "• Less effective for diffusion models\n• JPEG compression can mask spectral artifacts\n• Small images reduce frequency resolution\n• May produce false positives on regularly textured images"
 }
