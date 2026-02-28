@@ -93,16 +93,6 @@ export default function MethodsPage() {
                                 <h3 className="methods-card-name">{t(m.nameKey)}</h3>
                                 <p className="methods-card-desc">{t(m.descKey)}</p>
 
-                                <div className="methods-card-bar-track">
-                                    <div className={`methods-card-bar-fill methods-bar-w-${Math.round(m.weight * 100)}`} />
-                                </div>
-
-                                {/* Arrow hint */}
-                                <div className="methods-card-expand-hint">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <polyline points="9 18 15 12 9 6" />
-                                    </svg>
-                                </div>
                             </Link>
                         ))}
                     </div>
