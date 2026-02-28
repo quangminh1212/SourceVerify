@@ -56,7 +56,8 @@ export default function Header() {
     const [user, setUser] = useState<GoogleUser | null>(null);
     const [isDark, setIsDark] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
-    const [settingsFilter, setSettingsFilter] = useState<Category>('all');
+
+
     const [settings, setSettings] = useState<AnalysisSettings>(DEFAULT_SETTINGS);
     const { locale, setLocale, t } = useLanguage();
 
@@ -361,8 +362,6 @@ export default function Header() {
                 settingsOpen && typeof document !== 'undefined' && createPortal(
                     <SettingsModal
                         settings={settings}
-                        filter={settingsFilter}
-                        onFilterChange={setSettingsFilter}
                         locale={locale}
                         t={t}
                         onSave={(s) => {
@@ -382,11 +381,9 @@ export default function Header() {
 
 /* ── Settings Modal Component ── */
 function SettingsModal({
-    settings, filter, onFilterChange, locale, t, onSave, onClose,
+    settings, locale, t, onSave, onClose,
 }: {
     settings: AnalysisSettings;
-    filter: Category;
-    onFilterChange: (c: Category) => void;
     locale: Locale;
     t: (k: string) => string;
     onSave: (s: AnalysisSettings) => void;
@@ -395,10 +392,6 @@ function SettingsModal({
     const [local, setLocal] = useState<AnalysisSettings>(() => ({
         enabledMethods: [...settings.enabledMethods],
     }));
-
-    const filteredMethods = useMemo(() =>
-        filter === 'all' ? METHODS : METHODS.filter(m => m.category === filter)
-        , [filter]);
 
     const toggleMethod = (id: string) => {
         setLocal(prev => ({
@@ -410,26 +403,41 @@ function SettingsModal({
     };
 
     const toggleAll = () => {
-        const allIds = filteredMethods.map(m => m.id);
+        const allIds = METHODS.map(m => m.id);
         const allEnabled = allIds.every(id => local.enabledMethods.includes(id));
         setLocal(prev => ({
             ...prev,
-            enabledMethods: allEnabled
-                ? prev.enabledMethods.filter(id => !allIds.includes(id))
-                : [...new Set([...prev.enabledMethods, ...allIds])],
+            enabledMethods: allEnabled ? [] : [...allIds],
         }));
     };
 
-
+    const toggleGroup = (cat: string) => {
+        const groupIds = METHODS.filter(m => m.category === cat).map(m => m.id);
+        const allEnabled = groupIds.every(id => local.enabledMethods.includes(id));
+        setLocal(prev => ({
+            ...prev,
+            enabledMethods: allEnabled
+                ? prev.enabledMethods.filter(id => !groupIds.includes(id))
+                : [...new Set([...prev.enabledMethods, ...groupIds])],
+        }));
+    };
 
     const resetDefaults = () => {
-        setLocal({
-            enabledMethods: METHODS.map(m => m.id),
-        });
+        setLocal({ enabledMethods: METHODS.map(m => m.id) });
     };
 
     const enabledCount = local.enabledMethods.length;
-    const filteredAllEnabled = filteredMethods.every(m => local.enabledMethods.includes(m.id));
+    const allEnabled = METHODS.every(m => local.enabledMethods.includes(m.id));
+
+    // Group methods by category (exclude 'all')
+    const groups = useMemo(() => {
+        const cats = CATEGORIES.filter(c => c.key !== 'all');
+        return cats.map(c => ({
+            key: c.key,
+            label: t(c.labelKey),
+            methods: METHODS.filter(m => m.category === c.key),
+        }));
+    }, [t]);
 
     return (
         <div className="settings-overlay" onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
@@ -442,7 +450,7 @@ function SettingsModal({
                         </div>
                         <div>
                             <h2>{t('header.settings')}</h2>
-                            <p className="settings-subtitle">{t('settings.subtitle') || 'Chọn phương pháp phân tích bạn muốn sử dụng'}</p>
+                            <p className="settings-subtitle">{t('settings.subtitle')}</p>
                         </div>
                     </div>
                     <button className="settings-close-btn" onClick={onClose} aria-label="Close">
@@ -450,27 +458,13 @@ function SettingsModal({
                     </button>
                 </div>
 
-                {/* Category Filter */}
-                <div className="settings-filters">
-                    {CATEGORIES.map(c => (
-                        <button
-                            key={c.key}
-                            className={`settings-filter-btn ${filter === c.key ? 'active' : ''}`}
-                            onClick={() => onFilterChange(c.key)}
-                        >
-                            {c.key !== 'all' && <span className={`settings-filter-dot settings-dot-${c.key}`} />}
-                            {t(c.labelKey)}
-                        </button>
-                    ))}
-                </div>
-
                 {/* Select All / Count */}
                 <div className="settings-toolbar">
                     <button className="settings-toggle-all" onClick={toggleAll}>
-                        <span className={`settings-toggle-switch ${filteredAllEnabled ? 'on' : ''}`}>
+                        <span className={`settings-toggle-switch ${allEnabled ? 'on' : ''}`}>
                             <span className="settings-toggle-knob" />
                         </span>
-                        {filteredAllEnabled ? t('settings.deselectAll') : t('settings.selectAll')}
+                        {allEnabled ? t('settings.deselectAll') : t('settings.selectAll')}
                     </button>
                     <span className="settings-count">
                         <span className="settings-count-num">{enabledCount}</span>
@@ -479,30 +473,44 @@ function SettingsModal({
                     </span>
                 </div>
 
-                {/* Methods List */}
+                {/* Grouped Methods */}
                 <div className="settings-methods-list">
-                    {filteredMethods.map(m => {
-                        const enabled = local.enabledMethods.includes(m.id);
-                        const tr = getMethodTranslation(m.id, locale);
+                    {groups.map(g => {
+                        const groupEnabled = g.methods.every(m => local.enabledMethods.includes(m.id));
+                        const groupCount = g.methods.filter(m => local.enabledMethods.includes(m.id)).length;
                         return (
-                            <div
-                                key={m.id}
-                                className={`settings-method-row ${enabled ? 'enabled' : 'disabled'}`}
-                                onClick={() => toggleMethod(m.id)}
-                                role="button"
-                                tabIndex={0}
-                                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMethod(m.id); } }}
-                            >
-                                <div className="settings-method-left">
-                                    <span className={`settings-cat-dot settings-cat-${m.category}`} />
-                                    <div className="settings-method-info">
-                                        <span className="settings-method-name">{tr.name}</span>
-                                        <span className={`settings-method-cat settings-text-${m.category}`}>{t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}`)}</span>
+                            <div key={g.key} className="settings-group">
+                                <div className="settings-group-header" onClick={() => toggleGroup(g.key)} role="button" tabIndex={0}
+                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleGroup(g.key); } }}>
+                                    <div className="settings-group-left">
+                                        <span className={`settings-group-dot settings-dot-${g.key}`} />
+                                        <span className="settings-group-name">{g.label}</span>
+                                        <span className="settings-group-count">{groupCount}/{g.methods.length}</span>
                                     </div>
+                                    <span className={`settings-toggle-switch sm ${groupEnabled ? 'on' : ''}`}>
+                                        <span className="settings-toggle-knob" />
+                                    </span>
                                 </div>
-                                <span className={`settings-toggle-switch ${enabled ? 'on' : ''}`}>
-                                    <span className="settings-toggle-knob" />
-                                </span>
+                                <div className="settings-group-items">
+                                    {g.methods.map(m => {
+                                        const enabled = local.enabledMethods.includes(m.id);
+                                        const tr = getMethodTranslation(m.id, locale);
+                                        return (
+                                            <div
+                                                key={m.id}
+                                                className={`settings-method-row ${enabled ? 'enabled' : 'disabled'}`}
+                                                onClick={() => toggleMethod(m.id)}
+                                                role="button" tabIndex={0}
+                                                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMethod(m.id); } }}
+                                            >
+                                                <span className="settings-method-name">{tr.name}</span>
+                                                <span className={`settings-toggle-switch sm ${enabled ? 'on' : ''}`}>
+                                                    <span className="settings-toggle-knob" />
+                                                </span>
+                                            </div>
+                                        );
+                                    })}
+                                </div>
                             </div>
                         );
                     })}
