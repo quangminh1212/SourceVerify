@@ -162,27 +162,27 @@ print(await response.stream.bytesToString());`,
             case "overview":
                 return (
                     <div className="animate-fade-in-up">
-                        <p className="text-xs mb-4 uppercase tracking-wider font-medium" style={{ color: 'var(--color-text-muted)' }}>Getting Started</p>
-                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-5" style={{ color: 'var(--color-text-primary)' }}>
+                        <p className="text-xs mb-12 uppercase tracking-wider font-medium" style={{ color: 'var(--color-text-muted)' }}>Getting Started</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-16" style={{ color: 'var(--color-text-primary)' }}>
                             SourceVerify <span className="gradient-text">API</span>
                         </h1>
-                        <p className="text-sm leading-[1.8] mb-10" style={{ color: 'var(--color-text-secondary)' }}>
+                        <p className="text-sm leading-[1.8] mb-[120px]" style={{ color: 'var(--color-text-secondary)' }}>
                             Integrate AI-generated content detection into your applications with a simple REST API.
                         </p>
-                        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                        <div className="grid gap-16 sm:grid-cols-2 lg:grid-cols-3">
                             <div className="p-5 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
-                                <div className="text-2xl mb-3">🔍</div>
-                                <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
+                                <div className="text-2xl mb-8">🔍</div>
+                                <h3 className="text-sm font-semibold mb-6" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
                                 <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>Detect AI-generated images with advanced signal analysis</p>
                             </div>
                             <div className="p-5 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
-                                <div className="text-2xl mb-3">⚡</div>
-                                <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
+                                <div className="text-2xl mb-8">⚡</div>
+                                <h3 className="text-sm font-semibold mb-6" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
                                 <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>Average response time under 500ms with 99.9% uptime</p>
                             </div>
                             <div className="p-5 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
-                                <div className="text-2xl mb-3">🔗</div>
-                                <h3 className="text-sm font-semibold mb-2" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
+                                <div className="text-2xl mb-8">🔗</div>
+                                <h3 className="text-sm font-semibold mb-6" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
                                 <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>Simple HTTP endpoints with JSON responses and SDKs</p>
                             </div>
                         </div>
