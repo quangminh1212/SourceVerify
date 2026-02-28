@@ -59,20 +59,20 @@ export default function MethodsPage() {
 
                     {!showMethods ? (
                         /* === Intro View === */
-                        <div className="text-center animate-fade-in-up" style={{ paddingTop: '40px' }}>
-                            <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary]" style={{ marginBottom: '48px' }}>
+                        <div className="methods-intro-section text-center animate-fade-in-up">
+                            <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary]">
                                 {t("methods.headline")}{" "}
                                 <span className="gradient-text">{t("methods.headlineHighlight")}</span>
                             </h1>
                             <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
                                 {t("methods.subtitle1")}
                             </p>
-                            <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center" style={{ marginTop: '4px' }}>
+                            <p className="methods-subtitle2 text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
                                 {t("methods.subtitle2")}
                             </p>
 
                             {/* View Now Button */}
-                            <div style={{ marginTop: '48px' }}>
+                            <div className="methods-view-cta">
                                 <button
                                     className="btn-primary inline-flex items-center gap-2"
                                     onClick={() => setShowMethods(true)}
@@ -85,16 +85,6 @@ export default function MethodsPage() {
                     ) : (
                         /* === Methods Grid View === */
                         <>
-                            {/* Back button */}
-                            <div className="text-left animate-fade-in-up" style={{ marginBottom: '24px' }}>
-                                <button
-                                    className="methods-back-btn"
-                                    onClick={() => setShowMethods(false)}
-                                >
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
-                                    {t("methods.backToIntro")}
-                                </button>
-                            </div>
 
                             {/* Category Tabs */}
                             <div className="methods-cat-tabs animate-fade-in-up">
