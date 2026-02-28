@@ -47,6 +47,22 @@ export const METHODS = [
     { id: "diffusion", nameKey: "api.methods.diffusion.name", descKey: "api.methods.diffusion.desc", category: "sensor" as Category, weight: 0.04 },
     { id: "noiseprint", nameKey: "api.methods.noiseprint.name", descKey: "api.methods.noiseprint.desc", category: "sensor" as Category, weight: 0.04 },
     { id: "upscaling", nameKey: "api.methods.upscaling.name", descKey: "api.methods.upscaling.desc", category: "pixel" as Category, weight: 0.03 },
+    // New methods based on academic research
+    { id: "frequency_band", nameKey: "api.methods.frequency_band.name", descKey: "api.methods.frequency_band.desc", category: "frequency" as Category, weight: 0.03 },
+    { id: "face_landmark", nameKey: "api.methods.face_landmark.name", descKey: "api.methods.face_landmark.desc", category: "pixel" as Category, weight: 0.04 },
+    { id: "lighting", nameKey: "api.methods.lighting.name", descKey: "api.methods.lighting.desc", category: "pixel" as Category, weight: 0.03 },
+    { id: "shadow", nameKey: "api.methods.shadow.name", descKey: "api.methods.shadow.desc", category: "pixel" as Category, weight: 0.02 },
+    { id: "perspective", nameKey: "api.methods.perspective.name", descKey: "api.methods.perspective.desc", category: "pixel" as Category, weight: 0.02 },
+    { id: "reflection", nameKey: "api.methods.reflection.name", descKey: "api.methods.reflection.desc", category: "pixel" as Category, weight: 0.02 },
+    { id: "double_jpeg", nameKey: "api.methods.double_jpeg.name", descKey: "api.methods.double_jpeg.desc", category: "statistical" as Category, weight: 0.03 },
+    { id: "patchforensics", nameKey: "api.methods.patchforensics.name", descKey: "api.methods.patchforensics.desc", category: "sensor" as Category, weight: 0.04 },
+    { id: "clip_detection", nameKey: "api.methods.clip_detection.name", descKey: "api.methods.clip_detection.desc", category: "sensor" as Category, weight: 0.04 },
+    { id: "binary_pattern", nameKey: "api.methods.binary_pattern.name", descKey: "api.methods.binary_pattern.desc", category: "pixel" as Category, weight: 0.03 },
+    { id: "fourier_ring", nameKey: "api.methods.fourier_ring.name", descKey: "api.methods.fourier_ring.desc", category: "frequency" as Category, weight: 0.03 },
+    { id: "resnet_classifier", nameKey: "api.methods.resnet_classifier.name", descKey: "api.methods.resnet_classifier.desc", category: "sensor" as Category, weight: 0.04 },
+    { id: "vit_detection", nameKey: "api.methods.vit_detection.name", descKey: "api.methods.vit_detection.desc", category: "sensor" as Category, weight: 0.04 },
+    { id: "gram_matrix", nameKey: "api.methods.gram_matrix.name", descKey: "api.methods.gram_matrix.desc", category: "pixel" as Category, weight: 0.02 },
+    { id: "srm_filter", nameKey: "api.methods.srm_filter.name", descKey: "api.methods.srm_filter.desc", category: "pixel" as Category, weight: 0.03 },
 ];
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [
