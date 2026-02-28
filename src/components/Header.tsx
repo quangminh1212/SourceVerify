@@ -11,6 +11,7 @@ const NAV_KEYS = [
     { key: "nav.product", href: "/product" },
     { key: "nav.features", href: "/features" },
     { key: "nav.howItWorks", href: "/how-it-works" },
+    { key: "nav.methods", href: "/methods" },
     { key: "nav.about", href: "/about" },
 ];
 
