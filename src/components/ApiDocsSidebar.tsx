@@ -1,51 +1,55 @@
 "use client";
 
+import { useLanguage } from "@/i18n/LanguageContext";
+
 interface ApiDocsSidebarProps {
     activeSection: string;
     onSectionChange: (section: string) => void;
 }
 
-const SECTIONS = [
-    {
-        title: "Getting Started",
-        items: [
-            { id: "overview", label: "Overview" },
-            { id: "auth", label: "Authentication" },
-            { id: "rate-limits", label: "Rate Limits" },
-        ],
-    },
-    {
-        title: "Endpoints",
-        items: [
-            { id: "endpoint", label: "Analyze Image", method: "POST" },
-            { id: "url-analysis", label: "Analyze by URL", method: "POST" },
-            { id: "batch-analysis", label: "Batch Analysis", method: "POST" },
-            { id: "analysis-history", label: "Analysis History", method: "GET" },
-        ],
-    },
-    {
-        title: "Response",
-        items: [
-            { id: "response", label: "Response Format" },
-            { id: "verdict-values", label: "Verdict Values" },
-            { id: "error-codes", label: "Error Codes" },
-        ],
-    },
-    {
-        title: "Advanced",
-        items: [
-            { id: "webhooks", label: "Webhooks" },
-        ],
-    },
-    {
-        title: "Code Examples",
-        items: [
-            { id: "examples", label: "Quick Start" },
-        ],
-    },
-];
-
 export default function ApiDocsSidebar({ activeSection, onSectionChange }: ApiDocsSidebarProps) {
+    const { t } = useLanguage();
+
+    const SECTIONS = [
+        {
+            title: t("api.sidebar.gettingStarted"),
+            items: [
+                { id: "overview", label: t("api.sidebar.overview") },
+                { id: "auth", label: t("api.sidebar.authentication") },
+                { id: "rate-limits", label: t("api.sidebar.rateLimits") },
+            ],
+        },
+        {
+            title: t("api.sidebar.endpoints"),
+            items: [
+                { id: "endpoint", label: t("api.sidebar.analyzeImage"), method: "POST" },
+                { id: "url-analysis", label: t("api.sidebar.analyzeByUrl"), method: "POST" },
+                { id: "batch-analysis", label: t("api.sidebar.batchAnalysis"), method: "POST" },
+                { id: "analysis-history", label: t("api.sidebar.analysisHistory"), method: "GET" },
+            ],
+        },
+        {
+            title: t("api.sidebar.response"),
+            items: [
+                { id: "response", label: t("api.sidebar.responseFormat") },
+                { id: "verdict-values", label: t("api.sidebar.verdictValues") },
+                { id: "error-codes", label: t("api.sidebar.errorCodes") },
+            ],
+        },
+        {
+            title: t("api.sidebar.advanced"),
+            items: [
+                { id: "webhooks", label: t("api.sidebar.webhooks") },
+            ],
+        },
+        {
+            title: t("api.sidebar.codeExamples"),
+            items: [
+                { id: "examples", label: t("api.sidebar.quickStart") },
+            ],
+        },
+    ];
+
     return (
         <aside className="api-docs-sidebar">
             <nav className="sticky top-16 py-8 overflow-y-auto max-h-[calc(100vh-4rem)]">

@@ -1,6 +1,7 @@
 ﻿"use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 interface UserInfo {
     apiKey: string;
@@ -38,6 +39,7 @@ export default function ApiDocsContent({
     onSectionChange,
 }: ApiDocsContentProps) {
     const [activeTab, setActiveTab] = useState<string>("curl");
+    const { t } = useLanguage();
     const apiKey = user?.apiKey || "YOUR_API_KEY";
 
     const codeExamples: Record<string, string> = {
@@ -168,14 +170,14 @@ print(await response.stream.bytesToString());`,
                         <div className="api-hero">
                             <div>
                                 <div className="flex items-center gap-3 api-hero-badges">
-                                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold api-badge-label">Getting Started</span>
+                                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold api-badge-label">{t("api.overview.badge")}</span>
                                     <span className="text-[10px] font-mono api-badge-version">v1.0</span>
                                 </div>
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight api-hero-title">
                                     SourceVerify <span className="gradient-text">API</span>
                                 </h1>
                                 <p className="text-sm max-w-2xl api-hero-desc">
-                                    Integrate AI-generated content detection into your applications with a simple REST API. Analyze images in milliseconds with industry-leading accuracy.
+                                    {t("api.overview.desc")}
                                 </p>
 
                                 {/* Base URL inline */}
@@ -189,17 +191,17 @@ print(await response.stream.bytesToString());`,
                                         onClick={() => onSectionChange?.("auth")}
                                         className="api-link-btn text-xs font-semibold transition-all duration-200"
                                     >
-                                        Get API Key →
+                                        {t("api.overview.getApiKey")}
                                     </button>
                                     <button
                                         onClick={() => onSectionChange?.("examples")}
                                         className="api-link-btn-secondary text-xs font-semibold transition-all duration-200"
                                     >
-                                        View Examples
+                                        {t("api.overview.viewExamples")}
                                     </button>
                                     <div className="flex items-center gap-2 ml-auto text-xs api-text-muted">
                                         <span className="w-1.5 h-1.5 rounded-full animate-pulse api-status-dot" />
-                                        All systems operational
+                                        {t("api.overview.status")}
                                     </div>
                                 </div>
                             </div>
@@ -209,28 +211,28 @@ print(await response.stream.bytesToString());`,
                         <div className="api-divider" />
 
                         {/* Features */}
-                        <h2 className="text-xs uppercase tracking-wider font-semibold api-features-title">Key Features</h2>
+                        <h2 className="text-xs uppercase tracking-wider font-semibold api-features-title">{t("api.overview.keyFeatures")}</h2>
                         <div className="grid gap-12 sm:grid-cols-3">
                             <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5 api-feature-icon-blue">
                                     <svg className="w-4 h-4 api-icon-blue" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-3 api-feature-title">Image Analysis</h3>
-                                <p className="text-xs api-feature-desc">Detect AI-generated images with advanced multi-signal analysis and deep learning models.</p>
+                                <h3 className="text-sm font-semibold mb-3 api-feature-title">{t("api.overview.feature1.title")}</h3>
+                                <p className="text-xs api-feature-desc">{t("api.overview.feature1.desc")}</p>
                             </div>
                             <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5 api-feature-icon-green">
                                     <svg className="w-4 h-4 api-icon-green" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-3 api-feature-title">Fast & Reliable</h3>
-                                <p className="text-xs api-feature-desc">Average response time under 500ms with 99.9% uptime guarantee and global CDN.</p>
+                                <h3 className="text-sm font-semibold mb-3 api-feature-title">{t("api.overview.feature2.title")}</h3>
+                                <p className="text-xs api-feature-desc">{t("api.overview.feature2.desc")}</p>
                             </div>
                             <div>
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5 api-feature-icon-amber">
                                     <svg className="w-4 h-4 api-icon-amber" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-3 api-feature-title">REST API</h3>
-                                <p className="text-xs api-feature-desc">Simple HTTP endpoints with JSON responses. Easy to integrate with any language.</p>
+                                <h3 className="text-sm font-semibold mb-3 api-feature-title">{t("api.overview.feature3.title")}</h3>
+                                <p className="text-xs api-feature-desc">{t("api.overview.feature3.desc")}</p>
                             </div>
                         </div>
                     </div>
@@ -239,8 +241,8 @@ print(await response.stream.bytesToString());`,
             case "auth":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Authentication</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">All API requests require an API key sent via the <code className="text-xs px-1.5 py-0.5 rounded api-inline-code">X-API-Key</code> header.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.auth.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.auth.desc", { code: "X-API-Key" })} </p>
                         {user ? (
                             <div className="api-user-card">
                                 <div className="api-user-info">
@@ -251,34 +253,34 @@ print(await response.stream.bytesToString());`,
                                     </div>
                                 </div>
                                 <div className="api-key-box">
-                                    <label>API Key</label>
+                                    <label>{t("api.auth.apiKeyLabel")}</label>
                                     <div className="api-key-row">
                                         <code className="api-key-value">{user.apiKey}</code>
                                         <button onClick={onCopyKey} className="api-copy-btn">
-                                            {copied ? "Copied" : "Copy"}
+                                            {copied ? t("api.auth.copied") : t("api.auth.copy")}
                                         </button>
                                     </div>
                                 </div>
                                 <div className="api-user-actions">
                                     <button onClick={onTestApi} className="api-test-btn" disabled={testing}>
-                                        {testing ? "Testing..." : "Test API"}
+                                        {testing ? t("api.auth.testing") : t("api.auth.testApi")}
                                     </button>
-                                    <button onClick={onLogout} className="api-logout-btn">Sign Out</button>
+                                    <button onClick={onLogout} className="api-logout-btn">{t("api.auth.signOut")}</button>
                                 </div>
                                 {testResult && (
                                     <div className="mt-6">
-                                        <h3 className="text-sm font-semibold text-white mb-2">Test Result</h3>
+                                        <h3 className="text-sm font-semibold text-white mb-2">{t("api.auth.testResult")}</h3>
                                         <pre className="api-response-example">{testResult}</pre>
                                     </div>
                                 )}
                             </div>
                         ) : (
                             <div className="api-signin-card">
-                                <p className="text-sm mb-2 leading-[3] api-section-desc">Sign in with Google to get your API key.</p>
+                                <p className="text-sm mb-2 leading-[3] api-section-desc">{t("api.auth.signInPrompt")}</p>
                                 <div id="google-signin-btn"></div>
                                 {!googleClientId && (
                                     <p className="api-note">
-                                        Google Client ID not configured. Set <code>NEXT_PUBLIC_GOOGLE_CLIENT_ID</code> in your environment.
+                                        {t("api.auth.noClientId", { code: "NEXT_PUBLIC_GOOGLE_CLIENT_ID" })}
                                     </p>
                                 )}
                             </div>
@@ -289,24 +291,24 @@ print(await response.stream.bytesToString());`,
             case "rate-limits":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Rate Limits</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">API rate limits vary by plan. Exceeding them returns <code className="text-xs px-1.5 py-0.5 rounded api-inline-code">429 Too Many Requests</code>.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.rateLimits.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.rateLimits.desc", { code: "429 Too Many Requests" })}</p>
                         <table className="api-table">
-                            <thead><tr><th>Plan</th><th>Requests / min</th><th>Daily Limit</th><th>Max File Size</th></tr></thead>
+                            <thead><tr><th>{t("api.rateLimits.plan")}</th><th>{t("api.rateLimits.requestsPerMin")}</th><th>{t("api.rateLimits.dailyLimit")}</th><th>{t("api.rateLimits.maxFileSize")}</th></tr></thead>
                             <tbody>
-                                <tr><td>Free</td><td>10</td><td>100</td><td>5 MB</td></tr>
-                                <tr><td>Pro</td><td>60</td><td>5,000</td><td>10 MB</td></tr>
-                                <tr><td>Enterprise</td><td>300</td><td>Unlimited</td><td>25 MB</td></tr>
+                                <tr><td>{t("api.rateLimits.free")}</td><td>10</td><td>100</td><td>5 MB</td></tr>
+                                <tr><td>{t("api.rateLimits.pro")}</td><td>60</td><td>5,000</td><td>10 MB</td></tr>
+                                <tr><td>{t("api.rateLimits.enterprise")}</td><td>300</td><td>{t("api.rateLimits.unlimited")}</td><td>25 MB</td></tr>
                             </tbody>
                         </table>
-                        <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle api-rate-header-mt">Rate Limit Headers</h3>
-                        <p className="text-xs mb-4 leading-[3] api-section-desc">Each response includes headers to track your usage:</p>
+                        <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle api-rate-header-mt">{t("api.rateLimits.headersTitle")}</h3>
+                        <p className="text-xs mb-4 leading-[3] api-section-desc">{t("api.rateLimits.headersDesc")}</p>
                         <table className="api-table">
-                            <thead><tr><th>Header</th><th>Description</th></tr></thead>
+                            <thead><tr><th>{t("api.rateLimits.header")}</th><th>{t("api.rateLimits.headerDesc")}</th></tr></thead>
                             <tbody>
-                                <tr><td><code>X-RateLimit-Limit</code></td><td>Max requests per minute</td></tr>
-                                <tr><td><code>X-RateLimit-Remaining</code></td><td>Remaining requests in current window</td></tr>
-                                <tr><td><code>X-RateLimit-Reset</code></td><td>Unix timestamp when the window resets</td></tr>
+                                <tr><td><code>X-RateLimit-Limit</code></td><td>{t("api.rateLimits.limitDesc")}</td></tr>
+                                <tr><td><code>X-RateLimit-Remaining</code></td><td>{t("api.rateLimits.remainingDesc")}</td></tr>
+                                <tr><td><code>X-RateLimit-Reset</code></td><td>{t("api.rateLimits.resetDesc")}</td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -315,34 +317,34 @@ print(await response.stream.bytesToString());`,
             case "endpoint":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Analyze Image</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">Upload an image file to analyze whether it was AI-generated or authentic.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.endpoint.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.endpoint.desc")}</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/analyze</code>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Headers</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.endpoint.headers")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Header</th><th>Required</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.endpoint.header")}</th><th>{t("api.endpoint.required")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>X-API-Key</code></td><td>Yes</td><td>Your API key</td></tr>
-                                    <tr><td><code>Content-Type</code></td><td>No</td><td><code>multipart/form-data</code> or <code>application/json</code></td></tr>
+                                    <tr><td><code>X-API-Key</code></td><td>{t("api.endpoint.yes")}</td><td>{t("api.endpoint.yourApiKey")}</td></tr>
+                                    <tr><td><code>Content-Type</code></td><td>{t("api.endpoint.no")}</td><td><code>multipart/form-data</code> or <code>application/json</code></td></tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Request Body</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.endpoint.requestBody")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.endpoint.field")}</th><th>{t("api.endpoint.type")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>image</code></td><td>File / Base64</td><td>Image to analyze (max 10MB)</td></tr>
-                                    <tr><td><code>fileName</code></td><td>String</td><td>Optional filename (JSON requests)</td></tr>
+                                    <tr><td><code>image</code></td><td>File / Base64</td><td>{t("api.endpoint.imageDesc")}</td></tr>
+                                    <tr><td><code>fileName</code></td><td>String</td><td>{t("api.endpoint.filenameDesc")}</td></tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Example Request</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.endpoint.exampleRequest")}</h3>
                             <pre className="api-code-block">{codeExamples.curl}</pre>
                         </div>
                     </div>
@@ -351,24 +353,24 @@ print(await response.stream.bytesToString());`,
             case "url-analysis":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Analyze by URL</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">Analyze an image by providing its public URL instead of uploading a file.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.urlAnalysis.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.urlAnalysis.desc")}</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/analyze-url</code>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Request Body</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.endpoint.requestBody")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.endpoint.field")}</th><th>{t("api.endpoint.type")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>url</code></td><td>String</td><td>Public URL of the image to analyze</td></tr>
-                                    <tr><td><code>followRedirects</code></td><td>Boolean</td><td>Follow redirects (default: true)</td></tr>
+                                    <tr><td><code>url</code></td><td>String</td><td>{t("api.urlAnalysis.urlDesc")}</td></tr>
+                                    <tr><td><code>followRedirects</code></td><td>Boolean</td><td>{t("api.urlAnalysis.followRedirects")}</td></tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Example Request</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.urlAnalysis.exampleRequest")}</h3>
                             <pre className="api-code-block">{`curl -X POST ${apiDocsUrl}/api/analyze-url \\
   -H "X-API-Key: ${apiKey}" \\
   -H "Content-Type: application/json" \\
@@ -380,24 +382,24 @@ print(await response.stream.bytesToString());`,
             case "batch-analysis":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Batch Analysis</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">Analyze up to 10 images in a single request. Results are returned in the same order as the input.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.batch.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.batch.desc")}</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/analyze-batch</code>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Request Body</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.endpoint.requestBody")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.endpoint.field")}</th><th>{t("api.endpoint.type")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>images</code></td><td>File[]</td><td>Up to 10 image files</td></tr>
-                                    <tr><td><code>urls</code></td><td>String[]</td><td>Array of image URLs (alternative)</td></tr>
+                                    <tr><td><code>images</code></td><td>File[]</td><td>{t("api.batch.imagesDesc")}</td></tr>
+                                    <tr><td><code>urls</code></td><td>String[]</td><td>{t("api.batch.urlsDesc")}</td></tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Example Response</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.batch.exampleResponse")}</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 success: true,
                                 data: {
@@ -416,27 +418,27 @@ print(await response.stream.bytesToString());`,
             case "analysis-history":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Analysis History</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">Retrieve your past analysis results with pagination and filtering support.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.history.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.history.desc")}</p>
                         <div className="api-endpoint-card">
                             <div className="api-method api-method-get">GET</div>
                             <code className="api-url">/api/history</code>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Query Parameters</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.history.queryParams")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Parameter</th><th>Type</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.history.parameter")}</th><th>{t("api.endpoint.type")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>page</code></td><td>Number</td><td>Page number (default: 1)</td></tr>
-                                    <tr><td><code>limit</code></td><td>Number</td><td>Results per page (default: 20, max: 100)</td></tr>
-                                    <tr><td><code>verdict</code></td><td>String</td><td>Filter by verdict: ai, real, uncertain</td></tr>
-                                    <tr><td><code>from</code></td><td>ISO Date</td><td>Start date filter</td></tr>
-                                    <tr><td><code>to</code></td><td>ISO Date</td><td>End date filter</td></tr>
+                                    <tr><td><code>page</code></td><td>Number</td><td>{t("api.history.pageDesc")}</td></tr>
+                                    <tr><td><code>limit</code></td><td>Number</td><td>{t("api.history.limitDesc")}</td></tr>
+                                    <tr><td><code>verdict</code></td><td>String</td><td>{t("api.history.verdictDesc")}</td></tr>
+                                    <tr><td><code>from</code></td><td>ISO Date</td><td>{t("api.history.fromDesc")}</td></tr>
+                                    <tr><td><code>to</code></td><td>ISO Date</td><td>{t("api.history.toDesc")}</td></tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Example Response</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.examples.exampleResponse")}</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 success: true,
                                 data: {
@@ -454,8 +456,8 @@ print(await response.stream.bytesToString());`,
             case "response":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Response Format</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">All endpoints return JSON with a consistent structure.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.response.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.response.desc")}</p>
                         <pre className="api-response-example">{JSON.stringify({
                             success: true,
                             data: {
@@ -467,16 +469,16 @@ print(await response.stream.bytesToString());`,
                             },
                         }, null, 2)}</pre>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Response Fields</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.response.fields")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.endpoint.field")}</th><th>{t("api.endpoint.type")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>success</code></td><td>Boolean</td><td>Whether the request was successful</td></tr>
-                                    <tr><td><code>data.verdict</code></td><td>String</td><td>Detection result: ai, real, or uncertain</td></tr>
-                                    <tr><td><code>data.confidence</code></td><td>Number</td><td>Confidence level (0–100)</td></tr>
-                                    <tr><td><code>data.aiScore</code></td><td>Number</td><td>AI likelihood score (0–100)</td></tr>
-                                    <tr><td><code>data.signals</code></td><td>Array</td><td>Individual analysis signal results</td></tr>
-                                    <tr><td><code>data.processingTimeMs</code></td><td>Number</td><td>Processing time in milliseconds</td></tr>
+                                    <tr><td><code>success</code></td><td>Boolean</td><td>{t("api.response.successDesc")}</td></tr>
+                                    <tr><td><code>data.verdict</code></td><td>String</td><td>{t("api.response.verdictDesc")}</td></tr>
+                                    <tr><td><code>data.confidence</code></td><td>Number</td><td>{t("api.response.confidenceDesc")}</td></tr>
+                                    <tr><td><code>data.aiScore</code></td><td>Number</td><td>{t("api.response.aiScoreDesc")}</td></tr>
+                                    <tr><td><code>data.signals</code></td><td>Array</td><td>{t("api.response.signalsDesc")}</td></tr>
+                                    <tr><td><code>data.processingTimeMs</code></td><td>Number</td><td>{t("api.response.timeDesc")}</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -486,19 +488,19 @@ print(await response.stream.bytesToString());`,
             case "verdict-values":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Verdict Values</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">The <code className="text-xs px-1.5 py-0.5 rounded api-inline-code">verdict</code> field indicates the classification result.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.verdict.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.verdict.desc", { code: "verdict" })}</p>
                         <table className="api-table">
-                            <thead><tr><th>Value</th><th>Meaning</th><th>Score Range</th></tr></thead>
+                            <thead><tr><th>{t("api.verdict.value")}</th><th>{t("api.verdict.meaning")}</th><th>{t("api.verdict.scoreRange")}</th></tr></thead>
                             <tbody>
-                                <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>Likely AI-generated</td><td>&ge; 55</td></tr>
-                                <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>Likely authentic</td><td>&le; 40</td></tr>
-                                <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>Inconclusive</td><td>41–54</td></tr>
+                                <tr><td><code className="verdict-ai">&quot;ai&quot;</code></td><td>{t("api.verdict.aiMeaning")}</td><td>&ge; 55</td></tr>
+                                <tr><td><code className="verdict-real">&quot;real&quot;</code></td><td>{t("api.verdict.realMeaning")}</td><td>&le; 40</td></tr>
+                                <tr><td><code className="verdict-unc">&quot;uncertain&quot;</code></td><td>{t("api.verdict.uncertainMeaning")}</td><td>41–54</td></tr>
                             </tbody>
                         </table>
                         <div className="mt-8 p-6 rounded-lg border api-callout-box">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">💡 Best Practice</h3>
-                            <p className="text-xs leading-[3] api-section-desc">For production use, treat &quot;uncertain&quot; results as requiring human review. Consider using the confidence score alongside the verdict for nuanced decision-making.</p>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.verdict.bestPractice")}</h3>
+                            <p className="text-xs leading-[3] api-section-desc">{t("api.verdict.bestPracticeDesc")}</p>
                         </div>
                     </div>
                 );
@@ -506,22 +508,22 @@ print(await response.stream.bytesToString());`,
             case "error-codes":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Error Codes</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">When an error occurs, the API returns an appropriate HTTP status code with details.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.errors.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.errors.desc")}</p>
                         <table className="api-table">
-                            <thead><tr><th>Status</th><th>Code</th><th>Description</th></tr></thead>
+                            <thead><tr><th>{t("api.errors.status")}</th><th>{t("api.errors.code")}</th><th>{t("api.errors.description")}</th></tr></thead>
                             <tbody>
-                                <tr><td><code>400</code></td><td>INVALID_IMAGE</td><td>Image is invalid or corrupted</td></tr>
-                                <tr><td><code>400</code></td><td>INVALID_URL</td><td>URL is not a valid image URL</td></tr>
-                                <tr><td><code>401</code></td><td>UNAUTHORIZED</td><td>Missing or invalid API key</td></tr>
-                                <tr><td><code>403</code></td><td>FORBIDDEN</td><td>API key does not have required permissions</td></tr>
-                                <tr><td><code>413</code></td><td>FILE_TOO_LARGE</td><td>Image exceeds size limit</td></tr>
-                                <tr><td><code>429</code></td><td>RATE_LIMITED</td><td>Too many requests</td></tr>
-                                <tr><td><code>500</code></td><td>INTERNAL_ERROR</td><td>Server error</td></tr>
+                                <tr><td><code>400</code></td><td>INVALID_IMAGE</td><td>{t("api.errors.invalidImage")}</td></tr>
+                                <tr><td><code>400</code></td><td>INVALID_URL</td><td>{t("api.errors.invalidUrl")}</td></tr>
+                                <tr><td><code>401</code></td><td>UNAUTHORIZED</td><td>{t("api.errors.unauthorized")}</td></tr>
+                                <tr><td><code>403</code></td><td>FORBIDDEN</td><td>{t("api.errors.forbidden")}</td></tr>
+                                <tr><td><code>413</code></td><td>FILE_TOO_LARGE</td><td>{t("api.errors.tooLarge")}</td></tr>
+                                <tr><td><code>429</code></td><td>RATE_LIMITED</td><td>{t("api.errors.rateLimited")}</td></tr>
+                                <tr><td><code>500</code></td><td>INTERNAL_ERROR</td><td>{t("api.errors.internal")}</td></tr>
                             </tbody>
                         </table>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Error Response Format</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.errors.responseFormat")}</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 success: false,
                                 error: {
@@ -537,25 +539,25 @@ print(await response.stream.bytesToString());`,
             case "webhooks":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Webhooks</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">Receive real-time notifications when an analysis completes. Register a webhook URL to get POST requests with results.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.webhooks.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.webhooks.desc")}</p>
                         <div className="api-endpoint-card">
                             <div className="api-method">POST</div>
                             <code className="api-url">/api/webhooks</code>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Register Webhook</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.webhooks.register")}</h3>
                             <table className="api-table">
-                                <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+                                <thead><tr><th>{t("api.endpoint.field")}</th><th>{t("api.endpoint.type")}</th><th>{t("api.endpoint.description")}</th></tr></thead>
                                 <tbody>
-                                    <tr><td><code>url</code></td><td>String</td><td>Your webhook endpoint URL (HTTPS required)</td></tr>
-                                    <tr><td><code>events</code></td><td>String[]</td><td>Events to subscribe: analysis.complete, analysis.failed</td></tr>
-                                    <tr><td><code>secret</code></td><td>String</td><td>Signing secret for verifying webhook payloads</td></tr>
+                                    <tr><td><code>url</code></td><td>String</td><td>{t("api.webhooks.urlDesc")}</td></tr>
+                                    <tr><td><code>events</code></td><td>String[]</td><td>{t("api.webhooks.eventsDesc")}</td></tr>
+                                    <tr><td><code>secret</code></td><td>String</td><td>{t("api.webhooks.secretDesc")}</td></tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="mt-10">
-                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">Webhook Payload</h3>
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.webhooks.payload")}</h3>
                             <pre className="api-response-example">{JSON.stringify({
                                 event: "analysis.complete",
                                 data: {
@@ -575,8 +577,8 @@ print(await response.stream.bytesToString());`,
             case "examples":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
-                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">Code Examples</h2>
-                        <p className="text-sm mb-8 leading-[3] api-section-desc">Quick start examples in 12 programming languages.</p>
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.examples.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.examples.desc")}</p>
                         <div className="api-tabs">
                             {Object.entries({
                                 curl: "cURL", python: "Python", javascript: "JS", go: "Go",
