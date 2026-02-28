@@ -151,8 +151,8 @@ export default function ApiDocsPage() {
                                 { title: "Response", items: [{ id: "response", label: "Response Format" }, { id: "verdict-values", label: "Verdict Values" }, { id: "error-codes", label: "Error Codes" }] },
                                 { title: "Advanced", items: [{ id: "webhooks", label: "Webhooks" }] },
                                 { title: "Code Examples", items: [{ id: "examples", label: "Quick Start" }] },
-                            ].map((group) => (
-                                <div key={group.title}>
+                            ].map((group, idx) => (
+                                <div key={group.title} style={idx > 0 ? { borderTop: '1px solid var(--color-border-subtle)', marginTop: '4px', paddingTop: '4px' } : undefined}>
                                     <p className="px-4 pt-3 pb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-muted)' }}>{group.title}</p>
                                     {group.items.map((item) => (
                                         <button
