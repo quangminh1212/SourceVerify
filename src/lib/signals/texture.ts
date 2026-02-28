@@ -4,9 +4,9 @@
  * v4: Wider scoring range with 6 grades
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeTextureConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeTextureConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const regionSize = Math.min(64, Math.floor(Math.min(width, height) / 4));
     const positions = [
         [0, 0], [width - regionSize, 0],

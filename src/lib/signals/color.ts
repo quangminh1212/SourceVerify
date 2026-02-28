@@ -18,9 +18,9 @@
  * - Zhang et al. (2025): "Channel correlation forensics" IEEE TIFS
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeColorChannelCorrelation(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeColorChannelCorrelation(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const totalPixels = width * height;
     const sampleStep = Math.max(1, Math.floor(totalPixels / 50000));
 

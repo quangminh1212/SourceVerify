@@ -6,13 +6,13 @@
  * fields like File Name, File Size, MIME Type, Last Modified, Format.
  */
 
-import type { AnalysisSignal, FileMetadata } from "../types";
+import type { AnalysisMethod, FileMetadata } from "../types";
 import { AI_SOFTWARE_SIGNATURES, REAL_CAMERA_SIGNATURES } from "../constants";
 
 // These are NOT real EXIF fields — they are basic file info added by extractBasicMetadata
 const BASIC_FILE_INFO_KEYS = ["File Name", "File Size", "MIME Type", "Last Modified", "Format"];
 
-export function analyzeMetadata(metadata: FileMetadata, exifData: Record<string, string>): AnalysisSignal {
+export function analyzeMetadata(metadata: FileMetadata, exifData: Record<string, string>): AnalysisMethod {
     let score = 50;
     let description = "Metadata analysis inconclusive";
     let details = "";

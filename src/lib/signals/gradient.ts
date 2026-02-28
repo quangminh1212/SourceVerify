@@ -4,9 +4,9 @@
  * v4: Enhanced separation
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const blockSize = 32;
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);

@@ -4,9 +4,9 @@
  * v4: Wider scoring range for better separation
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeEdgeCoherence(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeEdgeCoherence(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const edgeMagnitudes: number[] = [];
     const edgeDirections: number[] = [];
     const step = Math.max(1, Math.floor(Math.min(width, height) / 300));

@@ -7,14 +7,14 @@
  * - Van de Weijer et al., "Edge-Based Color Constancy", IEEE TIP 2007
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 /**
  * Signal 42: Color Gamut Analysis
  * Detects out-of-gamut or unnaturally distributed colors
  * AI images may produce colors that deviate from natural camera gamut
  */
-export function analyzeColorGamut(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeColorGamut(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const totalPixels = width * height;
     const step = Math.max(1, Math.floor(totalPixels / 50000));
 
@@ -83,7 +83,7 @@ export function analyzeColorGamut(pixels: Uint8ClampedArray, width: number, heig
  * Van de Weijer et al. (2007) - Color constancy analysis
  * Checks if white balance is consistent across the image
  */
-export function analyzeWhiteBalance(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeWhiteBalance(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const regionSize = Math.min(64, Math.floor(Math.min(width, height) / 4));
     const positions = [
         [0, 0], [width - regionSize, 0],

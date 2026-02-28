@@ -8,7 +8,7 @@
  * - Morrone & Owens, "Feature detection from local energy", Pattern Recognition Letters 1987
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 function gray(pixels: Uint8ClampedArray, idx: number): number {
     return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
@@ -19,7 +19,7 @@ function gray(pixels: Uint8ClampedArray, idx: number): number {
  * Lyu & Farid (IEEE TSP 2005) - Haar wavelet decomposition
  * Natural images have specific wavelet coefficient distributions
  */
-export function analyzeWaveletStatistics(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeWaveletStatistics(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const size = Math.min(256, Math.min(width, height));
     const ox = Math.floor((width - size) / 2);
     const oy = Math.floor((height - size) / 2);
@@ -102,7 +102,7 @@ export function analyzeWaveletStatistics(pixels: Uint8ClampedArray, width: numbe
  * Multi-scale, multi-orientation texture analysis
  * AI images show different Gabor energy distribution patterns
  */
-export function analyzeGaborResponse(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeGaborResponse(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const orientations = 4; // 0, 45, 90, 135 degrees
     const energies: number[] = [];
     const step = Math.max(3, Math.floor(Math.min(width, height) / 120));
@@ -178,7 +178,7 @@ export function analyzeGaborResponse(pixels: Uint8ClampedArray, width: number, h
  * Field (JOSA 1987) - Natural images follow 1/f^β power law
  * β ≈ 2 for natural images, deviations indicate AI generation
  */
-export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const size = Math.min(128, Math.min(width, height));
     const ox = Math.floor((width - size) / 2);
     const oy = Math.floor((height - size) / 2);
@@ -249,7 +249,7 @@ export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: nu
  * Morrone & Owens (1987) - Phase-based feature detection
  * Measures alignment of Fourier components at edges
  */
-export function analyzePhaseCongruency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzePhaseCongruency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const step = Math.max(3, Math.floor(Math.min(width, height) / 120));
     const phaseValues: number[] = [];
 
@@ -320,7 +320,7 @@ export function analyzePhaseCongruency(pixels: Uint8ClampedArray, width: number,
  * Azimuthally averaged frequency analysis
  * Natural images have characteristic radial frequency profiles
  */
-export function analyzeRadialSpectrum(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeRadialSpectrum(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const size = Math.min(64, Math.min(width, height));
     const ox = Math.floor((width - size) / 2);
     const oy = Math.floor((height - size) / 2);
@@ -436,7 +436,7 @@ export function analyzeRadialSpectrum(pixels: Uint8ClampedArray, width: number, 
  * Comparing energy distribution across frequency bands
  * AI models produce characteristic frequency band signatures
  */
-export function analyzeFrequencyBandRatio(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeFrequencyBandRatio(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const size = Math.min(128, Math.min(width, height));
     const ox = Math.floor((width - size) / 2);
     const oy = Math.floor((height - size) / 2);

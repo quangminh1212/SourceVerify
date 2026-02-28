@@ -19,9 +19,9 @@
  * - Li et al. (2024): "DCT coefficient traces in AI-generated images" arXiv
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeDCTBlockArtifacts(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeDCTBlockArtifacts(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const blockSize = 8;
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);

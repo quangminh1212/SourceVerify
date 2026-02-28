@@ -5,9 +5,9 @@
  * v4: Wider scoring range with 6 grades
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeCFAPattern(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     let periodicEnergy = 0;
     let totalEnergy = 0;
     let count = 0;

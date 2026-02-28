@@ -7,7 +7,7 @@
  * - Kee et al., "Exposing Digital Forgeries from 3-D Lighting Environments", ICIP 2013
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 function gray(pixels: Uint8ClampedArray, idx: number): number {
     return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
@@ -18,7 +18,7 @@ function gray(pixels: Uint8ClampedArray, idx: number): number {
  * Vanishing point and line convergence analysis
  * AI images may have inconsistent perspective geometry
  */
-export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Detect strong edges and their orientations
     const step = Math.max(3, Math.floor(Math.min(width, height) / 100));
     const edgeAngles: number[] = [];
@@ -90,7 +90,7 @@ export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: 
  * Johnson & Farid (2005) - Analyzing light source direction consistency
  * AI images may have physically impossible lighting
  */
-export function analyzeLightingConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeLightingConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Estimate local lighting direction from intensity gradients across regions
     const regionSize = Math.min(64, Math.floor(Math.min(width, height) / 4));
     const positions = [
@@ -164,7 +164,7 @@ export function analyzeLightingConsistency(pixels: Uint8ClampedArray, width: num
  * Kee et al. (2013) - Shadow direction and opacity analysis
  * Verifying physical consistency of shadows across the image
  */
-export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Detect dark regions (potential shadows) and analyze their distribution
     const blockSize = 32;
     const blocksX = Math.floor(width / blockSize);

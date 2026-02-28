@@ -23,9 +23,9 @@
  * - Goljan et al. (2024): "PRNU as forensic tool for AI detection" MDPI Sensors
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzePRNUPattern(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzePRNUPattern(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Step 1: Extract noise residual using simplified Wiener-like filter
     // Noise residual = Original - Denoised (local mean filter)
     const kernelRadius = 2;

@@ -8,9 +8,9 @@
  *     added noise isotropy check and block-level kurtosis
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const blockSize = 32;
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);

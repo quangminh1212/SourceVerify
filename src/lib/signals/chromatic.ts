@@ -4,9 +4,9 @@
  * v4: Wider scoring range
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeChromaticAberration(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const borderWidth = Math.max(20, Math.floor(Math.min(width, height) * 0.05));
     let totalShift = 0, shiftCount = 0;
     const step = Math.max(2, Math.floor(borderWidth / 10));

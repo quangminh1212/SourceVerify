@@ -3,10 +3,10 @@
  * Duration, resolution, and format heuristics
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 import { AI_VIDEO_RESOLUTIONS } from "../constants";
 
-export function analyzeVideoSpecific(file: File, video: HTMLVideoElement): AnalysisSignal {
+export function analyzeVideoSpecific(file: File, video: HTMLVideoElement): AnalysisMethod {
     const duration = video.duration;
     const { videoWidth: w, videoHeight: h } = video;
 

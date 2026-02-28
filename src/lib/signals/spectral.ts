@@ -4,9 +4,9 @@
  * AI upsampling creates spectral artifacts at Nyquist frequencies
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeSpectralNyquist(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeSpectralNyquist(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const size = Math.min(256, Math.min(width, height));
     const offsetX = Math.floor((width - size) / 2);
     const offsetY = Math.floor((height - size) / 2);

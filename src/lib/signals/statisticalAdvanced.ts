@@ -8,7 +8,7 @@
  * - Zipf, "Human Behavior and the Principle of Least Effort", 1949
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 function gray(pixels: Uint8ClampedArray, idx: number): number {
     return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
@@ -19,7 +19,7 @@ function gray(pixels: Uint8ClampedArray, idx: number): number {
  * Shannon (1948) - Regional entropy distribution
  * AI images have less entropy variation across regions
  */
-export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const blockSize = 32;
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);
@@ -87,7 +87,7 @@ export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, heig
  * Lyu & Farid (ICIP 2002) - Higher-order statistical models
  * AI images have different kurtosis/skewness profiles in gradient domain
  */
-export function analyzeHigherOrderStatistics(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeHigherOrderStatistics(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const gradients: number[] = [];
     const step = Math.max(2, Math.floor(Math.min(width, height) / 250));
 
@@ -151,7 +151,7 @@ export function analyzeHigherOrderStatistics(pixels: Uint8ClampedArray, width: n
  * Zipf (1949) - Rank-frequency distribution in images
  * Natural images follow Zipf-like intensity distributions
  */
-export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const histogram = new Array(256).fill(0);
     const totalPixels = width * height;
     const step = Math.max(1, Math.floor(totalPixels / 100000));
@@ -224,7 +224,7 @@ export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height:
  * Statistical test for pixel value distribution uniformity
  * AI images may exhibit more uniform or biased distributions
  */
-export function analyzeChiSquareUniformity(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeChiSquareUniformity(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Analyze LSB (Least Significant Bit) distribution per channel
     const lsbCountR = [0, 0]; // 0 or 1
     const lsbCountG = [0, 0];
@@ -282,7 +282,7 @@ export function analyzeChiSquareUniformity(pixels: Uint8ClampedArray, width: num
  * Pixel-to-pixel transition patterns
  * AI images have different transition probability matrices
  */
-export function analyzeMarkovTransition(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeMarkovTransition(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const levels = 16; // Quantize to 16 levels
     const transition = Array.from({ length: levels }, () => new Array(levels).fill(0));
     let totalTransitions = 0;
@@ -362,7 +362,7 @@ export function analyzeMarkovTransition(pixels: Uint8ClampedArray, width: number
  * HSL color space saturation statistics
  * AI images often have over/under-saturated color profiles
  */
-export function analyzeSaturationDistribution(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeSaturationDistribution(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const saturations: number[] = [];
     const totalPixels = width * height;
     const step = Math.max(1, Math.floor(totalPixels / 50000));

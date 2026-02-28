@@ -9,7 +9,7 @@
  * - Chen et al., "WLD: A Robust Local Image Descriptor", IEEE PAMI 2010
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 // Helper: convert pixel to grayscale
 function gray(pixels: Uint8ClampedArray, idx: number): number {
@@ -21,7 +21,7 @@ function gray(pixels: Uint8ClampedArray, idx: number): number {
  * Ojala et al. (IEEE PAMI 2002) - Texture micro-patterns
  * AI images tend to have less diverse LBP patterns than natural images
  */
-export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const lbpHistogram = new Array(256).fill(0);
     let totalSamples = 0;
     const step = Math.max(2, Math.floor(Math.min(width, height) / 200));
@@ -92,7 +92,7 @@ export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: numb
  * Dalal & Triggs (CVPR 2005) - Gradient orientation distribution
  * AI images exhibit more uniform gradient orientations than natural scenes
  */
-export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const numBins = 9;
     const binSize = Math.PI / numBins;
     const globalHist = new Array(numBins).fill(0);
@@ -155,7 +155,7 @@ export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, heig
  * Haralick et al. (IEEE SMC 1973) - Texture feature extraction
  * Analyzes spatial relationships between pixel intensity levels
  */
-export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const levels = 16; // quantize to 16 levels for efficiency
     const glcm = Array.from({ length: levels }, () => new Array(levels).fill(0));
     let total = 0;
@@ -227,7 +227,7 @@ export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: nu
  * Measures consistency of local pixel variance across image regions
  * AI images exhibit more homogeneous variance maps
  */
-export function analyzeLocalVarianceMap(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeLocalVarianceMap(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const blockSize = 16;
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);
@@ -292,7 +292,7 @@ export function analyzeLocalVarianceMap(pixels: Uint8ClampedArray, width: number
  * Mathematical morphology patterns in image structure
  * Analyzes dilation-erosion difference patterns
  */
-export function analyzeMorphologicalGradient(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeMorphologicalGradient(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const gradients: number[] = [];
     const step = Math.max(2, Math.floor(Math.min(width, height) / 200));
 
@@ -353,7 +353,7 @@ export function analyzeMorphologicalGradient(pixels: Uint8ClampedArray, width: n
  * Chen et al. (IEEE PAMI 2010) - Robust local image descriptor
  * Combines differential excitation and gradient orientation
  */
-export function analyzeWeberDescriptor(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeWeberDescriptor(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const excitations: number[] = [];
     const step = Math.max(2, Math.floor(Math.min(width, height) / 200));
 

@@ -7,7 +7,7 @@
  * - Krawetz, "A Picture's Worth... Digital Image Analysis and Forensics", 2007
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 function gray(pixels: Uint8ClampedArray, idx: number): number {
     return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
@@ -18,7 +18,7 @@ function gray(pixels: Uint8ClampedArray, idx: number): number {
  * Farid (IEEE TIFS 2009) - Double compression artifact detection
  * AI-generated images saved as JPEG may show ghost artifacts
  */
-export function analyzeJPEGGhost(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeJPEGGhost(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Simulate re-compression by comparing 8x8 block boundaries
     const blockSize = 8;
     const blocksX = Math.floor(width / blockSize);
@@ -93,7 +93,7 @@ export function analyzeJPEGGhost(pixels: Uint8ClampedArray, width: number, heigh
  * JPEG quantization reveals compression history
  * AI images often lack standard camera quantization patterns
  */
-export function analyzeQuantizationFingerprint(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeQuantizationFingerprint(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // Analyze 8x8 block DCT coefficient quantization patterns
     const blockSize = 8;
     const blocksX = Math.floor(width / blockSize);
@@ -167,7 +167,7 @@ export function analyzeQuantizationFingerprint(pixels: Uint8ClampedArray, width:
  * Krawetz (2007) - Differential compression forensics
  * Re-saved regions show different error levels than original
  */
-export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     // ELA: Compare original with simulated re-compression
     // Approximate by comparing each pixel to its low-pass filtered version
     const blockSize = 4;
@@ -230,7 +230,7 @@ export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, heig
  * Detects posterization/quantization artifacts in gradients
  * AI images may show subtle color banding in smooth gradients
  */
-export function analyzeColorBanding(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeColorBanding(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     let bandingCount = 0;
     let gradientCount = 0;
     const step = Math.max(2, Math.floor(Math.min(width, height) / 200));

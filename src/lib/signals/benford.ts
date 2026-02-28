@@ -3,9 +3,9 @@
  * First-digit distribution of pixel gradients
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
-export function analyzeBenfordsLaw(pixels: Uint8ClampedArray, width: number, height: number): AnalysisSignal {
+export function analyzeBenfordsLaw(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const benford = [0, 0.301, 0.176, 0.125, 0.097, 0.079, 0.067, 0.058, 0.051, 0.046];
     const digitCount = new Array(10).fill(0);
     let totalDigits = 0;
