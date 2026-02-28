@@ -175,7 +175,7 @@ print(await response.stream.bytesToString());`,
                                 <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-8" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3' }}>
                                     SourceVerify <span className="gradient-text">API</span>
                                 </h1>
-                                <p className="text-sm max-w-xl mb-10" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>
+                                <p className="text-sm max-w-xl mb-10" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>
                                     Integrate AI-generated content detection into your applications with a simple REST API. Analyze images in milliseconds with industry-leading accuracy.
                                 </p>
                                 <div className="flex items-center gap-4 flex-wrap">
@@ -204,27 +204,27 @@ print(await response.stream.bytesToString());`,
                         </div>
 
                         {/* Features */}
-                        <div className="grid gap-6 sm:grid-cols-3">
-                            <div className="group p-6 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)' }}>
+                        <div className="grid gap-8 sm:grid-cols-3 mt-16">
+                            <div className="group p-6 rounded-xl transition-all duration-200">
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(66, 133, 244, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-blue)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>Detect AI-generated images with advanced signal analysis</p>
+                                <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>Detect AI-generated images with advanced signal analysis</p>
                             </div>
-                            <div className="group p-6 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)' }}>
+                            <div className="group p-6 rounded-xl transition-all duration-200">
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(52, 168, 83, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-green)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>Average response time under 500ms with 99.9% uptime</p>
+                                <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>Average response time under 500ms with 99.9% uptime</p>
                             </div>
-                            <div className="group p-6 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)' }}>
+                            <div className="group p-6 rounded-xl transition-all duration-200">
                                 <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(251, 188, 4, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-amber)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
-                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>Simple HTTP endpoints with JSON responses</p>
+                                <h3 className="text-sm font-semibold mb-4" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '3' }}>Simple HTTP endpoints with JSON responses</p>
                             </div>
                         </div>
 
