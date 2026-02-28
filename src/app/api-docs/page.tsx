@@ -166,6 +166,7 @@ export default function ApiDocsPage() {
                     onLogout={logout}
                     googleClientId={GOOGLE_CLIENT_ID}
                     apiDocsUrl={API_DOCS_URL}
+                    onSectionChange={setActiveSection}
                 />
             </div>
 
