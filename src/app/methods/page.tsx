@@ -41,7 +41,7 @@ export default function MethodsPage() {
         <main className="relative min-h-screen flex flex-col">
             <Header />
 
-            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-16 lg:pb-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
 
 
