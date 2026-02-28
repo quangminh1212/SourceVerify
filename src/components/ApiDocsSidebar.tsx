@@ -43,6 +43,12 @@ export default function ApiDocsSidebar({ activeSection, onSectionChange }: ApiDo
             ],
         },
         {
+            title: t("api.sidebar.analysisMethods"),
+            items: [
+                { id: "analysis-methods", label: t("api.methods.title") },
+            ],
+        },
+        {
             title: t("api.sidebar.codeExamples"),
             items: [
                 { id: "examples", label: t("api.sidebar.quickStart") },

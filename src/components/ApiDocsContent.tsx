@@ -574,6 +574,76 @@ print(await response.stream.bytesToString());`,
                 );
 
 
+            case "analysis-methods": {
+                const methods = [
+                    { id: "metadata", icon: "📋", cat: "metadata", weight: 2.5, nameKey: "api.methods.metadata.name", descKey: "api.methods.metadata.desc" },
+                    { id: "spectral", icon: "📊", cat: "frequency", weight: 4.0, nameKey: "api.methods.spectral.name", descKey: "api.methods.spectral.desc" },
+                    { id: "reconstruction", icon: "🔬", cat: "frequency", weight: 4.0, nameKey: "api.methods.reconstruction.name", descKey: "api.methods.reconstruction.desc" },
+                    { id: "noise", icon: "◫", cat: "pixel", weight: 3.5, nameKey: "api.methods.noise.name", descKey: "api.methods.noise.desc" },
+                    { id: "edge", icon: "⬡", cat: "pixel", weight: 3.0, nameKey: "api.methods.edge.name", descKey: "api.methods.edge.desc" },
+                    { id: "gradient", icon: "▤", cat: "pixel", weight: 3.5, nameKey: "api.methods.gradient.name", descKey: "api.methods.gradient.desc" },
+                    { id: "benford", icon: "📈", cat: "statistical", weight: 3.0, nameKey: "api.methods.benford.name", descKey: "api.methods.benford.desc" },
+                    { id: "chromatic", icon: "🌈", cat: "sensor", weight: 3.0, nameKey: "api.methods.chromatic.name", descKey: "api.methods.chromatic.desc" },
+                    { id: "texture", icon: "🧩", cat: "pixel", weight: 3.0, nameKey: "api.methods.texture.name", descKey: "api.methods.texture.desc" },
+                    { id: "cfa", icon: "⊞", cat: "sensor", weight: 3.5, nameKey: "api.methods.cfa.name", descKey: "api.methods.cfa.desc" },
+                    { id: "dct", icon: "▦", cat: "frequency", weight: 3.5, nameKey: "api.methods.dct.name", descKey: "api.methods.dct.desc" },
+                    { id: "color", icon: "◈", cat: "pixel", weight: 3.0, nameKey: "api.methods.color.name", descKey: "api.methods.color.desc" },
+                    { id: "prnu", icon: "⊕", cat: "sensor", weight: 4.0, nameKey: "api.methods.prnu.name", descKey: "api.methods.prnu.desc" },
+                ];
+                const catLabel: Record<string, string> = {
+                    pixel: t("api.methods.catPixel"),
+                    frequency: t("api.methods.catFrequency"),
+                    statistical: t("api.methods.catStatistical"),
+                    metadata: t("api.methods.catMetadata"),
+                    sensor: t("api.methods.catSensor"),
+                };
+                return (
+                    <div className="animate-fade-in-up leading-[3]">
+                        <h2 className="text-xl font-bold mb-8 pb-3 border-b leading-[2.5] api-section-header">{t("api.methods.title")}</h2>
+                        <p className="text-sm mb-8 leading-[3] api-section-desc">{t("api.methods.desc")}</p>
+
+                        <div className="grid gap-4 sm:grid-cols-1 lg:grid-cols-2 mb-10 api-methods-grid">
+                            {methods.map((m) => (
+                                <div key={m.id} className="api-method-card">
+                                    <div className="api-method-card-header">
+                                        <div className="api-method-card-title">
+                                            <span className={`api-method-icon ${m.cat}`}>{m.icon}</span>
+                                            {t(m.nameKey)}
+                                        </div>
+                                        <label className="api-toggle">
+                                            <input type="checkbox" defaultChecked aria-label={t(m.nameKey)} />
+                                            <span className="api-toggle-slider" />
+                                        </label>
+                                    </div>
+                                    <p className="api-method-card-desc">{t(m.descKey)}</p>
+                                    <div className="api-method-card-meta">
+                                        <span className={`api-method-badge cat-${m.cat}`}>{catLabel[m.cat]}</span>
+                                        <span className="api-method-weight">{t("api.methods.weight")}: {m.weight}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-10">
+                            <h3 className="text-sm font-semibold mb-4 leading-[3] api-section-subtitle">{t("api.methods.usage")}</h3>
+                            <p className="text-xs mb-4 leading-[3] api-section-desc">{t("api.methods.usageDesc")}</p>
+                            <pre className="api-code-block">{`curl -X POST ${apiDocsUrl}/api/analyze \\
+  -H "X-API-Key: ${apiKey}" \\
+  -H "Content-Type: application/json" \\
+  -d '{
+    "image": "<base64>",
+    "signals": ["noise", "spectral", "prnu", "dct"]
+  }'
+
+# ${t("api.methods.allSignals")}:
+# "signals": ["metadata", "spectral", "reconstruction",
+#   "noise", "edge", "gradient", "benford", "chromatic",
+#   "texture", "cfa", "dct", "color", "prnu"]`}</pre>
+                        </div>
+                    </div>
+                );
+            }
+
             case "examples":
                 return (
                     <div className="animate-fade-in-up leading-[3]">
