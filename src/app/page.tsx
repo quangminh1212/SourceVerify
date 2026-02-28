@@ -209,8 +209,8 @@ export default function Home() {
               </div>
             </div>
 
-            <p className="text-xs text-[--color-text-muted] hidden sm:block">
-              {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
+            <p className="text-xs text-[--color-text-muted] mt-3">
+              {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-[--color-bg-secondary] border border-[--color-border-subtle] text-[10px] font-mono text-[--color-text-secondary]">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
             </p>
           </div>
         )}
