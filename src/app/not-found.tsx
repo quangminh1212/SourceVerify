@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export default function NotFound() {
+    const { t } = useLanguage();
+
     return (
         <main className="relative min-h-screen flex items-center justify-center px-6">
             <div className="text-center animate-fade-in-up">
@@ -9,16 +14,16 @@ export default function NotFound() {
                     <span className="gradient-text">404</span>
                 </h1>
                 <h2 className="text-xl font-semibold text-[--color-text-secondary] mb-4">
-                    Page Not Found
+                    {t("notFound.title")}
                 </h2>
                 <p className="text-sm text-[--color-text-muted] max-w-md mx-auto mb-8">
-                    The page you&apos;re looking for doesn&apos;t exist or has been moved.
+                    {t("notFound.description")}
                 </p>
                 <Link
                     href="/"
                     className="btn-primary inline-flex items-center gap-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[--color-accent-cyan]"
                 >
-                    <span>← Back to Home</span>
+                    <span>← {t("notFound.backHome")}</span>
                 </Link>
             </div>
         </main>
