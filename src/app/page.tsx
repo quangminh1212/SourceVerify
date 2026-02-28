@@ -7,13 +7,36 @@ import {
   analyzeMedia,
   formatFileSize,
   type AnalysisResult,
+  METHOD_MAP,
 } from "@/lib/analyzer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
+import { METHODS } from "@/app/methods/data";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import ScoreRing from "@/components/ScoreRing";
 import RadarChart from "@/components/RadarChart";
+import { getMethodTranslation } from "@/app/methods/methodsI18n";
+
+/** Map display method ID (data.ts) → analyzer method ID (METHOD_MAP keys) */
+const DISPLAY_TO_ANALYZER: Record<string, string[]> = {
+  metadata: ["metadata"], spectral: ["spectral"], reconstruction: ["reconstruction"],
+  noise: ["noise"], edge: ["edge"], gradient: ["gradient"], benford: ["benford"],
+  chromatic: ["chromatic"], texture: ["texture"], cfa: ["cfa"], dct: ["dct"],
+  color: ["color"], prnu: ["prnu"], ela: ["ela"],
+  copymove: ["lbp", "hog"], splicing: ["glcm", "localVariance"],
+  histogram: ["saturation"], wavelet: ["wavelet"], jpeg_ghost: ["jpegGhost"],
+  chi_square: ["chiSquare"], entropy: ["entropy"],
+  gan_fingerprint: ["ganFingerprint"], diffusion: ["diffusion"],
+  noiseprint: ["morphGradient", "weber"], upscaling: ["upsampling"],
+  frequency_band: ["freqBand"], face_landmark: ["phase", "gabor"],
+  lighting: ["lighting"], shadow: ["shadow"], perspective: ["perspective"],
+  reflection: ["psd", "radial"], double_jpeg: ["quantization", "banding"],
+  patchforensics: ["markov", "hos"], clip_detection: ["zipf"],
+  binary_pattern: ["lbp"], fourier_ring: ["radial"],
+  resnet_classifier: ["hog"], vit_detection: ["gabor"],
+  gram_matrix: ["glcm"], srm_filter: ["weber"],
+};
 
 export default function Home() {
   const [file, setFile] = useState<File | null>(null);
@@ -24,9 +47,25 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [viewMode, setViewMode] = useState<'basic' | 'advanced'>('basic');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [selectedMethod, setSelectedMethod] = useState(METHODS[0].id);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
-  const { t } = useLanguage();
+  const { locale, t } = useLanguage();
+
+  // Check auth state from localStorage
+  useEffect(() => {
+    const checkAuth = () => {
+      const saved = localStorage.getItem("sv_user");
+      setIsLoggedIn(!!saved);
+    };
+    checkAuth();
+    // Listen for storage changes (login/logout from Header)
+    window.addEventListener("storage", checkAuth);
+    // Also poll periodically in case Header updates in same tab
+    const iv = setInterval(checkAuth, 1000);
+    return () => { window.removeEventListener("storage", checkAuth); clearInterval(iv); };
+  }, []);
 
   useEffect(() => { return () => { if (preview) URL.revokeObjectURL(preview); }; }, [preview]);
 
@@ -46,7 +85,9 @@ export default function Home() {
     }, 200);
 
     try {
-      const r = await analyzeMedia(selectedFile);
+      // If not logged in, only run the single selected method
+      const enabledMethods = isLoggedIn ? undefined : (DISPLAY_TO_ANALYZER[selectedMethod] || [selectedMethod]);
+      const r = await analyzeMedia(selectedFile, enabledMethods);
       clearInterval(iv);
       setProgress(100);
       await new Promise(res => setTimeout(res, 500));
@@ -58,7 +99,7 @@ export default function Home() {
       setIsAnalyzing(false);
       setError(t("home.errorFailed"));
     }
-  }, [t]);
+  }, [t, isLoggedIn, selectedMethod]);
 
   const handleDrop = useCallback((e: React.DragEvent) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }, [handleFile]);
   const handleReset = useCallback(() => {
@@ -111,6 +152,35 @@ export default function Home() {
             <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] max-w-xl leading-relaxed">
               {t("home.subtitle")}
             </p>
+
+            {/* Method selector — shown when not logged in */}
+            {!isLoggedIn && (
+              <div className="method-selector-wrapper">
+                <div className="method-selector-header">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" /><path d="M12 16v-4" /><path d="M12 8h.01" />
+                  </svg>
+                  <span>{t("home.singleMethodHint")}</span>
+                </div>
+                <select
+                  className="method-selector-select"
+                  value={selectedMethod}
+                  onChange={e => setSelectedMethod(e.target.value)}
+                  aria-label="Select analysis method"
+                >
+                  {METHODS.map(m => (
+                    <option key={m.id} value={m.id}>
+                      {getMethodTranslation(m.id, locale).name}
+                    </option>
+                  ))}
+                </select>
+                <p className="method-selector-login-hint">
+                  <Link href="#" onClick={(e) => { e.preventDefault(); document.querySelector<HTMLButtonElement>('.header-signin-fallback,.header-google-signin button')?.click(); }} className="method-selector-login-link">
+                    {t("home.signInForFull")}
+                  </Link>
+                </p>
+              </div>
+            )}
 
             {/* Upload area */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">

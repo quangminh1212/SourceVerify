@@ -215,7 +215,7 @@ function calculateVerdict(methods: AnalysisMethod[]): { aiScore: number; verdict
 // ============================
 
 // Method ID → nameKey mapping
-const METHOD_MAP: Record<string, string> = {
+export const METHOD_MAP: Record<string, string> = {
     // Original 13
     metadata: "signal.metadataAnalysis",
     spectral: "signal.spectralNyquist",
@@ -272,6 +272,13 @@ const METHOD_MAP: Record<string, string> = {
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
 /** @deprecated Use ALL_METHOD_IDS instead */
 export const ALL_SIGNAL_IDS = ALL_METHOD_IDS;
+
+/** Free-tier methods (original 13) — available without login */
+export const FREE_METHOD_IDS = [
+    "metadata", "spectral", "reconstruction", "noise", "edge",
+    "gradient", "benford", "chromatic", "texture", "cfa",
+    "dct", "color", "prnu",
+];
 
 async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<{ methods: AnalysisMethod[]; metadata: FileMetadata }> {
     const { canvas, ctx } = await loadImage(file);
