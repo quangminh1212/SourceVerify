@@ -153,11 +153,20 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                         {SECTION_LABELS.map(s => {
                             const value = tr[s.key as keyof MethodTranslations];
                             if (!value || typeof value !== "string") return null;
+                            const isSource = s.key === "source";
+                            const sourceUrl = isSource && tr.references && tr.references.length > 0 ? tr.references[0].url : undefined;
                             return (
                                 <div key={s.key} className="method-detail-section">
                                     <h3 className="method-detail-section-label">{s.label}</h3>
                                     <div className={`method-detail-section-value ${s.style === "algo" ? "method-detail-algo" : ""} ${s.style === "mono" ? "method-detail-mono" : ""} ${s.style === "ref" ? "method-detail-ref" : ""}`}>
-                                        <FormattedText text={value} />
+                                        {sourceUrl ? (
+                                            <a href={sourceUrl} target="_blank" rel="noopener noreferrer" className="method-detail-ref-link" title={value}>
+                                                <FormattedText text={value} />
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="method-detail-ref-icon"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                                            </a>
+                                        ) : (
+                                            <FormattedText text={value} />
+                                        )}
                                     </div>
                                 </div>
                             );
