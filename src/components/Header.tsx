@@ -431,9 +431,12 @@ function SettingsModal({
         setLocal({ enabledMethods: METHODS.map(m => m.id), customWeights: undefined });
     };
 
+    const maxWeight = useMemo(() => Math.max(...METHODS.map(m => m.weight)), []);
+
     const getWeight = (id: string): number => {
         if (local.customWeights?.[id] !== undefined) return local.customWeights[id];
-        return 100; // Default: 100% weight
+        const m = METHODS.find(m => m.id === id);
+        return m ? Math.round((m.weight / maxWeight) * 100) : 100;
     };
 
     const setWeight = (id: string, val: number) => {
