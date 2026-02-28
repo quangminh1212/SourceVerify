@@ -54,8 +54,8 @@ export default function MethodsPage() {
         <main className="relative min-h-screen flex flex-col">
             <Header />
 
-            <div className="flex-1 px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
-                <div className="w-full max-w-5xl mx-auto">
+            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
+                <div className="w-full max-w-5xl mx-auto text-center">
                     {/* Header */}
                     <div className="text-center mb-10 sm:mb-14 animate-fade-in-up">
                         <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4">
