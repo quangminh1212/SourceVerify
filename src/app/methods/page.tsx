@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -57,47 +56,46 @@ export default function MethodsPage() {
 
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
-                    {/* Header */}
-                    <div className="text-center animate-fade-in-up" style={{ marginBottom: '60px', paddingTop: '40px' }}>
-                        <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary]" style={{ marginBottom: '48px' }}>
-                            {t("methods.headline")}{" "}
-                            <span className="gradient-text">{t("methods.headlineHighlight")}</span>
-                        </h1>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
-                            {t("methods.subtitle1")}
-                        </p>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center" style={{ marginTop: '4px' }}>
-                            {t("methods.subtitle2")}
-                        </p>
-                    </div>
 
-                    {/* Toggle Button */}
-                    <div className="text-center animate-fade-in-up" style={{ marginBottom: '40px' }}>
-                        <button
-                            className="methods-toggle-btn"
-                            onClick={() => setShowMethods(!showMethods)}
-                        >
-                            <span>{showMethods ? t("methods.hideMethods") : t("methods.showMethods")}</span>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="20"
-                                height="20"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className={`methods-toggle-icon ${showMethods ? "rotated" : ""}`}
-                            >
-                                <polyline points="6 9 12 15 18 9" />
-                            </svg>
-                        </button>
-                    </div>
+                    {!showMethods ? (
+                        /* === Intro View === */
+                        <div className="text-center animate-fade-in-up" style={{ paddingTop: '40px' }}>
+                            <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary]" style={{ marginBottom: '48px' }}>
+                                {t("methods.headline")}{" "}
+                                <span className="gradient-text">{t("methods.headlineHighlight")}</span>
+                            </h1>
+                            <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
+                                {t("methods.subtitle1")}
+                            </p>
+                            <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center" style={{ marginTop: '4px' }}>
+                                {t("methods.subtitle2")}
+                            </p>
 
-                    {/* Collapsible Methods Section */}
-                    {showMethods && (
+                            {/* View Now Button */}
+                            <div style={{ marginTop: '48px' }}>
+                                <button
+                                    className="btn-primary inline-flex items-center gap-2"
+                                    onClick={() => setShowMethods(true)}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>
+                                    {t("methods.viewNow")}
+                                </button>
+                            </div>
+                        </div>
+                    ) : (
+                        /* === Methods Grid View === */
                         <>
+                            {/* Back button */}
+                            <div className="text-left animate-fade-in-up" style={{ marginBottom: '24px' }}>
+                                <button
+                                    className="methods-back-btn"
+                                    onClick={() => setShowMethods(false)}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                                    {t("methods.backToIntro")}
+                                </button>
+                            </div>
+
                             {/* Category Tabs */}
                             <div className="methods-cat-tabs animate-fade-in-up">
                                 {CATEGORIES.map(cat => (
@@ -149,13 +147,6 @@ export default function MethodsPage() {
                         </>
                     )}
 
-                    {/* CTA */}
-                    <div className="text-center mt-12 sm:mt-16 animate-fade-in-up">
-                        <Link href="/" className="btn-primary inline-flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
-                            {t("methods.cta")}
-                        </Link>
-                    </div>
                 </div>
             </div>
 
