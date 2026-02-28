@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -33,6 +34,27 @@ function MethodIcon({ category }: { category: Category }) {
 export default function MethodsPage() {
     const { t, locale } = useLanguage();
     const [activeCat, setActiveCat] = useState<Category>("all");
+    const router = useRouter();
+    const [isSelectMode, setIsSelectMode] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [selectedId, setSelectedId] = useState<string | null>(null);
+
+    useEffect(() => {
+        const saved = localStorage.getItem("sv_user");
+        setIsLoggedIn(!!saved);
+        const method = localStorage.getItem("sv_method");
+        setSelectedId(method);
+        // Check URL for select mode
+        const params = new URLSearchParams(window.location.search);
+        setIsSelectMode(params.get("select") === "1");
+    }, []);
+
+    const handleSelectMethod = (id: string) => {
+        localStorage.setItem("sv_method", id);
+        router.push("/");
+    };
+
+    const showSelectUI = isSelectMode && !isLoggedIn;
 
     const filtered = activeCat === "all"
         ? METHODS
@@ -85,7 +107,14 @@ export default function MethodsPage() {
                                 </div>
                                 <h3 className="methods-card-name">{getMethodTranslation(m.id, locale).name}</h3>
                                 <p className="methods-card-desc">{getMethodTranslation(m.id, locale).description}</p>
-
+                                {showSelectUI && (
+                                    <button
+                                        className={`methods-select-btn ${selectedId === m.id ? 'active' : ''}`}
+                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSelectMethod(m.id); }}
+                                    >
+                                        {selectedId === m.id ? t("methods.currentMethod") : t("methods.useThis")}
+                                    </button>
+                                )}
                             </Link>
                         ))}
                     </div>

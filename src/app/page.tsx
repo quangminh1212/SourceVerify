@@ -64,6 +64,11 @@ export default function Home() {
     window.addEventListener("storage", checkAuth);
     // Also poll periodically in case Header updates in same tab
     const iv = setInterval(checkAuth, 1000);
+    // Read selected method from localStorage
+    const savedMethod = localStorage.getItem("sv_method");
+    if (savedMethod && METHODS.some(m => m.id === savedMethod)) {
+      setSelectedMethod(savedMethod);
+    }
     return () => { window.removeEventListener("storage", checkAuth); clearInterval(iv); };
   }, []);
 
@@ -153,32 +158,18 @@ export default function Home() {
               {t("home.subtitle")}
             </p>
 
-            {/* Method selector — shown when not logged in */}
+            {/* Guest mode: show selected method chip */}
             {!isLoggedIn && (
-              <div className="method-selector-wrapper">
-                <div className="method-selector-header">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" /><path d="M12 16v-4" /><path d="M12 8h.01" />
-                  </svg>
-                  <span>{t("home.singleMethodHint")}</span>
-                </div>
-                <select
-                  className="method-selector-select"
-                  value={selectedMethod}
-                  onChange={e => setSelectedMethod(e.target.value)}
-                  aria-label="Select analysis method"
-                >
-                  {METHODS.map(m => (
-                    <option key={m.id} value={m.id}>
-                      {getMethodTranslation(m.id, locale).name}
-                    </option>
-                  ))}
-                </select>
-                <p className="method-selector-login-hint">
-                  <Link href="#" onClick={(e) => { e.preventDefault(); document.querySelector<HTMLButtonElement>('.header-signin-fallback,.header-google-signin button')?.click(); }} className="method-selector-login-link">
-                    {t("home.signInForFull")}
-                  </Link>
-                </p>
+              <div className="method-chip-row">
+                <Link href="/methods?select=1" className="method-chip-link">
+                  <span className="method-chip-dot" />
+                  <span className="method-chip-name">{getMethodTranslation(selectedMethod, locale).name}</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
+                </Link>
+                <span className="method-chip-sep">·</span>
+                <Link href="#" onClick={(e) => { e.preventDefault(); document.querySelector<HTMLButtonElement>('.header-signin-fallback,.header-google-signin button')?.click(); }} className="method-chip-unlock">
+                  {t("home.signInForFull")}
+                </Link>
               </div>
             )}
 
