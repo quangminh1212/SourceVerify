@@ -431,14 +431,13 @@ function SettingsModal({
 
     const getWeight = (id: string): number => {
         if (local.customWeights?.[id] !== undefined) return local.customWeights[id];
-        const m = METHODS.find(m => m.id === id);
-        return m ? m.weight : 1;
+        return 5; // Default: equal weight for all
     };
 
     const setWeight = (id: string, val: number) => {
         setLocal(prev => ({
             ...prev,
-            customWeights: { ...(prev.customWeights || {}), [id]: Math.max(0, Math.min(10, val)) },
+            customWeights: { ...(prev.customWeights || {}), [id]: Math.max(1, Math.min(10, Math.round(val))) },
         }));
     };
 
@@ -531,15 +530,17 @@ function SettingsModal({
                                                     <span className="settings-method-name">{tr.name}</span>
                                                 </div>
                                                 <div className="settings-method-right">
-                                                    <input
-                                                        type="number"
-                                                        className="settings-weight-input"
-                                                        value={getWeight(m.id)}
-                                                        onChange={e => setWeight(m.id, parseFloat(e.target.value) || 0)}
-                                                        onClick={e => e.stopPropagation()}
-                                                        min={0} max={10} step={0.1}
-                                                        title={t('settings.weight')}
-                                                    />
+                                                    <div className="settings-weight-slider" onClick={e => e.stopPropagation()}>
+                                                        <span className="settings-weight-val">{getWeight(m.id)}</span>
+                                                        <input
+                                                            type="range"
+                                                            className="settings-range"
+                                                            value={getWeight(m.id)}
+                                                            onChange={e => setWeight(m.id, parseInt(e.target.value))}
+                                                            min={1} max={10} step={1}
+                                                            aria-label={`${tr.name} ${t('settings.weight')}`}
+                                                        />
+                                                    </div>
                                                     <span className={`settings-toggle-switch sm ${enabled ? 'on' : ''}`} onClick={() => toggleMethod(m.id)}>
                                                         <span className="settings-toggle-knob" />
                                                     </span>
