@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { METHODS, CATEGORIES, CAT_COLORS, CAT_HEX, CAT_ICON_PATHS, type Category } from "./data";
+import { getMethodTranslation } from "./methodsI18n";
 
 function MethodIcon({ category }: { category: Category }) {
     const paths = (CAT_ICON_PATHS[category] || "").split(" M");
@@ -30,7 +31,7 @@ function MethodIcon({ category }: { category: Category }) {
 }
 
 export default function MethodsPage() {
-    const { t } = useLanguage();
+    const { t, locale } = useLanguage();
     const [activeCat, setActiveCat] = useState<Category>("all");
 
     const filtered = activeCat === "all"
@@ -82,8 +83,8 @@ export default function MethodsPage() {
                                         </span>
                                     </div>
                                 </div>
-                                <h3 className="methods-card-name">{t(m.nameKey)}</h3>
-                                <p className="methods-card-desc">{t(m.descKey)}</p>
+                                <h3 className="methods-card-name">{getMethodTranslation(m.id, locale).name}</h3>
+                                <p className="methods-card-desc">{getMethodTranslation(m.id, locale).description}</p>
 
                             </Link>
                         ))}
