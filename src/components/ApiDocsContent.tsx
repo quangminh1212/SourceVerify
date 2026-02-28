@@ -606,7 +606,7 @@ print(await response.stream.bytesToString());`,
     };
 
     return (
-        <div className="flex-1 min-w-0 flex justify-center" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
+        <div className="api-docs-content flex-1 min-w-0 flex justify-center" style={{ paddingTop: '40px', paddingBottom: '40px' }}>
             <div className="w-full max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
                 {renderSection()}
             </div>
