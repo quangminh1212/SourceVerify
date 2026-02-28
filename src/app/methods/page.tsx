@@ -57,15 +57,15 @@ export default function MethodsPage() {
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
                     {/* Header */}
-                    <div className="text-center mb-10 sm:mb-14 animate-fade-in-up">
-                        <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary]">
+                    <div className="text-center animate-fade-in-up" style={{ marginBottom: '60px' }}>
+                        <h1 className="methods-page-title text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary]" style={{ marginBottom: '48px' }}>
                             {t("methods.headline")}{" "}
                             <span className="gradient-text">{t("methods.headlineHighlight")}</span>
                         </h1>
                         <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
                             {t("methods.subtitle1")}
                         </p>
-                        <p className="methods-page-subtitle2 text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center" style={{ marginTop: '4px' }}>
                             {t("methods.subtitle2")}
                         </p>
                     </div>
