@@ -127,8 +127,7 @@ export default function ApiDocsPage() {
                 <div className="lg:hidden px-4 py-3 border-b border-[--color-border-subtle] bg-[--color-bg-primary]">
                     <button
                         onClick={() => setMobileNavOpen(!mobileNavOpen)}
-                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium"
-                        style={{ background: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)', border: '1px solid var(--color-border-subtle)' }}
+                        className="api-mobile-nav-btn w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium"
                     >
                         <span>{(() => {
                             const sections = [
@@ -139,12 +138,12 @@ export default function ApiDocsPage() {
                             ];
                             return sections.find(s => s.id === activeSection)?.label || "Overview";
                         })()}</span>
-                        <svg className="w-4 h-4" style={{ transform: mobileNavOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <svg className={`w-4 h-4 transition-transform duration-200 ${mobileNavOpen ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
                         </svg>
                     </button>
                     {mobileNavOpen && (
-                        <nav className="mt-2 rounded-lg overflow-hidden" style={{ background: 'var(--color-bg-secondary)' }}>
+                        <nav className="api-mobile-nav-panel mt-2 rounded-lg overflow-hidden">
                             {[
                                 { title: "Getting Started", items: [{ id: "overview", label: "Overview" }, { id: "auth", label: "Authentication" }, { id: "rate-limits", label: "Rate Limits" }] },
                                 { title: "Endpoints", items: [{ id: "endpoint", label: "Analyze Image", method: "POST" }, { id: "url-analysis", label: "Analyze by URL", method: "POST" }, { id: "batch-analysis", label: "Batch Analysis", method: "POST" }, { id: "analysis-history", label: "Analysis History", method: "GET" }] },
@@ -152,23 +151,16 @@ export default function ApiDocsPage() {
                                 { title: "Advanced", items: [{ id: "webhooks", label: "Webhooks" }] },
                                 { title: "Code Examples", items: [{ id: "examples", label: "Quick Start" }] },
                             ].map((group, idx) => (
-                                <div key={group.title} style={idx > 0 ? { borderTop: '1px solid var(--color-border-subtle)', marginTop: '4px', paddingTop: '4px' } : undefined}>
-                                    <p className="px-4 pt-3 pb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-muted)' }}>{group.title}</p>
+                                <div key={group.title} className={idx > 0 ? 'api-mobile-nav-divider' : undefined}>
+                                    <p className="api-mobile-nav-group-title px-4 pt-3 pb-1 text-[10px] uppercase tracking-wider font-semibold">{group.title}</p>
                                     {group.items.map((item) => (
                                         <button
                                             key={item.id}
                                             onClick={() => { setActiveSection(item.id); setMobileNavOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-                                            className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 transition-colors"
-                                            style={{
-                                                color: activeSection === item.id ? 'var(--color-accent-blue)' : 'var(--color-text-secondary)',
-                                                background: activeSection === item.id ? 'rgba(66, 133, 244, 0.08)' : 'transparent',
-                                            }}
+                                            className={`api-mobile-nav-item w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 transition-colors ${activeSection === item.id ? 'active' : ''}`}
                                         >
                                             {"method" in item && item.method && (
-                                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded" style={{
-                                                    color: item.method === "GET" ? 'var(--color-accent-green)' : 'var(--color-accent-blue)',
-                                                    background: item.method === "GET" ? 'rgba(52, 168, 83, 0.1)' : 'rgba(66, 133, 244, 0.1)',
-                                                }}>{item.method}</span>
+                                                <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded ${item.method === "GET" ? 'api-mobile-nav-badge-get' : 'api-mobile-nav-badge-post'}`}>{item.method}</span>
                                             )}
                                             {item.label}
                                         </button>
