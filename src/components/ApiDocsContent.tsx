@@ -592,8 +592,8 @@ results = client.analyze_batch(["img1.jpg", "img2.jpg", "img3.jpg"])`}</pre>
     };
 
     return (
-        <div className="flex-1 min-w-0 py-6 sm:py-8 lg:py-10">
-            <div className="w-full max-w-4xl px-6 sm:px-8 lg:px-12">
+        <div className="flex-1 min-w-0 py-6 sm:py-8 lg:py-10 flex justify-center">
+            <div className="w-full max-w-4xl mx-auto px-6 sm:px-8 lg:px-12">
                 {renderSection()}
             </div>
         </div>
