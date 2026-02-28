@@ -165,9 +165,8 @@ print(await response.stream.bytesToString());`,
                 return (
                     <div className="animate-fade-in-up">
                         {/* Hero Section */}
-                        <div className="relative overflow-hidden rounded-xl p-8 sm:p-10 mb-10" style={{ background: 'var(--color-bg-secondary)' }}>
-                            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, var(--color-accent-blue) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--color-accent-green) 0%, transparent 50%)' }} />
-                            <div className="relative">
+                        <div className="mb-10">
+                            <div>
                                 <div className="flex items-center gap-3 mb-8">
                                     <span className="text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full" style={{ color: 'var(--color-accent-blue)', background: 'rgba(66, 133, 244, 0.08)' }}>Getting Started</span>
                                     <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>v1.0</span>
