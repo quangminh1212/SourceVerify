@@ -169,21 +169,27 @@ print(await response.stream.bytesToString());`,
                         <p className="text-sm leading-[3.5] mb-10" style={{ color: 'var(--color-text-secondary)' }}>
                             Integrate AI-generated content detection into your applications with a simple REST API.
                         </p>
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                            <div className="p-6 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
-                                <div className="text-2xl mb-4">🔍</div>
-                                <h3 className="text-sm font-semibold mb-3 leading-[3]" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
-                                <p className="text-xs leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Detect AI-generated images with advanced signal analysis</p>
+                        <div className="space-y-5">
+                            <div className="flex items-start gap-4">
+                                <svg className="w-5 h-5 mt-0.5 shrink-0" style={{ color: 'var(--color-text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+                                <div>
+                                    <h3 className="text-sm font-semibold leading-[3]" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
+                                    <p className="text-xs leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Detect AI-generated images with advanced signal analysis</p>
+                                </div>
                             </div>
-                            <div className="p-6 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
-                                <div className="text-2xl mb-4">⚡</div>
-                                <h3 className="text-sm font-semibold mb-3 leading-[3]" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
-                                <p className="text-xs leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Average response time under 500ms with 99.9% uptime</p>
+                            <div className="flex items-start gap-4">
+                                <svg className="w-5 h-5 mt-0.5 shrink-0" style={{ color: 'var(--color-text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
+                                <div>
+                                    <h3 className="text-sm font-semibold leading-[3]" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
+                                    <p className="text-xs leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Average response time under 500ms with 99.9% uptime</p>
+                                </div>
                             </div>
-                            <div className="p-6 rounded-lg border" style={{ background: 'var(--color-bg-secondary)', borderColor: 'var(--color-border-subtle)' }}>
-                                <div className="text-2xl mb-4">🔗</div>
-                                <h3 className="text-sm font-semibold mb-3 leading-[3]" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
-                                <p className="text-xs leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Simple HTTP endpoints with JSON responses and SDKs</p>
+                            <div className="flex items-start gap-4">
+                                <svg className="w-5 h-5 mt-0.5 shrink-0" style={{ color: 'var(--color-text-muted)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
+                                <div>
+                                    <h3 className="text-sm font-semibold leading-[3]" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
+                                    <p className="text-xs leading-[3]" style={{ color: 'var(--color-text-secondary)' }}>Simple HTTP endpoints with JSON responses and SDKs</p>
+                                </div>
                             </div>
                         </div>
                     </div>
