@@ -6,10 +6,10 @@ import { useSearchParams } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { METHODS, CATEGORIES, CAT_COLORS, CAT_HEX, ICON_PATHS, type Category } from "./data";
+import { METHODS, CATEGORIES, CAT_COLORS, CAT_HEX, CAT_ICON_PATHS, type Category } from "./data";
 
-function MethodIcon({ id, category }: { id: string; category: Category }) {
-    const paths = (ICON_PATHS[id] || "").split(" M");
+function MethodIcon({ category }: { category: Category }) {
+    const paths = (CAT_ICON_PATHS[category] || "").split(" M");
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -116,7 +116,7 @@ export default function MethodsPage() {
                                         className={`methods-card methods-card-clickable animate-fade-in-up animate-delay-${Math.min(i, 5)}`}
                                     >
                                         <div className="methods-card-header">
-                                            <MethodIcon id={m.id} category={m.category} />
+                                            <MethodIcon category={m.category} />
                                             <div className="methods-card-meta">
                                                 <span className={`methods-card-badge ${CAT_COLORS[m.category]}`}>
                                                     {t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}` as string)}

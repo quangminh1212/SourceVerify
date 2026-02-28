@@ -4,7 +4,7 @@ import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { METHODS, CAT_HEX, CAT_COLORS, ICON_PATHS, type Category } from "../data";
+import { METHODS, CAT_HEX, CAT_COLORS, CAT_ICON_PATHS, type Category } from "../data";
 
 export type MethodTranslations = {
     name: string;
@@ -19,8 +19,8 @@ export type MethodTranslations = {
 
 type MethodI18n = Record<string, MethodTranslations>;
 
-function MethodIcon({ id, category, size = 28 }: { id: string; category: Category; size?: number }) {
-    const d = ICON_PATHS[id] || "";
+function MethodIcon({ category, size = 28 }: { category: Category; size?: number }) {
+    const d = CAT_ICON_PATHS[category] || "";
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -80,7 +80,7 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                     {/* Header */}
                     <div className="method-detail-header animate-fade-in-up">
                         <div className="method-detail-icon-wrap">
-                            <MethodIcon id={method.id} category={method.category} size={36} />
+                            <MethodIcon category={method.category} size={36} />
                         </div>
                         <div className="method-detail-header-text">
                             <h1 className="method-detail-title">{tr.name}</h1>
