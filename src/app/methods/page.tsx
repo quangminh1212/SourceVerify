@@ -71,6 +71,16 @@ export default function MethodsPage() {
                         </div>
                     ) : (
                         <>
+                            {/* Back to intro */}
+                            <nav className="method-detail-breadcrumb animate-fade-in-up">
+                                <button className="method-detail-back-nav" onClick={() => setShowMethods(false)} aria-label="Back">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                                </button>
+                                <span className="method-detail-breadcrumb-current">
+                                    {t("methods.headline")} {t("methods.headlineHighlight")}
+                                </span>
+                            </nav>
+
                             {/* Category Tabs */}
                             <div className="methods-cat-tabs animate-fade-in-up">
                                 {CATEGORIES.map(cat => (
