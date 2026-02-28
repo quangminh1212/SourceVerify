@@ -5,12 +5,12 @@
  * v4: Wider scoring range (5-95) for better separation
  */
 
-import type { AnalysisSignal } from "../types";
+import type { AnalysisMethod } from "../types";
 
 export async function analyzeMultiscaleReconstruction(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D
-): Promise<AnalysisSignal> {
+): Promise<AnalysisMethod> {
     const orig = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
     const qualities = [0.5, 0.75, 0.9];
     const blockSize = 16;

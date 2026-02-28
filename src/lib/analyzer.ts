@@ -1,21 +1,26 @@
 /**
  * SourceVerify AI Detection Engine v6
- * Main orchestrator — imports and coordinates all 43 signal modules
+ * Main orchestrator — imports and coordinates all 43 analysis methods
+ *
+ * Terminology: "method" = phương pháp phân tích (analysis method)
+ * Each method analyzes a specific aspect of the image and returns a result with a score.
  *
  * v6 Changes:
- * - Added 30 new forensic signals (total 43) from peer-reviewed research
+ * - Added 30 new forensic methods (total 43) from peer-reviewed research
  * - Categories: spatial, frequency, statistical, compression, generative, geometric, color
- * - New signals have lower weights (0.3-0.6) to supplement rather than dominate existing signals
+ * - New methods have lower weights (0.3-0.6) to supplement rather than dominate existing methods
  * - Verdict engine unchanged — thresholds calibrated from v5.1
  */
 
-export type { AnalysisResult, AnalysisSignal, FileMetadata } from "./types";
+export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
+/** @deprecated Use AnalysisMethod instead */
+export type { AnalysisMethod as AnalysisSignal } from "./types";
 export { formatFileSize } from "./utils";
 
-import type { AnalysisResult, AnalysisSignal, FileMetadata } from "./types";
+import type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
 import { loadImage, extractBasicMetadata, validateFileMagicBytes } from "./utils";
 import {
-    // Original 13 signals
+    // Original 13 methods
     analyzeMetadata,
     analyzeSpectralNyquist,
     analyzeMultiscaleReconstruction,
@@ -73,7 +78,7 @@ import {
 // MAIN ENTRY
 // ============================
 
-export async function analyzeMedia(file: File, enabledSignals?: string[]): Promise<AnalysisResult> {
+export async function analyzeMedia(file: File, enabledMethods?: string[]): Promise<AnalysisResult> {
     const start = performance.now();
 
     // Security: validate file magic bytes match claimed MIME type
@@ -84,40 +89,41 @@ export async function analyzeMedia(file: File, enabledSignals?: string[]): Promi
 
     const isVideo = file.type.startsWith("video/");
 
-    let signals: AnalysisSignal[];
+    let methods: AnalysisMethod[];
     let metadata: FileMetadata;
 
     if (isVideo) {
-        const result = await analyzeVideoFile(file, enabledSignals);
-        signals = result.signals;
+        const result = await analyzeVideoFile(file, enabledMethods);
+        methods = result.methods;
         metadata = result.metadata;
     } else {
-        const result = await analyzeImageFile(file, enabledSignals);
-        signals = result.signals;
+        const result = await analyzeImageFile(file, enabledMethods);
+        methods = result.methods;
         metadata = result.metadata;
     }
 
     // Calculate weighted AI score with advanced verdict engine
-    const { aiScore, verdict, confidence } = calculateVerdict(signals);
+    const { aiScore, verdict, confidence } = calculateVerdict(methods);
 
-    return { verdict, confidence, aiScore, signals, metadata, processingTimeMs: Math.round(performance.now() - start) };
+    // Backward compat: provide both 'methods' and deprecated 'signals'
+    return { verdict, confidence, aiScore, methods, signals: methods, metadata, processingTimeMs: Math.round(performance.now() - start) };
 }
 
 // ============================
 // SCORING ENGINE v4
 // ============================
 
-function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict: "ai" | "real" | "uncertain"; confidence: number } {
+function calculateVerdict(methods: AnalysisMethod[]): { aiScore: number; verdict: "ai" | "real" | "uncertain"; confidence: number } {
     // Step 1: Weighted average as baseline
     let totalWeight = 0;
     let weightedSum = 0;
-    for (const signal of signals) {
-        totalWeight += signal.weight;
-        weightedSum += signal.score * signal.weight;
+    for (const method of methods) {
+        totalWeight += method.weight;
+        weightedSum += method.score * method.weight;
     }
     let aiScore = Math.round(totalWeight > 0 ? weightedSum / totalWeight : 50);
 
-    // Step 2: Count signal agreement (v4 thresholds, proven better recall)
+    // Step 2: Count method agreement (v4 thresholds, proven better recall)
     let aiLeaningWeight = 0;
     let realLeaningWeight = 0;
     let strongAI = 0;
@@ -125,13 +131,13 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     let veryStrongAI = 0;
     let veryStrongReal = 0;
 
-    for (const signal of signals) {
-        if (signal.score > 50) aiLeaningWeight += signal.weight;
-        if (signal.score < 50) realLeaningWeight += signal.weight;
-        if (signal.score >= 65) strongAI++;
-        if (signal.score <= 35) strongReal++;
-        if (signal.score >= 78) veryStrongAI++;
-        if (signal.score <= 22) veryStrongReal++;
+    for (const method of methods) {
+        if (method.score > 50) aiLeaningWeight += method.weight;
+        if (method.score < 50) realLeaningWeight += method.weight;
+        if (method.score >= 65) strongAI++;
+        if (method.score <= 35) strongReal++;
+        if (method.score >= 78) veryStrongAI++;
+        if (method.score <= 22) veryStrongReal++;
     }
 
     // Step 3: Consensus amplification (v4 power, proven with benchmark)
@@ -164,19 +170,19 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
     }
 
     // Step 5: Metadata definitive override
-    const metadataSignal = signals.find(s => s.nameKey === "signal.metadataAnalysis");
-    if (metadataSignal) {
-        if (metadataSignal.score >= 90) adjustment += 25;
-        else if (metadataSignal.score <= 15) adjustment -= 25;
+    const metadataMethod = methods.find(s => s.nameKey === "signal.metadataAnalysis");
+    if (metadataMethod) {
+        if (metadataMethod.score >= 90) adjustment += 25;
+        else if (metadataMethod.score <= 15) adjustment -= 25;
     }
 
     // Step 5b: Anti-FP guard (v5: stronger)
     let heavyRealCount = 0;
     let heavyAICount = 0;
-    for (const signal of signals) {
-        if (signal.weight >= 3.0) {
-            if (signal.score < 40) heavyRealCount++;
-            if (signal.score > 60) heavyAICount++;
+    for (const method of methods) {
+        if (method.weight >= 3.0) {
+            if (method.score < 40) heavyRealCount++;
+            if (method.score > 60) heavyAICount++;
         }
     }
     if (heavyRealCount >= 2 && heavyAICount === 0 && aiScore + adjustment > 50) {
@@ -205,11 +211,11 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
 }
 
 // ============================
-// IMAGE ANALYSIS (43 signals)
+// IMAGE ANALYSIS (43 methods)
 // ============================
 
-// Signal ID to analysis function mapping
-const SIGNAL_MAP: Record<string, string> = {
+// Method ID → nameKey mapping
+const METHOD_MAP: Record<string, string> = {
     // Original 13
     metadata: "signal.metadataAnalysis",
     spectral: "signal.spectralNyquist",
@@ -263,9 +269,11 @@ const SIGNAL_MAP: Record<string, string> = {
     whiteBalance: "signal.whiteBalance",
 };
 
-export const ALL_SIGNAL_IDS = Object.keys(SIGNAL_MAP);
+export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
+/** @deprecated Use ALL_METHOD_IDS instead */
+export const ALL_SIGNAL_IDS = ALL_METHOD_IDS;
 
-async function analyzeImageFile(file: File, enabledSignals?: string[]): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
+async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<{ methods: AnalysisMethod[]; metadata: FileMetadata }> {
     const { canvas, ctx } = await loadImage(file);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
@@ -277,9 +285,9 @@ async function analyzeImageFile(file: File, enabledSignals?: string[]): Promise<
         width: w, height: h, isVideo: false, exifData,
     };
 
-    const enabled = new Set(enabledSignals || ALL_SIGNAL_IDS);
+    const enabled = new Set(enabledMethods || ALL_METHOD_IDS);
 
-    const allSignals: AnalysisSignal[] = [
+    const allMethods: AnalysisMethod[] = [
         // Original 13
         analyzeMetadata(metadata, exifData),
         analyzeSpectralNyquist(pixels, w, h),
@@ -333,25 +341,25 @@ async function analyzeImageFile(file: File, enabledSignals?: string[]): Promise<
         analyzeWhiteBalance(pixels, w, h),
     ];
 
-    // Filter signals based on enabled set
-    const signals = allSignals.filter(s => {
-        for (const [id, nameKey] of Object.entries(SIGNAL_MAP)) {
+    // Filter methods based on enabled set
+    const methods = allMethods.filter(s => {
+        for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
             if (s.nameKey === nameKey && enabled.has(id)) return true;
         }
         return false;
     });
 
-    return { signals, metadata };
+    return { methods, metadata };
 }
 
 // ============================
 // VIDEO ANALYSIS
 // ============================
 
-async function analyzeVideoFile(file: File, enabledSignals?: string[]): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
+async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<{ methods: AnalysisMethod[]; metadata: FileMetadata }> {
     const video = document.createElement("video");
     const url = URL.createObjectURL(file);
-    const enabled = new Set(enabledSignals || ALL_SIGNAL_IDS);
+    const enabled = new Set(enabledMethods || ALL_METHOD_IDS);
 
     return new Promise((resolve) => {
         video.onloadedmetadata = async () => {
@@ -376,7 +384,7 @@ async function analyzeVideoFile(file: File, enabledSignals?: string[]): Promise<
                 const exifData = await extractBasicMetadata(file);
                 metadata.exifData = exifData;
 
-                const allSignals: AnalysisSignal[] = [
+                const allMethods: AnalysisMethod[] = [
                     // Original 13 (without CFA for video)
                     analyzeMetadata(metadata, exifData),
                     analyzeSpectralNyquist(pixels, w, h),
@@ -430,15 +438,15 @@ async function analyzeVideoFile(file: File, enabledSignals?: string[]): Promise<
                     analyzeWhiteBalance(pixels, w, h),
                 ];
 
-                const signals = allSignals.filter(s => {
-                    if (s.nameKey === "signal.videoProperties") return true; // always include video signal
-                    for (const [id, nameKey] of Object.entries(SIGNAL_MAP)) {
+                const methods = allMethods.filter(s => {
+                    if (s.nameKey === "signal.videoProperties") return true; // always include video method
+                    for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
                         if (s.nameKey === nameKey && enabled.has(id)) return true;
                     }
                     return false;
                 });
 
-                resolve({ signals, metadata });
+                resolve({ methods, metadata });
             };
         };
         video.src = url;

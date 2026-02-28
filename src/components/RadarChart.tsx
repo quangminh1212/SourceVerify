@@ -1,10 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import type { AnalysisSignal } from "@/lib/types";
+import type { AnalysisMethod } from "@/lib/types";
 
 interface RadarChartProps {
-    signals: AnalysisSignal[];
+    signals: AnalysisMethod[];
     t: (key: string) => string;
 }
 

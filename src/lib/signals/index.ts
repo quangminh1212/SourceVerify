@@ -1,6 +1,6 @@
 /**
- * Signal modules barrel export
- * 43 forensic analysis signals based on peer-reviewed research
+ * Analysis methods barrel export
+ * 43 forensic analysis methods (phương pháp phân tích) based on peer-reviewed research
  */
 
 // Original 13 signals
