@@ -55,7 +55,7 @@ export default function ApiDocsPage() {
         script.defer = true;
         script.onload = () => {
             if (typeof window !== "undefined" && (window as unknown as Record<string, unknown>).google) {
-                const google = (window as unknown as Record<string, Record<string, { initialize: (c: unknown) => void; renderButton: (e: HTMLElement | null, c: unknown) => void }>>).google;
+                const google = (window as unknown as Record<string, Record<string, Record<string, { initialize: (c: unknown) => void; renderButton: (e: HTMLElement | null, c: unknown) => void }>>>).google;
                 if (google?.accounts?.id) {
                     google.accounts.id.initialize({
                         client_id: GOOGLE_CLIENT_ID,
