@@ -458,7 +458,7 @@ function SettingsModal({
                             className={`settings-filter-btn ${filter === c.key ? 'active' : ''}`}
                             onClick={() => onFilterChange(c.key)}
                         >
-                            {c.key !== 'all' && <span className="settings-filter-dot" style={{ background: CAT_HEX[c.key] }} />}
+                            {c.key !== 'all' && <span className={`settings-filter-dot settings-dot-${c.key}`} />}
                             {t(c.labelKey)}
                         </button>
                     ))}
@@ -484,7 +484,6 @@ function SettingsModal({
                     {filteredMethods.map(m => {
                         const enabled = local.enabledMethods.includes(m.id);
                         const tr = getMethodTranslation(m.id, locale);
-                        const catColor = CAT_HEX[m.category];
                         return (
                             <div
                                 key={m.id}
@@ -495,10 +494,10 @@ function SettingsModal({
                                 onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMethod(m.id); } }}
                             >
                                 <div className="settings-method-left">
-                                    <span className="settings-cat-dot" style={{ background: catColor }} />
+                                    <span className={`settings-cat-dot settings-cat-${m.category}`} />
                                     <div className="settings-method-info">
                                         <span className="settings-method-name">{tr.name}</span>
-                                        <span className="settings-method-cat" style={{ color: catColor }}>{t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}`)}</span>
+                                        <span className={`settings-method-cat settings-text-${m.category}`}>{t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}`)}</span>
                                     </div>
                                 </div>
                                 <span className={`settings-toggle-switch ${enabled ? 'on' : ''}`}>
