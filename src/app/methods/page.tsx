@@ -58,14 +58,14 @@ export default function MethodsPage() {
                 <div className="w-full max-w-5xl mx-auto text-center">
                     {/* Header */}
                     <div className="text-center mb-10 sm:mb-14 animate-fade-in-up">
-                        <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4">
+                        <h1 className="text-[clamp(1.75rem,4vw,3.25rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-12">
                             {t("methods.headline")}{" "}
                             <span className="gradient-text">{t("methods.headlineHighlight")}</span>
                         </h1>
                         <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center">
                             {t("methods.subtitle1")}
                         </p>
-                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center mt-3">
+                        <p className="text-sm sm:text-base lg:text-lg text-[--color-text-secondary] leading-relaxed mx-auto text-center mt-9">
                             {t("methods.subtitle2")}
                         </p>
                     </div>
