@@ -23,6 +23,7 @@ export default function ApiDocsPage() {
     const [testResult, setTestResult] = useState<string>("");
     const [testing, setTesting] = useState(false);
     const [activeSection, setActiveSection] = useState("overview");
+    const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
     const handleGoogleCallback = useCallback(async (response: { credential: string }) => {
         try {
@@ -124,35 +125,58 @@ export default function ApiDocsPage() {
             <div className="flex-1 flex flex-col lg:flex-row">
                 {/* Mobile section nav */}
                 <div className="lg:hidden px-4 py-3 border-b border-[--color-border-subtle] bg-[--color-bg-primary]">
-                    <select
-                        value={activeSection}
-                        onChange={(e) => setActiveSection(e.target.value)}
-                        aria-label="Navigate API docs sections"
-                        className="w-full px-3 py-2 rounded-lg bg-[--color-bg-secondary] text-[--color-text-primary] text-sm border border-[--color-border-subtle] outline-none"
+                    <button
+                        onClick={() => setMobileNavOpen(!mobileNavOpen)}
+                        className="w-full flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium"
+                        style={{ background: 'var(--color-bg-secondary)', color: 'var(--color-text-primary)', border: '1px solid var(--color-border-subtle)' }}
                     >
-                        <optgroup label="Getting Started">
-                            <option value="overview">Overview</option>
-                            <option value="auth">Authentication</option>
-                            <option value="rate-limits">Rate Limits</option>
-                        </optgroup>
-                        <optgroup label="Endpoints">
-                            <option value="endpoint">Analyze Image</option>
-                            <option value="url-analysis">Analyze by URL</option>
-                            <option value="batch-analysis">Batch Analysis</option>
-                            <option value="analysis-history">Analysis History</option>
-                        </optgroup>
-                        <optgroup label="Response">
-                            <option value="response">Response Format</option>
-                            <option value="verdict-values">Verdict Values</option>
-                            <option value="error-codes">Error Codes</option>
-                        </optgroup>
-                        <optgroup label="Advanced">
-                            <option value="webhooks">Webhooks</option>
-                        </optgroup>
-                        <optgroup label="Code Examples">
-                            <option value="examples">Quick Start</option>
-                        </optgroup>
-                    </select>
+                        <span>{(() => {
+                            const sections = [
+                                { id: "overview", label: "Overview" }, { id: "auth", label: "Authentication" }, { id: "rate-limits", label: "Rate Limits" },
+                                { id: "endpoint", label: "Analyze Image" }, { id: "url-analysis", label: "Analyze by URL" }, { id: "batch-analysis", label: "Batch Analysis" }, { id: "analysis-history", label: "Analysis History" },
+                                { id: "response", label: "Response Format" }, { id: "verdict-values", label: "Verdict Values" }, { id: "error-codes", label: "Error Codes" },
+                                { id: "webhooks", label: "Webhooks" }, { id: "examples", label: "Quick Start" },
+                            ];
+                            return sections.find(s => s.id === activeSection)?.label || "Overview";
+                        })()}</span>
+                        <svg className="w-4 h-4" style={{ transform: mobileNavOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                        </svg>
+                    </button>
+                    {mobileNavOpen && (
+                        <nav className="mt-2 rounded-lg overflow-hidden" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
+                            {[
+                                { title: "Getting Started", items: [{ id: "overview", label: "Overview" }, { id: "auth", label: "Authentication" }, { id: "rate-limits", label: "Rate Limits" }] },
+                                { title: "Endpoints", items: [{ id: "endpoint", label: "Analyze Image", method: "POST" }, { id: "url-analysis", label: "Analyze by URL", method: "POST" }, { id: "batch-analysis", label: "Batch Analysis", method: "POST" }, { id: "analysis-history", label: "Analysis History", method: "GET" }] },
+                                { title: "Response", items: [{ id: "response", label: "Response Format" }, { id: "verdict-values", label: "Verdict Values" }, { id: "error-codes", label: "Error Codes" }] },
+                                { title: "Advanced", items: [{ id: "webhooks", label: "Webhooks" }] },
+                                { title: "Code Examples", items: [{ id: "examples", label: "Quick Start" }] },
+                            ].map((group) => (
+                                <div key={group.title}>
+                                    <p className="px-4 pt-3 pb-1 text-[10px] uppercase tracking-wider font-semibold" style={{ color: 'var(--color-text-muted)' }}>{group.title}</p>
+                                    {group.items.map((item) => (
+                                        <button
+                                            key={item.id}
+                                            onClick={() => { setActiveSection(item.id); setMobileNavOpen(false); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+                                            className="w-full text-left px-4 py-2.5 text-sm flex items-center gap-2 transition-colors"
+                                            style={{
+                                                color: activeSection === item.id ? 'var(--color-accent-blue)' : 'var(--color-text-secondary)',
+                                                background: activeSection === item.id ? 'rgba(66, 133, 244, 0.08)' : 'transparent',
+                                            }}
+                                        >
+                                            {"method" in item && item.method && (
+                                                <span className="text-[9px] font-bold px-1.5 py-0.5 rounded" style={{
+                                                    color: item.method === "GET" ? 'var(--color-accent-green)' : 'var(--color-accent-blue)',
+                                                    background: item.method === "GET" ? 'rgba(52, 168, 83, 0.1)' : 'rgba(66, 133, 244, 0.1)',
+                                                }}>{item.method}</span>
+                                            )}
+                                            {item.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            ))}
+                        </nav>
+                    )}
                 </div>
                 <ApiDocsSidebar activeSection={activeSection} onSectionChange={setActiveSection} />
                 <ApiDocsContent
