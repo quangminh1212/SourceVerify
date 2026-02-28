@@ -15,7 +15,7 @@ const NAV_KEYS = [
     { key: "nav.about", href: "/about" },
 ];
 
-const LOCALES: Locale[] = ["en", "zh", "vi", "ja", "ko"];
+const LOCALES: Locale[] = ["en", "zh", "vi", "ja", "ko", "es"];
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "";
 
 interface GoogleUser {

@@ -20,6 +20,7 @@ function detectLocale(): Locale {
     if (nav.startsWith("zh")) return "zh";
     if (nav.startsWith("ja")) return "ja";
     if (nav.startsWith("ko")) return "ko";
+    if (nav.startsWith("es")) return "es";
     return "en";
 }
 
