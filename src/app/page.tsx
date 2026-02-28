@@ -372,7 +372,7 @@ export default function Home() {
       </section>
 
       {/* ===== Footer ===== */}
-      <Footer showLinks />
+      <Footer />
     </main>
   );
 }
