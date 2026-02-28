@@ -167,7 +167,7 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                     {/* References with links */}
                     {tr.references && tr.references.length > 0 && (
                         <div className="method-detail-section method-detail-references animate-fade-in-up">
-                            <h3 className="method-detail-section-label">📚 References & Citations</h3>
+                            <h3 className="method-detail-section-label">References & Citations</h3>
                             <ol className="method-detail-ref-list">
                                 {tr.references.map((ref, i) => (
                                     <li key={i} className="method-detail-ref-item">
