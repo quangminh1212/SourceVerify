@@ -165,31 +165,31 @@ print(await response.stream.bytesToString());`,
                 return (
                     <div className="animate-fade-in-up">
                         {/* Hero Section */}
-                        <div className="relative overflow-hidden rounded-xl p-8 sm:p-10 mb-8" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
+                        <div className="relative overflow-hidden rounded-xl p-8 sm:p-10 mb-10" style={{ background: 'var(--color-bg-secondary)' }}>
                             <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 20% 50%, var(--color-accent-blue) 0%, transparent 50%), radial-gradient(circle at 80% 20%, var(--color-accent-green) 0%, transparent 50%)' }} />
                             <div className="relative">
-                                <div className="flex items-center gap-3 mb-5">
-                                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full" style={{ color: 'var(--color-accent-blue)', background: 'rgba(66, 133, 244, 0.08)', border: '1px solid rgba(66, 133, 244, 0.15)' }}>Getting Started</span>
+                                <div className="flex items-center gap-3 mb-8">
+                                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold px-2.5 py-1 rounded-full" style={{ color: 'var(--color-accent-blue)', background: 'rgba(66, 133, 244, 0.08)' }}>Getting Started</span>
                                     <span className="text-[10px] font-mono px-2 py-0.5 rounded" style={{ color: 'var(--color-text-muted)', background: 'var(--color-bg-tertiary)' }}>v1.0</span>
                                 </div>
-                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-4" style={{ color: 'var(--color-text-primary)', lineHeight: '1.2' }}>
+                                <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tight mb-8" style={{ color: 'var(--color-text-primary)', lineHeight: '1.3' }}>
                                     SourceVerify <span className="gradient-text">API</span>
                                 </h1>
-                                <p className="text-sm leading-relaxed max-w-xl mb-6" style={{ color: 'var(--color-text-secondary)' }}>
+                                <p className="text-sm max-w-xl mb-10" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>
                                     Integrate AI-generated content detection into your applications with a simple REST API. Analyze images in milliseconds with industry-leading accuracy.
                                 </p>
                                 <div className="flex items-center gap-4 flex-wrap">
                                     <button
                                         onClick={() => onSectionChange?.("auth")}
-                                        className="text-xs font-semibold px-4 py-2 rounded-lg transition-all duration-200 hover:shadow-lg"
+                                        className="text-xs font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 hover:shadow-lg"
                                         style={{ color: '#fff', background: 'var(--color-accent-blue)' }}
                                     >
                                         Get API Key →
                                     </button>
                                     <button
                                         onClick={() => onSectionChange?.("examples")}
-                                        className="text-xs font-semibold px-4 py-2 rounded-lg transition-all duration-200"
-                                        style={{ color: 'var(--color-text-secondary)', background: 'var(--color-bg-tertiary)', border: '1px solid var(--color-border-subtle)' }}
+                                        className="text-xs font-semibold px-5 py-2.5 rounded-lg transition-all duration-200"
+                                        style={{ color: 'var(--color-text-secondary)', background: 'var(--color-bg-tertiary)' }}
                                     >
                                         View Examples
                                     </button>
@@ -198,38 +198,38 @@ print(await response.stream.bytesToString());`,
                         </div>
 
                         {/* Base URL */}
-                        <div className="flex items-center gap-3 mb-8 p-3 rounded-lg" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
+                        <div className="flex items-center gap-3 mb-10 p-4 rounded-lg" style={{ background: 'var(--color-bg-secondary)' }}>
                             <span className="text-[10px] uppercase tracking-wider font-semibold shrink-0" style={{ color: 'var(--color-text-muted)' }}>Base URL</span>
                             <code className="text-xs font-mono" style={{ color: 'var(--color-accent-blue)' }}>{apiDocsUrl}</code>
                         </div>
 
                         {/* Features */}
-                        <div className="grid gap-4 sm:grid-cols-3">
-                            <div className="group p-5 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
-                                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ background: 'rgba(66, 133, 244, 0.08)' }}>
+                        <div className="grid gap-6 sm:grid-cols-3">
+                            <div className="group p-6 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)' }}>
+                                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(66, 133, 244, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-blue)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
-                                <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>Detect AI-generated images with advanced signal analysis</p>
+                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Image Analysis</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>Detect AI-generated images with advanced signal analysis</p>
                             </div>
-                            <div className="group p-5 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
-                                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ background: 'rgba(52, 168, 83, 0.08)' }}>
+                            <div className="group p-6 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)' }}>
+                                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(52, 168, 83, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-green)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
-                                <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>Average response time under 500ms with 99.9% uptime</p>
+                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>Fast & Reliable</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>Average response time under 500ms with 99.9% uptime</p>
                             </div>
-                            <div className="group p-5 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)', border: '1px solid var(--color-border-subtle)' }}>
-                                <div className="w-8 h-8 rounded-lg flex items-center justify-center mb-3" style={{ background: 'rgba(251, 188, 4, 0.08)' }}>
+                            <div className="group p-6 rounded-xl transition-all duration-200 hover:scale-[1.02]" style={{ background: 'var(--color-bg-secondary)' }}>
+                                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-5" style={{ background: 'rgba(251, 188, 4, 0.08)' }}>
                                     <svg className="w-4 h-4" style={{ color: 'var(--color-accent-amber)' }} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244" /></svg>
                                 </div>
-                                <h3 className="text-sm font-semibold mb-1.5" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
-                                <p className="text-xs leading-relaxed" style={{ color: 'var(--color-text-secondary)' }}>Simple HTTP endpoints with JSON responses</p>
+                                <h3 className="text-sm font-semibold mb-3" style={{ color: 'var(--color-text-primary)' }}>REST API</h3>
+                                <p className="text-xs" style={{ color: 'var(--color-text-secondary)', lineHeight: '2.4' }}>Simple HTTP endpoints with JSON responses</p>
                             </div>
                         </div>
 
                         {/* Status */}
-                        <div className="flex items-center gap-2 mt-6 text-xs" style={{ color: 'var(--color-text-muted)' }}>
+                        <div className="flex items-center gap-2 mt-8 text-xs" style={{ color: 'var(--color-text-muted)' }}>
                             <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--color-accent-green)' }} />
                             All systems operational
                         </div>
