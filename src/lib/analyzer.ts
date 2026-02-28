@@ -102,12 +102,12 @@ export async function analyzeMedia(file: File, enabledMethods?: string[], custom
         metadata = result.metadata;
     }
 
-    // Apply custom weights if provided
+    // Apply custom weights if provided (percentage scale: 100 = full, 0 = ignore)
     if (customWeights && Object.keys(customWeights).length > 0) {
         for (const method of methods) {
             for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
                 if (method.nameKey === nameKey && customWeights[id] !== undefined) {
-                    method.weight = customWeights[id];
+                    method.weight = method.weight * (customWeights[id] / 100);
                 }
             }
         }

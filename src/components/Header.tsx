@@ -431,13 +431,13 @@ function SettingsModal({
 
     const getWeight = (id: string): number => {
         if (local.customWeights?.[id] !== undefined) return local.customWeights[id];
-        return 5; // Default: equal weight for all
+        return 100; // Default: 100% weight
     };
 
     const setWeight = (id: string, val: number) => {
         setLocal(prev => ({
             ...prev,
-            customWeights: { ...(prev.customWeights || {}), [id]: Math.max(1, Math.min(10, Math.round(val))) },
+            customWeights: { ...(prev.customWeights || {}), [id]: Math.max(0, Math.min(100, Math.round(val))) },
         }));
     };
 
@@ -531,13 +531,13 @@ function SettingsModal({
                                                 </div>
                                                 <div className="settings-method-right">
                                                     <div className="settings-weight-slider" onClick={e => e.stopPropagation()}>
-                                                        <span className="settings-weight-val">{getWeight(m.id)}</span>
+                                                        <span className="settings-weight-val">{getWeight(m.id)}%</span>
                                                         <input
                                                             type="range"
                                                             className="settings-range"
                                                             value={getWeight(m.id)}
                                                             onChange={e => setWeight(m.id, parseInt(e.target.value))}
-                                                            min={1} max={10} step={1}
+                                                            min={0} max={100} step={5}
                                                             aria-label={`${tr.name} ${t('settings.weight')}`}
                                                         />
                                                     </div>
