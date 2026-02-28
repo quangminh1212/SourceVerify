@@ -257,6 +257,7 @@ export default function Header() {
                                             <div className="user-dropdown-email">{user.email}</div>
                                         </div>
                                         <Link href="/api-docs" className="user-dropdown-item" onClick={() => setUserMenuOpen(false)}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="settings-icon-inline"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4" /></svg>
                                             {t("header.apiKey")}
                                         </Link>
                                         <button className="user-dropdown-item" onClick={() => { setSettingsOpen(true); setUserMenuOpen(false); }}>
@@ -264,6 +265,7 @@ export default function Header() {
                                             {t("header.settings")}
                                         </button>
                                         <button className="user-dropdown-item user-dropdown-logout" onClick={logout}>
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="settings-icon-inline"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
                                             {t("header.signOut")}
                                         </button>
                                     </div>
@@ -530,16 +532,16 @@ function SettingsModal({
                                                     <span className="settings-method-name">{tr.name}</span>
                                                 </div>
                                                 <div className="settings-method-right">
-                                                    <div className="settings-weight-slider" onClick={e => e.stopPropagation()}>
-                                                        <span className="settings-weight-val">{getWeight(m.id)}%</span>
+                                                    <div className="settings-weight-box" onClick={e => e.stopPropagation()}>
                                                         <input
-                                                            type="range"
-                                                            className="settings-range"
+                                                            type="number"
+                                                            className="settings-pct-input"
                                                             value={getWeight(m.id)}
-                                                            onChange={e => setWeight(m.id, parseInt(e.target.value))}
+                                                            onChange={e => setWeight(m.id, parseInt(e.target.value) || 0)}
                                                             min={0} max={100} step={5}
                                                             aria-label={`${tr.name} ${t('settings.weight')}`}
                                                         />
+                                                        <span className="settings-pct-unit">%</span>
                                                     </div>
                                                     <span className={`settings-toggle-switch sm ${enabled ? 'on' : ''}`} onClick={() => toggleMethod(m.id)}>
                                                         <span className="settings-toggle-knob" />
@@ -565,6 +567,6 @@ function SettingsModal({
                     </button>
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
