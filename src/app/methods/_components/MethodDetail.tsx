@@ -63,8 +63,11 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 py-14 sm:py-16 lg:py-20">
                 <div className="w-full max-w-3xl mx-auto">
 
-                    {/* Breadcrumb */}
+                    {/* Breadcrumb + back nav */}
                     <nav className="method-detail-breadcrumb animate-fade-in-up">
+                        <Link href="/methods" className="method-detail-back-nav">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6" /></svg>
+                        </Link>
                         <Link href="/methods" className="method-detail-breadcrumb-link">
                             {t("methods.headline")} {t("methods.headlineHighlight")}
                         </Link>
