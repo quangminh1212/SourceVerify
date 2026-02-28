@@ -38,7 +38,7 @@ import {
 // MAIN ENTRY
 // ============================
 
-export async function analyzeMedia(file: File): Promise<AnalysisResult> {
+export async function analyzeMedia(file: File, enabledSignals?: string[]): Promise<AnalysisResult> {
     const start = performance.now();
 
     // Security: validate file magic bytes match claimed MIME type
@@ -53,11 +53,11 @@ export async function analyzeMedia(file: File): Promise<AnalysisResult> {
     let metadata: FileMetadata;
 
     if (isVideo) {
-        const result = await analyzeVideoFile(file);
+        const result = await analyzeVideoFile(file, enabledSignals);
         signals = result.signals;
         metadata = result.metadata;
     } else {
-        const result = await analyzeImageFile(file);
+        const result = await analyzeImageFile(file, enabledSignals);
         signals = result.signals;
         metadata = result.metadata;
     }
@@ -173,7 +173,26 @@ function calculateVerdict(signals: AnalysisSignal[]): { aiScore: number; verdict
 // IMAGE ANALYSIS (13 signals)
 // ============================
 
-async function analyzeImageFile(file: File): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
+// Signal ID to analysis function mapping
+const SIGNAL_MAP: Record<string, string> = {
+    metadata: "signal.metadataAnalysis",
+    spectral: "signal.spectralNyquist",
+    reconstruction: "signal.multiScaleReconstruction",
+    noise: "signal.noiseResidual",
+    edge: "signal.edgeCoherence",
+    gradient: "signal.gradientSmoothness",
+    benford: "signal.benfordsLaw",
+    chromatic: "signal.chromaticAberration",
+    texture: "signal.textureConsistency",
+    cfa: "signal.cfaPattern",
+    dct: "signal.dctBlock",
+    color: "signal.colorCorrelation",
+    prnu: "signal.prnuPattern",
+};
+
+export const ALL_SIGNAL_IDS = Object.keys(SIGNAL_MAP);
+
+async function analyzeImageFile(file: File, enabledSignals?: string[]): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
     const { canvas, ctx } = await loadImage(file);
     const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
     const pixels = imageData.data;
@@ -185,7 +204,9 @@ async function analyzeImageFile(file: File): Promise<{ signals: AnalysisSignal[]
         width: w, height: h, isVideo: false, exifData,
     };
 
-    const signals: AnalysisSignal[] = [
+    const enabled = new Set(enabledSignals || ALL_SIGNAL_IDS);
+
+    const allSignals: AnalysisSignal[] = [
         analyzeMetadata(metadata, exifData),
         analyzeSpectralNyquist(pixels, w, h),
         await analyzeMultiscaleReconstruction(canvas, ctx),
@@ -201,6 +222,14 @@ async function analyzeImageFile(file: File): Promise<{ signals: AnalysisSignal[]
         analyzePRNUPattern(pixels, w, h),
     ];
 
+    // Filter signals based on enabled set
+    const signals = allSignals.filter(s => {
+        for (const [id, nameKey] of Object.entries(SIGNAL_MAP)) {
+            if (s.nameKey === nameKey && enabled.has(id)) return true;
+        }
+        return false;
+    });
+
     return { signals, metadata };
 }
 
@@ -208,9 +237,10 @@ async function analyzeImageFile(file: File): Promise<{ signals: AnalysisSignal[]
 // VIDEO ANALYSIS
 // ============================
 
-async function analyzeVideoFile(file: File): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
+async function analyzeVideoFile(file: File, enabledSignals?: string[]): Promise<{ signals: AnalysisSignal[]; metadata: FileMetadata }> {
     const video = document.createElement("video");
     const url = URL.createObjectURL(file);
+    const enabled = new Set(enabledSignals || ALL_SIGNAL_IDS);
 
     return new Promise((resolve) => {
         video.onloadedmetadata = async () => {
@@ -235,7 +265,7 @@ async function analyzeVideoFile(file: File): Promise<{ signals: AnalysisSignal[]
                 const exifData = await extractBasicMetadata(file);
                 metadata.exifData = exifData;
 
-                const signals: AnalysisSignal[] = [
+                const allSignals: AnalysisSignal[] = [
                     analyzeMetadata(metadata, exifData),
                     analyzeSpectralNyquist(pixels, w, h),
                     await analyzeMultiscaleReconstruction(canvas, ctx),
@@ -250,6 +280,14 @@ async function analyzeVideoFile(file: File): Promise<{ signals: AnalysisSignal[]
                     analyzePRNUPattern(pixels, w, h),
                     analyzeVideoSpecific(file, video),
                 ];
+
+                const signals = allSignals.filter(s => {
+                    if (s.nameKey === "signal.videoProperties") return true; // always include video signal
+                    for (const [id, nameKey] of Object.entries(SIGNAL_MAP)) {
+                        if (s.nameKey === nameKey && enabled.has(id)) return true;
+                    }
+                    return false;
+                });
 
                 resolve({ signals, metadata });
             };
