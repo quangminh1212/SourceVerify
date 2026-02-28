@@ -163,7 +163,7 @@ print(await response.stream.bytesToString());`,
         switch (activeSection) {
             case "overview":
                 return (
-                    <div className="animate-fade-in-up">
+                    <div className="animate-fade-in-up pt-8">
                         {/* Hero Section */}
                         <div className="mb-10">
                             <div>
