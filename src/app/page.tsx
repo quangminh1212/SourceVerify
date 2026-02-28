@@ -7,7 +7,6 @@ import {
   analyzeMedia,
   formatFileSize,
   type AnalysisResult,
-  ALL_SIGNAL_IDS,
 } from "@/lib/analyzer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from "@/lib/constants";
@@ -25,8 +24,6 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState(0);
   const [viewMode, setViewMode] = useState<'basic' | 'advanced'>('basic');
-  const [enabledSignals, setEnabledSignals] = useState<Set<string>>(new Set(ALL_SIGNAL_IDS));
-  const [showMethods, setShowMethods] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const { t } = useLanguage();
@@ -49,7 +46,7 @@ export default function Home() {
     }, 200);
 
     try {
-      const r = await analyzeMedia(selectedFile, [...enabledSignals]);
+      const r = await analyzeMedia(selectedFile);
       clearInterval(iv);
       setProgress(100);
       await new Promise(res => setTimeout(res, 500));
@@ -140,67 +137,6 @@ export default function Home() {
             <p className="text-xs text-[--color-text-muted] hidden sm:block">
               {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-gray-100 border border-gray-200 text-[10px] font-mono">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
             </p>
-
-            {/* Method Selector */}
-            <div className="w-full max-w-2xl mt-4">
-              <button
-                onClick={() => setShowMethods(v => !v)}
-                className="method-selector-toggle"
-                type="button"
-              >
-                <span className="method-selector-icon">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" /><circle cx="12" cy="12" r="3" /></svg>
-                </span>
-                <span>{t("home.methodsToggle")}</span>
-                <span className="method-selector-count">
-                  {enabledSignals.size === ALL_SIGNAL_IDS.length
-                    ? t("home.methodsAll")
-                    : t("home.methodsSelected", { count: String(enabledSignals.size), total: String(ALL_SIGNAL_IDS.length) })}
-                </span>
-                <svg className={`method-selector-chevron ${showMethods ? 'open' : ''}`} width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="6 9 12 15 18 9" /></svg>
-              </button>
-
-              {showMethods && (
-                <div className="method-selector-panel animate-fade-in-up">
-                  {([
-                    { id: "metadata", icon: "📋", key: "api.methods.metadata.name" },
-                    { id: "spectral", icon: "📊", key: "api.methods.spectral.name" },
-                    { id: "reconstruction", icon: "🔬", key: "api.methods.reconstruction.name" },
-                    { id: "noise", icon: "◫", key: "api.methods.noise.name" },
-                    { id: "edge", icon: "⬡", key: "api.methods.edge.name" },
-                    { id: "gradient", icon: "▤", key: "api.methods.gradient.name" },
-                    { id: "benford", icon: "📈", key: "api.methods.benford.name" },
-                    { id: "chromatic", icon: "🌈", key: "api.methods.chromatic.name" },
-                    { id: "texture", icon: "🧩", key: "api.methods.texture.name" },
-                    { id: "cfa", icon: "⊞", key: "api.methods.cfa.name" },
-                    { id: "dct", icon: "▦", key: "api.methods.dct.name" },
-                    { id: "color", icon: "◈", key: "api.methods.color.name" },
-                    { id: "prnu", icon: "⊕", key: "api.methods.prnu.name" },
-                  ] as const).map(m => (
-                    <label key={m.id} className="method-selector-item">
-                      <span className="method-selector-item-icon">{m.icon}</span>
-                      <span className="method-selector-item-name">{t(m.key)}</span>
-                      <span className="api-toggle">
-                        <input
-                          type="checkbox"
-                          checked={enabledSignals.has(m.id)}
-                          aria-label={t(m.key)}
-                          onChange={() => {
-                            setEnabledSignals(prev => {
-                              const next = new Set(prev);
-                              if (next.has(m.id)) { if (next.size > 1) next.delete(m.id); }
-                              else next.add(m.id);
-                              return next;
-                            });
-                          }}
-                        />
-                        <span className="api-toggle-slider" />
-                      </span>
-                    </label>
-                  ))}
-                </div>
-              )}
-            </div>
           </div>
         )}
 
