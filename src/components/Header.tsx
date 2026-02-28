@@ -91,7 +91,7 @@ export default function Header() {
         script.async = true;
         script.defer = true;
         script.onload = () => {
-            const g = (window as unknown as Record<string, Record<string, { initialize: (c: unknown) => void; renderButton: (e: HTMLElement | null, c: unknown) => void }>>).google;
+            const g = (window as unknown as Record<string, Record<string, Record<string, { initialize: (c: unknown) => void; renderButton: (e: HTMLElement | null, c: unknown) => void }>>>).google;
             if (g?.accounts?.id) {
                 g.accounts.id.initialize({
                     client_id: GOOGLE_CLIENT_ID,
@@ -223,10 +223,10 @@ export default function Header() {
                                         <div className="user-dropdown-email">{user.email}</div>
                                     </div>
                                     <Link href="/api-docs" className="user-dropdown-item" onClick={() => setUserMenuOpen(false)}>
-                                        API Key
+                                        {t("header.apiKey")}
                                     </Link>
                                     <button className="user-dropdown-item user-dropdown-logout" onClick={logout}>
-                                        Sign Out
+                                        {t("header.signOut")}
                                     </button>
                                 </div>
                             )}
@@ -238,7 +238,7 @@ export default function Header() {
                                 <button
                                     className="header-signin-fallback"
                                     onClick={() => {
-                                        const g = (window as unknown as Record<string, Record<string, { prompt: () => void }>>).google;
+                                        const g = (window as unknown as Record<string, Record<string, Record<string, { prompt: () => void }>>>).google;
                                         if (g?.accounts?.id) {
                                             g.accounts.id.prompt();
                                         } else if (!GOOGLE_CLIENT_ID) {
@@ -249,7 +249,7 @@ export default function Header() {
                                             script.src = "https://accounts.google.com/gsi/client";
                                             script.async = true;
                                             script.onload = () => {
-                                                const gg = (window as unknown as Record<string, Record<string, { initialize: (c: unknown) => void; prompt: () => void }>>).google;
+                                                const gg = (window as unknown as Record<string, Record<string, Record<string, { initialize: (c: unknown) => void; prompt: () => void }>>>).google;
                                                 if (gg?.accounts?.id) {
                                                     gg.accounts.id.initialize({
                                                         client_id: GOOGLE_CLIENT_ID,
@@ -267,7 +267,7 @@ export default function Header() {
                                         <polyline points="10 17 15 12 10 7" />
                                         <line x1="15" y1="12" x2="3" y2="12" />
                                     </svg>
-                                    Sign In
+                                    {t("header.signIn")}
                                 </button>
                             )}
                         </>
@@ -301,8 +301,8 @@ export default function Header() {
                                 {user.picture && <img src={user.picture} alt="" className="mobile-user-avatar" referrerPolicy="no-referrer" />}
                                 <span className="mobile-user-name">{user.name}</span>
                             </div>
-                            <Link href="/api-docs" className="header-mobile-link" onClick={() => setOpen(false)}>API Key</Link>
-                            <button className="header-mobile-link mobile-logout-btn" onClick={() => { logout(); setOpen(false); }}>Sign Out</button>
+                            <Link href="/api-docs" className="header-mobile-link" onClick={() => setOpen(false)}>{t("header.apiKey")}</Link>
+                            <button className="header-mobile-link mobile-logout-btn" onClick={() => { logout(); setOpen(false); }}>{t("header.signOut")}</button>
                         </div>
                     ) : (
                         <div className="mobile-google-wrapper">
@@ -315,7 +315,7 @@ export default function Header() {
                             className={`lang-mobile-btn ${isDark ? "active" : ""}`}
                             onClick={toggleTheme}
                         >
-                            {isDark ? "â˜€ï¸ Light" : "ðŸŒ™ Dark"}
+                            {isDark ? `☀️ ${t("header.lightMode")}` : `🌙 ${t("header.darkMode")}`}
                         </button>
                         {LOCALES.map((l) => (
                             <button
