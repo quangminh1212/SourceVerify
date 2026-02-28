@@ -428,6 +428,15 @@ function SettingsModal({
 
     const enabledCount = local.enabledMethods.length;
     const allEnabled = METHODS.every(m => local.enabledMethods.includes(m.id));
+    const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
+
+    const toggleExpand = (key: string) => {
+        setExpandedGroups(prev => {
+            const next = new Set(prev);
+            next.has(key) ? next.delete(key) : next.add(key);
+            return next;
+        });
+    };
 
     // Group methods by category (exclude 'all')
     const groups = useMemo(() => {
@@ -479,19 +488,20 @@ function SettingsModal({
                         const groupEnabled = g.methods.every(m => local.enabledMethods.includes(m.id));
                         const groupCount = g.methods.filter(m => local.enabledMethods.includes(m.id)).length;
                         return (
-                            <div key={g.key} className="settings-group">
-                                <div className="settings-group-header" onClick={() => toggleGroup(g.key)} role="button" tabIndex={0}
-                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleGroup(g.key); } }}>
+                            <div key={g.key} className={`settings-group ${expandedGroups.has(g.key) ? 'expanded' : ''}`}>
+                                <div className="settings-group-header" onClick={() => toggleExpand(g.key)} role="button" tabIndex={0}
+                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleExpand(g.key); } }}>
                                     <div className="settings-group-left">
+                                        <svg className={`settings-chevron ${expandedGroups.has(g.key) ? 'open' : ''}`} width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6" /></svg>
                                         <span className={`settings-group-dot settings-dot-${g.key}`} />
                                         <span className="settings-group-name">{g.label}</span>
                                         <span className="settings-group-count">{groupCount}/{g.methods.length}</span>
                                     </div>
-                                    <span className={`settings-toggle-switch sm ${groupEnabled ? 'on' : ''}`}>
+                                    <span className={`settings-toggle-switch sm ${groupEnabled ? 'on' : ''}`} onClick={(e) => { e.stopPropagation(); toggleGroup(g.key); }}>
                                         <span className="settings-toggle-knob" />
                                     </span>
                                 </div>
-                                <div className="settings-group-items">
+                                {expandedGroups.has(g.key) && <div className="settings-group-items">
                                     {g.methods.map(m => {
                                         const enabled = local.enabledMethods.includes(m.id);
                                         const tr = getMethodTranslation(m.id, locale);
@@ -510,7 +520,7 @@ function SettingsModal({
                                             </div>
                                         );
                                     })}
-                                </div>
+                                </div>}
                             </div>
                         );
                     })}
