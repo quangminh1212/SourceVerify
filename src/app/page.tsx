@@ -106,7 +106,7 @@ export default function Home() {
         // User has customized which methods are enabled
         enabledMethods = analysisSettings.enabledMethods.flatMap(id => DISPLAY_TO_ANALYZER[id] || [id]);
       }
-      const r = await analyzeMedia(selectedFile, enabledMethods);
+      const r = await analyzeMedia(selectedFile, enabledMethods, analysisSettings?.customWeights);
       clearInterval(iv);
       setProgress(100);
       await new Promise(res => setTimeout(res, 500));

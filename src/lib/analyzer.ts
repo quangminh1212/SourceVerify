@@ -78,7 +78,7 @@ import {
 // MAIN ENTRY
 // ============================
 
-export async function analyzeMedia(file: File, enabledMethods?: string[]): Promise<AnalysisResult> {
+export async function analyzeMedia(file: File, enabledMethods?: string[], customWeights?: Record<string, number>): Promise<AnalysisResult> {
     const start = performance.now();
 
     // Security: validate file magic bytes match claimed MIME type
@@ -100,6 +100,17 @@ export async function analyzeMedia(file: File, enabledMethods?: string[]): Promi
         const result = await analyzeImageFile(file, enabledMethods);
         methods = result.methods;
         metadata = result.metadata;
+    }
+
+    // Apply custom weights if provided
+    if (customWeights && Object.keys(customWeights).length > 0) {
+        for (const method of methods) {
+            for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
+                if (method.nameKey === nameKey && customWeights[id] !== undefined) {
+                    method.weight = customWeights[id];
+                }
+            }
+        }
     }
 
     // Calculate weighted AI score with advanced verdict engine

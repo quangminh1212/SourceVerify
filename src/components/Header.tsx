@@ -30,6 +30,7 @@ interface GoogleUser {
 
 export interface AnalysisSettings {
     enabledMethods: string[];
+    customWeights?: Record<string, number>;
 }
 
 const DEFAULT_SETTINGS: AnalysisSettings = {
@@ -44,6 +45,7 @@ export function loadSettings(): AnalysisSettings {
         const parsed = JSON.parse(raw);
         return {
             enabledMethods: parsed.enabledMethods ?? DEFAULT_SETTINGS.enabledMethods,
+            customWeights: parsed.customWeights,
         };
     } catch { return DEFAULT_SETTINGS; }
 }
@@ -391,6 +393,7 @@ function SettingsModal({
 }) {
     const [local, setLocal] = useState<AnalysisSettings>(() => ({
         enabledMethods: [...settings.enabledMethods],
+        customWeights: settings.customWeights ? { ...settings.customWeights } : undefined,
     }));
 
     const toggleMethod = (id: string) => {
@@ -423,7 +426,20 @@ function SettingsModal({
     };
 
     const resetDefaults = () => {
-        setLocal({ enabledMethods: METHODS.map(m => m.id) });
+        setLocal({ enabledMethods: METHODS.map(m => m.id), customWeights: undefined });
+    };
+
+    const getWeight = (id: string): number => {
+        if (local.customWeights?.[id] !== undefined) return local.customWeights[id];
+        const m = METHODS.find(m => m.id === id);
+        return m ? m.weight : 1;
+    };
+
+    const setWeight = (id: string, val: number) => {
+        setLocal(prev => ({
+            ...prev,
+            customWeights: { ...(prev.customWeights || {}), [id]: Math.max(0, Math.min(10, val)) },
+        }));
     };
 
     const enabledCount = local.enabledMethods.length;
@@ -509,14 +525,25 @@ function SettingsModal({
                                             <div
                                                 key={m.id}
                                                 className={`settings-method-row ${enabled ? 'enabled' : 'disabled'}`}
-                                                onClick={() => toggleMethod(m.id)}
-                                                role="button" tabIndex={0}
-                                                onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMethod(m.id); } }}
                                             >
-                                                <span className="settings-method-name">{tr.name}</span>
-                                                <span className={`settings-toggle-switch sm ${enabled ? 'on' : ''}`}>
-                                                    <span className="settings-toggle-knob" />
-                                                </span>
+                                                <div className="settings-method-left" onClick={() => toggleMethod(m.id)} role="button" tabIndex={0}
+                                                    onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMethod(m.id); } }}>
+                                                    <span className="settings-method-name">{tr.name}</span>
+                                                </div>
+                                                <div className="settings-method-right">
+                                                    <input
+                                                        type="number"
+                                                        className="settings-weight-input"
+                                                        value={getWeight(m.id)}
+                                                        onChange={e => setWeight(m.id, parseFloat(e.target.value) || 0)}
+                                                        onClick={e => e.stopPropagation()}
+                                                        min={0} max={10} step={0.1}
+                                                        title={t('settings.weight')}
+                                                    />
+                                                    <span className={`settings-toggle-switch sm ${enabled ? 'on' : ''}`} onClick={() => toggleMethod(m.id)}>
+                                                        <span className="settings-toggle-knob" />
+                                                    </span>
+                                                </div>
                                             </div>
                                         );
                                     })}
