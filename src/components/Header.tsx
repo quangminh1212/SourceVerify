@@ -68,6 +68,7 @@ export default function Header() {
         const stored = localStorage.getItem("sv_theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const dark = stored ? stored === "dark" : prefersDark;
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
         setIsDark(dark);
         document.documentElement.classList.toggle("dark", dark);
         setSettings(loadSettings());
@@ -128,6 +129,7 @@ export default function Header() {
         // Restore user from localStorage
         const saved = localStorage.getItem("sv_user");
         if (saved) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
             try { setUser(JSON.parse(saved)); } catch { /* ignore */ }
         }
 
@@ -245,6 +247,7 @@ export default function Header() {
                                     aria-label="User menu"
                                 >
                                     {user.picture ? (
+                                        // eslint-disable-next-line @next/next/no-img-element
                                         <img src={user.picture} alt="" className="user-avatar-img" referrerPolicy="no-referrer" />
                                     ) : (
                                         <span className="user-avatar-fallback">{user.name?.[0] || "U"}</span>
@@ -310,6 +313,7 @@ export default function Header() {
                         {user ? (
                             <div className="mobile-user-section">
                                 <div className="mobile-user-info">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     {user.picture && <img src={user.picture} alt="" className="mobile-user-avatar" referrerPolicy="no-referrer" />}
                                     <span className="mobile-user-name">{user.name}</span>
                                 </div>

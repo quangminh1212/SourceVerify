@@ -67,6 +67,7 @@ export default function Home() {
     // Read selected method from localStorage
     const savedMethod = localStorage.getItem("sv_method");
     if (savedMethod && METHODS.some(m => m.id === savedMethod)) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
       setSelectedMethod(savedMethod);
     }
     // Load analysis settings

@@ -247,6 +247,7 @@ print(await response.stream.bytesToString());`,
                         {user ? (
                             <div className="api-user-card">
                                 <div className="api-user-info">
+                                    {/* eslint-disable-next-line @next/next/no-img-element */}
                                     {user.picture && <img src={user.picture} alt="" className="api-user-avatar" referrerPolicy="no-referrer" />}
                                     <div>
                                         <div className="api-user-name">{user.name}</div>

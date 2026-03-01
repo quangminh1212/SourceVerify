@@ -45,6 +45,7 @@ export default function ApiDocsPage() {
     useEffect(() => {
         const saved = localStorage.getItem("sv_user");
         if (saved) {
+            // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
             try { setUser(JSON.parse(saved)); } catch { /* ignore */ }
         }
 
