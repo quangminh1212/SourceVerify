@@ -182,6 +182,27 @@ import sift_forensics_en from "./sift_forensics/i18n/en.json";
 import sift_forensics_vi from "./sift_forensics/i18n/vi.json";
 import neural_compression_en from "./neural_compression/i18n/en.json";
 import neural_compression_vi from "./neural_compression/i18n/vi.json";
+// Metadata Analysis v10 (10)
+import exif_integrity_en from "./exif_integrity/i18n/en.json";
+import exif_integrity_vi from "./exif_integrity/i18n/vi.json";
+import xmp_provenance_en from "./xmp_provenance/i18n/en.json";
+import xmp_provenance_vi from "./xmp_provenance/i18n/vi.json";
+import iptc_verification_en from "./iptc_verification/i18n/en.json";
+import iptc_verification_vi from "./iptc_verification/i18n/vi.json";
+import gps_consistency_en from "./gps_consistency/i18n/en.json";
+import gps_consistency_vi from "./gps_consistency/i18n/vi.json";
+import timestamp_forensics_en from "./timestamp_forensics/i18n/en.json";
+import timestamp_forensics_vi from "./timestamp_forensics/i18n/vi.json";
+import file_structure_en from "./file_structure/i18n/en.json";
+import file_structure_vi from "./file_structure/i18n/vi.json";
+import color_profile_meta_en from "./color_profile_meta/i18n/en.json";
+import color_profile_meta_vi from "./color_profile_meta/i18n/vi.json";
+import c2pa_verification_en from "./c2pa_verification/i18n/en.json";
+import c2pa_verification_vi from "./c2pa_verification/i18n/vi.json";
+import resolution_consistency_en from "./resolution_consistency/i18n/en.json";
+import resolution_consistency_vi from "./resolution_consistency/i18n/vi.json";
+import software_fingerprint_en from "./software_fingerprint/i18n/en.json";
+import software_fingerprint_vi from "./software_fingerprint/i18n/vi.json";
 
 type MethodLocaleEntry = { name: string; description: string };
 
@@ -233,6 +254,12 @@ const en = buildMap([
     ["efficientnet_detection", efficientnet_detection_en], ["attention_consistency", attention_consistency_en],
     ["style_transfer", style_transfer_en], ["color_temperature", color_temperature_en],
     ["sift_forensics", sift_forensics_en], ["neural_compression", neural_compression_en],
+    // Metadata Analysis v10
+    ["exif_integrity", exif_integrity_en], ["xmp_provenance", xmp_provenance_en],
+    ["iptc_verification", iptc_verification_en], ["gps_consistency", gps_consistency_en],
+    ["timestamp_forensics", timestamp_forensics_en], ["file_structure", file_structure_en],
+    ["color_profile_meta", color_profile_meta_en], ["c2pa_verification", c2pa_verification_en],
+    ["resolution_consistency", resolution_consistency_en], ["software_fingerprint", software_fingerprint_en],
 ]);
 
 const vi = buildMap([
@@ -274,6 +301,12 @@ const vi = buildMap([
     ["efficientnet_detection", efficientnet_detection_vi], ["attention_consistency", attention_consistency_vi],
     ["style_transfer", style_transfer_vi], ["color_temperature", color_temperature_vi],
     ["sift_forensics", sift_forensics_vi], ["neural_compression", neural_compression_vi],
+    // Metadata Analysis v10
+    ["exif_integrity", exif_integrity_vi], ["xmp_provenance", xmp_provenance_vi],
+    ["iptc_verification", iptc_verification_vi], ["gps_consistency", gps_consistency_vi],
+    ["timestamp_forensics", timestamp_forensics_vi], ["file_structure", file_structure_vi],
+    ["color_profile_meta", color_profile_meta_vi], ["c2pa_verification", c2pa_verification_vi],
+    ["resolution_consistency", resolution_consistency_vi], ["software_fingerprint", software_fingerprint_vi],
 ]);
 
 const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi };

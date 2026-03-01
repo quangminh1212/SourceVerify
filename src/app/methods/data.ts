@@ -116,6 +116,17 @@ export const METHODS = [
     // Advanced Color
     { id: "color_gamut", category: "pixel" as Category, weight: 0.02 },
     { id: "white_balance", category: "pixel" as Category, weight: 0.02 },
+    // Metadata Analysis v10 (10)
+    { id: "exif_integrity", category: "metadata" as Category, weight: 0.02 },
+    { id: "xmp_provenance", category: "metadata" as Category, weight: 0.02 },
+    { id: "iptc_verification", category: "metadata" as Category, weight: 0.02 },
+    { id: "gps_consistency", category: "metadata" as Category, weight: 0.02 },
+    { id: "timestamp_forensics", category: "metadata" as Category, weight: 0.02 },
+    { id: "file_structure", category: "metadata" as Category, weight: 0.02 },
+    { id: "color_profile_meta", category: "metadata" as Category, weight: 0.02 },
+    { id: "c2pa_verification", category: "metadata" as Category, weight: 0.02 },
+    { id: "resolution_consistency", category: "metadata" as Category, weight: 0.02 },
+    { id: "software_fingerprint", category: "metadata" as Category, weight: 0.02 },
 ];
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [
