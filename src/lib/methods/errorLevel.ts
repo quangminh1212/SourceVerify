@@ -1,5 +1,5 @@
 ﻿import type { AnalysisMethod } from "../types";
-import { gray } from "./pixelUtils";
+
 
 /**
  * Signal 34: Error Level Analysis (ELA)

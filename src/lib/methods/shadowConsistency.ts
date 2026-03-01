@@ -39,7 +39,6 @@ export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: numbe
     const globalMean = blockBrightness.reduce((a, b) => a + b, 0) / blockBrightness.length;
     const darkThreshold = globalMean * 0.5;
     const darkBlocks = blockBrightness.filter(b => b < darkThreshold);
-    const brightBlocks = blockBrightness.filter(b => b >= darkThreshold);
 
     // Shadow coherence: dark blocks should be spatially clustered (not scattered)
     // Compare variance within dark vs bright regions

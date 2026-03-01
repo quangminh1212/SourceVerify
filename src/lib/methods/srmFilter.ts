@@ -18,7 +18,7 @@ export function analyzeSRMFilter(pixels: Uint8ClampedArray, w: number, h: number
     let score: number;
     // Spatial Rich Model filter response for steganalysis and manipulation detection
     // Apply edge and noise residual filters
-    let residualSum = 0, residualSum2 = 0, cnt = 0;
+    let residualSum = 0, cnt = 0;
     for (let y = 2; y < Math.min(h, 256) - 2; y += 2) {
         for (let x = 2; x < Math.min(w, 256) - 2; x += 2) {
             const idx = (y * w + x) * 4;
@@ -26,7 +26,7 @@ export function analyzeSRMFilter(pixels: Uint8ClampedArray, w: number, h: number
             const r = -pixels[(y - 2) * w * 4 + x * 4] + 3 * pixels[(y - 1) * w * 4 + x * 4]
                 - 3 * pixels[idx] + pixels[(y + 1) * w * 4 + x * 4];
             residualSum += Math.abs(r);
-            residualSum2 += r * r;
+
             cnt++;
         }
     }
