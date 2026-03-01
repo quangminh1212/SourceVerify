@@ -109,6 +109,46 @@ import copy_move_forensics_en from "./copy_move_forensics/i18n/en.json";
 import copy_move_forensics_vi from "./copy_move_forensics/i18n/vi.json";
 import double_jpeg_detection_en from "./double_jpeg_detection/i18n/en.json";
 import double_jpeg_detection_vi from "./double_jpeg_detection/i18n/vi.json";
+import median_filter_en from "./median_filter/i18n/en.json";
+import median_filter_vi from "./median_filter/i18n/vi.json";
+import resampling_en from "./resampling/i18n/en.json";
+import resampling_vi from "./resampling/i18n/vi.json";
+import contrast_enhancement_en from "./contrast_enhancement/i18n/en.json";
+import contrast_enhancement_vi from "./contrast_enhancement/i18n/vi.json";
+import brisque_en from "./brisque/i18n/en.json";
+import brisque_vi from "./brisque/i18n/vi.json";
+import demosaicing_en from "./demosaicing/i18n/en.json";
+import demosaicing_vi from "./demosaicing/i18n/vi.json";
+import steganalysis_en from "./steganalysis/i18n/en.json";
+import steganalysis_vi from "./steganalysis/i18n/vi.json";
+import thumbnail_analysis_en from "./thumbnail_analysis/i18n/en.json";
+import thumbnail_analysis_vi from "./thumbnail_analysis/i18n/vi.json";
+import perceptual_hash_en from "./perceptual_hash/i18n/en.json";
+import perceptual_hash_vi from "./perceptual_hash/i18n/vi.json";
+import illuminant_map_en from "./illuminant_map/i18n/en.json";
+import illuminant_map_vi from "./illuminant_map/i18n/vi.json";
+import radon_transform_en from "./radon_transform/i18n/en.json";
+import radon_transform_vi from "./radon_transform/i18n/vi.json";
+import zernike_moments_en from "./zernike_moments/i18n/en.json";
+import zernike_moments_vi from "./zernike_moments/i18n/vi.json";
+import camera_model_en from "./camera_model/i18n/en.json";
+import camera_model_vi from "./camera_model/i18n/vi.json";
+import image_phylogeny_en from "./image_phylogeny/i18n/en.json";
+import image_phylogeny_vi from "./image_phylogeny/i18n/vi.json";
+import blocking_artifact_en from "./blocking_artifact/i18n/en.json";
+import blocking_artifact_vi from "./blocking_artifact/i18n/vi.json";
+import efficientnet_detection_en from "./efficientnet_detection/i18n/en.json";
+import efficientnet_detection_vi from "./efficientnet_detection/i18n/vi.json";
+import attention_consistency_en from "./attention_consistency/i18n/en.json";
+import attention_consistency_vi from "./attention_consistency/i18n/vi.json";
+import style_transfer_en from "./style_transfer/i18n/en.json";
+import style_transfer_vi from "./style_transfer/i18n/vi.json";
+import color_temperature_en from "./color_temperature/i18n/en.json";
+import color_temperature_vi from "./color_temperature/i18n/vi.json";
+import sift_forensics_en from "./sift_forensics/i18n/en.json";
+import sift_forensics_vi from "./sift_forensics/i18n/vi.json";
+import neural_compression_en from "./neural_compression/i18n/en.json";
+import neural_compression_vi from "./neural_compression/i18n/vi.json";
 
 type MethodLocaleEntry = { name: string; description: string };
 
@@ -141,6 +181,16 @@ const en = buildMap([
     ["histogram_gradient", histogram_gradient_en], ["color_coherence", color_coherence_en],
     ["mutual_information", mutual_information_en], ["laplacian_edge", laplacian_edge_en],
     ["copy_move_forensics", copy_move_forensics_en], ["double_jpeg_detection", double_jpeg_detection_en],
+    ["median_filter", median_filter_en], ["resampling", resampling_en],
+    ["contrast_enhancement", contrast_enhancement_en], ["brisque", brisque_en],
+    ["demosaicing", demosaicing_en], ["steganalysis", steganalysis_en],
+    ["thumbnail_analysis", thumbnail_analysis_en], ["perceptual_hash", perceptual_hash_en],
+    ["illuminant_map", illuminant_map_en], ["radon_transform", radon_transform_en],
+    ["zernike_moments", zernike_moments_en], ["camera_model", camera_model_en],
+    ["image_phylogeny", image_phylogeny_en], ["blocking_artifact", blocking_artifact_en],
+    ["efficientnet_detection", efficientnet_detection_en], ["attention_consistency", attention_consistency_en],
+    ["style_transfer", style_transfer_en], ["color_temperature", color_temperature_en],
+    ["sift_forensics", sift_forensics_en], ["neural_compression", neural_compression_en],
 ]);
 
 const vi = buildMap([
@@ -163,6 +213,16 @@ const vi = buildMap([
     ["histogram_gradient", histogram_gradient_vi], ["color_coherence", color_coherence_vi],
     ["mutual_information", mutual_information_vi], ["laplacian_edge", laplacian_edge_vi],
     ["copy_move_forensics", copy_move_forensics_vi], ["double_jpeg_detection", double_jpeg_detection_vi],
+    ["median_filter", median_filter_vi], ["resampling", resampling_vi],
+    ["contrast_enhancement", contrast_enhancement_vi], ["brisque", brisque_vi],
+    ["demosaicing", demosaicing_vi], ["steganalysis", steganalysis_vi],
+    ["thumbnail_analysis", thumbnail_analysis_vi], ["perceptual_hash", perceptual_hash_vi],
+    ["illuminant_map", illuminant_map_vi], ["radon_transform", radon_transform_vi],
+    ["zernike_moments", zernike_moments_vi], ["camera_model", camera_model_vi],
+    ["image_phylogeny", image_phylogeny_vi], ["blocking_artifact", blocking_artifact_vi],
+    ["efficientnet_detection", efficientnet_detection_vi], ["attention_consistency", attention_consistency_vi],
+    ["style_transfer", style_transfer_vi], ["color_temperature", color_temperature_vi],
+    ["sift_forensics", sift_forensics_vi], ["neural_compression", neural_compression_vi],
 ]);
 
 const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi };

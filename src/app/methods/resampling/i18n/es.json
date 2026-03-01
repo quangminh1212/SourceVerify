@@ -1,0 +1,18 @@
+{
+    "name": "Resampling Detection",
+    "description": "Detects interpolation artifacts from image scaling, rotation, or skewing operations.",
+    "algorithm": "Periodic Correlation Detection in Resampled Signals",
+    "mechanism": "Analyzes periodic correlations introduced by resampling operations. When an image is scaled or rotated, interpolation creates detectable periodic patterns in pixel derivatives that can be revealed through spectral analysis.",
+    "parameters": "Analysis: EM algorithm, Radon transform projection, Derivative filter: [-1, 1], Spectrum: 64-point DFT",
+    "accuracy": "High — 85-95%",
+    "source": "Popescu, A.C. & Farid, H. (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
+    "useCase": "Detecting geometric transformations applied during image splicing or composition",
+    "references": [
+        {
+            "title": "Popescu, A.C. & Farid, H. (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
+            "url": ""
+        }
+    ],
+    "strengths": "• Highly accurate for detecting scaling/rotation\\n• Theoretically well-grounded\\n• Can estimate resampling factor\\n• Works on different interpolation methods",
+    "limitations": "• Requires large homogeneous regions\\n• May fail on heavily textured areas\\n• Computationally intensive EM fitting\\n• JPEG compression can mask traces"
+}

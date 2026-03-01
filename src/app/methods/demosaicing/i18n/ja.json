@@ -1,0 +1,18 @@
+{
+    "name": "Demosaicing Artifact Analysis",
+    "description": "Analyzes color filter array demosaicing artifacts to verify camera origin and detect synthetic images.",
+    "algorithm": "CFA Interpolation Pattern Consistency Check",
+    "mechanism": "Real camera images exhibit specific demosaicing patterns from Bayer CFA interpolation. This method analyzes inter-channel correlation patterns at pixel level to detect inconsistencies.",
+    "parameters": "CFA pattern: RGGB, Interpolation: bilinear/AHD/VNG, Correlation window: 5×5, Analysis: cross-channel",
+    "accuracy": "High — 83-93%",
+    "source": "Popescu, A.C. & Farid, H. (2005) — Exposing Digital Forgeries by Detecting Traces of Demosaicing, ACM IHMMSec",
+    "useCase": "Verifying camera sensor origin by checking CFA demosaicing traces in images",
+    "references": [
+        {
+            "title": "Popescu, A.C. & Farid, H. (2005) — Exposing Digital Forgeries by Detecting Traces of Demosaicing, ACM IHMMSec",
+            "url": ""
+        }
+    ],
+    "strengths": "• Strongly linked to physical sensor\\n• Difficult to forge convincingly\\n• Works across camera brands\\n• Detects both AI and spliced images",
+    "limitations": "• Not applicable to RAW images\\n• Some cameras use non-Bayer patterns\\n• Heavy post-processing may mask traces\\n• Requires sufficient spatial resolution"
+}

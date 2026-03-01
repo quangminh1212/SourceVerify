@@ -1,0 +1,18 @@
+{
+    "name": "Blocking Artifact Grid Analysis",
+    "description": "Analyzes JPEG block boundary artifacts to detect inconsistent compression grids indicating tampering.",
+    "algorithm": "Block Artifact Grid (BAG) Extraction and Consistency Analysis",
+    "mechanism": "JPEG compression creates an 8×8 block grid. When a region is spliced from a differently compressed source, the block grid alignment becomes inconsistent.",
+    "parameters": "Block size: 8×8, Grid detection: cross-boundary gradient, Alignment: phase analysis, Map: block visibility",
+    "accuracy": "High — 80-92%",
+    "source": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
+    "useCase": "Detecting spliced regions by finding JPEG compression grid inconsistencies",
+    "references": [
+        {
+            "title": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
+            "url": ""
+        }
+    ],
+    "strengths": "• Directly linked to JPEG compression\\n• Can localize tampered regions\\n• Well-understood theoretical basis\\n• Effective on single-compressed images",
+    "limitations": "• Only works on JPEG images\\n• Double compression can mask artifacts\\n• Requires sufficient image quality\\n• May miss small tampered regions"
+}
