@@ -55,7 +55,6 @@ export const METHODS = [
     { id: "double_jpeg", category: "statistical" as Category, weight: 0.03 },
     { id: "patchforensics", category: "sensor" as Category, weight: 0.04 },
     { id: "clip_detection", category: "sensor" as Category, weight: 0.04 },
-    { id: "binary_pattern", category: "pixel" as Category, weight: 0.03 },
     { id: "fourier_ring", category: "frequency" as Category, weight: 0.03 },
     { id: "resnet_classifier", category: "sensor" as Category, weight: 0.04 },
     { id: "vit_detection", category: "sensor" as Category, weight: 0.04 },

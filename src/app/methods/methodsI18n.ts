@@ -73,8 +73,6 @@ import patchforensics_en from "./patchforensics/i18n/en.json";
 import patchforensics_vi from "./patchforensics/i18n/vi.json";
 import clip_detection_en from "./clip_detection/i18n/en.json";
 import clip_detection_vi from "./clip_detection/i18n/vi.json";
-import binary_pattern_en from "./binary_pattern/i18n/en.json";
-import binary_pattern_vi from "./binary_pattern/i18n/vi.json";
 import fourier_ring_en from "./fourier_ring/i18n/en.json";
 import fourier_ring_vi from "./fourier_ring/i18n/vi.json";
 import resnet_classifier_en from "./resnet_classifier/i18n/en.json";
@@ -207,7 +205,7 @@ const en = buildMap([
     ["upscaling", upscaling_en], ["frequency_band", frequency_band_en], ["face_landmark", face_landmark_en],
     ["lighting", lighting_en], ["shadow", shadow_en], ["perspective", perspective_en],
     ["reflection", reflection_en], ["double_jpeg", double_jpeg_en], ["patchforensics", patchforensics_en],
-    ["clip_detection", clip_detection_en], ["binary_pattern", binary_pattern_en],
+    ["clip_detection", clip_detection_en],
     ["fourier_ring", fourier_ring_en], ["resnet_classifier", resnet_classifier_en],
     ["vit_detection", vit_detection_en], ["gram_matrix", gram_matrix_en], ["srm_filter", srm_filter_en],
     ["autocorrelation", autocorrelation_en], ["pixel_cooccurrence", pixel_cooccurrence_en],
@@ -248,7 +246,7 @@ const vi = buildMap([
     ["upscaling", upscaling_vi], ["frequency_band", frequency_band_vi], ["face_landmark", face_landmark_vi],
     ["lighting", lighting_vi], ["shadow", shadow_vi], ["perspective", perspective_vi],
     ["reflection", reflection_vi], ["double_jpeg", double_jpeg_vi], ["patchforensics", patchforensics_vi],
-    ["clip_detection", clip_detection_vi], ["binary_pattern", binary_pattern_vi],
+    ["clip_detection", clip_detection_vi],
     ["fourier_ring", fourier_ring_vi], ["resnet_classifier", resnet_classifier_vi],
     ["vit_detection", vit_detection_vi], ["gram_matrix", gram_matrix_vi], ["srm_filter", srm_filter_vi],
     ["autocorrelation", autocorrelation_vi], ["pixel_cooccurrence", pixel_cooccurrence_vi],
