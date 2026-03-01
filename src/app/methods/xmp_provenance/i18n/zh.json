@@ -1,12 +1,12 @@
 {
     "name": "XMP来源分析",
-    "description": "分析XMP编辑历史、软件链和来源元数据，以检测AI生成工具。",
+    "description": "Analyzes XMP edit history, software chain, and provenance metadata to detect AI generation tools. Examines CreatorTool, History entries, and software agent signatures for comprehensive origin tracking.",
     "algorithm": "XMP来源链分析器",
-    "mechanism": "执行深层元数据检查：\n\n1. **CreatorTool分析**: 检查AI工具签名与合法照片编辑器。\n\n2. **编辑历史链**: 解析xmpMM:History重建完整编辑链。\n\n3. **软件代理指纹**: 分析stEvt:softwareAgent识别所有软件。\n\n4. **资源引用追踪**: 检查xmpMM:DerivedFrom和DocumentID。\n\n5. **AI标记检测**: 搜索显式AI生成标记。",
-    "parameters": "AI工具: Stable Diffusion, DALL-E, Midjourney, ComfyUI等\n编辑器: Photoshop, Lightroom, Capture One, GIMP\nXMP字段: CreatorTool, xmpMM:History, stEvt:softwareAgent",
-    "accuracy": "非常高 - XMP数据中存在AI签名时准确率90%以上。",
+    "mechanism": "The XMP provenance analysis performs deep metadata inspection:\n\n1. **CreatorTool Analysis**: Examines the XMP CreatorTool field for AI tool signatures (Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI) vs legitimate photo editors (Adobe Photoshop, Lightroom, Capture One, Affinity Photo).\n\n2. **Edit History Chain**: Parses xmpMM:History entries to reconstruct the complete edit chain from creation to final save. AI-generated images typically have no history or a single 'created' action.\n\n3. **Software Agent Fingerprinting**: Analyzes stEvt:softwareAgent entries to identify all software that touched the image. Real photos show a chain of camera firmware → RAW processor → editor.\n\n4. **Resource Reference Tracking**: Examines xmpMM:DerivedFrom and xmpMM:DocumentID to trace image lineage — whether it's an original or derivative work.\n\n5. **AI Marker Detection**: Searches for explicit AI generation markers that some tools embed, including custom XMP namespaces used by generative AI platforms.",
+    "parameters": "AI tool markers: Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI, Leonardo.AI, Firefly, etc.\nPhoto editors: Adobe Photoshop, Lightroom, Capture One, DxO, Affinity Photo, GIMP\nXMP fields: CreatorTool, xmpMM:History, stEvt:softwareAgent, xmpMM:DerivedFrom, xmpMM:DocumentID\nHistory actions: created, saved, converted, derived",
+    "accuracy": "Very High - 90%+ when AI tool signatures are present in XMP data. Lower when XMP has been stripped.",
     "source": "Adobe XMP Specification (ISO 16684), Dublin Core",
-    "useCase": "保留XMP元数据的图像的全面来源验证。",
+    "useCase": "Comprehensive provenance verification for images that retain XMP metadata. Essential for authenticating images in professional workflows where edit history integrity matters — journalism, stock photography, legal evidence.",
     "strengths": "• 编辑历史链提供完整来源\n• 软件代理指纹揭示完整处理管道\n• CreatorTool中的AI签名高度可靠\n• 资源引用实现世系追踪\n• 行业标准元数据",
     "limitations": "• 社交媒体和消息应用可能删除XMP\n• AI工具可能不嵌入XMP\n• 编辑历史可以手动伪造\n• 消费相机通常不写XMP\n• 复杂编辑历史可能无法得出结论",
     "references": [

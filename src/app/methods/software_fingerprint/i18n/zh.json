@@ -1,12 +1,12 @@
 {
     "name": "软件指纹分析",
-    "description": "深入分析软件签名、版本模式和编码指纹，以识别特定的AI生成工具。",
+    "description": "Deep analysis of software signatures, version patterns, and encoding fingerprints to identify specific AI generation tools, camera manufacturers, and image processing pipelines.",
     "algorithm": "多数据库软件签名匹配器",
-    "mechanism": "在三个检测层上运作：\n\n1. **AI工具签名匹配**: 与25+AI工具签名进行比对。\n\n2. **相机制造商识别**: 将Make/Model/Software与制造商数据库交叉引用。\n\n3. **编码库检测**: 识别libjpeg、Pillow、OpenCV等。\n\n4. **版本模式分析**: 验证软件版本字符串与已知模式。",
-    "parameters": "AI工具: 25+签名\n相机品牌: Canon, Nikon, Sony等\n编码库: libjpeg, Pillow, OpenCV, ImageMagick",
-    "accuracy": "非常高 - 签名存在时90-95%。",
+    "mechanism": "The software fingerprint analysis operates on three detection layers:\n\n1. **AI Tool Signature Matching**: Matches metadata values against a comprehensive database of 25+ AI tool signatures including Stable Diffusion (A1111, ComfyUI, InvokeAI), DALL-E, Midjourney, Leonardo.AI, and others. Checks CreatorTool, Software, ProcessingSoftware fields.\n\n2. **Camera Manufacturer Identification**: Cross-references Make/Model/Software fields against known camera manufacturer databases (Canon, Nikon, Sony, Fujifilm, Panasonic, Olympus, Apple, Samsung, Google Pixel).\n\n3. **Encoding Library Detection**: Identifies the image encoding library from JPEG/PNG headers and metadata (libjpeg, MozJPEG, Pillow/PIL, OpenCV, ImageMagick). AI tools typically use Python-based libraries (Pillow, OpenCV) while cameras use proprietary encoders.\n\n4. **Version Pattern Analysis**: Validates software version strings against known patterns to detect fabricated metadata.",
+    "parameters": "AI tools: 25+ signatures (Stable Diffusion, DALL-E 2/3, Midjourney v5/v6, ComfyUI, InvokeAI, Leonardo.AI, Firefly, Bing Image Creator, etc.)\nCamera brands: Canon, Nikon, Sony, Fujifilm, Panasonic, Apple, Samsung, Google\nEncoding libraries: libjpeg, MozJPEG, Pillow, OpenCV, ImageMagick, libpng\nChecked fields: CreatorTool, Software, ProcessingSoftware, Make, Model",
+    "accuracy": "Very High - 90-95% when software signatures are present in metadata. Accuracy depends on metadata not being stripped.",
     "source": "Stable Diffusion GitHub, OpenAI API, Midjourney Docs",
-    "useCase": "确定图像由哪个工具创建的主要识别方法。",
+    "useCase": "Primary identification method for determining exactly which tool created an image. Critical for content moderation platforms, journalism fact-checking, and forensic investigations where knowing the specific AI tool is important.",
     "strengths": "• 可识别使用的确切AI工具和版本\n• 签名存在时准确率极高\n• 相机制造商识别验证真实照片\n• 编码库检测\n• 持续更新的签名数据库",
     "limitations": "• 元数据可被轻松删除\n• 社交媒体删除软件元数据\n• 某些AI故意模仿相机元数据\n• 新AI工具可能不在数据库中\n• 元数据删除后无法检测AI",
     "references": [

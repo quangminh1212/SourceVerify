@@ -1,12 +1,12 @@
 {
     "name": "タイムスタンプフォレンジック",
-    "description": "作成、変更、デジタル化のタイムスタンプを相互参照して、AI生成や改ざんを示す時間的異常を検出します。",
+    "description": "Cross-references creation, modification, and digitized timestamps to detect temporal anomalies indicating AI generation or tampering. Validates timestamp consistency across multiple EXIF fields.",
     "algorithm": "マルチタイムスタンプ相互参照アナライザー",
-    "mechanism": "包括的な時間的検証を実行：\n\n1. **マルチフィールド収集**: すべてのタイムスタンプフィールドを収集。\n\n2. **時間的整合性分析**: 論理的順序を検証。\n\n3. **異常検出**: 未来の日付、エポックタイムスタンプ、デフォルト値を識別。\n\n4. **タイムスパン分析**: 撮影イベント間の間隔を測定。\n\n5. **サブ秒精度**: サブ秒タイミングデータを確認。",
-    "parameters": "フィールド: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, GPSDateTime\nフォーマット: EXIF, ISO 8601\n期待される順序: Original ≤ Digitized ≤ Modified",
-    "accuracy": "中高 - 75-85%。",
+    "mechanism": "The timestamp forensics analysis performs comprehensive temporal validation:\n\n1. **Multi-field Collection**: Gathers all available timestamp fields — DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal — providing a complete temporal picture.\n\n2. **Temporal Consistency Analysis**: Validates logical ordering — DateTimeOriginal ≤ DateTimeDigitized ≤ ModifyDate. Violations indicate metadata manipulation.\n\n3. **Anomaly Detection**: Identifies future dates, epoch timestamps (1970-01-01), default values (0000:00:00), timezone inconsistencies, and suspiciously round timestamps (exactly on the hour).\n\n4. **Time Span Analysis**: Measures intervals between capture events. Camera bursts show millisecond intervals, while fabricated timestamps show unusual gaps or identical values.\n\n5. **SubSecond Precision**: Checks for sub-second timing data (SubSecTimeOriginal), which is present in modern cameras but absent in most AI-generated images.",
+    "parameters": "Timestamp fields: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal\nFormats: EXIF (YYYY:MM:DD HH:MM:SS), ISO 8601\nAnomaly patterns: epoch date, future date, identical timestamps, missing subsecond data\nExpected ordering: Original ≤ Digitized ≤ Modified",
+    "accuracy": "Medium-High - 75-85%. Effective when multiple timestamps are present. Less reliable when only one timestamp exists.",
     "source": "JEITA CP-3451C (Exif 2.32), ISO 8601",
-    "useCase": "フォレンジックパイプラインでの時間的整合性検証。",
+    "useCase": "Temporal integrity verification in forensic pipelines. Detects timestamp manipulation in both AI-generated and manually tampered images. Essential for establishing image chronology in legal contexts.",
     "strengths": "• マルチフィールド相互参照で不整合を検出\n• サブ秒データは強力なカメラ真正性指標\n• AI生成と手動改ざんの両方を検出\n• 時間的順序検証は非常に信頼性が高い\n• GPSタイムスタンプとの併用で追加検証",
     "limitations": "• カメラ時計がユーザーにより誤設定される場合\n• 単一タイムスタンプのフォレンジック価値は限定的\n• AIツールのタイムスタンプ生成が改善中\n• タイムゾーン処理がデバイスにより異なる\n• バッチ処理で同一タイムスタンプの可能性",
     "references": [

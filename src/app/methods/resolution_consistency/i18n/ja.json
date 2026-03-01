@@ -1,12 +1,12 @@
 {
     "name": "解像度整合性",
-    "description": "DPI/解像度メタデータと実際のピクセル寸法を分析し、AIモデル固有の出力サイズを確認します。",
+    "description": "Analyzes DPI/resolution metadata vs actual pixel dimensions, checks for AI model-specific output sizes, and validates EXIF image size declarations against actual dimensions.",
     "algorithm": "解像度パターンアナライザー",
-    "mechanism": "解像度整合性分析は複数のシグナルを検査します：\n\n1. **AIモデル解像度マッチング**: 既知のAIモデル出力と寸法を照合。\n\n2. **VAE潜在空間検出**: 寸法が64の倍数かを確認。\n\n3. **DPIメタデータ検証**: 宣言されたDPIと実際の寸法を照合。\n\n4. **EXIF寸法クロスチェック**: EXIF宣言寸法と実際を比較。\n\n5. **メガピクセル分析**: 総ピクセル数をカメラセンサーと比較。",
-    "parameters": "AI解像度: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024²)\nDPI: 72 (web), 96 (screen), 300 (print)\nVAE: 64の倍数",
-    "accuracy": "中程度 - 70-80%。リサイズされていないAI出力に最も効果的。",
+    "mechanism": "The resolution consistency analysis examines multiple signals:\n\n1. **AI Model Resolution Matching**: Checks image dimensions against known AI model outputs (Stable Diffusion: 512², 768², 1024²; DALL-E 3: 1024×1024, 1792×1024; Midjourney: various).\n\n2. **VAE Latent Space Detection**: Validates if dimensions are multiples of 64 (8× downsampled VAE latent space), which is characteristic of diffusion models.\n\n3. **DPI Metadata Validation**: Cross-checks declared DPI (72 web, 96 screen, 240/300 print) against actual pixel dimensions. Inconsistencies suggest post-processing.\n\n4. **EXIF Dimension Cross-check**: Compares ExifImageWidth/ExifImageHeight with actual decoded image dimensions to detect resizing.\n\n5. **Megapixel Analysis**: Compares total pixel count against typical camera sensor outputs vs AI model capabilities.",
+    "parameters": "AI model resolutions: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024², 1792×1024), Flux (1024²)\nDPI standards: 72 (web), 96 (screen), 240/300 (print)\nVAE alignment: multiples of 64\nCamera megapixels: 12-108 MP typical",
+    "accuracy": "Medium - 70-80%. Most effective for unresized AI outputs. Accuracy decreases significantly when images are resized or cropped.",
     "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
-    "useCase": "寸法分析に基づくAI検出クイックスクリーニング。",
+    "useCase": "Quick AI detection screening based on dimensional analysis. Particularly effective for batch processing where images haven't been resized from their original AI-generated dimensions.",
     "strengths": "• ピクセル処理不要の高速寸法分析\n• VAE整列チェックは拡散モデルに高度に特異的\n• DPI不整合が後処理を明らかに\n• 微妙なリサイズを検出\n• 特定のAIモデル出力を識別",
     "limitations": "• リサイズやクロップで容易に回避\n• カメラ解像度がAI出力と重複\n• SNSが画像を自動リサイズ\n• アップスケーラーが寸法を変更\n• DPIが不正確または欠落",
     "references": [

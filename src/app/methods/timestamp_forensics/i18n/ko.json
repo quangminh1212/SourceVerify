@@ -1,12 +1,12 @@
 {
     "name": "타임스탬프 포렌식",
-    "description": "생성, 수정, 디지타이즈 타임스탬프를 교차 참조하여 AI 생성이나 변조를 나타내는 시간적 이상을 감지합니다.",
+    "description": "Cross-references creation, modification, and digitized timestamps to detect temporal anomalies indicating AI generation or tampering. Validates timestamp consistency across multiple EXIF fields.",
     "algorithm": "다중 타임스탬프 교차 참조 분석기",
-    "mechanism": "포괄적 시간 검증 수행:\n\n1. **다중 필드 수집**: 모든 타임스탬프 필드 수집.\n\n2. **시간 일관성 분석**: 논리적 순서 검증.\n\n3. **이상 감지**: 미래 날짜, 에포크 타임스탬프, 기본값 식별.\n\n4. **시간 간격 분석**: 촬영 이벤트 간 간격 측정.\n\n5. **서브초 정밀도**: 서브초 타이밍 데이터 확인.",
-    "parameters": "필드: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, GPSDateTime\n형식: EXIF, ISO 8601\n예상 순서: Original ≤ Digitized ≤ Modified",
-    "accuracy": "중상 - 75-85%.",
+    "mechanism": "The timestamp forensics analysis performs comprehensive temporal validation:\n\n1. **Multi-field Collection**: Gathers all available timestamp fields — DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal — providing a complete temporal picture.\n\n2. **Temporal Consistency Analysis**: Validates logical ordering — DateTimeOriginal ≤ DateTimeDigitized ≤ ModifyDate. Violations indicate metadata manipulation.\n\n3. **Anomaly Detection**: Identifies future dates, epoch timestamps (1970-01-01), default values (0000:00:00), timezone inconsistencies, and suspiciously round timestamps (exactly on the hour).\n\n4. **Time Span Analysis**: Measures intervals between capture events. Camera bursts show millisecond intervals, while fabricated timestamps show unusual gaps or identical values.\n\n5. **SubSecond Precision**: Checks for sub-second timing data (SubSecTimeOriginal), which is present in modern cameras but absent in most AI-generated images.",
+    "parameters": "Timestamp fields: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal\nFormats: EXIF (YYYY:MM:DD HH:MM:SS), ISO 8601\nAnomaly patterns: epoch date, future date, identical timestamps, missing subsecond data\nExpected ordering: Original ≤ Digitized ≤ Modified",
+    "accuracy": "Medium-High - 75-85%. Effective when multiple timestamps are present. Less reliable when only one timestamp exists.",
     "source": "JEITA CP-3451C (Exif 2.32), ISO 8601",
-    "useCase": "포렌식 파이프라인에서의 시간 무결성 검증.",
+    "useCase": "Temporal integrity verification in forensic pipelines. Detects timestamp manipulation in both AI-generated and manually tampered images. Essential for establishing image chronology in legal contexts.",
     "strengths": "• 다중 필드 교차 참조로 불일치 감지\n• 서브초 데이터는 강력한 카메라 진위 지표\n• AI 생성과 수동 변조 모두 감지\n• 시간 순서 검증의 높은 신뢰성\n• GPS 타임스탬프와 함께 추가 검증",
     "limitations": "• 카메라 시계가 잘못 설정될 수 있음\n• 단일 타임스탬프의 제한적 포렌식 가치\n• AI 도구의 타임스탬프 생성 능력 향상\n• 타임존 처리가 기기마다 다름\n• 배치 처리 시 동일 타임스탬프 가능",
     "references": [

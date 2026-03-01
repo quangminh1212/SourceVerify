@@ -1,12 +1,12 @@
 {
     "name": "EXIF整合性検証",
-    "description": "必須カメラフィールド、フィールドの一貫性、バージョン準拠、メタデータの完全性をチェックしてEXIFデータ構造の整合性を検証します。",
+    "description": "Validates EXIF data structure integrity by checking mandatory camera fields, field consistency, version compliance, and metadata completeness. Detects anomalies in EXIF data that indicate AI generation or post-processing tampering.",
     "algorithm": "マルチフィールドEXIF構造バリデーター",
-    "mechanism": "EXIF整合性バリデーターは以下を検査します：\n\n1. **必須フィールドの存在**: 重要なカメラEXIFフィールド（Make、Model、ExifVersion、DateTimeOriginal等）を確認。\n\n2. **フィールド値の一貫性**: 関連フィールドを相互検証。\n\n3. **構造の完全性**: 必須フィールドの存在比率に基づく整合性比率を計算。\n\n4. **バージョン準拠**: ExifVersionをJEITA標準（0220-0232）に対して検証。",
+    "mechanism": "The EXIF integrity validator examines:\n\n1. **Mandatory Field Presence**: Checks for essential camera EXIF fields (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Genuine camera images contain most of these fields.\n\n2. **Field Value Consistency**: Cross-validates related fields — e.g., DateTimeOriginal should precede DateTimeDigitized; ExifVersion should match known standards.\n\n3. **Structure Completeness**: Calculates an integrity ratio based on how many mandatory fields are present vs expected. High ratio indicates authentic camera capture.\n\n4. **Version Compliance**: Validates ExifVersion against known JEITA standards (0220-0232).",
     "parameters": "必須カメラフィールド: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\nEXIFバージョン: 0220, 0221, 0230, 0231, 0232",
-    "accuracy": "高 - EXIFデータが無傷の画像で80-90%の精度。",
+    "accuracy": "High - 80-90% accuracy for images with intact EXIF data. Less effective when metadata has been stripped.",
     "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP)",
-    "useCase": "二次メタデータ検証：初回メタデータスキャン後にEXIF構造の整合性を確認し、微妙な改ざんや偽造を特定。",
+    "useCase": "Second-pass metadata validation: verifies EXIF structural integrity after initial metadata scan to identify subtle tampering or fabrication. Essential for forensic workflows requiring comprehensive metadata authentication.",
     "strengths": "• 包括的なマルチフィールド検証でAIの不整合を検出\n• 関連フィールド間の相互検証で高い信頼性\n• すべてのJPEG/TIFFフォーマットに対応\n• 低い計算コスト — 即時結果\n• AI生成とメタデータ偽造の両方を検出",
     "limitations": "• EXIFが完全に削除されると結果なし（不確定）\n• 一部アプリはプライバシーのためEXIFを意図的に削除\n• AIツールのEXIF生成が改善中\n• SNSプラットフォームが大部分のEXIFを削除\n• 手動作成されたEXIFを検証できない",
     "references": [

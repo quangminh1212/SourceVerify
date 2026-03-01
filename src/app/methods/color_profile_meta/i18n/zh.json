@@ -1,12 +1,12 @@
 {
     "name": "颜色配置文件元数据",
-    "description": "分析ICC颜色配置文件数据、色彩空间声明、位深度和渲染意图元数据，以检测AI生成模式。",
+    "description": "Analyzes ICC color profile data, color space declarations, bit depth, and rendering intent metadata to detect AI generation patterns. Professional cameras embed complex color profiles, while AI tools typically output basic sRGB.",
     "algorithm": "ICC/色彩空间元数据分析器",
-    "mechanism": "颜色配置文件分析检查多个元数据层：\n\n1. **ICC配置文件检测**: 识别嵌入的ICC配置文件类型。专业相机使用Adobe RGB或ProPhoto RGB，AI图像使用基本sRGB。\n\n2. **位深度分析**: RAW文件使用12/14/16位，AI输出始终为每通道8位。\n\n3. **色彩空间一致性**: 交叉验证EXIF、ICC和XMP之间的色彩空间声明。\n\n4. **渲染意图检查**: 专业工作流保留渲染意图，AI工具很少正确设置。",
-    "parameters": "相机配置文件: Adobe RGB, ProPhoto RGB, Display P3\nAI典型: sRGB IEC61966-2.1\n位深度: 8-bit (标准/AI), 12/14/16-bit (专业RAW)",
-    "accuracy": "中等 - 70-80%。当存在高级颜色配置文件时指示性强。",
+    "mechanism": "The color profile analysis examines multiple metadata layers:\n\n1. **ICC Profile Detection**: Identifies the embedded ICC color profile type. Professional cameras use Adobe RGB, ProPhoto RGB, or Display P3 profiles, while AI-generated images almost universally use basic sRGB IEC61966-2.1.\n\n2. **Bit Depth Analysis**: Checks color depth metadata. RAW files from cameras use 12-bit, 14-bit, or 16-bit color depth. AI outputs are invariably 8-bit per channel.\n\n3. **Color Space Consistency**: Cross-validates color space declarations across EXIF, ICC, and XMP metadata. Inconsistencies suggest metadata fabrication.\n\n4. **Rendering Intent Check**: Professional workflows preserve rendering intent (perceptual, relative colorimetric). AI tools rarely set this metadata correctly.",
+    "parameters": "Camera profiles: Adobe RGB, ProPhoto RGB, Display P3, DCI-P3\nAI-typical: sRGB IEC61966-2.1\nBit depths: 8-bit (standard/AI), 12/14/16-bit (professional RAW)\nRendering intents: perceptual, relative colorimetric, saturation, absolute colorimetric",
+    "accuracy": "Medium - 70-80%. Strong indicator when advanced color profiles (Adobe RGB, ProPhoto) are present. Less reliable for consumer cameras that default to sRGB.",
     "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
-    "useCase": "元数据分析管道中的辅助证据。特别适用于区分专业摄影和AI生成内容。",
+    "useCase": "Supporting evidence in metadata analysis pipeline. Particularly useful for identifying professional photography (which uses wide-gamut profiles) vs AI-generated content (which uses sRGB). Effective as part of a multi-signal approach.",
     "strengths": "• 专业颜色配置文件非常难以被AI工具复制\n• 位深度分析可明确区分相机与AI\n• 低误报率\n• 快速、无损分析\n• 有助于识别RAW来源的图像",
     "limitations": "• 许多消费级相机也默认使用sRGB\n• AI工具理论上可以嵌入自定义ICC配置文件\n• JPEG转换会丢失配置文件信息\n• 社交媒体平台经常删除ICC配置文件\n• 无法区分sRGB相机和AI输出",
     "references": [

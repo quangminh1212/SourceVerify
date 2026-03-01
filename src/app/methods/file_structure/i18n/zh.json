@@ -1,12 +1,12 @@
 {
     "name": "文件结构分析",
-    "description": "分析文件命名模式、分辨率特征、宽高比和字节/像素比率，基于文件级特征检测AI生成图像。",
+    "description": "Analyzes file naming patterns, resolution characteristics, aspect ratios, and bytes-per-pixel ratios to detect AI-generated images based on file-level characteristics. AI tools produce files with distinctive structural signatures.",
     "algorithm": "文件级模式匹配器",
-    "mechanism": "文件结构分析执行多维模式匹配：\n\n1. **文件命名规则分析**: 检查AI典型模式（UUID、哈希名、`txt2img_xxx`）与相机模式（DSC_xxxx、IMG_xxxx）。\n\n2. **分辨率指纹**: 与已知AI模型输出尺寸（512²、768²、1024²）匹配，检查64的倍数。\n\n3. **宽高比分析**: 与标准相机传感器比率（3:2、4:3）和AI典型比率（1:1）比较。\n\n4. **字节/像素比**: 计算文件大小与像素数的比率。\n\n5. **扩展名一致性**: 验证文件扩展名与格式头部匹配。",
+    "mechanism": "The file structure analysis performs multi-dimensional pattern matching:\n\n1. **File Naming Convention Analysis**: Examines filenames for AI-typical patterns (UUID strings, hash-based names like `image_00001.png`, `txt2img_xxx`, `comfyui_xxx`) vs camera-typical patterns (DSC_xxxx, IMG_xxxx, P1000xxx, DSCN_xxxx).\n\n2. **Resolution Fingerprinting**: Matches image dimensions against known AI model output sizes (512×512, 768×768, 1024×1024, 2048×2048) and checks for multiples of 64 (VAE latent space alignment).\n\n3. **Aspect Ratio Analysis**: Compares aspect ratios against standard camera sensor ratios (3:2, 4:3, 16:9) vs AI-typical ratios (1:1 square outputs).\n\n4. **Bytes-per-Pixel Ratio**: Calculates file size relative to pixel count. AI-generated images often have different compression characteristics than camera captures.\n\n5. **File Extension Consistency**: Validates that file extension matches actual format headers (magic bytes).",
     "parameters": "AI分辨率: 512², 768², 1024², 2048²\nVAE对齐: 64的倍数\nAI模式: UUID, hash, image_N, txt2img, comfyui\n相机模式: DSC, IMG, P, DSCN, GOPR, DJI",
-    "accuracy": "中等 - 70-80%。与其他元数据信号结合时最有效。",
+    "accuracy": "Medium - 70-80%. Most effective combined with other metadata signals. High accuracy for unmodified AI outputs with original filenames.",
     "source": "Stable Diffusion, DALL-E, Midjourney输出格式分析",
-    "useCase": "AI检测工作流的首次分类。在深入像素分析之前快速识别明显的AI内容。",
+    "useCase": "First-pass triage in AI detection workflows. Quickly identifies obvious AI-generated content based on file-level metadata before deeper pixel analysis. Useful for batch processing large image collections.",
     "strengths": "• 极快——仅操作文件元数据\n• 检测常见AI工具输出\n• 分辨率指纹对AI模型高度特异\n• 64倍数检查检测基于VAE的生成器\n• 即使没有EXIF数据也能工作",
     "limitations": "• 通过重命名或调整大小轻松绕过\n• 许多合法图像使用1:1比率\n• 消费相机分辨率与AI输出重叠\n• 无法检测后处理的AI图像\n• 模式随新工具出现而演变",
     "references": [

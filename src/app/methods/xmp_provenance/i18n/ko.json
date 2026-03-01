@@ -1,12 +1,12 @@
 {
     "name": "XMP 출처 분석",
-    "description": "XMP 편집 이력, 소프트웨어 체인, 출처 메타데이터를 분석하여 AI 생성 도구를 감지합니다.",
+    "description": "Analyzes XMP edit history, software chain, and provenance metadata to detect AI generation tools. Examines CreatorTool, History entries, and software agent signatures for comprehensive origin tracking.",
     "algorithm": "XMP 출처 체인 분석기",
-    "mechanism": "심층 메타데이터 검사 수행:\n\n1. **CreatorTool 분석**: AI 도구 서명 vs 정품 사진 편집기 확인.\n\n2. **편집 이력 체인**: xmpMM:History 파싱으로 완전한 편집 체인 재구성.\n\n3. **소프트웨어 에이전트 핑거프린팅**: stEvt:softwareAgent로 모든 소프트웨어 식별.\n\n4. **리소스 참조 추적**: xmpMM:DerivedFrom과 DocumentID 검사.\n\n5. **AI 마커 감지**: 명시적 AI 생성 마커 검색.",
-    "parameters": "AI 도구: Stable Diffusion, DALL-E, Midjourney, ComfyUI 등\n편집기: Photoshop, Lightroom, Capture One, GIMP\nXMP 필드: CreatorTool, xmpMM:History, stEvt:softwareAgent",
-    "accuracy": "매우 높음 - XMP 데이터에 AI 서명이 있을 때 90% 이상.",
+    "mechanism": "The XMP provenance analysis performs deep metadata inspection:\n\n1. **CreatorTool Analysis**: Examines the XMP CreatorTool field for AI tool signatures (Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI) vs legitimate photo editors (Adobe Photoshop, Lightroom, Capture One, Affinity Photo).\n\n2. **Edit History Chain**: Parses xmpMM:History entries to reconstruct the complete edit chain from creation to final save. AI-generated images typically have no history or a single 'created' action.\n\n3. **Software Agent Fingerprinting**: Analyzes stEvt:softwareAgent entries to identify all software that touched the image. Real photos show a chain of camera firmware → RAW processor → editor.\n\n4. **Resource Reference Tracking**: Examines xmpMM:DerivedFrom and xmpMM:DocumentID to trace image lineage — whether it's an original or derivative work.\n\n5. **AI Marker Detection**: Searches for explicit AI generation markers that some tools embed, including custom XMP namespaces used by generative AI platforms.",
+    "parameters": "AI tool markers: Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI, Leonardo.AI, Firefly, etc.\nPhoto editors: Adobe Photoshop, Lightroom, Capture One, DxO, Affinity Photo, GIMP\nXMP fields: CreatorTool, xmpMM:History, stEvt:softwareAgent, xmpMM:DerivedFrom, xmpMM:DocumentID\nHistory actions: created, saved, converted, derived",
+    "accuracy": "Very High - 90%+ when AI tool signatures are present in XMP data. Lower when XMP has been stripped.",
     "source": "Adobe XMP Specification (ISO 16684), Dublin Core",
-    "useCase": "XMP 메타데이터가 보존된 이미지의 포괄적 출처 검증.",
+    "useCase": "Comprehensive provenance verification for images that retain XMP metadata. Essential for authenticating images in professional workflows where edit history integrity matters — journalism, stock photography, legal evidence.",
     "strengths": "• 편집 이력 체인이 완전한 출처 제공\n• 소프트웨어 에이전트 핑거프린팅이 처리 파이프라인 공개\n• CreatorTool의 AI 서명이 매우 신뢰성 높음\n• 리소스 참조로 계보 추적 가능\n• 업계 표준 메타데이터",
     "limitations": "• 소셜 미디어와 메신저가 XMP를 삭제할 수 있음\n• AI 도구가 XMP를 임베드하지 않을 수 있음\n• 편집 이력이 수동으로 위조될 수 있음\n• 소비자 카메라는 XMP를 쓰지 않는 경우가 많음\n• 복잡한 편집 이력은 결론 불명확",
     "references": [

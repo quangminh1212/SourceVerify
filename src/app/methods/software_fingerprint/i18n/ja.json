@@ -1,12 +1,12 @@
 {
     "name": "ソフトウェアフィンガープリント分析",
-    "description": "ソフトウェアシグネチャ、バージョンパターン、エンコーディングフィンガープリントの深層分析でAI生成ツールを特定。",
+    "description": "Deep analysis of software signatures, version patterns, and encoding fingerprints to identify specific AI generation tools, camera manufacturers, and image processing pipelines.",
     "algorithm": "マルチデータベースソフトウェアシグネチャマッチャー",
-    "mechanism": "3つの検出レイヤーで動作：\n\n1. **AIツールシグネチャマッチング**: 25以上のAIツールシグネチャと照合。\n\n2. **カメラメーカー識別**: Make/Model/Softwareをメーカーデータベースと照合。\n\n3. **エンコーディングライブラリ検出**: libjpeg、Pillow、OpenCVなどを識別。\n\n4. **バージョンパターン分析**: ソフトウェアバージョン文字列を既知パターンと検証。",
-    "parameters": "AIツール: 25以上のシグネチャ\nカメラブランド: Canon, Nikon, Sony等\nライブラリ: libjpeg, Pillow, OpenCV, ImageMagick",
-    "accuracy": "非常に高い - シグネチャが存在する場合90-95%。",
+    "mechanism": "The software fingerprint analysis operates on three detection layers:\n\n1. **AI Tool Signature Matching**: Matches metadata values against a comprehensive database of 25+ AI tool signatures including Stable Diffusion (A1111, ComfyUI, InvokeAI), DALL-E, Midjourney, Leonardo.AI, and others. Checks CreatorTool, Software, ProcessingSoftware fields.\n\n2. **Camera Manufacturer Identification**: Cross-references Make/Model/Software fields against known camera manufacturer databases (Canon, Nikon, Sony, Fujifilm, Panasonic, Olympus, Apple, Samsung, Google Pixel).\n\n3. **Encoding Library Detection**: Identifies the image encoding library from JPEG/PNG headers and metadata (libjpeg, MozJPEG, Pillow/PIL, OpenCV, ImageMagick). AI tools typically use Python-based libraries (Pillow, OpenCV) while cameras use proprietary encoders.\n\n4. **Version Pattern Analysis**: Validates software version strings against known patterns to detect fabricated metadata.",
+    "parameters": "AI tools: 25+ signatures (Stable Diffusion, DALL-E 2/3, Midjourney v5/v6, ComfyUI, InvokeAI, Leonardo.AI, Firefly, Bing Image Creator, etc.)\nCamera brands: Canon, Nikon, Sony, Fujifilm, Panasonic, Apple, Samsung, Google\nEncoding libraries: libjpeg, MozJPEG, Pillow, OpenCV, ImageMagick, libpng\nChecked fields: CreatorTool, Software, ProcessingSoftware, Make, Model",
+    "accuracy": "Very High - 90-95% when software signatures are present in metadata. Accuracy depends on metadata not being stripped.",
     "source": "Stable Diffusion GitHub, OpenAI API, Midjourney Docs",
-    "useCase": "画像を作成したツールの正確な特定。",
+    "useCase": "Primary identification method for determining exactly which tool created an image. Critical for content moderation platforms, journalism fact-checking, and forensic investigations where knowing the specific AI tool is important.",
     "strengths": "• 使用された正確なAIツールとバージョンを特定\n• シグネチャ存在時の極めて高い精度\n• カメラメーカー識別で本物の写真を検証\n• エンコーディングライブラリ検出\n• 継続的に更新されるデータベース",
     "limitations": "• メタデータが容易に削除される\n• SNSがソフトウェアメタデータを削除\n• 一部AIがカメラメタデータを模倣\n• 新しいAIツールがデータベースにない場合\n• メタデータ削除時はAI検出不可",
     "references": [

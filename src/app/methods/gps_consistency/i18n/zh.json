@@ -1,12 +1,12 @@
 {
     "name": "GPS一致性分析",
-    "description": "验证GPS坐标的存在、格式一致性和合理性。AI生成的图像很少包含有效的GPS坐标。",
+    "description": "Validates GPS coordinate presence, format consistency, and plausibility. AI-generated images rarely contain valid GPS coordinates, making this a strong authenticity indicator for real photographs.",
     "algorithm": "GPS坐标验证器（含DMS解析器）",
-    "mechanism": "GPS一致性分析验证多个方面：\n\n1. **GPS字段提取**: 提取GPSLatitude、GPSLongitude、GPSAltitude等GPS相关元数据。\n\n2. **坐标范围验证**: 确认坐标在有效范围内（纬度[-90,90]，经度[-180,180]）。\n\n3. **占位符检测**: 识别零岛坐标（0°N, 0°E）和精确整数值。\n\n4. **格式解析**: 处理十进制度和DMS格式。\n\n5. **多字段一致性**: 将GPS时间戳与EXIF拍摄时间戳交叉参照。",
-    "parameters": "GPS字段: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp\n有效范围: 纬度 [-90, 90], 经度 [-180, 180]",
-    "accuracy": "高 - 存在GPS数据时准确率85%以上。",
+    "mechanism": "The GPS consistency analysis validates multiple aspects:\n\n1. **GPS Field Extraction**: Extracts all GPS-related metadata fields including GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp, GPSImgDirection, and GPSSpeed.\n\n2. **Coordinate Range Validation**: Verifies coordinates fall within valid ranges (Latitude: -90 to 90, Longitude: -180 to 180) and checks for implausible values.\n\n3. **Placeholder Detection**: Identifies null-island coordinates (0°N, 0°E), exact integer values, or repeated patterns that indicate fabricated GPS data.\n\n4. **Format Parsing**: Handles both decimal degrees and DMS (Degrees/Minutes/Seconds) formats, validating proper structure for each.\n\n5. **Multi-field Consistency**: Cross-references GPS timestamp with EXIF capture timestamp and validates altitude plausibility.",
+    "parameters": "GPS fields analyzed: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp, GPSImgDirection, GPSSpeed, GPSMapDatum\nValid ranges: Latitude [-90, 90], Longitude [-180, 180]\nPlaceholder patterns: (0, 0), exact integers, repeated digits\nFormats: Decimal degrees, DMS (deg°min'sec\")",
+    "accuracy": "High - 85%+ when GPS data is present. Strong positive indicator for real photos. Most AI-generated images lack GPS entirely.",
     "source": "EXIF 2.32 GPS IFD, WGS 84 Geodetic Reference System",
-    "useCase": "智能手机和GPS相机照片的强力真实性信号。",
+    "useCase": "Strong authenticity signal for photos from smartphones and GPS-enabled cameras. The presence of valid, plausible GPS coordinates significantly increases the probability of authentic camera capture.",
     "strengths": "• 非常强的正向指标——AI工具几乎从不生成有效GPS\n• 智能手机照片几乎总是包含GPS数据\n• 坐标合理性检查检测伪造数据\n• 支持多种坐标格式\n• 低误报率",
     "limitations": "• 隐私应用可能删除GPS\n• 桌面相机和棚拍通常没有GPS\n• GPS坐标可以手动伪造\n• 室内照片GPS可能不准确\n• GPS缺失不能证明是AI生成",
     "references": [

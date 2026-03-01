@@ -1,12 +1,12 @@
 {
     "name": "分辨率一致性",
-    "description": "分析DPI/分辨率元数据与实际像素尺寸，检查AI模型特定输出大小。",
+    "description": "Analyzes DPI/resolution metadata vs actual pixel dimensions, checks for AI model-specific output sizes, and validates EXIF image size declarations against actual dimensions.",
     "algorithm": "分辨率模式分析器",
-    "mechanism": "分辨率一致性分析检查多个信号：\n\n1. **AI模型分辨率匹配**: 与已知AI模型输出尺寸比较。\n\n2. **VAE潜在空间检测**: 检查尺寸是否为64的倍数。\n\n3. **DPI元数据验证**: 交叉检查声明的DPI与实际尺寸。\n\n4. **EXIF尺寸交叉检查**: 比较EXIF声明尺寸与实际尺寸。\n\n5. **百万像素分析**: 将总像素数与相机传感器比较。",
-    "parameters": "AI分辨率: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024²)\nDPI: 72 (web), 96 (screen), 300 (print)\nVAE: 64的倍数",
-    "accuracy": "中等 - 70-80%。对未调整大小的AI输出最有效。",
+    "mechanism": "The resolution consistency analysis examines multiple signals:\n\n1. **AI Model Resolution Matching**: Checks image dimensions against known AI model outputs (Stable Diffusion: 512², 768², 1024²; DALL-E 3: 1024×1024, 1792×1024; Midjourney: various).\n\n2. **VAE Latent Space Detection**: Validates if dimensions are multiples of 64 (8× downsampled VAE latent space), which is characteristic of diffusion models.\n\n3. **DPI Metadata Validation**: Cross-checks declared DPI (72 web, 96 screen, 240/300 print) against actual pixel dimensions. Inconsistencies suggest post-processing.\n\n4. **EXIF Dimension Cross-check**: Compares ExifImageWidth/ExifImageHeight with actual decoded image dimensions to detect resizing.\n\n5. **Megapixel Analysis**: Compares total pixel count against typical camera sensor outputs vs AI model capabilities.",
+    "parameters": "AI model resolutions: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024², 1792×1024), Flux (1024²)\nDPI standards: 72 (web), 96 (screen), 240/300 (print)\nVAE alignment: multiples of 64\nCamera megapixels: 12-108 MP typical",
+    "accuracy": "Medium - 70-80%. Most effective for unresized AI outputs. Accuracy decreases significantly when images are resized or cropped.",
     "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
-    "useCase": "基于尺寸分析的快速AI检测筛查。",
+    "useCase": "Quick AI detection screening based on dimensional analysis. Particularly effective for batch processing where images haven't been resized from their original AI-generated dimensions.",
     "strengths": "• 无需像素处理的快速尺寸分析\n• VAE对齐检查对扩散模型高度特异\n• DPI不一致揭示后处理\n• 检测微妙的调整大小\n• 识别特定AI模型输出",
     "limitations": "• 通过调整大小或裁剪轻松绕过\n• 相机分辨率与AI输出重叠\n• 社交媒体自动调整图像大小\n• 放大器改变尺寸\n• DPI经常不准确或缺失",
     "references": [

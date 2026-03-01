@@ -1,10 +1,22 @@
 {
-    "useCase":  "변조 및 접합 감지",
-    "mechanism":  "여러 품질로 재압축하여 차이 맵을 측정합니다.",
-    "accuracy":  "중-높음 - 78-88%",
-    "name":  "JPEG 고스트 분석",
-    "source":  "Farid (2009)",
-    "algorithm":  "이중 JPEG 압축 감지",
-    "parameters":  "품질 범위: 50-99, 블록: 8x8",
-    "description":  "이전 JPEG 압축의 흔적을 감지합니다."
+    "useCase": "Detecting image tampering via re-saving, quality inconsistencies, and spliced JPEG regions",
+    "mechanism": "Re-compresses the image at multiple quality factors and measures the difference map for each. Regions that were previously compressed at a specific quality show minimal difference (ghost) at that quality level, revealing manipulation.",
+    "accuracy": "Medium-High - 78-88% for double-compressed JPEG images",
+    "name": "JPEG 고스트 분석",
+    "source": "Farid (2009)",
+    "algorithm": "이중 JPEG 압축 감지",
+    "parameters": "Quality range: 50-99, Step: 1, Block size: 8x8, Detection threshold: adaptive per-image",
+    "description": "Detects traces of previous JPEG compressions (ghosts) that reveal re-saving or manipulation. AI-generated images may have inconsistent compression histories.",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TIFS.2008.2012215",
+            "title": "Farid, H. (2009). Exposing Digital Forgeries from JPEG Ghosts. IEEE TIFS."
+        },
+        {
+            "url": "https://doi.org/10.1016/j.sigpro.2009.03.025",
+            "title": "Li, W. et al. (2009). Passive Detection of Doctored JPEG Image via Block Artifact Grid Extraction. Signal Processing."
+        }
+    ],
+    "strengths": "• Localizes tampered regions specifically\n• Strong evidence of re-compression\n• Can estimate original quality factor\n• Well-proven forensic methodology",
+    "limitations": "• Only works on JPEG images\n• Computationally intensive (multiple re-compressions)\n• Same-quality re-compression is undetectable\n• AI-generated JPEGs without tampering won't show ghosts"
 }

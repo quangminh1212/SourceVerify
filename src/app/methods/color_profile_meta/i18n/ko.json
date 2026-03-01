@@ -1,12 +1,12 @@
 {
     "name": "컬러 프로파일 메타데이터",
-    "description": "ICC 컬러 프로파일 데이터, 색 공간 선언, 비트 깊이, 렌더링 인텐트 메타데이터를 분석하여 AI 생성 패턴을 감지합니다.",
+    "description": "Analyzes ICC color profile data, color space declarations, bit depth, and rendering intent metadata to detect AI generation patterns. Professional cameras embed complex color profiles, while AI tools typically output basic sRGB.",
     "algorithm": "ICC/색 공간 메타데이터 분석기",
-    "mechanism": "컬러 프로파일 분석은 여러 메타데이터 레이어를 검사합니다:\n\n1. **ICC 프로파일 감지**: 임베디드 ICC 프로파일 유형 식별. 프로 카메라는 Adobe RGB나 ProPhoto RGB 사용, AI 이미지는 기본 sRGB 사용.\n\n2. **비트 깊이 분석**: RAW 파일은 12/14/16비트, AI 출력은 항상 채널당 8비트.\n\n3. **색 공간 일관성**: EXIF, ICC, XMP 간 색 공간 선언 교차 검증.\n\n4. **렌더링 인텐트 확인**: 프로 워크플로는 렌더링 인텐트를 보존, AI 도구는 올바르게 설정하지 않음.",
-    "parameters": "카메라 프로파일: Adobe RGB, ProPhoto RGB, Display P3\nAI 전형: sRGB IEC61966-2.1\n비트 깊이: 8-bit (표준/AI), 12/14/16-bit (프로 RAW)",
-    "accuracy": "중간 - 70-80%. 고급 컬러 프로파일이 있을 때 효과적.",
+    "mechanism": "The color profile analysis examines multiple metadata layers:\n\n1. **ICC Profile Detection**: Identifies the embedded ICC color profile type. Professional cameras use Adobe RGB, ProPhoto RGB, or Display P3 profiles, while AI-generated images almost universally use basic sRGB IEC61966-2.1.\n\n2. **Bit Depth Analysis**: Checks color depth metadata. RAW files from cameras use 12-bit, 14-bit, or 16-bit color depth. AI outputs are invariably 8-bit per channel.\n\n3. **Color Space Consistency**: Cross-validates color space declarations across EXIF, ICC, and XMP metadata. Inconsistencies suggest metadata fabrication.\n\n4. **Rendering Intent Check**: Professional workflows preserve rendering intent (perceptual, relative colorimetric). AI tools rarely set this metadata correctly.",
+    "parameters": "Camera profiles: Adobe RGB, ProPhoto RGB, Display P3, DCI-P3\nAI-typical: sRGB IEC61966-2.1\nBit depths: 8-bit (standard/AI), 12/14/16-bit (professional RAW)\nRendering intents: perceptual, relative colorimetric, saturation, absolute colorimetric",
+    "accuracy": "Medium - 70-80%. Strong indicator when advanced color profiles (Adobe RGB, ProPhoto) are present. Less reliable for consumer cameras that default to sRGB.",
     "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
-    "useCase": "메타데이터 분석 파이프라인의 보조 증거. 전문 사진과 AI 생성 콘텐츠 구별에 유용.",
+    "useCase": "Supporting evidence in metadata analysis pipeline. Particularly useful for identifying professional photography (which uses wide-gamut profiles) vs AI-generated content (which uses sRGB). Effective as part of a multi-signal approach.",
     "strengths": "• 전문 컬러 프로파일은 AI 도구가 복제하기 매우 어려움\n• 비트 깊이 분석으로 카메라와 AI를 명확히 구분\n• 낮은 위양성률\n• 빠르고 비파괴적인 분석\n• RAW 원본 이미지 식별에 유용",
     "limitations": "• 많은 소비자 카메라도 기본적으로 sRGB 사용\n• AI 도구가 커스텀 ICC 프로파일을 임베드할 가능성\n• JPEG 변환 시 프로파일 정보 손실\n• 소셜 미디어 플랫폼이 ICC 프로파일을 제거\n• sRGB 카메라와 AI 출력을 구분할 수 없음",
     "references": [

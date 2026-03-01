@@ -1,12 +1,12 @@
 {
     "name": "IPTC 데이터 검증",
-    "description": "IPTC 메타데이터 필드의 진위 마커, 디지털 소스 유형 분류, AI 도구 서명을 검증합니다.",
+    "description": "Verifies IPTC (International Press Telecommunications Council) metadata fields for authenticity markers, digital source type classification, and AI tool signatures in professional photo workflows.",
     "algorithm": "IPTC 필드 진위 분석기",
-    "mechanism": "IPTC 검증은 다음을 검사합니다:\n\n1. **DigitalSourceType 분류**: ISO 12639 비사진 지표 확인.\n\n2. **진위 필드 수 계산**: 전문 IPTC 필드 수 계측.\n\n3. **AI 참조 감지**: IPTC 필드에서 AI 도구 참조 검색.\n\n4. **워크플로 검증**: IPTC 메타데이터가 전문 관행을 따르는지 확인.",
-    "parameters": "IPTC 필드: credit, source, copyright, writer, caption, byline, city, country, headline, keywords\nDigitalSourceType: ISO 12639 분류",
-    "accuracy": "높음 - IPTC 데이터가 있는 전문 사진에서 85% 이상.",
+    "mechanism": "The IPTC verification examines professional metadata layers:\n\n1. **DigitalSourceType Classification**: Checks ISO 12639 DigitalSourceType field for non-photographic indicators such as 'trainedAlgorithmicMedia', 'algorithmicMedia', 'virtualRecording', or 'compositeSynthetic'.\n\n2. **Authenticity Field Count**: Counts professional IPTC fields (credit, source, copyright, writer, caption, byline, city, country, headline, keywords). High field count indicates professional photographic workflow.\n\n3. **AI Reference Detection**: Scans IPTC values for references to AI tools (Stable Diffusion, DALL-E, Midjourney, etc.) in source, credit, and software fields.\n\n4. **Workflow Validation**: Validates that IPTC metadata follows professional photography conventions — wire services, stock agencies, and newsrooms embed rich IPTC data.",
+    "parameters": "IPTC authenticity fields: credit, source, copyright, writer, caption, byline, city, country, headline, keywords, instructions, category\nDigitalSourceType values: photographicImage, negativeFilm, positiveFilm, trainedAlgorithmicMedia, algorithmicMedia, virtualRecording\nISO 12639 classifications",
+    "accuracy": "High - 85%+ for professional news/stock photos with IPTC data. Limited for consumer photos which rarely include IPTC.",
     "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639",
-    "useCase": "뉴스 통신사 및 스톡 사진 서비스의 전문 사진 검증.",
+    "useCase": "Professional photo verification: validates images from news agencies, stock photo services, and professional photographers. The presence of comprehensive IPTC metadata strongly indicates professional origin.",
     "strengths": "• DigitalSourceType이 있으면 명시적 AI 선언 제공\n• 전문 사진은 AI가 복제할 수 없는 풍부한 IPTC 데이터 보유\n• 모든 주요 통신사가 사용하는 업계 표준\n• IPTC 소스 필드에서 특정 AI 도구 식별\n• DigitalSourceType의 제로 위양성",
     "limitations": "• 소비자 사진에는 IPTC가 거의 포함되지 않음\n• IPTC 필드는 수동으로 위조 가능\n• 많은 AI 서비스가 DigitalSourceType을 미설정\n• 소셜 미디어가 IPTC를 삭제\n• IPTC 부재가 AI 생성을 나타내지 않음",
     "references": [

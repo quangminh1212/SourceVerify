@@ -1,10 +1,22 @@
 {
-    "useCase":  "检测AI放大图像",
-    "mechanism":  "分析频谱中的周期模式。",
-    "accuracy":  "中高 - 80-90%",
-    "name":  "放大检测",
-    "source":  "Popescu \u0026 Farid (2005)",
-    "algorithm":  "重采样检测 + 周期模式分析",
-    "parameters":  "分析: 2D FFT",
-    "description":  "检测超分辨率和放大伪影。"
+    "useCase": "Detecting AI-upscaled images, resolution manipulation, and super-resolution processing",
+    "mechanism": "Analyzes the frequency spectrum for periodic patterns introduced by interpolation algorithms and AI super-resolution models. Detects the characteristic ringing artifacts, aliasing patterns, and hallucinated high-frequency details produced by upscaling operations.",
+    "accuracy": "Medium-High - 80-90% for upscaled images with detectable interpolation artifacts",
+    "name": "放大检测",
+    "source": "Popescu & Farid (2005)",
+    "algorithm": "重采样检测 + 周期模式分析",
+    "parameters": "Analysis: 2D FFT periodicity, Interpolation kernels: bilinear/bicubic/Lanczos, AI upscaler signatures: ESRGAN/Real-ESRGAN/SwinIR patterns",
+    "description": "Detects super-resolution and upscaling artifacts in images. AI upscalers introduce periodic patterns and hallucinated details detectable through frequency analysis.",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TSP.2004.839932",
+            "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP."
+        },
+        {
+            "url": "https://doi.org/10.1109/CBMI.2005.1490103",
+            "title": "Gallagher, A.C. (2005). Detection of Linear and Cubic Interpolation in JPEG Compressed Images. IEEE ICIVR."
+        }
+    ],
+    "strengths": "• Detects both traditional and AI upscaling\n• Frequency analysis reveals interpolation patterns\n• Can identify specific upscaling algorithms\n• Effective for detecting resolution manipulation",
+    "limitations": "• Advanced AI upscalers minimize detectable artifacts\n• Original high-resolution images show no patterns\n• JPEG compression can mask interpolation artifacts\n• Very slight upscaling is harder to detect"
 }
