@@ -1,28 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { validateApiKey } from "@/lib/apiKeyStore";
 import { analyzeImageBuffer } from "@/lib/serverAnalyzer";
+import { getCorsHeaders, handleCorsPreFlight, checkRateLimit, getRateLimitHeaders } from "@/lib/apiMiddleware";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
 
-const CORS_HEADERS = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type, Authorization, X-API-Key",
-};
-
-export async function OPTIONS() {
-    return NextResponse.json({}, { headers: CORS_HEADERS });
+export async function OPTIONS(req: NextRequest) {
+    return handleCorsPreFlight(req);
 }
 
 export async function POST(req: NextRequest) {
+    const corsHeaders = getCorsHeaders(req);
+
     try {
+        // Rate limiting check
+        const rateLimitResponse = checkRateLimit(req, "analyze");
+        if (rateLimitResponse) return rateLimitResponse;
+
         // Validate API key
         const apiKey = req.headers.get("x-api-key") || req.headers.get("authorization")?.replace("Bearer ", "");
         if (!apiKey) {
             return NextResponse.json(
                 { error: "Missing API key. Include X-API-Key header or Authorization: Bearer <key>" },
-                { status: 401, headers: CORS_HEADERS }
+                { status: 401, headers: corsHeaders }
             );
         }
 
@@ -30,7 +31,7 @@ export async function POST(req: NextRequest) {
         if (!user) {
             return NextResponse.json(
                 { error: "Invalid API key" },
-                { status: 403, headers: CORS_HEADERS }
+                { status: 403, headers: corsHeaders }
             );
         }
 
@@ -45,7 +46,7 @@ export async function POST(req: NextRequest) {
             if (!file) {
                 return NextResponse.json(
                     { error: "No 'image' field in form data" },
-                    { status: 400, headers: CORS_HEADERS }
+                    { status: 400, headers: corsHeaders }
                 );
             }
             fileName = file.name;
@@ -56,7 +57,7 @@ export async function POST(req: NextRequest) {
             if (!body.image) {
                 return NextResponse.json(
                     { error: "Missing 'image' field (base64 encoded)" },
-                    { status: 400, headers: CORS_HEADERS }
+                    { status: 400, headers: corsHeaders }
                 );
             }
             const base64Data = body.image.replace(/^data:image\/\w+;base64,/, "");
@@ -72,7 +73,7 @@ export async function POST(req: NextRequest) {
         if (buffer.length > 10 * 1024 * 1024) {
             return NextResponse.json(
                 { error: "Image too large. Maximum 10MB." },
-                { status: 413, headers: CORS_HEADERS }
+                { status: 413, headers: corsHeaders }
             );
         }
 
@@ -86,13 +87,18 @@ export async function POST(req: NextRequest) {
                 apiVersion: "v1",
                 timestamp: new Date().toISOString(),
             },
-        }, { headers: CORS_HEADERS });
+        }, {
+            headers: {
+                ...corsHeaders,
+                ...getRateLimitHeaders(req, "analyze"),
+            },
+        });
 
     } catch (error) {
         console.error("API analyze error:", error);
         return NextResponse.json(
             { error: "Analysis failed", message: error instanceof Error ? error.message : "Unknown error" },
-            { status: 500, headers: CORS_HEADERS }
+            { status: 500, headers: corsHeaders }
         );
     }
 }

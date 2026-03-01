@@ -1,29 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createOrGetKey } from "@/lib/apiKeyStore";
+import { getCorsHeaders, handleCorsPreFlight, checkRateLimit, getRateLimitHeaders } from "@/lib/apiMiddleware";
 
 export const runtime = "nodejs";
 
 const GOOGLE_TOKEN_INFO_URL = "https://oauth2.googleapis.com/tokeninfo";
 
-const CORS_HEADERS = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-};
-
-export async function OPTIONS() {
-    return NextResponse.json({}, { headers: CORS_HEADERS });
+export async function OPTIONS(req: NextRequest) {
+    return handleCorsPreFlight(req);
 }
 
 export async function POST(req: NextRequest) {
+    const corsHeaders = getCorsHeaders(req);
+
     try {
+        // Rate limiting check (stricter for auth: 10 req/min)
+        const rateLimitResponse = checkRateLimit(req, "auth");
+        if (rateLimitResponse) return rateLimitResponse;
+
         const body = await req.json();
         const { credential } = body;
 
         if (!credential) {
             return NextResponse.json(
                 { error: "Missing Google credential token" },
-                { status: 400, headers: CORS_HEADERS }
+                { status: 400, headers: corsHeaders }
             );
         }
 
@@ -32,7 +33,7 @@ export async function POST(req: NextRequest) {
         if (!verifyRes.ok) {
             return NextResponse.json(
                 { error: "Invalid Google token" },
-                { status: 401, headers: CORS_HEADERS }
+                { status: 401, headers: corsHeaders }
             );
         }
 
@@ -42,7 +43,7 @@ export async function POST(req: NextRequest) {
         if (!googleId || !email) {
             return NextResponse.json(
                 { error: "Could not extract user info from Google token" },
-                { status: 400, headers: CORS_HEADERS }
+                { status: 400, headers: corsHeaders }
             );
         }
 
@@ -59,13 +60,18 @@ export async function POST(req: NextRequest) {
                 createdAt: entry.createdAt,
                 usageCount: entry.usageCount,
             },
-        }, { headers: CORS_HEADERS });
+        }, {
+            headers: {
+                ...corsHeaders,
+                ...getRateLimitHeaders(req, "auth"),
+            },
+        });
 
     } catch (error) {
         console.error("Auth error:", error);
         return NextResponse.json(
             { error: "Authentication failed" },
-            { status: 500, headers: CORS_HEADERS }
+            { status: 500, headers: corsHeaders }
         );
     }
 }
