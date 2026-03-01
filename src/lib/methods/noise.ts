@@ -22,8 +22,8 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
 
     for (let by = 0; by < blocksY; by += step) {
         for (let bx = 0; bx < blocksX; bx += step) {
-            let sumResidual = 0, sumResidual2 = 0, sumResidual4 = 0;
-            let sumBright = 0, count = 0;
+            let sumResidual = 0, sumBright = 0, count = 0;
+            const residuals: number[] = [];
 
             for (let y = by * blockSize + 1; y < (by + 1) * blockSize - 1; y++) {
                 for (let x = bx * blockSize + 1; x < (bx + 1) * blockSize - 1; x++) {
@@ -34,8 +34,7 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
                     const center = getGray(x, y);
                     const laplacian = 4 * center - getGray(x - 1, y) - getGray(x + 1, y) - getGray(x, y - 1) - getGray(x, y + 1);
                     sumResidual += laplacian;
-                    sumResidual2 += laplacian * laplacian;
-                    sumResidual4 += laplacian * laplacian * laplacian * laplacian;
+                    residuals.push(laplacian);
                     sumBright += center;
                     count++;
                 }
@@ -43,14 +42,19 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
 
             if (count > 0) {
                 const mean = sumResidual / count;
-                const variance = sumResidual2 / count - mean * mean;
+                // Compute centered moments correctly
+                let cm2 = 0, cm4 = 0;
+                for (let i = 0; i < residuals.length; i++) {
+                    const d = residuals[i] - mean;
+                    cm2 += d * d;
+                    cm4 += d * d * d * d;
+                }
+                const variance = cm2 / count;
                 const stddev = Math.sqrt(Math.max(0, variance));
                 blockStdDevs.push(stddev);
                 blockBrightness.push(sumBright / count);
                 // Kurtosis: real camera noise is Gaussian (kurtosis≈3), AI noise may differ
-                const moment4 = sumResidual4 / count - 4 * mean * (sumResidual2 * sumResidual / (count * count))
-                    + 6 * mean * mean * (sumResidual2 / count) - 3 * mean * mean * mean * mean;
-                const kurt = variance > 0.01 ? moment4 / (variance * variance) : 3;
+                const kurt = variance > 0.01 ? (cm4 / count) / (variance * variance) : 3;
                 blockKurtosis.push(kurt);
             }
         }
