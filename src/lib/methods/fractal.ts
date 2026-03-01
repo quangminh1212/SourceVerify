@@ -57,7 +57,7 @@ export function analyzeFractalDimension(pixels: Uint8ClampedArray, width: number
         }
 
         scales.push(Math.log(1 / r));
-        counts.push(Math.log(totalBoxes));
+        counts.push(Math.log(Math.max(1, totalBoxes)));
     }
 
     let fractalDim = 2.5;

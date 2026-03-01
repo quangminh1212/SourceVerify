@@ -40,7 +40,8 @@ export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height:
     const sumXY = logRank.reduce((a, b, i) => a + b * logFreq[i], 0);
     const sumX2 = logRank.reduce((a, b) => a + b * b, 0);
 
-    const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+    const denom = n * sumX2 - sumX * sumX;
+    const slope = Math.abs(denom) > 1e-10 ? (n * sumXY - sumX * sumY) / denom : -1;
     const intercept = (sumY - slope * sumX) / n;
 
     // Calculate RÂ² (goodness of fit)
