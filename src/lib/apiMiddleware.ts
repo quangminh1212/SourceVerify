@@ -7,20 +7,18 @@ import { NextRequest, NextResponse } from "next/server";
 // ─── CORS ────────────────────────────────────────────────────────────────────
 
 /**
- * Get allowed origins from environment variable or defaults
- * Format: comma-separated, e.g. "https://sourceverify.vercel.app,https://example.com"
+ * Allowed origins for CORS
+ * Production domain + localhost for development
  */
+const ALLOWED_ORIGINS = [
+    "https://sourceverify.app",
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://127.0.0.1:3000",
+];
+
 function getAllowedOrigins(): string[] {
-    const envOrigins = process.env.ALLOWED_ORIGINS;
-    if (envOrigins) {
-        return envOrigins.split(",").map((o) => o.trim()).filter(Boolean);
-    }
-    // Default: allow same-origin + localhost for dev
-    return [
-        "http://localhost:3000",
-        "http://localhost:3001",
-        "http://127.0.0.1:3000",
-    ];
+    return ALLOWED_ORIGINS;
 }
 
 /**
