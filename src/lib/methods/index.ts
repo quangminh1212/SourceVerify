@@ -57,3 +57,25 @@ export { analyzeHistogramGradient } from "./histogramGradient";
 export { analyzeColorCoherence } from "./colorCoherence";
 export { analyzeMutualInformation } from "./mutualInfo";
 export { analyzeLaplacianEdge } from "./laplacianEdge";
+
+// New: Forensic Methods v8 (20 methods)
+export { analyzeMedianFilter } from "./medianFilter";
+export { analyzeResampling } from "./resamplingDetect";
+export { analyzeContrastEnhancement } from "./contrastEnhancement";
+export { analyzeBrisque } from "./brisque";
+export { analyzeDemosaicing } from "./demosaicingDetect";
+export { analyzeSteganalysis } from "./steganalysisDetect";
+export { analyzeThumbnailConsistency } from "./thumbnailAnalysis";
+export { analyzePerceptualHash } from "./perceptualHash";
+export { analyzeIlluminantMap } from "./illuminantMap";
+export { analyzeRadonTransform } from "./radonTransform";
+export { analyzeZernikeMoments } from "./zernikeMoments";
+export { analyzeCameraModel } from "./cameraModel";
+export { analyzeImagePhylogeny } from "./imagePhylogeny";
+export { analyzeBlockingArtifact } from "./blockingArtifact";
+export { analyzeEfficientnetFeatures } from "./efficientnetDetect";
+export { analyzeAttentionConsistency } from "./attentionConsistency";
+export { analyzeStyleTransfer } from "./styleTransfer";
+export { analyzeColorTemperature } from "./colorTemperature";
+export { analyzeSiftForensics } from "./siftForensics";
+export { analyzeNeuralCompression } from "./neuralCompression";

@@ -1,6 +1,6 @@
 /**
- * SourceVerify AI Detection Engine v7
- * Main orchestrator — imports and coordinates all 55 analysis methods
+ * SourceVerify AI Detection Engine v8
+ * Main orchestrator — imports and coordinates all 75 analysis methods
  *
  * Terminology: "method" = phương pháp phân tích (analysis method)
  * Each method analyzes a specific aspect of the image and returns a result with a score.
@@ -88,6 +88,27 @@ import {
     analyzeColorCoherence,
     analyzeMutualInformation,
     analyzeLaplacianEdge,
+    // New: Forensic Methods v8 (20)
+    analyzeMedianFilter,
+    analyzeResampling,
+    analyzeContrastEnhancement,
+    analyzeBrisque,
+    analyzeDemosaicing,
+    analyzeSteganalysis,
+    analyzeThumbnailConsistency,
+    analyzePerceptualHash,
+    analyzeIlluminantMap,
+    analyzeRadonTransform,
+    analyzeZernikeMoments,
+    analyzeCameraModel,
+    analyzeImagePhylogeny,
+    analyzeBlockingArtifact,
+    analyzeEfficientnetFeatures,
+    analyzeAttentionConsistency,
+    analyzeStyleTransfer,
+    analyzeColorTemperature,
+    analyzeSiftForensics,
+    analyzeNeuralCompression,
 } from "./methods";
 
 // ============================
@@ -238,7 +259,7 @@ function calculateVerdict(methods: AnalysisMethod[]): { aiScore: number; verdict
 }
 
 // ============================
-// IMAGE ANALYSIS (55 methods)
+// IMAGE ANALYSIS (75 methods)
 // ============================
 
 // Method ID → nameKey mapping
@@ -309,6 +330,27 @@ export const METHOD_MAP: Record<string, string> = {
     colorCoherence: "signal.colorCoherence",
     mutualInfo: "signal.mutualInfo",
     laplacianEdge: "signal.laplacianEdge",
+    // Forensic Methods v8 (20)
+    medianFilter: "signal.medianFilter",
+    resampling: "signal.resampling",
+    contrastEnhancement: "signal.contrastEnhancement",
+    brisque: "signal.brisque",
+    demosaicing: "signal.demosaicing",
+    steganalysis: "signal.steganalysis",
+    thumbnailAnalysis: "signal.thumbnailAnalysis",
+    perceptualHash: "signal.perceptualHash",
+    illuminantMap: "signal.illuminantMap",
+    radonTransform: "signal.radonTransform",
+    zernikeMoments: "signal.zernikeMoments",
+    cameraModel: "signal.cameraModel",
+    imagePhylogeny: "signal.imagePhylogeny",
+    blockingArtifact: "signal.blockingArtifact",
+    efficientnetDetection: "signal.efficientnetDetection",
+    attentionConsistency: "signal.attentionConsistency",
+    styleTransfer: "signal.styleTransfer",
+    colorTemperature: "signal.colorTemperature",
+    siftForensics: "signal.siftForensics",
+    neuralCompression: "signal.neuralCompression",
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
@@ -403,6 +445,27 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         analyzeColorCoherence(pixels, w, h),
         analyzeMutualInformation(pixels, w, h),
         analyzeLaplacianEdge(pixels, w, h),
+        // Forensic Methods v8 (20)
+        analyzeMedianFilter(pixels, w, h),
+        analyzeResampling(pixels, w, h),
+        analyzeContrastEnhancement(pixels, w, h),
+        analyzeBrisque(pixels, w, h),
+        analyzeDemosaicing(pixels, w, h),
+        analyzeSteganalysis(pixels, w, h),
+        analyzeThumbnailConsistency(pixels, w, h),
+        analyzePerceptualHash(pixels, w, h),
+        analyzeIlluminantMap(pixels, w, h),
+        analyzeRadonTransform(pixels, w, h),
+        analyzeZernikeMoments(pixels, w, h),
+        analyzeCameraModel(pixels, w, h),
+        analyzeImagePhylogeny(pixels, w, h),
+        analyzeBlockingArtifact(pixels, w, h),
+        analyzeEfficientnetFeatures(pixels, w, h),
+        analyzeAttentionConsistency(pixels, w, h),
+        analyzeStyleTransfer(pixels, w, h),
+        analyzeColorTemperature(pixels, w, h),
+        analyzeSiftForensics(pixels, w, h),
+        analyzeNeuralCompression(pixels, w, h),
     ];
 
     // Filter methods based on enabled set
@@ -515,6 +578,27 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     analyzeColorCoherence(pixels, w, h),
                     analyzeMutualInformation(pixels, w, h),
                     analyzeLaplacianEdge(pixels, w, h),
+                    // Forensic Methods v8 (20)
+                    analyzeMedianFilter(pixels, w, h),
+                    analyzeResampling(pixels, w, h),
+                    analyzeContrastEnhancement(pixels, w, h),
+                    analyzeBrisque(pixels, w, h),
+                    analyzeDemosaicing(pixels, w, h),
+                    analyzeSteganalysis(pixels, w, h),
+                    analyzeThumbnailConsistency(pixels, w, h),
+                    analyzePerceptualHash(pixels, w, h),
+                    analyzeIlluminantMap(pixels, w, h),
+                    analyzeRadonTransform(pixels, w, h),
+                    analyzeZernikeMoments(pixels, w, h),
+                    analyzeCameraModel(pixels, w, h),
+                    analyzeImagePhylogeny(pixels, w, h),
+                    analyzeBlockingArtifact(pixels, w, h),
+                    analyzeEfficientnetFeatures(pixels, w, h),
+                    analyzeAttentionConsistency(pixels, w, h),
+                    analyzeStyleTransfer(pixels, w, h),
+                    analyzeColorTemperature(pixels, w, h),
+                    analyzeSiftForensics(pixels, w, h),
+                    analyzeNeuralCompression(pixels, w, h),
                 ];
 
                 const methods = allMethods.filter(s => {
