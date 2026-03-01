@@ -1,0 +1,20 @@
+{
+    "name": "Autocorrelation Regularity",
+    "description": "Detects periodic autocorrelation peaks that suggest resampling or AI upsampling artifacts in the image structure.",
+    "algorithm": "Spatial Autocorrelation Peak Analysis",
+    "mechanism": "Computes the normalized autocorrelation function over grayscale pixel rows and columns at multiple lags. Periodic peaks in the autocorrelation indicate resampling artifacts from interpolation or AI upsampling, which produce predictable periodicity absent in natural images captured directly by camera sensors.",
+    "parameters": "Max lag: 32 pixels, Block size: 128x128. Sampling: row+column pairs, Normalization: zero-lag division",
+    "accuracy": "Moderate — 65-78%, best combined with spectral analysis",
+    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
+    "useCase": "Detecting resampling and upsampling artifacts characteristic of AI image generation pipelines",
+    "references": [
+        {
+            "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
+            "url": "https://doi.org/10.1109/TSP.2005.855406"
+        },
+        {
+            "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis of Fixed Linear Predictor Residue. ACM MM&Sec.",
+            "url": "https://doi.org/10.1145/1411328.1411333"
+        }
+    ]
+}

@@ -1,0 +1,22 @@
+{
+    "name": "Tính đều đặn tự tương quan",
+    "description": "Phát hiện đỉnh tự tương quan tuần hoàn gợi ý lỗi resampling hoặc upsampling AI trong cấu trúc ảnh.",
+    "algorithm": "Phân tích đỉnh tự tương quan không gian",
+    "mechanism": "Tính hàm tự tương quan chuẩn hóa trên các hàng và cột pixel xám ở nhiều độ trễ. Đỉnh tuần hoàn trong tự tương quan chỉ ra lỗi resampling từ nội suy hoặc upsampling AI.",
+    "parameters": "Độ trễ tối đa: 32 pixel, Khối: 128x128, Lấy mẫu: cặp hàng+cột, Chuẩn hóa: chia zero-lag",
+    "accuracy": "Trung bình — 65-78%, hiệu quả nhất khi kết hợp phân tích phổ",
+    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
+    "useCase": "Phát hiện lỗi resampling và upsampling đặc trưng của pipeline tạo ảnh AI",
+    "references": [
+        {
+            "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
+            "url": "https://doi.org/10.1109/TSP.2005.855406"
+        },
+        {
+            "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis. ACM MM&Sec.",
+            "url": "https://doi.org/10.1145/1411328.1411333"
+        }
+    ],
+    "strengths": "• Phát hiện lỗi resampling mắt thường không thấy\\n• Tính toán nhanh trên khối pixel cục bộ\\n• Nền tảng toán học trong xử lý tín hiệu\\n• Bổ sung cho phân tích Nyquist phổ",
+    "limitations": "• Độ nhạy giảm với nén JPEG nặng\\n• Kết cấu tự nhiên có mẫu tuần hoàn gây dương tính giả\\n• Ảnh nhỏ có thể không đủ dữ liệu\\n• Một số mô hình AI tránh resampling hoàn toàn"
+}
