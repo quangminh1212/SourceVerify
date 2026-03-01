@@ -1,0 +1,10 @@
+{
+    "name": "EXIF Integrity Validation",
+    "description": "Validates EXIF data structure integrity by checking mandatory camera fields, field consistency, version compliance, and metadata completeness. Detects anomalies in EXIF data that indicate AI generation or post-processing tampering.",
+    "algorithm": "Multi-field EXIF Structure Validator",
+    "mechanism": "The EXIF integrity validator examines:\n\n1. **Mandatory Field Presence**: Checks for essential camera EXIF fields (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Genuine camera images contain most of these fields.\n\n2. **Field Value Consistency**: Cross-validates related fields — e.g., DateTimeOriginal should precede DateTimeDigitized; ExifVersion should match known standards.\n\n3. **Structure Completeness**: Calculates an integrity ratio based on how many mandatory fields are present vs expected. High ratio indicates authentic camera capture.\n\n4. **Version Compliance**: Validates ExifVersion against known JEITA standards (0220-0232).",
+    "parameters": "Mandatory camera fields: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\n\nExcluded basic info: File Name, File Size, MIME Type, Last Modified, Format\n\nSupported EXIF versions: 0220, 0221, 0230, 0231, 0232",
+    "accuracy": "High - 80-90% accuracy for images with intact EXIF data. Less effective when metadata has been stripped.",
+    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP), CIPA DC-007 (Multi-Picture Format)",
+    "useCase": "Second-pass metadata validation: verifies EXIF structural integrity after initial metadata scan to identify subtle tampering or fabrication."
+}

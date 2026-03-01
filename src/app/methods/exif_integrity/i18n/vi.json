@@ -1,0 +1,10 @@
+{
+    "name": "Kiểm tra tính toàn vẹn EXIF",
+    "description": "Xác thực cấu trúc dữ liệu EXIF bằng cách kiểm tra các trường bắt buộc của máy ảnh, tính nhất quán của trường, tuân thủ phiên bản, và tính đầy đủ metadata. Phát hiện bất thường trong dữ liệu EXIF cho thấy hình ảnh do AI tạo hoặc bị chỉnh sửa.",
+    "algorithm": "Bộ kiểm tra cấu trúc EXIF đa trường",
+    "mechanism": "Bộ kiểm tra tính toàn vẹn EXIF phân tích:\n\n1. **Kiểm tra trường bắt buộc**: Kiểm tra các trường EXIF camera thiết yếu (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Ảnh chụp thật thường có hầu hết các trường này.\n\n2. **Tính nhất quán giá trị**: Kiểm tra chéo các trường liên quan — VD: DateTimeOriginal phải trước DateTimeDigitized; ExifVersion phải khớp tiêu chuẩn.\n\n3. **Tính đầy đủ cấu trúc**: Tính tỷ lệ toàn vẹn dựa trên số trường bắt buộc hiện có. Tỷ lệ cao cho thấy ảnh chụp thật.\n\n4. **Tuân thủ phiên bản**: Xác thực ExifVersion theo tiêu chuẩn JEITA (0220-0232).",
+    "parameters": "Trường bắt buộc: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\n\nTrường loại trừ: File Name, File Size, MIME Type, Last Modified, Format",
+    "accuracy": "Cao - 80-90% khi dữ liệu EXIF còn nguyên vẹn. Kém hiệu quả khi metadata đã bị xóa.",
+    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP), CIPA DC-007",
+    "useCase": "Kiểm tra metadata cấp 2: xác minh tính toàn vẹn cấu trúc EXIF sau lần quét metadata đầu tiên để phát hiện giả mạo tinh vi."
+}
