@@ -115,6 +115,17 @@ import {
     analyzeVitDetection,
     analyzeGramMatrix,
     analyzeSRMFilter,
+    // Metadata Analysis v10 (10)
+    analyzeExifIntegrity,
+    analyzeXmpProvenance,
+    analyzeIptcVerification,
+    analyzeGpsConsistency,
+    analyzeTimestampForensics,
+    analyzeFileStructure,
+    analyzeColorProfileMeta,
+    analyzeC2paVerification,
+    analyzeResolutionConsistency,
+    analyzeSoftwareFingerprint,
 } from "./methods";
 
 // ============================
@@ -423,6 +434,17 @@ export const METHOD_MAP: Record<string, string> = {
     upsampling_artifact: "signal.upsamplingArtifact",
     color_gamut: "signal.colorGamut",
     white_balance: "signal.whiteBalance",
+    // Metadata Analysis v10 (10)
+    exif_integrity: "signal.exifIntegrity",
+    xmp_provenance: "signal.xmpProvenance",
+    iptc_verification: "signal.iptcVerification",
+    gps_consistency: "signal.gpsConsistency",
+    timestamp_forensics: "signal.timestampForensics",
+    file_structure: "signal.fileStructure",
+    color_profile_meta: "signal.colorProfileMeta",
+    c2pa_verification: "signal.c2paVerification",
+    resolution_consistency: "signal.resolutionConsistency",
+    software_fingerprint: "signal.softwareFingerprint",
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
@@ -551,6 +573,17 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         analyzeVitDetection(pixels, w, h),
         analyzeGramMatrix(pixels, w, h),
         analyzeSRMFilter(pixels, w, h),
+        // Metadata Analysis v10 (10)
+        analyzeExifIntegrity(metadata, exifData),
+        analyzeXmpProvenance(metadata, exifData),
+        analyzeIptcVerification(metadata, exifData),
+        analyzeGpsConsistency(metadata, exifData),
+        analyzeTimestampForensics(metadata, exifData),
+        analyzeFileStructure(metadata, exifData),
+        analyzeColorProfileMeta(metadata, exifData),
+        analyzeC2paVerification(metadata, exifData),
+        analyzeResolutionConsistency(metadata, exifData),
+        analyzeSoftwareFingerprint(metadata, exifData),
     ];
 
     // Filter methods based on enabled set
@@ -698,6 +731,17 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     analyzeVitDetection(pixels, w, h),
                     analyzeGramMatrix(pixels, w, h),
                     analyzeSRMFilter(pixels, w, h),
+                    // Metadata Analysis v10 (10)
+                    analyzeExifIntegrity(metadata, exifData),
+                    analyzeXmpProvenance(metadata, exifData),
+                    analyzeIptcVerification(metadata, exifData),
+                    analyzeGpsConsistency(metadata, exifData),
+                    analyzeTimestampForensics(metadata, exifData),
+                    analyzeFileStructure(metadata, exifData),
+                    analyzeColorProfileMeta(metadata, exifData),
+                    analyzeC2paVerification(metadata, exifData),
+                    analyzeResolutionConsistency(metadata, exifData),
+                    analyzeSoftwareFingerprint(metadata, exifData),
                 ];
 
                 const methods = allMethods.filter(s => {

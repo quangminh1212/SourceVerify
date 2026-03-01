@@ -118,3 +118,15 @@ export { analyzeResnetClassifier } from "./resnetClassifier";
 export { analyzeVitDetection } from "./vitDetection";
 export { analyzeGramMatrix } from "./gramMatrix";
 export { analyzeSRMFilter } from "./srmFilter";
+
+// Metadata Analysis v10 (10 signals)
+export { analyzeExifIntegrity } from "./exifIntegrity";
+export { analyzeXmpProvenance } from "./xmpProvenance";
+export { analyzeIptcVerification } from "./iptcVerification";
+export { analyzeGpsConsistency } from "./gpsConsistency";
+export { analyzeTimestampForensics } from "./timestampForensics";
+export { analyzeFileStructure } from "./fileStructure";
+export { analyzeColorProfileMeta } from "./colorProfileMeta";
+export { analyzeC2paVerification } from "./c2paVerification";
+export { analyzeResolutionConsistency } from "./resolutionConsistency";
+export { analyzeSoftwareFingerprint } from "./softwareFingerprint";
