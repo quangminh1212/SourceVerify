@@ -1,16 +1,9 @@
 /**
- * SourceVerify AI Detection Engine v8
- * Main orchestrator — imports and coordinates all 75 analysis methods
+ * SourceVerify AI Detection Engine v9
+ * Main orchestrator — imports and coordinates all 87 analysis methods
  *
  * Terminology: "method" = phương pháp phân tích (analysis method)
  * Each method analyzes a specific aspect of the image and returns a result with a score.
- *
- * v7 Changes:
- * - Added 12 new methods (total 55) from peer-reviewed research papers
- * - New categories: forensic-advanced, perceptual, histogram/info-theory
- * - Papers: Christlein 2012, Lin 2009, Popescu & Farid 2005, Fridrich 2012,
- *   Tamura 1978, Ojansivu 2008, Sarkar 1994, Loy 2006, Farid 2016, Pass 1996,
- *   Cover & Thomas 2006, Wang 2004
  */
 
 export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
@@ -109,6 +102,19 @@ import {
     analyzeColorTemperature,
     analyzeSiftForensics,
     analyzeNeuralCompression,
+    // New: Extended Forensic Methods v9 (12)
+    analyzeSplicingDetection,
+    analyzeNoiseprintExtraction,
+    analyzeUpscalingDetection,
+    analyzeFaceLandmarkConsistency,
+    analyzeReflectionConsistency,
+    analyzePatchForensics,
+    analyzeClipDetection,
+    analyzeFourierRing,
+    analyzeResnetClassifier,
+    analyzeVitDetection,
+    analyzeGramMatrix,
+    analyzeSRMFilter,
 } from "./methods";
 
 // ============================
@@ -259,7 +265,7 @@ function calculateVerdict(methods: AnalysisMethod[]): { aiScore: number; verdict
 }
 
 // ============================
-// IMAGE ANALYSIS (75 methods)
+// IMAGE ANALYSIS (87 methods)
 // ============================
 
 // Method ID → nameKey mapping
@@ -351,6 +357,55 @@ export const METHOD_MAP: Record<string, string> = {
     colorTemperature: "signal.colorTemperature",
     siftForensics: "signal.siftForensics",
     neuralCompression: "signal.neuralCompression",
+    // Extended Forensic Methods v9 (12)
+    splicing: "signal.splicingDetection",
+    noiseprint: "signal.noiseprintExtraction",
+    upscaling: "signal.upscalingDetection",
+    face_landmark: "signal.faceLandmarkConsistency",
+    reflection: "signal.reflectionConsistency",
+    patchforensics: "signal.patchForensics",
+    clip_detection: "signal.clipDetection",
+    fourier_ring: "signal.fourierRing",
+    resnet_classifier: "signal.resnetClassifier",
+    vit_detection: "signal.vitDetection",
+    gram_matrix: "signal.gramMatrix",
+    srm_filter: "signal.srmFilter",
+    // Alias mappings for data.ts IDs → existing methods
+    copymove: "signal.copyMove",
+    histogram: "signal.histogramGradient",
+    jpeg_ghost: "signal.jpegGhost",
+    chi_square: "signal.chiSquareUniformity",
+    frequency_band: "signal.freqBandRatio",
+    double_jpeg: "signal.doubleJpeg",
+    binary_pattern: "signal.localBinaryPattern",
+    tamura_texture: "signal.tamuraTexture",
+    lpq_analysis: "signal.lpq",
+    fractal_dimension: "signal.fractalDimension",
+    bilateral_symmetry: "signal.bilateralSymmetry",
+    histogram_gradient: "signal.histogramGradient",
+    color_coherence: "signal.colorCoherence",
+    mutual_information: "signal.mutualInfo",
+    laplacian_edge: "signal.laplacianEdge",
+    copy_move_forensics: "signal.copyMove",
+    double_jpeg_detection: "signal.doubleJpeg",
+    pixel_cooccurrence: "signal.pixelCooccurrence",
+    median_filter: "signal.medianFilter",
+    contrast_enhancement: "signal.contrastEnhancement",
+    thumbnail_analysis: "signal.thumbnailAnalysis",
+    perceptual_hash: "signal.perceptualHash",
+    illuminant_map: "signal.illuminantMap",
+    radon_transform: "signal.radonTransform",
+    zernike_moments: "signal.zernikeMoments",
+    camera_model: "signal.cameraModel",
+    image_phylogeny: "signal.imagePhylogeny",
+    blocking_artifact: "signal.blockingArtifact",
+    efficientnet_detection: "signal.efficientnetDetection",
+    attention_consistency: "signal.attentionConsistency",
+    style_transfer: "signal.styleTransfer",
+    color_temperature: "signal.colorTemperature",
+    sift_forensics: "signal.siftForensics",
+    neural_compression: "signal.neuralCompression",
+    gan_fingerprint: "signal.ganFingerprint",
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
@@ -466,6 +521,19 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         analyzeColorTemperature(pixels, w, h),
         analyzeSiftForensics(pixels, w, h),
         analyzeNeuralCompression(pixels, w, h),
+        // Extended Forensic Methods v9 (12)
+        analyzeSplicingDetection(pixels, w, h),
+        analyzeNoiseprintExtraction(pixels, w, h),
+        analyzeUpscalingDetection(pixels, w, h),
+        analyzeFaceLandmarkConsistency(pixels, w, h),
+        analyzeReflectionConsistency(pixels, w, h),
+        analyzePatchForensics(pixels, w, h),
+        analyzeClipDetection(pixels, w, h),
+        analyzeFourierRing(pixels, w, h),
+        analyzeResnetClassifier(pixels, w, h),
+        analyzeVitDetection(pixels, w, h),
+        analyzeGramMatrix(pixels, w, h),
+        analyzeSRMFilter(pixels, w, h),
     ];
 
     // Filter methods based on enabled set
@@ -599,6 +667,19 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     analyzeColorTemperature(pixels, w, h),
                     analyzeSiftForensics(pixels, w, h),
                     analyzeNeuralCompression(pixels, w, h),
+                    // Extended Forensic Methods v9 (12)
+                    analyzeSplicingDetection(pixels, w, h),
+                    analyzeNoiseprintExtraction(pixels, w, h),
+                    analyzeUpscalingDetection(pixels, w, h),
+                    analyzeFaceLandmarkConsistency(pixels, w, h),
+                    analyzeReflectionConsistency(pixels, w, h),
+                    analyzePatchForensics(pixels, w, h),
+                    analyzeClipDetection(pixels, w, h),
+                    analyzeFourierRing(pixels, w, h),
+                    analyzeResnetClassifier(pixels, w, h),
+                    analyzeVitDetection(pixels, w, h),
+                    analyzeGramMatrix(pixels, w, h),
+                    analyzeSRMFilter(pixels, w, h),
                 ];
 
                 const methods = allMethods.filter(s => {

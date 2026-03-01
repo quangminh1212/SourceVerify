@@ -1,6 +1,7 @@
 /**
  * Analysis methods barrel export
- * 55 forensic analysis methods (phương pháp phân tích) based on peer-reviewed research
+ * 75+ forensic analysis methods based on peer-reviewed research
+ * Each method is in its own file for maintainability
  */
 
 // Original 13 signals
@@ -19,46 +20,69 @@ export { analyzeDCTBlockArtifacts } from "./dct";
 export { analyzeColorChannelCorrelation } from "./color";
 export { analyzePRNUPattern } from "./prnu";
 
-// New: Spatial Domain (6 signals) — Signals 14-19
-export { analyzeLocalBinaryPattern, analyzeHOGAnomaly, analyzeGLCM, analyzeLocalVarianceMap, analyzeMorphologicalGradient, analyzeWeberDescriptor } from "./spatial";
+// Spatial Domain (6 signals)
+export { analyzeLocalBinaryPattern } from "./localBinaryPattern";
+export { analyzeHOGAnomaly } from "./hogAnomaly";
+export { analyzeGLCM } from "./glcm";
+export { analyzeLocalVarianceMap } from "./localVarianceMap";
+export { analyzeMorphologicalGradient } from "./morphologicalGradient";
+export { analyzeWeberDescriptor } from "./weberDescriptor";
 
-// New: Frequency Domain (6 signals) — Signals 20-25
-export { analyzeWaveletStatistics, analyzeGaborResponse, analyzePowerSpectralDensity, analyzePhaseCongruency, analyzeRadialSpectrum, analyzeFrequencyBandRatio } from "./frequencyAdvanced";
+// Frequency Domain (6 signals)
+export { analyzeWaveletStatistics } from "./waveletStatistics";
+export { analyzeGaborResponse } from "./gaborResponse";
+export { analyzePowerSpectralDensity } from "./powerSpectralDensity";
+export { analyzePhaseCongruency } from "./phaseCongruency";
+export { analyzeRadialSpectrum } from "./radialSpectrum";
+export { analyzeFrequencyBandRatio } from "./frequencyBandRatio";
 
-// New: Statistical (6 signals) — Signals 26-31
-export { analyzeEntropyMap, analyzeHigherOrderStatistics, analyzeZipfLaw, analyzeChiSquareUniformity, analyzeMarkovTransition, analyzeSaturationDistribution } from "./statisticalAdvanced";
+// Statistical (6 signals)
+export { analyzeEntropyMap } from "./entropyMap";
+export { analyzeHigherOrderStatistics } from "./higherOrderStatistics";
+export { analyzeZipfLaw } from "./zipfLaw";
+export { analyzeChiSquareUniformity } from "./chiSquareUniformity";
+export { analyzeMarkovTransition } from "./markovTransition";
+export { analyzeSaturationDistribution } from "./saturationDistribution";
 
-// New: Compression (4 signals) — Signals 32-35
-export { analyzeJPEGGhost, analyzeQuantizationFingerprint, analyzeErrorLevel, analyzeColorBanding } from "./compression";
+// Compression (4 signals)
+export { analyzeJPEGGhost } from "./jpegGhost";
+export { analyzeQuantizationFingerprint } from "./quantizationFingerprint";
+export { analyzeErrorLevel } from "./errorLevel";
+export { analyzeColorBanding } from "./colorBanding";
 
-// New: Generative Model Detection (3 signals) — Signals 36-38
-export { analyzeGANFingerprint, analyzeUpsamplingArtifact, analyzeDiffusionArtifact } from "./generative";
+// Generative Model Detection (3 signals)
+export { analyzeGANFingerprint } from "./ganFingerprint";
+export { analyzeUpsamplingArtifact } from "./upsamplingArtifact";
+export { analyzeDiffusionArtifact } from "./diffusionArtifact";
 
-// New: Geometric (3 signals) — Signals 39-41
-export { analyzePerspectiveConsistency, analyzeLightingConsistency, analyzeShadowConsistency } from "./geometric";
+// Geometric (3 signals)
+export { analyzePerspectiveConsistency } from "./perspectiveConsistency";
+export { analyzeLightingConsistency } from "./lightingConsistency";
+export { analyzeShadowConsistency } from "./shadowConsistency";
 
-// New: Advanced Color (2 signals) — Signals 42-43
-export { analyzeColorGamut, analyzeWhiteBalance } from "./colorAdvanced";
+// Advanced Color (2 signals)
+export { analyzeColorGamut } from "./colorGamut";
+export { analyzeWhiteBalance } from "./whiteBalance";
 
-// New: Advanced Forensic (4 signals) — Signals 44-47
+// Advanced Forensic (4 signals)
 export { analyzeCopyMoveForensics } from "./copyMove";
 export { analyzeDoubleJPEG } from "./doubleJpeg";
 export { analyzeAutocorrelation } from "./autocorrelation";
 export { analyzePixelCooccurrence } from "./pixelCooccurrence";
 
-// New: Perceptual Texture (4 signals) — Signals 48-51
+// Perceptual Texture (4 signals)
 export { analyzeTamuraTexture } from "./tamura";
 export { analyzeLocalPhaseQuantization } from "./lpq";
 export { analyzeFractalDimension } from "./fractal";
 export { analyzeBilateralSymmetry } from "./bilateralSymmetry";
 
-// New: Histogram & Information Theory (4 signals) — Signals 52-55
+// Histogram & Info Theory (4 signals)
 export { analyzeHistogramGradient } from "./histogramGradient";
 export { analyzeColorCoherence } from "./colorCoherence";
 export { analyzeMutualInformation } from "./mutualInfo";
 export { analyzeLaplacianEdge } from "./laplacianEdge";
 
-// New: Forensic Methods v8 (20 methods)
+// Forensic Methods v8 (20 signals)
 export { analyzeMedianFilter } from "./medianFilter";
 export { analyzeResampling } from "./resamplingDetect";
 export { analyzeContrastEnhancement } from "./contrastEnhancement";
@@ -79,3 +103,17 @@ export { analyzeStyleTransfer } from "./styleTransfer";
 export { analyzeColorTemperature } from "./colorTemperature";
 export { analyzeSiftForensics } from "./siftForensics";
 export { analyzeNeuralCompression } from "./neuralCompression";
+
+// Extended forensic methods v9 (12 signals)
+export { analyzeSplicingDetection } from "./splicingDetection";
+export { analyzeNoiseprintExtraction } from "./noiseprintExtraction";
+export { analyzeUpscalingDetection } from "./upscalingDetection";
+export { analyzeFaceLandmarkConsistency } from "./faceLandmarkConsistency";
+export { analyzeReflectionConsistency } from "./reflectionConsistency";
+export { analyzePatchForensics } from "./patchForensics";
+export { analyzeClipDetection } from "./clipDetection";
+export { analyzeFourierRing } from "./fourierRing";
+export { analyzeResnetClassifier } from "./resnetClassifier";
+export { analyzeVitDetection } from "./vitDetection";
+export { analyzeGramMatrix } from "./gramMatrix";
+export { analyzeSRMFilter } from "./srmFilter";
