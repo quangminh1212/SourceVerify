@@ -1,0 +1,22 @@
+{
+    "name": "CFA Pattern Detection",
+    "description": "Searches for Bayer Color Filter Array demosaicing artifacts left by real camera sensors. This fingerprint is a strong indicator of real photography and is absent in AI images.",
+    "algorithm": "Color Filter Array (Bayer CFA) Demosaicing Trace Detection",
+    "mechanism": "Detects periodic correlation patterns from Bayer CFA demosaicing in real cameras. These traces are absent in AI-generated images.",
+    "parameters": "Analysis: 2D autocorrelation of green channel, Expected pattern: 2x2 periodic",
+    "accuracy": "High - 80-92% for images from known camera sensors",
+    "source": "Popescu and Farid (2005), ACM Workshop on Multimedia and Security",
+    "useCase": "Verifying authentic camera origin through CFA demosaicing artifacts",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TSP.2005.855406",
+            "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries in Color Filter Array Interpolated Images. IEEE TSP."
+        },
+        {
+            "url": "https://doi.org/10.1109/ICIP.2009.5413963",
+            "title": "Dirik, A.E. & Memon, N. (2009). Image tamper detection based on demosaicing artifacts. IEEE ICIP."
+        }
+    ],
+    "strengths": "• Strong indicator of real camera origin\n• Based on physical sensor hardware\n• Difficult for AI to simulate CFA patterns\n• Very low false positive rate on camera images",
+    "limitations": "• Only detects presence/absence of CFA patterns\n• Some cameras apply heavy demosaicing that masks patterns\n• Resizing or heavy processing destroys CFA traces\n• Cannot identify specific camera model"
+}

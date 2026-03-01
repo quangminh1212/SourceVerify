@@ -1,0 +1,22 @@
+{
+    "useCase": "Phát hiện zero-shot và few-shot nội dung AI trên nhiều loại bộ tạo",
+    "mechanism": "Mã hóa ảnh đầu vào bằng bộ mã hóa thị giác ViT-L/14 của CLIP để tạo vector đặc trưng 768 chiều. Bộ phân loại tuyến tính đã huấn luyện xác định xem đặc trưng ngữ nghĩa có khớp mẫu điển hình của nội dung AI hay không.",
+    "accuracy": "Cao - 85-93% trên nhiều loại bộ tạo AI",
+    "name": "Phát hiện AI dựa trên CLIP",
+    "source": "Radford et al. (2021) - Học mô hình thị giác có thể chuyển giao từ giám sát ngôn ngữ tự nhiên, ICML",
+    "algorithm": "CLIP ViT-L/14 + Bộ phân loại tuyến tính",
+    "parameters": "Backbone: ViT-L/14, Chiều đặc trưng: 768, Bộ phân loại: tuyến tính, Đầu vào: 224x224, Tiền xử lý: cắt giữa + chuẩn hóa",
+    "description": "Sử dụng mô hình thị giác-ngôn ngữ CLIP của OpenAI để phát hiện bất nhất quán ngữ nghĩa. Dùng học đối lập cho phát hiện zero-shot.",
+    "strengths": "• Tổng quát hóa xuất sắc trên nhiều bộ tạo AI\n• Nắm bắt sự không nhất quán ngữ nghĩa cấp cao\n• Được huấn luyện trên tập dữ liệu khổng lồ (400M cặp ảnh-text)\n• Hoạt động tốt không cần tinh chỉnh",
+    "limitations": "• Yêu cầu tài nguyên tính toán đáng kể\n• Có thể không phát hiện hiện vật mức pixel thấp\n• Hiệu suất thay đổi theo độ phân giải\n• Kích thước mô hình lớn (~900MB)",
+    "references": [
+        {
+            "title": "Radford, A. et al. (2021). Learning Transferable Visual Models From Natural Language Supervision. ICML.",
+            "url": "https://arxiv.org/abs/2103.00020"
+        },
+        {
+            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Generative Models. CVPR.",
+            "url": "https://arxiv.org/abs/2302.10174"
+        }
+    ]
+}

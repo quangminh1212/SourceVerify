@@ -1,0 +1,22 @@
+{
+    "useCase": "Binary classification of real vs. AI-generated images using deep learning features",
+    "mechanism": "Uses a ResNet-50 backbone pre-trained on ImageNet, replacing the final classification layer with a binary real/AI classifier. Global Average Pooling aggregates spatial features before the fully connected layer. Transfer learning enables robust feature extraction from limited forensic training data.",
+    "accuracy": "High - 88-95% on in-distribution AI generators",
+    "name": "ResNet Binary Classifier",
+    "source": "Wang et al. (2020) - CNN-generated Images Are Surprisingly Easy to Spot For Now, CVPR",
+    "algorithm": "ResNet-50 + Global Average Pooling + FC Layer",
+    "parameters": "Backbone: ResNet-50, Pre-training: ImageNet, FC output: 2 (real/AI), Input: 224x224, Optimizer: Adam, Learning rate: 1e-4",
+    "description": "Fine-tuned ResNet-50 deep neural network trained on large-scale real vs. AI-generated image datasets. Uses transfer learning from ImageNet for robust feature extraction.",
+    "strengths": "• Strong baseline with high accuracy\n• Benefits from ImageNet pre-training\n• Captures both low-level and high-level features\n• Well-studied architecture with known properties",
+    "limitations": "• Generalization to unseen generators is limited\n• Requires retraining for new AI model types\n• Black-box nature limits interpretability\n• Vulnerable to adversarial attacks",
+    "references": [
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-Generated Images Are Surprisingly Easy to Spot...For Now. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
+        },
+        {
+            "title": "He, K. et al. (2016). Deep Residual Learning for Image Recognition. CVPR.",
+            "url": "https://doi.org/10.1109/CVPR.2016.90"
+        }
+    ]
+}

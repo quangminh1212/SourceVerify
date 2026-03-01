@@ -1,0 +1,22 @@
+{
+    "useCase": "Phát hiện hiện vật upsampling GAN không thể nhìn thấy bằng mắt nhưng có trong miền tần số",
+    "mechanism": "Tính toán biến đổi Fourier nhanh 2D và chuyển sang tọa độ cực để tạo hồ sơ mật độ phổ công suất theo bán kính. Các phép upsampling GAN (chuyển vị tích chập, xáo trộn pixel) tạo mẫu vòng tuần hoàn đặc trưng trong miền tần số xuất hiện dưới dạng đỉnh trong hồ sơ bán kính.",
+    "accuracy": "Cao - 85-93% cho ảnh GAN có hiện vật upsampling",
+    "name": "Phát hiện mẫu vòng Fourier",
+    "source": "Dzanic et al. (2020) - Sự khác biệt phổ Fourier trong ảnh tạo bởi mạng sâu, NeurIPS Workshop",
+    "algorithm": "Profile hướng tâm FFT 2D + Phát hiện đỉnh",
+    "parameters": "Kích thước FFT: kích thước ảnh, Bins bán kính: 256, Phát hiện đỉnh: scipy find_peaks, Độ nổi bật đỉnh tối thiểu: 2σ trên trung bình",
+    "description": "Phát hiện mẫu vòng tuần hoàn trong phổ Fourier 2D do phép upsampling GAN. Các bất thường phổ này mắt thường không thấy nhưng máy tính phát hiện được.",
+    "strengths": "• Rất đáng tin cậy cho bộ tạo dựa trên GAN\n• Phát hiện hiện vật mắt thường không thấy\n• Nền tảng toán học vững chắc\n• Tính toán nhanh qua FFT",
+    "limitations": "• Kém hiệu quả với mô hình khuếch tán\n• Nén JPEG có thể che giấu hiện vật phổ\n• Ảnh nhỏ giảm độ phân giải tần số\n• Có thể tạo dương tính giả trên ảnh có kết cấu đều",
+    "references": [
+        {
+            "title": "Dzanic, T. et al. (2020). Fourier Spectrum Discrepancies in Deep Network Generated Images. NeurIPS Workshop.",
+            "url": "https://arxiv.org/abs/1911.06465"
+        },
+        {
+            "title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML.",
+            "url": "https://arxiv.org/abs/2003.08685"
+        }
+    ]
+}

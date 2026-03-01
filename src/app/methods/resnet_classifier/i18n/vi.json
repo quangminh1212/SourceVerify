@@ -1,0 +1,22 @@
+{
+    "useCase": "Phân loại nhị phân ảnh thật vs AI bằng đặc trưng học sâu",
+    "mechanism": "Sử dụng backbone ResNet-50 đã huấn luyện trên ImageNet, thay tầng phân loại cuối bằng bộ phân loại nhị phân thật/AI. Global Average Pooling tổng hợp đặc trưng không gian trước tầng kết nối đầy đủ. Học chuyển giao cho phép trích xuất đặc trưng mạnh mẽ.",
+    "accuracy": "Cao - 88-95% trên bộ tạo AI trong phân phối",
+    "name": "Bộ phân loại nhị phân ResNet",
+    "source": "Wang et al. (2020) - Ảnh tạo bởi CNN dễ phát hiện một cách bất ngờ, CVPR",
+    "algorithm": "ResNet-50 + Pooling trung bình toàn cục + Lớp kết nối",
+    "parameters": "Backbone: ResNet-50, Tiền huấn luyện: ImageNet, Đầu ra FC: 2 (thật/AI), Đầu vào: 224x224, Tối ưu: Adam, Tốc độ học: 1e-4",
+    "description": "Mạng nơ-ron sâu ResNet-50 tinh chỉnh trên tập dữ liệu ảnh thật vs. AI quy mô lớn. Dùng học chuyển giao từ ImageNet để trích xuất đặc trưng bền vững.",
+    "strengths": "• Baseline mạnh với độ chính xác cao\n• Hưởng lợi từ tiền huấn luyện ImageNet\n• Nắm bắt cả đặc trưng mức thấp và cao\n• Kiến trúc được nghiên cứu kỹ",
+    "limitations": "• Tổng quát hóa sang bộ tạo chưa biết bị hạn chế\n• Cần huấn luyện lại cho loại mô hình AI mới\n• Bản chất hộp đen hạn chế khả năng giải thích\n• Dễ bị tấn công đối kháng",
+    "references": [
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-Generated Images Are Surprisingly Easy to Spot...For Now. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
+        },
+        {
+            "title": "He, K. et al. (2016). Deep Residual Learning for Image Recognition. CVPR.",
+            "url": "https://doi.org/10.1109/CVPR.2016.90"
+        }
+    ]
+}

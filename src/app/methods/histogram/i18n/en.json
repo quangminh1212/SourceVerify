@@ -1,0 +1,22 @@
+{
+    "useCase": "Preliminary screening for AI-generated content and post-processing detection",
+    "mechanism": "Computes per-channel histograms (R, G, B, Luminance) and analyzes for gaps, spikes, periodicity, and smoothness metrics. Natural images have characteristic histogram shapes that differ from AI-generated content.",
+    "accuracy": "Medium - 70-82% as standalone method, higher when combined with other signals",
+    "name": "Histogram Analysis",
+    "source": "Popescu & Farid (2005) - Statistical Tools for Digital Forensics",
+    "algorithm": "Multi-channel Histogram Distribution Analysis",
+    "parameters": "Bins: 256, Channels: R/G/B/L, Metrics: kurtosis, skewness, entropy, gap count, periodicity index",
+    "description": "Analyzes color and luminance histogram distributions for statistical anomalies. AI-generated images often show unnaturally smooth or periodic histogram patterns.",
+    "references": [
+        {
+            "url": "https://doi.org/10.1007/978-3-540-30114-1_10",
+            "title": "Popescu, A.C. & Farid, H. (2005). Statistical Tools for Digital Forensics. Information Hiding."
+        },
+        {
+            "url": "https://doi.org/10.1109/ICIP.2019.8803661",
+            "title": "McCloskey, S. & Albright, M. (2019). Detecting GAN-generated Imagery using Saturation Cues. IEEE ICIP."
+        }
+    ],
+    "strengths": "• Very fast computation\n• Effective preliminary screening tool\n• Detects common AI histogram patterns\n• Works across all image formats",
+    "limitations": "• Low standalone detection rate\n• Post-processing easily alters histograms\n• Natural images can have unusual histograms\n• Color-corrected images produce false positives"
+}
