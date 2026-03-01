@@ -1,28 +1,17 @@
 import type { NextConfig } from "next";
-import os from "os";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   compress: true,
   poweredByHeader: false,
   serverExternalPackages: ["canvas"],
-  // Timeout cho static page generation - tránh build bị treo quá lâu
+  // Timeout cho static page generation - tránh build bị treo quá lâu (giây)
   staticPageGenerationTimeout: 30,
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  // Tối ưu build performance
-  experimental: {
-    workerThreads: false,
-    cpus: Math.max(1, Math.min(4, (os.cpus()?.length || 2) - 1)),
-  },
-  // Next.js 16 dùng Turbopack mặc định, cần config turbopack thay vì webpack
-  turbopack: {
-    resolveAlias: {
-      // Tránh canvas bị bundle vào client-side
-      canvas: { browser: '' },
-    },
-  },
+  // Turbopack config (Next.js 16 default)
+  turbopack: {},
   async headers() {
     return [
       {
