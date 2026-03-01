@@ -203,6 +203,28 @@ import resolution_consistency_en from "./resolution_consistency/i18n/en.json";
 import resolution_consistency_vi from "./resolution_consistency/i18n/vi.json";
 import software_fingerprint_en from "./software_fingerprint/i18n/en.json";
 import software_fingerprint_vi from "./software_fingerprint/i18n/vi.json";
+// Video Analysis Methods
+import temporal_consistency_en from "./temporal_consistency/i18n/en.json";
+import temporal_consistency_vi from "./temporal_consistency/i18n/vi.json";
+import lip_sync_analysis_en from "./lip_sync_analysis/i18n/en.json";
+import lip_sync_analysis_vi from "./lip_sync_analysis/i18n/vi.json";
+import frame_interpolation_en from "./frame_interpolation/i18n/en.json";
+import frame_interpolation_vi from "./frame_interpolation/i18n/vi.json";
+import optical_flow_anomaly_en from "./optical_flow_anomaly/i18n/en.json";
+import optical_flow_anomaly_vi from "./optical_flow_anomaly/i18n/vi.json";
+import audio_visual_sync_en from "./audio_visual_sync/i18n/en.json";
+import audio_visual_sync_vi from "./audio_visual_sync/i18n/vi.json";
+// Text Analysis Methods
+import perplexity_analysis_en from "./perplexity_analysis/i18n/en.json";
+import perplexity_analysis_vi from "./perplexity_analysis/i18n/vi.json";
+import burstiness_detection_en from "./burstiness_detection/i18n/en.json";
+import burstiness_detection_vi from "./burstiness_detection/i18n/vi.json";
+import vocabulary_diversity_en from "./vocabulary_diversity/i18n/en.json";
+import vocabulary_diversity_vi from "./vocabulary_diversity/i18n/vi.json";
+import stylometric_analysis_en from "./stylometric_analysis/i18n/en.json";
+import stylometric_analysis_vi from "./stylometric_analysis/i18n/vi.json";
+import ngram_frequency_en from "./ngram_frequency/i18n/en.json";
+import ngram_frequency_vi from "./ngram_frequency/i18n/vi.json";
 
 type MethodLocaleEntry = { name: string; description: string };
 
@@ -260,6 +282,14 @@ const en = buildMap([
     ["timestamp_forensics", timestamp_forensics_en], ["file_structure", file_structure_en],
     ["color_profile_meta", color_profile_meta_en], ["c2pa_verification", c2pa_verification_en],
     ["resolution_consistency", resolution_consistency_en], ["software_fingerprint", software_fingerprint_en],
+    // Video Analysis Methods
+    ["temporal_consistency", temporal_consistency_en], ["lip_sync_analysis", lip_sync_analysis_en],
+    ["frame_interpolation", frame_interpolation_en], ["optical_flow_anomaly", optical_flow_anomaly_en],
+    ["audio_visual_sync", audio_visual_sync_en],
+    // Text Analysis Methods
+    ["perplexity_analysis", perplexity_analysis_en], ["burstiness_detection", burstiness_detection_en],
+    ["vocabulary_diversity", vocabulary_diversity_en], ["stylometric_analysis", stylometric_analysis_en],
+    ["ngram_frequency", ngram_frequency_en],
 ]);
 
 const vi = buildMap([
@@ -307,6 +337,14 @@ const vi = buildMap([
     ["timestamp_forensics", timestamp_forensics_vi], ["file_structure", file_structure_vi],
     ["color_profile_meta", color_profile_meta_vi], ["c2pa_verification", c2pa_verification_vi],
     ["resolution_consistency", resolution_consistency_vi], ["software_fingerprint", software_fingerprint_vi],
+    // Video Analysis Methods
+    ["temporal_consistency", temporal_consistency_vi], ["lip_sync_analysis", lip_sync_analysis_vi],
+    ["frame_interpolation", frame_interpolation_vi], ["optical_flow_anomaly", optical_flow_anomaly_vi],
+    ["audio_visual_sync", audio_visual_sync_vi],
+    // Text Analysis Methods
+    ["perplexity_analysis", perplexity_analysis_vi], ["burstiness_detection", burstiness_detection_vi],
+    ["vocabulary_diversity", vocabulary_diversity_vi], ["stylometric_analysis", stylometric_analysis_vi],
+    ["ngram_frequency", ngram_frequency_vi],
 ]);
 
 const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi };

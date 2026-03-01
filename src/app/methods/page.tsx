@@ -6,7 +6,12 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
-import { METHODS, CATEGORIES, CAT_COLORS, CAT_HEX, CAT_ICON_PATHS, type Category } from "./data";
+import {
+    METHODS, CATEGORIES, MEDIA_TYPES,
+    CAT_COLORS, CAT_HEX, CAT_ICON_PATHS,
+    MEDIA_HEX, MEDIA_ICON_PATHS, MEDIA_COLORS,
+    type Category, type MediaType,
+} from "./data";
 import { getMethodTranslation } from "./methodsI18n";
 
 function MethodIcon({ category }: { category: Category }) {
@@ -31,9 +36,32 @@ function MethodIcon({ category }: { category: Category }) {
     );
 }
 
+function MediaIcon({ mediaType }: { mediaType: MediaType }) {
+    if (mediaType === "all") return null;
+    const paths = (MEDIA_ICON_PATHS[mediaType] || "").split(" M");
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={MEDIA_HEX[mediaType]}
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            {paths.map((p, i) => (
+                <path key={i} d={i === 0 ? p : `M${p}`} />
+            ))}
+        </svg>
+    );
+}
+
 export default function MethodsPage() {
     const { t, locale } = useLanguage();
     const [activeCat, setActiveCat] = useState<Category>("all");
+    const [activeMedia, setActiveMedia] = useState<MediaType>("all");
     const router = useRouter();
     const [isSelectMode, setIsSelectMode] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,7 +72,6 @@ export default function MethodsPage() {
         setIsLoggedIn(!!saved);
         const method = localStorage.getItem("sv_method");
         setSelectedId(method);
-        // Check URL for select mode
         const params = new URLSearchParams(window.location.search);
         setIsSelectMode(params.get("select") === "1");
     }, []);
@@ -56,9 +83,11 @@ export default function MethodsPage() {
 
     const showSelectUI = isSelectMode && !isLoggedIn;
 
-    const filtered = activeCat === "all"
-        ? METHODS
-        : METHODS.filter(m => m.category === activeCat);
+    const filtered = METHODS.filter(m => {
+        const catMatch = activeCat === "all" || m.category === activeCat;
+        const mediaMatch = activeMedia === "all" || m.mediaType === activeMedia;
+        return catMatch && mediaMatch;
+    });
 
     return (
         <main className="relative min-h-screen flex flex-col">
@@ -67,23 +96,52 @@ export default function MethodsPage() {
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-16 lg:pb-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
 
+                    {/* Media Type Tabs — By Content Type */}
+                    <div className="methods-filter-section animate-fade-in-up">
+                        <span className="methods-filter-label">{t("methods.filterByContent")}</span>
+                        <div className="methods-media-tabs">
+                            {MEDIA_TYPES.map(mt => (
+                                <button
+                                    key={mt.key}
+                                    className={`methods-media-tab ${activeMedia === mt.key ? "active" : ""} ${mt.key !== "all" ? `media-${mt.key}` : ""}`}
+                                    onClick={() => setActiveMedia(mt.key)}
+                                >
+                                    {mt.key !== "all" && <MediaIcon mediaType={mt.key} />}
+                                    {t(mt.labelKey)}
+                                    {mt.key !== "all" && (
+                                        <span className={`methods-media-tab-count`}>
+                                            {METHODS.filter(m => m.mediaType === mt.key).length}
+                                        </span>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
 
-                    {/* Category Tabs */}
-                    <div className="methods-cat-tabs animate-fade-in-up">
-                        {CATEGORIES.map(cat => (
-                            <button
-                                key={cat.key}
-                                className={`methods-cat-tab ${activeCat === cat.key ? "active" : ""}`}
-                                onClick={() => setActiveCat(cat.key)}
-                            >
-                                {t(cat.labelKey)}
-                                {cat.key !== "all" && (
-                                    <span className={`methods-cat-tab-count count-${cat.key}`}>
-                                        {METHODS.filter(m => m.category === cat.key).length}
-                                    </span>
-                                )}
-                            </button>
-                        ))}
+                    {/* Category Tabs — By Technique */}
+                    <div className="methods-filter-section animate-fade-in-up">
+                        <span className="methods-filter-label">{t("methods.filterByTechnique")}</span>
+                        <div className="methods-cat-tabs">
+                            {CATEGORIES.map(cat => (
+                                <button
+                                    key={cat.key}
+                                    className={`methods-cat-tab ${activeCat === cat.key ? "active" : ""}`}
+                                    onClick={() => setActiveCat(cat.key)}
+                                >
+                                    {t(cat.labelKey)}
+                                    {cat.key !== "all" && (
+                                        <span className={`methods-cat-tab-count count-${cat.key}`}>
+                                            {METHODS.filter(m => m.category === cat.key).length}
+                                        </span>
+                                    )}
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+
+                    {/* Result count */}
+                    <div className="methods-result-count animate-fade-in-up">
+                        {filtered.length} / {METHODS.length}
                     </div>
 
                     {/* Methods Grid */}
@@ -97,6 +155,10 @@ export default function MethodsPage() {
                                 <div className="methods-card-header">
                                     <MethodIcon category={m.category} />
                                     <div className="methods-card-meta">
+                                        <span className={`methods-card-badge ${MEDIA_COLORS[m.mediaType]}`}>
+                                            <MediaIcon mediaType={m.mediaType} />
+                                            {t(`methods.media${m.mediaType.charAt(0).toUpperCase() + m.mediaType.slice(1)}` as string)}
+                                        </span>
                                         <span className={`methods-card-badge ${CAT_COLORS[m.category]}`}>
                                             {t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}` as string)}
                                         </span>
