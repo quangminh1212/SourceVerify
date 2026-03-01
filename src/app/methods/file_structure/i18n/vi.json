@@ -1,9 +1,30 @@
 {
     "name": "Phân tích cấu trúc file",
-    "description": "Phân tích mẫu đặt tên file, đặc điểm độ phân giải, tỷ lệ khung hình, và tỷ lệ byte/pixel để phát hiện ảnh do AI tạo dựa trên đặc điểm cấp file.",
+    "description": "Phân tích mẫu đặt tên file, đặc điểm độ phân giải, tỷ lệ khung hình, và tỷ lệ byte/pixel để phát hiện ảnh do AI tạo dựa trên đặc điểm cấp file. Công cụ AI tạo file với chữ ký cấu trúc đặc trưng.",
     "algorithm": "Bộ khớp mẫu cấp file",
-    "mechanism": "Kiểm tra quy ước đặt tên (UUID, hash, mẫu AI), khớp độ phân giải với output mô hình AI, phân tích tỷ lệ khung hình, tỷ lệ kích thước file vs độ phân giải, và mẫu đặt tên camera.",
-    "parameters": "Độ phân giải AI: 512², 768², 1024², 2048²\nMẫu tên AI: UUID, hash, image_N, txt2img\nMẫu camera: DSC, IMG, P, DSCN",
-    "accuracy": "Trung bình - 70-80%. Hiệu quả nhất khi kết hợp với các tín hiệu metadata khác.",
-    "source": "Phân tích định dạng output Stable Diffusion, DALL-E, Midjourney"
+    "mechanism": "Phân tích cấu trúc file thực hiện khớp mẫu đa chiều:\n\n1. **Phân tích quy ước đặt tên**: Kiểm tra tên file với mẫu AI điển hình (chuỗi UUID, tên dạng hash như `image_00001.png`, `txt2img_xxx`, `comfyui_xxx`) so với mẫu camera (DSC_xxxx, IMG_xxxx, P1000xxx).\n\n2. **Dấu vân tay độ phân giải**: Khớp kích thước ảnh với đầu ra của các mô hình AI (512×512, 768×768, 1024×1024, 2048×2048) và kiểm tra bội số của 64 (căn chỉnh không gian ẩn VAE).\n\n3. **Phân tích tỷ lệ khung hình**: So sánh tỷ lệ khung hình với tỷ lệ cảm biến camera chuẩn (3:2, 4:3, 16:9) so với tỷ lệ AI điển hình (1:1 vuông).\n\n4. **Tỷ lệ byte/pixel**: Tính kích thước file tương đối so với số pixel. Ảnh AI thường có đặc điểm nén khác biệt so với ảnh chụp.\n\n5. **Nhất quán phần mở rộng file**: Xác thực phần mở rộng file khớp với header định dạng thực tế (magic bytes).",
+    "parameters": "Độ phân giải AI: 512², 768², 1024², 2048²\nCăn chỉnh VAE: bội số của 64\nMẫu đặt tên AI: UUID, hash, image_N, txt2img, comfyui, sd_xl\nMẫu camera: DSC, IMG, P, DSCN, GOPR, DJI\nTỷ lệ khung hình camera: 3:2 (DSLR), 4:3 (compact), 16:9 (video)",
+    "accuracy": "Trung bình - 70-80%. Hiệu quả nhất khi kết hợp với các tín hiệu metadata khác. Độ chính xác cao cho đầu ra AI chưa chỉnh sửa với tên file gốc.",
+    "source": "Phân tích định dạng output Stable Diffusion, DALL-E, Midjourney",
+    "useCase": "Sàng lọc lượt đầu trong quy trình phát hiện AI. Nhanh chóng xác định nội dung AI rõ ràng dựa trên metadata cấp file trước khi phân tích pixel sâu hơn. Hữu ích cho xử lý hàng loạt bộ sưu tập ảnh lớn.",
+    "strengths": "• Cực kỳ nhanh — chỉ hoạt động trên metadata file, không cần phân tích pixel\n• Bắt được đầu ra công cụ AI phổ biến trước khi bị đổi tên\n• Dấu vân tay độ phân giải rất đặc trưng cho các mô hình AI đã biết\n• Kiểm tra bội số 64 phát hiện các generator dựa trên VAE\n• Hoạt động ngay cả khi không có dữ liệu EXIF",
+    "limitations": "• Dễ bị vượt qua bằng cách đổi tên file hoặc resize ảnh\n• Nhiều ảnh hợp lệ sử dụng tỷ lệ vuông (crop từ mạng xã hội)\n• Camera tiêu dùng sử dụng độ phân giải phổ biến trùng với đầu ra AI\n• Không phát hiện ảnh AI đã qua xử lý hậu kỳ hoặc resize\n• Mẫu đặt tên thay đổi khi công cụ AI mới xuất hiện",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models. CVPR 2022.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "Ramesh, A. et al. (2022). Hierarchical Text-Conditional Image Generation with CLIP Latents (DALL-E 2).",
+            "url": "https://doi.org/10.48550/arXiv.2204.06125"
+        },
+        {
+            "title": "Midjourney Documentation — Image Output Specifications",
+            "url": "https://docs.midjourney.com/"
+        },
+        {
+            "title": "EXIF.org — Standard EXIF Tags and Camera Naming Conventions",
+            "url": "https://exif.org/"
+        }
+    ]
 }

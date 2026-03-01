@@ -1,9 +1,26 @@
 {
-    "name": "EXIF Integrity Validation",
-    "description": "Validates EXIF structure by checking mandatory camera fields and metadata consistency.",
-    "algorithm": "Multi-field EXIF Structure Validator",
-    "mechanism": "Examines mandatory EXIF fields, cross-validates related fields, and checks version compliance to detect tampering.",
-    "parameters": "Mandatory fields: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO",
-    "accuracy": "High - 80-90% with intact EXIF data",
-    "source": "JEITA CP-3451C (Exif 2.32), ISO 12234-1"
+    "name": "Validación de Integridad EXIF",
+    "description": "Valida la integridad estructural de datos EXIF verificando campos de cámara obligatorios, consistencia de campos, cumplimiento de versiones y completitud de metadatos.",
+    "algorithm": "Validador de Estructura EXIF Multi-campo",
+    "mechanism": "El validador examina:\n\n1. **Presencia de campos obligatorios**: Verifica campos EXIF esenciales (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO).\n\n2. **Consistencia de valores**: Valida cruzadamente campos relacionados.\n\n3. **Completitud estructural**: Calcula ratio de integridad basado en campos presentes vs esperados.\n\n4. **Cumplimiento de versión**: Valida ExifVersion contra estándares JEITA conocidos (0220-0232).",
+    "parameters": "Campos obligatorios: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\nVersiones EXIF: 0220, 0221, 0230, 0231, 0232",
+    "accuracy": "Alta - 80-90% para imágenes con datos EXIF intactos.",
+    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP)",
+    "useCase": "Validación de segunda pasada: verifica integridad EXIF para identificar manipulación o fabricación sutil.",
+    "strengths": "• Validación multi-campo detecta inconsistencias que AI no replica\n• Validación cruzada entre campos proporciona alta confianza\n• Funciona en todos los formatos JPEG y TIFF\n• Bajo costo computacional\n• Detecta generación AI y fabricación de metadatos",
+    "limitations": "• EXIF completamente eliminado no produce resultado\n• Algunas apps eliminan EXIF intencionalmente\n• Las herramientas AI mejoran en generar EXIF realista\n• Las redes sociales eliminan campos EXIF\n• No puede validar EXIF fabricado manualmente",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 12234-1:2012 — Electronic Still-Picture Imaging (TIFF/EP)",
+            "url": "https://www.iso.org/standard/53527.html"
+        },
+        {
+            "title": "Farid, H. (2019). Image Forensics. Annual Review of Vision Science.",
+            "url": "https://doi.org/10.1146/annurev-vision-091718-014827"
+        }
+    ]
 }

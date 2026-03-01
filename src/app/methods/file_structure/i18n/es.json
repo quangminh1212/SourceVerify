@@ -1,9 +1,26 @@
 {
-    "name": "File Structure Analysis",
-    "description": "Analyzes file naming, resolution, and structure patterns.",
-    "algorithm": "File Pattern Matcher",
-    "mechanism": "Checks naming conventions and resolution against AI models.",
-    "parameters": "AI resolutions, naming patterns, camera patterns",
-    "accuracy": "Medium - 70-80%",
-    "source": "AI model output analysis"
+    "name": "Análisis de Estructura de Archivo",
+    "description": "Analiza patrones de nomenclatura de archivos, características de resolución, relaciones de aspecto y ratios de bytes por píxel para detectar imágenes generadas por IA.",
+    "algorithm": "Comparador de Patrones a Nivel de Archivo",
+    "mechanism": "El análisis realiza coincidencia de patrones multidimensional:\n\n1. **Análisis de nomenclatura**: Examina nombres con patrones típicos de IA (UUID, hash, `txt2img_xxx`) vs patrones de cámara (DSC_xxxx, IMG_xxxx).\n\n2. **Huella digital de resolución**: Compara dimensiones con salidas de modelos AI conocidos (512², 768², 1024²) y verifica múltiplos de 64.\n\n3. **Análisis de relación de aspecto**: Compara con ratios de sensores de cámara (3:2, 4:3) vs IA (1:1).\n\n4. **Ratio bytes/píxel**: Calcula tamaño relativo vs número de píxeles.\n\n5. **Consistencia de extensión**: Valida que la extensión coincida con los headers del formato.",
+    "parameters": "Resoluciones AI: 512², 768², 1024², 2048²\nAlineación VAE: múltiplos de 64\nPatrones AI: UUID, hash, image_N, txt2img, comfyui\nPatrones cámara: DSC, IMG, P, DSCN, GOPR, DJI",
+    "accuracy": "Media - 70-80%. Más efectivo combinado con otras señales de metadatos.",
+    "source": "Análisis de formato de salida de Stable Diffusion, DALL-E, Midjourney",
+    "useCase": "Triaje de primera pasada en flujos de detección de IA. Identifica rápidamente contenido AI obvio antes del análisis de píxeles más profundo.",
+    "strengths": "• Extremadamente rápido — opera solo en metadatos de archivo\n• Detecta salidas de herramientas AI comunes\n• La huella digital de resolución es altamente específica\n• Verificación de múltiplos de 64 detecta generadores basados en VAE\n• Funciona incluso sin datos EXIF",
+    "limitations": "• Fácilmente eludido renombrando archivos o redimensionando\n• Muchas imágenes legítimas usan relación 1:1\n• Resoluciones de cámaras de consumo se superponen con salidas AI\n• No detecta imágenes AI post-procesadas\n• Los patrones evolucionan con nuevas herramientas",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models. CVPR 2022.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "Ramesh, A. et al. (2022). Hierarchical Text-Conditional Image Generation with CLIP Latents.",
+            "url": "https://doi.org/10.48550/arXiv.2204.06125"
+        },
+        {
+            "title": "Midjourney Documentation — Image Output Specifications",
+            "url": "https://docs.midjourney.com/"
+        }
+    ]
 }

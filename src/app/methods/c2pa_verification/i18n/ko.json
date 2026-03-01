@@ -1,9 +1,30 @@
 {
     "name": "C2PA 콘텐츠 자격 증명",
-    "description": "C2PA 콘텐츠 자격 증명과 출처 데이터를 확인합니다.",
-    "algorithm": "C2PA 스캐너",
-    "mechanism": "C2PA 매니페스트 마커와 AI 선언을 스캔합니다.",
-    "parameters": "C2PA 마커, AI 액션",
-    "accuracy": "매우 높음 - 존재 시 95%+",
-    "source": "C2PA Spec 2.0"
+    "description": "C2PA(콘텐츠 출처 및 진위를 위한 연합)의 콘텐츠 자격 증명과 출처 데이터를 확인합니다. C2PA 표준은 콘텐츠 출처와 편집 이력의 암호학적 증거를 제공합니다.",
+    "algorithm": "C2PA 매니페스트 스캐너",
+    "mechanism": "C2PA 검증 프로세스는 여러 단계를 포함합니다:\n\n1. **JUMBF 컨테이너 감지**: C2PA 매니페스트의 전송 메커니즘인 JUMBF 수퍼박스를 검색합니다.\n\n2. **CBOR 페이로드 파싱**: 클레임, 어설션, 자격 증명 저장소를 포함한 CBOR 페이로드를 추출 및 디코딩합니다.\n\n3. **AI 액션 감지**: `c2pa.created`, `ai_generated`, `trainedAlgorithmicMedia` 등 AI 생성을 나타내는 액션 선언을 검색합니다.\n\n4. **출처 체인 검증**: 매니페스트 체인을 추적하여 이미지의 출처를 확인합니다.",
+    "parameters": "C2PA 마커: content credentials, manifest store, JUMBF superbox, CBOR containers\nAI 액션 유형: c2pa.created, ai_generated, trainedAlgorithmicMedia\n지원 카메라: Leica M11, Sony α7/α9 시리즈, Nikon Z 시리즈",
+    "accuracy": "매우 높음 - C2PA 데이터가 있을 때 95% 이상. 현재 채택률이 제한적입니다 (이미지의 약 5%).",
+    "source": "C2PA Technical Specification 2.0, Content Authenticity Initiative (CAI)",
+    "useCase": "뉴스 조직, 전문 사진, 콘텐츠 자격 증명을 구현한 AI 플랫폼 등 C2PA 호환 소스의 이미지에 대한 주요 검증. 저널리즘 및 콘텐츠 모더레이션 워크플로에 필수적.",
+    "strengths": "• 출처의 암호학적 증명 — 쉽게 위조 불가\n• 촬영부터 게시까지 완전한 편집 이력\n• 업계 지원 표준 (Adobe, Microsoft, Google, BBC, Intel)\n• AI 생성 및 카메라 촬영 콘텐츠 모두 포괄\n• 기계 판독 및 사람 검증 가능",
+    "limitations": "• 현재 채택률이 매우 낮음 (이미지의 약 5%)\n• 소셜 미디어 공유 시 메타데이터가 삭제될 수 있음\n• 촬영/생성 시 C2PA 호환 하드웨어 또는 소프트웨어 필요\n• 스크린샷 기반 우회를 방지할 수 없음\n• 표준이 아직 발전 중 — 버전 호환성 문제",
+    "references": [
+        {
+            "title": "C2PA Technical Specification 2.0 — Coalition for Content Provenance and Authenticity",
+            "url": "https://c2pa.org/specifications/specifications/2.0/specs/C2PA_Specification.html"
+        },
+        {
+            "title": "Content Authenticity Initiative — Adobe",
+            "url": "https://contentauthenticity.org/"
+        },
+        {
+            "title": "Rosenthol, L. et al. (2023). Content Provenance and Authenticity: The C2PA Standard. IEEE Security & Privacy.",
+            "url": "https://doi.org/10.1109/MSEC.2023.3265252"
+        },
+        {
+            "title": "JUMBF (ISO 19566-5) — JPEG Universal Metadata Box Format",
+            "url": "https://jpeg.org/jumbf/"
+        }
+    ]
 }

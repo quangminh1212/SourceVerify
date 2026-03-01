@@ -1,9 +1,26 @@
 {
     "name": "EXIF完整性验证",
-    "description": "通过检查必需的相机字段、字段一致性和版本合规性来验证EXIF数据结构的完整性。",
+    "description": "通过检查必需的相机字段、字段一致性、版本合规性和元数据完整性来验证EXIF数据结构的完整性。",
     "algorithm": "多字段EXIF结构验证器",
-    "mechanism": "检查必需的EXIF字段、交叉验证相关字段，并检查版本合规性以检测篡改。",
-    "parameters": "必需字段：Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO",
-    "accuracy": "高 - EXIF数据完整时80-90%",
-    "source": "JEITA CP-3451C (Exif 2.32), ISO 12234-1"
+    "mechanism": "EXIF完整性验证器检查：\n\n1. **必需字段存在**: 检查关键相机EXIF字段（Make、Model、ExifVersion、DateTimeOriginal等）。\n\n2. **字段值一致性**: 交叉验证相关字段。\n\n3. **结构完整性**: 基于必需字段存在比例计算完整性比率。\n\n4. **版本合规**: 对照JEITA标准（0220-0232）验证ExifVersion。",
+    "parameters": "必需相机字段: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\nEXIF版本: 0220, 0221, 0230, 0231, 0232",
+    "accuracy": "高 - EXIF数据完整的图像准确率80-90%。",
+    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP)",
+    "useCase": "二次元数据验证：在初始元数据扫描后验证EXIF结构完整性，以识别微妙的篡改或伪造。",
+    "strengths": "• 全面的多字段验证检测AI不一致性\n• 相关字段间交叉验证提供高置信度\n• 适用于所有JPEG和TIFF格式\n• 低计算开销——即时结果\n• 同时检测AI生成和元数据伪造",
+    "limitations": "• EXIF完全被删除时无法产生结果（不确定）\n• 某些应用为隐私目的故意删除EXIF\n• AI工具正在改进生成逼真EXIF数据\n• 社交媒体平台删除大部分EXIF字段\n• 无法验证手动伪造的EXIF",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 12234-1:2012 — Electronic Still-Picture Imaging (TIFF/EP)",
+            "url": "https://www.iso.org/standard/53527.html"
+        },
+        {
+            "title": "Farid, H. (2019). Image Forensics. Annual Review of Vision Science.",
+            "url": "https://doi.org/10.1146/annurev-vision-091718-014827"
+        }
+    ]
 }

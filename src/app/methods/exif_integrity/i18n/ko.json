@@ -1,9 +1,26 @@
 {
     "name": "EXIF 무결성 검증",
-    "description": "필수 카메라 필드, 필드 일관성, 버전 준수를 확인하여 EXIF 데이터 구조의 무결성을 검증합니다.",
+    "description": "필수 카메라 필드, 필드 일관성, 버전 준수, 메타데이터 완전성을 확인하여 EXIF 데이터 구조 무결성을 검증합니다.",
     "algorithm": "다중 필드 EXIF 구조 검증기",
-    "mechanism": "필수 EXIF 필드를 검사하고, 관련 필드를 상호 검증하며, 변조를 감지하기 위해 버전 준수를 확인합니다.",
-    "parameters": "필수 필드: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO",
-    "accuracy": "높음 - EXIF 데이터가 완전할 때 80-90%",
-    "source": "JEITA CP-3451C (Exif 2.32), ISO 12234-1"
+    "mechanism": "EXIF 무결성 검증기는 다음을 검사합니다:\n\n1. **필수 필드 존재**: 필수 카메라 EXIF 필드(Make, Model, ExifVersion, DateTimeOriginal 등) 확인.\n\n2. **필드 값 일관성**: 관련 필드 간 교차 검증.\n\n3. **구조 완전성**: 필수 필드 존재 비율 기반 무결성 비율 계산.\n\n4. **버전 준수**: ExifVersion을 JEITA 표준(0220-0232)에 대해 검증.",
+    "parameters": "필수 카메라 필드: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\nEXIF 버전: 0220, 0221, 0230, 0231, 0232",
+    "accuracy": "높음 - EXIF 데이터가 온전한 이미지에서 80-90% 정확도.",
+    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP)",
+    "useCase": "2차 메타데이터 검증: 초기 메타데이터 스캔 후 EXIF 구조 무결성을 확인하여 미묘한 변조나 위조를 식별.",
+    "strengths": "• 포괄적 다중 필드 검증으로 AI 불일치 감지\n• 관련 필드 간 교차 검증으로 높은 신뢰도\n• 모든 JPEG 및 TIFF 형식 지원\n• 낮은 계산 비용 — 즉시 결과\n• AI 생성 및 메타데이터 위조 모두 감지",
+    "limitations": "• EXIF가 완전히 제거되면 결과 없음 (불확정)\n• 일부 앱은 프라이버시를 위해 EXIF를 의도적으로 제거\n• AI 도구의 EXIF 생성 능력 향상 중\n• 소셜 미디어 플랫폼이 대부분의 EXIF 필드 제거\n• 수동으로 만들어진 EXIF 검증 불가",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 12234-1:2012 — Electronic Still-Picture Imaging (TIFF/EP)",
+            "url": "https://www.iso.org/standard/53527.html"
+        },
+        {
+            "title": "Farid, H. (2019). Image Forensics. Annual Review of Vision Science.",
+            "url": "https://doi.org/10.1146/annurev-vision-091718-014827"
+        }
+    ]
 }

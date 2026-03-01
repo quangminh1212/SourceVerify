@@ -1,9 +1,26 @@
 {
     "name": "カラープロファイルメタデータ",
-    "description": "ICCカラープロファイルと色空間メタデータを分析します。",
-    "algorithm": "ICCアナライザー",
-    "mechanism": "カラープロファイルタイプとビット深度を確認します。",
-    "parameters": "ICCプロファイル、色空間、ビット深度",
-    "accuracy": "中 - 70-80%",
-    "source": "ICC v4.4 (ISO 15076-1)"
+    "description": "ICCカラープロファイルデータ、色空間宣言、ビット深度、レンダリングインテントメタデータを分析してAI生成パターンを検出します。",
+    "algorithm": "ICC/色空間メタデータアナライザー",
+    "mechanism": "カラープロファイル分析は複数のメタデータレイヤーを検査します：\n\n1. **ICCプロファイル検出**: 埋め込みICCプロファイルの種類を特定。プロカメラはAdobe RGBやProPhoto RGBを使用、AI画像は基本的なsRGBを使用。\n\n2. **ビット深度分析**: RAWファイルは12/14/16ビット、AI出力は常に8ビット/チャンネル。\n\n3. **色空間の一貫性**: EXIF、ICC、XMP間の色空間宣言を相互検証。\n\n4. **レンダリングインテントチェック**: プロのワークフローはレンダリングインテントを保持、AIツールは正しく設定しない。",
+    "parameters": "カメラプロファイル: Adobe RGB, ProPhoto RGB, Display P3\nAI典型: sRGB IEC61966-2.1\nビット深度: 8-bit (標準/AI), 12/14/16-bit (プロRAW)",
+    "accuracy": "中程度 - 70-80%。高度なカラープロファイルがある場合に有効。",
+    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
+    "useCase": "メタデータ分析パイプラインの補助証拠。プロ写真とAI生成コンテンツの区別に有用。",
+    "strengths": "• プロのカラープロファイルはAIツールが複製困難\n• ビット深度分析でカメラとAIを明確に区別\n• 偽陽性率が低い\n• 高速で非破壊の分析\n• RAW由来の画像識別に有用",
+    "limitations": "• 多くの一般カメラもsRGBをデフォルト使用\n• AIツールがカスタムICCプロファイルを埋め込む可能性\n• JPEG変換でプロファイル情報が失われる\n• SNSプラットフォームがICCプロファイルを削除\n• sRGBカメラとAI出力を区別できない",
+    "references": [
+        {
+            "title": "ICC Profile Specification v4.4 (ISO 15076-1:2010)",
+            "url": "https://www.color.org/specification/ICC.1-2022-05.pdf"
+        },
+        {
+            "title": "sRGB Standard — IEC 61966-2.1:1999",
+            "url": "https://webstore.iec.ch/en/publication/6169"
+        },
+        {
+            "title": "Adobe RGB (1998) Color Image Encoding",
+            "url": "https://www.adobe.com/digitalimag/adobergb.html"
+        }
+    ]
 }

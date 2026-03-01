@@ -1,10 +1,30 @@
 {
-    "name": "Kiểm tra tính toàn vẹn EXIF",
-    "description": "Xác thực cấu trúc dữ liệu EXIF bằng cách kiểm tra các trường bắt buộc của máy ảnh, tính nhất quán của trường, tuân thủ phiên bản, và tính đầy đủ metadata. Phát hiện bất thường trong dữ liệu EXIF cho thấy hình ảnh do AI tạo hoặc bị chỉnh sửa.",
-    "algorithm": "Bộ kiểm tra cấu trúc EXIF đa trường",
-    "mechanism": "Bộ kiểm tra tính toàn vẹn EXIF phân tích:\n\n1. **Kiểm tra trường bắt buộc**: Kiểm tra các trường EXIF camera thiết yếu (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Ảnh chụp thật thường có hầu hết các trường này.\n\n2. **Tính nhất quán giá trị**: Kiểm tra chéo các trường liên quan — VD: DateTimeOriginal phải trước DateTimeDigitized; ExifVersion phải khớp tiêu chuẩn.\n\n3. **Tính đầy đủ cấu trúc**: Tính tỷ lệ toàn vẹn dựa trên số trường bắt buộc hiện có. Tỷ lệ cao cho thấy ảnh chụp thật.\n\n4. **Tuân thủ phiên bản**: Xác thực ExifVersion theo tiêu chuẩn JEITA (0220-0232).",
-    "parameters": "Trường bắt buộc: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\n\nTrường loại trừ: File Name, File Size, MIME Type, Last Modified, Format",
-    "accuracy": "Cao - 80-90% khi dữ liệu EXIF còn nguyên vẹn. Kém hiệu quả khi metadata đã bị xóa.",
+    "name": "Xác thực tính toàn vẹn EXIF",
+    "description": "Xác thực tính toàn vẹn cấu trúc dữ liệu EXIF bằng cách kiểm tra các trường camera bắt buộc, tính nhất quán giữa các trường, tuân thủ phiên bản, và tính đầy đủ metadata. Phát hiện bất thường trong dữ liệu EXIF cho thấy ảnh được AI tạo hoặc bị giả mạo.",
+    "algorithm": "Bộ xác thực cấu trúc EXIF đa trường",
+    "mechanism": "Bộ xác thực tính toàn vẹn EXIF kiểm tra:\n\n1. **Sự hiện diện trường bắt buộc**: Kiểm tra các trường EXIF camera cần thiết (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Ảnh chụp từ camera thật chứa hầu hết các trường này.\n\n2. **Tính nhất quán giá trị**: Đối chiếu các trường liên quan — vd: DateTimeOriginal phải trước DateTimeDigitized; ExifVersion phải khớp tiêu chuẩn.\n\n3. **Tính đầy đủ cấu trúc**: Tính tỉ lệ toàn vẹn dựa trên số trường bắt buộc có mặt so với dự kiến. Tỉ lệ cao cho thấy ảnh chụp thật.\n\n4. **Tuân thủ phiên bản**: Xác thực ExifVersion theo tiêu chuẩn JEITA (0220-0232).",
+    "parameters": "Trường camera bắt buộc: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\n\nLoại trừ thông tin cơ bản: File Name, File Size, MIME Type, Last Modified, Format\n\nPhiên bản EXIF hỗ trợ: 0220, 0221, 0230, 0231, 0232",
+    "accuracy": "Cao - Độ chính xác 80-90% cho ảnh có dữ liệu EXIF nguyên vẹn. Kém hiệu quả hơn khi metadata đã bị xóa.",
     "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP), CIPA DC-007",
-    "useCase": "Kiểm tra metadata cấp 2: xác minh tính toàn vẹn cấu trúc EXIF sau lần quét metadata đầu tiên để phát hiện giả mạo tinh vi."
+    "useCase": "Xác thực metadata lượt hai: kiểm tra tính toàn vẹn cấu trúc EXIF sau quét metadata ban đầu để phát hiện giả mạo tinh vi. Cần thiết cho quy trình pháp y yêu cầu xác thực metadata toàn diện.",
+    "strengths": "• Xác thực đa trường toàn diện phát hiện sự không nhất quán mà công cụ AI bỏ sót\n• Đối chiếu giữa các trường liên quan cho độ tin cậy cao\n• Hoạt động trên tất cả định dạng JPEG và TIFF\n• Chi phí tính toán thấp — kết quả tức thì\n• Phát hiện cả ảnh AI tạo và metadata bị xóa/giả mạo",
+    "limitations": "• Dữ liệu EXIF bị xóa hoàn toàn không cho kết quả (không xác định)\n• Một số ứng dụng cố ý xóa EXIF vì quyền riêng tư\n• Công cụ AI đang cải thiện việc tạo dữ liệu EXIF thực tế\n• Nền tảng mạng xã hội xóa hầu hết trường EXIF\n• Không xác thực được EXIF đã được tạo thủ công",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 12234-1:2012 — Electronic Still-Picture Imaging (TIFF/EP)",
+            "url": "https://www.iso.org/standard/53527.html"
+        },
+        {
+            "title": "Farid, H. (2019). Image Forensics. Annual Review of Vision Science.",
+            "url": "https://doi.org/10.1146/annurev-vision-091718-014827"
+        },
+        {
+            "title": "CIPA DC-007 — Multi-Picture Format Standard",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-007-Translation-2021-E"
+        }
+    ]
 }

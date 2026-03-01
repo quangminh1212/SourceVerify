@@ -1,9 +1,26 @@
 {
-    "name": "Color Profile Metadata",
-    "description": "Analyzes ICC color profile and color space metadata.",
-    "algorithm": "ICC Analyzer",
-    "mechanism": "Checks color profile type and bit depth.",
-    "parameters": "ICC profiles, color spaces, bit depths",
-    "accuracy": "Medium - 70-80%",
-    "source": "ICC v4.4 (ISO 15076-1)"
+    "name": "Metadatos de Perfil de Color",
+    "description": "Analiza datos de perfil de color ICC, declaraciones de espacio de color, profundidad de bits y metadatos de intent de renderizado para detectar patrones de generación por IA.",
+    "algorithm": "Analizador de Metadatos ICC/Espacio de Color",
+    "mechanism": "El análisis de perfil de color examina múltiples capas:\n\n1. **Detección de perfil ICC**: Identifica el perfil ICC incrustado. Las cámaras profesionales usan Adobe RGB o ProPhoto RGB, mientras que las imágenes de IA usan sRGB básico.\n\n2. **Análisis de profundidad de bits**: Los archivos RAW usan 12/14/16 bits. Las salidas de IA son invariablemente 8 bits por canal.\n\n3. **Consistencia del espacio de color**: Valida cruzadamente las declaraciones entre EXIF, ICC y XMP.\n\n4. **Verificación de intent de renderizado**: Los flujos profesionales preservan el intent; las herramientas de IA raramente lo configuran.",
+    "parameters": "Perfiles de cámara: Adobe RGB, ProPhoto RGB, Display P3\nAI típico: sRGB IEC61966-2.1\nProfundidades: 8-bit (estándar/AI), 12/14/16-bit (RAW profesional)",
+    "accuracy": "Media - 70-80%. Indicador fuerte cuando perfiles avanzados están presentes.",
+    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
+    "useCase": "Evidencia de apoyo en el pipeline de análisis de metadatos. Útil para distinguir fotografía profesional de contenido generado por IA.",
+    "strengths": "• Los perfiles de color profesionales son muy difíciles de replicar por IA\n• El análisis de profundidad de bits distingue cámara vs IA\n• Baja tasa de falsos positivos\n• Análisis rápido y no destructivo\n• Útil para identificar imágenes originarias de RAW",
+    "limitations": "• Muchas cámaras de consumo usan sRGB por defecto\n• Las herramientas de IA podrían incrustar perfiles ICC personalizados\n• La conversión JPEG elimina información del perfil\n• Las redes sociales a menudo eliminan perfiles ICC\n• No distingue cámaras sRGB de salidas de IA",
+    "references": [
+        {
+            "title": "ICC Profile Specification v4.4 (ISO 15076-1:2010)",
+            "url": "https://www.color.org/specification/ICC.1-2022-05.pdf"
+        },
+        {
+            "title": "sRGB Standard — IEC 61966-2.1:1999",
+            "url": "https://webstore.iec.ch/en/publication/6169"
+        },
+        {
+            "title": "Adobe RGB (1998) Color Image Encoding",
+            "url": "https://www.adobe.com/digitalimag/adobergb.html"
+        }
+    ]
 }

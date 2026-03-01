@@ -1,9 +1,26 @@
 {
     "name": "文件结构分析",
-    "description": "分析文件命名、分辨率和结构模式。",
-    "algorithm": "文件模式匹配器",
-    "mechanism": "检查命名约定和AI模型的分辨率匹配。",
-    "parameters": "AI分辨率、命名模式、相机模式",
-    "accuracy": "中 - 70-80%",
-    "source": "AI模型输出分析"
+    "description": "分析文件命名模式、分辨率特征、宽高比和字节/像素比率，基于文件级特征检测AI生成图像。",
+    "algorithm": "文件级模式匹配器",
+    "mechanism": "文件结构分析执行多维模式匹配：\n\n1. **文件命名规则分析**: 检查AI典型模式（UUID、哈希名、`txt2img_xxx`）与相机模式（DSC_xxxx、IMG_xxxx）。\n\n2. **分辨率指纹**: 与已知AI模型输出尺寸（512²、768²、1024²）匹配，检查64的倍数。\n\n3. **宽高比分析**: 与标准相机传感器比率（3:2、4:3）和AI典型比率（1:1）比较。\n\n4. **字节/像素比**: 计算文件大小与像素数的比率。\n\n5. **扩展名一致性**: 验证文件扩展名与格式头部匹配。",
+    "parameters": "AI分辨率: 512², 768², 1024², 2048²\nVAE对齐: 64的倍数\nAI模式: UUID, hash, image_N, txt2img, comfyui\n相机模式: DSC, IMG, P, DSCN, GOPR, DJI",
+    "accuracy": "中等 - 70-80%。与其他元数据信号结合时最有效。",
+    "source": "Stable Diffusion, DALL-E, Midjourney输出格式分析",
+    "useCase": "AI检测工作流的首次分类。在深入像素分析之前快速识别明显的AI内容。",
+    "strengths": "• 极快——仅操作文件元数据\n• 检测常见AI工具输出\n• 分辨率指纹对AI模型高度特异\n• 64倍数检查检测基于VAE的生成器\n• 即使没有EXIF数据也能工作",
+    "limitations": "• 通过重命名或调整大小轻松绕过\n• 许多合法图像使用1:1比率\n• 消费相机分辨率与AI输出重叠\n• 无法检测后处理的AI图像\n• 模式随新工具出现而演变",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models. CVPR 2022.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "Ramesh, A. et al. (2022). Hierarchical Text-Conditional Image Generation with CLIP Latents.",
+            "url": "https://doi.org/10.48550/arXiv.2204.06125"
+        },
+        {
+            "title": "Midjourney Documentation — Image Output Specifications",
+            "url": "https://docs.midjourney.com/"
+        }
+    ]
 }

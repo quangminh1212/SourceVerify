@@ -1,9 +1,26 @@
 {
     "name": "EXIF整合性検証",
-    "description": "必須カメラフィールド、フィールドの一貫性、バージョン準拠を確認してEXIFデータ構造の整合性を検証します。",
+    "description": "必須カメラフィールド、フィールドの一貫性、バージョン準拠、メタデータの完全性をチェックしてEXIFデータ構造の整合性を検証します。",
     "algorithm": "マルチフィールドEXIF構造バリデーター",
-    "mechanism": "必須EXIFフィールドを検査し、関連フィールドを相互検証し、改ざんを検出するためにバージョン準拠を確認します。",
-    "parameters": "必須フィールド：Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO",
-    "accuracy": "高 - EXIFデータが完全な場合80-90%",
-    "source": "JEITA CP-3451C (Exif 2.32), ISO 12234-1"
+    "mechanism": "EXIF整合性バリデーターは以下を検査します：\n\n1. **必須フィールドの存在**: 重要なカメラEXIFフィールド（Make、Model、ExifVersion、DateTimeOriginal等）を確認。\n\n2. **フィールド値の一貫性**: 関連フィールドを相互検証。\n\n3. **構造の完全性**: 必須フィールドの存在比率に基づく整合性比率を計算。\n\n4. **バージョン準拠**: ExifVersionをJEITA標準（0220-0232）に対して検証。",
+    "parameters": "必須カメラフィールド: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\nEXIFバージョン: 0220, 0221, 0230, 0231, 0232",
+    "accuracy": "高 - EXIFデータが無傷の画像で80-90%の精度。",
+    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP)",
+    "useCase": "二次メタデータ検証：初回メタデータスキャン後にEXIF構造の整合性を確認し、微妙な改ざんや偽造を特定。",
+    "strengths": "• 包括的なマルチフィールド検証でAIの不整合を検出\n• 関連フィールド間の相互検証で高い信頼性\n• すべてのJPEG/TIFFフォーマットに対応\n• 低い計算コスト — 即時結果\n• AI生成とメタデータ偽造の両方を検出",
+    "limitations": "• EXIFが完全に削除されると結果なし（不確定）\n• 一部アプリはプライバシーのためEXIFを意図的に削除\n• AIツールのEXIF生成が改善中\n• SNSプラットフォームが大部分のEXIFを削除\n• 手動作成されたEXIFを検証できない",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 12234-1:2012 — Electronic Still-Picture Imaging (TIFF/EP)",
+            "url": "https://www.iso.org/standard/53527.html"
+        },
+        {
+            "title": "Farid, H. (2019). Image Forensics. Annual Review of Vision Science.",
+            "url": "https://doi.org/10.1146/annurev-vision-091718-014827"
+        }
+    ]
 }

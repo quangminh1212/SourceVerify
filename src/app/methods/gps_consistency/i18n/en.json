@@ -1,9 +1,30 @@
 {
     "name": "GPS Consistency Analysis",
-    "description": "Validates GPS coordinate presence, format consistency, and plausibility. AI-generated images rarely contain valid GPS coordinates, making this a strong authenticity indicator.",
+    "description": "Validates GPS coordinate presence, format consistency, and plausibility. AI-generated images rarely contain valid GPS coordinates, making this a strong authenticity indicator for real photographs.",
     "algorithm": "GPS Coordinate Validator with DMS Parser",
-    "mechanism": "Extracts GPS-related metadata fields, validates coordinate ranges, detects placeholder values (0,0), checks for exact integer coordinates, and parses both decimal and DMS (Degrees/Minutes/Seconds) formats.",
-    "parameters": "GPS fields analyzed: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp\nValid ranges: Latitude [-90, 90], Longitude [-180, 180]",
-    "accuracy": "High - 85%+ when GPS data is present. Strong positive indicator for real photos.",
-    "source": "EXIF 2.32 GPS IFD, WGS 84 Geodetic Reference System"
+    "mechanism": "The GPS consistency analysis validates multiple aspects:\n\n1. **GPS Field Extraction**: Extracts all GPS-related metadata fields including GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp, GPSImgDirection, and GPSSpeed.\n\n2. **Coordinate Range Validation**: Verifies coordinates fall within valid ranges (Latitude: -90 to 90, Longitude: -180 to 180) and checks for implausible values.\n\n3. **Placeholder Detection**: Identifies null-island coordinates (0°N, 0°E), exact integer values, or repeated patterns that indicate fabricated GPS data.\n\n4. **Format Parsing**: Handles both decimal degrees and DMS (Degrees/Minutes/Seconds) formats, validating proper structure for each.\n\n5. **Multi-field Consistency**: Cross-references GPS timestamp with EXIF capture timestamp and validates altitude plausibility.",
+    "parameters": "GPS fields analyzed: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp, GPSImgDirection, GPSSpeed, GPSMapDatum\nValid ranges: Latitude [-90, 90], Longitude [-180, 180]\nPlaceholder patterns: (0, 0), exact integers, repeated digits\nFormats: Decimal degrees, DMS (deg°min'sec\")",
+    "accuracy": "High - 85%+ when GPS data is present. Strong positive indicator for real photos. Most AI-generated images lack GPS entirely.",
+    "source": "EXIF 2.32 GPS IFD, WGS 84 Geodetic Reference System",
+    "useCase": "Strong authenticity signal for photos from smartphones and GPS-enabled cameras. The presence of valid, plausible GPS coordinates significantly increases the probability of authentic camera capture.",
+    "strengths": "• Very strong positive indicator — AI tools almost never generate valid GPS\n• Smartphone photos almost always contain GPS data\n• Coordinate plausibility checking catches fabricated data\n• Works with multiple coordinate formats\n• Low false-positive rate for genuine GPS detection",
+    "limitations": "• GPS can be stripped by privacy-conscious apps and platforms\n• Desktop cameras and studio shots often lack GPS\n• GPS coordinates can be manually spoofed in metadata\n• Indoor photos may have inaccurate GPS readings\n• Absence of GPS is not proof of AI generation",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 GPS IFD Specification",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "WGS 84 — World Geodetic System (NIMA Technical Report)",
+            "url": "https://earth-info.nga.mil/php/download.php?file=coord-wgs84"
+        },
+        {
+            "title": "EXIF GPS Data Format — ExifTool Documentation",
+            "url": "https://exiftool.org/TagNames/GPS.html"
+        },
+        {
+            "title": "Friedland, G. & Sommer, R. (2010). Cybercasing the Joint: On the Privacy Implications of Geo-Tagging. USENIX.",
+            "url": "https://www.usenix.org/legacy/events/hotsec10/tech/full_papers/Friedland.pdf"
+        }
+    ]
 }

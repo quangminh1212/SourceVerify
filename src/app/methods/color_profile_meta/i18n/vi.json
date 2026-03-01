@@ -1,9 +1,30 @@
 {
-    "name": "Phân tích hồ sơ màu sắc",
-    "description": "Phân tích dữ liệu hồ sơ màu ICC, khai báo không gian màu, độ sâu bit, và metadata ý định render để phát hiện mẫu AI.",
-    "algorithm": "Bộ phân tích metadata ICC/Không gian màu",
-    "mechanism": "Kiểm tra loại hồ sơ ICC (sRGB vs Adobe RGB/ProPhoto), kiểm tra độ sâu bit cho chỉ báo RAW, và xác thực tính nhất quán không gian màu/hồ sơ.",
-    "parameters": "Hồ sơ camera: Adobe RGB, ProPhoto RGB, Display P3\nAI thường dùng: sRGB IEC61966-2.1\nĐộ sâu bit: 8-bit (chuẩn), 12/14/16-bit (chuyên nghiệp)",
-    "accuracy": "Trung bình - 70-80%. Mạnh khi có hồ sơ màu nâng cao.",
-    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1"
+    "name": "Phân tích Metadata Hồ sơ Màu",
+    "description": "Phân tích dữ liệu hồ sơ màu ICC, khai báo không gian màu, độ sâu bit, và metadata rendering intent để phát hiện các mẫu ảnh AI tạo. Camera chuyên nghiệp nhúng hồ sơ màu phức tạp, trong khi công cụ AI thường chỉ xuất sRGB cơ bản.",
+    "algorithm": "Bộ phân tích Metadata ICC/Không gian màu",
+    "mechanism": "Phân tích hồ sơ màu kiểm tra nhiều lớp metadata:\n\n1. **Phát hiện hồ sơ ICC**: Xác định loại hồ sơ ICC nhúng. Camera chuyên nghiệp sử dụng Adobe RGB, ProPhoto RGB, hoặc Display P3, trong khi ảnh AI hầu như luôn dùng sRGB IEC61966-2.1 cơ bản.\n\n2. **Phân tích độ sâu bit**: Kiểm tra metadata độ sâu màu. File RAW từ camera dùng 12-bit, 14-bit, hoặc 16-bit. Đầu ra AI luôn là 8-bit mỗi kênh.\n\n3. **Tính nhất quán không gian màu**: Đối chiếu khai báo không gian màu giữa EXIF, ICC, và XMP. Sự không nhất quán cho thấy metadata bị giả mạo.\n\n4. **Kiểm tra Rendering Intent**: Quy trình chuyên nghiệp giữ nguyên rendering intent (perceptual, relative colorimetric). Công cụ AI hiếm khi thiết lập đúng.",
+    "parameters": "Hồ sơ camera: Adobe RGB, ProPhoto RGB, Display P3, DCI-P3\nAI điển hình: sRGB IEC61966-2.1\nĐộ sâu bit: 8-bit (tiêu chuẩn/AI), 12/14/16-bit (RAW chuyên nghiệp)\nRendering intents: perceptual, relative colorimetric, saturation, absolute colorimetric",
+    "accuracy": "Trung bình - 70-80%. Dấu hiệu mạnh khi có hồ sơ màu nâng cao (Adobe RGB, ProPhoto). Kém tin cậy hơn với camera tiêu dùng mặc định sRGB.",
+    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
+    "useCase": "Bằng chứng hỗ trợ trong pipeline phân tích metadata. Đặc biệt hữu ích để phân biệt ảnh chụp chuyên nghiệp (dùng hồ sơ dải rộng) với nội dung AI tạo (dùng sRGB). Hiệu quả khi kết hợp nhiều tín hiệu.",
+    "strengths": "• Hồ sơ màu chuyên nghiệp rất khó cho công cụ AI sao chép\n• Phân tích độ sâu bit cho phép phân biệt rõ camera vs AI\n• Tỉ lệ dương tính giả thấp khi phát hiện hồ sơ dải rộng\n• Phân tích nhanh, không phá hủy\n• Hữu ích để xác định ảnh gốc từ RAW",
+    "limitations": "• Nhiều camera tiêu dùng cũng mặc định sRGB\n• Công cụ AI về lý thuyết có thể nhúng hồ sơ ICC tùy chỉnh\n• Chuyển đổi JPEG loại bỏ một số thông tin hồ sơ màu\n• Nền tảng mạng xã hội thường xóa hồ sơ ICC\n• Không phân biệt được camera sRGB và đầu ra AI",
+    "references": [
+        {
+            "title": "ICC Profile Specification v4.4 (ISO 15076-1:2010)",
+            "url": "https://www.color.org/specification/ICC.1-2022-05.pdf"
+        },
+        {
+            "title": "sRGB Standard — IEC 61966-2.1:1999",
+            "url": "https://webstore.iec.ch/en/publication/6169"
+        },
+        {
+            "title": "Fraser, B. et al. (2004). Real World Color Management. Peachpit Press.",
+            "url": "https://www.color.org/whitepapers.xalter"
+        },
+        {
+            "title": "Adobe RGB (1998) Color Image Encoding",
+            "url": "https://www.adobe.com/digitalimag/adobergb.html"
+        }
+    ]
 }

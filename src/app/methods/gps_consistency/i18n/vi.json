@@ -1,9 +1,30 @@
 {
-    "name": "Phân tích tính nhất quán GPS",
-    "description": "Xác thực sự hiện diện tọa độ GPS, tính nhất quán định dạng, và tính hợp lý. Ảnh do AI tạo hiếm khi có tọa độ GPS hợp lệ, đây là chỉ báo xác thực mạnh.",
-    "algorithm": "Bộ xác thực tọa độ GPS với phân tích DMS",
-    "mechanism": "Trích xuất các trường metadata liên quan GPS, xác thực phạm vi tọa độ, phát hiện giá trị placeholder (0,0), kiểm tra tọa độ số nguyên chính xác, và phân tích cả định dạng thập phân và DMS.",
-    "parameters": "Trường GPS: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp\nPhạm vi hợp lệ: Vĩ độ [-90, 90], Kinh độ [-180, 180]",
-    "accuracy": "Cao - 85%+ khi có dữ liệu GPS. Chỉ báo tích cực mạnh cho ảnh thật.",
-    "source": "EXIF 2.32 GPS IFD, WGS 84"
+    "name": "Phân tích nhất quán GPS",
+    "description": "Xác thực sự hiện diện tọa độ GPS, tính nhất quán định dạng, và tính hợp lý. Ảnh AI tạo hiếm khi chứa tọa độ GPS hợp lệ, đây là chỉ báo xác thực mạnh cho ảnh thật.",
+    "algorithm": "Bộ xác thực tọa độ GPS với bộ phân tích DMS",
+    "mechanism": "Phân tích nhất quán GPS xác thực nhiều khía cạnh:\n\n1. **Trích xuất trường GPS**: Trích xuất tất cả trường metadata GPS bao gồm GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp, GPSImgDirection, và GPSSpeed.\n\n2. **Xác thực phạm vi tọa độ**: Xác minh tọa độ nằm trong phạm vi hợp lệ (Vĩ độ: -90 đến 90, Kinh độ: -180 đến 180) và kiểm tra giá trị không hợp lý.\n\n3. **Phát hiện Placeholder**: Xác định tọa độ null-island (0°N, 0°E), giá trị nguyên chính xác, hoặc mẫu lặp lại cho thấy dữ liệu GPS giả mạo.\n\n4. **Phân tích định dạng**: Xử lý cả độ thập phân và DMS (Degrees/Minutes/Seconds), xác thực cấu trúc cho mỗi loại.\n\n5. **Nhất quán đa trường**: Đối chiếu timestamp GPS với timestamp chụp EXIF và xác thực tính hợp lý của độ cao.",
+    "parameters": "Trường GPS phân tích: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp, GPSImgDirection, GPSSpeed, GPSMapDatum\nPhạm vi hợp lệ: Vĩ độ [-90, 90], Kinh độ [-180, 180]\nMẫu placeholder: (0, 0), số nguyên chính xác, chữ số lặp\nĐịnh dạng: Độ thập phân, DMS (deg°min'sec\")",
+    "accuracy": "Cao - 85%+ khi có dữ liệu GPS. Chỉ báo tích cực mạnh cho ảnh thật. Hầu hết ảnh AI thiếu GPS hoàn toàn.",
+    "source": "EXIF 2.32 GPS IFD, WGS 84 Geodetic Reference System",
+    "useCase": "Tín hiệu xác thực mạnh cho ảnh từ smartphone và camera có GPS. Sự hiện diện GPS hợp lệ tăng đáng kể xác suất ảnh thật.",
+    "strengths": "• Chỉ báo tích cực rất mạnh — công cụ AI gần như không bao giờ tạo GPS hợp lệ\n• Ảnh smartphone hầu như luôn chứa dữ liệu GPS\n• Kiểm tra tính hợp lý tọa độ phát hiện dữ liệu giả mạo\n• Hoạt động với nhiều định dạng tọa độ\n• Tỉ lệ dương tính giả thấp cho phát hiện GPS thật",
+    "limitations": "• GPS có thể bị xóa bởi ứng dụng và nền tảng bảo vệ quyền riêng tư\n• Camera desktop và ảnh studio thường thiếu GPS\n• Tọa độ GPS có thể bị giả mạo thủ công trong metadata\n• Ảnh trong nhà có thể có GPS không chính xác\n• Thiếu GPS không phải bằng chứng ảnh AI tạo",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 GPS IFD Specification",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "WGS 84 — World Geodetic System (NIMA Technical Report)",
+            "url": "https://earth-info.nga.mil/php/download.php?file=coord-wgs84"
+        },
+        {
+            "title": "EXIF GPS Data Format — ExifTool Documentation",
+            "url": "https://exiftool.org/TagNames/GPS.html"
+        },
+        {
+            "title": "Friedland, G. & Sommer, R. (2010). Cybercasing the Joint: Privacy Implications of Geo-Tagging. USENIX.",
+            "url": "https://www.usenix.org/legacy/events/hotsec10/tech/full_papers/Friedland.pdf"
+        }
+    ]
 }

@@ -1,9 +1,26 @@
 {
     "name": "GPS 일관성 분석",
-    "description": "GPS 좌표의 존재, 형식 일관성 및 타당성을 검증합니다.",
-    "algorithm": "GPS 검증기",
-    "mechanism": "GPS 필드 존재 여부, 좌표 범위, 플레이스홀더 값을 확인합니다.",
-    "parameters": "GPS 필드: 위도, 경도, 고도",
-    "accuracy": "높음 - 85%+",
-    "source": "EXIF 2.32 GPS IFD"
+    "description": "GPS 좌표 존재, 형식 일관성, 타당성을 검증합니다. AI 생성 이미지는 유효한 GPS 좌표를 거의 포함하지 않습니다.",
+    "algorithm": "GPS 좌표 검증기 (DMS 파서 포함)",
+    "mechanism": "GPS 일관성 분석은 다양한 측면을 검증합니다:\n\n1. **GPS 필드 추출**: GPSLatitude, GPSLongitude, GPSAltitude 등 GPS 관련 메타데이터 추출.\n\n2. **좌표 범위 검증**: 유효 범위 내(위도[-90,90], 경도[-180,180]) 확인.\n\n3. **플레이스홀더 감지**: null-island 좌표(0°N, 0°E)와 정확한 정수 값 식별.\n\n4. **형식 파싱**: 십진도와 DMS 형식 모두 처리.\n\n5. **다중 필드 일관성**: GPS 타임스탬프와 EXIF 촬영 타임스탬프 교차 참조.",
+    "parameters": "GPS 필드: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp\n유효 범위: 위도 [-90, 90], 경도 [-180, 180]",
+    "accuracy": "높음 - GPS 데이터가 있을 때 85% 이상.",
+    "source": "EXIF 2.32 GPS IFD, WGS 84 Geodetic Reference System",
+    "useCase": "스마트폰 및 GPS 장착 카메라 사진의 강력한 진위 신호.",
+    "strengths": "• 매우 강력한 양성 지표 — AI 도구는 유효한 GPS를 거의 생성하지 않음\n• 스마트폰 사진은 거의 항상 GPS 데이터 포함\n• 좌표 타당성 검사로 위조 데이터 감지\n• 여러 좌표 형식 지원\n• 낮은 위양성률",
+    "limitations": "• 프라이버시 앱이 GPS를 제거할 수 있음\n• 데스크톱 카메라와 스튜디오 촬영에는 GPS 없음\n• GPS 좌표는 수동으로 위조 가능\n• 실내 사진은 GPS가 부정확할 수 있음\n• GPS 부재가 AI 생성의 증거는 아님",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 GPS IFD",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "WGS 84 — World Geodetic System",
+            "url": "https://earth-info.nga.mil/php/download.php?file=coord-wgs84"
+        },
+        {
+            "title": "EXIF GPS Data Format — ExifTool",
+            "url": "https://exiftool.org/TagNames/GPS.html"
+        }
+    ]
 }

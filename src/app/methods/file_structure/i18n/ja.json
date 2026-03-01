@@ -1,9 +1,26 @@
 {
     "name": "ファイル構造分析",
-    "description": "ファイル命名、解像度、構造パターンを分析します。",
-    "algorithm": "ファイルパターンマッチャー",
-    "mechanism": "命名規則とAIモデルの解像度マッチを確認します。",
-    "parameters": "AI解像度、命名パターン、カメラパターン",
-    "accuracy": "中 - 70-80%",
-    "source": "AIモデル出力分析"
+    "description": "ファイル命名パターン、解像度特性、アスペクト比、バイト/ピクセル比率を分析してAI生成画像を検出します。",
+    "algorithm": "ファイルレベルパターンマッチャー",
+    "mechanism": "ファイル構造分析は多次元パターンマッチングを実行します：\n\n1. **ファイル命名規則分析**: AI典型パターン（UUID、ハッシュ名、`txt2img_xxx`）vsカメラパターン（DSC_xxxx、IMG_xxxx）を検査。\n\n2. **解像度フィンガープリント**: 既知のAIモデル出力サイズ（512²、768²、1024²）と照合し、64の倍数を確認。\n\n3. **アスペクト比分析**: カメラセンサー比率（3:2、4:3）vsAI典型比率（1:1）を比較。\n\n4. **バイト/ピクセル比**: ファイルサイズとピクセル数の比率を計算。\n\n5. **拡張子整合性**: ファイル拡張子がフォーマットヘッダーと一致するか確認。",
+    "parameters": "AI解像度: 512², 768², 1024², 2048²\nVAE整列: 64の倍数\nAIパターン: UUID, hash, image_N, txt2img, comfyui\nカメラパターン: DSC, IMG, P, DSCN, GOPR, DJI",
+    "accuracy": "中程度 - 70-80%。他のメタデータシグナルとの組み合わせで最も効果的。",
+    "source": "Stable Diffusion, DALL-E, Midjourney出力フォーマット分析",
+    "useCase": "AI検出ワークフローの初回トリアージ。深いピクセル分析の前にファイルレベルのメタデータから明白なAIコンテンツを迅速に特定。",
+    "strengths": "• 非常に高速 — ファイルメタデータのみで動作\n• 一般的なAIツールの出力を検出\n• 解像度フィンガープリントはAIモデルに高度に特異的\n• 64の倍数チェックでVAEベースの生成器を検出\n• EXIFデータなしでも動作",
+    "limitations": "• ファイル名変更やリサイズで容易に回避可能\n• 多くの正当な画像が1:1比率を使用\n• 消費者カメラの解像度がAI出力と重複\n• 後処理されたAI画像を検出不可\n• 新ツール出現でパターンが進化",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models. CVPR 2022.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "Ramesh, A. et al. (2022). Hierarchical Text-Conditional Image Generation with CLIP Latents.",
+            "url": "https://doi.org/10.48550/arXiv.2204.06125"
+        },
+        {
+            "title": "Midjourney Documentation — Image Output Specifications",
+            "url": "https://docs.midjourney.com/"
+        }
+    ]
 }

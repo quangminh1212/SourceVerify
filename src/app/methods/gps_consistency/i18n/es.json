@@ -1,9 +1,26 @@
 {
-    "name": "GPS Consistency Analysis",
-    "description": "Validates GPS coordinates presence and plausibility.",
-    "algorithm": "GPS Validator",
-    "mechanism": "Checks GPS field presence, coordinate ranges, and placeholder values.",
-    "parameters": "GPS fields: Latitude, Longitude, Altitude",
-    "accuracy": "High - 85%+",
-    "source": "EXIF 2.32 GPS IFD"
+    "name": "Análisis de Consistencia GPS",
+    "description": "Valida la presencia, consistencia y plausibilidad de coordenadas GPS. Las imágenes generadas por IA raramente contienen coordenadas GPS válidas.",
+    "algorithm": "Validador de Coordenadas GPS con Parser DMS",
+    "mechanism": "El análisis valida múltiples aspectos:\n\n1. **Extracción de campos GPS**: Extrae GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp.\n\n2. **Validación de rangos**: Verifica coordenadas dentro de rangos válidos (Latitud [-90, 90], Longitud [-180, 180]).\n\n3. **Detección de placeholders**: Identifica coordenadas null-island (0°N, 0°E) y valores enteros exactos.\n\n4. **Parseo de formatos**: Maneja grados decimales y DMS.\n\n5. **Consistencia multi-campo**: Referencia cruzada de timestamp GPS con EXIF.",
+    "parameters": "Campos GPS: GPSLatitude, GPSLongitude, GPSAltitude, GPSTimeStamp\nRangos válidos: Latitud [-90, 90], Longitud [-180, 180]",
+    "accuracy": "Alta - 85%+ cuando datos GPS están presentes.",
+    "source": "EXIF 2.32 GPS IFD, WGS 84 Geodetic Reference System",
+    "useCase": "Señal fuerte de autenticidad para fotos de smartphones y cámaras con GPS.",
+    "strengths": "• Indicador positivo muy fuerte — herramientas AI casi nunca generan GPS válido\n• Los smartphones casi siempre incluyen datos GPS\n• La verificación de plausibilidad detecta datos fabricados\n• Compatible con múltiples formatos\n• Baja tasa de falsos positivos",
+    "limitations": "• GPS puede ser eliminado por apps de privacidad\n• Cámaras de escritorio carecen de GPS\n• Las coordenadas pueden ser falsificadas manualmente\n• Fotos interiores pueden tener GPS inexacto\n• La ausencia de GPS no prueba generación por IA",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 GPS IFD Specification",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "WGS 84 — World Geodetic System",
+            "url": "https://earth-info.nga.mil/php/download.php?file=coord-wgs84"
+        },
+        {
+            "title": "EXIF GPS Data Format — ExifTool Documentation",
+            "url": "https://exiftool.org/TagNames/GPS.html"
+        }
+    ]
 }

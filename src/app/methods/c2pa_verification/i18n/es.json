@@ -1,9 +1,30 @@
 {
-    "name": "C2PA Content Credentials",
-    "description": "Checks for C2PA content credentials and provenance data.",
-    "algorithm": "C2PA Scanner",
-    "mechanism": "Scans for C2PA manifest markers and AI declarations.",
-    "parameters": "C2PA markers, AI actions",
-    "accuracy": "Very High - 95%+ when present",
-    "source": "C2PA Spec 2.0"
+    "name": "Credenciales de Contenido C2PA",
+    "description": "Verifica las credenciales de contenido C2PA (Coalición para la Procedencia y Autenticidad del Contenido) y los datos de procedencia. El estándar C2PA proporciona prueba criptográfica del origen del contenido y el historial de edición.",
+    "algorithm": "Escáner de Manifiestos C2PA",
+    "mechanism": "El proceso de verificación C2PA involucra múltiples etapas:\n\n1. **Detección de contenedores JUMBF**: Escanea el binario de la imagen buscando superboxes JUMBF, el mecanismo de transporte para manifiestos C2PA.\n\n2. **Análisis de payload CBOR**: Extrae y decodifica payloads CBOR que contienen datos de claims, assertions y credential stores.\n\n3. **Detección de acciones AI**: Busca declaraciones de acciones que indican generación por IA, incluyendo `c2pa.created`, `ai_generated`, `trainedAlgorithmicMedia`.\n\n4. **Validación de cadena de procedencia**: Traza la cadena de manifiestos para establecer el origen de la imagen.",
+    "parameters": "Marcadores C2PA: content credentials, manifest store, JUMBF superbox, CBOR containers\nTipos de acciones AI: c2pa.created, ai_generated, trainedAlgorithmicMedia\nCámaras compatibles: Leica M11, Sony α7/α9 series, Nikon Z series",
+    "accuracy": "Muy alta - 95%+ cuando los datos C2PA están presentes. Adopción actualmente limitada (~5% de las imágenes).",
+    "source": "C2PA Technical Specification 2.0, Content Authenticity Initiative (CAI)",
+    "useCase": "Verificación principal para imágenes de fuentes compatibles con C2PA como organizaciones de noticias, fotografía profesional y plataformas de IA que implementan credenciales de contenido.",
+    "strengths": "• Prueba criptográfica del origen — no se puede falsificar fácilmente\n• Historial completo de edición desde la captura hasta la publicación\n• Estándar respaldado por la industria (Adobe, Microsoft, Google, BBC, Intel)\n• Cubre contenido generado por IA y capturado por cámara\n• Legible por máquina y verificable por humanos",
+    "limitations": "• Tasa de adopción actualmente muy baja (~5% de imágenes)\n• Los metadatos pueden eliminarse al compartir en redes sociales\n• Requiere hardware o software compatible con C2PA\n• No previene la evasión mediante capturas de pantalla\n• El estándar aún está evolucionando",
+    "references": [
+        {
+            "title": "C2PA Technical Specification 2.0 — Coalition for Content Provenance and Authenticity",
+            "url": "https://c2pa.org/specifications/specifications/2.0/specs/C2PA_Specification.html"
+        },
+        {
+            "title": "Content Authenticity Initiative — Adobe",
+            "url": "https://contentauthenticity.org/"
+        },
+        {
+            "title": "Rosenthol, L. et al. (2023). Content Provenance and Authenticity: The C2PA Standard. IEEE Security & Privacy.",
+            "url": "https://doi.org/10.1109/MSEC.2023.3265252"
+        },
+        {
+            "title": "JUMBF (ISO 19566-5) — JPEG Universal Metadata Box Format",
+            "url": "https://jpeg.org/jumbf/"
+        }
+    ]
 }
