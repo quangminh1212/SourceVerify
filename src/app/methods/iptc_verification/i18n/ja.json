@@ -1,9 +1,26 @@
 {
     "name": "IPTCデータ検証",
-    "description": "IPTC メタデータフィールドの真正性マーカーとデジタルソースタイプを検証します。",
-    "algorithm": "IPTCフィールドアナライザー",
-    "mechanism": "IPTC DigitalSourceTypeを検査し、真正性フィールドをカウントします。",
-    "parameters": "IPTCフィールド: credit, source, copyright等",
-    "accuracy": "高 - 85%+",
-    "source": "IPTC PMD 2024.1"
+    "description": "IPTCメタデータフィールドの真正性マーカー、デジタルソースタイプ分類、AIツールシグネチャを検証します。",
+    "algorithm": "IPTCフィールド真正性アナライザー",
+    "mechanism": "IPTC検証は以下を検査します：\n\n1. **DigitalSourceType分類**: ISO 12639に基づく非写真インジケーターを確認。\n\n2. **真正性フィールドカウント**: プロのIPTCフィールド数を計測。\n\n3. **AI参照検出**: IPTCフィールドでAIツール参照を検索。\n\n4. **ワークフロー検証**: IPTCメタデータがプロの慣行に従うか確認。",
+    "parameters": "IPTCフィールド: credit, source, copyright, writer, caption, byline, city, country, headline, keywords\nDigitalSourceType: ISO 12639分類",
+    "accuracy": "高 - IPTCデータを持つプロ写真で85%以上。",
+    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639",
+    "useCase": "通信社やストックフォトサービスのプロ写真検証。",
+    "strengths": "• DigitalSourceTypeが存在すれば明示的なAI宣言\n• プロ写真はAIが複製できない豊富なIPTCデータを持つ\n• 主要通信社が使用する業界標準\n• IPTCソースフィールドから特定のAIツールを識別\n• DigitalSourceTypeでのゼロ偽陽性",
+    "limitations": "• 消費者写真にはIPTCが含まれることが稀\n• IPTCフィールドは手動で偽造可能\n• 多くのAIサービスがDigitalSourceTypeを未設定\n• SNSがIPTCを削除\n• IPTCの不在はAI生成を示さない",
+    "references": [
+        {
+            "title": "IPTC Photo Metadata Standard 2024.1",
+            "url": "https://iptc.org/standards/photo-metadata/iptc-standard/"
+        },
+        {
+            "title": "IPTC DigitalSourceType NewsCodes",
+            "url": "https://cv.iptc.org/newscodes/digitalsourcetype/"
+        },
+        {
+            "title": "IPTC Photo Metadata User Guide",
+            "url": "https://www.iptc.org/std/photometadata/documentation/userguide/"
+        }
+    ]
 }

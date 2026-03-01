@@ -1,9 +1,22 @@
 {
-    "name": "Resolution Consistency",
-    "description": "Analyzes resolution metadata vs actual dimensions.",
-    "algorithm": "Resolution Analyzer",
-    "mechanism": "Checks AI model output sizes and DPI metadata.",
-    "parameters": "AI resolutions, DPI standards",
-    "accuracy": "Medium - 70-80%",
-    "source": "Latent Diffusion Architecture"
+    "name": "Consistencia de Resolución",
+    "description": "Analiza metadatos DPI/resolución vs dimensiones reales, verifica tamaños de salida específicos de modelos AI.",
+    "algorithm": "Analizador de Patrones de Resolución",
+    "mechanism": "Examina múltiples señales:\n\n1. **Coincidencia de resoluciones AI**: Compara dimensiones con salidas conocidas de modelos AI.\n\n2. **Detección de espacio latente VAE**: Verifica si las dimensiones son múltiplos de 64.\n\n3. **Validación de metadatos DPI**: Cruza DPI declarado con dimensiones reales.\n\n4. **Verificación cruzada EXIF**: Compara dimensiones EXIF con las reales.\n\n5. **Análisis de megapíxeles**: Compara total de píxeles con sensores de cámara típicos.",
+    "parameters": "Resoluciones AI: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024²)\nDPI: 72 (web), 96 (screen), 300 (print)\nVAE: múltiplos de 64",
+    "accuracy": "Media - 70-80%. Más efectivo para salidas AI sin redimensionar.",
+    "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
+    "useCase": "Screening rápido de AI basado en análisis dimensional.",
+    "strengths": "• Análisis dimensional rápido sin procesamiento de píxeles\n• Verificación VAE altamente específica para modelos de difusión\n• Inconsistencias DPI revelan post-procesamiento\n• Detecta redimensionamiento sutil\n• Identifica salidas de modelos AI específicos",
+    "limitations": "• Fácilmente eludido con redimensionamiento\n• Resoluciones de cámara se superponen con AI\n• Redes sociales redimensionan automáticamente\n• Upscalers cambian dimensiones\n• DPI a menudo inexacto o ausente",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "DALL-E 3 System Card — OpenAI",
+            "url": "https://cdn.openai.com/papers/DALL_E_3_System_Card.pdf"
+        }
+    ]
 }

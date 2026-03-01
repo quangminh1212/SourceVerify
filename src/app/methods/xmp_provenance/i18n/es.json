@@ -1,9 +1,30 @@
 {
-    "name": "XMP Provenance Analysis",
-    "description": "Analyzes XMP edit history and software chain to detect AI tools.",
-    "algorithm": "XMP Provenance Chain Analyzer",
-    "mechanism": "Scans XMP metadata for AI tool signatures and validates software agent entries.",
-    "parameters": "AI markers and photo editors",
-    "accuracy": "Very High - 90%+ with AI signatures",
-    "source": "Adobe XMP (ISO 16684)"
+    "name": "Análisis de Procedencia XMP",
+    "description": "Analiza el historial de edición XMP, cadena de software y metadatos de procedencia para detectar herramientas de generación AI.",
+    "algorithm": "Analizador de Cadena de Procedencia XMP",
+    "mechanism": "Inspección profunda de metadatos:\n\n1. **Análisis de CreatorTool**: Examina firmas de herramientas AI vs editores de fotos legítimos.\n\n2. **Cadena de historial de edición**: Parsea xmpMM:History para reconstruir la cadena completa.\n\n3. **Huella de agente de software**: Analiza stEvt:softwareAgent para identificar todo software.\n\n4. **Seguimiento de referencias de recursos**: Examina xmpMM:DerivedFrom y DocumentID.\n\n5. **Detección de marcadores AI**: Busca marcadores explícitos de generación AI.",
+    "parameters": "Herramientas AI: Stable Diffusion, DALL-E, Midjourney, ComfyUI, etc.\nEditores: Photoshop, Lightroom, Capture One, GIMP\nCampos XMP: CreatorTool, xmpMM:History, stEvt:softwareAgent",
+    "accuracy": "Muy alta - 90%+ cuando firmas AI están presentes en datos XMP.",
+    "source": "Adobe XMP Specification (ISO 16684), Dublin Core",
+    "useCase": "Verificación integral de procedencia para imágenes con metadatos XMP conservados.",
+    "strengths": "• Historial de edición proporciona procedencia completa\n• Huellas de agente revelan el pipeline de procesamiento\n• Firmas AI en CreatorTool son altamente confiables\n• Referencias de recursos permiten seguimiento de linaje\n• Metadatos estándar de la industria",
+    "limitations": "• XMP puede ser eliminado por redes sociales\n• Herramientas AI pueden no embeber XMP\n• Historial puede ser fabricado manualmente\n• Cámaras de consumo no escriben XMP\n• Historiales complejos pueden ser inconclusos",
+    "references": [
+        {
+            "title": "Adobe XMP Specification Part 1 (ISO 16684-1:2019)",
+            "url": "https://www.adobe.com/devnet/xmp.html"
+        },
+        {
+            "title": "Adobe XMP Part 2: Additional Properties",
+            "url": "https://developer.adobe.com/xmp/docs/"
+        },
+        {
+            "title": "Dublin Core Metadata Initiative",
+            "url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/"
+        },
+        {
+            "title": "ExifTool XMP Tags",
+            "url": "https://exiftool.org/TagNames/XMP.html"
+        }
+    ]
 }

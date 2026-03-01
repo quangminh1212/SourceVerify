@@ -2,8 +2,29 @@
     "name": "Timestamp Forensics",
     "description": "Cross-references creation, modification, and digitized timestamps to detect temporal anomalies indicating AI generation or tampering. Validates timestamp consistency across multiple EXIF fields.",
     "algorithm": "Multi-Timestamp Cross-Reference Analyzer",
-    "mechanism": "Collects all timestamp fields (DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, etc.), analyzes temporal consistency, detects future dates, epoch/default timestamps, and unusual time spans between capture events.",
-    "parameters": "Timestamp fields: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal\nFormats: EXIF (YYYY:MM:DD HH:MM:SS), ISO 8601",
-    "accuracy": "Medium-High - 75-85%. Effective when multiple timestamps are present.",
-    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601 Timestamp Standard"
+    "mechanism": "The timestamp forensics analysis performs comprehensive temporal validation:\n\n1. **Multi-field Collection**: Gathers all available timestamp fields — DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal — providing a complete temporal picture.\n\n2. **Temporal Consistency Analysis**: Validates logical ordering — DateTimeOriginal ≤ DateTimeDigitized ≤ ModifyDate. Violations indicate metadata manipulation.\n\n3. **Anomaly Detection**: Identifies future dates, epoch timestamps (1970-01-01), default values (0000:00:00), timezone inconsistencies, and suspiciously round timestamps (exactly on the hour).\n\n4. **Time Span Analysis**: Measures intervals between capture events. Camera bursts show millisecond intervals, while fabricated timestamps show unusual gaps or identical values.\n\n5. **SubSecond Precision**: Checks for sub-second timing data (SubSecTimeOriginal), which is present in modern cameras but absent in most AI-generated images.",
+    "parameters": "Timestamp fields: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal\nFormats: EXIF (YYYY:MM:DD HH:MM:SS), ISO 8601\nAnomaly patterns: epoch date, future date, identical timestamps, missing subsecond data\nExpected ordering: Original ≤ Digitized ≤ Modified",
+    "accuracy": "Medium-High - 75-85%. Effective when multiple timestamps are present. Less reliable when only one timestamp exists.",
+    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601 Timestamp Standard",
+    "useCase": "Temporal integrity verification in forensic pipelines. Detects timestamp manipulation in both AI-generated and manually tampered images. Essential for establishing image chronology in legal contexts.",
+    "strengths": "• Multi-field cross-referencing catches inconsistencies AI tools miss\n• SubSecond data is a strong camera authenticity indicator\n• Detects both AI generation and manual tampering\n• Temporal ordering validation is highly reliable\n• Works alongside GPS timestamp for additional verification",
+    "limitations": "• Camera clock may be incorrectly set by the user\n• Single timestamp provides limited forensic value\n• AI tools are improving at generating plausible timestamps\n• Timezone handling varies across cameras and software\n• Batch-processed images may have identical timestamps",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 DateTime Tags Specification",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 8601:2019 — Date and Time Format Standard",
+            "url": "https://www.iso.org/standard/70907.html"
+        },
+        {
+            "title": "Geradts, Z. & Bijhold, J. (2002). Content-Based Information Retrieval in Forensic Image Databases. Journal of Forensic Sciences.",
+            "url": "https://doi.org/10.1520/JFS15316J"
+        },
+        {
+            "title": "ExifTool DateTime Tags Reference",
+            "url": "https://exiftool.org/TagNames/EXIF.html"
+        }
+    ]
 }

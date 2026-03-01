@@ -1,9 +1,26 @@
 {
     "name": "소프트웨어 핑거프린트 분석",
-    "description": "소프트웨어 서명을 심층 분석하여 AI 도구를 식별합니다.",
-    "algorithm": "소프트웨어 서명 매처",
-    "mechanism": "메타데이터를 AI 도구 및 카메라 데이터베이스와 매칭합니다.",
-    "parameters": "25+ AI 도구, 카메라 브랜드, 인코딩 라이브러리",
-    "accuracy": "매우 높음 - 90-95%",
-    "source": "AI 도구 문서"
+    "description": "소프트웨어 서명, 버전 패턴, 인코딩 핑거프린트의 심층 분석으로 특정 AI 도구를 식별합니다.",
+    "algorithm": "다중 데이터베이스 소프트웨어 서명 매처",
+    "mechanism": "3개의 감지 레이어에서 작동:\n\n1. **AI 도구 서명 매칭**: 25개 이상의 AI 도구 서명과 대조.\n\n2. **카메라 제조사 식별**: Make/Model/Software를 제조사 데이터베이스와 대조.\n\n3. **인코딩 라이브러리 감지**: libjpeg, Pillow, OpenCV 등 식별.\n\n4. **버전 패턴 분석**: 소프트웨어 버전 문자열을 알려진 패턴과 검증.",
+    "parameters": "AI 도구: 25개 이상의 서명\n카메라 브랜드: Canon, Nikon, Sony 등\n라이브러리: libjpeg, Pillow, OpenCV, ImageMagick",
+    "accuracy": "매우 높음 - 서명이 존재할 때 90-95%.",
+    "source": "Stable Diffusion GitHub, OpenAI API, Midjourney Docs",
+    "useCase": "이미지를 만든 정확한 도구 식별을 위한 주요 방법.",
+    "strengths": "• 사용된 정확한 AI 도구와 버전 식별\n• 서명 존재 시 매우 높은 정확도\n• 카메라 제조사 식별로 실제 사진 검증\n• 인코딩 라이브러리 감지\n• 지속적으로 업데이트되는 데이터베이스",
+    "limitations": "• 메타데이터가 쉽게 제거될 수 있음\n• 소셜 미디어가 소프트웨어 메타데이터 삭제\n• 일부 AI가 카메라 메타데이터를 모방\n• 새 AI 도구가 데이터베이스에 없을 수 있음\n• 메타데이터 제거 시 AI 감지 불가",
+    "references": [
+        {
+            "title": "Stable Diffusion Web UI — GitHub",
+            "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui"
+        },
+        {
+            "title": "OpenAI DALL-E API Reference",
+            "url": "https://platform.openai.com/docs/api-reference/images"
+        },
+        {
+            "title": "ExifTool — Metadata Tag Database",
+            "url": "https://exiftool.org/TagNames/"
+        }
+    ]
 }

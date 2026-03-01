@@ -1,9 +1,26 @@
 {
-    "name": "Timestamp Forensics",
-    "description": "Cross-references timestamps to detect temporal anomalies.",
-    "algorithm": "Multi-Timestamp Analyzer",
-    "mechanism": "Validates timestamp consistency across EXIF fields.",
-    "parameters": "DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate",
-    "accuracy": "Medium-High - 75-85%",
-    "source": "EXIF 2.32, ISO 8601"
+    "name": "Forensia de Marcas Temporales",
+    "description": "Referencias cruzadas de marcas temporales de creación, modificación y digitalización para detectar anomalías temporales.",
+    "algorithm": "Analizador de Referencias Cruzadas Multi-Timestamp",
+    "mechanism": "Realiza validación temporal integral:\n\n1. **Recopilación multi-campo**: Reúne todos los campos de timestamp disponibles.\n\n2. **Análisis de consistencia temporal**: Valida ordenamiento lógico.\n\n3. **Detección de anomalías**: Identifica fechas futuras, timestamps epoch, valores por defecto.\n\n4. **Análisis de intervalos**: Mide intervalos entre eventos de captura.\n\n5. **Precisión SubSegundo**: Verifica datos de tiempo sub-segundo.",
+    "parameters": "Campos: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, GPSDateTime\nFormatos: EXIF, ISO 8601\nOrden esperado: Original ≤ Digitized ≤ Modified",
+    "accuracy": "Media-Alta - 75-85%.",
+    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601",
+    "useCase": "Verificación de integridad temporal en pipelines forenses.",
+    "strengths": "• Referencias cruzadas multi-campo detectan inconsistencias\n• Datos SubSecond son indicador fuerte de cámara auténtica\n• Detecta generación AI y manipulación manual\n• Validación de orden temporal muy confiable\n• Compatible con timestamp GPS",
+    "limitations": "• Reloj de cámara puede estar mal configurado\n• Un solo timestamp tiene valor forense limitado\n• Herramientas AI mejoran en generar timestamps plausibles\n• Manejo de zonas horarias varía\n• Procesamiento por lotes puede dar timestamps idénticos",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 DateTime Tags",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 8601:2019 — Date and Time Format",
+            "url": "https://www.iso.org/standard/70907.html"
+        },
+        {
+            "title": "ExifTool DateTime Tags Reference",
+            "url": "https://exiftool.org/TagNames/EXIF.html"
+        }
+    ]
 }

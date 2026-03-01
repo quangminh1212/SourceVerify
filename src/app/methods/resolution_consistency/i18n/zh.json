@@ -1,9 +1,22 @@
 {
     "name": "分辨率一致性",
-    "description": "分析分辨率元数据与实际尺寸的一致性。",
-    "algorithm": "分辨率分析器",
-    "mechanism": "检查AI模型输出尺寸和DPI元数据。",
-    "parameters": "AI分辨率、DPI标准",
-    "accuracy": "中 - 70-80%",
-    "source": "潜在扩散架构"
+    "description": "分析DPI/分辨率元数据与实际像素尺寸，检查AI模型特定输出大小。",
+    "algorithm": "分辨率模式分析器",
+    "mechanism": "分辨率一致性分析检查多个信号：\n\n1. **AI模型分辨率匹配**: 与已知AI模型输出尺寸比较。\n\n2. **VAE潜在空间检测**: 检查尺寸是否为64的倍数。\n\n3. **DPI元数据验证**: 交叉检查声明的DPI与实际尺寸。\n\n4. **EXIF尺寸交叉检查**: 比较EXIF声明尺寸与实际尺寸。\n\n5. **百万像素分析**: 将总像素数与相机传感器比较。",
+    "parameters": "AI分辨率: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024²)\nDPI: 72 (web), 96 (screen), 300 (print)\nVAE: 64的倍数",
+    "accuracy": "中等 - 70-80%。对未调整大小的AI输出最有效。",
+    "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
+    "useCase": "基于尺寸分析的快速AI检测筛查。",
+    "strengths": "• 无需像素处理的快速尺寸分析\n• VAE对齐检查对扩散模型高度特异\n• DPI不一致揭示后处理\n• 检测微妙的调整大小\n• 识别特定AI模型输出",
+    "limitations": "• 通过调整大小或裁剪轻松绕过\n• 相机分辨率与AI输出重叠\n• 社交媒体自动调整图像大小\n• 放大器改变尺寸\n• DPI经常不准确或缺失",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "DALL-E 3 System Card — OpenAI",
+            "url": "https://cdn.openai.com/papers/DALL_E_3_System_Card.pdf"
+        }
+    ]
 }

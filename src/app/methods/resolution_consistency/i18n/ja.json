@@ -1,9 +1,22 @@
 {
-    "name": "解像度一致性",
-    "description": "解像度メタデータと実際のサイズの一致性を分析します。",
-    "algorithm": "解像度アナライザー",
-    "mechanism": "AIモデル出力サイズとDPIメタデータを確認します。",
-    "parameters": "AI解像度、DPI基準",
-    "accuracy": "中 - 70-80%",
-    "source": "潜在拡散アーキテクチャ"
+    "name": "解像度整合性",
+    "description": "DPI/解像度メタデータと実際のピクセル寸法を分析し、AIモデル固有の出力サイズを確認します。",
+    "algorithm": "解像度パターンアナライザー",
+    "mechanism": "解像度整合性分析は複数のシグナルを検査します：\n\n1. **AIモデル解像度マッチング**: 既知のAIモデル出力と寸法を照合。\n\n2. **VAE潜在空間検出**: 寸法が64の倍数かを確認。\n\n3. **DPIメタデータ検証**: 宣言されたDPIと実際の寸法を照合。\n\n4. **EXIF寸法クロスチェック**: EXIF宣言寸法と実際を比較。\n\n5. **メガピクセル分析**: 総ピクセル数をカメラセンサーと比較。",
+    "parameters": "AI解像度: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024²)\nDPI: 72 (web), 96 (screen), 300 (print)\nVAE: 64の倍数",
+    "accuracy": "中程度 - 70-80%。リサイズされていないAI出力に最も効果的。",
+    "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
+    "useCase": "寸法分析に基づくAI検出クイックスクリーニング。",
+    "strengths": "• ピクセル処理不要の高速寸法分析\n• VAE整列チェックは拡散モデルに高度に特異的\n• DPI不整合が後処理を明らかに\n• 微妙なリサイズを検出\n• 特定のAIモデル出力を識別",
+    "limitations": "• リサイズやクロップで容易に回避\n• カメラ解像度がAI出力と重複\n• SNSが画像を自動リサイズ\n• アップスケーラーが寸法を変更\n• DPIが不正確または欠落",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "DALL-E 3 System Card — OpenAI",
+            "url": "https://cdn.openai.com/papers/DALL_E_3_System_Card.pdf"
+        }
+    ]
 }

@@ -1,9 +1,26 @@
 {
     "name": "IPTC 데이터 검증",
-    "description": "IPTC 메타데이터 필드의 진위 마커와 디지털 소스 유형을 검증합니다.",
-    "algorithm": "IPTC 필드 분석기",
-    "mechanism": "IPTC DigitalSourceType을 검사하고 진위 필드를 카운트합니다.",
-    "parameters": "IPTC 필드: credit, source, copyright 등",
-    "accuracy": "높음 - 85%+",
-    "source": "IPTC PMD 2024.1"
+    "description": "IPTC 메타데이터 필드의 진위 마커, 디지털 소스 유형 분류, AI 도구 서명을 검증합니다.",
+    "algorithm": "IPTC 필드 진위 분석기",
+    "mechanism": "IPTC 검증은 다음을 검사합니다:\n\n1. **DigitalSourceType 분류**: ISO 12639 비사진 지표 확인.\n\n2. **진위 필드 수 계산**: 전문 IPTC 필드 수 계측.\n\n3. **AI 참조 감지**: IPTC 필드에서 AI 도구 참조 검색.\n\n4. **워크플로 검증**: IPTC 메타데이터가 전문 관행을 따르는지 확인.",
+    "parameters": "IPTC 필드: credit, source, copyright, writer, caption, byline, city, country, headline, keywords\nDigitalSourceType: ISO 12639 분류",
+    "accuracy": "높음 - IPTC 데이터가 있는 전문 사진에서 85% 이상.",
+    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639",
+    "useCase": "뉴스 통신사 및 스톡 사진 서비스의 전문 사진 검증.",
+    "strengths": "• DigitalSourceType이 있으면 명시적 AI 선언 제공\n• 전문 사진은 AI가 복제할 수 없는 풍부한 IPTC 데이터 보유\n• 모든 주요 통신사가 사용하는 업계 표준\n• IPTC 소스 필드에서 특정 AI 도구 식별\n• DigitalSourceType의 제로 위양성",
+    "limitations": "• 소비자 사진에는 IPTC가 거의 포함되지 않음\n• IPTC 필드는 수동으로 위조 가능\n• 많은 AI 서비스가 DigitalSourceType을 미설정\n• 소셜 미디어가 IPTC를 삭제\n• IPTC 부재가 AI 생성을 나타내지 않음",
+    "references": [
+        {
+            "title": "IPTC Photo Metadata Standard 2024.1",
+            "url": "https://iptc.org/standards/photo-metadata/iptc-standard/"
+        },
+        {
+            "title": "IPTC DigitalSourceType NewsCodes",
+            "url": "https://cv.iptc.org/newscodes/digitalsourcetype/"
+        },
+        {
+            "title": "IPTC Photo Metadata User Guide",
+            "url": "https://www.iptc.org/std/photometadata/documentation/userguide/"
+        }
+    ]
 }

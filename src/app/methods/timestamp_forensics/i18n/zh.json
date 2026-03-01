@@ -1,9 +1,26 @@
 {
     "name": "时间戳取证",
-    "description": "交叉引用时间戳以检测时间异常。",
-    "algorithm": "多时间戳分析器",
-    "mechanism": "验证跨EXIF字段的时间戳一致性。",
-    "parameters": "DateTimeOriginal, CreateDate等",
-    "accuracy": "中高 - 75-85%",
-    "source": "EXIF 2.32, ISO 8601"
+    "description": "交叉引用创建、修改和数字化时间戳，检测指示AI生成或篡改的时间异常。",
+    "algorithm": "多时间戳交叉引用分析器",
+    "mechanism": "执行全面的时间验证：\n\n1. **多字段收集**: 收集所有可用时间戳字段。\n\n2. **时间一致性分析**: 验证逻辑排序。\n\n3. **异常检测**: 识别未来日期、纪元时间戳、默认值。\n\n4. **时间跨度分析**: 测量捕获事件之间的间隔。\n\n5. **亚秒精度**: 检查亚秒时间数据。",
+    "parameters": "时间戳字段: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, GPSDateTime\n格式: EXIF, ISO 8601\n预期排序: Original ≤ Digitized ≤ Modified",
+    "accuracy": "中高 - 75-85%。",
+    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601",
+    "useCase": "取证管道中的时间完整性验证。",
+    "strengths": "• 多字段交叉引用检测不一致\n• 亚秒数据是相机真实性的强指标\n• 检测AI生成和手动篡改\n• 时间排序验证高度可靠\n• 与GPS时间戳配合额外验证",
+    "limitations": "• 相机时钟可能被用户设置错误\n• 单个时间戳取证价值有限\n• AI工具正在改进时间戳生成\n• 时区处理因设备而异\n• 批处理可能产生相同时间戳",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 DateTime Tags",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 8601:2019 — Date and Time Format",
+            "url": "https://www.iso.org/standard/70907.html"
+        },
+        {
+            "title": "ExifTool DateTime Tags Reference",
+            "url": "https://exiftool.org/TagNames/EXIF.html"
+        }
+    ]
 }

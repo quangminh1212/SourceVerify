@@ -2,8 +2,29 @@
     "name": "IPTC Data Verification",
     "description": "Verifies IPTC (International Press Telecommunications Council) metadata fields for authenticity markers, digital source type classification, and AI tool signatures in professional photo workflows.",
     "algorithm": "IPTC Field Authenticity Analyzer",
-    "mechanism": "Examines IPTC DigitalSourceType for non-photographic origin indicators, counts authenticity fields (credit, source, copyright, byline), and checks for synthetic/generated references.",
-    "parameters": "IPTC authenticity fields: credit, source, copyright, writer, caption, byline, city, country, headline, keywords\nDigitalSourceType: ISO 12639 classifications",
-    "accuracy": "High - 85%+ for professional news/stock photos with IPTC data",
-    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639 (DigitalSourceType)"
+    "mechanism": "The IPTC verification examines professional metadata layers:\n\n1. **DigitalSourceType Classification**: Checks ISO 12639 DigitalSourceType field for non-photographic indicators such as 'trainedAlgorithmicMedia', 'algorithmicMedia', 'virtualRecording', or 'compositeSynthetic'.\n\n2. **Authenticity Field Count**: Counts professional IPTC fields (credit, source, copyright, writer, caption, byline, city, country, headline, keywords). High field count indicates professional photographic workflow.\n\n3. **AI Reference Detection**: Scans IPTC values for references to AI tools (Stable Diffusion, DALL-E, Midjourney, etc.) in source, credit, and software fields.\n\n4. **Workflow Validation**: Validates that IPTC metadata follows professional photography conventions — wire services, stock agencies, and newsrooms embed rich IPTC data.",
+    "parameters": "IPTC authenticity fields: credit, source, copyright, writer, caption, byline, city, country, headline, keywords, instructions, category\nDigitalSourceType values: photographicImage, negativeFilm, positiveFilm, trainedAlgorithmicMedia, algorithmicMedia, virtualRecording\nISO 12639 classifications",
+    "accuracy": "High - 85%+ for professional news/stock photos with IPTC data. Limited for consumer photos which rarely include IPTC.",
+    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639 (DigitalSourceType)",
+    "useCase": "Professional photo verification: validates images from news agencies, stock photo services, and professional photographers. The presence of comprehensive IPTC metadata strongly indicates professional origin.",
+    "strengths": "• DigitalSourceType provides explicit AI declaration when present\n• Professional photos have rich IPTC data that AI tools don't replicate\n• Industry-standard metadata used by all major wire services\n• Can identify specific AI tools from IPTC source fields\n• Zero false positives when DigitalSourceType declares AI origin",
+    "limitations": "• Consumer photos rarely contain IPTC data\n• IPTC fields can be manually fabricated\n• Many AI services don't yet set DigitalSourceType\n• Social media platforms strip IPTC metadata\n• Absence of IPTC doesn't indicate AI generation",
+    "references": [
+        {
+            "title": "IPTC Photo Metadata Standard 2024.1",
+            "url": "https://iptc.org/standards/photo-metadata/iptc-standard/"
+        },
+        {
+            "title": "ISO 12639:2004 — Graphic technology — Prepress digital data exchange (DigitalSourceType)",
+            "url": "https://www.iso.org/standard/34342.html"
+        },
+        {
+            "title": "IPTC DigitalSourceType NewsCodes Vocabulary",
+            "url": "https://cv.iptc.org/newscodes/digitalsourcetype/"
+        },
+        {
+            "title": "IPTC Photo Metadata User Guide",
+            "url": "https://www.iptc.org/std/photometadata/documentation/userguide/"
+        }
+    ]
 }

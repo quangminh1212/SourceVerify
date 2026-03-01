@@ -1,9 +1,22 @@
 {
     "name": "해상도 일관성",
-    "description": "해상도 메타데이터와 실제 크기의 일관성을 분석합니다.",
-    "algorithm": "해상도 분석기",
-    "mechanism": "AI 모델 출력 크기와 DPI 메타데이터를 확인합니다.",
-    "parameters": "AI 해상도, DPI 표준",
-    "accuracy": "중간 - 70-80%",
-    "source": "잠재 확산 아키텍처"
+    "description": "DPI/해상도 메타데이터와 실제 픽셀 크기를 분석하고, AI 모델별 출력 크기를 확인합니다.",
+    "algorithm": "해상도 패턴 분석기",
+    "mechanism": "해상도 일관성 분석은 여러 신호를 검사합니다:\n\n1. **AI 모델 해상도 매칭**: 알려진 AI 모델 출력과 크기 비교.\n\n2. **VAE 잠재 공간 감지**: 크기가 64의 배수인지 확인.\n\n3. **DPI 메타데이터 검증**: 선언된 DPI와 실제 크기 교차 확인.\n\n4. **EXIF 크기 교차 확인**: EXIF 선언 크기와 실제 비교.\n\n5. **메가픽셀 분석**: 총 픽셀 수를 카메라 센서와 비교.",
+    "parameters": "AI 해상도: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024²)\nDPI: 72 (web), 96 (screen), 300 (print)\nVAE: 64의 배수",
+    "accuracy": "중간 - 70-80%. 리사이즈되지 않은 AI 출력에 가장 효과적.",
+    "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
+    "useCase": "차원 분석 기반 신속한 AI 감지 스크리닝.",
+    "strengths": "• 픽셀 처리 없는 빠른 차원 분석\n• VAE 정렬 확인이 확산 모델에 매우 특이적\n• DPI 불일치가 후처리를 드러냄\n• 미묘한 리사이즈 감지\n• 특정 AI 모델 출력 식별",
+    "limitations": "• 리사이즈나 크롭으로 쉽게 우회\n• 카메라 해상도가 AI 출력과 겹침\n• 소셜 미디어가 자동 리사이즈\n• 업스케일러가 크기 변경\n• DPI가 부정확하거나 없는 경우",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "DALL-E 3 System Card — OpenAI",
+            "url": "https://cdn.openai.com/papers/DALL_E_3_System_Card.pdf"
+        }
+    ]
 }

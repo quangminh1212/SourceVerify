@@ -1,9 +1,30 @@
 {
     "name": "XMP Provenance Analysis",
-    "description": "Analyzes XMP edit history, software chain, and provenance metadata to detect AI generation tools. Examines CreatorTool, History entries, and software agent signatures.",
+    "description": "Analyzes XMP edit history, software chain, and provenance metadata to detect AI generation tools. Examines CreatorTool, History entries, and software agent signatures for comprehensive origin tracking.",
     "algorithm": "XMP Provenance Chain Analyzer",
-    "mechanism": "Scans XMP metadata for AI tool signatures, examines edit history chain, and validates software agent entries against known AI and photo editing tools.",
-    "parameters": "AI markers: Stable Diffusion, DALL-E, Midjourney, ComfyUI, etc.\nPhoto editors: Photoshop, Lightroom, Capture One, etc.",
-    "accuracy": "Very High - 90%+ when AI tool signatures are present in XMP data",
-    "source": "Adobe XMP Specification Part 1-3 (ISO 16684), Dublin Core Metadata Initiative"
+    "mechanism": "The XMP provenance analysis performs deep metadata inspection:\n\n1. **CreatorTool Analysis**: Examines the XMP CreatorTool field for AI tool signatures (Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI) vs legitimate photo editors (Adobe Photoshop, Lightroom, Capture One, Affinity Photo).\n\n2. **Edit History Chain**: Parses xmpMM:History entries to reconstruct the complete edit chain from creation to final save. AI-generated images typically have no history or a single 'created' action.\n\n3. **Software Agent Fingerprinting**: Analyzes stEvt:softwareAgent entries to identify all software that touched the image. Real photos show a chain of camera firmware → RAW processor → editor.\n\n4. **Resource Reference Tracking**: Examines xmpMM:DerivedFrom and xmpMM:DocumentID to trace image lineage — whether it's an original or derivative work.\n\n5. **AI Marker Detection**: Searches for explicit AI generation markers that some tools embed, including custom XMP namespaces used by generative AI platforms.",
+    "parameters": "AI tool markers: Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI, Leonardo.AI, Firefly, etc.\nPhoto editors: Adobe Photoshop, Lightroom, Capture One, DxO, Affinity Photo, GIMP\nXMP fields: CreatorTool, xmpMM:History, stEvt:softwareAgent, xmpMM:DerivedFrom, xmpMM:DocumentID\nHistory actions: created, saved, converted, derived",
+    "accuracy": "Very High - 90%+ when AI tool signatures are present in XMP data. Lower when XMP has been stripped.",
+    "source": "Adobe XMP Specification Part 1-3 (ISO 16684), Dublin Core Metadata Initiative",
+    "useCase": "Comprehensive provenance verification for images that retain XMP metadata. Essential for authenticating images in professional workflows where edit history integrity matters — journalism, stock photography, legal evidence.",
+    "strengths": "• Edit history chain provides complete image provenance\n• Software agent fingerprinting reveals the full processing pipeline\n• AI tool signatures in CreatorTool are highly reliable\n• Resource references enable lineage tracking\n• Industry standard metadata — widely preserved in professional workflows",
+    "limitations": "• XMP metadata can be stripped by social media and messaging apps\n• AI tools may not embed XMP metadata at all\n• Edit history can be manually fabricated using metadata editors\n• Consumer cameras often don't write XMP data\n• Complex edit histories may be inconclusive",
+    "references": [
+        {
+            "title": "Adobe XMP Specification Part 1: Data Model (ISO 16684-1:2019)",
+            "url": "https://www.adobe.com/devnet/xmp.html"
+        },
+        {
+            "title": "Adobe XMP Specification Part 2: Additional Properties",
+            "url": "https://developer.adobe.com/xmp/docs/"
+        },
+        {
+            "title": "Dublin Core Metadata Initiative — DCMI Metadata Terms",
+            "url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/"
+        },
+        {
+            "title": "ExifTool XMP Tags Reference",
+            "url": "https://exiftool.org/TagNames/XMP.html"
+        }
+    ]
 }

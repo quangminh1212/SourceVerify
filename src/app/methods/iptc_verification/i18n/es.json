@@ -1,9 +1,26 @@
 {
-    "name": "IPTC Data Verification",
-    "description": "Verifies IPTC metadata fields for authenticity markers.",
-    "algorithm": "IPTC Field Analyzer",
-    "mechanism": "Examines IPTC DigitalSourceType and counts authenticity fields.",
-    "parameters": "IPTC fields: credit, source, copyright, byline, etc.",
-    "accuracy": "High - 85%+",
-    "source": "IPTC PMD 2024.1"
+    "name": "Verificación de Datos IPTC",
+    "description": "Verifica campos de metadatos IPTC para marcadores de autenticidad y clasificación de tipo de fuente digital.",
+    "algorithm": "Analizador de Autenticidad IPTC",
+    "mechanism": "La verificación IPTC examina:\n\n1. **Clasificación DigitalSourceType**: Verifica indicadores no fotográficos como 'trainedAlgorithmicMedia'.\n\n2. **Conteo de campos de autenticidad**: Cuenta campos profesionales IPTC.\n\n3. **Detección de referencias AI**: Busca herramientas AI en campos IPTC.\n\n4. **Validación de flujo de trabajo**: Valida que IPTC siga convenciones profesionales.",
+    "parameters": "Campos IPTC: credit, source, copyright, writer, caption, byline, city, country, headline, keywords\nDigitalSourceType: ISO 12639",
+    "accuracy": "Alta - 85%+ para fotos profesionales con datos IPTC.",
+    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639",
+    "useCase": "Verificación de fotos profesionales de agencias de noticias y servicios de stock.",
+    "strengths": "• DigitalSourceType proporciona declaración explícita de AI\n• Fotos profesionales tienen datos IPTC ricos\n• Estándar de la industria en todas las agencias de noticias\n• Identifica herramientas AI específicas\n• Cero falsos positivos con DigitalSourceType",
+    "limitations": "• Fotos de consumo raramente contienen IPTC\n• Los campos IPTC pueden ser fabricados\n• Muchos servicios AI no establecen DigitalSourceType\n• Las redes sociales eliminan IPTC\n• La ausencia de IPTC no indica generación AI",
+    "references": [
+        {
+            "title": "IPTC Photo Metadata Standard 2024.1",
+            "url": "https://iptc.org/standards/photo-metadata/iptc-standard/"
+        },
+        {
+            "title": "IPTC DigitalSourceType NewsCodes",
+            "url": "https://cv.iptc.org/newscodes/digitalsourcetype/"
+        },
+        {
+            "title": "IPTC Photo Metadata User Guide",
+            "url": "https://www.iptc.org/std/photometadata/documentation/userguide/"
+        }
+    ]
 }

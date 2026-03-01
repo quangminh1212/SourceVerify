@@ -1,9 +1,26 @@
 {
     "name": "软件指纹分析",
-    "description": "深度分析软件签名以识别AI工具。",
-    "algorithm": "软件签名匹配器",
-    "mechanism": "将元数据与AI工具和相机数据库进行匹配。",
-    "parameters": "25+ AI工具、相机品牌、编码库",
-    "accuracy": "非常高 - 90-95%",
-    "source": "AI工具文档"
+    "description": "深入分析软件签名、版本模式和编码指纹，以识别特定的AI生成工具。",
+    "algorithm": "多数据库软件签名匹配器",
+    "mechanism": "在三个检测层上运作：\n\n1. **AI工具签名匹配**: 与25+AI工具签名进行比对。\n\n2. **相机制造商识别**: 将Make/Model/Software与制造商数据库交叉引用。\n\n3. **编码库检测**: 识别libjpeg、Pillow、OpenCV等。\n\n4. **版本模式分析**: 验证软件版本字符串与已知模式。",
+    "parameters": "AI工具: 25+签名\n相机品牌: Canon, Nikon, Sony等\n编码库: libjpeg, Pillow, OpenCV, ImageMagick",
+    "accuracy": "非常高 - 签名存在时90-95%。",
+    "source": "Stable Diffusion GitHub, OpenAI API, Midjourney Docs",
+    "useCase": "确定图像由哪个工具创建的主要识别方法。",
+    "strengths": "• 可识别使用的确切AI工具和版本\n• 签名存在时准确率极高\n• 相机制造商识别验证真实照片\n• 编码库检测\n• 持续更新的签名数据库",
+    "limitations": "• 元数据可被轻松删除\n• 社交媒体删除软件元数据\n• 某些AI故意模仿相机元数据\n• 新AI工具可能不在数据库中\n• 元数据删除后无法检测AI",
+    "references": [
+        {
+            "title": "Stable Diffusion Web UI — GitHub",
+            "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui"
+        },
+        {
+            "title": "OpenAI DALL-E API Reference",
+            "url": "https://platform.openai.com/docs/api-reference/images"
+        },
+        {
+            "title": "ExifTool — Metadata Tag Database",
+            "url": "https://exiftool.org/TagNames/"
+        }
+    ]
 }

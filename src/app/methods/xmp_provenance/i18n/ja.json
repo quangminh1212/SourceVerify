@@ -2,8 +2,29 @@
     "name": "XMP来歴分析",
     "description": "XMP編集履歴、ソフトウェアチェーン、来歴メタデータを分析してAI生成ツールを検出します。",
     "algorithm": "XMP来歴チェーンアナライザー",
-    "mechanism": "XMPメタデータからAIツール署名をスキャンし、編集履歴チェーンを検証します。",
-    "parameters": "AIマーカーと写真編集ソフト",
-    "accuracy": "非常に高い - AI署名がある場合90%+",
-    "source": "Adobe XMP (ISO 16684)"
+    "mechanism": "深層メタデータ検査を実行：\n\n1. **CreatorTool分析**: AIツールシグネチャ vs 正規写真エディタを確認。\n\n2. **編集履歴チェーン**: xmpMM:Historyを解析して完全な編集チェーンを再構築。\n\n3. **ソフトウェアエージェント**: stEvt:softwareAgentで全ソフトウェアを特定。\n\n4. **リソース参照追跡**: xmpMM:DerivedFromとDocumentIDを検査。\n\n5. **AIマーカー検出**: 明示的なAI生成マーカーを検索。",
+    "parameters": "AIツール: Stable Diffusion, DALL-E, Midjourney, ComfyUI等\nエディタ: Photoshop, Lightroom, Capture One, GIMP\nXMPフィールド: CreatorTool, xmpMM:History, stEvt:softwareAgent",
+    "accuracy": "非常に高い - XMPデータにAIシグネチャがある場合90%以上。",
+    "source": "Adobe XMP Specification (ISO 16684), Dublin Core",
+    "useCase": "XMPメタデータを保持する画像の包括的な来歴検証。",
+    "strengths": "• 編集履歴チェーンが完全な来歴を提供\n• ソフトウェアエージェントが処理パイプラインを明示\n• CreatorToolのAIシグネチャは高い信頼性\n• リソース参照で系統追跡が可能\n• 業界標準メタデータ",
+    "limitations": "• SNSやメッセンジャーがXMPを削除する場合\n• AIツールがXMPを埋め込まない可能性\n• 編集履歴は手動偽造可能\n• 一般カメラはXMPを書かないことが多い\n• 複雑な編集履歴は結論不明の場合あり",
+    "references": [
+        {
+            "title": "Adobe XMP Specification Part 1 (ISO 16684-1:2019)",
+            "url": "https://www.adobe.com/devnet/xmp.html"
+        },
+        {
+            "title": "Adobe XMP Part 2: Additional Properties",
+            "url": "https://developer.adobe.com/xmp/docs/"
+        },
+        {
+            "title": "Dublin Core Metadata Initiative",
+            "url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/"
+        },
+        {
+            "title": "ExifTool XMP Tags",
+            "url": "https://exiftool.org/TagNames/XMP.html"
+        }
+    ]
 }

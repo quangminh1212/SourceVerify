@@ -2,8 +2,29 @@
     "name": "Resolution Consistency",
     "description": "Analyzes DPI/resolution metadata vs actual pixel dimensions, checks for AI model-specific output sizes, and validates EXIF image size declarations against actual dimensions.",
     "algorithm": "Resolution Pattern Analyzer",
-    "mechanism": "Checks dimensions against known AI model outputs (512², 768², 1024², etc.), validates DPI metadata, compares EXIF declared dimensions vs actual, checks for multiples of 64 (VAE latent space), and analyzes megapixel counts.",
-    "parameters": "AI model resolutions: 512², 768², 1024², 2048²\nDPI standards: 72 (web), 96 (screen), 240/300 (print)\nVAE alignment: multiples of 64",
-    "accuracy": "Medium - 70-80%. Most effective for unresized AI outputs.",
-    "source": "Latent Diffusion Model Architecture, JEITA CP-3451C"
+    "mechanism": "The resolution consistency analysis examines multiple signals:\n\n1. **AI Model Resolution Matching**: Checks image dimensions against known AI model outputs (Stable Diffusion: 512², 768², 1024²; DALL-E 3: 1024×1024, 1792×1024; Midjourney: various).\n\n2. **VAE Latent Space Detection**: Validates if dimensions are multiples of 64 (8× downsampled VAE latent space), which is characteristic of diffusion models.\n\n3. **DPI Metadata Validation**: Cross-checks declared DPI (72 web, 96 screen, 240/300 print) against actual pixel dimensions. Inconsistencies suggest post-processing.\n\n4. **EXIF Dimension Cross-check**: Compares ExifImageWidth/ExifImageHeight with actual decoded image dimensions to detect resizing.\n\n5. **Megapixel Analysis**: Compares total pixel count against typical camera sensor outputs vs AI model capabilities.",
+    "parameters": "AI model resolutions: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024², 1792×1024), Flux (1024²)\nDPI standards: 72 (web), 96 (screen), 240/300 (print)\nVAE alignment: multiples of 64\nCamera megapixels: 12-108 MP typical",
+    "accuracy": "Medium - 70-80%. Most effective for unresized AI outputs. Accuracy decreases significantly when images are resized or cropped.",
+    "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
+    "useCase": "Quick AI detection screening based on dimensional analysis. Particularly effective for batch processing where images haven't been resized from their original AI-generated dimensions.",
+    "strengths": "• Fast dimensional analysis with no pixel processing needed\n• VAE alignment check is highly specific to diffusion models\n• DPI metadata inconsistencies reveal post-processing\n• EXIF dimension cross-check catches subtle resizing\n• Effective for identifying specific AI model outputs",
+    "limitations": "• Easily defeated by resizing or cropping the image\n• Many camera resolutions overlap with AI model outputs\n• Social media platforms resize images automatically\n• Upscalers change dimensions to non-standard sizes\n• DPI metadata is often inaccurate or absent",
+    "references": [
+        {
+            "title": "Rombach, R. et al. (2022). High-Resolution Image Synthesis with Latent Diffusion Models. CVPR.",
+            "url": "https://doi.org/10.1109/CVPR52688.2022.01042"
+        },
+        {
+            "title": "Podell, D. et al. (2023). SDXL: Improving Latent Diffusion Models for High-Resolution Image Synthesis.",
+            "url": "https://doi.org/10.48550/arXiv.2307.01952"
+        },
+        {
+            "title": "DALL-E 3 System Card — OpenAI",
+            "url": "https://cdn.openai.com/papers/DALL_E_3_System_Card.pdf"
+        },
+        {
+            "title": "JEITA CP-3451C — Exif Standard Image Dimensions",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        }
+    ]
 }

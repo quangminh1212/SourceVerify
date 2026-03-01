@@ -1,9 +1,30 @@
 {
-    "name": "Pháp y dấu thời gian",
-    "description": "So sánh chéo các dấu thời gian tạo, chỉnh sửa, và số hóa để phát hiện bất thường thời gian chỉ ra ảnh AI hoặc giả mạo. Xác thực tính nhất quán thời gian qua nhiều trường EXIF.",
-    "algorithm": "Bộ phân tích so sánh chéo đa dấu thời gian",
-    "mechanism": "Thu thập tất cả trường dấu thời gian, phân tích tính nhất quán thời gian, phát hiện ngày tương lai, dấu thời gian epoch/mặc định, và khoảng cách thời gian bất thường.",
-    "parameters": "Trường thời gian: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime",
-    "accuracy": "Trung bình-Cao - 75-85%. Hiệu quả khi có nhiều dấu thời gian.",
-    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601"
+    "name": "Phân tích pháp y dấu thời gian",
+    "description": "Đối chiếu các dấu thời gian tạo, sửa đổi, và số hóa để phát hiện bất thường thời gian cho thấy ảnh AI tạo hoặc giả mạo. Xác thực tính nhất quán timestamp qua nhiều trường EXIF.",
+    "algorithm": "Bộ phân tích đối chiếu đa dấu thời gian",
+    "mechanism": "Phân tích pháp y dấu thời gian thực hiện xác thực thời gian toàn diện:\n\n1. **Thu thập đa trường**: Thu thập tất cả trường timestamp — DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal.\n\n2. **Phân tích nhất quán thời gian**: Xác thực thứ tự logic — DateTimeOriginal ≤ DateTimeDigitized ≤ ModifyDate. Vi phạm cho thấy metadata bị thao túng.\n\n3. **Phát hiện bất thường**: Xác định ngày trong tương lai, timestamp epoch (1970-01-01), giá trị mặc định (0000:00:00), không nhất quán múi giờ, và timestamp tròn đáng ngờ.\n\n4. **Phân tích khoảng thời gian**: Đo khoảng cách giữa các sự kiện chụp. Chụp burst cho thấy khoảng millisecond, timestamp giả mạo cho thấy khoảng cách bất thường.\n\n5. **Độ chính xác SubSecond**: Kiểm tra dữ liệu thời gian dưới giây (SubSecTimeOriginal), có mặt trong camera hiện đại nhưng vắng mặt trong hầu hết ảnh AI.",
+    "parameters": "Trường timestamp: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, DateTime, GPSDateTime, SubSecTimeOriginal\nĐịnh dạng: EXIF (YYYY:MM:DD HH:MM:SS), ISO 8601\nMẫu bất thường: ngày epoch, ngày tương lai, timestamp giống nhau, thiếu dữ liệu dưới giây\nThứ tự mong đợi: Original ≤ Digitized ≤ Modified",
+    "accuracy": "Trung bình-Cao - 75-85%. Hiệu quả khi có nhiều timestamp. Kém tin cậy khi chỉ có một timestamp.",
+    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601 Timestamp Standard",
+    "useCase": "Xác minh tính toàn vẹn thời gian trong pipeline pháp y. Phát hiện thao túng timestamp trong cả ảnh AI tạo và ảnh bị giả mạo thủ công. Cần thiết cho xác lập trình tự thời gian ảnh trong bối cảnh pháp lý.",
+    "strengths": "• Đối chiếu đa trường phát hiện sự không nhất quán mà công cụ AI bỏ sót\n• Dữ liệu SubSecond là chỉ báo xác thực camera mạnh\n• Phát hiện cả ảnh AI tạo và giả mạo thủ công\n• Xác thực thứ tự thời gian rất đáng tin cậy\n• Kết hợp với timestamp GPS để xác minh bổ sung",
+    "limitations": "• Đồng hồ camera có thể được người dùng đặt sai\n• Chỉ một timestamp cho giá trị pháp y hạn chế\n• Công cụ AI đang cải thiện việc tạo timestamp hợp lý\n• Xử lý múi giờ khác nhau giữa camera và phần mềm\n• Ảnh xử lý hàng loạt có thể có timestamp giống nhau",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 DateTime Tags Specification",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 8601:2019 — Date and Time Format Standard",
+            "url": "https://www.iso.org/standard/70907.html"
+        },
+        {
+            "title": "Geradts, Z. & Bijhold, J. (2002). Content-Based Information Retrieval in Forensic Image Databases.",
+            "url": "https://doi.org/10.1520/JFS15316J"
+        },
+        {
+            "title": "ExifTool DateTime Tags Reference",
+            "url": "https://exiftool.org/TagNames/EXIF.html"
+        }
+    ]
 }

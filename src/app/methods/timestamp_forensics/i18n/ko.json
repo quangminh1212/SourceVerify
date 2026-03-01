@@ -1,9 +1,26 @@
 {
     "name": "타임스탬프 포렌식",
-    "description": "타임스탬프를 교차 참조하여 시간적 이상을 감지합니다.",
-    "algorithm": "멀티 타임스탬프 분석기",
-    "mechanism": "EXIF 필드 간의 타임스탬프 일관성을 검증합니다.",
-    "parameters": "DateTimeOriginal, CreateDate 등",
-    "accuracy": "중상 - 75-85%",
-    "source": "EXIF 2.32, ISO 8601"
+    "description": "생성, 수정, 디지타이즈 타임스탬프를 교차 참조하여 AI 생성이나 변조를 나타내는 시간적 이상을 감지합니다.",
+    "algorithm": "다중 타임스탬프 교차 참조 분석기",
+    "mechanism": "포괄적 시간 검증 수행:\n\n1. **다중 필드 수집**: 모든 타임스탬프 필드 수집.\n\n2. **시간 일관성 분석**: 논리적 순서 검증.\n\n3. **이상 감지**: 미래 날짜, 에포크 타임스탬프, 기본값 식별.\n\n4. **시간 간격 분석**: 촬영 이벤트 간 간격 측정.\n\n5. **서브초 정밀도**: 서브초 타이밍 데이터 확인.",
+    "parameters": "필드: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, GPSDateTime\n형식: EXIF, ISO 8601\n예상 순서: Original ≤ Digitized ≤ Modified",
+    "accuracy": "중상 - 75-85%.",
+    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601",
+    "useCase": "포렌식 파이프라인에서의 시간 무결성 검증.",
+    "strengths": "• 다중 필드 교차 참조로 불일치 감지\n• 서브초 데이터는 강력한 카메라 진위 지표\n• AI 생성과 수동 변조 모두 감지\n• 시간 순서 검증의 높은 신뢰성\n• GPS 타임스탬프와 함께 추가 검증",
+    "limitations": "• 카메라 시계가 잘못 설정될 수 있음\n• 단일 타임스탬프의 제한적 포렌식 가치\n• AI 도구의 타임스탬프 생성 능력 향상\n• 타임존 처리가 기기마다 다름\n• 배치 처리 시 동일 타임스탬프 가능",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 DateTime Tags",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 8601:2019 — Date and Time Format",
+            "url": "https://www.iso.org/standard/70907.html"
+        },
+        {
+            "title": "ExifTool DateTime Tags Reference",
+            "url": "https://exiftool.org/TagNames/EXIF.html"
+        }
+    ]
 }

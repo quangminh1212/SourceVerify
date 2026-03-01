@@ -1,9 +1,30 @@
 {
     "name": "Xác minh dữ liệu IPTC",
-    "description": "Xác minh các trường metadata IPTC (International Press Telecommunications Council) để tìm dấu hiệu xác thực, phân loại nguồn kỹ thuật số, và chữ ký công cụ AI trong quy trình ảnh chuyên nghiệp.",
+    "description": "Xác minh các trường metadata IPTC (Hội đồng Viễn thông Báo chí Quốc tế) cho các dấu hiệu xác thực, phân loại loại nguồn số, và chữ ký công cụ AI trong quy trình ảnh chuyên nghiệp.",
     "algorithm": "Bộ phân tích xác thực trường IPTC",
-    "mechanism": "Kiểm tra IPTC DigitalSourceType để phát hiện nguồn gốc phi nhiếp ảnh, đếm các trường xác thực (credit, source, copyright, byline), và kiểm tra tham chiếu tổng hợp/tạo ra.",
-    "parameters": "Các trường xác thực IPTC: credit, source, copyright, writer, caption, byline, city, country, headline, keywords",
-    "accuracy": "Cao - 85%+ cho ảnh tin tức/stock chuyên nghiệp có dữ liệu IPTC",
-    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639"
+    "mechanism": "Xác minh IPTC kiểm tra các lớp metadata chuyên nghiệp:\n\n1. **Phân loại DigitalSourceType**: Kiểm tra trường DigitalSourceType theo ISO 12639 cho các chỉ báo phi chụp ảnh như 'trainedAlgorithmicMedia', 'algorithmicMedia', 'virtualRecording'.\n\n2. **Đếm trường xác thực**: Đếm các trường IPTC chuyên nghiệp (credit, source, copyright, writer, caption, byline, city, country, headline, keywords). Số lượng nhiều cho thấy quy trình chụp ảnh chuyên nghiệp.\n\n3. **Phát hiện tham chiếu AI**: Quét giá trị IPTC tìm tham chiếu đến công cụ AI trong các trường source, credit, và software.\n\n4. **Xác thực quy trình**: Xác thực metadata IPTC tuân theo quy ước chụp ảnh chuyên nghiệp.",
+    "parameters": "Trường xác thực IPTC: credit, source, copyright, writer, caption, byline, city, country, headline, keywords, instructions, category\nGiá trị DigitalSourceType: photographicImage, negativeFilm, trainedAlgorithmicMedia, algorithmicMedia\nPhân loại ISO 12639",
+    "accuracy": "Cao - 85%+ cho ảnh báo chí/stock có dữ liệu IPTC. Hạn chế cho ảnh tiêu dùng ít khi có IPTC.",
+    "source": "IPTC Photo Metadata Standard 2024.1, ISO 12639 (DigitalSourceType)",
+    "useCase": "Xác minh ảnh chuyên nghiệp: xác thực ảnh từ hãng tin, dịch vụ ảnh stock, và nhiếp ảnh gia chuyên nghiệp. Metadata IPTC đầy đủ chỉ báo mạnh nguồn gốc chuyên nghiệp.",
+    "strengths": "• DigitalSourceType cung cấp khai báo AI rõ ràng khi có mặt\n• Ảnh chuyên nghiệp có IPTC phong phú mà AI không sao chép\n• Metadata tiêu chuẩn ngành được tất cả hãng tin lớn sử dụng\n• Có thể xác định công cụ AI cụ thể từ trường IPTC source\n• Không có dương tính giả khi DigitalSourceType khai báo AI",
+    "limitations": "• Ảnh tiêu dùng hiếm khi chứa dữ liệu IPTC\n• Trường IPTC có thể bị giả mạo thủ công\n• Nhiều dịch vụ AI chưa thiết lập DigitalSourceType\n• Nền tảng mạng xã hội xóa metadata IPTC\n• Thiếu IPTC không cho thấy ảnh AI tạo",
+    "references": [
+        {
+            "title": "IPTC Photo Metadata Standard 2024.1",
+            "url": "https://iptc.org/standards/photo-metadata/iptc-standard/"
+        },
+        {
+            "title": "ISO 12639:2004 — DigitalSourceType",
+            "url": "https://www.iso.org/standard/34342.html"
+        },
+        {
+            "title": "IPTC DigitalSourceType NewsCodes Vocabulary",
+            "url": "https://cv.iptc.org/newscodes/digitalsourcetype/"
+        },
+        {
+            "title": "IPTC Photo Metadata User Guide",
+            "url": "https://www.iptc.org/std/photometadata/documentation/userguide/"
+        }
+    ]
 }

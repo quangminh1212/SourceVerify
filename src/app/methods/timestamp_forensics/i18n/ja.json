@@ -1,9 +1,26 @@
 {
     "name": "タイムスタンプフォレンジック",
-    "description": "タイムスタンプを相互参照して時間的異常を検出します。",
-    "algorithm": "マルチタイムスタンプアナライザー",
-    "mechanism": "EXIFフィールド間のタイムスタンプの一貫性を検証します。",
-    "parameters": "DateTimeOriginal, CreateDate等",
-    "accuracy": "中高 - 75-85%",
-    "source": "EXIF 2.32, ISO 8601"
+    "description": "作成、変更、デジタル化のタイムスタンプを相互参照して、AI生成や改ざんを示す時間的異常を検出します。",
+    "algorithm": "マルチタイムスタンプ相互参照アナライザー",
+    "mechanism": "包括的な時間的検証を実行：\n\n1. **マルチフィールド収集**: すべてのタイムスタンプフィールドを収集。\n\n2. **時間的整合性分析**: 論理的順序を検証。\n\n3. **異常検出**: 未来の日付、エポックタイムスタンプ、デフォルト値を識別。\n\n4. **タイムスパン分析**: 撮影イベント間の間隔を測定。\n\n5. **サブ秒精度**: サブ秒タイミングデータを確認。",
+    "parameters": "フィールド: DateTimeOriginal, CreateDate, DateTimeDigitized, ModifyDate, GPSDateTime\nフォーマット: EXIF, ISO 8601\n期待される順序: Original ≤ Digitized ≤ Modified",
+    "accuracy": "中高 - 75-85%。",
+    "source": "JEITA CP-3451C (Exif 2.32), ISO 8601",
+    "useCase": "フォレンジックパイプラインでの時間的整合性検証。",
+    "strengths": "• マルチフィールド相互参照で不整合を検出\n• サブ秒データは強力なカメラ真正性指標\n• AI生成と手動改ざんの両方を検出\n• 時間的順序検証は非常に信頼性が高い\n• GPSタイムスタンプとの併用で追加検証",
+    "limitations": "• カメラ時計がユーザーにより誤設定される場合\n• 単一タイムスタンプのフォレンジック価値は限定的\n• AIツールのタイムスタンプ生成が改善中\n• タイムゾーン処理がデバイスにより異なる\n• バッチ処理で同一タイムスタンプの可能性",
+    "references": [
+        {
+            "title": "JEITA CP-3451C — Exif 2.32 DateTime Tags",
+            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
+        },
+        {
+            "title": "ISO 8601:2019 — Date and Time Format",
+            "url": "https://www.iso.org/standard/70907.html"
+        },
+        {
+            "title": "ExifTool DateTime Tags Reference",
+            "url": "https://exiftool.org/TagNames/EXIF.html"
+        }
+    ]
 }

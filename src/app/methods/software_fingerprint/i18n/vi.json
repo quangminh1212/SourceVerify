@@ -1,9 +1,30 @@
 {
     "name": "Phân tích dấu vân tay phần mềm",
-    "description": "Phân tích sâu chữ ký phần mềm, mẫu phiên bản, và dấu vân tay mã hóa để nhận diện công cụ AI cụ thể, nhà sản xuất camera, và pipeline xử lý ảnh.",
+    "description": "Phân tích sâu chữ ký phần mềm, mẫu phiên bản, và dấu vân tay mã hóa để xác định công cụ AI tạo ảnh cụ thể, nhà sản xuất camera, và pipeline xử lý ảnh.",
     "algorithm": "Bộ khớp chữ ký phần mềm đa cơ sở dữ liệu",
-    "mechanism": "So khớp giá trị metadata với cơ sở dữ liệu toàn diện về công cụ AI (Stable Diffusion, DALL-E, Midjourney, ComfyUI, v.v.), nhà sản xuất camera (Canon, Nikon, Sony, v.v.), và thư viện mã hóa (libjpeg, Pillow, OpenCV).",
-    "parameters": "Công cụ AI: 25+ chữ ký bao gồm Stable Diffusion, DALL-E, Midjourney, ComfyUI, InvokeAI, Leonardo.AI, v.v.\nHãng camera: Canon, Nikon, Sony, Fujifilm, Panasonic, Apple, Samsung, v.v.",
-    "accuracy": "Rất cao - 90-95% khi chữ ký phần mềm có trong metadata.",
-    "source": "Stable Diffusion GitHub, OpenAI API, Midjourney Documentation"
+    "mechanism": "Phân tích dấu vân tay phần mềm hoạt động trên ba lớp phát hiện:\n\n1. **Khớp chữ ký công cụ AI**: Khớp giá trị metadata với cơ sở dữ liệu 25+ chữ ký công cụ AI bao gồm Stable Diffusion (A1111, ComfyUI, InvokeAI), DALL-E, Midjourney, Leonardo.AI. Kiểm tra CreatorTool, Software, ProcessingSoftware.\n\n2. **Xác định nhà sản xuất camera**: Đối chiếu trường Make/Model/Software với cơ sở dữ liệu nhà sản xuất camera (Canon, Nikon, Sony, Fujifilm, Apple, Samsung, Google Pixel).\n\n3. **Phát hiện thư viện mã hóa**: Xác định thư viện mã hóa ảnh từ header JPEG/PNG (libjpeg, MozJPEG, Pillow/PIL, OpenCV, ImageMagick). Công cụ AI thường dùng thư viện Python (Pillow, OpenCV) trong khi camera dùng encoder độc quyền.\n\n4. **Phân tích mẫu phiên bản**: Xác thực chuỗi phiên bản phần mềm theo mẫu đã biết để phát hiện metadata giả mạo.",
+    "parameters": "Công cụ AI: 25+ chữ ký (Stable Diffusion, DALL-E 2/3, Midjourney v5/v6, ComfyUI, InvokeAI, Leonardo.AI, Firefly, Bing Image Creator, v.v.)\nHãng camera: Canon, Nikon, Sony, Fujifilm, Panasonic, Apple, Samsung, Google\nThư viện mã hóa: libjpeg, MozJPEG, Pillow, OpenCV, ImageMagick, libpng\nTrường kiểm tra: CreatorTool, Software, ProcessingSoftware, Make, Model",
+    "accuracy": "Rất cao - 90-95% khi có chữ ký phần mềm trong metadata. Độ chính xác phụ thuộc vào metadata không bị xóa.",
+    "source": "Stable Diffusion GitHub, OpenAI API Documentation, Midjourney Documentation",
+    "useCase": "Phương pháp xác định chính để biết chính xác công cụ nào tạo ảnh. Quan trọng cho kiểm duyệt nội dung, kiểm chứng tin tức, và điều tra pháp y cần biết công cụ AI cụ thể.",
+    "strengths": "• Có thể xác định chính xác công cụ AI và phiên bản sử dụng\n• Độ chính xác cực cao khi có chữ ký\n• Xác định nhà sản xuất camera xác thực ảnh thật\n• Phát hiện thư viện mã hóa cung cấp bằng chứng AI gián tiếp\n• Cơ sở dữ liệu chữ ký được cập nhật liên tục",
+    "limitations": "• Metadata có thể dễ dàng bị xóa bởi hầu hết trình chỉnh sửa ảnh\n• Nền tảng mạng xã hội xóa metadata phần mềm\n• Một số công cụ AI cố ý bắt chước metadata camera\n• Công cụ AI mới có thể chưa có trong cơ sở dữ liệu\n• Không phát hiện được nội dung AI khi tất cả metadata bị xóa",
+    "references": [
+        {
+            "title": "Stable Diffusion Web UI (AUTOMATIC1111) — GitHub Repository",
+            "url": "https://github.com/AUTOMATIC1111/stable-diffusion-webui"
+        },
+        {
+            "title": "OpenAI DALL-E API Reference — Image Generation",
+            "url": "https://platform.openai.com/docs/api-reference/images"
+        },
+        {
+            "title": "ExifTool — Comprehensive Metadata Tag Database",
+            "url": "https://exiftool.org/TagNames/"
+        },
+        {
+            "title": "Yu, N. et al. (2019). Attributing Fake Images to GANs. ICCV.",
+            "url": "https://doi.org/10.1109/ICCV.2019.00765"
+        }
+    ]
 }
