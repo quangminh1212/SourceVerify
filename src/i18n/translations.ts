@@ -4,6 +4,7 @@ import vi from "./locales/vi.json";
 import ja from "./locales/ja.json";
 import ko from "./locales/ko.json";
 import es from "./locales/es.json";
+import { methodTranslations } from "../lib/methods/i18n";
 
 export type Locale = "en" | "zh" | "vi" | "ja" | "ko" | "es";
 
@@ -25,13 +26,14 @@ export const LOCALE_NAMES: Record<Locale, string> = {
     es: "Español",
 };
 
+// Merge base translations with method-specific translations
 const translations: Record<Locale, Record<string, string>> = {
-    en,
-    zh,
-    vi,
-    ja,
-    ko,
-    es,
+    en: { ...en, ...methodTranslations.en },
+    zh: { ...zh, ...methodTranslations.en }, // fallback to en for missing
+    vi: { ...vi, ...methodTranslations.vi },
+    ja: { ...ja, ...methodTranslations.en }, // fallback to en
+    ko: { ...ko, ...methodTranslations.en }, // fallback to en
+    es: { ...es, ...methodTranslations.en }, // fallback to en
 };
 
 export default translations;
