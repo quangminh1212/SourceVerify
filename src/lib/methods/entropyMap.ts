@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -12,11 +12,7 @@ import { gray } from "./pixelUtils";
  * - Zipf, "Human Behavior and the Principle of Least Effort", 1949
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 26: Entropy Map Analysis
@@ -57,7 +53,7 @@ export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, heig
             name: "Entropy Map", nameKey: "signal.entropyMap",
             category: "statistical", score: 50, weight: 0.5,
             description: "Insufficient data for entropy analysis",
-            descriptionKey: "signal.entropy.error", icon: "Ⓗ",
+            descriptionKey: "signal.entropy.error", icon: "â’½",
         };
     }
 
@@ -78,10 +74,10 @@ export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, heig
         name: "Entropy Map", nameKey: "signal.entropyMap",
         category: "statistical", score, weight: 0.5,
         description: score > 55
-            ? "Entropy distribution is too uniform — AI images lack natural information variation"
-            : "Entropy distribution varies naturally — consistent with real scene content",
+            ? "Entropy distribution is too uniform â€” AI images lack natural information variation"
+            : "Entropy distribution varies naturally â€” consistent with real scene content",
         descriptionKey: score > 55 ? "signal.entropy.ai" : "signal.entropy.real",
-        icon: "Ⓗ",
+        icon: "â’½",
         details: `Mean entropy: ${mean.toFixed(3)} bits, CV: ${cv.toFixed(3)}, Blocks: ${entropies.length}.`,
     };
 }

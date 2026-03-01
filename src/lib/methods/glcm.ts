@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -13,11 +13,8 @@ import { gray } from "./pixelUtils";
  * - Chen et al., "WLD: A Robust Local Image Descriptor", IEEE PAMI 2010
  */
 
-import type { AnalysisMethod } from "../types";
-
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
+
+
 
 /**
  * Signal 14: Local Binary Pattern (LBP) Analysis
@@ -82,10 +79,10 @@ export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: numb
         name: "Local Binary Pattern", nameKey: "signal.localBinaryPattern",
         category: "spatial", score, weight: 0.6,
         description: score > 55
-            ? "LBP texture patterns lack diversity — characteristic of AI-generated surfaces"
-            : "LBP texture shows natural diversity — consistent with real photography",
+            ? "LBP texture patterns lack diversity â€” characteristic of AI-generated surfaces"
+            : "LBP texture shows natural diversity â€” consistent with real photography",
         descriptionKey: score > 55 ? "signal.lbp.ai" : "signal.lbp.real",
-        icon: "⊞",
+        icon: "âŠž",
         details: `Uniform ratio: ${uniformRatio.toFixed(3)}, LBP entropy: ${lbpEntropy.toFixed(2)} bits, Samples: ${totalSamples}.`,
     };
 }
@@ -145,10 +142,10 @@ export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, heig
         name: "HOG Anomaly", nameKey: "signal.hogAnomaly",
         category: "spatial", score, weight: 0.5,
         description: score > 55
-            ? "Gradient orientations are unusually uniform — typical of AI generation"
-            : "Gradient orientations show natural variation — consistent with real scenes",
+            ? "Gradient orientations are unusually uniform â€” typical of AI generation"
+            : "Gradient orientations show natural variation â€” consistent with real scenes",
         descriptionKey: score > 55 ? "signal.hog.ai" : "signal.hog.real",
-        icon: "⊠",
+        icon: "âŠ ",
         details: `HOG entropy: ${hogEntropy.toFixed(3)} (norm: ${normalizedEntropy.toFixed(3)}), Peak dominance: ${peakDominance.toFixed(3)}.`,
     };
 }
@@ -164,7 +161,7 @@ export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: nu
     let total = 0;
     const step = Math.max(2, Math.floor(Math.min(width, height) / 200));
 
-    // Horizontal co-occurrence (d=1, θ=0)
+    // Horizontal co-occurrence (d=1, Î¸=0)
     for (let y = 0; y < height; y += step) {
         for (let x = 0; x < width - 1; x += step) {
             const g1 = Math.min(levels - 1, Math.floor(gray(pixels, (y * width + x) * 4) / 256 * levels));
@@ -217,10 +214,10 @@ export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: nu
         name: "GLCM Texture", nameKey: "signal.glcmTexture",
         category: "spatial", score, weight: 0.5,
         description: score > 55
-            ? "GLCM features indicate overly smooth texture — typical of AI generation"
+            ? "GLCM features indicate overly smooth texture â€” typical of AI generation"
             : "GLCM texture features are consistent with natural image characteristics",
         descriptionKey: score > 55 ? "signal.glcm.ai" : "signal.glcm.real",
-        icon: "▣",
+        icon: "â–£",
         details: `Contrast: ${contrast.toFixed(2)}, Energy: ${energy.toFixed(4)}, Homogeneity: ${homogeneity.toFixed(3)}.`,
     };
 }

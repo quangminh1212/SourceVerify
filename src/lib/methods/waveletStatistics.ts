@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -12,11 +12,7 @@ import { gray } from "./pixelUtils";
  * - Morrone & Owens, "Feature detection from local energy", Pattern Recognition Letters 1987
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 20: Wavelet Coefficient Statistics
@@ -93,10 +89,10 @@ export function analyzeWaveletStatistics(pixels: Uint8ClampedArray, width: numbe
         name: "Wavelet Statistics", nameKey: "signal.waveletStats",
         category: "frequency", score, weight: 0.6,
         description: score > 55
-            ? "Wavelet coefficients show Gaussian distribution — AI images lack natural heavy-tailed statistics"
-            : "Wavelet coefficients show natural heavy-tailed distribution — consistent with real images",
+            ? "Wavelet coefficients show Gaussian distribution â€” AI images lack natural heavy-tailed statistics"
+            : "Wavelet coefficients show natural heavy-tailed distribution â€” consistent with real images",
         descriptionKey: score > 55 ? "signal.wavelet.ai" : "signal.wavelet.real",
-        icon: "≋",
+        icon: "â‰‹",
         details: `Avg kurtosis: ${avgKurtosis.toFixed(2)}, Avg detail std: ${avgStd.toFixed(2)}.`,
     };
 }

@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -11,11 +11,7 @@ import { gray } from "./pixelUtils";
  * - Kee et al., "Exposing Digital Forgeries from 3-D Lighting Environments", ICIP 2013
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 39: Perspective Consistency Check
@@ -47,7 +43,7 @@ export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: 
             name: "Perspective Consistency", nameKey: "signal.perspectiveConsistency",
             category: "geometric", score: 50, weight: 0.3,
             description: "Not enough strong edges for perspective analysis",
-            descriptionKey: "signal.perspective.error", icon: "⊿",
+            descriptionKey: "signal.perspective.error", icon: "âŠ¿",
         };
     }
 
@@ -82,9 +78,9 @@ export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: 
         category: "geometric", score, weight: 0.3,
         description: score > 55
             ? "Edge direction distribution suggests inconsistent perspective geometry"
-            : "Edge directions show consistent perspective structure — natural scene geometry",
+            : "Edge directions show consistent perspective structure â€” natural scene geometry",
         descriptionKey: score > 55 ? "signal.perspective.ai" : "signal.perspective.real",
-        icon: "⊿",
+        icon: "âŠ¿",
         details: `Dominant directions: ${dominantDirs}/${numBins}, Strong edges: ${edgeAngles.length}.`,
     };
 }
@@ -129,7 +125,7 @@ export function analyzeLightingConsistency(pixels: Uint8ClampedArray, width: num
             name: "Lighting Consistency", nameKey: "signal.lightingConsistency",
             category: "geometric", score: 50, weight: 0.4,
             description: "Not enough regions for lighting analysis",
-            descriptionKey: "signal.lighting.error", icon: "☼",
+            descriptionKey: "signal.lighting.error", icon: "â˜¼",
         };
     }
 
@@ -155,10 +151,10 @@ export function analyzeLightingConsistency(pixels: Uint8ClampedArray, width: num
         name: "Lighting Consistency", nameKey: "signal.lightingConsistency",
         category: "geometric", score, weight: 0.4,
         description: score > 55
-            ? "Lighting direction varies significantly across regions — physically inconsistent"
-            : "Lighting direction is consistent across regions — natural illumination pattern",
+            ? "Lighting direction varies significantly across regions â€” physically inconsistent"
+            : "Lighting direction is consistent across regions â€” natural illumination pattern",
         descriptionKey: score > 55 ? "signal.lighting.ai" : "signal.lighting.real",
-        icon: "☼",
+        icon: "â˜¼",
         details: `Circular variance: ${circularVariance.toFixed(3)}, Resultant length R: ${R.toFixed(3)}, Regions: ${lightDirections.length}.`,
     };
 }
@@ -194,7 +190,7 @@ export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: numbe
             name: "Shadow Consistency", nameKey: "signal.shadowConsistency",
             category: "geometric", score: 50, weight: 0.3,
             description: "Not enough data for shadow analysis",
-            descriptionKey: "signal.shadow.error", icon: "◑",
+            descriptionKey: "signal.shadow.error", icon: "â—‘",
         };
     }
 
@@ -240,10 +236,10 @@ export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: numbe
         name: "Shadow Consistency", nameKey: "signal.shadowConsistency",
         category: "geometric", score, weight: 0.3,
         description: score > 55
-            ? "Shadow distribution appears physically inconsistent — potential AI generation"
-            : "Shadow distribution is physically plausible — natural lighting and shadow patterns",
+            ? "Shadow distribution appears physically inconsistent â€” potential AI generation"
+            : "Shadow distribution is physically plausible â€” natural lighting and shadow patterns",
         descriptionKey: score > 55 ? "signal.shadow.ai" : "signal.shadow.real",
-        icon: "◑",
+        icon: "â—‘",
         details: `Dark ratio: ${darkRatio.toFixed(3)}, Dynamic range: ${dynamicRange.toFixed(1)}, Dark blocks: ${darkBlocks.length}/${blockBrightness.length}.`,
     };
 }

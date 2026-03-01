@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -13,11 +13,8 @@ import { gray } from "./pixelUtils";
  * - Chen et al., "WLD: A Robust Local Image Descriptor", IEEE PAMI 2010
  */
 
-import type { AnalysisMethod } from "../types";
-
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
+
+
 
 /**
  * Signal 14: Local Binary Pattern (LBP) Analysis
@@ -82,10 +79,10 @@ export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: numb
         name: "Local Binary Pattern", nameKey: "signal.localBinaryPattern",
         category: "spatial", score, weight: 0.6,
         description: score > 55
-            ? "LBP texture patterns lack diversity — characteristic of AI-generated surfaces"
-            : "LBP texture shows natural diversity — consistent with real photography",
+            ? "LBP texture patterns lack diversity â€” characteristic of AI-generated surfaces"
+            : "LBP texture shows natural diversity â€” consistent with real photography",
         descriptionKey: score > 55 ? "signal.lbp.ai" : "signal.lbp.real",
-        icon: "⊞",
+        icon: "âŠž",
         details: `Uniform ratio: ${uniformRatio.toFixed(3)}, LBP entropy: ${lbpEntropy.toFixed(2)} bits, Samples: ${totalSamples}.`,
     };
 }
@@ -145,10 +142,10 @@ export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, heig
         name: "HOG Anomaly", nameKey: "signal.hogAnomaly",
         category: "spatial", score, weight: 0.5,
         description: score > 55
-            ? "Gradient orientations are unusually uniform — typical of AI generation"
-            : "Gradient orientations show natural variation — consistent with real scenes",
+            ? "Gradient orientations are unusually uniform â€” typical of AI generation"
+            : "Gradient orientations show natural variation â€” consistent with real scenes",
         descriptionKey: score > 55 ? "signal.hog.ai" : "signal.hog.real",
-        icon: "⊠",
+        icon: "âŠ ",
         details: `HOG entropy: ${hogEntropy.toFixed(3)} (norm: ${normalizedEntropy.toFixed(3)}), Peak dominance: ${peakDominance.toFixed(3)}.`,
     };
 }

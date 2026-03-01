@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -11,11 +11,7 @@ import { gray } from "./pixelUtils";
  * - Kee et al., "Exposing Digital Forgeries from 3-D Lighting Environments", ICIP 2013
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 39: Perspective Consistency Check
@@ -47,7 +43,7 @@ export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: 
             name: "Perspective Consistency", nameKey: "signal.perspectiveConsistency",
             category: "geometric", score: 50, weight: 0.3,
             description: "Not enough strong edges for perspective analysis",
-            descriptionKey: "signal.perspective.error", icon: "⊿",
+            descriptionKey: "signal.perspective.error", icon: "âŠ¿",
         };
     }
 
@@ -82,9 +78,9 @@ export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: 
         category: "geometric", score, weight: 0.3,
         description: score > 55
             ? "Edge direction distribution suggests inconsistent perspective geometry"
-            : "Edge directions show consistent perspective structure — natural scene geometry",
+            : "Edge directions show consistent perspective structure â€” natural scene geometry",
         descriptionKey: score > 55 ? "signal.perspective.ai" : "signal.perspective.real",
-        icon: "⊿",
+        icon: "âŠ¿",
         details: `Dominant directions: ${dominantDirs}/${numBins}, Strong edges: ${edgeAngles.length}.`,
     };
 }

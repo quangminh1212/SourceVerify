@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -12,11 +12,7 @@ import { gray } from "./pixelUtils";
  * - Zipf, "Human Behavior and the Principle of Least Effort", 1949
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 26: Entropy Map Analysis
@@ -57,7 +53,7 @@ export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, heig
             name: "Entropy Map", nameKey: "signal.entropyMap",
             category: "statistical", score: 50, weight: 0.5,
             description: "Insufficient data for entropy analysis",
-            descriptionKey: "signal.entropy.error", icon: "Ⓗ",
+            descriptionKey: "signal.entropy.error", icon: "â’½",
         };
     }
 
@@ -78,10 +74,10 @@ export function analyzeEntropyMap(pixels: Uint8ClampedArray, width: number, heig
         name: "Entropy Map", nameKey: "signal.entropyMap",
         category: "statistical", score, weight: 0.5,
         description: score > 55
-            ? "Entropy distribution is too uniform — AI images lack natural information variation"
-            : "Entropy distribution varies naturally — consistent with real scene content",
+            ? "Entropy distribution is too uniform â€” AI images lack natural information variation"
+            : "Entropy distribution varies naturally â€” consistent with real scene content",
         descriptionKey: score > 55 ? "signal.entropy.ai" : "signal.entropy.real",
-        icon: "Ⓗ",
+        icon: "â’½",
         details: `Mean entropy: ${mean.toFixed(3)} bits, CV: ${cv.toFixed(3)}, Blocks: ${entropies.length}.`,
     };
 }
@@ -108,7 +104,7 @@ export function analyzeHigherOrderStatistics(pixels: Uint8ClampedArray, width: n
             name: "Higher-Order Statistics", nameKey: "signal.higherOrderStats",
             category: "statistical", score: 50, weight: 0.5,
             description: "Insufficient data for HOS analysis",
-            descriptionKey: "signal.hos.error", icon: "μ",
+            descriptionKey: "signal.hos.error", icon: "Î¼",
         };
     }
 
@@ -122,7 +118,7 @@ export function analyzeHigherOrderStatistics(pixels: Uint8ClampedArray, width: n
     const skewness = std > 0 ? m3 / (std ** 3) : 0;
     const kurtosis = m2 > 0 ? m4 / (m2 * m2) : 3;
 
-    // Natural images: gradient kurtosis >> 3 (heavy tails), skewness ≈ 0
+    // Natural images: gradient kurtosis >> 3 (heavy tails), skewness â‰ˆ 0
     // AI images: kurtosis closer to 3 (more Gaussian)
     let score = 50;
     if (kurtosis < 5) score += 20;
@@ -142,10 +138,10 @@ export function analyzeHigherOrderStatistics(pixels: Uint8ClampedArray, width: n
         name: "Higher-Order Statistics", nameKey: "signal.higherOrderStats",
         category: "statistical", score, weight: 0.5,
         description: score > 55
-            ? "Gradient statistics are too Gaussian — natural images have heavier-tailed distributions"
+            ? "Gradient statistics are too Gaussian â€” natural images have heavier-tailed distributions"
             : "Gradient statistics show natural heavy-tailed distribution",
         descriptionKey: score > 55 ? "signal.hos.ai" : "signal.hos.real",
-        icon: "μ",
+        icon: "Î¼",
         details: `Kurtosis: ${kurtosis.toFixed(2)}, Skewness: ${skewness.toFixed(3)}, Std: ${std.toFixed(2)}.`,
     };
 }
@@ -172,7 +168,7 @@ export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height:
             name: "Zipf's Law", nameKey: "signal.zipfLaw",
             category: "statistical", score: 50, weight: 0.3,
             description: "Insufficient data for Zipf analysis",
-            descriptionKey: "signal.zipf.error", icon: "ℤ",
+            descriptionKey: "signal.zipf.error", icon: "â„¤",
         };
     }
 
@@ -192,7 +188,7 @@ export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height:
     const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     const intercept = (sumY - slope * sumX) / n;
 
-    // Calculate R² (goodness of fit)
+    // Calculate RÂ² (goodness of fit)
     const meanY = sumY / n;
     let ssTot = 0, ssRes = 0;
     for (let i = 0; i < n; i++) {
@@ -202,7 +198,7 @@ export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height:
     }
     const rSquared = ssTot > 0 ? 1 - ssRes / ssTot : 0;
 
-    // Natural images: slope ≈ -1 to -1.5, high R²
+    // Natural images: slope â‰ˆ -1 to -1.5, high RÂ²
     // AI images: deviation from Zipf distribution
     let score: number;
     if (rSquared < 0.7) score = 75;
@@ -215,10 +211,10 @@ export function analyzeZipfLaw(pixels: Uint8ClampedArray, width: number, height:
         name: "Zipf's Law", nameKey: "signal.zipfLaw",
         category: "statistical", score, weight: 0.3,
         description: score > 55
-            ? "Intensity distribution deviates from Zipf's law — potential AI generation artifact"
+            ? "Intensity distribution deviates from Zipf's law â€” potential AI generation artifact"
             : "Intensity distribution follows natural Zipf-like pattern",
         descriptionKey: score > 55 ? "signal.zipf.ai" : "signal.zipf.real",
-        icon: "ℤ",
-        details: `Zipf slope: ${slope.toFixed(3)}, R²: ${rSquared.toFixed(4)}.`,
+        icon: "â„¤",
+        details: `Zipf slope: ${slope.toFixed(3)}, RÂ²: ${rSquared.toFixed(4)}.`,
     };
 }

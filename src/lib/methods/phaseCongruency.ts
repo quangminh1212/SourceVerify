@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -12,11 +12,7 @@ import { gray } from "./pixelUtils";
  * - Morrone & Owens, "Feature detection from local energy", Pattern Recognition Letters 1987
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 20: Wavelet Coefficient Statistics
@@ -93,10 +89,10 @@ export function analyzeWaveletStatistics(pixels: Uint8ClampedArray, width: numbe
         name: "Wavelet Statistics", nameKey: "signal.waveletStats",
         category: "frequency", score, weight: 0.6,
         description: score > 55
-            ? "Wavelet coefficients show Gaussian distribution — AI images lack natural heavy-tailed statistics"
-            : "Wavelet coefficients show natural heavy-tailed distribution — consistent with real images",
+            ? "Wavelet coefficients show Gaussian distribution â€” AI images lack natural heavy-tailed statistics"
+            : "Wavelet coefficients show natural heavy-tailed distribution â€” consistent with real images",
         descriptionKey: score > 55 ? "signal.wavelet.ai" : "signal.wavelet.real",
-        icon: "≋",
+        icon: "â‰‹",
         details: `Avg kurtosis: ${avgKurtosis.toFixed(2)}, Avg detail std: ${avgStd.toFixed(2)}.`,
     };
 }
@@ -145,7 +141,7 @@ export function analyzeGaborResponse(pixels: Uint8ClampedArray, width: number, h
             name: "Gabor Response", nameKey: "signal.gaborResponse",
             category: "frequency", score: 50, weight: 0.5,
             description: "Insufficient data for Gabor analysis",
-            descriptionKey: "signal.gabor.error", icon: "≈",
+            descriptionKey: "signal.gabor.error", icon: "â‰ˆ",
         };
     }
 
@@ -169,18 +165,18 @@ export function analyzeGaborResponse(pixels: Uint8ClampedArray, width: number, h
         name: "Gabor Response", nameKey: "signal.gaborResponse",
         category: "frequency", score, weight: 0.5,
         description: score > 55
-            ? "Gabor filter shows isotropic response — AI images lack directional texture variation"
+            ? "Gabor filter shows isotropic response â€” AI images lack directional texture variation"
             : "Gabor filter response shows natural directional variation in texture",
         descriptionKey: score > 55 ? "signal.gabor.ai" : "signal.gabor.real",
-        icon: "≈",
+        icon: "â‰ˆ",
         details: `Anisotropy: ${anisotropy.toFixed(3)}, CV: ${cv.toFixed(3)}, Energies: ${energies.map(e => e.toFixed(1)).join(", ")}.`,
     };
 }
 
 /**
  * Signal 22: Power Spectral Density (PSD) Slope
- * Field (JOSA 1987) - Natural images follow 1/f^β power law
- * β ≈ 2 for natural images, deviations indicate AI generation
+ * Field (JOSA 1987) - Natural images follow 1/f^Î² power law
+ * Î² â‰ˆ 2 for natural images, deviations indicate AI generation
  */
 export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
     const size = Math.min(128, Math.min(width, height));
@@ -209,7 +205,7 @@ export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: nu
     }
     for (let k = 0; k <= halfSize; k++) power[k] /= size;
 
-    // Linear regression on log-log scale to find slope β
+    // Linear regression on log-log scale to find slope Î²
     const logF: number[] = [], logP: number[] = [];
     for (let k = 1; k <= halfSize; k++) {
         if (power[k] > 0) {
@@ -228,7 +224,7 @@ export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: nu
         beta = -(n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
     }
 
-    // Natural images: β ≈ 1.5-2.5, AI images may have different slopes
+    // Natural images: Î² â‰ˆ 1.5-2.5, AI images may have different slopes
     let score: number;
     if (beta < 1.0 || beta > 3.5) score = 78;
     else if (beta < 1.3 || beta > 3.0) score = 65;
@@ -240,11 +236,11 @@ export function analyzePowerSpectralDensity(pixels: Uint8ClampedArray, width: nu
         name: "PSD Slope Analysis", nameKey: "signal.psdSlope",
         category: "frequency", score, weight: 0.5,
         description: score > 55
-            ? "Power spectral density deviates from natural 1/f² law — potential AI generation"
-            : "Power spectral density follows natural 1/f² power law — consistent with real images",
+            ? "Power spectral density deviates from natural 1/fÂ² law â€” potential AI generation"
+            : "Power spectral density follows natural 1/fÂ² power law â€” consistent with real images",
         descriptionKey: score > 55 ? "signal.psd.ai" : "signal.psd.real",
-        icon: "∿",
-        details: `PSD slope β: ${beta.toFixed(3)} (natural range: 1.5-2.5).`,
+        icon: "âˆ¿",
+        details: `PSD slope Î²: ${beta.toFixed(3)} (natural range: 1.5-2.5).`,
     };
 }
 
@@ -291,7 +287,7 @@ export function analyzePhaseCongruency(pixels: Uint8ClampedArray, width: number,
             name: "Phase Congruency", nameKey: "signal.phaseCongruency",
             category: "frequency", score: 50, weight: 0.4,
             description: "Insufficient data for phase congruency analysis",
-            descriptionKey: "signal.phase.error", icon: "∠",
+            descriptionKey: "signal.phase.error", icon: "âˆ ",
         };
     }
 
@@ -311,10 +307,10 @@ export function analyzePhaseCongruency(pixels: Uint8ClampedArray, width: number,
         name: "Phase Congruency", nameKey: "signal.phaseCongruency",
         category: "frequency", score, weight: 0.4,
         description: score > 55
-            ? "Phase congruency is overly uniform — AI images have artificial edge structure"
-            : "Phase congruency varies naturally — consistent with real scene geometry",
+            ? "Phase congruency is overly uniform â€” AI images have artificial edge structure"
+            : "Phase congruency varies naturally â€” consistent with real scene geometry",
         descriptionKey: score > 55 ? "signal.phase.ai" : "signal.phase.real",
-        icon: "∠",
+        icon: "âˆ ",
         details: `Mean PC: ${mean.toFixed(3)}, CV: ${cv.toFixed(3)}, Samples: ${phaseValues.length}.`,
     };
 }

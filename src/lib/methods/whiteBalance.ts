@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 
 /**
  * Advanced Color Analysis Signals (2 methods)
@@ -9,7 +9,6 @@ import type { AnalysisMethod } from "../types";
  * - Van de Weijer et al., "Edge-Based Color Constancy", IEEE TIP 2007
  */
 
-import type { AnalysisMethod } from "../types";
 
 /**
  * Signal 42: Color Gamut Analysis
@@ -72,10 +71,10 @@ export function analyzeColorGamut(pixels: Uint8ClampedArray, width: number, heig
         name: "Color Gamut Analysis", nameKey: "signal.colorGamut",
         category: "color", score, weight: 0.4,
         description: score > 55
-            ? "Color gamut shows unnatural vibrancy — AI images often exceed natural camera gamut"
-            : "Color gamut falls within natural range — consistent with camera sensor response",
+            ? "Color gamut shows unnatural vibrancy â€” AI images often exceed natural camera gamut"
+            : "Color gamut falls within natural range â€” consistent with camera sensor response",
         descriptionKey: score > 55 ? "signal.gamut.ai" : "signal.gamut.real",
-        icon: "◉",
+        icon: "â—‰",
         details: `Vibrant ratio: ${vibrantRatio.toFixed(4)}, Clip ratio: ${clipRatio.toFixed(4)}, Extreme: ${extremeRatio.toFixed(5)}.`,
     };
 }
@@ -119,7 +118,7 @@ export function analyzeWhiteBalance(pixels: Uint8ClampedArray, width: number, he
             name: "White Balance Consistency", nameKey: "signal.whiteBalance",
             category: "color", score: 50, weight: 0.3,
             description: "Not enough regions for white balance analysis",
-            descriptionKey: "signal.wb.error", icon: "⊙",
+            descriptionKey: "signal.wb.error", icon: "âŠ™",
         };
     }
 
@@ -144,10 +143,10 @@ export function analyzeWhiteBalance(pixels: Uint8ClampedArray, width: number, he
         name: "White Balance Consistency", nameKey: "signal.whiteBalance",
         category: "color", score, weight: 0.3,
         description: score > 55
-            ? "White balance is suspiciously uniform — real scenes have subtle WB variation from mixed lighting"
-            : "White balance varies naturally across regions — consistent with real-world illumination",
+            ? "White balance is suspiciously uniform â€” real scenes have subtle WB variation from mixed lighting"
+            : "White balance varies naturally across regions â€” consistent with real-world illumination",
         descriptionKey: score > 55 ? "signal.wb.ai" : "signal.wb.real",
-        icon: "⊙",
+        icon: "âŠ™",
         details: `R/G CV: ${cvRG.toFixed(4)}, B/G CV: ${cvBG.toFixed(4)}, Avg CV: ${avgCV.toFixed(4)}.`,
     };
 }

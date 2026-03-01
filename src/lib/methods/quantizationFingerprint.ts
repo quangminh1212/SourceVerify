@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../types";
+﻿import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
 
 
@@ -11,11 +11,7 @@ import { gray } from "./pixelUtils";
  * - Krawetz, "A Picture's Worth... Digital Image Analysis and Forensics", 2007
  */
 
-import type { AnalysisMethod } from "../types";
 
-function gray(pixels: Uint8ClampedArray, idx: number): number {
-    return pixels[idx] * 0.299 + pixels[idx + 1] * 0.587 + pixels[idx + 2] * 0.114;
-}
 
 /**
  * Signal 32: JPEG Ghost Detection
@@ -33,7 +29,7 @@ export function analyzeJPEGGhost(pixels: Uint8ClampedArray, width: number, heigh
             name: "JPEG Ghost Detection", nameKey: "signal.jpegGhost",
             category: "compression", score: 50, weight: 0.4,
             description: "Image too small for JPEG ghost analysis",
-            descriptionKey: "signal.jpegGhost.error", icon: "⊟",
+            descriptionKey: "signal.jpegGhost.error", icon: "âŠŸ",
         };
     }
 
@@ -84,10 +80,10 @@ export function analyzeJPEGGhost(pixels: Uint8ClampedArray, width: number, heigh
         name: "JPEG Ghost Detection", nameKey: "signal.jpegGhost",
         category: "compression", score, weight: 0.4,
         description: score > 55
-            ? "No JPEG block boundaries detected — image may not originate from camera compression"
-            : "JPEG block boundary artifacts present — consistent with camera compression pipeline",
+            ? "No JPEG block boundaries detected â€” image may not originate from camera compression"
+            : "JPEG block boundary artifacts present â€” consistent with camera compression pipeline",
         descriptionKey: score > 55 ? "signal.jpegGhost.ai" : "signal.jpegGhost.real",
-        icon: "⊟",
+        icon: "âŠŸ",
         details: `Boundary/interior ratio: ${ghostRatio.toFixed(3)}, Avg boundary: ${avgBoundary.toFixed(2)}, Interior: ${avgInterior.toFixed(2)}.`,
     };
 }
@@ -108,7 +104,7 @@ export function analyzeQuantizationFingerprint(pixels: Uint8ClampedArray, width:
             name: "Quantization Fingerprint", nameKey: "signal.quantFingerprint",
             category: "compression", score: 50, weight: 0.3,
             description: "Image too small for quantization analysis",
-            descriptionKey: "signal.quant.error", icon: "⊞",
+            descriptionKey: "signal.quant.error", icon: "âŠž",
         };
     }
 
@@ -158,10 +154,10 @@ export function analyzeQuantizationFingerprint(pixels: Uint8ClampedArray, width:
         name: "Quantization Fingerprint", nameKey: "signal.quantFingerprint",
         category: "compression", score, weight: 0.3,
         description: score > 55
-            ? "No JPEG quantization patterns — image appears to bypass standard compression"
-            : "JPEG quantization patterns present — consistent with standard camera pipeline",
+            ? "No JPEG quantization patterns â€” image appears to bypass standard compression"
+            : "JPEG quantization patterns present â€” consistent with standard camera pipeline",
         descriptionKey: score > 55 ? "signal.quant.ai" : "signal.quant.real",
-        icon: "⊞",
+        icon: "âŠž",
         details: `Comb ratio: ${combRatio.toFixed(3)}, Periodic score: ${periodicScore.toFixed(4)}, Comb peaks: ${combCount}.`,
     };
 }
