@@ -7,8 +7,7 @@
  */
 
 export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
-/** @deprecated Use AnalysisMethod instead */
-export type { AnalysisMethod as AnalysisSignal } from "./types";
+
 export { formatFileSize } from "./utils";
 
 import type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
@@ -160,7 +159,6 @@ export async function analyzeMedia(file: File, enabledMethods?: string[], custom
     // Calculate weighted AI score with advanced verdict engine
     const { aiScore, verdict, confidence } = calculateVerdict(methods);
 
-    // Backward compat: provide both 'methods' and deprecated 'signals'
     return { verdict, confidence, aiScore, methods, signals: methods, metadata, processingTimeMs: Math.round(performance.now() - start) };
 }
 
@@ -428,8 +426,7 @@ export const METHOD_MAP: Record<string, string> = {
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
-/** @deprecated Use ALL_METHOD_IDS instead */
-export const ALL_SIGNAL_IDS = ALL_METHOD_IDS;
+
 
 /** Free-tier methods (original 13) — available without login */
 export const FREE_METHOD_IDS = [
