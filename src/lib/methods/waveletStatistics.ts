@@ -1,18 +1,5 @@
-﻿import type { AnalysisMethod } from "../types";
+import type { AnalysisMethod } from "../types";
 import { gray } from "./pixelUtils";
-
-
-/**
- * Frequency Domain Analysis Signals (6 methods)
- * Based on peer-reviewed research in image forensics
- *
- * References:
- * - Lyu & Farid, "How Realistic is Photorealistic?", IEEE TSP 2005
- * - Field, "Relations between the statistics of natural images and the response properties of cortical cells", JOSA 1987
- * - Morrone & Owens, "Feature detection from local energy", Pattern Recognition Letters 1987
- */
-
-
 
 /**
  * Signal 20: Wavelet Coefficient Statistics
