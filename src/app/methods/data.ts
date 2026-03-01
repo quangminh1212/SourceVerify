@@ -71,8 +71,7 @@ export const METHODS = [
     { id: "color_coherence", category: "pixel" as Category, weight: 0.02 },
     { id: "mutual_information", category: "statistical" as Category, weight: 0.03 },
     { id: "laplacian_edge", category: "pixel" as Category, weight: 0.03 },
-    { id: "copy_move_forensics", category: "pixel" as Category, weight: 0.04 },
-    { id: "double_jpeg_detection", category: "statistical" as Category, weight: 0.03 },
+
     { id: "median_filter", category: "pixel" as Category, weight: 0.03 },
     { id: "resampling", category: "statistical" as Category, weight: 0.03 },
     { id: "contrast_enhancement", category: "statistical" as Category, weight: 0.02 },
@@ -93,6 +92,31 @@ export const METHODS = [
     { id: "color_temperature", category: "pixel" as Category, weight: 0.02 },
     { id: "sift_forensics", category: "pixel" as Category, weight: 0.03 },
     { id: "neural_compression", category: "sensor" as Category, weight: 0.03 },
+    // Spatial Domain
+    { id: "local_binary_pattern", category: "pixel" as Category, weight: 0.03 },
+    { id: "hog_anomaly", category: "pixel" as Category, weight: 0.03 },
+    { id: "glcm", category: "pixel" as Category, weight: 0.03 },
+    { id: "local_variance_map", category: "pixel" as Category, weight: 0.03 },
+    { id: "morphological_gradient", category: "pixel" as Category, weight: 0.03 },
+    { id: "weber_descriptor", category: "pixel" as Category, weight: 0.03 },
+    // Frequency Domain
+    { id: "gabor_response", category: "frequency" as Category, weight: 0.03 },
+    { id: "power_spectral_density", category: "frequency" as Category, weight: 0.03 },
+    { id: "phase_congruency", category: "frequency" as Category, weight: 0.03 },
+    { id: "radial_spectrum", category: "frequency" as Category, weight: 0.03 },
+    // Statistical
+    { id: "higher_order_statistics", category: "statistical" as Category, weight: 0.03 },
+    { id: "zipf_law", category: "statistical" as Category, weight: 0.03 },
+    { id: "markov_transition", category: "statistical" as Category, weight: 0.03 },
+    { id: "saturation_distribution", category: "statistical" as Category, weight: 0.03 },
+    // Compression
+    { id: "quantization_fingerprint", category: "frequency" as Category, weight: 0.03 },
+    { id: "color_banding", category: "pixel" as Category, weight: 0.03 },
+    // Generative
+    { id: "upsampling_artifact", category: "sensor" as Category, weight: 0.03 },
+    // Advanced Color
+    { id: "color_gamut", category: "pixel" as Category, weight: 0.02 },
+    { id: "white_balance", category: "pixel" as Category, weight: 0.02 },
 ];
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [

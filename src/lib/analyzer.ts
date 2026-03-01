@@ -406,6 +406,25 @@ export const METHOD_MAP: Record<string, string> = {
     sift_forensics: "signal.siftForensics",
     neural_compression: "signal.neuralCompression",
     gan_fingerprint: "signal.ganFingerprint",
+    // New UI method IDs → existing lib nameKeys
+    local_binary_pattern: "signal.localBinaryPattern",
+    hog_anomaly: "signal.hogAnomaly",
+    local_variance_map: "signal.localVarianceMap",
+    morphological_gradient: "signal.morphGradient",
+    weber_descriptor: "signal.weberDescriptor",
+    gabor_response: "signal.gaborResponse",
+    power_spectral_density: "signal.psdSlope",
+    phase_congruency: "signal.phaseCongruency",
+    radial_spectrum: "signal.radialSpectrum",
+    higher_order_statistics: "signal.higherOrderStats",
+    zipf_law: "signal.zipfLaw",
+    markov_transition: "signal.markovTransition",
+    saturation_distribution: "signal.saturationDist",
+    quantization_fingerprint: "signal.quantFingerprint",
+    color_banding: "signal.colorBanding",
+    upsampling_artifact: "signal.upsamplingArtifact",
+    color_gamut: "signal.colorGamut",
+    white_balance: "signal.whiteBalance",
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);

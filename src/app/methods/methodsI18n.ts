@@ -105,10 +105,45 @@ import mutual_information_en from "./mutual_information/i18n/en.json";
 import mutual_information_vi from "./mutual_information/i18n/vi.json";
 import laplacian_edge_en from "./laplacian_edge/i18n/en.json";
 import laplacian_edge_vi from "./laplacian_edge/i18n/vi.json";
-import copy_move_forensics_en from "./copy_move_forensics/i18n/en.json";
-import copy_move_forensics_vi from "./copy_move_forensics/i18n/vi.json";
-import double_jpeg_detection_en from "./double_jpeg_detection/i18n/en.json";
-import double_jpeg_detection_vi from "./double_jpeg_detection/i18n/vi.json";
+// 19 new method imports
+import color_banding_en from "./color_banding/i18n/en.json";
+import color_banding_vi from "./color_banding/i18n/vi.json";
+import color_gamut_en from "./color_gamut/i18n/en.json";
+import color_gamut_vi from "./color_gamut/i18n/vi.json";
+import gabor_response_en from "./gabor_response/i18n/en.json";
+import gabor_response_vi from "./gabor_response/i18n/vi.json";
+import glcm_en from "./glcm/i18n/en.json";
+import glcm_vi from "./glcm/i18n/vi.json";
+import higher_order_statistics_en from "./higher_order_statistics/i18n/en.json";
+import higher_order_statistics_vi from "./higher_order_statistics/i18n/vi.json";
+import hog_anomaly_en from "./hog_anomaly/i18n/en.json";
+import hog_anomaly_vi from "./hog_anomaly/i18n/vi.json";
+import local_binary_pattern_en from "./local_binary_pattern/i18n/en.json";
+import local_binary_pattern_vi from "./local_binary_pattern/i18n/vi.json";
+import local_variance_map_en from "./local_variance_map/i18n/en.json";
+import local_variance_map_vi from "./local_variance_map/i18n/vi.json";
+import markov_transition_en from "./markov_transition/i18n/en.json";
+import markov_transition_vi from "./markov_transition/i18n/vi.json";
+import morphological_gradient_en from "./morphological_gradient/i18n/en.json";
+import morphological_gradient_vi from "./morphological_gradient/i18n/vi.json";
+import phase_congruency_en from "./phase_congruency/i18n/en.json";
+import phase_congruency_vi from "./phase_congruency/i18n/vi.json";
+import power_spectral_density_en from "./power_spectral_density/i18n/en.json";
+import power_spectral_density_vi from "./power_spectral_density/i18n/vi.json";
+import quantization_fingerprint_en from "./quantization_fingerprint/i18n/en.json";
+import quantization_fingerprint_vi from "./quantization_fingerprint/i18n/vi.json";
+import radial_spectrum_en from "./radial_spectrum/i18n/en.json";
+import radial_spectrum_vi from "./radial_spectrum/i18n/vi.json";
+import saturation_distribution_en from "./saturation_distribution/i18n/en.json";
+import saturation_distribution_vi from "./saturation_distribution/i18n/vi.json";
+import upsampling_artifact_en from "./upsampling_artifact/i18n/en.json";
+import upsampling_artifact_vi from "./upsampling_artifact/i18n/vi.json";
+import weber_descriptor_en from "./weber_descriptor/i18n/en.json";
+import weber_descriptor_vi from "./weber_descriptor/i18n/vi.json";
+import white_balance_en from "./white_balance/i18n/en.json";
+import white_balance_vi from "./white_balance/i18n/vi.json";
+import zipf_law_en from "./zipf_law/i18n/en.json";
+import zipf_law_vi from "./zipf_law/i18n/vi.json";
 import median_filter_en from "./median_filter/i18n/en.json";
 import median_filter_vi from "./median_filter/i18n/vi.json";
 import resampling_en from "./resampling/i18n/en.json";
@@ -180,7 +215,16 @@ const en = buildMap([
     ["fractal_dimension", fractal_dimension_en], ["bilateral_symmetry", bilateral_symmetry_en],
     ["histogram_gradient", histogram_gradient_en], ["color_coherence", color_coherence_en],
     ["mutual_information", mutual_information_en], ["laplacian_edge", laplacian_edge_en],
-    ["copy_move_forensics", copy_move_forensics_en], ["double_jpeg_detection", double_jpeg_detection_en],
+    ["color_banding", color_banding_en], ["color_gamut", color_gamut_en],
+    ["gabor_response", gabor_response_en], ["glcm", glcm_en],
+    ["higher_order_statistics", higher_order_statistics_en], ["hog_anomaly", hog_anomaly_en],
+    ["local_binary_pattern", local_binary_pattern_en], ["local_variance_map", local_variance_map_en],
+    ["markov_transition", markov_transition_en], ["morphological_gradient", morphological_gradient_en],
+    ["phase_congruency", phase_congruency_en], ["power_spectral_density", power_spectral_density_en],
+    ["quantization_fingerprint", quantization_fingerprint_en], ["radial_spectrum", radial_spectrum_en],
+    ["saturation_distribution", saturation_distribution_en], ["upsampling_artifact", upsampling_artifact_en],
+    ["weber_descriptor", weber_descriptor_en], ["white_balance", white_balance_en],
+    ["zipf_law", zipf_law_en],
     ["median_filter", median_filter_en], ["resampling", resampling_en],
     ["contrast_enhancement", contrast_enhancement_en], ["brisque", brisque_en],
     ["demosaicing", demosaicing_en], ["steganalysis", steganalysis_en],
@@ -212,7 +256,16 @@ const vi = buildMap([
     ["fractal_dimension", fractal_dimension_vi], ["bilateral_symmetry", bilateral_symmetry_vi],
     ["histogram_gradient", histogram_gradient_vi], ["color_coherence", color_coherence_vi],
     ["mutual_information", mutual_information_vi], ["laplacian_edge", laplacian_edge_vi],
-    ["copy_move_forensics", copy_move_forensics_vi], ["double_jpeg_detection", double_jpeg_detection_vi],
+    ["color_banding", color_banding_vi], ["color_gamut", color_gamut_vi],
+    ["gabor_response", gabor_response_vi], ["glcm", glcm_vi],
+    ["higher_order_statistics", higher_order_statistics_vi], ["hog_anomaly", hog_anomaly_vi],
+    ["local_binary_pattern", local_binary_pattern_vi], ["local_variance_map", local_variance_map_vi],
+    ["markov_transition", markov_transition_vi], ["morphological_gradient", morphological_gradient_vi],
+    ["phase_congruency", phase_congruency_vi], ["power_spectral_density", power_spectral_density_vi],
+    ["quantization_fingerprint", quantization_fingerprint_vi], ["radial_spectrum", radial_spectrum_vi],
+    ["saturation_distribution", saturation_distribution_vi], ["upsampling_artifact", upsampling_artifact_vi],
+    ["weber_descriptor", weber_descriptor_vi], ["white_balance", white_balance_vi],
+    ["zipf_law", zipf_law_vi],
     ["median_filter", median_filter_vi], ["resampling", resampling_vi],
     ["contrast_enhancement", contrast_enhancement_vi], ["brisque", brisque_vi],
     ["demosaicing", demosaicing_vi], ["steganalysis", steganalysis_vi],
