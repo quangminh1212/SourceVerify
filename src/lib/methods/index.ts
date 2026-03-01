@@ -76,7 +76,8 @@ export { analyzeLocalPhaseQuantization } from "./lpq";
 export { analyzeFractalDimension } from "./fractal";
 export { analyzeBilateralSymmetry } from "./bilateralSymmetry";
 
-// Histogram & Info Theory (4 signals)
+// Histogram & Info Theory (5 signals)
+export { analyzeHistogramDistribution } from "./histogram";
 export { analyzeHistogramGradient } from "./histogramGradient";
 export { analyzeColorCoherence } from "./colorCoherence";
 export { analyzeMutualInformation } from "./mutualInfo";

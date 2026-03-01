@@ -266,7 +266,12 @@ export const methodTranslations: MethodTranslations = {
         "signal.symmetry2.real": "Natural asymmetry detected — real scenes rarely exhibit perfect bilateral symmetry",
         "signal.symmetry2.error": "Image too small for symmetry analysis",
 
-        // === Histogram & Info Theory (4) — v7 ===
+        // === Histogram & Info Theory (5) — v7 ===
+        "signal.histogram": "Histogram Analysis",
+        "signal.hist.ai": "Histogram distributions show anomalies — AI images have unnaturally smooth or periodic patterns",
+        "signal.hist.real": "Histogram distributions appear natural — consistent with camera-captured image characteristics",
+        "signal.hist.error": "Image too small for histogram analysis",
+
         "signal.histogramGradient": "Histogram Gradient",
         "signal.histGrad.ai": "Histogram shows unnatural smoothness or gaps — AI images have atypical intensity distributions",
         "signal.histGrad.real": "Histogram gradient is natural — consistent with camera-captured intensity distribution",
@@ -555,7 +560,12 @@ export const methodTranslations: MethodTranslations = {
         "signal.symmetry2.real": "Bất đối xứng tự nhiên — cảnh thật hiếm khi có đối xứng hai bên hoàn hảo",
         "signal.symmetry2.error": "Ảnh quá nhỏ để phân tích đối xứng",
 
-        // === Histogram & Info Theory (4) — v7 ===
+        // === Histogram & Info Theory (5) — v7 ===
+        "signal.histogram": "Phân tích Histogram",
+        "signal.hist.ai": "Phân bố histogram có bất thường — ảnh AI có mẫu histogram mượt hoặc tuần hoàn bất thường",
+        "signal.hist.real": "Phân bố histogram tự nhiên — phù hợp đặc trưng ảnh chụp từ máy ảnh",
+        "signal.hist.error": "Ảnh quá nhỏ để phân tích histogram",
+
         "signal.histogramGradient": "Gradient histogram",
         "signal.histGrad.ai": "Histogram cho thấy độ mượt hoặc khoảng trống bất thường — ảnh AI có phân bố cường độ bất thường",
         "signal.histGrad.real": "Gradient histogram tự nhiên — phù hợp phân bố cường độ ảnh chụp",
