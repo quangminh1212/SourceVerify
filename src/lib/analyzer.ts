@@ -76,7 +76,8 @@ import {
     analyzeLocalPhaseQuantization,
     analyzeFractalDimension,
     analyzeBilateralSymmetry,
-    // New: Histogram & Info Theory (4) — v7
+    // New: Histogram & Info Theory (5) — v7
+    analyzeHistogramDistribution,
     analyzeHistogramGradient,
     analyzeColorCoherence,
     analyzeMutualInformation,
@@ -265,7 +266,7 @@ function calculateVerdict(methods: AnalysisMethod[]): { aiScore: number; verdict
 }
 
 // ============================
-// IMAGE ANALYSIS (87 methods)
+// IMAGE ANALYSIS (88 methods)
 // ============================
 
 // Method ID → nameKey mapping
@@ -331,7 +332,8 @@ export const METHOD_MAP: Record<string, string> = {
     lpq: "signal.lpq",
     fractal: "signal.fractalDimension",
     bilateralSymmetry: "signal.bilateralSymmetry",
-    // Histogram & Info Theory (4) — v7
+    // Histogram & Info Theory (5) — v7
+    histogram: "signal.histogram",
     histogramGradient: "signal.histogramGradient",
     colorCoherence: "signal.colorCoherence",
     mutualInfo: "signal.mutualInfo",
@@ -372,12 +374,10 @@ export const METHOD_MAP: Record<string, string> = {
     srm_filter: "signal.srmFilter",
     // Alias mappings for data.ts IDs → existing methods
     copymove: "signal.copyMove",
-    histogram: "signal.histogramGradient",
     jpeg_ghost: "signal.jpegGhost",
     chi_square: "signal.chiSquareUniformity",
     frequency_band: "signal.freqBandRatio",
     double_jpeg: "signal.doubleJpeg",
-    binary_pattern: "signal.localBinaryPattern",
     tamura_texture: "signal.tamuraTexture",
     lpq_analysis: "signal.lpq",
     fractal_dimension: "signal.fractalDimension",
@@ -514,7 +514,8 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         analyzeLocalPhaseQuantization(pixels, w, h),
         analyzeFractalDimension(pixels, w, h),
         analyzeBilateralSymmetry(pixels, w, h),
-        // Histogram & Info Theory (4) — v7
+        // Histogram & Info Theory (5) — v7
+        analyzeHistogramDistribution(pixels, w, h),
         analyzeHistogramGradient(pixels, w, h),
         analyzeColorCoherence(pixels, w, h),
         analyzeMutualInformation(pixels, w, h),
@@ -660,7 +661,8 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     analyzeLocalPhaseQuantization(pixels, w, h),
                     analyzeFractalDimension(pixels, w, h),
                     analyzeBilateralSymmetry(pixels, w, h),
-                    // Histogram & Info Theory (4) — v7
+                    // Histogram & Info Theory (5) — v7
+                    analyzeHistogramDistribution(pixels, w, h),
                     analyzeHistogramGradient(pixels, w, h),
                     analyzeColorCoherence(pixels, w, h),
                     analyzeMutualInformation(pixels, w, h),
