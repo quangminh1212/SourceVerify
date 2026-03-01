@@ -1,0 +1,18 @@
+{
+    "name": "Copy-Move Forgery Detection",
+    "description": "Detects duplicated image regions via block hashing to identify AI-generated repeated micro-patterns or copy-move forgeries.",
+    "algorithm": "Block-Based Hash Matching for Region Duplication",
+    "mechanism": "Extracts lightweight block descriptors using mean RGB values and gradient features, then detects duplicate blocks via hash matching. High duplication ratios suggest AI generation or copy-move manipulation.",
+    "parameters": "Block size: 16×16, Step: adaptive, Hash: mean RGB + gradient, Match criterion: exact hash equality",
+    "accuracy": "Medium-High — 75-88%",
+    "source": "Christlein, V. et al. (2012) — An Evaluation of Popular Copy-Move Forgery Detection Approaches, IEEE TIFS",
+    "useCase": "Identifying cloned regions and texture duplication in manipulated or AI-generated images",
+    "references": [
+        {
+            "title": "Christlein, V. et al. (2012). An Evaluation of Popular Copy-Move Forgery Detection Approaches. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2218597"
+        }
+    ],
+    "strengths": "• Excellent for detecting cloned regions\\n• Can detect scaled/rotated copies\\n• Well-proven forensic technique\\n• Fast block hashing approach",
+    "limitations": "• Only detects duplication within single image\\n• Heavy post-processing masks copied regions\\n• Computationally expensive for large images\\n• May miss very small duplicated areas"
+}
