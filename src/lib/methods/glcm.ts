@@ -32,14 +32,11 @@ export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: nu
 
     // Haralick features: contrast, energy, homogeneity, correlation
     let contrast = 0, energy = 0, homogeneity = 0;
-    let _muI = 0, _muJ = 0;
     for (let i = 0; i < levels; i++) {
         for (let j = 0; j < levels; j++) {
             contrast += (i - j) ** 2 * glcm[i][j];
             energy += glcm[i][j] ** 2;
             homogeneity += glcm[i][j] / (1 + Math.abs(i - j));
-            _muI += i * glcm[i][j];
-            _muJ += j * glcm[i][j];
         }
     }
 

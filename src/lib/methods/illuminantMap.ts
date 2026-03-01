@@ -24,7 +24,6 @@ export function analyzeIlluminantMap(pixels: Uint8ClampedArray, w: number, h: nu
     for (let gy = 0; gy < gridSize; gy++) {
         for (let gx = 0; gx < gridSize; gx++) {
             let sumR = 0, sumG = 0, sumB = 0, cnt = 0;
-            const _step = Math.max(1, Math.floor(cellW * cellH / 2000));
             for (let y = gy * cellH; y < (gy + 1) * cellH; y += Math.max(1, Math.floor(cellH / 30))) {
                 for (let x = gx * cellW; x < (gx + 1) * cellW; x += Math.max(1, Math.floor(cellW / 30))) {
                     const idx = (y * w + x) * 4;

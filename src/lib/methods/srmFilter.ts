@@ -31,7 +31,6 @@ export function analyzeSRMFilter(pixels: Uint8ClampedArray, w: number, h: number
         }
     }
     const avgResidual = cnt > 0 ? residualSum / cnt : 0;
-    const _varResidual = cnt > 0 ? Math.sqrt(residualSum2 / cnt - (residualSum / cnt) ** 2) : 0;
     // AI images: lower residual energy, more uniform
     if (avgResidual < 5) score = 70;
     else if (avgResidual < 12) score = 55;

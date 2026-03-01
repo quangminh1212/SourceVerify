@@ -46,9 +46,6 @@ export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: numbe
     const darkVar = darkBlocks.length > 1
         ? darkBlocks.reduce((a, b) => a + (b - darkBlocks.reduce((s, c) => s + c, 0) / darkBlocks.length) ** 2, 0) / darkBlocks.length
         : 0;
-    const _brightVar = brightBlocks.length > 1
-        ? brightBlocks.reduce((a, b) => a + (b - brightBlocks.reduce((s, c) => s + c, 0) / brightBlocks.length) ** 2, 0) / brightBlocks.length
-        : 0;
 
     // Dynamic range: ratio of darkest to brightest blocks
     const minBright = Math.min(...blockBrightness);

@@ -15,7 +15,7 @@ export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, heig
 
     for (let y = 1; y < height - 1; y += step) {
         for (let x = 1; x < width - 1; x += step) {
-            const _idx = (y * width + x) * 4;
+            // Compute gradients
             const gx = gray(pixels, (y * width + x + 1) * 4) - gray(pixels, (y * width + x - 1) * 4);
             const gy = gray(pixels, ((y + 1) * width + x) * 4) - gray(pixels, ((y - 1) * width + x) * 4);
             const mag = Math.sqrt(gx * gx + gy * gy);

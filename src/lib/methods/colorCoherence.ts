@@ -25,8 +25,6 @@ export function analyzeColorCoherence(pixels: Uint8ClampedArray, width: number, 
 
     // Label connected components using a simplified approach:
     // A pixel is "coherent" if it belongs to a large region of similar color
-    // Use tau threshold: region >= tau pixels = coherent
-    const _tau = Math.max(25, Math.floor(totalPixels * 0.001));
 
     // Create quantized color map
     const colorMap = new Uint8Array(totalPixels);

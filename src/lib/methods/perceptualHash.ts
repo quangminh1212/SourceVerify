@@ -19,7 +19,6 @@ export function analyzePerceptualHash(pixels: Uint8ClampedArray, w: number, h: n
 
     // Compute perceptual hash features to detect internal inconsistencies
     const blockW = Math.min(8, w), blockH = Math.min(8, h);
-    const _scX = w / blockW, _scY = h / blockH;
     // Compute DCT-like hash for different image quadrants
     const quadrants = [
         { x0: 0, y0: 0, x1: Math.floor(w / 2), y1: Math.floor(h / 2) },
