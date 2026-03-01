@@ -4,7 +4,7 @@ import vi from "./locales/vi.json";
 import ja from "./locales/ja.json";
 import ko from "./locales/ko.json";
 import es from "./locales/es.json";
-import { methodTranslations } from "../lib/methods/i18n";
+import { methodTranslations } from "../lib/methodsI18n";
 
 export type Locale = "en" | "zh" | "vi" | "ja" | "ko" | "es";
 
