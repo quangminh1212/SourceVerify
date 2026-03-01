@@ -61,6 +61,18 @@ export const METHODS = [
     { id: "vit_detection", category: "sensor" as Category, weight: 0.04 },
     { id: "gram_matrix", category: "pixel" as Category, weight: 0.02 },
     { id: "srm_filter", category: "pixel" as Category, weight: 0.03 },
+    { id: "autocorrelation", category: "statistical" as Category, weight: 0.03 },
+    { id: "pixel_cooccurrence", category: "pixel" as Category, weight: 0.03 },
+    { id: "tamura_texture", category: "pixel" as Category, weight: 0.03 },
+    { id: "lpq_analysis", category: "pixel" as Category, weight: 0.03 },
+    { id: "fractal_dimension", category: "statistical" as Category, weight: 0.02 },
+    { id: "bilateral_symmetry", category: "pixel" as Category, weight: 0.02 },
+    { id: "histogram_gradient", category: "statistical" as Category, weight: 0.03 },
+    { id: "color_coherence", category: "pixel" as Category, weight: 0.02 },
+    { id: "mutual_information", category: "statistical" as Category, weight: 0.03 },
+    { id: "laplacian_edge", category: "pixel" as Category, weight: 0.03 },
+    { id: "copy_move_forensics", category: "pixel" as Category, weight: 0.04 },
+    { id: "double_jpeg_detection", category: "statistical" as Category, weight: 0.03 },
 ];
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [

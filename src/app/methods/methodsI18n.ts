@@ -85,6 +85,30 @@ import gram_matrix_en from "./gram_matrix/i18n/en.json";
 import gram_matrix_vi from "./gram_matrix/i18n/vi.json";
 import srm_filter_en from "./srm_filter/i18n/en.json";
 import srm_filter_vi from "./srm_filter/i18n/vi.json";
+import autocorrelation_en from "./autocorrelation/i18n/en.json";
+import autocorrelation_vi from "./autocorrelation/i18n/vi.json";
+import pixel_cooccurrence_en from "./pixel_cooccurrence/i18n/en.json";
+import pixel_cooccurrence_vi from "./pixel_cooccurrence/i18n/vi.json";
+import tamura_texture_en from "./tamura_texture/i18n/en.json";
+import tamura_texture_vi from "./tamura_texture/i18n/vi.json";
+import lpq_analysis_en from "./lpq_analysis/i18n/en.json";
+import lpq_analysis_vi from "./lpq_analysis/i18n/vi.json";
+import fractal_dimension_en from "./fractal_dimension/i18n/en.json";
+import fractal_dimension_vi from "./fractal_dimension/i18n/vi.json";
+import bilateral_symmetry_en from "./bilateral_symmetry/i18n/en.json";
+import bilateral_symmetry_vi from "./bilateral_symmetry/i18n/vi.json";
+import histogram_gradient_en from "./histogram_gradient/i18n/en.json";
+import histogram_gradient_vi from "./histogram_gradient/i18n/vi.json";
+import color_coherence_en from "./color_coherence/i18n/en.json";
+import color_coherence_vi from "./color_coherence/i18n/vi.json";
+import mutual_information_en from "./mutual_information/i18n/en.json";
+import mutual_information_vi from "./mutual_information/i18n/vi.json";
+import laplacian_edge_en from "./laplacian_edge/i18n/en.json";
+import laplacian_edge_vi from "./laplacian_edge/i18n/vi.json";
+import copy_move_forensics_en from "./copy_move_forensics/i18n/en.json";
+import copy_move_forensics_vi from "./copy_move_forensics/i18n/vi.json";
+import double_jpeg_detection_en from "./double_jpeg_detection/i18n/en.json";
+import double_jpeg_detection_vi from "./double_jpeg_detection/i18n/vi.json";
 
 type MethodLocaleEntry = { name: string; description: string };
 
@@ -111,6 +135,12 @@ const en = buildMap([
     ["clip_detection", clip_detection_en], ["binary_pattern", binary_pattern_en],
     ["fourier_ring", fourier_ring_en], ["resnet_classifier", resnet_classifier_en],
     ["vit_detection", vit_detection_en], ["gram_matrix", gram_matrix_en], ["srm_filter", srm_filter_en],
+    ["autocorrelation", autocorrelation_en], ["pixel_cooccurrence", pixel_cooccurrence_en],
+    ["tamura_texture", tamura_texture_en], ["lpq_analysis", lpq_analysis_en],
+    ["fractal_dimension", fractal_dimension_en], ["bilateral_symmetry", bilateral_symmetry_en],
+    ["histogram_gradient", histogram_gradient_en], ["color_coherence", color_coherence_en],
+    ["mutual_information", mutual_information_en], ["laplacian_edge", laplacian_edge_en],
+    ["copy_move_forensics", copy_move_forensics_en], ["double_jpeg_detection", double_jpeg_detection_en],
 ]);
 
 const vi = buildMap([
@@ -127,6 +157,12 @@ const vi = buildMap([
     ["clip_detection", clip_detection_vi], ["binary_pattern", binary_pattern_vi],
     ["fourier_ring", fourier_ring_vi], ["resnet_classifier", resnet_classifier_vi],
     ["vit_detection", vit_detection_vi], ["gram_matrix", gram_matrix_vi], ["srm_filter", srm_filter_vi],
+    ["autocorrelation", autocorrelation_vi], ["pixel_cooccurrence", pixel_cooccurrence_vi],
+    ["tamura_texture", tamura_texture_vi], ["lpq_analysis", lpq_analysis_vi],
+    ["fractal_dimension", fractal_dimension_vi], ["bilateral_symmetry", bilateral_symmetry_vi],
+    ["histogram_gradient", histogram_gradient_vi], ["color_coherence", color_coherence_vi],
+    ["mutual_information", mutual_information_vi], ["laplacian_edge", laplacian_edge_vi],
+    ["copy_move_forensics", copy_move_forensics_vi], ["double_jpeg_detection", double_jpeg_detection_vi],
 ]);
 
 const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi };
@@ -137,3 +173,4 @@ const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi 
 export function getMethodTranslation(methodId: string, locale: Locale): MethodLocaleEntry {
     return METHOD_I18N[locale]?.[methodId] ?? METHOD_I18N.en[methodId] ?? { name: methodId, description: "" };
 }
+
