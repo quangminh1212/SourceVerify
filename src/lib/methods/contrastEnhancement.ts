@@ -16,26 +16,25 @@ export function analyzeContrastEnhancement(pixels: Uint8ClampedArray, w: number,
     }
 
     let score: number;
-    
+
     // Detect contrast enhancement via peak-gap analysis in histogram
     const hist = new Uint32Array(256);
     const step = Math.max(1, Math.floor(w * h / 80000));
     for (let i = 0; i < w * h * 4; i += 4 * step) {
-        const lum = Math.round(0.299*pixels[i] + 0.587*pixels[i+1] + 0.114*pixels[i+2]);
+        const lum = Math.round(0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2]);
         hist[lum]++;
     }
     let totalPixels = 0;
     for (let i = 0; i < 256; i++) totalPixels += hist[i];
     // Count gaps and peaks
-    let gapCount = 0, peakCount = 0;
+    let gapCount = 0;
     for (let i = 2; i < 254; i++) {
-        if (hist[i] === 0 && hist[i-1] > 0 && hist[i+1] > 0) gapCount++;
-        if (hist[i] > hist[i-1] * 2 && hist[i] > hist[i+1] * 2 && hist[i] > totalPixels * 0.005) peakCount++;
+        if (hist[i] === 0 && hist[i - 1] > 0 && hist[i + 1] > 0) gapCount++;
     }
     // Alternating pattern detection (peak-gap-peak)
     let alternating = 0;
     for (let i = 1; i < 254; i++) {
-        if (hist[i] === 0 && hist[i-1] > 0 && hist[i+1] > 0) alternating++;
+        if (hist[i] === 0 && hist[i - 1] > 0 && hist[i + 1] > 0) alternating++;
     }
     if (alternating > 20 && gapCount > 15) score = 80;
     else if (alternating > 10) score = 68;

@@ -48,7 +48,7 @@ export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: numb
     // Calculate LBP uniformity - ratio of uniform patterns (transitions <= 2)
     let uniformCount = 0;
     for (let i = 0; i < 256; i++) {
-        let bits = i;
+        const bits = i;
         let transitions = 0;
         for (let b = 0; b < 8; b++) {
             const curr = (bits >> b) & 1;

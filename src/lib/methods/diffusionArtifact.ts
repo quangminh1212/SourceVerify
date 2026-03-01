@@ -29,7 +29,7 @@ export function analyzeDiffusionArtifact(pixels: Uint8ClampedArray, width: numbe
                 for (let x = bx * blockSize + 1; x < (bx + 1) * blockSize - 1; x++) {
                     const center = gray(pixels, (y * width + x) * 4);
                     const right = gray(pixels, (y * width + x + 1) * 4);
-                    const down = gray(pixels, ((y + 1) * width + x) * 4);
+                    const _down = gray(pixels, ((y + 1) * width + x) * 4);
                     const right2 = x + 2 < width ? gray(pixels, (y * width + x + 2) * 4) : center;
 
                     // First derivative (mid frequency)

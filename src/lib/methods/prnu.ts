@@ -66,7 +66,7 @@ export function analyzePRNUPattern(pixels: Uint8ClampedArray, width: number, hei
     // Real camera PRNU: consistent spatial correlation due to fixed sensor defects
     // AI noise: uncorrelated or random spatial pattern
     const cols = Math.floor((width - 2 * kernelRadius) / noiseStep);
-    let autoCorr = 0, autoCorrH = 0, autoCorrCount = 0;
+    let autoCorr = 0, autoCorrCount = 0;
 
     for (let i = 0; i < residuals.length - 1; i++) {
         const [x1, y1] = positions[i];

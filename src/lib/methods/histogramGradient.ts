@@ -35,7 +35,7 @@ export function analyzeHistogramGradient(pixels: Uint8ClampedArray, width: numbe
     // Compute first-order gradient of histogram
     let gradientSum = 0;
     let gradientMax = 0;
-    let zeroGapCount = 0; // consecutive zero bins (histogram gaps)
+    let zeroGapCount = 0; // eslint-disable-line @typescript-eslint/no-unused-vars
     let consecutiveZeros = 0;
     let maxConsecutiveZeros = 0;
 

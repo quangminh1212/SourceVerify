@@ -24,14 +24,14 @@ export function analyzeSRMFilter(pixels: Uint8ClampedArray, w: number, h: number
             const idx = (y * w + x) * 4;
             // 3rd-order SRM-like residual
             const r = -pixels[(y - 2) * w * 4 + x * 4] + 3 * pixels[(y - 1) * w * 4 + x * 4]
-                      - 3 * pixels[idx] + pixels[(y + 1) * w * 4 + x * 4];
+                - 3 * pixels[idx] + pixels[(y + 1) * w * 4 + x * 4];
             residualSum += Math.abs(r);
             residualSum2 += r * r;
             cnt++;
         }
     }
     const avgResidual = cnt > 0 ? residualSum / cnt : 0;
-    const varResidual = cnt > 0 ? Math.sqrt(residualSum2 / cnt - (residualSum / cnt) ** 2) : 0;
+    const _varResidual = cnt > 0 ? Math.sqrt(residualSum2 / cnt - (residualSum / cnt) ** 2) : 0;
     // AI images: lower residual energy, more uniform
     if (avgResidual < 5) score = 70;
     else if (avgResidual < 12) score = 55;

@@ -1,5 +1,4 @@
 ﻿import type { AnalysisMethod } from "../types";
-import { gray } from "./pixelUtils";
 
 /**
  * Signal 29: Chi-Square Uniformity Test

@@ -16,20 +16,18 @@ export function analyzeMedianFilter(pixels: Uint8ClampedArray, w: number, h: num
     }
 
     let score: number;
-    
+
     // Detect median filtering by analyzing pixel value histogram for streak artifacts
     const hist = new Uint32Array(256);
     const step = Math.max(1, Math.floor(w * h / 50000));
     for (let i = 0; i < w * h * 4; i += 4 * step) {
-        const lum = Math.round(0.299 * pixels[i] + 0.587 * pixels[i+1] + 0.114 * pixels[i+2]);
+        const lum = Math.round(0.299 * pixels[i] + 0.587 * pixels[i + 1] + 0.114 * pixels[i + 2]);
         hist[lum]++;
     }
     // Count zero-bins (gaps) and streaks in histogram
-    let gaps = 0, streaks = 0, prevZero = false;
+    let gaps = 0;
     for (let i = 1; i < 255; i++) {
-        if (hist[i] === 0 && hist[i-1] > 0 && hist[i+1] > 0) gaps++;
-        if (hist[i] > 0 && hist[i-1] === 0) { if (prevZero) streaks++; }
-        prevZero = hist[i] === 0;
+        if (hist[i] === 0 && hist[i - 1] > 0 && hist[i + 1] > 0) gaps++;
     }
     // Analyze smoothness via neighbor differences
     let smoothCount = 0, totalChecked = 0;
@@ -39,7 +37,7 @@ export function analyzeMedianFilter(pixels: Uint8ClampedArray, w: number, h: num
             const c = pixels[idx];
             const l = pixels[idx - 4], r = pixels[idx + 4];
             const u = pixels[idx - w * 4], d = pixels[idx + w * 4];
-            const sorted = [l, u, r, d, c].sort((a,b) => a - b);
+            const sorted = [l, u, r, d, c].sort((a, b) => a - b);
             if (Math.abs(c - sorted[2]) <= 1) smoothCount++;
             totalChecked++;
         }
