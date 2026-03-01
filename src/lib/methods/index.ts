@@ -1,6 +1,6 @@
 /**
  * Analysis methods barrel export
- * 43 forensic analysis methods (phương pháp phân tích) based on peer-reviewed research
+ * 55 forensic analysis methods (phương pháp phân tích) based on peer-reviewed research
  */
 
 // Original 13 signals
@@ -39,3 +39,21 @@ export { analyzePerspectiveConsistency, analyzeLightingConsistency, analyzeShado
 
 // New: Advanced Color (2 signals) — Signals 42-43
 export { analyzeColorGamut, analyzeWhiteBalance } from "./colorAdvanced";
+
+// New: Advanced Forensic (4 signals) — Signals 44-47
+export { analyzeCopyMoveForensics } from "./copyMove";
+export { analyzeDoubleJPEG } from "./doubleJpeg";
+export { analyzeAutocorrelation } from "./autocorrelation";
+export { analyzePixelCooccurrence } from "./pixelCooccurrence";
+
+// New: Perceptual Texture (4 signals) — Signals 48-51
+export { analyzeTamuraTexture } from "./tamura";
+export { analyzeLocalPhaseQuantization } from "./lpq";
+export { analyzeFractalDimension } from "./fractal";
+export { analyzeBilateralSymmetry } from "./bilateralSymmetry";
+
+// New: Histogram & Information Theory (4 signals) — Signals 52-55
+export { analyzeHistogramGradient } from "./histogramGradient";
+export { analyzeColorCoherence } from "./colorCoherence";
+export { analyzeMutualInformation } from "./mutualInfo";
+export { analyzeLaplacianEdge } from "./laplacianEdge";

@@ -1,15 +1,16 @@
 /**
- * SourceVerify AI Detection Engine v6
- * Main orchestrator — imports and coordinates all 43 analysis methods
+ * SourceVerify AI Detection Engine v7
+ * Main orchestrator — imports and coordinates all 55 analysis methods
  *
  * Terminology: "method" = phương pháp phân tích (analysis method)
  * Each method analyzes a specific aspect of the image and returns a result with a score.
  *
- * v6 Changes:
- * - Added 30 new forensic methods (total 43) from peer-reviewed research
- * - Categories: spatial, frequency, statistical, compression, generative, geometric, color
- * - New methods have lower weights (0.3-0.6) to supplement rather than dominate existing methods
- * - Verdict engine unchanged — thresholds calibrated from v5.1
+ * v7 Changes:
+ * - Added 12 new methods (total 55) from peer-reviewed research papers
+ * - New categories: forensic-advanced, perceptual, histogram/info-theory
+ * - Papers: Christlein 2012, Lin 2009, Popescu & Farid 2005, Fridrich 2012,
+ *   Tamura 1978, Ojansivu 2008, Sarkar 1994, Loy 2006, Farid 2016, Pass 1996,
+ *   Cover & Thomas 2006, Wang 2004
  */
 
 export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
@@ -72,6 +73,21 @@ import {
     // New: Advanced Color (2)
     analyzeColorGamut,
     analyzeWhiteBalance,
+    // New: Advanced Forensic (4) — v7
+    analyzeCopyMoveForensics,
+    analyzeDoubleJPEG,
+    analyzeAutocorrelation,
+    analyzePixelCooccurrence,
+    // New: Perceptual Texture (4) — v7
+    analyzeTamuraTexture,
+    analyzeLocalPhaseQuantization,
+    analyzeFractalDimension,
+    analyzeBilateralSymmetry,
+    // New: Histogram & Info Theory (4) — v7
+    analyzeHistogramGradient,
+    analyzeColorCoherence,
+    analyzeMutualInformation,
+    analyzeLaplacianEdge,
 } from "./methods";
 
 // ============================
@@ -222,7 +238,7 @@ function calculateVerdict(methods: AnalysisMethod[]): { aiScore: number; verdict
 }
 
 // ============================
-// IMAGE ANALYSIS (43 methods)
+// IMAGE ANALYSIS (55 methods)
 // ============================
 
 // Method ID → nameKey mapping
@@ -278,6 +294,21 @@ export const METHOD_MAP: Record<string, string> = {
     // Advanced Color (2)
     gamut: "signal.colorGamut",
     whiteBalance: "signal.whiteBalance",
+    // Advanced Forensic (4) — v7
+    copyMove: "signal.copyMove",
+    doubleJpeg: "signal.doubleJpeg",
+    autocorrelation: "signal.autocorrelation",
+    pixelCooccurrence: "signal.pixelCooccurrence",
+    // Perceptual Texture (4) — v7
+    tamura: "signal.tamuraTexture",
+    lpq: "signal.lpq",
+    fractal: "signal.fractalDimension",
+    bilateralSymmetry: "signal.bilateralSymmetry",
+    // Histogram & Info Theory (4) — v7
+    histogramGradient: "signal.histogramGradient",
+    colorCoherence: "signal.colorCoherence",
+    mutualInfo: "signal.mutualInfo",
+    laplacianEdge: "signal.laplacianEdge",
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
@@ -357,6 +388,21 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         // Advanced Color (2)
         analyzeColorGamut(pixels, w, h),
         analyzeWhiteBalance(pixels, w, h),
+        // Advanced Forensic (4) — v7
+        analyzeCopyMoveForensics(pixels, w, h),
+        analyzeDoubleJPEG(pixels, w, h),
+        analyzeAutocorrelation(pixels, w, h),
+        analyzePixelCooccurrence(pixels, w, h),
+        // Perceptual Texture (4) — v7
+        analyzeTamuraTexture(pixels, w, h),
+        analyzeLocalPhaseQuantization(pixels, w, h),
+        analyzeFractalDimension(pixels, w, h),
+        analyzeBilateralSymmetry(pixels, w, h),
+        // Histogram & Info Theory (4) — v7
+        analyzeHistogramGradient(pixels, w, h),
+        analyzeColorCoherence(pixels, w, h),
+        analyzeMutualInformation(pixels, w, h),
+        analyzeLaplacianEdge(pixels, w, h),
     ];
 
     // Filter methods based on enabled set
@@ -454,6 +500,21 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     // Advanced Color (2)
                     analyzeColorGamut(pixels, w, h),
                     analyzeWhiteBalance(pixels, w, h),
+                    // Advanced Forensic (4) — v7
+                    analyzeCopyMoveForensics(pixels, w, h),
+                    analyzeDoubleJPEG(pixels, w, h),
+                    analyzeAutocorrelation(pixels, w, h),
+                    analyzePixelCooccurrence(pixels, w, h),
+                    // Perceptual Texture (4) — v7
+                    analyzeTamuraTexture(pixels, w, h),
+                    analyzeLocalPhaseQuantization(pixels, w, h),
+                    analyzeFractalDimension(pixels, w, h),
+                    analyzeBilateralSymmetry(pixels, w, h),
+                    // Histogram & Info Theory (4) — v7
+                    analyzeHistogramGradient(pixels, w, h),
+                    analyzeColorCoherence(pixels, w, h),
+                    analyzeMutualInformation(pixels, w, h),
+                    analyzeLaplacianEdge(pixels, w, h),
                 ];
 
                 const methods = allMethods.filter(s => {
