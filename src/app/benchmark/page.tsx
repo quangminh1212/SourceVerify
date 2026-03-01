@@ -34,7 +34,6 @@ export default function BenchmarkPage() {
     const analyzeImage = useCallback(async (
         fileName: string,
         category: "ai" | "real",
-        allResults: TestResult[],
     ): Promise<TestResult | null> => {
         try {
             const resp = await fetch(`/benchmark/${fileName}`);
@@ -80,7 +79,7 @@ export default function BenchmarkPage() {
             const fileName = `ai_face_${String(i).padStart(3, "0")}.jpg`;
             setCurrent(i);
 
-            const testResult = await analyzeImage(fileName, "ai", allResults);
+            const testResult = await analyzeImage(fileName, "ai");
             if (!testResult) { continue; }
 
             allResults.push(testResult);
@@ -108,7 +107,7 @@ export default function BenchmarkPage() {
             const fileName = `real_photo_${String(i).padStart(3, "0")}.jpg`;
             setCurrent(AI_COUNT + i);
 
-            const testResult = await analyzeImage(fileName, "real", allResults);
+            const testResult = await analyzeImage(fileName, "real");
             if (!testResult) { continue; }
 
             allResults.push(testResult);

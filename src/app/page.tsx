@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import {
   analyzeMedia,
   formatFileSize,
   type AnalysisResult,
-  METHOD_MAP,
 } from "@/lib/analyzer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { ACCEPTED_TYPES, MAX_FILE_SIZE } from "@/lib/constants";

@@ -7,7 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { LOCALE_LABELS, type Locale } from "@/i18n/translations";
-import { METHODS, CATEGORIES, CAT_HEX, type Category } from "@/app/methods/data";
+import { METHODS, CATEGORIES } from "@/app/methods/data";
 import { getMethodTranslation } from "@/app/methods/methodsI18n";
 
 const NAV_KEYS = [
@@ -453,7 +453,7 @@ function SettingsModal({
     const toggleExpand = (key: string) => {
         setExpandedGroups(prev => {
             const next = new Set(prev);
-            next.has(key) ? next.delete(key) : next.add(key);
+            if (next.has(key)) { next.delete(key); } else { next.add(key); }
             return next;
         });
     };
