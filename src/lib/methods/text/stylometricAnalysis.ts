@@ -1,82 +1,114 @@
 /**
  * Stylometric Analysis
- * Identifies writing style consistency markers
- * AI text tends to maintain overly consistent style throughout
+ * Identifies writing style consistency markers using multiple stylometric features.
+ * AI text tends to maintain overly consistent style (avg word length, function word ratio,
+ * sentence complexity) across the document.
+ *
+ * Features extracted (per Kumarage et al.):
+ * - Average word length distribution
+ * - Function word frequency
+ * - Sentence complexity variation (clauses per sentence approximation)
+ * - Lexical density (content words / total words)
+ *
  * Reference: Kumarage et al. (2023) - Stylometric Detection of AI-Generated Text
+ * Reference: Zheng et al. (2006) - A framework for authorship identification, JASIST
  */
 
 import type { AnalysisMethod } from "../../types";
 
-export function analyzeStylometricAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
-    if (w < 16 || h < 16) {
+const FUNCTION_WORDS = new Set([
+    "the", "a", "an", "is", "are", "was", "were", "be", "been", "being",
+    "have", "has", "had", "do", "does", "did", "will", "would", "could",
+    "should", "may", "might", "shall", "can", "need", "dare", "ought",
+    "used", "to", "of", "in", "for", "on", "with", "at", "by", "from",
+    "as", "into", "through", "during", "before", "after", "above", "below",
+    "between", "out", "off", "over", "under", "again", "further", "then",
+    "once", "and", "but", "or", "nor", "not", "so", "yet", "both",
+    "either", "neither", "each", "every", "all", "any", "few", "more",
+    "most", "other", "some", "such", "no", "only", "own", "same",
+    "than", "too", "very", "just", "about", "also", "back", "how",
+    "its", "it", "he", "she", "they", "we", "you", "i", "me", "him",
+    "her", "us", "them", "my", "your", "his", "our", "their", "this",
+    "that", "these", "those", "what", "which", "who", "whom", "whose",
+    "when", "where", "why", "if", "because", "although", "while", "since",
+]);
+
+export function analyzeStylometricAnalysis(text: string): AnalysisMethod {
+    if (text.length < 200) {
         return {
             name: "Stylometric Analysis", nameKey: "signal.stylometricAnalysis",
             category: "statistical", score: 50, weight: 0.3,
-            description: "Input too small for analysis",
+            description: "Text too short for stylometric analysis",
             descriptionKey: "signal.stylometricAnalysis.error", icon: "✍",
         };
     }
 
-    // Analyze row-level intensity profiles as a proxy for writing style
-    // Human text has more varied line-to-line characteristics
-    const sampleCount = Math.min(h, 100);
-    const lineStep = Math.max(1, Math.floor(h / sampleCount));
-    const lineProfiles: number[] = [];
-
-    for (let y = 0; y < h; y += lineStep) {
-        let lineSum = 0, lineVar = 0;
-        const linePixels: number[] = [];
-
-        for (let x = 0; x < w; x++) {
-            const idx = (y * w + x) * 4;
-            const gray = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            linePixels.push(gray);
-            lineSum += gray;
-        }
-
-        const lineMean = lineSum / w;
-        for (const p of linePixels) {
-            lineVar += (p - lineMean) ** 2;
-        }
-        lineProfiles.push(lineVar / w);
-    }
-
-    if (lineProfiles.length < 2) {
+    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+    if (sentences.length < 5) {
         return {
             name: "Stylometric Analysis", nameKey: "signal.stylometricAnalysis",
             category: "statistical", score: 50, weight: 0.3,
-            description: "Insufficient data for stylometric analysis",
+            description: "Insufficient sentences for analysis",
             descriptionKey: "signal.stylometricAnalysis.error", icon: "✍",
         };
     }
 
-    // Calculate consistency of line variance profiles
-    const profMean = lineProfiles.reduce((a, b) => a + b, 0) / lineProfiles.length;
-    const profVar = lineProfiles.reduce((a, b) => a + (b - profMean) ** 2, 0) / lineProfiles.length;
-    const profCV = profMean > 0 ? Math.sqrt(profVar) / profMean : 0;
+    // Per-sentence features
+    const sentenceFeatures = sentences.map(sent => {
+        const words = sent.toLowerCase().split(/\s+/).filter(w => w.length > 0);
+        if (words.length === 0) return null;
 
-    // Analyze consecutive line difference for rhythm detection
-    let rhythmConsistency = 0;
-    for (let i = 1; i < lineProfiles.length; i++) {
-        const diff = Math.abs(lineProfiles[i] - lineProfiles[i - 1]);
-        if (diff < profMean * 0.3) rhythmConsistency++;
+        const avgWordLen = words.reduce((a, w) => a + w.length, 0) / words.length;
+        const funcWordRatio = words.filter(w => FUNCTION_WORDS.has(w)).length / words.length;
+        const commaCount = (sent.match(/,/g) || []).length;
+        const clauseProxy = commaCount + 1; // approximation of clause count
+        const lexicalDensity = words.filter(w => !FUNCTION_WORDS.has(w)).length / words.length;
+
+        return { avgWordLen, funcWordRatio, clauseProxy, lexicalDensity, wordCount: words.length };
+    }).filter(f => f !== null);
+
+    if (sentenceFeatures.length < 3) {
+        return {
+            name: "Stylometric Analysis", nameKey: "signal.stylometricAnalysis",
+            category: "statistical", score: 50, weight: 0.3,
+            description: "Insufficient valid sentences",
+            descriptionKey: "signal.stylometricAnalysis.error", icon: "✍",
+        };
     }
-    const rhythmRatio = rhythmConsistency / (lineProfiles.length - 1);
+
+    // Calculate CV (coefficient of variation) for each feature
+    const computeCV = (values: number[]): number => {
+        const mean = values.reduce((a, b) => a + b, 0) / values.length;
+        const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
+        return mean > 0 ? Math.sqrt(variance) / mean : 0;
+    };
+
+    const cvWordLen = computeCV(sentenceFeatures.map(f => f.avgWordLen));
+    const cvFuncWord = computeCV(sentenceFeatures.map(f => f.funcWordRatio));
+    const cvLexDensity = computeCV(sentenceFeatures.map(f => f.lexicalDensity));
+    const cvSentLen = computeCV(sentenceFeatures.map(f => f.wordCount));
+
+    // Combined style consistency score
+    // AI text: all CVs are low (overly consistent)
+    // Human text: higher CVs (natural variation)
+    const avgCV = (cvWordLen + cvFuncWord + cvLexDensity + cvSentLen) / 4;
 
     let score: number;
-    if (profCV < 0.3 && rhythmRatio > 0.7) score = 72;
-    else if (profCV < 0.5 && rhythmRatio > 0.5) score = 60;
-    else if (profCV > 1.0) score = 28;
+    if (avgCV < 0.12) score = 78;
+    else if (avgCV < 0.18) score = 65;
+    else if (avgCV < 0.25) score = 52;
+    else if (avgCV > 0.45) score = 22;
+    else if (avgCV > 0.35) score = 32;
     else score = 42;
 
     return {
         name: "Stylometric Analysis", nameKey: "signal.stylometricAnalysis",
         category: "statistical", score, weight: 0.3,
         description: score > 55
-            ? "Overly consistent writing style detected — characteristic of AI-generated text"
+            ? "Overly consistent writing style — characteristic of AI-generated text"
             : "Natural style variation — consistent with human authorship",
         descriptionKey: score > 55 ? "signal.stylometricAnalysis.ai" : "signal.stylometricAnalysis.real",
         icon: "✍",
-        details: `Profile CV: ${profCV.toFixed(3)}, Rhythm ratio: ${rhythmRatio.toFixed(3)}.`,
+        details: `CV word-len: ${cvWordLen.toFixed(3)}, CV func-word: ${cvFuncWord.toFixed(3)}, CV lex-density: ${cvLexDensity.toFixed(3)}, CV sent-len: ${cvSentLen.toFixed(3)}, Avg CV: ${avgCV.toFixed(3)}.`,
     };
 }

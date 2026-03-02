@@ -1,78 +1,75 @@
 /**
  * Burstiness Detection
- * Analyzes burstiness patterns — human writing has variable bursts,
- * AI text tends to be more uniform in distribution
- * Reference: Mitchell et al. (2023) - DetectGPT
+ * Measures the burstiness of sentence lengths and word frequencies.
+ * Human writing exhibits bursty patterns (variable sentence lengths, topic-specific word clusters),
+ * while AI text tends toward uniform distribution of sentence lengths.
+ *
+ * Burstiness B = (σ - μ) / (σ + μ) where σ=std dev, μ=mean of inter-event intervals.
+ * B ∈ [-1, 1]: B→-1 is periodic (AI-like), B→0 is random, B→1 is bursty (human-like).
+ *
+ * Reference: Mitchell et al. (2023) - DetectGPT: Zero-Shot Machine-Generated Text Detection, ICML
+ * Reference: Goh & Barabási (2008) - Burstiness and memory of human dynamics
  */
 
 import type { AnalysisMethod } from "../../types";
 
-export function analyzeBurstinessDetection(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
-    if (w < 16 || h < 16) {
+export function analyzeBurstinessDetection(text: string): AnalysisMethod {
+    if (text.length < 100) {
         return {
             name: "Burstiness Detection", nameKey: "signal.burstinessDetection",
             category: "statistical", score: 50, weight: 0.25,
-            description: "Input too small for analysis",
+            description: "Text too short for burstiness analysis",
             descriptionKey: "signal.burstinessDetection.error", icon: "💥",
         };
     }
 
-    // Analyze spatial burstiness in horizontal scan lines
-    // Human-written text images have bursty intensity patterns; AI is more uniform
-    const sampleLines = Math.min(h, 64);
-    const lineStep = Math.max(1, Math.floor(h / sampleLines));
-    const runLengths: number[] = [];
-
-    for (let y = 0; y < h; y += lineStep) {
-        let runLen = 1;
-        let prevIntensity = "low";
-
-        for (let x = 1; x < w; x++) {
-            const idx = (y * w + x) * 4;
-            const gray = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const curIntensity = gray > 128 ? "high" : "low";
-
-            if (curIntensity === prevIntensity) {
-                runLen++;
-            } else {
-                runLengths.push(runLen);
-                runLen = 1;
-                prevIntensity = curIntensity;
-            }
-        }
-        runLengths.push(runLen);
-    }
-
-    if (runLengths.length === 0) {
+    // Split into sentences
+    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
+    if (sentences.length < 5) {
         return {
             name: "Burstiness Detection", nameKey: "signal.burstinessDetection",
             category: "statistical", score: 50, weight: 0.25,
-            description: "Could not compute burstiness",
+            description: "Too few sentences for burstiness analysis",
             descriptionKey: "signal.burstinessDetection.error", icon: "💥",
         };
     }
 
-    // Calculate coefficient of variation (CV) of run lengths
-    const mean = runLengths.reduce((a, b) => a + b, 0) / runLengths.length;
-    const variance = runLengths.reduce((a, b) => a + (b - mean) ** 2, 0) / runLengths.length;
+    // Calculate word counts per sentence
+    const wordCounts = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
+
+    // Burstiness of sentence lengths: B = (σ - μ) / (σ + μ)
+    const mean = wordCounts.reduce((a, b) => a + b, 0) / wordCounts.length;
+    const variance = wordCounts.reduce((a, b) => a + (b - mean) ** 2, 0) / wordCounts.length;
     const stdDev = Math.sqrt(variance);
-    const cv = mean > 0 ? stdDev / mean : 0;
+    const burstiness = (mean + stdDev) > 0 ? (stdDev - mean) / (stdDev + mean) : 0;
 
-    // Low CV = uniform (AI-like), High CV = bursty (human-like)
+    // Also measure inter-sentence length differences (consecutive variation)
+    const diffs: number[] = [];
+    for (let i = 1; i < wordCounts.length; i++) {
+        diffs.push(Math.abs(wordCounts[i] - wordCounts[i - 1]));
+    }
+    const meanDiff = diffs.length > 0 ? diffs.reduce((a, b) => a + b, 0) / diffs.length : 0;
+    const diffVar = diffs.length > 0 ? diffs.reduce((a, b) => a + (b - meanDiff) ** 2, 0) / diffs.length : 0;
+    const diffCV = meanDiff > 0 ? Math.sqrt(diffVar) / meanDiff : 0;
+
+    // AI text: burstiness close to -1 (periodic), low diffCV
+    // Human text: burstiness > 0 (bursty), high diffCV
     let score: number;
-    if (cv < 0.5) score = 70;
-    else if (cv < 0.8) score = 58;
-    else if (cv > 1.5) score = 28;
+    if (burstiness < -0.3 && diffCV < 0.6) score = 75;
+    else if (burstiness < -0.1 && diffCV < 0.8) score = 62;
+    else if (burstiness < 0.1) score = 52;
+    else if (burstiness > 0.3 && diffCV > 1.0) score = 22;
+    else if (burstiness > 0.15) score = 35;
     else score = 42;
 
     return {
         name: "Burstiness Detection", nameKey: "signal.burstinessDetection",
         category: "statistical", score, weight: 0.25,
         description: score > 55
-            ? "Low burstiness — overly uniform distribution suggests AI-generated content"
-            : "Natural burstiness pattern — consistent with human-created content",
+            ? "Low burstiness — overly uniform sentence structure suggests AI generation"
+            : "Natural bursty writing pattern — consistent with human authorship",
         descriptionKey: score > 55 ? "signal.burstinessDetection.ai" : "signal.burstinessDetection.real",
         icon: "💥",
-        details: `CV: ${cv.toFixed(3)}, Mean run: ${mean.toFixed(1)}, StdDev: ${stdDev.toFixed(1)}.`,
+        details: `Burstiness: ${burstiness.toFixed(3)}, Sentence CV: ${(stdDev / (mean || 1)).toFixed(3)}, Diff CV: ${diffCV.toFixed(3)}, Sentences: ${sentences.length}.`,
     };
 }
