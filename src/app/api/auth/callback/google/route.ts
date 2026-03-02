@@ -36,6 +36,10 @@ export async function GET(req: NextRequest) {
 </html>`;
 
     return new NextResponse(html, {
-        headers: { "Content-Type": "text/html; charset=utf-8" },
+        headers: {
+            "Content-Type": "text/html; charset=utf-8",
+            "Content-Security-Policy": "default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'",
+            "X-Content-Type-Options": "nosniff",
+        },
     });
 }
