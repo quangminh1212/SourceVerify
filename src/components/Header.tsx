@@ -11,11 +11,11 @@ import { METHODS, CATEGORIES } from "@/app/methods/data";
 import { getMethodTranslation } from "@/app/methods/methodsI18n";
 
 const NAV_KEYS = [
+    { key: "nav.about", href: "/about" },
     { key: "nav.product", href: "/product" },
     { key: "nav.features", href: "/features" },
     { key: "nav.howItWorks", href: "/how-it-works" },
     { key: "nav.methods", href: "/methods" },
-    { key: "nav.about", href: "/about" },
 ];
 
 const LOCALES: Locale[] = ["en", "zh", "vi", "ja", "ko", "es"];
