@@ -166,3 +166,20 @@ export { analyzeTopicConsistency } from "./text/topicConsistency";
 export { analyzeWordFrequencyRank } from "./text/wordFrequencyRank";
 export { analyzeSemanticDensity } from "./text/semanticDensity";
 export { analyzeWritingRhythm } from "./text/writingRhythm";
+
+// Text Analysis Methods v2 (15 new methods)
+export { analyzePosTagAnalysis } from "./text/posTagAnalysis";
+export { analyzeDiscourseMarkers } from "./text/discourseMarkers";
+export { analyzeCoreferenceChain } from "./text/coreferenceChain";
+export { analyzeNamedEntityConsistency } from "./text/namedEntityConsistency";
+export { analyzeHedgingLanguage } from "./text/hedgingLanguage";
+export { analyzeTypeTokenRatio } from "./text/typeTokenRatio";
+export { analyzeSyntacticComplexity } from "./text/syntacticComplexity";
+export { analyzePassiveVoiceFrequency } from "./text/passiveVoiceFrequency";
+export { analyzeLexicalSophistication } from "./text/lexicalSophistication";
+export { analyzeTextCompressionRatio } from "./text/textCompressionRatio";
+export { analyzeFunctionWordDistribution } from "./text/functionWordDistribution";
+export { analyzePronounUsagePattern } from "./text/pronounUsagePattern";
+export { analyzeClauseDepthAnalysis } from "./text/clauseDepthAnalysis";
+export { analyzeCollocationStrength } from "./text/collocationStrength";
+export { analyzeTemporalExpression } from "./text/temporalExpression";
