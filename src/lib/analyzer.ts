@@ -449,6 +449,13 @@ export const METHOD_MAP: Record<string, string> = {
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
 
+// Reverse map: nameKey → Set of method IDs (for O(1) filtering)
+const NAMEKEY_TO_IDS: Map<string, string[]> = new Map();
+for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
+    const arr = NAMEKEY_TO_IDS.get(nameKey);
+    if (arr) arr.push(id);
+    else NAMEKEY_TO_IDS.set(nameKey, [id]);
+}
 
 /** Free-tier methods (original 13) — available without login */
 export const FREE_METHOD_IDS = [
@@ -586,12 +593,10 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         analyzeSoftwareFingerprint(metadata, exifData),
     ];
 
-    // Filter methods based on enabled set
+    // Filter methods based on enabled set using O(1) reverse map lookup
     const methods = allMethods.filter(s => {
-        for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
-            if (s.nameKey === nameKey && enabled.has(id)) return true;
-        }
-        return false;
+        const ids = NAMEKEY_TO_IDS.get(s.nameKey);
+        return ids ? ids.some(id => enabled.has(id)) : false;
     });
 
     return { methods, metadata };
@@ -765,10 +770,8 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
 
                 const methods = allMethods.filter(s => {
                     if (s.nameKey === "signal.videoProperties") return true; // always include video method
-                    for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
-                        if (s.nameKey === nameKey && enabled.has(id)) return true;
-                    }
-                    return false;
+                    const ids = NAMEKEY_TO_IDS.get(s.nameKey);
+                    return ids ? ids.some(id => enabled.has(id)) : false;
                 });
 
                 resolve({ methods, metadata });
