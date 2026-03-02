@@ -150,7 +150,7 @@ export default function MethodsPage() {
                         {filtered.map((m, i) => (
                             <Link
                                 key={m.id}
-                                href={`/methods/${m.id}`}
+                                href={`/methods/${m.mediaType}/${m.id}`}
                                 className={`methods-card methods-card-clickable animate-fade-in-up animate-delay-${Math.min(i, 5)}`}
                             >
                                 <div className="methods-card-header">
