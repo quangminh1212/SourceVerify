@@ -1,35 +1,62 @@
 /**
  * SourceVerify - Utility Functions
  * Image loading, metadata extraction, and helper functions
+ *
+ * v2: Cross-platform consistent canvas rendering
+ *   - createImageBitmap with colorSpaceConversion: 'none' (prevents ICC profile differences)
+ *   - willReadFrequently: true (forces software rendering, eliminates GPU differences)
+ *   - colorSpace: 'srgb' (ensures consistent color space output)
  */
 
 import { MAX_PROCESS_DIMENSION } from "./constants";
 
-export async function loadImage(file: File): Promise<{ canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D; img: HTMLImageElement }> {
-    return new Promise((resolve, reject) => {
-        const img = new Image();
-        const url = URL.createObjectURL(file);
-
-        img.onload = () => {
-            let w = img.width, h = img.height;
-            if (w > MAX_PROCESS_DIMENSION || h > MAX_PROCESS_DIMENSION) {
-                const scale = MAX_PROCESS_DIMENSION / Math.max(w, h);
-                w = Math.round(w * scale);
-                h = Math.round(h * scale);
-            }
-
-            const canvas = document.createElement("canvas");
-            canvas.width = w; canvas.height = h;
-            const ctx = canvas.getContext("2d")!;
-            ctx.drawImage(img, 0, 0, w, h);
-
-            URL.revokeObjectURL(url);
-            resolve({ canvas, ctx, img });
-        };
-
-        img.onerror = () => { URL.revokeObjectURL(url); reject(new Error("Failed to load image")); };
-        img.src = url;
+/**
+ * Create a 2D canvas context with cross-platform consistent settings
+ * - willReadFrequently: forces CPU/software rendering (no GPU variance)
+ * - colorSpace: 'srgb' ensures identical color space across machines
+ */
+export function createConsistentContext(canvas: HTMLCanvasElement): CanvasRenderingContext2D {
+    const ctx = canvas.getContext("2d", {
+        willReadFrequently: true,
+        colorSpace: "srgb",
     });
+    if (!ctx) throw new Error("Failed to create 2D context");
+    return ctx;
+}
+
+export async function loadImage(file: File): Promise<{ canvas: HTMLCanvasElement; ctx: CanvasRenderingContext2D; img: HTMLImageElement }> {
+    // Decode image with createImageBitmap for cross-platform consistency
+    // colorSpaceConversion: 'none' prevents browser from applying ICC/monitor profiles
+    // (this is the #1 source of pixel-level differences between machines)
+    let bitmap: ImageBitmap;
+    try {
+        bitmap = await createImageBitmap(file, {
+            colorSpaceConversion: "none",
+            premultiplyAlpha: "none",
+        } as ImageBitmapOptions);
+    } catch {
+        // Fallback for browsers that don't support options
+        bitmap = await createImageBitmap(file);
+    }
+
+    let w = bitmap.width, h = bitmap.height;
+    if (w > MAX_PROCESS_DIMENSION || h > MAX_PROCESS_DIMENSION) {
+        const scale = MAX_PROCESS_DIMENSION / Math.max(w, h);
+        w = Math.round(w * scale);
+        h = Math.round(h * scale);
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = w; canvas.height = h;
+    const ctx = createConsistentContext(canvas);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(bitmap, 0, 0, w, h);
+    bitmap.close(); // Free memory
+
+    // Placeholder img for backward compatibility
+    const img = new Image();
+    return { canvas, ctx, img };
 }
 
 export async function extractBasicMetadata(file: File): Promise<Record<string, string>> {
