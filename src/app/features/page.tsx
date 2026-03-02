@@ -42,11 +42,11 @@ export default function FeaturesPage() {
                             >
                                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feat.accent} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
                                 <div className="relative flex flex-col flex-1">
-                                    <div className="flex items-center gap-2 mb-3">
+                                    <div className="flex items-center justify-center gap-2 mb-3">
                                         <span className="text-2xl lg:text-3xl">{feat.icon}</span>
                                         <h3 className="text-sm lg:text-base font-bold text-[--color-text-primary]">{t(feat.titleKey)}</h3>
                                     </div>
-                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary] flex-1">{t(feat.descKey)}</p>
+                                    <p className="text-[13px] lg:text-sm leading-relaxed text-[--color-text-secondary] flex-1 text-center">{t(feat.descKey)}</p>
                                 </div>
                             </div>
                         ))}
