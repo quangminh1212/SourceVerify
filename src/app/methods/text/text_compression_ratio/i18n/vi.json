@@ -1,0 +1,26 @@
+{
+    "name": "Tỷ lệ nén văn bản",
+    "description": "Sử dụng thuật toán nén dữ liệu để đo mức độ dư thừa và dự đoán được của văn bản như chỉ báo AI.",
+    "useCase": "Phát hiện văn bản AI thông qua mật độ thông tin thấp hơn và khả năng nén cao hơn",
+    "mechanism": "Nén văn bản đầu vào bằng thuật toán không mất dữ liệu (gzip, zlib, LZ77) và tính tỷ lệ nén (kích thước nén / kích thước gốc). Văn bản AI thường nén hiệu quả hơn do tính quy tắc cao hơn, mẫu lặp lại nhiều hơn và entropy thông tin thấp hơn. Cũng phân tích tỷ lệ nén cửa sổ trượt để phát hiện phân đoạn có khả năng nén khác nhau—dấu hiệu tác giả hỗn hợp.",
+    "accuracy": "Trung bình - 70-80% trên văn bản dài (>500 từ)",
+    "source": "Jiang, Z. et al. (2024) - Detecting LLM-Generated Text in Computing Education, IEEE Access",
+    "algorithm": "Multi-Algorithm Compression + Ratio Analysis + Sliding Window Segmentation",
+    "parameters": "Thuật toán: gzip-9/zlib/brotli, Cửa sổ: 200-500 ký tự, Chỉ số: tỷ lệ toàn cục, theo phân đoạn, phương sai, Tối thiểu: 200 từ",
+    "strengths": "• Không cần dữ liệu huấn luyện (không giám sát)\n• Không phụ thuộc ngôn ngữ và mô hình\n• Tính toán cực nhanh\n• Nắm bắt tính chất lý thuyết thông tin",
+    "limitations": "• Độ chính xác thấp trên văn bản ngắn\n• Văn bản kỹ thuật với thuật ngữ lặp nén tốt tự nhiên\n• Phụ thuộc chọn thuật toán nén\n• Không nhạy với mẫu cấp ngữ nghĩa",
+    "references": [
+        {
+            "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
+            "url": "https://doi.org/10.1109/ACCESS.2024.3361395"
+        },
+        {
+            "title": "Benedetto, D. et al. (2002). Language Trees and Zipping. Physical Review Letters.",
+            "url": "https://doi.org/10.1103/PhysRevLett.88.048702"
+        },
+        {
+            "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Detectors. EACL.",
+            "url": "https://arxiv.org/abs/2305.09859"
+        }
+    ]
+}
