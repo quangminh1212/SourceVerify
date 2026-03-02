@@ -64,7 +64,14 @@ export async function POST(req: NextRequest) {
             buffer = Buffer.from(base64Data, "base64");
             fileName = body.fileName || "uploaded.jpg";
         } else {
-            // Raw binary
+            // Raw binary - check Content-Length before reading
+            const contentLength = req.headers.get("content-length");
+            if (contentLength && parseInt(contentLength, 10) > 10 * 1024 * 1024) {
+                return NextResponse.json(
+                    { error: "Image too large. Maximum 10MB." },
+                    { status: 413, headers: corsHeaders }
+                );
+            }
             const arrayBuffer = await req.arrayBuffer();
             buffer = Buffer.from(arrayBuffer);
         }
@@ -96,8 +103,12 @@ export async function POST(req: NextRequest) {
 
     } catch (error) {
         console.error("API analyze error:", error);
+        // Sanitize error message in production to prevent info leakage
+        const message = process.env.NODE_ENV === "development"
+            ? (error instanceof Error ? error.message : "Unknown error")
+            : "Internal processing error";
         return NextResponse.json(
-            { error: "Analysis failed", message: error instanceof Error ? error.message : "Unknown error" },
+            { error: "Analysis failed", message },
             { status: 500, headers: corsHeaders }
         );
     }
