@@ -87,7 +87,8 @@ export default function Header() {
         const handleWheel = (e: WheelEvent) => {
             if (scrollCooldown.current) return;
 
-            const atBottom = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 5);
+            const scrollHeight = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+            const atBottom = (window.innerHeight + window.scrollY) >= (scrollHeight - 50);
             const atTop = window.scrollY <= 5;
 
             if (e.deltaY > 0 && atBottom) {
