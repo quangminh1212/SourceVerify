@@ -126,6 +126,37 @@ import {
     analyzeC2paVerification,
     analyzeResolutionConsistency,
     analyzeSoftwareFingerprint,
+    // Text Analysis Methods (30)
+    analyzePerplexityAnalysis,
+    analyzeBurstinessDetection,
+    analyzeVocabularyDiversity,
+    analyzeStylometricAnalysis,
+    analyzeNgramFrequency,
+    analyzeRepetitionPattern,
+    analyzeCoherenceAnalysis,
+    analyzeEntropyDistribution,
+    analyzeSentenceLengthVariance,
+    analyzeReadabilityScore,
+    analyzePunctuationPattern,
+    analyzeTopicConsistency,
+    analyzeWordFrequencyRank,
+    analyzeSemanticDensity,
+    analyzeWritingRhythm,
+    analyzePosTagAnalysis,
+    analyzeDiscourseMarkers,
+    analyzeCoreferenceChain,
+    analyzeNamedEntityConsistency,
+    analyzeHedgingLanguage,
+    analyzeTypeTokenRatio,
+    analyzeSyntacticComplexity,
+    analyzePassiveVoiceFrequency,
+    analyzeLexicalSophistication,
+    analyzeTextCompressionRatio,
+    analyzeFunctionWordDistribution,
+    analyzePronounUsagePattern,
+    analyzeClauseDepthAnalysis,
+    analyzeCollocationStrength,
+    analyzeTemporalExpression,
 } from "./methods";
 
 // ============================
@@ -447,7 +478,42 @@ export const METHOD_MAP: Record<string, string> = {
     software_fingerprint: "signal.softwareFingerprint",
 };
 
+/** Text method ID → nameKey mapping */
+export const TEXT_METHOD_MAP: Record<string, string> = {
+    perplexity_analysis: "signal.perplexityAnalysis",
+    burstiness_detection: "signal.burstinessDetection",
+    vocabulary_diversity: "signal.vocabularyDiversity",
+    stylometric_analysis: "signal.stylometricAnalysis",
+    ngram_frequency: "signal.ngramFrequency",
+    repetition_pattern: "signal.repetitionPattern",
+    coherence_analysis: "signal.coherenceAnalysis",
+    entropy_distribution: "signal.entropyDistribution",
+    sentence_length_variance: "signal.sentenceLengthVariance",
+    readability_score: "signal.readabilityScore",
+    punctuation_pattern: "signal.punctuationPattern",
+    topic_consistency: "signal.topicConsistency",
+    word_frequency_rank: "signal.wordFrequencyRank",
+    semantic_density: "signal.semanticDensity",
+    writing_rhythm: "signal.writingRhythm",
+    pos_tag_analysis: "signal.posTagAnalysis",
+    discourse_markers: "signal.discourseMarkers",
+    coreference_chain: "signal.coreferenceChain",
+    named_entity_consistency: "signal.namedEntityConsistency",
+    hedging_language: "signal.hedgingLanguage",
+    type_token_ratio: "signal.typeTokenRatio",
+    syntactic_complexity: "signal.syntacticComplexity",
+    passive_voice_frequency: "signal.passiveVoiceFrequency",
+    lexical_sophistication: "signal.lexicalSophistication",
+    text_compression_ratio: "signal.textCompressionRatio",
+    function_word_distribution: "signal.functionWordDistribution",
+    pronoun_usage_pattern: "signal.pronounUsagePattern",
+    clause_depth_analysis: "signal.clauseDepthAnalysis",
+    collocation_strength: "signal.collocationStrength",
+    temporal_expression: "signal.temporalExpression",
+};
+
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
+export const ALL_TEXT_METHOD_IDS = Object.keys(TEXT_METHOD_MAP);
 
 // Reverse map: nameKey → Set of method IDs (for O(1) filtering)
 const NAMEKEY_TO_IDS: Map<string, string[]> = new Map();
@@ -457,11 +523,23 @@ for (const [id, nameKey] of Object.entries(METHOD_MAP)) {
     else NAMEKEY_TO_IDS.set(nameKey, [id]);
 }
 
+const TEXT_NAMEKEY_TO_IDS: Map<string, string[]> = new Map();
+for (const [id, nameKey] of Object.entries(TEXT_METHOD_MAP)) {
+    const arr = TEXT_NAMEKEY_TO_IDS.get(nameKey);
+    if (arr) arr.push(id);
+    else TEXT_NAMEKEY_TO_IDS.set(nameKey, [id]);
+}
+
 /** Free-tier methods (original 13) — available without login */
 export const FREE_METHOD_IDS = [
     "metadata", "spectral", "reconstruction", "noise", "edge",
     "gradient", "benford", "chromatic", "texture", "cfa",
     "dct", "color", "prnu",
+];
+
+/** Free-tier text methods — available without login */
+export const FREE_TEXT_METHOD_IDS = [
+    "perplexity_analysis", "burstiness_detection", "vocabulary_diversity",
 ];
 
 async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<{ methods: AnalysisMethod[]; metadata: FileMetadata }> {
@@ -779,4 +857,75 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
         };
         video.src = url;
     });
+}
+
+// ============================
+// TEXT ANALYSIS
+// ============================
+
+export async function analyzeText(text: string, enabledMethods?: string[], customWeights?: Record<string, number>): Promise<AnalysisResult> {
+    const start = performance.now();
+    if (!text || text.trim().length < 50) {
+        throw new Error("Text too short for analysis (minimum 50 characters)");
+    }
+
+    const enabled = new Set(enabledMethods || ALL_TEXT_METHOD_IDS);
+
+    const allMethods: AnalysisMethod[] = [
+        analyzePerplexityAnalysis(text),
+        analyzeBurstinessDetection(text),
+        analyzeVocabularyDiversity(text),
+        analyzeStylometricAnalysis(text),
+        analyzeNgramFrequency(text),
+        analyzeRepetitionPattern(text),
+        analyzeCoherenceAnalysis(text),
+        analyzeEntropyDistribution(text),
+        analyzeSentenceLengthVariance(text),
+        analyzeReadabilityScore(text),
+        analyzePunctuationPattern(text),
+        analyzeTopicConsistency(text),
+        analyzeWordFrequencyRank(text),
+        analyzeSemanticDensity(text),
+        analyzeWritingRhythm(text),
+        analyzePosTagAnalysis(text),
+        analyzeDiscourseMarkers(text),
+        analyzeCoreferenceChain(text),
+        analyzeNamedEntityConsistency(text),
+        analyzeHedgingLanguage(text),
+        analyzeTypeTokenRatio(text),
+        analyzeSyntacticComplexity(text),
+        analyzePassiveVoiceFrequency(text),
+        analyzeLexicalSophistication(text),
+        analyzeTextCompressionRatio(text),
+        analyzeFunctionWordDistribution(text),
+        analyzePronounUsagePattern(text),
+        analyzeClauseDepthAnalysis(text),
+        analyzeCollocationStrength(text),
+        analyzeTemporalExpression(text),
+    ];
+
+    const methods = allMethods.filter(s => {
+        const ids = TEXT_NAMEKEY_TO_IDS.get(s.nameKey);
+        return ids ? ids.some(id => enabled.has(id)) : false;
+    });
+
+    // Apply custom weights
+    if (customWeights && Object.keys(customWeights).length > 0) {
+        for (const method of methods) {
+            for (const [id, nameKey] of Object.entries(TEXT_METHOD_MAP)) {
+                if (method.nameKey === nameKey && customWeights[id] !== undefined) {
+                    method.weight = method.weight * (customWeights[id] / 100);
+                }
+            }
+        }
+    }
+
+    const { aiScore, verdict, confidence } = calculateVerdict(methods);
+
+    const metadata: FileMetadata = {
+        fileName: "text-input", fileSize: new Blob([text]).size, fileType: "text/plain",
+        width: 0, height: 0, isVideo: false,
+    };
+
+    return { verdict, confidence, aiScore, methods, signals: methods, metadata, processingTimeMs: Math.round(performance.now() - start) };
 }
