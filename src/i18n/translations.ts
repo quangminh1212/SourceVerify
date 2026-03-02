@@ -29,11 +29,11 @@ export const LOCALE_NAMES: Record<Locale, string> = {
 // Merge base translations with method-specific translations
 const translations: Record<Locale, Record<string, string>> = {
     en: { ...en, ...methodTranslations.en },
-    zh: { ...zh, ...methodTranslations.en }, // fallback to en for missing
-    vi: { ...vi, ...methodTranslations.vi },
-    ja: { ...ja, ...methodTranslations.en }, // fallback to en
-    ko: { ...ko, ...methodTranslations.en }, // fallback to en
-    es: { ...es, ...methodTranslations.en }, // fallback to en
+    zh: { ...zh, ...methodTranslations.en, ...(methodTranslations.zh ?? {}) },
+    vi: { ...vi, ...methodTranslations.en, ...(methodTranslations.vi ?? {}) },
+    ja: { ...ja, ...methodTranslations.en, ...(methodTranslations.ja ?? {}) },
+    ko: { ...ko, ...methodTranslations.en, ...(methodTranslations.ko ?? {}) },
+    es: { ...es, ...methodTranslations.en, ...(methodTranslations.es ?? {}) },
 };
 
 export default translations;
