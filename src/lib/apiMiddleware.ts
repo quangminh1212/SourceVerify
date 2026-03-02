@@ -96,10 +96,11 @@ interface RateLimitEntry {
  */
 class RateLimiter {
     private store = new Map<string, RateLimitEntry>();
-    private readonly maxRequests: number;
-    private readonly windowMs: number;
+    readonly maxRequests: number;
+    readonly windowMs: number;
     private lastCleanup = Date.now();
     private readonly cleanupIntervalMs = 60_000; // cleanup stale entries every 60s
+    private static readonly MAX_STORE_SIZE = 10_000; // prevent memory exhaustion
 
     constructor(maxRequests: number, windowMs: number) {
         this.maxRequests = maxRequests;
@@ -117,6 +118,12 @@ class RateLimiter {
         if (now - this.lastCleanup > this.cleanupIntervalMs) {
             this.cleanup(now);
             this.lastCleanup = now;
+        }
+
+        // Evict oldest entries if store exceeds max size (DDoS protection)
+        if (this.store.size >= RateLimiter.MAX_STORE_SIZE) {
+            const firstKey = this.store.keys().next().value;
+            if (firstKey) this.store.delete(firstKey);
         }
 
         let entry = this.store.get(key);
@@ -147,6 +154,17 @@ class RateLimiter {
             remaining: this.maxRequests - entry.timestamps.length,
             resetMs: this.windowMs,
         };
+    }
+
+    /**
+     * Peek at current request count for a key without consuming a slot
+     * Used for rate limit headers on successful responses
+     */
+    peek(key: string): number {
+        const entry = this.store.get(key);
+        if (!entry) return 0;
+        const windowStart = Date.now() - this.windowMs;
+        return entry.timestamps.filter((t) => t > windowStart).length;
     }
 
     private cleanup(now: number) {
@@ -226,18 +244,11 @@ export function getRateLimitHeaders(
 ): Record<string, string> {
     const limiter = type === "analyze" ? analyzeLimiter : authLimiter;
     const ip = getClientIp(req);
-    const limit = type === "analyze" ? 30 : 10;
-    // Peek without consuming - check current count
-    const entry = limiter["store"].get(ip);
-    const now = Date.now();
-    const windowStart = now - limiter["windowMs"];
-    const currentCount = entry
-        ? entry.timestamps.filter((t) => t > windowStart).length
-        : 0;
+    const currentCount = limiter.peek(ip);
 
     return {
-        "X-RateLimit-Limit": String(limit),
-        "X-RateLimit-Remaining": String(Math.max(0, limit - currentCount)),
-        "X-RateLimit-Reset": String(Math.ceil((now + limiter["windowMs"]) / 1000)),
+        "X-RateLimit-Limit": String(limiter.maxRequests),
+        "X-RateLimit-Remaining": String(Math.max(0, limiter.maxRequests - currentCount)),
+        "X-RateLimit-Reset": String(Math.ceil((Date.now() + limiter.windowMs) / 1000)),
     };
 }
