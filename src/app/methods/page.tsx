@@ -69,6 +69,7 @@ export default function MethodsPage() {
 
     useEffect(() => {
         const saved = localStorage.getItem("sv_user");
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
         setIsLoggedIn(!!saved);
         const method = localStorage.getItem("sv_method");
         setSelectedId(method);
