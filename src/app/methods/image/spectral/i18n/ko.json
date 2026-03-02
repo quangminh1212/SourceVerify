@@ -1,5 +1,5 @@
 {
-    "name": "Spectral Nyquist Analysis",
+    "name": "스펙트럼 나이퀴스트 분석",
     "description": "Analyzes the frequency spectrum at Nyquist boundaries to detect upsampling artifacts. AI models often produce spectral peaks at these frequencies that are absent in real photos.",
     "algorithm": "Nyquist Frequency Spectral Analysis (2D FFT)",
     "mechanism": "The analysis process involves several stages:\n\n1. **2D FFT Transform**: Converts the image from spatial domain to frequency domain using 2D Fast Fourier Transform.\n\n2. **High-frequency spectrum analysis**: Examines spectral energy around the Nyquist frequency (f/2). Neural network image generators (GANs, Diffusion models) use upsampling layers (bilinear, nearest-neighbor, transposed convolution) that create characteristic frequency artifacts.\n\n3. **Periodic peak detection**: Identifies periodic energy peaks in the frequency spectrum — a hallmark signature of upsampling in decoder/generator architectures.\n\n4. **Spectral comparison**: Compares the frequency energy distribution against natural spectral models. Camera images have natural high-frequency rolloff due to optics, while AI images show abnormal energy distributions.",
