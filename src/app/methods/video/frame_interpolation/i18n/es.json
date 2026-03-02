@@ -1,0 +1,18 @@
+{
+    "name": "Detección de Interpolación de Cuadros",
+    "description": "Identifies artificially interpolated frames in video that indicate AI-generated content.",
+    "useCase": "Detecting AI-generated video with artificially smooth or interpolated motion",
+    "mechanism": "Analyzes inter-frame motion patterns in the frequency domain to detect artificially interpolated frames. AI video generators often produce unnaturally smooth motion by inserting generated intermediate frames, which creates detectable spectral artifacts.",
+    "accuracy": "Moderate-High - 75-85% on AI-generated video content",
+    "source": "Stamm & Liu (2009) - Forensic Detection of Image Manipulation Using Statistical Intrinsic Fingerprints, IEEE TIP",
+    "algorithm": "Spectral Analysis + Inter-frame DCT + Motion Vector Consistency",
+    "parameters": "Frame pairs: consecutive, DCT block size: 8x8, Motion threshold: adaptive, Frequency bands: low/mid/high",
+    "strengths": "• Effective at detecting AI-generated smooth video\n• Works in frequency domain for robust detection\n• Can identify specific interpolated frame ranges\n• Low false positive rate on natural video",
+    "limitations": "• May miss high-quality interpolation\n• Sensitive to video encoding settings\n• Less effective on very short clips\n• Natural slow-motion can trigger false positives",
+    "references": [
+        {
+            "title": "Stamm, M. & Liu, K. (2009). Forensic Detection of Image Manipulation Using Statistical Intrinsic Fingerprints. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2010.2050625"
+        }
+    ]
+}
