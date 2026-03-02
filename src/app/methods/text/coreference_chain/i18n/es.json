@@ -1,0 +1,26 @@
+{
+    "name": "Análisis de Cadena de Correferencia",
+    "description": "Examines coreference resolution chains to identify AI-generated text through abnormal entity tracking and pronominal reference patterns.",
+    "useCase": "Detecting AI text through inconsistent or oversimplified entity reference chains",
+    "mechanism": "Constructs coreference chains linking mentions of the same entity throughout the text (pronouns, noun phrases, proper names). AI-generated text often shows shorter coreference chains, less complex reference resolutions, and occasional entity confusion—where referents are ambiguously or incorrectly resolved. The method measures chain length distribution, referential distance, and chain branching complexity.",
+    "accuracy": "Moderate-High - 75-85% on long-form text",
+    "source": "Dugan, L. et al. (2024) - RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors, ACL",
+    "algorithm": "Coreference Resolution + Chain Statistics + Anomaly Scoring",
+    "parameters": "Model: neural coreference resolver, Min chain length: 2 mentions, Metrics: chain density, avg distance, branching factor, Text min: 200 words",
+    "strengths": "• Captures deep discourse-level coherence\n• Effective on long-form narratives and essays\n• Detects subtle entity tracking failures\n• Orthogonal to surface-level features",
+    "limitations": "• Computationally expensive for long texts\n• Coreference resolution itself is imperfect\n• Short texts yield too few chains for analysis\n• Performance depends on coreference model quality",
+    "references": [
+        {
+            "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors. ACL.",
+            "url": "https://arxiv.org/abs/2405.07940"
+        },
+        {
+            "title": "Clark, K. & Manning, C. D. (2016). Deep Reinforcement Learning for Mention-Ranking Coreference Models. EMNLP.",
+            "url": "https://doi.org/10.18653/v1/D16-1245"
+        },
+        {
+            "title": "Pu, J. et al. (2023). On the Zero-Shot Generalization of Machine-Generated Text Detectors. EMNLP Findings.",
+            "url": "https://arxiv.org/abs/2310.05165"
+        }
+    ]
+}

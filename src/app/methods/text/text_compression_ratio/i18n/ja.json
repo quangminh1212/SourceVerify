@@ -1,0 +1,26 @@
+{
+    "name": "テキスト圧縮比",
+    "description": "Uses data compression algorithms to measure text redundancy and predictability as indicators of AI generation.",
+    "useCase": "Detecting AI-generated text through lower information density and higher compressibility",
+    "mechanism": "Compresses the input text using lossless algorithms (gzip, zlib, LZ77) and computes the compression ratio (compressed size / original size). AI-generated text typically compresses more efficiently due to higher regularity, more repetitive patterns, and lower information entropy compared to human text. The method also analyzes the compression ratio of sliding windows to detect segments with varying compressibility—a sign of mixed human/AI authorship.",
+    "accuracy": "Moderate - 70-80% on longer texts (>500 words)",
+    "source": "Jiang, Z. et al. (2024) - Detecting LLM-Generated Text in Computing Education: A Comparative Study for ChatGPT Cases, IEEE Access",
+    "algorithm": "Multi-Algorithm Compression + Ratio Analysis + Sliding Window Segmentation",
+    "parameters": "Algorithms: gzip-9/zlib/brotli, Window: 200-500 chars sliding, Metrics: global ratio, segment ratios, ratio variance, Min text: 200 words",
+    "strengths": "• No training data required (unsupervised)\n• Language and model agnostic\n• Extremely fast computation\n• Captures information-theoretic properties",
+    "limitations": "• Lower accuracy on short texts\n• Technical text with repeated terms compresses well naturally\n• Depends on compression algorithm choice\n• Not sensitive to semantic-level patterns",
+    "references": [
+        {
+            "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
+            "url": "https://doi.org/10.1109/ACCESS.2024.3361395"
+        },
+        {
+            "title": "Benedetto, D. et al. (2002). Language Trees and Zipping. Physical Review Letters.",
+            "url": "https://doi.org/10.1103/PhysRevLett.88.048702"
+        },
+        {
+            "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",
+            "url": "https://arxiv.org/abs/2305.09859"
+        }
+    ]
+}

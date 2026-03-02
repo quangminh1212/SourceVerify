@@ -1,0 +1,26 @@
+{
+    "name": "品詞タグ分布",
+    "description": "Analyzes part-of-speech tag distribution patterns to detect AI-generated text, which often shows unnatural grammatical structure distributions.",
+    "useCase": "Detecting AI text through abnormal grammatical category distributions compared to natural human writing",
+    "mechanism": "Performs part-of-speech tagging on input text and computes the frequency distribution of each POS category (nouns, verbs, adjectives, adverbs, etc.). AI-generated text tends to over-rely on certain syntactic constructions, producing flatter distributions or unusual ratios between categories (e.g., higher adjective-to-noun ratio). The method compares observed distributions against reference human corpora using chi-squared goodness-of-fit tests.",
+    "accuracy": "Moderate - 72-82% on standard benchmarks",
+    "source": "Fröhling & Zubiaga (2021) - Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover, PeerJ Computer Science",
+    "algorithm": "POS Tagging + Chi-Squared Goodness-of-Fit + KL Divergence",
+    "parameters": "POS Tagset: Universal Dependencies, Window: full document, Comparison: reference corpus baselines, Granularity: fine-grained 36-tag",
+    "strengths": "• Language-structure based rather than content-based\n• Works across different AI model architectures\n• Computationally efficient\n• Interpretable results for linguists",
+    "limitations": "• Requires sufficient text length for reliable statistics\n• May vary across text genres and domains\n• Advanced AI models increasingly mimic human POS distributions\n• Less effective on short texts (<100 words)",
+    "references": [
+        {
+            "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover. PeerJ Computer Science.",
+            "url": "https://doi.org/10.7717/peerj-cs.443"
+        },
+        {
+            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",
+            "url": "https://arxiv.org/abs/1906.03351"
+        },
+        {
+            "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",
+            "url": "https://doi.org/10.1007/978-3-319-41754-7_43"
+        }
+    ]
+}
