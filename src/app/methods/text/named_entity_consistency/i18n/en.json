@@ -1,0 +1,26 @@
+{
+    "name": "Named Entity Consistency",
+    "description": "Evaluates the consistency and factual accuracy of named entities (people, places, dates) to detect AI hallucinations and fabricated content.",
+    "useCase": "Detecting AI-generated text through inconsistent or hallucinated named entities",
+    "mechanism": "Extracts named entities using NER models, then checks for internal consistency (same entity referenced with conflicting attributes), temporal plausibility (dates and events alignment), and cross-referencing density. AI-generated text is prone to 'hallucination'—generating plausible-sounding but factually incorrect entity mentions or mixing attributes between different entities.",
+    "accuracy": "Moderate-High - 76-86% on factual text domains",
+    "source": "Ji, Z. et al. (2023) - Survey of Hallucination in Natural Language Generation, ACM Computing Surveys",
+    "algorithm": "Named Entity Recognition + Consistency Graph + Conflict Detection",
+    "parameters": "NER model: transformer-based, Entity types: PER/ORG/LOC/DATE/NUM, Consistency check: pairwise attribute comparison, Threshold: adaptive per entity type",
+    "strengths": "• Directly targets AI hallucination problem\n• High precision on factual documents\n• Interpretable error examples\n• Effective on news and academic text",
+    "limitations": "• Requires domain knowledge for fact-checking\n• Creative fiction has naturally inconsistent entities\n• NER model errors propagate to analysis\n• Less useful for opinion or abstract text",
+    "references": [
+        {
+            "title": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.",
+            "url": "https://doi.org/10.1145/3571730"
+        },
+        {
+            "title": "Manakul, P. et al. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs. EMNLP.",
+            "url": "https://arxiv.org/abs/2303.08896"
+        },
+        {
+            "title": "Min, S. et al. (2023). FActScore: Fine-grained Atomic Evaluation of Factual Precision. EMNLP.",
+            "url": "https://arxiv.org/abs/2305.14251"
+        }
+    ]
+}

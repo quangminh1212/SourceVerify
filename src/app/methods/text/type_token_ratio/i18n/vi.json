@@ -1,0 +1,26 @@
+{
+    "name": "Tỷ lệ Type-Token (TTR)",
+    "description": "Tính tỷ lệ từ duy nhất trên tổng số từ bằng biến thể MATTR để phát hiện mẫu từ vựng của văn bản AI.",
+    "useCase": "Phát hiện văn bản AI thông qua tỷ lệ đa dạng từ vựng bất thường trên các phân đoạn",
+    "mechanism": "Tính Moving-Average Type-Token Ratio (MATTR) bằng cửa sổ trượt để loại bỏ ảnh hưởng độ dài. Với mỗi cửa sổ N từ, tỷ lệ loại từ duy nhất trên tổng token được tính, rồi lấy trung bình. Văn bản AI thường có TTR đồng nhất hơn giữa các cửa sổ so với con người, vốn thay đổi tự nhiên do chuyển chủ đề và phong cách.",
+    "accuracy": "Trung bình - 68-78% khi đứng riêng",
+    "source": "Covington & McFall (2010) - Moving-Average TTR, Journal of Quantitative Linguistics",
+    "algorithm": "Moving-Average Type-Token Ratio (MATTR) + Variance Analysis + Segment Comparison",
+    "parameters": "Cửa sổ: 50-100 token, Chỉ số: MATTR trung bình, phương sai MATTR, phạm vi MATTR, Chuẩn hóa: độc lập độ dài",
+    "strengths": "• Đo lường độc lập độ dài qua MATTR\n• Chỉ số ngôn ngữ tâm lý đã thiết lập\n• Tính toán nhanh với tài nguyên tối thiểu\n• Nắm bắt mẫu sử dụng từ vựng",
+    "limitations": "• Sức mạnh phân biệt thấp khi đứng riêng\n• Nhạy cảm với thể loại và chủ đề\n• LLM tiên tiến ngày càng khớp phạm vi TTR con người\n• Chọn kích thước cửa sổ ảnh hưởng kết quả",
+    "references": [
+        {
+            "title": "Covington & McFall (2010). MATTR. Journal of Quantitative Linguistics.",
+            "url": "https://doi.org/10.1080/09296174.2010.492666"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2306.04723"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
+}

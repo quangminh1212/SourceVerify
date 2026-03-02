@@ -1,0 +1,26 @@
+{
+    "name": "Phân tích dấu hiệu diễn ngôn",
+    "description": "Phân tích mẫu sử dụng các từ nối diễn ngôn (liên kết, chuyển tiếp) để phân biệt văn bản AI và văn bản con người.",
+    "useCase": "Phát hiện văn bản AI thông qua lạm dụng hoặc thiếu sót từ nối liên kết",
+    "mechanism": "Nhận diện và lượng hóa các từ nối diễn ngôn (ví dụ: 'tuy nhiên', 'do đó', 'hơn nữa', 'ngoài ra') và phân bố vị trí của chúng. Văn bản AI thường sử dụng bộ từ nối hẹp hơn với vị trí đặt công thức hơn. Phương pháp xây dựng hồ sơ từ nối và so sánh với phân bố tham chiếu con người bằng Jensen-Shannon divergence.",
+    "accuracy": "Trung bình - 73-83% trên nhiều lĩnh vực",
+    "source": "Kumarage et al. (2023) - Stylometric Detection of AI-Generated Text in Twitter Timelines, arXiv",
+    "algorithm": "Discourse Marker Extraction + Positional Analysis + Distribution Comparison",
+    "parameters": "Bộ từ vựng: 150+ từ nối, Theo dõi vị trí: đầu/giữa/cuối câu, Chuẩn hóa: theo câu, So sánh: JSD",
+    "strengths": "• Nắm bắt mẫu tổ chức văn bản cấp cao\n• Mạnh mẽ trên nhiều độ dài văn bản\n• Đặc trưng dễ giải thích ngôn ngữ học\n• Bổ sung các phương pháp phát hiện cấp token",
+    "limitations": "• Bộ từ nối thay đổi theo ngôn ngữ\n• Phân bố cơ sở phụ thuộc thể loại\n• LLM tiên tiến có thể tạo mẫu diễn ngôn đa dạng\n• Cần định nghĩa phân loại từ nối cẩn thận",
+    "references": [
+        {
+            "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
+            "url": "https://arxiv.org/abs/2303.03697"
+        },
+        {
+            "title": "Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman.",
+            "url": "https://doi.org/10.4324/9781315836010"
+        },
+        {
+            "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
+            "url": "https://arxiv.org/abs/1905.12616"
+        }
+    ]
+}
