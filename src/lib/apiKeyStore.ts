@@ -39,17 +39,20 @@ export interface IApiKeyStore {
 // ─── In-memory cache ─────────────────────────────────────────────────────────
 
 let store: Map<string, ApiKeyEntry> | null = null;
+let googleIdIndex: Map<string, string> | null = null; // googleId → apiKey
 let isDirty = false;
 
 function loadStore(): Map<string, ApiKeyEntry> {
     if (store) return store;
     store = new Map();
+    googleIdIndex = new Map();
     try {
         if (fs.existsSync(STORE_PATH)) {
             const raw = fs.readFileSync(STORE_PATH, "utf-8");
             const data = JSON.parse(raw);
             for (const [k, v] of Object.entries(data)) {
                 store.set(k, v as ApiKeyEntry);
+                googleIdIndex.set((v as ApiKeyEntry).googleId, k);
             }
         }
     } catch (err) {
@@ -71,9 +74,14 @@ function saveStore() {
     const tmpPath = path.join(os.tmpdir(), `.api-keys-${crypto.randomBytes(4).toString("hex")}.tmp`);
     try {
         fs.writeFileSync(tmpPath, JSON.stringify(obj, null, 2), "utf-8");
-        // Atomic rename (on same filesystem this is atomic on most OS)
-        fs.copyFileSync(tmpPath, STORE_PATH);
-        fs.unlinkSync(tmpPath);
+        // Try atomic rename first (works on same filesystem)
+        try {
+            fs.renameSync(tmpPath, STORE_PATH);
+        } catch {
+            // Cross-filesystem fallback: copy + unlink
+            fs.copyFileSync(tmpPath, STORE_PATH);
+            fs.unlinkSync(tmpPath);
+        }
         isDirty = false;
     } catch (err) {
         console.error("[ApiKeyStore] Failed to save store:", err instanceof Error ? err.message : err);
@@ -89,11 +97,11 @@ export function generateApiKey(): string {
 }
 
 export function findByGoogleId(googleId: string): ApiKeyEntry | undefined {
-    const s = loadStore();
-    for (const entry of s.values()) {
-        if (entry.googleId === googleId) return entry;
-    }
-    return undefined;
+    loadStore();
+    if (!googleIdIndex) return undefined;
+    const apiKey = googleIdIndex.get(googleId);
+    if (!apiKey) return undefined;
+    return store?.get(apiKey);
 }
 
 export function createOrGetKey(googleId: string, email: string, name: string, picture: string): ApiKeyEntry {
@@ -108,6 +116,7 @@ export function createOrGetKey(googleId: string, email: string, name: string, pi
         lastUsed: null,
     };
     loadStore().set(apiKey, entry);
+    if (googleIdIndex) googleIdIndex.set(googleId, apiKey);
     isDirty = true;
     saveStore();
     return entry;
@@ -136,22 +145,20 @@ export function validateApiKey(apiKey: string): ApiKeyEntry | null {
 
 export function revokeApiKey(apiKey: string): boolean {
     const s = loadStore();
-    const deleted = s.delete(apiKey);
-    if (deleted) {
-        isDirty = true;
-        saveStore();
-    }
-    return deleted;
+    const entry = s.get(apiKey);
+    if (!entry) return false;
+    s.delete(apiKey);
+    if (googleIdIndex) googleIdIndex.delete(entry.googleId);
+    isDirty = true;
+    saveStore();
+    return true;
 }
 
 // Save any pending changes on process exit
 if (typeof process !== "undefined") {
-    const flushOnExit = () => {
+    process.on("exit", () => {
         if (isDirty) {
             try { saveStore(); } catch { /* best effort */ }
         }
-    };
-    process.on("exit", flushOnExit);
-    process.on("SIGINT", () => { flushOnExit(); process.exit(0); });
-    process.on("SIGTERM", () => { flushOnExit(); process.exit(0); });
+    });
 }
