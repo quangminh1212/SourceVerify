@@ -182,6 +182,22 @@ export const METHODS = [
     { id: "word_frequency_rank", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
     { id: "semantic_density", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
     { id: "writing_rhythm", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02 },
+    // Text Analysis Methods v2 - Additional NLP-based methods
+    { id: "pos_tag_analysis", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "discourse_markers", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "coreference_chain", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "named_entity_consistency", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "hedging_language", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "type_token_ratio", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02 },
+    { id: "syntactic_complexity", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "passive_voice_frequency", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02 },
+    { id: "lexical_sophistication", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "text_compression_ratio", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "function_word_distribution", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "pronoun_usage_pattern", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02 },
+    { id: "clause_depth_analysis", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "collocation_strength", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.03 },
+    { id: "temporal_expression", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02 },
 ];
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [

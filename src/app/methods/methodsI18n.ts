@@ -265,6 +265,37 @@ import semantic_density_en from "./text/semantic_density/i18n/en.json";
 import semantic_density_vi from "./text/semantic_density/i18n/vi.json";
 import writing_rhythm_en from "./text/writing_rhythm/i18n/en.json";
 import writing_rhythm_vi from "./text/writing_rhythm/i18n/vi.json";
+// Text Analysis Methods v2
+import pos_tag_analysis_en from "./text/pos_tag_analysis/i18n/en.json";
+import pos_tag_analysis_vi from "./text/pos_tag_analysis/i18n/vi.json";
+import discourse_markers_en from "./text/discourse_markers/i18n/en.json";
+import discourse_markers_vi from "./text/discourse_markers/i18n/vi.json";
+import coreference_chain_en from "./text/coreference_chain/i18n/en.json";
+import coreference_chain_vi from "./text/coreference_chain/i18n/vi.json";
+import named_entity_consistency_en from "./text/named_entity_consistency/i18n/en.json";
+import named_entity_consistency_vi from "./text/named_entity_consistency/i18n/vi.json";
+import hedging_language_en from "./text/hedging_language/i18n/en.json";
+import hedging_language_vi from "./text/hedging_language/i18n/vi.json";
+import type_token_ratio_en from "./text/type_token_ratio/i18n/en.json";
+import type_token_ratio_vi from "./text/type_token_ratio/i18n/vi.json";
+import syntactic_complexity_en from "./text/syntactic_complexity/i18n/en.json";
+import syntactic_complexity_vi from "./text/syntactic_complexity/i18n/vi.json";
+import passive_voice_frequency_en from "./text/passive_voice_frequency/i18n/en.json";
+import passive_voice_frequency_vi from "./text/passive_voice_frequency/i18n/vi.json";
+import lexical_sophistication_en from "./text/lexical_sophistication/i18n/en.json";
+import lexical_sophistication_vi from "./text/lexical_sophistication/i18n/vi.json";
+import text_compression_ratio_en from "./text/text_compression_ratio/i18n/en.json";
+import text_compression_ratio_vi from "./text/text_compression_ratio/i18n/vi.json";
+import function_word_distribution_en from "./text/function_word_distribution/i18n/en.json";
+import function_word_distribution_vi from "./text/function_word_distribution/i18n/vi.json";
+import pronoun_usage_pattern_en from "./text/pronoun_usage_pattern/i18n/en.json";
+import pronoun_usage_pattern_vi from "./text/pronoun_usage_pattern/i18n/vi.json";
+import clause_depth_analysis_en from "./text/clause_depth_analysis/i18n/en.json";
+import clause_depth_analysis_vi from "./text/clause_depth_analysis/i18n/vi.json";
+import collocation_strength_en from "./text/collocation_strength/i18n/en.json";
+import collocation_strength_vi from "./text/collocation_strength/i18n/vi.json";
+import temporal_expression_en from "./text/temporal_expression/i18n/en.json";
+import temporal_expression_vi from "./text/temporal_expression/i18n/vi.json";
 
 type MethodLocaleEntry = { name: string; description: string };
 
@@ -340,6 +371,15 @@ const en = buildMap([
     ["readability_score", readability_score_en], ["punctuation_pattern", punctuation_pattern_en],
     ["topic_consistency", topic_consistency_en], ["word_frequency_rank", word_frequency_rank_en],
     ["semantic_density", semantic_density_en], ["writing_rhythm", writing_rhythm_en],
+    // Text Analysis Methods v2
+    ["pos_tag_analysis", pos_tag_analysis_en], ["discourse_markers", discourse_markers_en],
+    ["coreference_chain", coreference_chain_en], ["named_entity_consistency", named_entity_consistency_en],
+    ["hedging_language", hedging_language_en], ["type_token_ratio", type_token_ratio_en],
+    ["syntactic_complexity", syntactic_complexity_en], ["passive_voice_frequency", passive_voice_frequency_en],
+    ["lexical_sophistication", lexical_sophistication_en], ["text_compression_ratio", text_compression_ratio_en],
+    ["function_word_distribution", function_word_distribution_en], ["pronoun_usage_pattern", pronoun_usage_pattern_en],
+    ["clause_depth_analysis", clause_depth_analysis_en], ["collocation_strength", collocation_strength_en],
+    ["temporal_expression", temporal_expression_en],
 ]);
 
 const vi = buildMap([
@@ -405,6 +445,15 @@ const vi = buildMap([
     ["readability_score", readability_score_vi], ["punctuation_pattern", punctuation_pattern_vi],
     ["topic_consistency", topic_consistency_vi], ["word_frequency_rank", word_frequency_rank_vi],
     ["semantic_density", semantic_density_vi], ["writing_rhythm", writing_rhythm_vi],
+    // Text Analysis Methods v2
+    ["pos_tag_analysis", pos_tag_analysis_vi], ["discourse_markers", discourse_markers_vi],
+    ["coreference_chain", coreference_chain_vi], ["named_entity_consistency", named_entity_consistency_vi],
+    ["hedging_language", hedging_language_vi], ["type_token_ratio", type_token_ratio_vi],
+    ["syntactic_complexity", syntactic_complexity_vi], ["passive_voice_frequency", passive_voice_frequency_vi],
+    ["lexical_sophistication", lexical_sophistication_vi], ["text_compression_ratio", text_compression_ratio_vi],
+    ["function_word_distribution", function_word_distribution_vi], ["pronoun_usage_pattern", pronoun_usage_pattern_vi],
+    ["clause_depth_analysis", clause_depth_analysis_vi], ["collocation_strength", collocation_strength_vi],
+    ["temporal_expression", temporal_expression_vi],
 ]);
 
 const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi };
