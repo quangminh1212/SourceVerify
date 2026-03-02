@@ -606,7 +606,19 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
     const url = URL.createObjectURL(file);
     const enabled = new Set(enabledMethods || ALL_METHOD_IDS);
 
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
+        // Timeout guard: reject after 30s to prevent hanging
+        const timeout = setTimeout(() => {
+            URL.revokeObjectURL(url);
+            reject(new Error("Video analysis timed out after 30 seconds"));
+        }, 30000);
+
+        video.onerror = () => {
+            clearTimeout(timeout);
+            URL.revokeObjectURL(url);
+            reject(new Error("Failed to load video file"));
+        };
+
         video.onloadedmetadata = async () => {
             const metadata: FileMetadata = {
                 fileName: file.name, fileSize: file.size, fileType: file.type,
@@ -616,14 +628,21 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
             video.currentTime = Math.min(1, video.duration / 2);
 
             video.onseeked = async () => {
+                clearTimeout(timeout);
+                // Downscale video frame like image analysis (MAX_PROCESS_DIMENSION)
+                let w = video.videoWidth, h = video.videoHeight;
+                if (w > 1024 || h > 1024) {
+                    const scale = 1024 / Math.max(w, h);
+                    w = Math.round(w * scale);
+                    h = Math.round(h * scale);
+                }
                 const canvas = document.createElement("canvas");
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
+                canvas.width = w;
+                canvas.height = h;
                 const ctx = canvas.getContext("2d")!;
-                ctx.drawImage(video, 0, 0);
-                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                ctx.drawImage(video, 0, 0, w, h);
+                const imageData = ctx.getImageData(0, 0, w, h);
                 const pixels = imageData.data;
-                const w = canvas.width, h = canvas.height;
                 URL.revokeObjectURL(url);
 
                 const exifData = await extractBasicMetadata(file);
