@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../../types";
+ï»¿import type { AnalysisMethod } from "../../types";
 
 
 /**
@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
  *
  * True ELA compares original vs JPEG re-compressed version.
  * Since we operate on decoded pixels (no access to raw JPEG stream),
- * we simulate DCT quantization via 8×8 block averaging which is closer
+ * we simulate DCT quantization via 8x8 block averaging which is closer
  * to actual JPEG behavior than a simple mean filter.
  *
  * Key insight: Real camera JPEGs have spatially varying error levels
@@ -16,7 +16,7 @@ import type { AnalysisMethod } from "../../types";
  * were not originally JPEG compressed.
  */
 export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, height: number): AnalysisMethod {
-    const blockSize = 8; // JPEG uses 8×8 DCT blocks
+    const blockSize = 8; // JPEG uses 8x8 DCT blocks
     const blocksX = Math.floor(width / blockSize);
     const blocksY = Math.floor(height / blockSize);
 
@@ -102,8 +102,8 @@ export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, heig
         name: "Error Level Analysis", nameKey: "signal.errorLevel",
         category: "compression", score, weight: 0.4,
         description: score > 55
-            ? "Error levels are unusually uniform — AI images lack compression-induced variation"
-            : "Error levels vary naturally — consistent with real camera compression",
+            ? "Error levels are unusually uniform â€” AI images lack compression-induced variation"
+            : "Error levels vary naturally â€” consistent with real camera compression",
         descriptionKey: score > 55 ? "signal.ela.ai" : "signal.ela.real",
         icon: "?",
         details: `Mean error: ${mean.toFixed(2)}, CV: ${cv.toFixed(3)}, Blocks: ${blockErrors.length}. Real JPEGs have CV > 0.6.`,
