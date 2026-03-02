@@ -1,12 +1,14 @@
 {
-    "useCase": "Detecting AI-generated or manipulated faces through geometric inconsistency analysis",
-    "mechanism": "Detects faces and extracts 68 facial landmarks using a pre-trained shape predictor. Applies Procrustes analysis to normalize face geometry, then measures deviations from expected anatomical proportions. AI-generated faces often show subtle asymmetries and impossible geometric relationships between facial features.",
-    "accuracy": "Moderate-High - 78-88% on images containing clear faces",
-    "name": "顔ランドマーク整合性",
+    "useCase": "幾何学的不一致分析によるAI生成または操作された顔の検出",
+    "mechanism": "事前学習済み形状予測器を使用して顔を検出し68の顔ランドマークを抽出します。プロクラステス分析を適用して顔の幾何学を正規化し、期待される解剖学的プロポーションからの偏差を測定します。",
+    "accuracy": "中高 - 78-88%（明瞭な顔を含む画像）",
+    "name": "顔ランドマーク一貫性",
     "source": "Yang et al. (2019) - Exposing Deep Fakes Using Inconsistent Head Poses, ICASSP",
-    "algorithm": "68-Point Face Mesh + Procrustes Analysis",
-    "parameters": "Landmarks: 68 points, Face detector: HOG/CNN, Normalization: Procrustes alignment, Metrics: inter-ocular distance ratio, symmetry score, golden ratio deviation",
-    "description": "Detects inconsistencies in facial landmark positions using 68-point face mesh. AI-generated faces often have subtle geometric anomalies in eye, nose, and mouth alignment.",
+    "algorithm": "68点顔メッシュ + プロクラステス分析",
+    "parameters": "ランドマーク: 68点, 顔検出器: HOG/CNN, 正規化: プロクラステスアラインメント, 指標: 瞳孔間距離比, 対称スコア, 黄金比偏差",
+    "description": "68点顔メッシュを使用して顔ランドマーク位置の不一致を検出します。AI生成の顔には目、鼻、口の位置合わせに微妙な幾何学的異常が見られることがあります。",
+    "strengths": "• 顔特化のディープフェイク検出に非常に有効\n• よく理解された解剖学的制約に基づく\n• 微妙な幾何学的異常を検出可能\n• 高解像度顔画像で良好に動作",
+    "limitations": "• 顔を含む画像にのみ適用可能\n• 正面または正面に近い顔の向きが必要\n• 遮蔽や極端なポーズでパフォーマンス低下\n• 現代のジェネレーターは解剖学的に正しい顔を生成",
     "references": [
         {
             "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
@@ -16,7 +18,5 @@
             "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes and Face Manipulations. WACV.",
             "url": "https://doi.org/10.1109/WACVW.2019.00020"
         }
-    ],
-    "strengths": "• Highly effective for face-specific deepfake detection\n• Based on well-understood anatomical constraints\n• Can detect subtle geometric anomalies\n• Works well with high-resolution face images",
-    "limitations": "• Only applicable to images containing faces\n• Requires frontal or near-frontal face orientation\n• Performance drops with occlusions or extreme poses\n• Modern generators increasingly produce anatomically correct faces"
+    ]
 }

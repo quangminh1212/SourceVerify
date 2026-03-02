@@ -2,11 +2,11 @@
     "name": "メタデータ分析",
     "description": "Examines EXIF data, file naming patterns, and resolution for signs of AI generation tools. Checks for camera make/model, GPS data, and software markers like Stable Diffusion or DALL-E.",
     "algorithm": "EXIF / XMP / IPTC Parser",
-    "mechanism": "The metadata analysis system operates in multiple stages:\n\n1. **Data Extraction**: Reads all EXIF (Exchangeable Image File Format), XMP (Extensible Metadata Platform), and IPTC (International Press Telecommunications Council) metadata fields embedded in the image.\n\n2. **Camera Verification**: Examines Make, Model, LensModel fields to verify the capture device. AI images typically lack or contain fabricated camera information.\n\n3. **Software Detection**: Identifies Software, CreatorTool, HistorySoftwareAgent tags containing AI tool names such as 'Stable Diffusion', 'DALL-E', 'Midjourney', 'Adobe Firefly'.\n\n4. **Timestamp Validation**: Cross-references DateTimeOriginal, DateTimeDigitized, ModifyDate to detect temporal anomalies.\n\n5. **GPS Analysis**: Checks GPSLatitude, GPSLongitude — AI images rarely contain authentic GPS coordinates.",
+    "mechanism": "The メタデータ分析 system operates in multiple stages:\n\n1. **Data Extraction**: Reads all EXIF (Exchangeable Image File Format), XMP (Extensible Metadata Platform), and IPTC (International Press Telecommunications Council) メタデータ fields embedded in the image.\n\n2. **Camera Verification**: 調査します Make, Model, LensModel fields to verify the capture device. AI images typically lack or contain fabricated camera information.\n\n3. **Software Detection**: 識別します Software, CreatorTool, HistorySoftwareAgent tags containing AI tool names などの 'Stable Diffusion', 'DALL-E', 'Midjourney', 'Adobe Firefly'.\n\n4. **Timestamp Validation**: Cross-references DateTimeOriginal, DateTimeDigitized, ModifyDate を検出するために temporal 異常.\n\n5. **GPS Analysis**: チェックします GPSLatitude, GPSLongitude — AI images rarely contain authentic GPS coordinates.",
     "parameters": "Primary EXIF fields: Make, Model, Software, GPSLatitude, GPSLongitude, DateTimeOriginal, ColorSpace, ExifVersion, XMP:CreatorTool, XMP:History, IPTC:DigitalSourceType\n\nDetected AI tools: Stable Diffusion, DALL-E, Midjourney, Adobe Firefly, ComfyUI, Automatic1111, InvokeAI\n\nMetadata standards: EXIF 2.32 (JEITA CP-3451), Adobe XMP 2.0, IPTC PMD 2024.1",
-    "accuracy": "High - 85-95% when metadata is present and unstripped. However, many social media platforms (Facebook, Twitter, Instagram) automatically strip metadata on upload, reducing effectiveness.",
+    "accuracy": "高 - 85-95% when メタデータ is present and unstripped. However, many social media platforms (Facebook, Twitter, Instagram) automatically strip メタデータ on upload, reducing effectiveness.",
     "source": "JEITA CP-3451 (Exif 2.32), Adobe XMP Specification, IPTC Photo Metadata Standard",
-    "useCase": "First-pass triage: quickly identifies images with AI software tags, missing authentic camera metadata, or inconsistent metadata. This is the first step in the analysis pipeline due to its speed and low computational cost.",
+    "useCase": "First-pass triage: quickly 識別する images with AI software tags, missing authentic camera メタデータ, or inconsistent メタデータ. This is the first step in the 分析 pipeline due to its speed and low computational cost.",
     "references": [
         {
             "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
@@ -33,6 +33,6 @@
             "url": "https://doi.org/10.1145/1774088.1774427"
         }
     ],
-    "strengths": "• Extremely fast analysis time (< 10ms per image)\n• No pixel decoding required, only reads file headers\n• High accuracy when metadata is intact\n• Can identify specific AI tools through software tags\n• Compliant with international standards (EXIF, XMP, IPTC, C2PA)",
-    "limitations": "• Metadata can be easily stripped or forged\n• Many social media platforms auto-strip metadata on upload\n• Cannot detect AI images that have had metadata removed\n• Depends on whether AI tools embed software tags"
+    "strengths": "• Extremely fast 分析 time (< 10ms per image)\n• No pixel decoding required, only reads file headers\n• High 精度 when メタデータ is intact\n• Can identify specific AI tools through software tags\n• Compliant with international standards (EXIF, XMP, IPTC, C2PA)",
+    "limitations": "• Metadata can be easily stripped or forged\n• Many social media platforms auto-strip メタデータ on upload\n• Cannot detect AI images that have had メタデータ removed\n• Depends on whether AI tools embed software tags"
 }

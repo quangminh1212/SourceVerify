@@ -2,11 +2,11 @@
     "name": "频谱奈奎斯特分析",
     "description": "Analyzes the frequency spectrum at Nyquist boundaries to detect upsampling artifacts. AI models often produce spectral peaks at these frequencies that are absent in real photos.",
     "algorithm": "Nyquist Frequency Spectral Analysis (2D FFT)",
-    "mechanism": "The analysis process involves several stages:\n\n1. **2D FFT Transform**: Converts the image from spatial domain to frequency domain using 2D Fast Fourier Transform.\n\n2. **High-frequency spectrum analysis**: Examines spectral energy around the Nyquist frequency (f/2). Neural network image generators (GANs, Diffusion models) use upsampling layers (bilinear, nearest-neighbor, transposed convolution) that create characteristic frequency artifacts.\n\n3. **Periodic peak detection**: Identifies periodic energy peaks in the frequency spectrum — a hallmark signature of upsampling in decoder/generator architectures.\n\n4. **Spectral comparison**: Compares the frequency energy distribution against natural spectral models. Camera images have natural high-frequency rolloff due to optics, while AI images show abnormal energy distributions.",
-    "parameters": "Transform: 2D FFT (radix-2), Analysis region: Nyquist band ±10%, Metrics: high/low frequency energy ratio, periodic peak coefficient, spectral gradient\n\nAnalysis size: full image + 256x256 blocks\nNormalization: logarithmic spectrum, azimuthal averaging",
-    "accuracy": "High - 80-90% for AI images with upsampling artifacts. Particularly effective for GAN-generated images (StyleGAN, ProGAN) due to heavy use of upsampling layers.",
+    "mechanism": "The 分析 process involves several stages:\n\n1. **2D FFT Transform**: Converts the image from 空间域 to 频域 using 2D Fast 傅里叶 Transform.\n\n2. **High-frequency 频谱 分析**: 检查 spectral energy around the Nyquist frequency (f/2). Neural network image generators (GANs, Diffusion models) use upsampling layers (bilinear, nearest-neighbor, transposed convolution) that create characteristic frequency 伪影.\n\n3. **Periodic peak 检测**: 识别 periodic energy peaks in the frequency 频谱 — a hallmark signature of upsampling in decoder/generator architectures.\n\n4. **Spectral comparison**: 比较 the frequency energy 分布 against natural spectral models. Camera images have natural high-frequency rolloff due to optics, while AI images show abnormal energy 分布s.",
+    "parameters": "Transform: 2D FFT (radix-2), Analysis region: Nyquist band ±10%, Metrics: high/low frequency energy ratio, periodic peak 系数, spectral 梯度\n\nAnalysis size: full image + 256x256 blocks\nNormalization: logarithmic 频谱, azimuthal averaging",
+    "accuracy": "高 - 80-90% for AI images with upsampling 伪影. Particularly effective for GAN-generated images (StyleGAN, ProGAN) due to heavy use of upsampling layers.",
     "source": "Durall et al. (2020) Watch your Up-Convolution, CVPR 2020",
-    "useCase": "Detection of frequency artifacts from generative networks and upsampling. Especially effective with GAN images and AI-upscaled images.",
+    "useCase": "Detection of frequency 伪影 from generative networks and upsampling. Especially effective with GAN images and AI-upscaled images.",
     "references": [
         {
             "title": "Zhang, X. et al. (2019). Detecting and Simulating Artifacts in GAN Fake Images. IEEE WIFS.",
@@ -25,6 +25,6 @@
             "url": "https://arxiv.org/abs/1911.06465"
         }
     ],
-    "strengths": "• Effectively detects GAN-specific upsampling artifacts\n• Content-independent analysis\n• Difficult to forge as it relates to fundamental frequency characteristics\n• Works well with uncompressed or lightly compressed images",
-    "limitations": "• Effectiveness decreases with heavy JPEG compression\n• Some newer Diffusion models produce fewer spectral artifacts\n• Real images that have been resized may produce false positives\n• Not effective with small images (< 256x256)"
+    "strengths": "• Effectively 检测 GAN-specific upsampling 伪影\n• Content-independent 分析\n• Difficult to forge as it relates to fundamental frequency characteristics\n• Works well with uncompressed or lightly compressed images",
+    "limitations": "• Effectiveness decreases with heavy JPEG压缩\n• Some newer Diffusion models produce fewer spectral 伪影\n• Real images that have been resized may produce 误报\n• Not effective with small images (< 256x256)"
 }

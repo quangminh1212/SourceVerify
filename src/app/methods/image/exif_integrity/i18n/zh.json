@@ -1,12 +1,12 @@
 {
     "name": "EXIF完整性验证",
-    "description": "Validates EXIF data structure integrity by checking mandatory camera fields, field consistency, version compliance, and metadata completeness. Detects anomalies in EXIF data that indicate AI generation or post-processing tampering.",
+    "description": "Validates EXIF data structure 完整性 by checking mandatory camera fields, field consistency, version compliance, and 元数据 completeness. 检测 异常 in EXIF data that indicate AI generation or post-processing 篡改.",
     "algorithm": "多字段EXIF结构验证器",
-    "mechanism": "The EXIF integrity validator examines:\n\n1. **Mandatory Field Presence**: Checks for essential camera EXIF fields (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Genuine camera images contain most of these fields.\n\n2. **Field Value Consistency**: Cross-validates related fields — e.g., DateTimeOriginal should precede DateTimeDigitized; ExifVersion should match known standards.\n\n3. **Structure Completeness**: Calculates an integrity ratio based on how many mandatory fields are present vs expected. High ratio indicates authentic camera capture.\n\n4. **Version Compliance**: Validates ExifVersion against known JEITA standards (0220-0232).",
+    "mechanism": "The EXIF 完整性 validator examines:\n\n1. **Mandatory Field Presence**: 检查 for essential camera EXIF fields (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Genuine camera images contain most of these fields.\n\n2. **Field Value Consistency**: Cross-validates related fields — e.g., DateTimeOriginal should precede DateTimeDigitized; ExifVersion should match known standards.\n\n3. **Structure Completeness**: 计算 an 完整性 ratio based on how many mandatory fields are present vs expected. High ratio indicates authentic camera capture.\n\n4. **Version Compliance**: Validates ExifVersion against known JEITA standards (0220-0232).",
     "parameters": "必需相机字段: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\nEXIF版本: 0220, 0221, 0230, 0231, 0232",
-    "accuracy": "High - 80-90% accuracy for images with intact EXIF data. Less effective when metadata has been stripped.",
+    "accuracy": "高 - 80-90% 准确度 for images with intact EXIF data. Less effective when 元数据 has been stripped.",
     "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP)",
-    "useCase": "Second-pass metadata validation: verifies EXIF structural integrity after initial metadata scan to identify subtle tampering or fabrication. Essential for forensic workflows requiring comprehensive metadata authentication.",
+    "useCase": "Second-pass 元数据 validation: verifies EXIF structural 完整性 after initial 元数据 scan 以识别 subtle 篡改 or fabrication. Essential for 取证 workflows requiring comprehensive 元数据 authentication.",
     "strengths": "• 全面的多字段验证检测AI不一致性\n• 相关字段间交叉验证提供高置信度\n• 适用于所有JPEG和TIFF格式\n• 低计算开销——即时结果\n• 同时检测AI生成和元数据伪造",
     "limitations": "• EXIF完全被删除时无法产生结果（不确定）\n• 某些应用为隐私目的故意删除EXIF\n• AI工具正在改进生成逼真EXIF数据\n• 社交媒体平台删除大部分EXIF字段\n• 无法验证手动伪造的EXIF",
     "references": [

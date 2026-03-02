@@ -1,12 +1,12 @@
 {
-    "useCase": "Detecting GAN upsampling artifacts invisible to the human eye but present in frequency domain",
-    "mechanism": "Computes the 2D Fast Fourier Transform and converts to polar coordinates to create a radial power spectral density profile. GAN-based upsampling operations (transposed convolution, pixel shuffle) create characteristic periodic ring patterns in the frequency domain that appear as peaks in the radial profile.",
-    "accuracy": "High - 85-93% for GAN-generated images with upsampling artifacts",
+    "useCase": "Detecting GAN upsampling 伪影 invisible to the human eye but present in 频域",
+    "mechanism": "Computes the 2D Fast 傅里叶 Transform and converts to polar coordinates to create a radial power spectral density profile. GAN-based upsampling operations (transposed convolution, pixel shuffle) create characteristic periodic ring 模式 in the 频域 that appear as peaks in the radial profile.",
+    "accuracy": "高 - 85-93% for GAN-generated images with upsampling 伪影",
     "name": "傅里叶环形模式检测",
     "source": "Dzanic et al. (2020) - Fourier Spectrum Discrepancies in Deep Network Generated Images, NeurIPS Workshop",
     "algorithm": "2D FFT Radial Profile + Peak Detection",
-    "parameters": "FFT size: image dimensions, Radial bins: 256, Peak detection: scipy find_peaks, Min peak prominence: 2σ above mean",
-    "description": "Detects periodic ring patterns in 2D Fourier spectrum caused by GAN upsampling operations. These spectral anomalies are invisible to human eyes but computationally detectable.",
+    "parameters": "FFT size: image dimensions, Radial bins: 256, Peak 检测: scipy find_peaks, Min peak prominence: 2σ above mean",
+    "description": "检测 periodic ring 模式 in 2D 傅里叶 频谱 caused by GAN upsampling operations. These spectral 异常 are invisible to human eyes but computationally detectable.",
     "references": [
         {
             "title": "Dzanic, T. et al. (2020). Fourier Spectrum Discrepancies in Deep Network Generated Images. NeurIPS Workshop.",
@@ -17,6 +17,6 @@
             "url": "https://arxiv.org/abs/2003.08685"
         }
     ],
-    "strengths": "• Very reliable for GAN-based generators\n• Detects artifacts invisible to humans\n• Mathematically well-founded\n• Fast computation via FFT",
-    "limitations": "• Less effective for diffusion models\n• JPEG compression can mask spectral artifacts\n• Small images reduce frequency resolution\n• May produce false positives on regularly textured images"
+    "strengths": "• Very reliable for GAN-based generators\n• 检测 伪影 invisible to humans\n• Mathematically well-founded\n• Fast computation via FFT",
+    "limitations": "• Less effective for diffusion models\n• JPEG压缩 can mask spectral 伪影\n• Small images reduce frequency 分辨率\n• May produce 误报 on regularly textured images"
 }

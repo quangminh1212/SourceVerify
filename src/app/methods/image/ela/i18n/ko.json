@@ -1,12 +1,12 @@
 {
-    "useCase": "Detection of local manipulation (cut-paste, editing), AI inpainting, and regions with inconsistent compression history. Widely used in digital image forensics and content verification.",
-    "mechanism": "The ELA analysis process:\n\n1. **Re-compression**: The image is re-saved at a fixed JPEG quality level (typically 95%).\n\n2. **Difference calculation**: Pixel-by-pixel comparison between the original and re-compressed image, creating an absolute difference map.\n\n3. **Error pattern analysis**: In an unmodified JPEG, the entire image has undergone the same compression, so error levels are relatively uniform. Manipulated or AI-generated regions show different error levels because they've undergone different compression histories.\n\n4. **Uniformity assessment**: AI images typically show abnormally uniform error levels across the entire image because all pixels were generated, not captured.",
-    "accuracy": "High - 88-94% for JPEG images. Effectiveness significantly decreases for PNG images or multiply-compressed JPEGs.",
+    "useCase": "Detection of local 조작 (cut-paste, editing), AI inpainting, and regions with inconsistent compression history. Widely used in digital 이미지 포렌식 and content verification.",
+    "mechanism": "The ELA 분석 process:\n\n1. **Re-compression**: The image is re-saved at a fixed JPEG 품질 level (typically 95%).\n\n2. **Difference calculation**: Pixel-by-pixel comparison 사이의 the original and re-compressed image, creating an absolute difference map.\n\n3. **Error 패턴 분석**: In an unmodified JPEG, the entire image has undergone the same compression, so error levels are relatively uniform. Manipulated or AI 생성 regions show different error levels because they've undergone different compression histories.\n\n4. **Uniformity assessment**: AI images typically show abnormally uniform error levels 에 걸친 the entire image because all pixels were generated, not captured.",
+    "accuracy": "높음 - 88-94% for JPEG images. Effectiveness significantly decreases for PNG images or multiply-compressed JPEGs.",
     "name": "오류 수준 분석 (ELA)",
     "source": "Krawetz (2007)",
     "algorithm": "JPEG 재압축 차분",
-    "parameters": "Re-compression quality: 95%, Color space: YCbCr, DCT block size: 8x8\nAnalysis: absolute pixel difference, regional error level variance\nThreshold: adaptive based on global error distribution",
-    "description": "Error Level Analysis resaves an image at a known JPEG quality and compares the error levels between the original and re-compressed version. AI-generated images show abnormally uniform error patterns, while authentic photos exhibit varying compression artifacts across different regions.",
+    "parameters": "Re-compression quality: 95%, Color space: YCbCr, DCT block size: 8x8\nAnalysis: absolute pixel difference, regional error level 분산\n임계값: 적응형 based on global error 분포",
+    "description": "오류 수준 분석 resaves an image at a known JPEG 품질 and compares the error levels 사이의 the original and re-compressed version. AI 생성 images show abnormally uniform error 패턴, while authentic photos exhibit varying 압축 아티팩트 다양한 영역에서.",
     "references": [
         {
             "title": "Krawetz, N. (2007). A Picture's Worth: Digital Image Analysis and Forensics. Hacker Factor.",
@@ -25,6 +25,6 @@
             "url": "https://doi.org/10.1109/TSP.2004.839932"
         }
     ],
-    "strengths": "• Intuitive and easy to understand for non-experts\n• Good detection of local manipulation and splicing\n• Low computational cost, fast analysis\n• Particularly effective with single-compression JPEGs",
-    "limitations": "• Only effective for JPEG images, not applicable to PNG/WebP\n• Multiple JPEG compressions introduce noise into results\n• Resized or cropped images may produce false positives\n• Cannot distinguish AI from heavily post-processed real images"
+    "strengths": "• Intuitive and easy to understand for non-experts\n• Good 감지 of local 조작 and 접합\n• Low computational cost, fast 분석\n• Particularly effective with single-compression JPEGs",
+    "limitations": "• Only effective for JPEG images, not applicable to PNG/WebP\n• Multiple JPEG 압축s introduce noise into results\n• Resized or cropped images may produce 오탐\n• Cannot distinguish AI from heavily post-processed real images"
 }

@@ -1,12 +1,14 @@
 {
-    "useCase": "Detecting AI-generated or manipulated faces through geometric inconsistency analysis",
-    "mechanism": "Detects faces and extracts 68 facial landmarks using a pre-trained shape predictor. Applies Procrustes analysis to normalize face geometry, then measures deviations from expected anatomical proportions. AI-generated faces often show subtle asymmetries and impossible geometric relationships between facial features.",
-    "accuracy": "Moderate-High - 78-88% on images containing clear faces",
     "name": "Consistencia de Puntos Faciales",
+    "description": "Detecta inconsistencias en posiciones de puntos faciales usando malla facial de 68 puntos. Los rostros generados por IA frecuentemente tienen anomalías geométricas sutiles en la alineación de ojos, nariz y boca.",
+    "useCase": "Detección de rostros generados o manipulados por IA mediante análisis de inconsistencia geométrica",
+    "mechanism": "Detecta rostros y extrae 68 puntos faciales usando un predictor de forma pre-entrenado. Aplica análisis de Procrustes para normalizar la geometría facial, luego mide desviaciones de proporciones anatómicas esperadas. Los rostros generados por IA frecuentemente muestran asimetrías sutiles y relaciones geométricas imposibles entre características faciales.",
+    "accuracy": "Moderada-Alta - 78-88% en imágenes con rostros claros",
     "source": "Yang et al. (2019) - Exposing Deep Fakes Using Inconsistent Head Poses, ICASSP",
-    "algorithm": "68-Point Face Mesh + Procrustes Analysis",
-    "parameters": "Landmarks: 68 points, Face detector: HOG/CNN, Normalization: Procrustes alignment, Metrics: inter-ocular distance ratio, symmetry score, golden ratio deviation",
-    "description": "Detects inconsistencies in facial landmark positions using 68-point face mesh. AI-generated faces often have subtle geometric anomalies in eye, nose, and mouth alignment.",
+    "algorithm": "Malla Facial de 68 Puntos + Análisis de Procrustes",
+    "parameters": "Puntos: 68, Detector facial: HOG/CNN, Normalización: alineación de Procrustes, Métricas: ratio de distancia interocular, puntuación de simetría, desviación de proporción áurea",
+    "strengths": "• Altamente efectivo para detección de deepfakes faciales\n• Basado en restricciones anatómicas bien comprendidas\n• Puede detectar anomalías geométricas sutiles\n• Funciona bien con imágenes faciales de alta resolución",
+    "limitations": "• Solo aplicable a imágenes que contienen rostros\n• Requiere orientación facial frontal o casi frontal\n• El rendimiento disminuye con oclusiones o poses extremas\n• Los generadores modernos producen cada vez más rostros anatómicamente correctos",
     "references": [
         {
             "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
@@ -16,7 +18,5 @@
             "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes and Face Manipulations. WACV.",
             "url": "https://doi.org/10.1109/WACVW.2019.00020"
         }
-    ],
-    "strengths": "• Highly effective for face-specific deepfake detection\n• Based on well-understood anatomical constraints\n• Can detect subtle geometric anomalies\n• Works well with high-resolution face images",
-    "limitations": "• Only applicable to images containing faces\n• Requires frontal or near-frontal face orientation\n• Performance drops with occlusions or extreme poses\n• Modern generators increasingly produce anatomically correct faces"
+    ]
 }

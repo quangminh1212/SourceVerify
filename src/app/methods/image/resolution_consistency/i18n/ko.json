@@ -1,12 +1,12 @@
 {
     "name": "해상도 일관성",
-    "description": "Analyzes DPI/resolution metadata vs actual pixel dimensions, checks for AI model-specific output sizes, and validates EXIF image size declarations against actual dimensions.",
+    "description": "분석합니다 DPI/해상도 메타데이터 vs actual pixel dimensions, checks for AI model-specific output sizes, and validates EXIF image size declarations against actual dimensions.",
     "algorithm": "해상도 패턴 분석기",
-    "mechanism": "The resolution consistency analysis examines multiple signals:\n\n1. **AI Model Resolution Matching**: Checks image dimensions against known AI model outputs (Stable Diffusion: 512², 768², 1024²; DALL-E 3: 1024×1024, 1792×1024; Midjourney: various).\n\n2. **VAE Latent Space Detection**: Validates if dimensions are multiples of 64 (8× downsampled VAE latent space), which is characteristic of diffusion models.\n\n3. **DPI Metadata Validation**: Cross-checks declared DPI (72 web, 96 screen, 240/300 print) against actual pixel dimensions. Inconsistencies suggest post-processing.\n\n4. **EXIF Dimension Cross-check**: Compares ExifImageWidth/ExifImageHeight with actual decoded image dimensions to detect resizing.\n\n5. **Megapixel Analysis**: Compares total pixel count against typical camera sensor outputs vs AI model capabilities.",
-    "parameters": "AI model resolutions: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024², 1792×1024), Flux (1024²)\nDPI standards: 72 (web), 96 (screen), 240/300 (print)\nVAE alignment: multiples of 64\nCamera megapixels: 12-108 MP typical",
-    "accuracy": "Medium - 70-80%. Most effective for unresized AI outputs. Accuracy decreases significantly when images are resized or cropped.",
+    "mechanism": "The 해상도 consistency 분석 examines multiple signals:\n\n1. **AI Model Resolution Matching**: 확인합니다 image dimensions against known AI model outputs (Stable Diffusion: 512², 768², 1024²; DALL-E 3: 1024×1024, 1792×1024; Midjourney: various).\n\n2. **VAE Latent Space Detection**: Validates if dimensions are multiples of 64 (8× downsampled VAE latent space), 는 is characteristic of diffusion models.\n\n3. **DPI Metadata Validation**: Cross-checks declared DPI (72 web, 96 screen, 240/300 print) against actual pixel dimensions. Inconsistencies suggest post-processing.\n\n4. **EXIF Dimension Cross-check**: 비교합니다 ExifImageWidth/ExifImageHeight with actual decoded image dimensions 감지하기 위해 resizing.\n\n5. **Megapixel Analysis**: 비교합니다 total pixel count against typical camera sensor outputs vs AI model capabilities.",
+    "parameters": "AI model 해상도s: SD 1.x (512²), SD XL (1024²), DALL-E 3 (1024², 1792×1024), Flux (1024²)\nDPI standards: 72 (web), 96 (screen), 240/300 (print)\nVAE alignment: multiples of 64\nCamera megapixels: 12-108 MP typical",
+    "accuracy": "중간 - 70-80%. 리사이즈되지 않은 AI 출력에 가장 효과적. 이미지가 리사이즈되거나 잘리면 정확도가 크게 감소.",
     "source": "Latent Diffusion Model Architecture, JEITA CP-3451C",
-    "useCase": "Quick AI detection screening based on dimensional analysis. Particularly effective for batch processing where images haven't been resized from their original AI-generated dimensions.",
+    "useCase": "Quick AI 감지 screening based on dimensional 분석. Particularly effective for batch processing where images haven't been resized from their original AI 생성 dimensions.",
     "strengths": "• 픽셀 처리 없는 빠른 차원 분석\n• VAE 정렬 확인이 확산 모델에 매우 특이적\n• DPI 불일치가 후처리를 드러냄\n• 미묘한 리사이즈 감지\n• 특정 AI 모델 출력 식별",
     "limitations": "• 리사이즈나 크롭으로 쉽게 우회\n• 카메라 해상도가 AI 출력과 겹침\n• 소셜 미디어가 자동 리사이즈\n• 업스케일러가 크기 변경\n• DPI가 부정확하거나 없는 경우",
     "references": [

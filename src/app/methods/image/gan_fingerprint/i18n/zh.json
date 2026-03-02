@@ -1,12 +1,12 @@
 {
-    "useCase": "Identifying GAN-generated images and attributing them to specific AI model architectures. Critical for deepfake detection and content provenance.",
-    "mechanism": "The detection process:\n\n1. **Spectral feature extraction**: Computes the 2D FFT power spectrum and extracts azimuthally-averaged frequency profiles unique to each GAN architecture.\n\n2. **Architecture-specific patterns**: Different GAN architectures (StyleGAN, ProGAN, BigGAN, CycleGAN) produce distinct spectral fingerprints due to their specific upsampling and normalization layers.\n\n3. **Fingerprint classification**: A multi-class SVM classifier trained on spectral features identifies both the presence of GAN artifacts and the specific architecture.\n\n4. **Cross-model validation**: Results are cross-validated against a database of known GAN spectral signatures.",
-    "accuracy": "Very High - 92-98% for known GAN architectures. Accuracy decreases for novel or fine-tuned architectures.",
+    "useCase": "Identifying GAN-generated images and attributing them to specific AI model architectures. Critical for 深度伪造检测 and content provenance.",
+    "mechanism": "The 检测 process:\n\n1. **Spectral 特征 extraction**: Computes the 2D FFT power 频谱 and extracts azimuthally-averaged frequency profiles unique to each GAN architecture.\n\n2. **Architecture-specific 模式**: Different GAN architectures (StyleGAN, ProGAN, BigGAN, CycleGAN) produce distinct spectral fingerprints due to their specific upsampling and normalization layers.\n\n3. **Fingerprint classification**: A multi-class SVM classifier trained on spectral 特征 识别 both the presence of GAN 伪影 and the specific architecture.\n\n4. **Cross-model validation**: Results are cross-validated against a database of known GAN spectral signatures.",
+    "accuracy": "Very 高 - 92-98% for known GAN architectures. Accuracy decreases for novel or fine-tuned architectures.",
     "name": "GAN指纹检测",
     "source": "Marra et al. (2019)",
     "algorithm": "GAN架构指纹分类器",
-    "parameters": "FFT: 256x256 power spectrum\nFeature extraction: azimuthal averaging + radial profiles\nClassifier: Multi-class SVM with RBF kernel\nKnown architectures: StyleGAN1/2/3, ProGAN, BigGAN, CycleGAN, StarGAN, DCGAN",
-    "description": "Identifies unique spectral fingerprints left by Generative Adversarial Networks. Each GAN architecture produces characteristic frequency-domain patterns in generated images that serve as reliable forensic identifiers.",
+    "parameters": "FFT: 256x256 power 频谱\n特征提取: azimuthal averaging + radial profiles\nClassifier: Multi-class SVM with RBF kernel\nKnown architectures: StyleGAN1/2/3, ProGAN, BigGAN, CycleGAN, StarGAN, DCGAN",
+    "description": "识别 unique spectral fingerprints left by Generative Adversarial Networks. Each GAN architecture produces characteristic frequency-domain 模式 in generated images that serve as reliable 取证 identifiers.",
     "references": [
         {
             "title": "Marra, F. et al. (2019). Do GANs Leave Artificial Fingerprints? IEEE MIPR.",
@@ -25,6 +25,6 @@
             "url": "https://arxiv.org/abs/2104.02617"
         }
     ],
-    "strengths": "• Extremely high accuracy for known GAN families\n• Can attribute images to specific GAN architectures\n• Robust against common image transformations\n• Works without requiring the original model",
-    "limitations": "• Less effective for novel/unknown GAN architectures\n• Fine-tuned models may alter fingerprints\n• Diffusion models have different fingerprint characteristics\n• Heavy post-processing can degrade fingerprints"
+    "strengths": "• Extremely high 准确度 for known GAN families\n• Can attribute images to specific GAN architectures\n• Robust against common image transformations\n• Works without requiring the original model",
+    "limitations": "• 对新型/未知GAN架构效果较差\n• 微调模型可能改变指纹\n• 扩散模型具有不同的指纹特征\n• 重度后处理可能降低指纹质量"
 }
