@@ -1,0 +1,26 @@
+{
+    "name":  "머리 자세 추정 분석",
+    "description":  "얼굴 조작을 나타내는 3D 머리 자세 궤적의 불일치를 감지합니다.",
+    "useCase":  "Exposing deepfakes through unnatural head pose transitions and geometric inconsistencies",
+    "mechanism":  "Estimates 3D head orientation (pitch, yaw, roll) across frames and analyzes the trajectory smoothness. Deepfake face swaps often produce head poses that are inconsistent between the source and target face, creating detectable discontinuities in the pose trajectory.",
+    "accuracy":  "High - 80-90% on face-swap deepfakes",
+    "source":  "Yang, X. et al. (2019) - Exposing Deep Fakes Using Inconsistent Head Poses, ICASSP",
+    "algorithm":  "3D Head Pose Estimation (PnP) + Trajectory Smoothness Analysis + Source-Target Consistency",
+    "parameters":  "Landmarks: 68-point model, Pose estimation: EPnP algorithm, Smoothness: Savitzky-Golay filter",
+    "strengths":  "â€¢ Strong theoretical foundation (3D geometry)\nâ€¢ Effective on face-swap deepfakes\nâ€¢ Works at moderate resolution\nâ€¢ Detects subtle geometric mismatches",
+    "limitations":  "â€¢ Less effective on face reenactment\nâ€¢ Frontal faces reduce detection power\nâ€¢ Requires stable camera or motion compensation\nâ€¢ Learning-based pose estimation adds uncertainty",
+    "references":  [
+                       {
+                           "title":  "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
+                           "url":  "https://arxiv.org/abs/1811.00661"
+                       },
+                       {
+                           "title":  "Cozzolino, D. et al. (2021). ID-Reveal: Identity-aware DeepFake Video Detection. ICCV.",
+                           "url":  "https://arxiv.org/abs/2012.02512"
+                       },
+                       {
+                           "title":  "Dong, X. et al. (2022). Protecting Celebrities from DeepFake with Identity Consistency Transformer. CVPR.",
+                           "url":  "https://arxiv.org/abs/2203.01318"
+                       }
+                   ]
+}

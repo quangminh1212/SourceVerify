@@ -234,6 +234,37 @@ import hand_gesture_consistency_en from "./video/hand_gesture_consistency/i18n/e
 import hand_gesture_consistency_vi from "./video/hand_gesture_consistency/i18n/vi.json";
 import body_proportion_en from "./video/body_proportion/i18n/en.json";
 import body_proportion_vi from "./video/body_proportion/i18n/vi.json";
+// Video Analysis Methods v2
+import speech_cadence_en from "./video/speech_cadence/i18n/en.json";
+import speech_cadence_vi from "./video/speech_cadence/i18n/vi.json";
+import ear_consistency_en from "./video/ear_consistency/i18n/en.json";
+import ear_consistency_vi from "./video/ear_consistency/i18n/vi.json";
+import hair_dynamics_en from "./video/hair_dynamics/i18n/en.json";
+import hair_dynamics_vi from "./video/hair_dynamics/i18n/vi.json";
+import skin_texture_temporal_en from "./video/skin_texture_temporal/i18n/en.json";
+import skin_texture_temporal_vi from "./video/skin_texture_temporal/i18n/vi.json";
+import shadow_consistency_video_en from "./video/shadow_consistency_video/i18n/en.json";
+import shadow_consistency_video_vi from "./video/shadow_consistency_video/i18n/vi.json";
+import reflection_consistency_video_en from "./video/reflection_consistency_video/i18n/en.json";
+import reflection_consistency_video_vi from "./video/reflection_consistency_video/i18n/vi.json";
+import pupil_dynamics_en from "./video/pupil_dynamics/i18n/en.json";
+import pupil_dynamics_vi from "./video/pupil_dynamics/i18n/vi.json";
+import head_pose_estimation_en from "./video/head_pose_estimation/i18n/en.json";
+import head_pose_estimation_vi from "./video/head_pose_estimation/i18n/vi.json";
+import video_noise_pattern_en from "./video/video_noise_pattern/i18n/en.json";
+import video_noise_pattern_vi from "./video/video_noise_pattern/i18n/vi.json";
+import heartbeat_detection_en from "./video/heartbeat_detection/i18n/en.json";
+import heartbeat_detection_vi from "./video/heartbeat_detection/i18n/vi.json";
+import micro_expression_en from "./video/micro_expression/i18n/en.json";
+import micro_expression_vi from "./video/micro_expression/i18n/vi.json";
+import clothing_consistency_en from "./video/clothing_consistency/i18n/en.json";
+import clothing_consistency_vi from "./video/clothing_consistency/i18n/vi.json";
+import face_3d_reconstruction_en from "./video/face_3d_reconstruction/i18n/en.json";
+import face_3d_reconstruction_vi from "./video/face_3d_reconstruction/i18n/vi.json";
+import video_codec_analysis_en from "./video/video_codec_analysis/i18n/en.json";
+import video_codec_analysis_vi from "./video/video_codec_analysis/i18n/vi.json";
+import inter_frame_forgery_en from "./video/inter_frame_forgery/i18n/en.json";
+import inter_frame_forgery_vi from "./video/inter_frame_forgery/i18n/vi.json";
 // Text Analysis Methods
 import perplexity_analysis_en from "./text/perplexity_analysis/i18n/en.json";
 import perplexity_analysis_vi from "./text/perplexity_analysis/i18n/vi.json";
@@ -362,6 +393,15 @@ const en = buildMap([
     ["gaze_direction", gaze_direction_en], ["facial_reenactment", facial_reenactment_en],
     ["video_compression_trace", video_compression_trace_en], ["flicker_analysis", flicker_analysis_en],
     ["hand_gesture_consistency", hand_gesture_consistency_en], ["body_proportion", body_proportion_en],
+    // Video Analysis Methods v2
+    ["speech_cadence", speech_cadence_en], ["ear_consistency", ear_consistency_en],
+    ["hair_dynamics", hair_dynamics_en], ["skin_texture_temporal", skin_texture_temporal_en],
+    ["shadow_consistency_video", shadow_consistency_video_en], ["reflection_consistency_video", reflection_consistency_video_en],
+    ["pupil_dynamics", pupil_dynamics_en], ["head_pose_estimation", head_pose_estimation_en],
+    ["video_noise_pattern", video_noise_pattern_en], ["heartbeat_detection", heartbeat_detection_en],
+    ["micro_expression", micro_expression_en], ["clothing_consistency", clothing_consistency_en],
+    ["face_3d_reconstruction", face_3d_reconstruction_en], ["video_codec_analysis", video_codec_analysis_en],
+    ["inter_frame_forgery", inter_frame_forgery_en],
     // Text Analysis Methods
     ["perplexity_analysis", perplexity_analysis_en], ["burstiness_detection", burstiness_detection_en],
     ["vocabulary_diversity", vocabulary_diversity_en], ["stylometric_analysis", stylometric_analysis_en],
@@ -436,6 +476,15 @@ const vi = buildMap([
     ["gaze_direction", gaze_direction_vi], ["facial_reenactment", facial_reenactment_vi],
     ["video_compression_trace", video_compression_trace_vi], ["flicker_analysis", flicker_analysis_vi],
     ["hand_gesture_consistency", hand_gesture_consistency_vi], ["body_proportion", body_proportion_vi],
+    // Video Analysis Methods v2
+    ["speech_cadence", speech_cadence_vi], ["ear_consistency", ear_consistency_vi],
+    ["hair_dynamics", hair_dynamics_vi], ["skin_texture_temporal", skin_texture_temporal_vi],
+    ["shadow_consistency_video", shadow_consistency_video_vi], ["reflection_consistency_video", reflection_consistency_video_vi],
+    ["pupil_dynamics", pupil_dynamics_vi], ["head_pose_estimation", head_pose_estimation_vi],
+    ["video_noise_pattern", video_noise_pattern_vi], ["heartbeat_detection", heartbeat_detection_vi],
+    ["micro_expression", micro_expression_vi], ["clothing_consistency", clothing_consistency_vi],
+    ["face_3d_reconstruction", face_3d_reconstruction_vi], ["video_codec_analysis", video_codec_analysis_vi],
+    ["inter_frame_forgery", inter_frame_forgery_vi],
     // Text Analysis Methods
     ["perplexity_analysis", perplexity_analysis_vi], ["burstiness_detection", burstiness_detection_vi],
     ["vocabulary_diversity", vocabulary_diversity_vi], ["stylometric_analysis", stylometric_analysis_vi],

@@ -1,0 +1,26 @@
+{
+    "name":  "微表情分析",
+    "description":  "检测视频中不自然的微表情和面部动作单元模式。",
+    "useCase":  "Identifying deepfakes through abnormal facial muscle movement patterns",
+    "mechanism":  "Analyzes Facial Action Coding System (FACS) action units to detect micro-expressions - brief, involuntary facial movements lasting 40-200ms. Deepfake videos often lack natural micro-expressions, show impossible AU combinations, or exhibit delayed/absent emotional transitions.",
+    "accuracy":  "Medium-High - 76-88% on identity swap deepfakes",
+    "source":  "Agarwal, S. et al. (2020) - Detecting Deep-Fake Videos from Aural and Oral Dynamics, CVPR Workshop",
+    "algorithm":  "AU Detection (OpenFace) + Temporal Pattern Analysis + FACS Plausibility Verification",
+    "parameters":  "AU detection: 17 core AUs, Temporal resolution: 40ms, Window: 200ms sliding, Threshold: AU probability \u003e 0.5",
+    "strengths":  "â€¢ Based on established facial coding system\nâ€¢ Detects subtle involuntary expressions\nâ€¢ Works on both face swap and reenactment\nâ€¢ Leverages decades of psychology research",
+    "limitations":  "â€¢ Requires high frame rate video (\u003e25fps)\nâ€¢ Frontal face orientation preferred\nâ€¢ Cultural differences in expression\nâ€¢ Occluded faces reduce accuracy",
+    "references":  [
+                       {
+                           "title":  "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Aural and Oral Dynamics. CVPR Workshop.",
+                           "url":  "https://arxiv.org/abs/1907.11228"
+                       },
+                       {
+                           "title":  "Li, Y. \u0026 Lyu, S. (2019). Exposing DeepFake Videos By Detecting Face Warping Artifacts. CVPR Workshop.",
+                           "url":  "https://arxiv.org/abs/1811.00656"
+                       },
+                       {
+                           "title":  "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow Based CNN. ICDP.",
+                           "url":  "https://doi.org/10.1049/cp.2019.0220"
+                       }
+                   ]
+}
