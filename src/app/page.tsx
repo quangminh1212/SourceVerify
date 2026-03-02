@@ -4,6 +4,7 @@ import { useState, useCallback, useRef, useEffect } from "react";
 import Link from "next/link";
 import {
   analyzeMedia,
+  analyzeText,
   formatFileSize,
   type AnalysisResult,
 } from "@/lib/analyzer";
@@ -52,6 +53,8 @@ export default function Home() {
   const resultRef = useRef<HTMLDivElement>(null);
   const { locale, t } = useLanguage();
   const [analysisSettings, setAnalysisSettings] = useState<AnalysisSettings | null>(null);
+  const [inputMode, setInputMode] = useState<'file' | 'text'>('file');
+  const [textInput, setTextInput] = useState('');
 
   // Check auth state from localStorage
   useEffect(() => {
@@ -153,7 +156,7 @@ export default function Home() {
       {/* ===== Hero ===== */}
       <section id="main-content" className="relative z-10 flex-1 flex flex-col items-center justify-center px-8 pt-12 pb-16">
 
-        {!file && !result && (
+        {!file && !result && !isAnalyzing && (
           <div className="flex flex-col items-center gap-9 text-center max-w-3xl mx-auto animate-fade-in-up">
 
             {/* Tagline chip */}
@@ -172,7 +175,7 @@ export default function Home() {
             </p>
 
             {/* Guest mode: show selected method chip */}
-            {!isLoggedIn && (
+            {!isLoggedIn && inputMode === 'file' && (
               <div className="method-chip-row">
                 <Link href="/methods?select=1" className="method-chip-link">
                   <span className="method-chip-dot" />
@@ -186,35 +189,107 @@ export default function Home() {
               </div>
             )}
 
-            {/* Upload area */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-              <label className="btn-primary flex items-center gap-2.5 cursor-pointer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                  <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-                {t("home.uploadFile")}
-                <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES.join(",")} className="hidden"
-                  onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
-              </label>
-              <div
-                className={`btn-secondary cursor-pointer ${dragOver ? "!border-[#4285f4] !bg-blue-50" : ""}`}
-                onDrop={handleDrop}
-                onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-                onDragLeave={() => setDragOver(false)}
+            {/* Input mode toggle */}
+            <div className="flex items-center gap-1 p-1 rounded-xl bg-[--color-bg-secondary] border border-[--color-border-subtle]">
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${inputMode === 'file' ? 'bg-[--color-bg-primary] text-[--color-text-primary] shadow-sm' : 'text-[--color-text-muted] hover:text-[--color-text-secondary]'}`}
+                onClick={() => setInputMode('file')}
               >
-                {t("home.orDropHere")}
-              </div>
+                <span className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><circle cx="8.5" cy="8.5" r="1.5" /><polyline points="21 15 16 10 5 21" /></svg>
+                  {t("home.modeFile") || 'Ảnh & Video'}
+                </span>
+              </button>
+              <button
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${inputMode === 'text' ? 'bg-[--color-bg-primary] text-[--color-text-primary] shadow-sm' : 'text-[--color-text-muted] hover:text-[--color-text-secondary]'}`}
+                onClick={() => setInputMode('text')}
+              >
+                <span className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /><polyline points="10 9 9 9 8 9" /></svg>
+                  {t("home.modeText") || 'Văn bản'}
+                </span>
+              </button>
             </div>
 
-            <p className="text-xs text-[--color-text-muted] mt-3">
-              {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-[--color-bg-secondary] border border-[--color-border-subtle] text-[10px] font-mono text-[--color-text-secondary]">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
-            </p>
+            {inputMode === 'file' ? (
+              <>
+                {/* Upload area */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                  <label className="btn-primary flex items-center gap-2.5 cursor-pointer">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                      <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    {t("home.uploadFile")}
+                    <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES.join(",")} className="hidden"
+                      onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
+                  </label>
+                  <div
+                    className={`btn-secondary cursor-pointer ${dragOver ? "!border-[#4285f4] !bg-blue-50" : ""}`}
+                    onDrop={handleDrop}
+                    onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+                    onDragLeave={() => setDragOver(false)}
+                  >
+                    {t("home.orDropHere")}
+                  </div>
+                </div>
+
+                <p className="text-xs text-[--color-text-muted] mt-1">
+                  {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-[--color-bg-secondary] border border-[--color-border-subtle] text-[10px] font-mono text-[--color-text-secondary]">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
+                </p>
+              </>
+            ) : (
+              <>
+                {/* Text input area */}
+                <div className="w-full max-w-2xl">
+                  <textarea
+                    className="w-full h-48 p-4 rounded-xl bg-[--color-bg-secondary] border border-[--color-border-subtle] text-[--color-text-primary] text-sm leading-relaxed resize-y focus:outline-none focus:ring-2 focus:ring-[#4285f4]/40 focus:border-[#4285f4] transition-all placeholder:text-[--color-text-muted]"
+                    placeholder={t("home.textPlaceholder") || 'Dán văn bản cần phân tích vào đây... (tối thiểu 50 ký tự)'}
+                    value={textInput}
+                    onChange={e => setTextInput(e.target.value)}
+                  />
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="text-xs text-[--color-text-muted]">
+                      {textInput.length} {t("home.textChars") || 'ký tự'} {textInput.length < 50 && textInput.length > 0 ? `(${t("home.textMinHint") || 'cần tối thiểu 50'})` : ''}
+                    </span>
+                    <button
+                      className="btn-primary flex items-center gap-2"
+                      disabled={textInput.trim().length < 50}
+                      onClick={async () => {
+                        setIsAnalyzing(true);
+                        setProgress(0);
+                        setError(null);
+                        setResult(null);
+                        const iv = setInterval(() => {
+                          setProgress(p => { if (p >= 90) { clearInterval(iv); return p; } return p + Math.random() * 20; });
+                        }, 150);
+                        try {
+                          const r = await analyzeText(textInput);
+                          clearInterval(iv);
+                          setProgress(100);
+                          await new Promise(res => setTimeout(res, 400));
+                          setResult(r);
+                          setIsAnalyzing(false);
+                          setTimeout(() => resultRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 100);
+                        } catch {
+                          clearInterval(iv);
+                          setIsAnalyzing(false);
+                          setError(t("home.errorFailed"));
+                        }
+                      }}
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                      {t("home.analyzeText") || 'Phân tích văn bản'}
+                    </button>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
 
-        {/* File loaded — preview + progress */}
+        {/* File loaded — preview + progress (file mode only) */}
         {file && !result && (
           <div className="w-full max-w-2xl mx-auto animate-fade-in-up">
             <div className="card p-4 sm:p-6">
@@ -247,6 +322,26 @@ export default function Home() {
                   </p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Text analyzing progress */}
+        {!file && isAnalyzing && !result && (
+          <div className="w-full max-w-2xl mx-auto animate-fade-in-up">
+            <div className="card p-6">
+              <div className="flex items-center gap-3 mb-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#34A853]"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" /><polyline points="14 2 14 8 20 8" /><line x1="16" y1="13" x2="8" y2="13" /><line x1="16" y1="17" x2="8" y2="17" /></svg>
+                <span className="text-sm text-[--color-text-secondary]">{t("home.analyzingText") || 'Đang phân tích văn bản...'}</span>
+              </div>
+              <div role="status">
+                <div className="confidence-bar">
+                  <div className="confidence-fill progress-fill-gradient" ref={el => { if (el) el.style.setProperty('--progress-width', `${Math.min(progress, 100)}%`); }} />
+                </div>
+                <p className="text-xs text-[--color-text-muted] mt-2 text-center">
+                  {progress < 30 ? (t("home.textAnalyzing1") || 'Phân tích cấu trúc...') : progress < 60 ? (t("home.textAnalyzing2") || 'Kiểm tra mẫu từ vựng...') : progress < 85 ? (t("home.textAnalyzing3") || 'Phân tích thống kê...') : (t("home.finalizing"))}
+                </p>
+              </div>
             </div>
           </div>
         )}
@@ -355,7 +450,7 @@ export default function Home() {
                   </div>
                 </details>
               )}
-              <button onClick={handleReset} className="btn-primary">
+              <button onClick={() => { handleReset(); setTextInput(''); }} className="btn-primary">
                 {t('home.analyzeAnother')}
               </button>
               <p className="result-disclaimer">{t('home.disclaimer')}</p>
