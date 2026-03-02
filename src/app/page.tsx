@@ -358,7 +358,7 @@ export default function Home() {
                   </div>
                 </details>
               )}
-              <button onClick={() => { handleReset(); setTextInput(''); }} className="btn-primary">
+              <button onClick={() => { handleReset(); }} className="btn-primary">
                 {t('home.analyzeAnother')}
               </button>
               <p className="result-disclaimer">{t('home.disclaimer')}</p>
