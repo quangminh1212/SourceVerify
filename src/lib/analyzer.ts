@@ -11,7 +11,7 @@ export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
 export { formatFileSize } from "./utils";
 
 import type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
-import { loadImage, extractBasicMetadata, validateFileMagicBytes } from "./utils";
+import { loadImage, extractBasicMetadata, validateFileMagicBytes, createConsistentContext } from "./utils";
 import {
     // Original 13 methods
     analyzeMetadata,
@@ -475,7 +475,7 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         // Original 13
         analyzeMetadata(metadata, exifData),
         analyzeSpectralNyquist(pixels, w, h),
-        await analyzeMultiscaleReconstruction(canvas, ctx),
+        analyzeMultiscaleReconstruction(canvas, ctx),
         analyzeNoiseResidual(pixels, w, h),
         analyzeEdgeCoherence(pixels, w, h),
         analyzeGradientMicroTexture(pixels, w, h),
@@ -639,7 +639,7 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                 const canvas = document.createElement("canvas");
                 canvas.width = w;
                 canvas.height = h;
-                const ctx = canvas.getContext("2d")!;
+                const ctx = createConsistentContext(canvas);
                 ctx.drawImage(video, 0, 0, w, h);
                 const imageData = ctx.getImageData(0, 0, w, h);
                 const pixels = imageData.data;
@@ -652,7 +652,7 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     // Original 13 (without CFA for video)
                     analyzeMetadata(metadata, exifData),
                     analyzeSpectralNyquist(pixels, w, h),
-                    await analyzeMultiscaleReconstruction(canvas, ctx),
+                    analyzeMultiscaleReconstruction(canvas, ctx),
                     analyzeNoiseResidual(pixels, w, h),
                     analyzeEdgeCoherence(pixels, w, h),
                     analyzeGradientMicroTexture(pixels, w, h),
