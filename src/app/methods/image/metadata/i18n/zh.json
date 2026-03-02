@@ -1,5 +1,5 @@
 {
-    "name": "Metadata Analysis",
+    "name": "元数据分析",
     "description": "Examines EXIF data, file naming patterns, and resolution for signs of AI generation tools. Checks for camera make/model, GPS data, and software markers like Stable Diffusion or DALL-E.",
     "algorithm": "EXIF / XMP / IPTC Parser",
     "mechanism": "The metadata analysis system operates in multiple stages:\n\n1. **Data Extraction**: Reads all EXIF (Exchangeable Image File Format), XMP (Extensible Metadata Platform), and IPTC (International Press Telecommunications Council) metadata fields embedded in the image.\n\n2. **Camera Verification**: Examines Make, Model, LensModel fields to verify the capture device. AI images typically lack or contain fabricated camera information.\n\n3. **Software Detection**: Identifies Software, CreatorTool, HistorySoftwareAgent tags containing AI tool names such as 'Stable Diffusion', 'DALL-E', 'Midjourney', 'Adobe Firefly'.\n\n4. **Timestamp Validation**: Cross-references DateTimeOriginal, DateTimeDigitized, ModifyDate to detect temporal anomalies.\n\n5. **GPS Analysis**: Checks GPSLatitude, GPSLongitude — AI images rarely contain authentic GPS coordinates.",
