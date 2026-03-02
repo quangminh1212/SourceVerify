@@ -1,43 +1,25 @@
 /**
  * Video Blockiness
- * Video compression blockiness analysis
+ * Algorithm: blockBound
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoBlockiness(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Blockiness", nameKey: "signal.videoBlockiness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoBlockiness.error", icon: "🧱" };
+        return { name: "Video Blockiness", nameKey: "signal.videoBlockiness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoBlockiness.error", icon: "⬜" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const bs3=8;let boundDiff=0,innerDiff=0,bCnt2=0,iCnt=0;
+for(let y=bs3;y<h-1;y+=bs3){for(let x=0;x<w;x+=2){const i=(y*w+x)*4;const j=((y-1)*w+x)*4;
+boundDiff+=Math.abs(pixels[i]-pixels[j]);bCnt2++;}}
+for(let y=1;y<h-1;y++){if(y%bs3===0)continue;for(let x=0;x<w;x+=8){const i=(y*w+x)*4;const j=((y-1)*w+x)*4;
+innerDiff+=Math.abs(pixels[i]-pixels[j]);iCnt++;}}
+const bAvg=bCnt2>0?boundDiff/bCnt2:0;const iAvg=iCnt>0?innerDiff/iCnt:1;const blockRatio=iAvg>0?bAvg/iAvg:1;
+let score;if(blockRatio>2)score=68;else if(blockRatio>1.4)score=55;else if(blockRatio<0.8)score=35;else score=44;
+const details=`Block ratio: ${blockRatio.toFixed(3)}.`;
     return {
         name: "Video Blockiness", nameKey: "signal.videoBlockiness", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Video compression blockiness analysis — potential AI-generated video artifact" : "Natural video compression blockiness analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.videoBlockiness.ai" : "signal.videoBlockiness.real", icon: "🧱",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Video Blockiness — potential AI artifact" : "Natural video blockiness — authentic",
+        descriptionKey: score > 55 ? "signal.videoBlockiness.ai" : "signal.videoBlockiness.real", icon: "⬜",
+        details,
     };
 }

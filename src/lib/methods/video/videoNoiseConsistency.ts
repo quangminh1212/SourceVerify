@@ -1,43 +1,27 @@
 /**
  * Video Noise Consistency
- * Noise pattern consistency across frame regions
+ * Algorithm: histogramDist
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoNoiseConsistency(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Noise Consistency", nameKey: "signal.videoNoiseConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoNoiseConsistency.error", icon: "📡" };
+        return { name: "Video Noise Consistency", nameKey: "signal.videoNoiseConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoNoiseConsistency.error", icon: "🔊" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const hist=new Array(256).fill(0);const n=pixels.length/4;
+for(let i=0;i<pixels.length;i+=4){const g=Math.round(pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114);hist[g]++;}
+let entropy=0;for(const c of hist){if(c>0){const p=c/n;entropy-=p*Math.log2(p);}}
+const topH=hist.slice(0,Math.floor(h/2)*w>n?n:Math.floor(n/2));
+const botH=hist.slice(Math.floor(n/2));
+let skewness=0,m2=0,m3=0;const mean2=hist.reduce((a,v,i)=>a+i*v,0)/n;
+for(let i=0;i<256;i++){const d=i-mean2;m2+=d*d*hist[i];m3+=d*d*d*hist[i];}
+m2/=n;m3/=n;skewness=m2>0?m3/Math.pow(m2,1.5):0;
+let score;if(Math.abs(skewness)<0.3&&entropy>7)score=35;else if(entropy<5)score=68;else if(entropy<6.5)score=55;else score=44;
+const details=`Entropy: ${entropy.toFixed(3)}, Skewness: ${skewness.toFixed(3)}.`;
     return {
         name: "Video Noise Consistency", nameKey: "signal.videoNoiseConsistency", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Noise pattern consistency across frame regions — potential AI-generated video artifact" : "Natural noise pattern consistency across frame regions — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.videoNoiseConsistency.ai" : "signal.videoNoiseConsistency.real", icon: "📡",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Video Noise Consistency — potential AI artifact" : "Natural video noise consistency — authentic",
+        descriptionKey: score > 55 ? "signal.videoNoiseConsistency.ai" : "signal.videoNoiseConsistency.real", icon: "🔊",
+        details,
     };
 }

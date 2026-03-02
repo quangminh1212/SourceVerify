@@ -1,43 +1,23 @@
 /**
  * Pixel Repetition
- * Pixel pattern repetition in frame
+ * Algorithm: repetition
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzePixelRepetitionVideo(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Pixel Repetition", nameKey: "signal.pixelRepetitionVideo", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pixelRepetitionVideo.error", icon: "🔁" };
+        return { name: "Pixel Repetition", nameKey: "signal.pixelRepetitionVideo", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pixelRepetitionVideo.error", icon: "🔲" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let repCount=0,total=0;
+for(let y=0;y<h;y+=4){for(let x=0;x<w-8;x+=4){const i=(y*w+x)*4;const j=(y*w+x+8)*4;
+if(Math.abs(pixels[i]-pixels[j])<2&&Math.abs(pixels[i+1]-pixels[j+1])<2&&Math.abs(pixels[i+2]-pixels[j+2])<2)repCount++;total++;}}
+const ratio=total>0?repCount/total:0;
+let score;if(ratio>0.5)score=70;else if(ratio>0.3)score=56;else if(ratio<0.05)score=30;else score=44;
+const details=`Repetition: ${ratio.toFixed(4)}.`;
     return {
         name: "Pixel Repetition", nameKey: "signal.pixelRepetitionVideo", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Pixel pattern repetition in frame — potential AI-generated video artifact" : "Natural pixel pattern repetition in frame — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.pixelRepetitionVideo.ai" : "signal.pixelRepetitionVideo.real", icon: "🔁",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Pixel Repetition — potential AI artifact" : "Natural pixel repetition — authentic",
+        descriptionKey: score > 55 ? "signal.pixelRepetitionVideo.ai" : "signal.pixelRepetitionVideo.real", icon: "🔲",
+        details,
     };
 }

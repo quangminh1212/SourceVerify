@@ -1,34 +1,28 @@
 /**
  * Text Coherence Score
- * Overall text coherence scoring
+ * Unique algorithm for text coherence score detection
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeTextCoherence(text: string): AnalysisMethod {
     if (text.length < 100) {
-        return { name: "Text Coherence Score", nameKey: "signal.textCoherence", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.textCoherence.error", icon: "🎯" };
+        return { name: "Text Coherence Score", nameKey: "signal.textCoherence", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.textCoherence.error", icon: "📋" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Text Coherence Score", nameKey: "signal.textCoherence", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.textCoherence.error", icon: "🎯" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const sents=text.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>5);
+    if(sents.length<3)return{name:"Text Coherence Score",nameKey:"signal.textCoherence",category:"statistical",score:50,weight:0.2,description:"Too few sentences",descriptionKey:"signal.textCoherence.error",icon:"📋"};
+    const ws=text.split(/\s+/);const uniqueRatio=new Set(ws.map(w=>w.toLowerCase())).size/ws.length;
+    const sentLens=sents.map(s=>s.split(/\s+/).length);
+    const meanLen=sentLens.reduce((a,b)=>a+b,0)/sentLens.length;
+    const lenCV=meanLen>0?Math.sqrt(sentLens.reduce((a,b)=>a+(b-meanLen)**2,0)/sentLens.length)/meanLen:0;
+    const coherence=uniqueRatio*(1-lenCV*0.5);
+    let score;
+    if(coherence>0.7)score=30;else if(coherence>0.55)score=42;else if(coherence<0.3)score=70;else score=55;
+    const details=`Coherence: ${coherence.toFixed(3)}, LenCV: ${lenCV.toFixed(3)}, LexDiv: ${uniqueRatio.toFixed(3)}.`;
     return {
         name: "Text Coherence Score", nameKey: "signal.textCoherence", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Overall text coherence scoring — pattern suggests AI generation" : "Natural overall text coherence scoring — consistent with human writing",
-        descriptionKey: score > 55 ? "signal.textCoherence.ai" : "signal.textCoherence.real", icon: "🎯",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        description: score > 55 ? "Text Coherence Score pattern suggests AI generation" : "Natural text coherence score — consistent with human writing",
+        descriptionKey: score > 55 ? "signal.textCoherence.ai" : "signal.textCoherence.real", icon: "📋",
+        details,
     };
 }

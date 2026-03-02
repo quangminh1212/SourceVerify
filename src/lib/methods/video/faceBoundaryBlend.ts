@@ -1,6 +1,6 @@
 /**
  * Face Boundary Blend
- * Face boundary blending artifact
+ * Algorithm: blendDetect
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,17 @@ export function analyzeFaceBoundaryBlend(pixels: Uint8ClampedArray, w: number, h
     if (w < 16 || h < 16) {
         return { name: "Face Boundary Blend", nameKey: "signal.faceBoundaryBlend", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceBoundaryBlend.error", icon: "🎭" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let blendScore2=0,cnt=0;const cx2=w/2,cy2=h/3;const r2=Math.min(w,h)/4;
+for(let a=0;a<360;a+=5){const x=Math.floor(cx2+r2*Math.cos(a*Math.PI/180));const y=Math.floor(cy2+r2*Math.sin(a*Math.PI/180));
+if(x>1&&x<w-2&&y>1&&y<h-2){const i=(y*w+x)*4;const io=(y*w+x+2)*4;const ii=(y*w+x-2)*4;
+blendScore2+=Math.abs(2*pixels[i]-pixels[io]-pixels[ii])+Math.abs(2*pixels[i+1]-pixels[io+1]-pixels[ii+1]);cnt++;}}
+const avg=cnt>0?blendScore2/cnt:0;
+let score;if(avg<8)score=68;else if(avg<20)score=55;else if(avg>40)score=30;else score=44;
+const details=`Blend score: ${avg.toFixed(2)}.`;
     return {
         name: "Face Boundary Blend", nameKey: "signal.faceBoundaryBlend", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Face boundary blending artifact — potential AI-generated video artifact" : "Natural face boundary blending artifact — consistent with authentic video",
+        description: score > 55 ? "Face Boundary Blend — potential AI artifact" : "Natural face boundary blend — authentic",
         descriptionKey: score > 55 ? "signal.faceBoundaryBlend.ai" : "signal.faceBoundaryBlend.real", icon: "🎭",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

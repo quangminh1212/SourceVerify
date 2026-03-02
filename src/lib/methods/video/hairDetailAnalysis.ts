@@ -1,6 +1,6 @@
 /**
  * Hair Detail Analysis
- * Hair strand detail and rendering quality
+ * Algorithm: spatialCorr
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,18 @@ export function analyzeHairDetailAnalysis(pixels: Uint8ClampedArray, w: number, 
     if (w < 16 || h < 16) {
         return { name: "Hair Detail Analysis", nameKey: "signal.hairDetailAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.hairDetailAnalysis.error", icon: "💇" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let autocorr=0,total=0;
+for(let y=0;y<h;y+=4){for(let x=0;x<w-2;x+=4){const i=(y*w+x)*4;const j=(y*w+x+2)*4;
+const g1=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+const g2=pixels[j]*0.299+pixels[j+1]*0.587+pixels[j+2]*0.114;
+autocorr+=g1*g2;total++;}}
+const avgCorr=total>0?autocorr/(total*255*255):0;
+let score;if(avgCorr>0.85)score=70;else if(avgCorr>0.7)score=58;else if(avgCorr<0.4)score=30;else score=45;
+const details=`Autocorrelation: ${avgCorr.toFixed(4)}.`;
     return {
         name: "Hair Detail Analysis", nameKey: "signal.hairDetailAnalysis", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Hair strand detail and rendering quality — potential AI-generated video artifact" : "Natural hair strand detail and rendering quality — consistent with authentic video",
+        description: score > 55 ? "Hair Detail Analysis — potential AI artifact" : "Natural hair detail analysis — authentic",
         descriptionKey: score > 55 ? "signal.hairDetailAnalysis.ai" : "signal.hairDetailAnalysis.real", icon: "💇",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

@@ -1,6 +1,6 @@
 /**
  * Texture Flow
- * Texture flow coherence analysis
+ * Algorithm: coherence
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,19 @@ export function analyzeTextureFlowAnalysis(pixels: Uint8ClampedArray, w: number,
     if (w < 16 || h < 16) {
         return { name: "Texture Flow", nameKey: "signal.textureFlowAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.textureFlowAnalysis.error", icon: "🌊" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let coh=0,cnt=0;
+for(let y=1;y<h-1;y+=3){for(let x=1;x<w-1;x+=3){const i=(y*w+x)*4;
+const gx=pixels[i+4]-pixels[i-4];const gy=pixels[i+w*4]-pixels[i-w*4];
+const j=((y+1)*w+x)*4;const gx2=pixels[j+4]-pixels[j-4];const gy2=pixels[j+w*4]-pixels[j-w*4];
+const dot=gx*gx2+gy*gy2;const m1=Math.sqrt(gx*gx+gy*gy);const m2=Math.sqrt(gx2*gx2+gy2*gy2);
+if(m1>2&&m2>2)coh+=dot/(m1*m2);cnt++;}}
+const avg=cnt>0?coh/cnt:0;
+let score;if(avg>0.8)score=68;else if(avg>0.5)score=55;else if(avg<0.1)score=32;else score=44;
+const details=`Flow coherence: ${avg.toFixed(4)}.`;
     return {
         name: "Texture Flow", nameKey: "signal.textureFlowAnalysis", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Texture flow coherence analysis — potential AI-generated video artifact" : "Natural texture flow coherence analysis — consistent with authentic video",
+        description: score > 55 ? "Texture Flow — potential AI artifact" : "Natural texture flow — authentic",
         descriptionKey: score > 55 ? "signal.textureFlowAnalysis.ai" : "signal.textureFlowAnalysis.real", icon: "🌊",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

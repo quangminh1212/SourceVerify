@@ -1,6 +1,6 @@
 /**
  * Eyebrow Naturalness
- * Eyebrow texture and shape analysis
+ * Algorithm: horizLine
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,15 @@ export function analyzeEyebrowNaturalness(pixels: Uint8ClampedArray, w: number, 
     if (w < 16 || h < 16) {
         return { name: "Eyebrow Naturalness", nameKey: "signal.eyebrowNaturalness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.eyebrowNaturalness.error", icon: "🤨" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let lineE=0,cnt=0;
+for(let y=Math.floor(h*0.15);y<Math.floor(h*0.4);y+=2){let rowE=0;for(let x=1;x<w-1;x++){const i=(y*w+x)*4;rowE+=Math.abs(pixels[i+4]-pixels[i-4]);}lineE+=rowE/w;cnt++;}
+const avgLine=cnt>0?lineE/cnt:0;
+let score;if(avgLine<5)score=68;else if(avgLine<12)score=55;else if(avgLine>25)score=32;else score=44;
+const details=`Horiz edge: ${avgLine.toFixed(3)}.`;
     return {
         name: "Eyebrow Naturalness", nameKey: "signal.eyebrowNaturalness", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Eyebrow texture and shape analysis — potential AI-generated video artifact" : "Natural eyebrow texture and shape analysis — consistent with authentic video",
+        description: score > 55 ? "Eyebrow Naturalness — potential AI artifact" : "Natural eyebrow naturalness — authentic",
         descriptionKey: score > 55 ? "signal.eyebrowNaturalness.ai" : "signal.eyebrowNaturalness.real", icon: "🤨",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

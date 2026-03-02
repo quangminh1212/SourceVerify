@@ -1,6 +1,6 @@
 /**
  * Sentiment Variance
- * Sentiment variation analysis
+ * Unique algorithm for sentiment variance detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,20 @@ export function analyzeSentimentVariance(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Sentiment Variance", nameKey: "signal.sentimentVariance", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.sentimentVariance.error", icon: "📈" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Sentiment Variance", nameKey: "signal.sentimentVariance", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.sentimentVariance.error", icon: "📈" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const pos=['good','great','best','happy','love','excellent','wonderful','amazing','fantastic','brilliant','perfect','beautiful','outstanding','superb','magnificent'];
+    const neg=['bad','worst','terrible','awful','horrible','hate','ugly','disgusting','poor','dreadful','miserable','pathetic','disappointing','atrocious','abysmal'];
+    const sents=text.split(/[.!?]+/).filter(s=>s.trim().length>3);
+    const sentScores=sents.map(s=>{const w=s.toLowerCase().split(/\s+/);let sc=0;for(const x of w){if(pos.includes(x))sc++;if(neg.includes(x))sc--;}return sc;});
+    const mean=sentScores.reduce((a,b)=>a+b,0)/sentScores.length;
+    const variance=sentScores.reduce((a,b)=>a+(b-mean)**2,0)/sentScores.length;
+    let score;
+    if(variance<0.05)score=68;else if(variance<0.2)score=56;else if(variance>1)score=28;else score=44;
+    const details=`Sentiment var: ${variance.toFixed(4)}, Mean: ${mean.toFixed(3)}.`;
     return {
         name: "Sentiment Variance", nameKey: "signal.sentimentVariance", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Sentiment variation analysis — pattern suggests AI generation" : "Natural sentiment variation analysis — consistent with human writing",
+        description: score > 55 ? "Sentiment Variance pattern suggests AI generation" : "Natural sentiment variance — consistent with human writing",
         descriptionKey: score > 55 ? "signal.sentimentVariance.ai" : "signal.sentimentVariance.real", icon: "📈",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

@@ -1,43 +1,25 @@
 /**
  * Neck Transition
- * Neck-face boundary transition analysis
+ * Algorithm: bottomGrad
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeNeckTransition(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Neck Transition", nameKey: "signal.neckTransition", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.neckTransition.error", icon: "🦒" };
+        return { name: "Neck Transition", nameKey: "signal.neckTransition", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.neckTransition.error", icon: "🔽" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const botStart=Math.floor(h*0.7);let gradSum=0,cnt=0;
+for(let y=botStart;y<h-1;y+=2){for(let x=0;x<w;x+=3){const i1=(y*w+x)*4,i2=((y+1)*w+x)*4;
+const g1=pixels[i1]*0.299+pixels[i1+1]*0.587+pixels[i1+2]*0.114;
+const g2=pixels[i2]*0.299+pixels[i2+1]*0.587+pixels[i2+2]*0.114;
+gradSum+=Math.abs(g1-g2);cnt++;}}
+const avg=cnt>0?gradSum/cnt:0;
+let score;if(avg<2)score=68;else if(avg<6)score=55;else if(avg>15)score=30;else score=44;
+const details=`Bottom gradient: ${avg.toFixed(3)}.`;
     return {
         name: "Neck Transition", nameKey: "signal.neckTransition", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Neck-face boundary transition analysis — potential AI-generated video artifact" : "Natural neck-face boundary transition analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.neckTransition.ai" : "signal.neckTransition.real", icon: "🦒",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Neck Transition — potential AI artifact" : "Natural neck transition — authentic",
+        descriptionKey: score > 55 ? "signal.neckTransition.ai" : "signal.neckTransition.real", icon: "🔽",
+        details,
     };
 }

@@ -1,6 +1,6 @@
 /**
  * Transition Quality
- * Transition smoothness analysis
+ * Unique algorithm for transition quality detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,19 @@ export function analyzeTransitionQuality(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Transition Quality", nameKey: "signal.transitionQuality", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.transitionQuality.error", icon: "🔗" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Transition Quality", nameKey: "signal.transitionQuality", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.transitionQuality.error", icon: "🔗" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const transitions=['however','moreover','furthermore','additionally','nevertheless','consequently','therefore','thus','meanwhile','subsequently','likewise','similarly','conversely','nonetheless','alternatively','accordingly','hence','otherwise','instead','besides'];
+    const ws=text.toLowerCase().split(/\s+/);
+    let count=0;for(const w of ws)if(transitions.includes(w))count++;
+    const sents=text.split(/[.!?]+/).filter(s=>s.trim().length>0).length;
+    const ratio=sents>0?count/sents:0;
+    let score;
+    if(ratio>0.15)score=70;else if(ratio>0.08)score=58;else if(ratio<0.01)score=30;else score=44;
+    const details=`Transition ratio: ${ratio.toFixed(3)}, Found: ${count}.`;
     return {
         name: "Transition Quality", nameKey: "signal.transitionQuality", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Transition smoothness analysis — pattern suggests AI generation" : "Natural transition smoothness analysis — consistent with human writing",
+        description: score > 55 ? "Transition Quality pattern suggests AI generation" : "Natural transition quality — consistent with human writing",
         descriptionKey: score > 55 ? "signal.transitionQuality.ai" : "signal.transitionQuality.real", icon: "🔗",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

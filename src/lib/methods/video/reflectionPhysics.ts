@@ -1,6 +1,6 @@
 /**
  * Reflection Physics
- * Reflection physical consistency analysis
+ * Algorithm: mirrorCheck
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,16 @@ export function analyzeReflectionPhysics(pixels: Uint8ClampedArray, w: number, h
     if (w < 16 || h < 16) {
         return { name: "Reflection Physics", nameKey: "signal.reflectionPhysics", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.reflectionPhysics.error", icon: "🪞" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let mirrorDiff=0,cnt=0;
+for(let y=0;y<h;y+=3){for(let x=0;x<w/2;x+=3){const i1=(y*w+x)*4,i2=(y*w+(w-1-x))*4;
+mirrorDiff+=Math.abs(pixels[i1]-pixels[i2])+Math.abs(pixels[i1+1]-pixels[i2+1])+Math.abs(pixels[i1+2]-pixels[i2+2]);cnt++;}}
+const avg=cnt>0?mirrorDiff/(cnt*3):0;
+let score;if(avg<10)score=70;else if(avg<30)score=55;else if(avg>60)score=30;else score=44;
+const details=`Mirror diff: ${avg.toFixed(2)}.`;
     return {
         name: "Reflection Physics", nameKey: "signal.reflectionPhysics", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Reflection physical consistency analysis — potential AI-generated video artifact" : "Natural reflection physical consistency analysis — consistent with authentic video",
+        description: score > 55 ? "Reflection Physics — potential AI artifact" : "Natural reflection physics — authentic",
         descriptionKey: score > 55 ? "signal.reflectionPhysics.ai" : "signal.reflectionPhysics.real", icon: "🪞",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

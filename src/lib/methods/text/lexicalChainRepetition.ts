@@ -1,34 +1,28 @@
 /**
  * Lexical Chain Repetition
- * Lexical chain repetition pattern
+ * Unique algorithm for lexical chain repetition detection
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeLexicalChainRepetition(text: string): AnalysisMethod {
     if (text.length < 100) {
-        return { name: "Lexical Chain Repetition", nameKey: "signal.lexicalChainRepetition", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.lexicalChainRepetition.error", icon: "🔁" };
+        return { name: "Lexical Chain Repetition", nameKey: "signal.lexicalChainRepetition", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.lexicalChainRepetition.error", icon: "🔗" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Lexical Chain Repetition", nameKey: "signal.lexicalChainRepetition", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.lexicalChainRepetition.error", icon: "🔁" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const ws=text.toLowerCase().replace(/[^\w\s]/g,'').split(/\s+/).filter(w=>w.length>3);
+    if(ws.length<20)return{name:"Lexical Chain Repetition",nameKey:"signal.lexicalChainRepetition",category:"statistical",score:50,weight:0.2,description:"Too few words",descriptionKey:"signal.lexicalChainRepetition.error",icon:"🔗"};
+    const freq=new Map();for(const w of ws)freq.set(w,(freq.get(w)||0)+1);
+    const sorted=[...freq.entries()].sort((a,b)=>b[1]-a[1]);
+    const top10=sorted.slice(0,10);
+    const top10Count=top10.reduce((a,b)=>a+b[1],0);
+    const concentration=ws.length>0?top10Count/ws.length:0;
+    let score;
+    if(concentration>0.4)score=70;else if(concentration>0.25)score=58;else if(concentration<0.1)score=30;else score=44;
+    const details=`Top-10 concentration: ${concentration.toFixed(3)}, Total words: ${ws.length}.`;
     return {
         name: "Lexical Chain Repetition", nameKey: "signal.lexicalChainRepetition", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Lexical chain repetition pattern — pattern suggests AI generation" : "Natural lexical chain repetition pattern — consistent with human writing",
-        descriptionKey: score > 55 ? "signal.lexicalChainRepetition.ai" : "signal.lexicalChainRepetition.real", icon: "🔁",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        description: score > 55 ? "Lexical Chain Repetition pattern suggests AI generation" : "Natural lexical chain repetition — consistent with human writing",
+        descriptionKey: score > 55 ? "signal.lexicalChainRepetition.ai" : "signal.lexicalChainRepetition.real", icon: "🔗",
+        details,
     };
 }

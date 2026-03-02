@@ -1,43 +1,24 @@
 /**
  * Object Boundary
- * Object boundary consistency
+ * Algorithm: cannyLike
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeObjectBoundary(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Object Boundary", nameKey: "signal.objectBoundary", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.objectBoundary.error", icon: "🔲" };
+        return { name: "Object Boundary", nameKey: "signal.objectBoundary", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.objectBoundary.error", icon: "🔳" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let strong=0,weak=0,total=0;
+for(let y=1;y<h-1;y+=2){for(let x=1;x<w-1;x+=2){const i=(y*w+x)*4;
+const gx=pixels[i+4]-pixels[i-4];const gy=pixels[i+w*4]-pixels[i-w*4];
+const mag=Math.sqrt(gx*gx+gy*gy);if(mag>50)strong++;else if(mag>20)weak++;total++;}}
+const strongR=total>0?strong/total:0;const weakR=total>0?weak/total:0;
+let score;if(strongR>0.15)score=38;else if(strongR>0.05)score=48;else if(strongR<0.01)score=65;else score=50;
+const details=`Strong edges: ${(strongR*100).toFixed(1)}%, Weak: ${(weakR*100).toFixed(1)}%.`;
     return {
         name: "Object Boundary", nameKey: "signal.objectBoundary", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Object boundary consistency — potential AI-generated video artifact" : "Natural object boundary consistency — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.objectBoundary.ai" : "signal.objectBoundary.real", icon: "🔲",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Object Boundary — potential AI artifact" : "Natural object boundary — authentic",
+        descriptionKey: score > 55 ? "signal.objectBoundary.ai" : "signal.objectBoundary.real", icon: "🔳",
+        details,
     };
 }

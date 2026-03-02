@@ -1,43 +1,23 @@
 /**
  * Pupil Dilation
- * Pupil response and dilation pattern
+ * Algorithm: centerWeight
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzePupilDilation(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Pupil Dilation", nameKey: "signal.pupilDilation", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pupilDilation.error", icon: "🔍" };
+        return { name: "Pupil Dilation", nameKey: "signal.pupilDilation", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pupilDilation.error", icon: "👁" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let centerE=0,borderE=0,cCnt=0,bCnt=0;const cx=w/2,cy=h/2,r=Math.min(w,h)/4;
+for(let y=0;y<h;y+=3){for(let x=0;x<w;x+=3){const i=(y*w+x)*4;const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+const d=Math.sqrt((x-cx)**2+(y-cy)**2);if(d<r){centerE+=g;cCnt++;}else{borderE+=g;bCnt++;}}}
+const cMean=cCnt>0?centerE/cCnt:128;const bMean=bCnt>0?borderE/bCnt:128;const ratio=bMean>0?cMean/bMean:1;
+let score;if(Math.abs(ratio-1)<0.05)score=68;else if(Math.abs(ratio-1)<0.15)score=55;else score=38;
+const details=`Center/border: ${ratio.toFixed(3)}.`;
     return {
         name: "Pupil Dilation", nameKey: "signal.pupilDilation", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Pupil response and dilation pattern — potential AI-generated video artifact" : "Natural pupil response and dilation pattern — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.pupilDilation.ai" : "signal.pupilDilation.real", icon: "🔍",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Pupil Dilation — potential AI artifact" : "Natural pupil dilation — authentic",
+        descriptionKey: score > 55 ? "signal.pupilDilation.ai" : "signal.pupilDilation.real", icon: "👁",
+        details,
     };
 }

@@ -1,43 +1,25 @@
 /**
  * Facial Wrinkle Consistency
- * Wrinkle pattern and depth analysis
+ * Algorithm: highFreq
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeFacialWrinkle(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Facial Wrinkle Consistency", nameKey: "signal.facialWrinkle", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.facialWrinkle.error", icon: "🔬" };
+        return { name: "Facial Wrinkle Consistency", nameKey: "signal.facialWrinkle", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.facialWrinkle.error", icon: "🔍" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let hf=0,total=0;
+for(let y=1;y<h-1;y+=2){for(let x=1;x<w-1;x+=2){const i=(y*w+x)*4;
+const c=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+const l=-4*c+(pixels[(i-4)]*0.299+pixels[(i-4)+1]*0.587+pixels[(i-4)+2]*0.114)+(pixels[(i+4)]*0.299+pixels[(i+4)+1]*0.587+pixels[(i+4)+2]*0.114)+(pixels[(i-w*4)]*0.299+pixels[(i-w*4)+1]*0.587+pixels[(i-w*4)+2]*0.114)+(pixels[(i+w*4)]*0.299+pixels[(i+w*4)+1]*0.587+pixels[(i+w*4)+2]*0.114);
+hf+=Math.abs(l);total++;}}
+const avgHf=total>0?hf/total:0;
+let score;if(avgHf<3)score=70;else if(avgHf<8)score=56;else if(avgHf>20)score=30;else score=44;
+const details=`High freq: ${avgHf.toFixed(3)}.`;
     return {
         name: "Facial Wrinkle Consistency", nameKey: "signal.facialWrinkle", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Wrinkle pattern and depth analysis — potential AI-generated video artifact" : "Natural wrinkle pattern and depth analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.facialWrinkle.ai" : "signal.facialWrinkle.real", icon: "🔬",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Facial Wrinkle Consistency — potential AI artifact" : "Natural facial wrinkle consistency — authentic",
+        descriptionKey: score > 55 ? "signal.facialWrinkle.ai" : "signal.facialWrinkle.real", icon: "🔍",
+        details,
     };
 }

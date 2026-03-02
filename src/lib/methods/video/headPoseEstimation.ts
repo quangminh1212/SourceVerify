@@ -1,6 +1,6 @@
 /**
  * Head Pose Estimation
- * Head pose physics and rotation analysis
+ * Algorithm: faceRegion
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,17 @@ export function analyzeHeadPoseEstimation(pixels: Uint8ClampedArray, w: number, 
     if (w < 16 || h < 16) {
         return { name: "Head Pose Estimation", nameKey: "signal.headPoseEstimation", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.headPoseEstimation.error", icon: "🗣" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const fy=Math.floor(h*0.1),fh=Math.floor(h*0.5),fx=Math.floor(w*0.2),fw=Math.floor(w*0.6);
+let lMean=0,rMean=0,lC=0,rC=0;const mid=fx+fw/2;
+for(let y=fy;y<fy+fh;y+=2){for(let x=fx;x<fx+fw;x+=2){const i=(y*w+x)*4;const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+if(x<mid){lMean+=g;lC++;}else{rMean+=g;rC++;}}}
+lMean/=lC;rMean/=rC;const asym=Math.abs(lMean-rMean);
+let score;if(asym<5)score=68;else if(asym<15)score=55;else if(asym>35)score=30;else score=44;
+const details=`Face asymmetry: ${asym.toFixed(2)}.`;
     return {
         name: "Head Pose Estimation", nameKey: "signal.headPoseEstimation", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Head pose physics and rotation analysis — potential AI-generated video artifact" : "Natural head pose physics and rotation analysis — consistent with authentic video",
+        description: score > 55 ? "Head Pose Estimation — potential AI artifact" : "Natural head pose estimation — authentic",
         descriptionKey: score > 55 ? "signal.headPoseEstimation.ai" : "signal.headPoseEstimation.real", icon: "🗣",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

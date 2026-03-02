@@ -1,6 +1,6 @@
 /**
  * Idiom Detection
- * Idiomatic expression usage
+ * Unique algorithm for idiom detection detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,19 @@ export function analyzeIdiomDetection(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Idiom Detection", nameKey: "signal.idiomDetection", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.idiomDetection.error", icon: "💬" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Idiom Detection", nameKey: "signal.idiomDetection", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.idiomDetection.error", icon: "💬" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const idioms=['break the ice','hit the nail','piece of cake','once in a blue moon','bite the bullet','burn the midnight','cost an arm','call it a day','get out of hand','go the extra mile','in the same boat','let the cat out','miss the boat','under the weather','break a leg','back to square','beat around the bush','better late than','on the same page','speak of the devil'];
+    const lower=text.toLowerCase();
+    let count=0;for(const id of idioms)if(lower.includes(id))count++;
+    const ws=text.split(/\s+/).length;
+    const density=ws>0?count/(ws/100):0;
+    let score;
+    if(density<0.05)score=62;else if(density<0.2)score=50;else if(density>1)score=30;else score=40;
+    const details=`Idiom density: ${density.toFixed(3)}/100w, Found: ${count}.`;
     return {
         name: "Idiom Detection", nameKey: "signal.idiomDetection", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Idiomatic expression usage — pattern suggests AI generation" : "Natural idiomatic expression usage — consistent with human writing",
+        description: score > 55 ? "Idiom Detection pattern suggests AI generation" : "Natural idiom detection — consistent with human writing",
         descriptionKey: score > 55 ? "signal.idiomDetection.ai" : "signal.idiomDetection.real", icon: "💬",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

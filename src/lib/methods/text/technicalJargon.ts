@@ -1,6 +1,6 @@
 /**
  * Technical Jargon
- * Technical term density
+ * Unique algorithm for technical jargon detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,18 @@ export function analyzeTechnicalJargon(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Technical Jargon", nameKey: "signal.technicalJargon", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.technicalJargon.error", icon: "🔧" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Technical Jargon", nameKey: "signal.technicalJargon", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.technicalJargon.error", icon: "🔧" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const ws=text.split(/[\s,.;:!?]+/).filter(w=>w.length>0);
+    let techCount=0;
+    for(const w of ws){if(w.length>10)techCount++;else if(/[A-Z]{2,}/.test(w))techCount++;else if(/\d+/.test(w)&&/[a-zA-Z]/.test(w))techCount++;}
+    const ratio=ws.length>0?techCount/ws.length:0;
+    let score;
+    if(ratio>0.15)score=35;else if(ratio>0.08)score=45;else if(ratio<0.02)score=62;else score=50;
+    const details=`Technical ratio: ${ratio.toFixed(4)}, Tech words: ${techCount}/${ws.length}.`;
     return {
         name: "Technical Jargon", nameKey: "signal.technicalJargon", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Technical term density — pattern suggests AI generation" : "Natural technical term density — consistent with human writing",
+        description: score > 55 ? "Technical Jargon pattern suggests AI generation" : "Natural technical jargon — consistent with human writing",
         descriptionKey: score > 55 ? "signal.technicalJargon.ai" : "signal.technicalJargon.real", icon: "🔧",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

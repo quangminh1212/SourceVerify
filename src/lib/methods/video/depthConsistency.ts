@@ -1,43 +1,26 @@
 /**
  * Depth Consistency
- * Depth map consistency analysis
+ * Algorithm: gradMag
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeDepthConsistency(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Depth Consistency", nameKey: "signal.depthConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.depthConsistency.error", icon: "📏" };
+        return { name: "Depth Consistency", nameKey: "signal.depthConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.depthConsistency.error", icon: "🔭" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let totalGrad=0,cnt=0;
+for(let y=1;y<h-1;y+=3){for(let x=1;x<w-1;x+=3){const i=(y*w+x)*4;
+const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+const gx=(pixels[i+4]*0.299+pixels[i+5]*0.587+pixels[i+6]*0.114)-g;
+const gy=(pixels[i+w*4]*0.299+pixels[i+w*4+1]*0.587+pixels[i+w*4+2]*0.114)-g;
+totalGrad+=Math.sqrt(gx*gx+gy*gy);cnt++;}}
+const avg=cnt>0?totalGrad/cnt:0;
+let score;if(avg<5)score=68;else if(avg<12)score=55;else if(avg>30)score=30;else score=44;
+const details=`Avg gradient mag: ${avg.toFixed(3)}.`;
     return {
         name: "Depth Consistency", nameKey: "signal.depthConsistency", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Depth map consistency analysis — potential AI-generated video artifact" : "Natural depth map consistency analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.depthConsistency.ai" : "signal.depthConsistency.real", icon: "📏",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Depth Consistency — potential AI artifact" : "Natural depth consistency — authentic",
+        descriptionKey: score > 55 ? "signal.depthConsistency.ai" : "signal.depthConsistency.real", icon: "🔭",
+        details,
     };
 }

@@ -1,6 +1,6 @@
 /**
  * Word Length Distribution
- * Word length distribution analysis
+ * Unique algorithm for word length distribution detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,20 @@ export function analyzeWordLengthDist(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Word Length Distribution", nameKey: "signal.wordLengthDist", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.wordLengthDist.error", icon: "📏" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Word Length Distribution", nameKey: "signal.wordLengthDist", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.wordLengthDist.error", icon: "📏" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const ws=text.split(/\s+/).filter(w=>w.length>0);
+    const lens=ws.map(w=>w.replace(/[^a-zA-Z]/g,'').length).filter(l=>l>0);
+    if(lens.length<10)return{name:"Word Length Distribution",nameKey:"signal.wordLengthDist",category:"statistical",score:50,weight:0.2,description:"Too few words",descriptionKey:"signal.wordLengthDist.error",icon:"📏"};
+    const bins=new Array(15).fill(0);for(const l of lens)bins[Math.min(l,14)]++;
+    const total=lens.length;const probs=bins.map(b=>b/total);
+    let entropy=0;for(const p of probs)if(p>0)entropy-=p*Math.log2(p);
+    let score;
+    if(entropy<2.5)score=68;else if(entropy<3.0)score=56;else if(entropy>3.5)score=32;else score=44;
+    const details=`Length entropy: ${entropy.toFixed(3)}, Mean len: ${(lens.reduce((a,b)=>a+b,0)/lens.length).toFixed(2)}.`;
     return {
         name: "Word Length Distribution", nameKey: "signal.wordLengthDist", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Word length distribution analysis — pattern suggests AI generation" : "Natural word length distribution analysis — consistent with human writing",
+        description: score > 55 ? "Word Length Distribution pattern suggests AI generation" : "Natural word length distribution — consistent with human writing",
         descriptionKey: score > 55 ? "signal.wordLengthDist.ai" : "signal.wordLengthDist.real", icon: "📏",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

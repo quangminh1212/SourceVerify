@@ -1,6 +1,6 @@
 /**
  * Face Alignment
- * Face alignment geometry consistency
+ * Algorithm: colProfile
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,16 @@ export function analyzeFaceAlignment(pixels: Uint8ClampedArray, w: number, h: nu
     if (w < 16 || h < 16) {
         return { name: "Face Alignment", nameKey: "signal.faceAlignment", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceAlignment.error", icon: "📐" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const profile=[];
+for(let x=0;x<w;x+=2){let sum=0,cnt2=0;for(let y=0;y<h;y+=2){const i=(y*w+x)*4;sum+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;cnt2++;}profile.push(sum/cnt2);}
+const mean=profile.reduce((a,b)=>a+b,0)/profile.length;
+const cv=mean>0?Math.sqrt(profile.reduce((a,b)=>a+(b-mean)**2,0)/profile.length)/mean:0;
+let score;if(cv<0.05)score=68;else if(cv<0.12)score=55;else if(cv>0.3)score=30;else score=44;
+const details=`Column CV: ${cv.toFixed(4)}.`;
     return {
         name: "Face Alignment", nameKey: "signal.faceAlignment", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Face alignment geometry consistency — potential AI-generated video artifact" : "Natural face alignment geometry consistency — consistent with authentic video",
+        description: score > 55 ? "Face Alignment — potential AI artifact" : "Natural face alignment — authentic",
         descriptionKey: score > 55 ? "signal.faceAlignment.ai" : "signal.faceAlignment.real", icon: "📐",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

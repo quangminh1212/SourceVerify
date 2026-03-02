@@ -1,34 +1,26 @@
 /**
  * Abstract-Concrete Ratio
- * Abstract vs concrete language balance
+ * Unique algorithm for abstract-concrete ratio detection
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeAbstractConcrete(text: string): AnalysisMethod {
     if (text.length < 100) {
-        return { name: "Abstract-Concrete Ratio", nameKey: "signal.abstractConcrete", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.abstractConcrete.error", icon: "🧊" };
+        return { name: "Abstract-Concrete Ratio", nameKey: "signal.abstractConcrete", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.abstractConcrete.error", icon: "🔬" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Abstract-Concrete Ratio", nameKey: "signal.abstractConcrete", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.abstractConcrete.error", icon: "🧊" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const abstractW=['concept','idea','theory','freedom','justice','beauty','truth','knowledge','wisdom','belief','faith','hope','democracy','philosophy','morality','virtue','dignity','consciousness','reality','existence'];
+    const concreteW=['table','chair','dog','car','house','tree','book','phone','water','food','door','window','road','building','hand','face','wall','floor','stone','glass'];
+    const ws=text.toLowerCase().split(/[\s,.;:!?]+/).filter(w=>w.length>2);
+    let abs=0,con=0;for(const w of ws){if(abstractW.includes(w))abs++;if(concreteW.includes(w))con++;}
+    const total=abs+con;const ratio=total>0?abs/total:0.5;
+    let score;
+    if(ratio>0.8)score=68;else if(ratio>0.6)score=56;else if(ratio<0.2)score=32;else score=44;
+    const details=`Abstract ratio: ${ratio.toFixed(3)}, Abstract: ${abs}, Concrete: ${con}.`;
     return {
         name: "Abstract-Concrete Ratio", nameKey: "signal.abstractConcrete", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Abstract vs concrete language balance — pattern suggests AI generation" : "Natural abstract vs concrete language balance — consistent with human writing",
-        descriptionKey: score > 55 ? "signal.abstractConcrete.ai" : "signal.abstractConcrete.real", icon: "🧊",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        description: score > 55 ? "Abstract-Concrete Ratio pattern suggests AI generation" : "Natural abstract-concrete ratio — consistent with human writing",
+        descriptionKey: score > 55 ? "signal.abstractConcrete.ai" : "signal.abstractConcrete.real", icon: "🔬",
+        details,
     };
 }

@@ -1,6 +1,6 @@
 /**
  * Edge Ringing
- * Edge ringing artifact analysis
+ * Algorithm: ringing
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,19 @@ export function analyzeEdgeRinging(pixels: Uint8ClampedArray, w: number, h: numb
     if (w < 16 || h < 16) {
         return { name: "Edge Ringing", nameKey: "signal.edgeRinging", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.edgeRinging.error", icon: "〰" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let ring=0,total=0;
+for(let y=2;y<h-2;y+=3){for(let x=2;x<w-2;x+=3){const i=(y*w+x)*4;
+const g0=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+const g1=pixels[(i+8)]*0.299+pixels[(i+9)]*0.587+pixels[(i+10)]*0.114;
+const g2=pixels[(i+16)]*0.299+pixels[(i+17)]*0.587+pixels[(i+18)]*0.114;
+if((g1-g0)*(g2-g1)<0&&Math.abs(g1-g0)>10)ring++;total++;}}
+const ratio=total>0?ring/total:0;
+let score;if(ratio>0.3)score=65;else if(ratio>0.15)score=52;else if(ratio<0.02)score=35;else score=44;
+const details=`Ring ratio: ${ratio.toFixed(4)}.`;
     return {
         name: "Edge Ringing", nameKey: "signal.edgeRinging", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Edge ringing artifact analysis — potential AI-generated video artifact" : "Natural edge ringing artifact analysis — consistent with authentic video",
+        description: score > 55 ? "Edge Ringing — potential AI artifact" : "Natural edge ringing — authentic",
         descriptionKey: score > 55 ? "signal.edgeRinging.ai" : "signal.edgeRinging.real", icon: "〰",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

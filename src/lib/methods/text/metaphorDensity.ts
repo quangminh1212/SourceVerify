@@ -1,34 +1,26 @@
 /**
  * Metaphor Density
- * Figurative language density
+ * Unique algorithm for metaphor density detection
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeMetaphorDensity(text: string): AnalysisMethod {
     if (text.length < 100) {
-        return { name: "Metaphor Density", nameKey: "signal.metaphorDensity", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.metaphorDensity.error", icon: "🌟" };
+        return { name: "Metaphor Density", nameKey: "signal.metaphorDensity", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.metaphorDensity.error", icon: "🎭" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Metaphor Density", nameKey: "signal.metaphorDensity", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.metaphorDensity.error", icon: "🌟" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const markers=['like a','as if','as though','resembles','mirror','echoes','shadow of','heart of','ocean of','mountain of','river of','sea of','flood of','storm of','fire of','light of','wave of','bridge between','wall of','door to','window into','key to','path to','garden of','forest of'];
+    const lower=text.toLowerCase();
+    let count=0;for(const m of markers){let i=-1;while((i=lower.indexOf(m,i+1))!==-1)count++;}
+    const sents=text.split(/[.!?]+/).filter(s=>s.trim().length>0).length;
+    const density=sents>0?count/sents:0;
+    let score;
+    if(density<0.05)score=65;else if(density<0.15)score=55;else if(density>0.5)score=30;else score=42;
+    const details=`Figurative density: ${density.toFixed(3)}, Markers: ${count}, Sentences: ${sents}.`;
     return {
         name: "Metaphor Density", nameKey: "signal.metaphorDensity", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Figurative language density — pattern suggests AI generation" : "Natural figurative language density — consistent with human writing",
-        descriptionKey: score > 55 ? "signal.metaphorDensity.ai" : "signal.metaphorDensity.real", icon: "🌟",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        description: score > 55 ? "Metaphor Density pattern suggests AI generation" : "Natural metaphor density — consistent with human writing",
+        descriptionKey: score > 55 ? "signal.metaphorDensity.ai" : "signal.metaphorDensity.real", icon: "🎭",
+        details,
     };
 }

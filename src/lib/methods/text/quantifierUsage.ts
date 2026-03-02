@@ -1,6 +1,6 @@
 /**
  * Quantifier Usage
- * Quantifier frequency analysis
+ * Unique algorithm for quantifier usage detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,18 @@ export function analyzeQuantifierUsage(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Quantifier Usage", nameKey: "signal.quantifierUsage", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.quantifierUsage.error", icon: "🔢" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Quantifier Usage", nameKey: "signal.quantifierUsage", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.quantifierUsage.error", icon: "🔢" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const quants=['all','every','each','most','many','much','some','few','several','any','no','none','both','either','neither','plenty','enough','various','numerous','countless'];
+    const ws=text.toLowerCase().split(/[\s,.;:!?]+/).filter(w=>w.length>0);
+    let count=0;for(const w of ws)if(quants.includes(w))count++;
+    const ratio=ws.length>0?count/ws.length:0;
+    let score;
+    if(ratio>0.04)score=62;else if(ratio>0.025)score=52;else if(ratio<0.005)score=38;else score=46;
+    const details=`Quantifier ratio: ${ratio.toFixed(4)}, Found: ${count}.`;
     return {
         name: "Quantifier Usage", nameKey: "signal.quantifierUsage", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Quantifier frequency analysis — pattern suggests AI generation" : "Natural quantifier frequency analysis — consistent with human writing",
+        description: score > 55 ? "Quantifier Usage pattern suggests AI generation" : "Natural quantifier usage — consistent with human writing",
         descriptionKey: score > 55 ? "signal.quantifierUsage.ai" : "signal.quantifierUsage.real", icon: "🔢",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

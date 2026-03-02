@@ -1,6 +1,6 @@
 /**
  * Face Illumination
- * Face illumination consistency
+ * Algorithm: illumination
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,18 @@ export function analyzeFaceIllumination(pixels: Uint8ClampedArray, w: number, h:
     if (w < 16 || h < 16) {
         return { name: "Face Illumination", nameKey: "signal.faceIllumination", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceIllumination.error", icon: "💡" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const strips=8;const means=[];
+for(let s=0;s<strips;s++){const y1=Math.floor(s*h/strips),y2=Math.floor((s+1)*h/strips);let sum=0,cnt=0;
+for(let y=y1;y<y2;y+=2){for(let x=0;x<w;x+=2){const i=(y*w+x)*4;sum+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;cnt++;}}
+means.push(cnt>0?sum/cnt:128);}
+const mMean=means.reduce((a,b)=>a+b,0)/means.length;
+const mCV=mMean>0?Math.sqrt(means.reduce((a,b)=>a+(b-mMean)**2,0)/means.length)/mMean:0;
+let score;if(mCV<0.05)score=68;else if(mCV<0.12)score=55;else if(mCV>0.3)score=30;else score=44;
+const details=`Illum CV: ${mCV.toFixed(4)}.`;
     return {
         name: "Face Illumination", nameKey: "signal.faceIllumination", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Face illumination consistency — potential AI-generated video artifact" : "Natural face illumination consistency — consistent with authentic video",
+        description: score > 55 ? "Face Illumination — potential AI artifact" : "Natural face illumination — authentic",
         descriptionKey: score > 55 ? "signal.faceIllumination.ai" : "signal.faceIllumination.real", icon: "💡",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

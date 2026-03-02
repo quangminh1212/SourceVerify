@@ -1,6 +1,6 @@
 /**
  * Background Perspective
- * Background perspective geometry consistency
+ * Algorithm: depthHint
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,36 +8,16 @@ export function analyzeBackgroundPerspective(pixels: Uint8ClampedArray, w: numbe
     if (w < 16 || h < 16) {
         return { name: "Background Perspective", nameKey: "signal.backgroundPerspective", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.backgroundPerspective.error", icon: "🏞" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const topMean=Array(3).fill(0),botMean=Array(3).fill(0);let tC=0,bC=0;
+for(let y=0;y<h;y+=3){for(let x=0;x<w;x+=3){const i=(y*w+x)*4;if(y<h/3){topMean[0]+=pixels[i];topMean[1]+=pixels[i+1];topMean[2]+=pixels[i+2];tC++;}
+else if(y>2*h/3){botMean[0]+=pixels[i];botMean[1]+=pixels[i+1];botMean[2]+=pixels[i+2];bC++;}}}
+const diff=Math.sqrt(Math.pow((topMean[0]/tC-botMean[0]/bC),2)+Math.pow((topMean[1]/tC-botMean[1]/bC),2)+Math.pow((topMean[2]/tC-botMean[2]/bC),2));
+let score;if(diff<15)score=65;else if(diff<40)score=50;else if(diff>80)score=30;else score=44;
+const details=`Top-bottom color diff: ${diff.toFixed(2)}.`;
     return {
         name: "Background Perspective", nameKey: "signal.backgroundPerspective", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Background perspective geometry consistency — potential AI-generated video artifact" : "Natural background perspective geometry consistency — consistent with authentic video",
+        description: score > 55 ? "Background Perspective — potential AI artifact" : "Natural background perspective — authentic",
         descriptionKey: score > 55 ? "signal.backgroundPerspective.ai" : "signal.backgroundPerspective.real", icon: "🏞",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        details,
     };
 }

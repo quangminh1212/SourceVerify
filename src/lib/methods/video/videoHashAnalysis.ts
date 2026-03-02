@@ -1,43 +1,24 @@
 /**
  * Video Hash Analysis
- * Video perceptual hash analysis
+ * Algorithm: dctLike
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoHashAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Hash Analysis", nameKey: "signal.videoHashAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoHashAnalysis.error", icon: "#️⃣" };
+        return { name: "Video Hash Analysis", nameKey: "signal.videoHashAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoHashAnalysis.error", icon: "🔐" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const bs=8,bx=Math.min(Math.floor(w/bs),16),by2=Math.min(Math.floor(h/bs),16);let lowFreq=0,highFreq=0;
+for(let j=0;j<by2;j++){for(let i=0;i<bx;i++){let sum=0,sum2=0;
+for(let dy=0;dy<bs;dy++){for(let dx=0;dx<bs;dx++){const idx=((j*bs+dy)*w+(i*bs+dx))*4;const g=pixels[idx]*0.299+pixels[idx+1]*0.587+pixels[idx+2]*0.114;sum+=g;sum2+=g*g;}}
+const mean2=sum/(bs*bs);const msq=sum2/(bs*bs)-mean2*mean2;if(msq<100)lowFreq++;else highFreq++;}}
+const lfRatio=(lowFreq+highFreq)>0?lowFreq/(lowFreq+highFreq):0;
+let score;if(lfRatio>0.8)score=68;else if(lfRatio>0.6)score=55;else if(lfRatio<0.3)score=30;else score=44;
+const details=`Low-freq ratio: ${lfRatio.toFixed(3)}.`;
     return {
         name: "Video Hash Analysis", nameKey: "signal.videoHashAnalysis", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Video perceptual hash analysis — potential AI-generated video artifact" : "Natural video perceptual hash analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.videoHashAnalysis.ai" : "signal.videoHashAnalysis.real", icon: "#️⃣",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Video Hash Analysis — potential AI artifact" : "Natural video hash analysis — authentic",
+        descriptionKey: score > 55 ? "signal.videoHashAnalysis.ai" : "signal.videoHashAnalysis.real", icon: "🔐",
+        details,
     };
 }

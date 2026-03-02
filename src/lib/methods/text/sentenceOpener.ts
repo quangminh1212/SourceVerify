@@ -1,6 +1,6 @@
 /**
  * Sentence Opener Diversity
- * Sentence beginning diversity analysis
+ * Unique algorithm for sentence opener diversity detection
  */
 import type { AnalysisMethod } from "../../types";
 
@@ -8,27 +8,19 @@ export function analyzeSentenceOpener(text: string): AnalysisMethod {
     if (text.length < 100) {
         return { name: "Sentence Opener Diversity", nameKey: "signal.sentenceOpener", category: "statistical", score: 50, weight: 0.2, description: "Text too short", descriptionKey: "signal.sentenceOpener.error", icon: "🔤" };
     }
-    const words = text.split(/\s+/).filter(w => w.length > 0);
-    const sentences = text.split(/[.!?]+/).map(s => s.trim()).filter(s => s.length > 0);
-    if (sentences.length < 3) {
-        return { name: "Sentence Opener Diversity", nameKey: "signal.sentenceOpener", category: "statistical", score: 50, weight: 0.2, description: "Too few sentences", descriptionKey: "signal.sentenceOpener.error", icon: "🔤" };
-    }
-    const values = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
-    const mean = values.reduce((a, b) => a + b, 0) / values.length;
-    const variance = values.reduce((a, b) => a + (b - mean) ** 2, 0) / values.length;
-    const cv = mean > 0 ? Math.sqrt(variance) / mean : 0;
 
-    let score: number;
-    if (cv < 0.2) score = 72;
-    else if (cv < 0.35) score = 60;
-    else if (cv > 0.8) score = 28;
-    else if (cv > 0.6) score = 38;
-    else score = 48;
-
+    const sents=text.split(/[.!?]+/).map(s=>s.trim()).filter(s=>s.length>3);
+    if(sents.length<5)return{name:"Sentence Opener Diversity",nameKey:"signal.sentenceOpener",category:"statistical",score:50,weight:0.2,description:"Too few sentences",descriptionKey:"signal.sentenceOpener.error",icon:"🔤"};
+    const openers=sents.map(s=>{const ws=s.split(/\s+/);return ws.slice(0,Math.min(2,ws.length)).join(' ').toLowerCase();});
+    const unique=new Set(openers).size;
+    const diversity=unique/openers.length;
+    let score;
+    if(diversity<0.3)score=72;else if(diversity<0.5)score=60;else if(diversity>0.85)score=28;else score=44;
+    const details=`Opener diversity: ${diversity.toFixed(3)}, Unique: ${unique}/${openers.length}.`;
     return {
         name: "Sentence Opener Diversity", nameKey: "signal.sentenceOpener", category: "statistical", score, weight: 0.2,
-        description: score > 55 ? "Sentence beginning diversity analysis — pattern suggests AI generation" : "Natural sentence beginning diversity analysis — consistent with human writing",
+        description: score > 55 ? "Sentence Opener Diversity pattern suggests AI generation" : "Natural sentence opener diversity — consistent with human writing",
         descriptionKey: score > 55 ? "signal.sentenceOpener.ai" : "signal.sentenceOpener.real", icon: "🔤",
-        details: `CV: ${cv.toFixed(3)}, Mean: ${mean.toFixed(2)}, Sentences: ${sentences.length}, Words: ${words.length}.`,
+        details,
     };
 }

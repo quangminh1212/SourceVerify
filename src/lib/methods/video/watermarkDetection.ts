@@ -1,43 +1,24 @@
 /**
  * Watermark Detection
- * AI watermark and signature analysis
+ * Algorithm: cornerAnalysis
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeWatermarkDetection(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Watermark Detection", nameKey: "signal.watermarkDetection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.watermarkDetection.error", icon: "💧" };
+        return { name: "Watermark Detection", nameKey: "signal.watermarkDetection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.watermarkDetection.error", icon: "🔍" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const cs=Math.min(64,Math.floor(Math.min(w,h)/4));
+let cornerE=0,centerE=0,cCnt=0,eCnt=0;
+for(let y=0;y<cs;y++){for(let x=w-cs;x<w;x++){const i=(y*w+x)*4;cornerE+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;eCnt++;}}
+for(let y=Math.floor(h/3);y<Math.floor(2*h/3);y+=2){for(let x=Math.floor(w/3);x<Math.floor(2*w/3);x+=2){const i=(y*w+x)*4;centerE+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;cCnt++;}}
+const cM=cCnt>0?centerE/cCnt:128;const eM=eCnt>0?cornerE/eCnt:128;const diff=Math.abs(cM-eM);
+let score;if(diff>30)score=60;else if(diff>15)score=50;else score=42;
+const details=`Corner-center diff: ${diff.toFixed(2)}.`;
     return {
         name: "Watermark Detection", nameKey: "signal.watermarkDetection", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "AI watermark and signature analysis — potential AI-generated video artifact" : "Natural ai watermark and signature analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.watermarkDetection.ai" : "signal.watermarkDetection.real", icon: "💧",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Watermark Detection — potential AI artifact" : "Natural watermark detection — authentic",
+        descriptionKey: score > 55 ? "signal.watermarkDetection.ai" : "signal.watermarkDetection.real", icon: "🔍",
+        details,
     };
 }

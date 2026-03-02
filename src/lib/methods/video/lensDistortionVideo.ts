@@ -1,43 +1,24 @@
 /**
  * Lens Distortion
- * Lens distortion pattern analysis
+ * Algorithm: radialDist
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeLensDistortionVideo(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Lens Distortion", nameKey: "signal.lensDistortionVideo", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.lensDistortionVideo.error", icon: "🔭" };
+        return { name: "Lens Distortion", nameKey: "signal.lensDistortionVideo", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.lensDistortionVideo.error", icon: "🔍" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const cx=w/2,cy=h/2;let innerM=0,outerM=0,iC=0,oC=0;const maxR=Math.sqrt(cx*cx+cy*cy);
+for(let y=0;y<h;y+=4){for(let x=0;x<w;x+=4){const d=Math.sqrt((x-cx)**2+(y-cy)**2)/maxR;
+const i=(y*w+x)*4;const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;
+if(d<0.3){innerM+=g;iC++;}else if(d>0.7){outerM+=g;oC++;}}}
+const iAvg=iC>0?innerM/iC:128;const oAvg=oC>0?outerM/oC:128;const falloff=Math.abs(iAvg-oAvg);
+let score;if(falloff<5)score=60;else if(falloff<15)score=50;else if(falloff>40)score=35;else score=44;
+const details=`Radial falloff: ${falloff.toFixed(2)}.`;
     return {
         name: "Lens Distortion", nameKey: "signal.lensDistortionVideo", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Lens distortion pattern analysis — potential AI-generated video artifact" : "Natural lens distortion pattern analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.lensDistortionVideo.ai" : "signal.lensDistortionVideo.real", icon: "🔭",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Lens Distortion — potential AI artifact" : "Natural lens distortion — authentic",
+        descriptionKey: score > 55 ? "signal.lensDistortionVideo.ai" : "signal.lensDistortionVideo.real", icon: "🔍",
+        details,
     };
 }

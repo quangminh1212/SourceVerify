@@ -1,43 +1,24 @@
 /**
  * Expression Naturalness
- * Facial expression dynamics analysis
+ * Algorithm: freqApprox
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeExpressionNaturalness(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Expression Naturalness", nameKey: "signal.expressionNaturalness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.expressionNaturalness.error", icon: "😊" };
+        return { name: "Expression Naturalness", nameKey: "signal.expressionNaturalness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.expressionNaturalness.error", icon: "😐" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+const row=new Float64Array(w);let energy=0,total=0;
+for(let y=0;y<h;y+=4){for(let x=0;x<w;x++){const i=(y*w+x)*4;row[x]=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;}
+for(let k=1;k<Math.min(w/2,64);k++){let re=0,im=0;for(let x=0;x<w;x++){const a=2*Math.PI*k*x/w;re+=row[x]*Math.cos(a);im+=row[x]*Math.sin(a);}
+energy+=Math.sqrt(re*re+im*im);total++;}}
+const avgEnergy=total>0?energy/(total*w):0;
+let score;if(avgEnergy<0.3)score=68;else if(avgEnergy<0.6)score=56;else if(avgEnergy>1.2)score=30;else score=44;
+const details=`Freq energy: ${avgEnergy.toFixed(4)}.`;
     return {
         name: "Expression Naturalness", nameKey: "signal.expressionNaturalness", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Facial expression dynamics analysis — potential AI-generated video artifact" : "Natural facial expression dynamics analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.expressionNaturalness.ai" : "signal.expressionNaturalness.real", icon: "😊",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Expression Naturalness — potential AI artifact" : "Natural expression naturalness — authentic",
+        descriptionKey: score > 55 ? "signal.expressionNaturalness.ai" : "signal.expressionNaturalness.real", icon: "😐",
+        details,
     };
 }

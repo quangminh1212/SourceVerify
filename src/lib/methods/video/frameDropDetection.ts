@@ -1,43 +1,25 @@
 /**
  * Frame Drop Detection
- * Frame continuity and drop pattern analysis
+ * Algorithm: edgeVariant
  */
 import type { AnalysisMethod } from "../../types";
 
 export function analyzeFrameDropDetection(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Frame Drop Detection", nameKey: "signal.frameDropDetection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.frameDropDetection.error", icon: "⏭" };
+        return { name: "Frame Drop Detection", nameKey: "signal.frameDropDetection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.frameDropDetection.error", icon: "📉" };
     }
-    const blockSize = 8;
-    const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);
-    let metric1 = 0, metric2 = 0, total = 0;
-
-    for (let by = 0; by < blocksY - 1; by++) {
-        for (let bx = 0; bx < blocksX - 1; bx++) {
-            const idx = (by * blockSize * w + bx * blockSize) * 4;
-            const idxR = (by * blockSize * w + (bx + 1) * blockSize) * 4;
-            const idxD = ((by + 1) * blockSize * w + bx * blockSize) * 4;
-            const g1 = 0.299 * pixels[idx] + 0.587 * pixels[idx + 1] + 0.114 * pixels[idx + 2];
-            const g2 = 0.299 * pixels[idxR] + 0.587 * pixels[idxR + 1] + 0.114 * pixels[idxR + 2];
-            const g3 = 0.299 * pixels[idxD] + 0.587 * pixels[idxD + 1] + 0.114 * pixels[idxD + 2];
-            const diffH = Math.abs(g1 - g2), diffV = Math.abs(g1 - g3);
-            metric1 += diffH + diffV;
-            if (diffH < 5 && diffV < 5) metric2++;
-            total++;
-        }
-    }
-    const avgDiff = total > 0 ? metric1 / (total * 2) : 0;
-    const smoothRatio = total > 0 ? metric2 / total : 0;
-    let score: number;
-    if (smoothRatio > 0.8 && avgDiff < 4) score = 72;
-    else if (smoothRatio > 0.65) score = 60;
-    else if (smoothRatio < 0.3) score = 32;
-    else score = 45;
-
+let edgeCount=0,total=0;
+for(let y=1;y<h-1;y+=2){for(let x=1;x<w-1;x+=2){const i=(y*w+x)*4;
+const gx=pixels[i+4]-pixels[i-4]+2*(pixels[i+4+1]-pixels[i-4+1])+pixels[i+4+2]-pixels[i-4+2];
+const gy=pixels[(i+w*4)]-pixels[(i-w*4)]+2*(pixels[(i+w*4)+1]-pixels[(i-w*4)+1]);
+const mag=Math.sqrt(gx*gx+gy*gy);if(mag>30)edgeCount++;total++;}}
+const edgeRatio=total>0?edgeCount/total:0;
+let score;if(edgeRatio>0.4)score=35;else if(edgeRatio>0.25)score=45;else if(edgeRatio<0.05)score=70;else score=52;
+const details=`Edge ratio: ${edgeRatio.toFixed(4)}, Edges: ${edgeCount}/${total}.`;
     return {
         name: "Frame Drop Detection", nameKey: "signal.frameDropDetection", category: "forensic", score, weight: 0.2,
-        description: score > 55 ? "Frame continuity and drop pattern analysis — potential AI-generated video artifact" : "Natural frame continuity and drop pattern analysis — consistent with authentic video",
-        descriptionKey: score > 55 ? "signal.frameDropDetection.ai" : "signal.frameDropDetection.real", icon: "⏭",
-        details: `Avg diff: ${avgDiff.toFixed(3)}, Smooth ratio: ${smoothRatio.toFixed(3)}.`,
+        description: score > 55 ? "Frame Drop Detection — potential AI artifact" : "Natural frame drop detection — authentic",
+        descriptionKey: score > 55 ? "signal.frameDropDetection.ai" : "signal.frameDropDetection.real", icon: "📉",
+        details,
     };
 }
