@@ -73,11 +73,11 @@ export default function Header() {
 
     useEffect(() => {
         const currentIdx = NAV_KEYS.findIndex(n => pathname === n.href);
-        if (currentIdx === -1) {
+        if (currentIdx === -1 || currentIdx >= NAV_KEYS.length - 1) {
             setNextPageHint("");
             return;
         }
-        const nextIdx = (currentIdx + 1) % NAV_KEYS.length;
+        const nextIdx = currentIdx + 1;
         setNextPageHint(NAV_KEYS[nextIdx].key);
     }, [pathname]);
 
@@ -92,12 +92,12 @@ export default function Header() {
             const atBottom = (window.innerHeight + window.scrollY) >= (scrollHeight - 50);
             const atTop = window.scrollY <= 5;
 
-            if (e.deltaY > 0 && atBottom) {
+            if (e.deltaY > 0 && atBottom && currentIdx < NAV_KEYS.length - 1) {
                 scrollAccum.current += e.deltaY;
                 if (scrollAccum.current >= SCROLL_THRESHOLD) {
                     scrollCooldown.current = true;
                     scrollAccum.current = 0;
-                    const nextIdx = (currentIdx + 1) % NAV_KEYS.length;
+                    const nextIdx = currentIdx + 1;
                     setShowTransition(true);
                     setTimeout(() => {
                         router.push(NAV_KEYS[nextIdx].href);
@@ -107,12 +107,12 @@ export default function Header() {
                         }, 600);
                     }, 300);
                 }
-            } else if (e.deltaY < 0 && atTop) {
+            } else if (e.deltaY < 0 && atTop && currentIdx > 0) {
                 scrollAccum.current -= e.deltaY;
                 if (scrollAccum.current >= SCROLL_THRESHOLD) {
                     scrollCooldown.current = true;
                     scrollAccum.current = 0;
-                    const prevIdx = (currentIdx - 1 + NAV_KEYS.length) % NAV_KEYS.length;
+                    const prevIdx = currentIdx - 1;
                     setShowTransition(true);
                     setTimeout(() => {
                         router.push(NAV_KEYS[prevIdx].href);
