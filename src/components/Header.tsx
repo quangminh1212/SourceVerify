@@ -1,8 +1,8 @@
 ﻿"use client";
 
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -52,16 +52,82 @@ export function loadSettings(): AnalysisSettings {
 
 export default function Header() {
     const pathname = usePathname();
+    const router = useRouter();
     const [open, setOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [user, setUser] = useState<GoogleUser | null>(null);
     const [isDark, setIsDark] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
-
+    const [nextPageHint, setNextPageHint] = useState("");
+    const [showTransition, setShowTransition] = useState(false);
 
     const [settings, setSettings] = useState<AnalysisSettings>(DEFAULT_SETTINGS);
     const { locale, setLocale, t } = useLanguage();
+
+    // --- Scroll-to-navigate logic ---
+    const scrollCooldown = useRef(false);
+    const scrollAccum = useRef(0);
+    const SCROLL_THRESHOLD = 150; // accumulated scroll delta needed to trigger
+
+    useEffect(() => {
+        const currentIdx = NAV_KEYS.findIndex(n => pathname === n.href);
+        if (currentIdx === -1) {
+            setNextPageHint("");
+            return;
+        }
+        const nextIdx = (currentIdx + 1) % NAV_KEYS.length;
+        setNextPageHint(NAV_KEYS[nextIdx].key);
+    }, [pathname]);
+
+    useEffect(() => {
+        const currentIdx = NAV_KEYS.findIndex(n => pathname === n.href);
+        if (currentIdx === -1) return; // not a nav page, skip
+
+        const handleWheel = (e: WheelEvent) => {
+            if (scrollCooldown.current) return;
+
+            const atBottom = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 5);
+            const atTop = window.scrollY <= 5;
+
+            if (e.deltaY > 0 && atBottom) {
+                scrollAccum.current += e.deltaY;
+                if (scrollAccum.current >= SCROLL_THRESHOLD) {
+                    scrollCooldown.current = true;
+                    scrollAccum.current = 0;
+                    const nextIdx = (currentIdx + 1) % NAV_KEYS.length;
+                    setShowTransition(true);
+                    setTimeout(() => {
+                        router.push(NAV_KEYS[nextIdx].href);
+                        setTimeout(() => {
+                            setShowTransition(false);
+                            scrollCooldown.current = false;
+                        }, 600);
+                    }, 300);
+                }
+            } else if (e.deltaY < 0 && atTop) {
+                scrollAccum.current -= e.deltaY;
+                if (scrollAccum.current >= SCROLL_THRESHOLD) {
+                    scrollCooldown.current = true;
+                    scrollAccum.current = 0;
+                    const prevIdx = (currentIdx - 1 + NAV_KEYS.length) % NAV_KEYS.length;
+                    setShowTransition(true);
+                    setTimeout(() => {
+                        router.push(NAV_KEYS[prevIdx].href);
+                        setTimeout(() => {
+                            setShowTransition(false);
+                            scrollCooldown.current = false;
+                        }, 600);
+                    }, 300);
+                }
+            } else {
+                scrollAccum.current = 0;
+            }
+        };
+
+        window.addEventListener('wheel', handleWheel, { passive: true });
+        return () => window.removeEventListener('wheel', handleWheel);
+    }, [pathname, router]);
 
     // Dark mode + settings initialization
     useEffect(() => {
@@ -163,6 +229,25 @@ export default function Header() {
 
     return (
         <>
+            {/* Page transition overlay */}
+            {showTransition && typeof document !== 'undefined' && createPortal(
+                <div className="page-transition-overlay" />,
+                document.body
+            )}
+
+            {/* Scroll navigation indicator at bottom */}
+            {nextPageHint && typeof document !== 'undefined' && createPortal(
+                <div className="scroll-nav-indicator">
+                    <div className="scroll-nav-inner">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="6 9 12 15 18 9" />
+                        </svg>
+                        <span>{t(nextPageHint)}</span>
+                    </div>
+                </div>,
+                document.body
+            )}
+
             <header className="header-bar">
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
