@@ -57,7 +57,9 @@ function isOriginAllowed(origin: string | null): boolean {
  */
 export function getCorsHeaders(req: NextRequest): Record<string, string> {
     const origin = req.headers.get("origin");
-    const allowedOrigin = isOriginAllowed(origin) ? (origin || "*") : "";
+    // Same-origin requests (origin=null): don't set CORS headers (browser handles natively)
+    // Cross-origin requests: only allow if origin is in allowed list
+    const allowedOrigin = origin ? (isOriginAllowed(origin) ? origin : "") : "";
 
     return {
         "Access-Control-Allow-Origin": allowedOrigin,
