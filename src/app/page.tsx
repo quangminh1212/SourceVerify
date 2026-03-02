@@ -157,12 +157,6 @@ export default function Home() {
         {!file && !result && !isAnalyzing && (
           <div className="flex flex-col items-center gap-9 text-center max-w-3xl mx-auto animate-fade-in-up">
 
-            {/* Tagline chip */}
-            <div className="hero-chip">
-              <span className="hero-chip-dot" />
-              {t("home.chip")}
-            </div>
-
             {/* Big headline */}
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-[1.15] text-[--color-text-primary] whitespace-nowrap">
               {t("home.headline")} <span className="gradient-text">{t("home.headlineHighlight")}</span> {t("home.headlineSuffix")}
