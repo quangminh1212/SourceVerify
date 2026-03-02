@@ -82,13 +82,31 @@ export default function MethodsPage() {
         router.push("/");
     };
 
+    const handleMediaChange = (key: MediaType) => {
+        setActiveMedia(key);
+        setActiveCat("all"); // reset category when switching media type
+    };
+
     const showSelectUI = isSelectMode && !isLoggedIn;
+
+    // Get categories available in the selected media type
+    const availableCategories = activeMedia === "all"
+        ? CATEGORIES
+        : CATEGORIES.filter(cat =>
+            cat.key === "all" || METHODS.some(m => m.mediaType === activeMedia && m.category === cat.key)
+        );
 
     const filtered = METHODS.filter(m => {
         const catMatch = activeCat === "all" || m.category === activeCat;
         const mediaMatch = activeMedia === "all" || m.mediaType === activeMedia;
         return catMatch && mediaMatch;
     });
+
+    // Count methods for category tabs based on current media type filter
+    const getCatCount = (catKey: Category) => {
+        if (activeMedia === "all") return METHODS.filter(m => m.category === catKey).length;
+        return METHODS.filter(m => m.mediaType === activeMedia && m.category === catKey).length;
+    };
 
     return (
         <main className="relative min-h-screen flex flex-col">
@@ -97,7 +115,7 @@ export default function MethodsPage() {
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-16 lg:pb-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
 
-                    {/* Media Type Tabs — By Content Type */}
+                    {/* Step 1: Media Type Tabs — By Content Type (Primary) */}
                     <div className="methods-filter-section animate-fade-in-up">
                         <span className="methods-filter-label">{t("methods.filterByContent")}</span>
                         <div className="methods-media-tabs">
@@ -105,7 +123,7 @@ export default function MethodsPage() {
                                 <button
                                     key={mt.key}
                                     className={`methods-media-tab ${activeMedia === mt.key ? "active" : ""} ${mt.key !== "all" ? `media-${mt.key}` : ""}`}
-                                    onClick={() => setActiveMedia(mt.key)}
+                                    onClick={() => handleMediaChange(mt.key)}
                                 >
                                     {mt.key !== "all" && <MediaIcon mediaType={mt.key} />}
                                     {t(mt.labelKey)}
@@ -119,26 +137,28 @@ export default function MethodsPage() {
                         </div>
                     </div>
 
-                    {/* Category Tabs — By Technique */}
-                    <div className="methods-filter-section animate-fade-in-up">
-                        <span className="methods-filter-label">{t("methods.filterByTechnique")}</span>
-                        <div className="methods-cat-tabs">
-                            {CATEGORIES.map(cat => (
-                                <button
-                                    key={cat.key}
-                                    className={`methods-cat-tab ${activeCat === cat.key ? "active" : ""}`}
-                                    onClick={() => setActiveCat(cat.key)}
-                                >
-                                    {t(cat.labelKey)}
-                                    {cat.key !== "all" && (
-                                        <span className={`methods-cat-tab-count count-${cat.key}`}>
-                                            {METHODS.filter(m => m.category === cat.key).length}
-                                        </span>
-                                    )}
-                                </button>
-                            ))}
+                    {/* Step 2: Category Tabs — By Technique (only when a specific media type is selected) */}
+                    {activeMedia !== "all" && (
+                        <div className="methods-filter-section animate-fade-in-up">
+                            <span className="methods-filter-label">{t("methods.filterByTechnique")}</span>
+                            <div className="methods-cat-tabs">
+                                {availableCategories.map(cat => (
+                                    <button
+                                        key={cat.key}
+                                        className={`methods-cat-tab ${activeCat === cat.key ? "active" : ""}`}
+                                        onClick={() => setActiveCat(cat.key)}
+                                    >
+                                        {t(cat.labelKey)}
+                                        {cat.key !== "all" && (
+                                            <span className={`methods-cat-tab-count count-${cat.key}`}>
+                                                {getCatCount(cat.key)}
+                                            </span>
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Result count */}
                     <div className="methods-result-count animate-fade-in-up">
