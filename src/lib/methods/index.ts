@@ -134,3 +134,15 @@ export { analyzeSoftwareFingerprint } from "./image/softwareFingerprint";
 
 // ===== VIDEO ANALYSIS METHODS =====
 export { analyzeFaceLandmarkConsistency } from "./video/faceLandmarkConsistency";
+export { analyzeTemporalConsistency } from "./video/temporalConsistency";
+export { analyzeAudioVisualSync } from "./video/audioVisualSync";
+export { analyzeFrameInterpolation } from "./video/frameInterpolation";
+export { analyzeLipSyncAnalysis } from "./video/lipSyncAnalysis";
+export { analyzeOpticalFlowAnomaly } from "./video/opticalFlowAnomaly";
+
+// ===== TEXT ANALYSIS METHODS =====
+export { analyzePerplexityAnalysis } from "./text/perplexityAnalysis";
+export { analyzeBurstinessDetection } from "./text/burstinessDetection";
+export { analyzeVocabularyDiversity } from "./text/vocabularyDiversity";
+export { analyzeStylometricAnalysis } from "./text/stylometricAnalysis";
+export { analyzeNgramFrequency } from "./text/ngramFrequency";
