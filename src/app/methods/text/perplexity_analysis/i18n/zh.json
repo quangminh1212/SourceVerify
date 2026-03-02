@@ -1,0 +1,18 @@
+{
+    "name": "困惑度分析",
+    "description": "Measures text perplexity to detect AI-generated text, which tends to have lower perplexity than human writing.",
+    "useCase": "Detecting AI-generated text by measuring predictability of word sequences",
+    "mechanism": "Calculates per-token perplexity using language models to measure how predictable each word is given its context. AI-generated text typically exhibits lower, more uniform perplexity because language models optimize for precisely this metric, while human text shows more variation and occasional surprising word choices.",
+    "accuracy": "Moderate-High - 78-88% on standard AI-generated text",
+    "source": "Mitchell et al. (2023) - DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature, ICML",
+    "algorithm": "Language Model Perplexity Scoring + Statistical Threshold Analysis",
+    "parameters": "Model: GPT-2 based, Context window: 1024 tokens, Scoring: per-token log probability, Threshold: adaptive",
+    "strengths": "• Does not require training on specific AI models\n• Works across different AI text generators\n• Fast inference with pre-trained models\n• Can analyze text of any length",
+    "limitations": "• Less effective on edited or paraphrased AI text\n• Domain-specific text may have naturally low perplexity\n• Short texts provide less reliable signals\n• Performance varies across languages",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
+}
