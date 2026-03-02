@@ -10,7 +10,6 @@ export function analyzeGpsConsistency(metadata: FileMetadata, exifData: Record<s
     let score = 50;
     let details = "";
 
-    const allKeys = Object.keys(exifData).map(k => k.toLowerCase());
     const allValues = Object.entries(exifData);
 
     // Find GPS-related fields

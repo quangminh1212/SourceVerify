@@ -6,7 +6,7 @@
 
 import type { AnalysisMethod, FileMetadata } from "../types";
 
-export function analyzeFileStructure(metadata: FileMetadata, exifData: Record<string, string>): AnalysisMethod {
+export function analyzeFileStructure(metadata: FileMetadata, _exifData: Record<string, string>): AnalysisMethod {
     let score = 50;
     let details = "";
 
