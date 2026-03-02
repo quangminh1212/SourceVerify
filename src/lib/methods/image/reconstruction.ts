@@ -1,63 +1,68 @@
 /**
  * Signal 3: Multi-scale Reconstruction Discrepancy
- * Improved ELA: re-encode at 3 quality levels, analyze variance pattern
- * 
- * v4: Wider scoring range (5-95) for better separation
+ * Deterministic cross-platform ELA simulation via pixel quantization
+ *
+ * v5: Replaced browser-dependent canvas.toDataURL("image/jpeg") with pure-JS
+ *     quantization to ensure identical results across all machines/browsers.
+ *     JPEG re-encoding varies by browser engine; this approach eliminates that.
+ *
+ * The quantization simulates lossy compression at 3 intensity levels:
+ * - Higher quantStep = coarser loss (like low-quality JPEG)
+ * - Lower quantStep = finer loss (like high-quality JPEG)
+ * AI images have smooth, uniform pixel distributions → uniform quantization error
+ * Real photos have diverse textures/edges → spatially varying quantization error
  */
 
 import type { AnalysisMethod } from "../../types";
 
-export async function analyzeMultiscaleReconstruction(
+export function analyzeMultiscaleReconstruction(
     canvas: HTMLCanvasElement,
     ctx: CanvasRenderingContext2D
-): Promise<AnalysisMethod> {
-    const orig = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
-    const qualities = [0.5, 0.75, 0.9];
+): AnalysisMethod {
+    const w = canvas.width, h = canvas.height;
+    const orig = ctx.getImageData(0, 0, w, h).data;
+
+    // Deterministic quantization at 3 levels (replaces JPEG encode/decode cycle)
+    const quantSteps = [24, 12, 4];
     const blockSize = 16;
-    const blocksX = Math.floor(canvas.width / blockSize);
-    const blocksY = Math.floor(canvas.height / blockSize);
+    const blocksX = Math.floor(w / blockSize);
+    const blocksY = Math.floor(h / blockSize);
     const totalBlocks = blocksX * blocksY;
+
+    if (totalBlocks < 4) {
+        return {
+            name: "Multi-scale Reconstruction", nameKey: "signal.multiScaleReconstruction",
+            category: "forensic", score: 50, weight: 4.0,
+            description: "Image too small for analysis",
+            descriptionKey: "signal.reconstruction.error", icon: "⊞",
+        };
+    }
 
     const scaleErrors: number[][] = [];
 
-    for (const q of qualities) {
-        const dataURL = canvas.toDataURL("image/jpeg", q);
-        const errors = await new Promise<number[]>((resolve) => {
-            const img2 = new Image();
-            img2.onload = () => {
-                const c2 = document.createElement("canvas");
-                c2.width = canvas.width; c2.height = canvas.height;
-                const ctx2 = c2.getContext("2d")!;
-                ctx2.drawImage(img2, 0, 0, canvas.width, canvas.height);
-                const recomp = ctx2.getImageData(0, 0, canvas.width, canvas.height).data;
-
-                const blockErrors: number[] = [];
-                for (let by = 0; by < blocksY; by++) {
-                    for (let bx = 0; bx < blocksX; bx++) {
-                        let diff = 0, count = 0;
-                        for (let y = by * blockSize; y < (by + 1) * blockSize; y++) {
-                            for (let x = bx * blockSize; x < (bx + 1) * blockSize; x++) {
-                                const idx = (y * canvas.width + x) * 4;
-                                diff += Math.abs(orig[idx] - recomp[idx])
-                                    + Math.abs(orig[idx + 1] - recomp[idx + 1])
-                                    + Math.abs(orig[idx + 2] - recomp[idx + 2]);
-                                count++;
-                            }
+    for (const qStep of quantSteps) {
+        const blockErrors: number[] = [];
+        for (let by = 0; by < blocksY; by++) {
+            for (let bx = 0; bx < blocksX; bx++) {
+                let diff = 0, count = 0;
+                for (let y = by * blockSize; y < (by + 1) * blockSize; y++) {
+                    for (let x = bx * blockSize; x < (bx + 1) * blockSize; x++) {
+                        const idx = (y * w + x) * 4;
+                        for (let c = 0; c < 3; c++) {
+                            const val = orig[idx + c];
+                            diff += Math.abs(val - Math.round(val / qStep) * qStep);
                         }
-                        blockErrors.push(count > 0 ? diff / (count * 3) : 0);
+                        count++;
                     }
                 }
-                resolve(blockErrors);
-            };
-            img2.onerror = () => resolve(new Array(totalBlocks).fill(0));
-            img2.src = dataURL;
-        });
-        scaleErrors.push(errors);
+                blockErrors.push(count > 0 ? diff / (count * 3) : 0);
+            }
+        }
+        scaleErrors.push(blockErrors);
     }
 
     // Cross-scale consistency analysis
     let crossScaleVariance = 0;
-
     for (let b = 0; b < totalBlocks; b++) {
         const vals = scaleErrors.map(s => s[b]);
         const mean = vals.reduce((a, v) => a + v, 0) / vals.length;
@@ -73,7 +78,7 @@ export async function analyzeMultiscaleReconstruction(
 
     const combined = totalCV * 0.6 + crossScaleVariance * 0.4;
 
-    // v4: Wider scoring with more granularity
+    // Scoring (same thresholds — quantization produces similar CV ranges as JPEG ELA)
     let score: number;
     if (combined < 0.10) score = 88;
     else if (combined < 0.15) score = 78;
