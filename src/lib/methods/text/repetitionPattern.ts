@@ -29,7 +29,7 @@ export function analyzeRepetitionPattern(text: string): AnalysisMethod {
         trigramCounts.set(trigram, (trigramCounts.get(trigram) || 0) + 1);
     }
     let repeatedTrigrams = 0;
-    let totalTrigrams = words.length - 2;
+    const totalTrigrams = words.length - 2;
     for (const count of trigramCounts.values()) {
         if (count > 1) repeatedTrigrams += count;
     }
