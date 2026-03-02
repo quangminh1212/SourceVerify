@@ -214,6 +214,26 @@ import optical_flow_anomaly_en from "./video/optical_flow_anomaly/i18n/en.json";
 import optical_flow_anomaly_vi from "./video/optical_flow_anomaly/i18n/vi.json";
 import audio_visual_sync_en from "./video/audio_visual_sync/i18n/en.json";
 import audio_visual_sync_vi from "./video/audio_visual_sync/i18n/vi.json";
+import deepfake_artifact_en from "./video/deepfake_artifact/i18n/en.json";
+import deepfake_artifact_vi from "./video/deepfake_artifact/i18n/vi.json";
+import scene_transition_en from "./video/scene_transition/i18n/en.json";
+import scene_transition_vi from "./video/scene_transition/i18n/vi.json";
+import motion_blur_consistency_en from "./video/motion_blur_consistency/i18n/en.json";
+import motion_blur_consistency_vi from "./video/motion_blur_consistency/i18n/vi.json";
+import background_stability_en from "./video/background_stability/i18n/en.json";
+import background_stability_vi from "./video/background_stability/i18n/vi.json";
+import gaze_direction_en from "./video/gaze_direction/i18n/en.json";
+import gaze_direction_vi from "./video/gaze_direction/i18n/vi.json";
+import facial_reenactment_en from "./video/facial_reenactment/i18n/en.json";
+import facial_reenactment_vi from "./video/facial_reenactment/i18n/vi.json";
+import video_compression_trace_en from "./video/video_compression_trace/i18n/en.json";
+import video_compression_trace_vi from "./video/video_compression_trace/i18n/vi.json";
+import flicker_analysis_en from "./video/flicker_analysis/i18n/en.json";
+import flicker_analysis_vi from "./video/flicker_analysis/i18n/vi.json";
+import hand_gesture_consistency_en from "./video/hand_gesture_consistency/i18n/en.json";
+import hand_gesture_consistency_vi from "./video/hand_gesture_consistency/i18n/vi.json";
+import body_proportion_en from "./video/body_proportion/i18n/en.json";
+import body_proportion_vi from "./video/body_proportion/i18n/vi.json";
 // Text Analysis Methods
 import perplexity_analysis_en from "./text/perplexity_analysis/i18n/en.json";
 import perplexity_analysis_vi from "./text/perplexity_analysis/i18n/vi.json";
@@ -225,6 +245,26 @@ import stylometric_analysis_en from "./text/stylometric_analysis/i18n/en.json";
 import stylometric_analysis_vi from "./text/stylometric_analysis/i18n/vi.json";
 import ngram_frequency_en from "./text/ngram_frequency/i18n/en.json";
 import ngram_frequency_vi from "./text/ngram_frequency/i18n/vi.json";
+import repetition_pattern_en from "./text/repetition_pattern/i18n/en.json";
+import repetition_pattern_vi from "./text/repetition_pattern/i18n/vi.json";
+import coherence_analysis_en from "./text/coherence_analysis/i18n/en.json";
+import coherence_analysis_vi from "./text/coherence_analysis/i18n/vi.json";
+import entropy_distribution_en from "./text/entropy_distribution/i18n/en.json";
+import entropy_distribution_vi from "./text/entropy_distribution/i18n/vi.json";
+import sentence_length_variance_en from "./text/sentence_length_variance/i18n/en.json";
+import sentence_length_variance_vi from "./text/sentence_length_variance/i18n/vi.json";
+import readability_score_en from "./text/readability_score/i18n/en.json";
+import readability_score_vi from "./text/readability_score/i18n/vi.json";
+import punctuation_pattern_en from "./text/punctuation_pattern/i18n/en.json";
+import punctuation_pattern_vi from "./text/punctuation_pattern/i18n/vi.json";
+import topic_consistency_en from "./text/topic_consistency/i18n/en.json";
+import topic_consistency_vi from "./text/topic_consistency/i18n/vi.json";
+import word_frequency_rank_en from "./text/word_frequency_rank/i18n/en.json";
+import word_frequency_rank_vi from "./text/word_frequency_rank/i18n/vi.json";
+import semantic_density_en from "./text/semantic_density/i18n/en.json";
+import semantic_density_vi from "./text/semantic_density/i18n/vi.json";
+import writing_rhythm_en from "./text/writing_rhythm/i18n/en.json";
+import writing_rhythm_vi from "./text/writing_rhythm/i18n/vi.json";
 
 type MethodLocaleEntry = { name: string; description: string };
 
@@ -286,10 +326,20 @@ const en = buildMap([
     ["temporal_consistency", temporal_consistency_en], ["lip_sync_analysis", lip_sync_analysis_en],
     ["frame_interpolation", frame_interpolation_en], ["optical_flow_anomaly", optical_flow_anomaly_en],
     ["audio_visual_sync", audio_visual_sync_en],
+    ["deepfake_artifact", deepfake_artifact_en], ["scene_transition", scene_transition_en],
+    ["motion_blur_consistency", motion_blur_consistency_en], ["background_stability", background_stability_en],
+    ["gaze_direction", gaze_direction_en], ["facial_reenactment", facial_reenactment_en],
+    ["video_compression_trace", video_compression_trace_en], ["flicker_analysis", flicker_analysis_en],
+    ["hand_gesture_consistency", hand_gesture_consistency_en], ["body_proportion", body_proportion_en],
     // Text Analysis Methods
     ["perplexity_analysis", perplexity_analysis_en], ["burstiness_detection", burstiness_detection_en],
     ["vocabulary_diversity", vocabulary_diversity_en], ["stylometric_analysis", stylometric_analysis_en],
     ["ngram_frequency", ngram_frequency_en],
+    ["repetition_pattern", repetition_pattern_en], ["coherence_analysis", coherence_analysis_en],
+    ["entropy_distribution", entropy_distribution_en], ["sentence_length_variance", sentence_length_variance_en],
+    ["readability_score", readability_score_en], ["punctuation_pattern", punctuation_pattern_en],
+    ["topic_consistency", topic_consistency_en], ["word_frequency_rank", word_frequency_rank_en],
+    ["semantic_density", semantic_density_en], ["writing_rhythm", writing_rhythm_en],
 ]);
 
 const vi = buildMap([
@@ -341,10 +391,20 @@ const vi = buildMap([
     ["temporal_consistency", temporal_consistency_vi], ["lip_sync_analysis", lip_sync_analysis_vi],
     ["frame_interpolation", frame_interpolation_vi], ["optical_flow_anomaly", optical_flow_anomaly_vi],
     ["audio_visual_sync", audio_visual_sync_vi],
+    ["deepfake_artifact", deepfake_artifact_vi], ["scene_transition", scene_transition_vi],
+    ["motion_blur_consistency", motion_blur_consistency_vi], ["background_stability", background_stability_vi],
+    ["gaze_direction", gaze_direction_vi], ["facial_reenactment", facial_reenactment_vi],
+    ["video_compression_trace", video_compression_trace_vi], ["flicker_analysis", flicker_analysis_vi],
+    ["hand_gesture_consistency", hand_gesture_consistency_vi], ["body_proportion", body_proportion_vi],
     // Text Analysis Methods
     ["perplexity_analysis", perplexity_analysis_vi], ["burstiness_detection", burstiness_detection_vi],
     ["vocabulary_diversity", vocabulary_diversity_vi], ["stylometric_analysis", stylometric_analysis_vi],
     ["ngram_frequency", ngram_frequency_vi],
+    ["repetition_pattern", repetition_pattern_vi], ["coherence_analysis", coherence_analysis_vi],
+    ["entropy_distribution", entropy_distribution_vi], ["sentence_length_variance", sentence_length_variance_vi],
+    ["readability_score", readability_score_vi], ["punctuation_pattern", punctuation_pattern_vi],
+    ["topic_consistency", topic_consistency_vi], ["word_frequency_rank", word_frequency_rank_vi],
+    ["semantic_density", semantic_density_vi], ["writing_rhythm", writing_rhythm_vi],
 ]);
 
 const METHOD_I18N: Record<string, Record<string, MethodLocaleEntry>> = { en, vi };
