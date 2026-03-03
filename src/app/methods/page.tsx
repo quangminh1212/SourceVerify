@@ -197,7 +197,7 @@ export default function MethodsPage() {
                                     <ChevronDown />
                                 </button>
                                 {mediaOpen && (
-                                    <div className="methods-dropdown-menu" style={{ background: '#000', opacity: 1 }}>
+                                    <div className="methods-dropdown-menu">
                                         {MEDIA_TYPES.map(mt => (
                                             <button
                                                 key={mt.key}
@@ -230,7 +230,7 @@ export default function MethodsPage() {
                                     <ChevronDown />
                                 </button>
                                 {sortOpen && (
-                                    <div className="methods-dropdown-menu" style={{ background: '#000', opacity: 1 }}>
+                                    <div className="methods-dropdown-menu">
                                         {SORT_OPTIONS.map(opt => (
                                             <button
                                                 key={opt.key}
