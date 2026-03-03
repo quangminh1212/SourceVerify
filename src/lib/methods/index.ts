@@ -17,7 +17,6 @@ export { analyzeBenfordsLaw } from "./image/benford";
 export { analyzeChromaticAberration } from "./image/chromatic";
 export { analyzeTextureConsistency } from "./image/texture";
 export { analyzeCFAPattern } from "./image/cfa";
-export { analyzeVideoSpecific } from "../video";
 export { analyzeDCTBlockArtifacts } from "./image/dct";
 export { analyzeColorChannelCorrelation } from "./image/color";
 export { analyzePRNUPattern } from "./image/prnu";
