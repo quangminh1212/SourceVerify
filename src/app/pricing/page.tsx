@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
 
 const CHECK = (
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="20 6 9 17 4 12" />
     </svg>
 );
@@ -83,78 +83,80 @@ export default function PricingPage() {
         <main className="relative min-h-screen flex flex-col">
             <Header />
 
-            <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-16 lg:pb-20">
-                <div className="w-full max-w-5xl mx-auto text-center">
+            <div className="flex-1 px-4 sm:px-6 lg:px-8 pt-28 sm:pt-32 lg:pt-36 pb-14 sm:pb-16 lg:pb-20">
+                <div className="w-full max-w-6xl mx-auto">
 
                     {/* Title */}
-                    <div className="section-gap">
+                    <div className="text-center mb-12 sm:mb-16">
                         <h1 className="text-[clamp(1.5rem,3.5vw,2.75rem)] font-extrabold tracking-tight leading-[1.1] text-[--color-text-primary] mb-4 animate-fade-in-up">
                             {t("pricing.headline")}{" "}
                             <span className="gradient-text">{t("pricing.headlineHighlight")}</span>
                         </h1>
-                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] max-w-2xl mx-auto animate-fade-in-up animate-delay-1">
+                        <p className="text-sm sm:text-[15px] lg:text-base leading-[1.8] text-[--color-text-secondary] max-w-xl mx-auto animate-fade-in-up animate-delay-1">
                             {t("pricing.subtitle")}
                         </p>
                     </div>
 
                     {/* Plans Grid */}
-                    <div className="section-gap grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 mt-10 animate-fade-in-up animate-delay-2">
+                    <div className="pricing-grid animate-fade-in-up animate-delay-2">
                         {PLANS.map((plan) => (
                             <div
                                 key={plan.nameKey}
                                 className={`pricing-card ${plan.highlight ? "pricing-card-highlight" : ""}`}
                             >
+                                {/* Badge */}
                                 {plan.badgeKey && (
-                                    <span className="pricing-badge">{t(plan.badgeKey)}</span>
+                                    <div className="pricing-badge">{t(plan.badgeKey)}</div>
                                 )}
-                                <h3 className="text-lg font-bold text-[--color-text-primary] mb-2">
-                                    {t(plan.nameKey)}
-                                </h3>
-                                <div className="flex items-baseline justify-center gap-1 mb-2">
-                                    <span className="text-3xl sm:text-4xl font-extrabold text-[--color-text-primary]">
-                                        {t(plan.priceKey)}
-                                    </span>
-                                    {t(plan.periodKey) && (
-                                        <span className="text-sm text-[--color-text-muted]">
-                                            {t(plan.periodKey)}
-                                        </span>
-                                    )}
+
+                                {/* Plan Header */}
+                                <div className="pricing-card-header">
+                                    <h3 className="pricing-plan-name">{t(plan.nameKey)}</h3>
+                                    <div className="pricing-price-row">
+                                        <span className="pricing-price">{t(plan.priceKey)}</span>
+                                        {t(plan.periodKey) && (
+                                            <span className="pricing-period">{t(plan.periodKey)}</span>
+                                        )}
+                                    </div>
+                                    <p className="pricing-desc">{t(plan.descKey)}</p>
                                 </div>
-                                <p className="text-xs sm:text-sm text-[--color-text-secondary] mb-6">
-                                    {t(plan.descKey)}
-                                </p>
-                                <ul className="space-y-3 mb-8 text-left">
+
+                                {/* Divider */}
+                                <div className="pricing-divider" />
+
+                                {/* Features */}
+                                <ul className="pricing-features">
                                     {plan.features.map((f) => (
-                                        <li key={f.key} className="flex items-start gap-2 text-sm text-[--color-text-secondary]">
-                                            <span className="text-[--color-accent-green] mt-0.5 shrink-0">{CHECK}</span>
-                                            {t(f.key)}
+                                        <li key={f.key} className="pricing-feature-item">
+                                            <span className="pricing-check">{CHECK}</span>
+                                            <span>{t(f.key)}</span>
                                         </li>
                                     ))}
                                 </ul>
-                                <Link
-                                    href="/"
-                                    className={plan.highlight ? "btn-primary w-full text-center block" : "btn-outline w-full text-center block"}
-                                >
-                                    {t(plan.ctaKey)}
-                                </Link>
+
+                                {/* CTA */}
+                                <div className="pricing-cta-wrap">
+                                    <Link
+                                        href="/"
+                                        className={plan.highlight ? "pricing-cta-primary" : "pricing-cta-outline"}
+                                    >
+                                        {t(plan.ctaKey)}
+                                    </Link>
+                                </div>
                             </div>
                         ))}
                     </div>
 
                     {/* FAQ */}
-                    <div className="section-gap mt-16 animate-fade-in-up animate-delay-3">
-                        <h2 className="text-xl sm:text-2xl font-bold text-[--color-text-primary] mb-8">
+                    <div className="text-center mt-20 sm:mt-24 animate-fade-in-up animate-delay-3">
+                        <h2 className="text-xl sm:text-2xl font-bold text-[--color-text-primary] mb-10">
                             {t("pricing.faq.title")}
                         </h2>
-                        <div className="max-w-2xl mx-auto space-y-4 text-left">
+                        <div className="pricing-faq-grid">
                             {FAQS.map((faq) => (
                                 <div key={faq.q} className="pricing-faq-item">
-                                    <h3 className="text-sm sm:text-[15px] font-semibold text-[--color-text-primary] mb-2">
-                                        {t(faq.q)}
-                                    </h3>
-                                    <p className="text-xs sm:text-sm text-[--color-text-secondary] leading-relaxed">
-                                        {t(faq.a)}
-                                    </p>
+                                    <h3 className="pricing-faq-q">{t(faq.q)}</h3>
+                                    <p className="pricing-faq-a">{t(faq.a)}</p>
                                 </div>
                             ))}
                         </div>

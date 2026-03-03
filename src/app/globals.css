@@ -5339,105 +5339,297 @@ html.dark .scroll-nav-inner {
 }
 
 /* === Pricing Page === */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+@media (max-width: 768px) {
+  .pricing-grid {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+    gap: 2rem;
+  }
+}
+
 .pricing-card {
   position: relative;
   background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 16px;
-  padding: 2rem 1.5rem;
-  transition: all 0.3s ease;
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: 20px;
+  padding: 2.25rem 1.75rem 1.75rem;
   display: flex;
   flex-direction: column;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.pricing-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--color-border-subtle);
+  transition: background 0.3s ease;
 }
 
 .pricing-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  border-color: rgba(66, 133, 244, 0.2);
+}
+
+.pricing-card:hover::before {
+  background: var(--color-accent-blue);
 }
 
 .pricing-card-highlight {
   border-color: var(--color-accent-blue);
-  box-shadow: 0 0 0 1px var(--color-accent-blue), 0 8px 30px rgba(66, 133, 244, 0.1);
+  box-shadow: 0 0 0 1px rgba(66, 133, 244, 0.15), 0 16px 48px rgba(66, 133, 244, 0.08);
+}
+
+.pricing-card-highlight::before {
+  background: linear-gradient(90deg, #4285f4, #8ab4f8, #4285f4);
+  height: 3px;
 }
 
 .pricing-card-highlight:hover {
-  box-shadow: 0 0 0 1px var(--color-accent-blue), 0 12px 40px rgba(66, 133, 244, 0.15);
+  box-shadow: 0 0 0 1px rgba(66, 133, 244, 0.25), 0 24px 64px rgba(66, 133, 244, 0.12);
 }
 
 .pricing-badge {
   position: absolute;
-  top: -0.75rem;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--color-accent-blue);
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, #4285f4, #669df6);
   color: #fff;
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 700;
-  padding: 0.25rem 1rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 999px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
+  box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
 }
 
-.pricing-faq-item {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 12px;
-  padding: 1.25rem 1.5rem;
-  transition: border-color 0.2s ease;
+.pricing-card-header {
+  text-align: center;
+  margin-bottom: 0;
 }
 
-.pricing-faq-item:hover {
-  border-color: var(--color-accent-blue);
+.pricing-plan-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
 }
 
-html.dark .pricing-card {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-html.dark .pricing-card:hover {
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-html.dark .pricing-card-highlight {
-  border-color: rgba(138, 180, 248, 0.4);
-  box-shadow: 0 0 0 1px rgba(138, 180, 248, 0.3), 0 8px 30px rgba(138, 180, 248, 0.06);
-}
-
-html.dark .pricing-card-highlight:hover {
-  box-shadow: 0 0 0 1px rgba(138, 180, 248, 0.4), 0 12px 40px rgba(138, 180, 248, 0.1);
-}
-
-html.dark .pricing-faq-item {
-  background: rgba(255, 255, 255, 0.03);
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-html.dark .pricing-faq-item:hover {
-  border-color: rgba(138, 180, 248, 0.3);
-}
-
-.btn-outline {
-  display: inline-flex;
-  align-items: center;
+.pricing-price-row {
+  display: flex;
+  align-items: baseline;
   justify-content: center;
-  gap: 0.5rem;
-  padding: 0.625rem 1.5rem;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.pricing-price {
+  font-size: 2.75rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.pricing-period {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.pricing-desc {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.pricing-divider {
+  height: 1px;
+  background: var(--color-border-subtle);
+  margin: 1.5rem 0;
+}
+
+.pricing-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+  flex: 1;
+}
+
+.pricing-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+.pricing-check {
+  color: var(--color-accent-green);
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+
+.pricing-cta-wrap {
+  margin-top: 1.75rem;
+}
+
+.pricing-cta-primary {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #4285f4, #669df6);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-decoration: none;
+  box-shadow: 0 4px 16px rgba(66, 133, 244, 0.25);
+}
+
+.pricing-cta-primary:hover {
+  background: linear-gradient(135deg, #3b78e7, #5a93f0);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 24px rgba(66, 133, 244, 0.35);
+}
+
+.pricing-cta-outline {
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 0.75rem 1.5rem;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-text-primary);
   background: transparent;
-  border: 1px solid var(--color-border-subtle);
-  border-radius: 999px;
+  border: 1.5px solid var(--color-border-subtle);
+  border-radius: 12px;
   cursor: pointer;
   transition: all 0.25s ease;
   text-decoration: none;
 }
 
-.btn-outline:hover {
+.pricing-cta-outline:hover {
   border-color: var(--color-accent-blue);
   color: var(--color-accent-blue);
   background: rgba(66, 133, 244, 0.04);
+}
+
+/* FAQ */
+.pricing-faq-grid {
+  max-width: 42rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  text-align: left;
+}
+
+.pricing-faq-item {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 14px;
+  padding: 1.25rem 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.pricing-faq-item:hover {
+  border-color: var(--color-accent-blue);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+.pricing-faq-q {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0 0 0.5rem;
+}
+
+.pricing-faq-a {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Dark mode */
+html.dark .pricing-card {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+html.dark .pricing-card::before {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+html.dark .pricing-card:hover {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  border-color: rgba(138, 180, 248, 0.2);
+}
+
+html.dark .pricing-card:hover::before {
+  background: #8ab4f8;
+}
+
+html.dark .pricing-card-highlight {
+  border-color: rgba(138, 180, 248, 0.35);
+  box-shadow: 0 0 0 1px rgba(138, 180, 248, 0.2), 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .pricing-card-highlight::before {
+  background: linear-gradient(90deg, #8ab4f8, #aecbfa, #8ab4f8);
+}
+
+html.dark .pricing-card-highlight:hover {
+  box-shadow: 0 0 0 1px rgba(138, 180, 248, 0.3), 0 24px 64px rgba(0, 0, 0, 0.4);
+}
+
+html.dark .pricing-divider {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+html.dark .pricing-faq-item {
+  background: rgba(255, 255, 255, 0.025);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+html.dark .pricing-faq-item:hover {
+  border-color: rgba(138, 180, 248, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+html.dark .pricing-cta-outline {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark .pricing-cta-outline:hover {
+  border-color: rgba(138, 180, 248, 0.4);
+  color: #8ab4f8;
+  background: rgba(138, 180, 248, 0.06);
 }
