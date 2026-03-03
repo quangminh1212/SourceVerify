@@ -236,6 +236,7 @@ import metadata_vi from "./image/metadata/i18n/vi.json";
 - [ ] en.json có `references` với title + url (link clickable)
 - [ ] en.json các trường `mechanism`, `parameters` có nội dung chi tiết
 - [ ] en.json hoàn toàn bằng tiếng Anh (không trộn tiếng Việt)
+- [ ] **1:1 mapping**: Tổng methods trong `data.ts` = Tổng file lib (trừ index.ts, types.ts, pixelUtils.ts)
 
 ---
 
@@ -302,13 +303,51 @@ const i18n = { en, vi, zh, ja, ko, es };
 
 ## 📊 Thống kê hiện tại
 
-| Media Type | Tổng methods | Có page + i18n | Có đủ 6 ngôn ngữ |
-|-----------|-------------|---------------|------------------|
-| Image | ~167 | ~167 | ~80 (batch đầu) |
-| Video | ~120 | ~120 | ~30 (batch đầu) |
-| Text | ~100 | ~100 | 0 |
+| Media Type | Tổng methods (data.ts) | Lib files thực tế | Page + i18n | Có đủ 6 ngôn ngữ |
+|-----------|:---------------------:|:-----------------:|:-----------:|:-----------------:|
+| Image | 161 | 161 ✅ | ~161 | ~80 |
+| Video | 140 | 140 ✅ | ~140 | ~30 |
+| Text | 124 | 124 ✅ | ~124 | 0 |
+| **Tổng** | **425** | **425** ✅ | **~425** | **~110** |
 
-> **Lưu ý**: Phần lớn method mới (v3-v6) có page + i18n nhưng chỉ en/vi và nội dung en.json chất lượng thấp (trộn tiếng Việt, generic).
+> ✅ **1:1 Mapping đã hoàn chỉnh**: Tổng methods (425) = Tổng lib files (425). Mỗi method trong `data.ts` đều có đúng 1 file lib tương ứng tại `src/lib/methods/{mediaType}/`.
+> 
+> ⚠️ **Lưu ý**: Phần lớn method mới (v3-v7) có page + i18n nhưng chỉ en/vi và nội dung en.json chất lượng thấp (trộn tiếng Việt, generic).
+
+---
+
+## 🔗 Quy tắc 1:1 Mapping — Method ↔ Lib File
+
+**BẮT BUỘC**: Mỗi method đăng ký trong `data.ts` METHODS array **PHẢI** có **đúng 1 file lib tương ứng** tại `src/lib/methods/{mediaType}/{fileName}.ts`.
+
+### Quy tắc:
+- **Tổng methods trong `data.ts`** = **Tổng file `.ts` trong `src/lib/methods/`** (trừ `index.ts`, `types.ts`, `pixelUtils.ts`)
+- Mỗi file lib **chỉ chứa 1 hàm analyze** cho 1 method duy nhất
+- File lib **phải được export** trong `src/lib/methods/index.ts` (barrel export)
+- **Naming convention**: Method ID dạng `snake_case` (VD: `bg_complexity`) → File lib dạng `camelCase` (VD: `backgroundComplexity.ts`)
+
+### Kiểm tra nhanh:
+```bash
+# Đếm methods trong data.ts
+grep -c 'id:' src/app/methods/data.ts
+
+# Đếm lib files (trừ index.ts, types.ts, pixelUtils.ts)
+find src/lib/methods -name "*.ts" ! -name "index.ts" ! -name "types.ts" ! -name "pixelUtils.ts" | wc -l
+
+# Hai số trên PHẢI BẰNG NHAU
+```
+
+### Lỗi thường gặp:
+```
+# ❌ SAI: Method trong data.ts nhưng KHÔNG có file lib
+{ id: "video_grain", category: "metadata", mediaType: "video", ... }
+# → Nhưng KHÔNG tồn tại file src/lib/methods/video/videoGrainAnalysis.ts
+
+# ✅ ĐÚNG: Mỗi method PHẢI có file lib tương ứng
+{ id: "video_grain", category: "metadata", mediaType: "video", ... }
+# → PHẢI tồn tại file src/lib/methods/video/videoGrainAnalysis.ts
+# → PHẢI export trong src/lib/methods/index.ts
+```
 
 ---
 
