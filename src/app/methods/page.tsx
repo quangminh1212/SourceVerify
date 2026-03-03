@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Header from "@/components/Header";
@@ -13,6 +13,8 @@ import {
     type Category, type MediaType,
 } from "./data";
 import { getMethodTranslation } from "./methodsI18n";
+
+type SortMode = "default" | "name" | "year" | "category";
 
 function MethodIcon({ category }: { category: Category }) {
     const paths = (CAT_ICON_PATHS[category] || "").split(" M");
@@ -58,14 +60,30 @@ function MediaIcon({ mediaType }: { mediaType: MediaType }) {
     );
 }
 
+/* Chevron down icon for dropdowns */
+function ChevronDown() {
+    return (
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M6 9l6 6 6-6" />
+        </svg>
+    );
+}
+
 export default function MethodsPage() {
     const { t, locale } = useLanguage();
     const [activeCat, setActiveCat] = useState<Category>("all");
     const [activeMedia, setActiveMedia] = useState<MediaType>("all");
+    const [sortMode, setSortMode] = useState<SortMode>("default");
     const router = useRouter();
     const [isSelectMode, setIsSelectMode] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [selectedId, setSelectedId] = useState<string | null>(null);
+
+    // Dropdown open states
+    const [mediaOpen, setMediaOpen] = useState(false);
+    const [sortOpen, setSortOpen] = useState(false);
+    const mediaRef = useRef<HTMLDivElement>(null);
+    const sortRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const saved = localStorage.getItem("sv_user");
@@ -77,6 +95,16 @@ export default function MethodsPage() {
         setIsSelectMode(params.get("select") === "1");
     }, []);
 
+    // Close dropdowns on outside click
+    useEffect(() => {
+        const handleClick = (e: MouseEvent) => {
+            if (mediaRef.current && !mediaRef.current.contains(e.target as Node)) setMediaOpen(false);
+            if (sortRef.current && !sortRef.current.contains(e.target as Node)) setSortOpen(false);
+        };
+        document.addEventListener("mousedown", handleClick);
+        return () => document.removeEventListener("mousedown", handleClick);
+    }, []);
+
     const handleSelectMethod = (id: string) => {
         localStorage.setItem("sv_method", id);
         router.push("/");
@@ -85,6 +113,7 @@ export default function MethodsPage() {
     const handleMediaChange = (key: MediaType) => {
         setActiveMedia(key);
         setActiveCat("all"); // reset category when switching media type
+        setMediaOpen(false);
     };
 
     const showSelectUI = isSelectMode && !isLoggedIn;
@@ -102,11 +131,46 @@ export default function MethodsPage() {
         return catMatch && mediaMatch;
     });
 
+    // Sort the filtered results
+    const sorted = useMemo(() => {
+        const arr = [...filtered];
+        switch (sortMode) {
+            case "name":
+                return arr.sort((a, b) => {
+                    const nameA = getMethodTranslation(a.id, locale).name.toLowerCase();
+                    const nameB = getMethodTranslation(b.id, locale).name.toLowerCase();
+                    return nameA.localeCompare(nameB);
+                });
+            case "year":
+                return arr.sort((a, b) => (a.year || 9999) - (b.year || 9999));
+            case "category":
+                return arr.sort((a, b) => {
+                    const catOrder: Record<string, number> = { pixel: 0, frequency: 1, statistical: 2, metadata: 3, sensor: 4 };
+                    return (catOrder[a.category] ?? 99) - (catOrder[b.category] ?? 99);
+                });
+            default:
+                return arr;
+        }
+    }, [filtered, sortMode, locale]);
+
     // Count methods for category tabs based on current media type filter
     const getCatCount = (catKey: Category) => {
         if (activeMedia === "all") return METHODS.filter(m => m.category === catKey).length;
         return METHODS.filter(m => m.mediaType === activeMedia && m.category === catKey).length;
     };
+
+    // Current media label
+    const activeMediaLabel = MEDIA_TYPES.find(mt => mt.key === activeMedia);
+    const mediaCount = activeMedia === "all" ? METHODS.length : METHODS.filter(m => m.mediaType === activeMedia).length;
+
+    // Sort mode labels
+    const SORT_OPTIONS: { key: SortMode; labelKey: string }[] = [
+        { key: "default", labelKey: "methods.catAll" },
+        { key: "name", labelKey: "methods.sortByName" },
+        { key: "year", labelKey: "methods.sortByYear" },
+        { key: "category", labelKey: "methods.sortByCategory" },
+    ];
+    const activeSortLabel = SORT_OPTIONS.find(s => s.key === sortMode);
 
     return (
         <main className="relative min-h-screen flex flex-col">
@@ -115,25 +179,70 @@ export default function MethodsPage() {
             <div className="flex-1 grid place-items-center px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 lg:pt-32 pb-14 sm:pb-16 lg:pb-20">
                 <div className="w-full max-w-5xl mx-auto text-center">
 
-                    {/* Step 1: Media Type Tabs — By Content Type (Primary) */}
-                    <div className="methods-filter-section animate-fade-in-up">
-                        <span className="methods-filter-label">{t("methods.filterByContent")}</span>
-                        <div className="methods-media-tabs">
-                            {MEDIA_TYPES.map(mt => (
+                    {/* Dropdowns row */}
+                    <div className="methods-dropdowns-row animate-fade-in-up">
+                        {/* Media Type Dropdown */}
+                        <div className="methods-dropdown-group">
+                            <span className="methods-filter-label">{t("methods.filterByContent")}</span>
+                            <div className="methods-dropdown" ref={mediaRef}>
                                 <button
-                                    key={mt.key}
-                                    className={`methods-media-tab ${activeMedia === mt.key ? "active" : ""} ${mt.key !== "all" ? `media-${mt.key}` : ""}`}
-                                    onClick={() => handleMediaChange(mt.key)}
+                                    className="methods-dropdown-trigger"
+                                    onClick={() => { setMediaOpen(!mediaOpen); setSortOpen(false); }}
                                 >
-                                    {mt.key !== "all" && <MediaIcon mediaType={mt.key} />}
-                                    {t(mt.labelKey)}
-                                    {mt.key !== "all" && (
-                                        <span className={`methods-media-tab-count`}>
-                                            {METHODS.filter(m => m.mediaType === mt.key).length}
-                                        </span>
+                                    {activeMedia !== "all" && <MediaIcon mediaType={activeMedia} />}
+                                    <span>{t(activeMediaLabel?.labelKey || "methods.mediaAll")}</span>
+                                    {activeMedia !== "all" && (
+                                        <span className="methods-dropdown-count">{mediaCount}</span>
                                     )}
+                                    <ChevronDown />
                                 </button>
-                            ))}
+                                {mediaOpen && (
+                                    <div className="methods-dropdown-menu">
+                                        {MEDIA_TYPES.map(mt => (
+                                            <button
+                                                key={mt.key}
+                                                className={`methods-dropdown-item ${activeMedia === mt.key ? "active" : ""}`}
+                                                onClick={() => handleMediaChange(mt.key)}
+                                            >
+                                                {mt.key !== "all" && <MediaIcon mediaType={mt.key} />}
+                                                <span>{t(mt.labelKey)}</span>
+                                                {mt.key !== "all" && (
+                                                    <span className="methods-dropdown-item-count">
+                                                        {METHODS.filter(m => m.mediaType === mt.key).length}
+                                                    </span>
+                                                )}
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Sort Dropdown */}
+                        <div className="methods-dropdown-group">
+                            <span className="methods-filter-label">{t("methods.sortBy")}</span>
+                            <div className="methods-dropdown" ref={sortRef}>
+                                <button
+                                    className="methods-dropdown-trigger"
+                                    onClick={() => { setSortOpen(!sortOpen); setMediaOpen(false); }}
+                                >
+                                    <span>{t(activeSortLabel?.labelKey || "methods.catAll")}</span>
+                                    <ChevronDown />
+                                </button>
+                                {sortOpen && (
+                                    <div className="methods-dropdown-menu">
+                                        {SORT_OPTIONS.map(opt => (
+                                            <button
+                                                key={opt.key}
+                                                className={`methods-dropdown-item ${sortMode === opt.key ? "active" : ""}`}
+                                                onClick={() => { setSortMode(opt.key); setSortOpen(false); }}
+                                            >
+                                                <span>{t(opt.labelKey)}</span>
+                                            </button>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         </div>
                     </div>
 
@@ -162,12 +271,12 @@ export default function MethodsPage() {
 
                     {/* Result count */}
                     <div className="methods-result-count animate-fade-in-up">
-                        {filtered.length} / {METHODS.length}
+                        {sorted.length} / {METHODS.length}
                     </div>
 
                     {/* Methods Grid */}
                     <div className="methods-grid animate-fade-in-up">
-                        {filtered.map((m, i) => (
+                        {sorted.map((m, i) => (
                             <Link
                                 key={m.id}
                                 href={`/methods/${m.mediaType}/${m.id}`}
