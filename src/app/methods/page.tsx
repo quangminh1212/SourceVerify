@@ -180,7 +180,7 @@ export default function MethodsPage() {
                 <div className="w-full max-w-5xl mx-auto text-center">
 
                     {/* Dropdowns row */}
-                    <div className="methods-dropdowns-row animate-fade-in-up">
+                    <div className="methods-dropdowns-row">
                         {/* Media Type Dropdown */}
                         <div className="methods-dropdown-group">
                             <span className="methods-filter-label">{t("methods.filterByContent")}</span>
@@ -197,7 +197,7 @@ export default function MethodsPage() {
                                     <ChevronDown />
                                 </button>
                                 {mediaOpen && (
-                                    <div className="methods-dropdown-menu">
+                                    <div className="methods-dropdown-menu" style={{ background: '#000', opacity: 1 }}>
                                         {MEDIA_TYPES.map(mt => (
                                             <button
                                                 key={mt.key}
@@ -230,7 +230,7 @@ export default function MethodsPage() {
                                     <ChevronDown />
                                 </button>
                                 {sortOpen && (
-                                    <div className="methods-dropdown-menu">
+                                    <div className="methods-dropdown-menu" style={{ background: '#000', opacity: 1 }}>
                                         {SORT_OPTIONS.map(opt => (
                                             <button
                                                 key={opt.key}
