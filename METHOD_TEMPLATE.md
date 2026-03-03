@@ -305,14 +305,14 @@ const i18n = { en, vi, zh, ja, ko, es };
 
 | Media Type | Tổng methods (data.ts) | Lib files thực tế | Page + i18n | Có đủ 6 ngôn ngữ |
 |-----------|:---------------------:|:-----------------:|:-----------:|:-----------------:|
-| Image | 161 | 161 ✅ | ~161 | ~80 |
-| Video | 140 | 140 ✅ | ~140 | ~30 |
-| Text | 124 | 124 ✅ | ~124 | 0 |
-| **Tổng** | **425** | **425** ✅ | **~425** | **~110** |
+| Image | 186 | 186 ✅ | 186 ✅ | 186 ✅ |
+| Video | 165 | 165 ✅ | 165 ✅ | 165 ✅ |
+| Text | 149 | 149 ✅ | 149 ✅ | 149 ✅ |
+| **Tổng** | **500** | **500** ✅ | **500** ✅ | **500** ✅ |
 
-> ✅ **1:1 Mapping đã hoàn chỉnh**: Tổng methods (425) = Tổng lib files (425). Mỗi method trong `data.ts` đều có đúng 1 file lib tương ứng tại `src/lib/methods/{mediaType}/`.
+> ✅ **1:1 Mapping đã hoàn chỉnh**: Tổng methods (500) = Tổng lib files (500) = Tổng page dirs (500). Mỗi method trong `data.ts` đều có đúng 1 file lib, 1 page directory với đủ 6 file i18n.
 > 
-> ⚠️ **Lưu ý**: Phần lớn method mới (v3-v7) có page + i18n nhưng chỉ en/vi và nội dung en.json chất lượng thấp (trộn tiếng Việt, generic).
+> ⚠️ **Lưu ý**: 75 methods batch cuối (v14/v8/v7) chưa có trường `references` trong en.json. 7 file en.json cần sửa lại vì trộn tiếng Việt.
 
 ---
 
@@ -321,7 +321,7 @@ const i18n = { en, vi, zh, ja, ko, es };
 **BẮT BUỘC**: Mỗi method đăng ký trong `data.ts` METHODS array **PHẢI** có **đúng 1 file lib tương ứng** tại `src/lib/methods/{mediaType}/{fileName}.ts`.
 
 ### Quy tắc:
-- **Tổng methods trong `data.ts`** = **Tổng file `.ts` trong `src/lib/methods/`** (trừ `index.ts`, `types.ts`, `pixelUtils.ts`)
+- **Tổng methods trong `data.ts`** (hiện tại: **500**) = **Tổng file `.ts` trong `src/lib/methods/`** (trừ `index.ts`, `types.ts`, `pixelUtils.ts`)
 - Mỗi file lib **chỉ chứa 1 hàm analyze** cho 1 method duy nhất
 - File lib **phải được export** trong `src/lib/methods/index.ts` (barrel export)
 - **Naming convention**: Method ID dạng `snake_case` (VD: `bg_complexity`) → File lib dạng `camelCase` (VD: `backgroundComplexity.ts`)
