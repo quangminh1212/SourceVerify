@@ -452,6 +452,22 @@ export { analyzeEarDetailConsistency } from "./video/earDetailConsistency";
 export { analyzeClothingEdgeBlend } from "./video/clothingEdgeBlend";
 export { analyzeTemporalJitter } from "./video/temporalJitter";
 export { analyzeSkinPoreSimulation } from "./video/skinPoreSimulation";
+// Video v7 (15 new methods - completing 1:1 mapping)
+export { analyzeSpeechCadence } from "./video/speechCadence";
+export { analyzeEarConsistency } from "./video/earConsistency";
+export { analyzeHairDynamics } from "./video/hairDynamics";
+export { analyzeSkinTextureTemporal } from "./video/skinTextureTemporal";
+export { analyzeShadowConsistencyVideo } from "./video/shadowConsistencyVideo";
+export { analyzeReflectionConsistencyVideo } from "./video/reflectionConsistencyVideo";
+export { analyzePupilDynamics } from "./video/pupilDynamics";
+export { analyzeVideoNoisePattern } from "./video/videoNoisePattern";
+export { analyzeHeartbeatDetection } from "./video/heartbeatDetection";
+export { analyzeClothingConsistency } from "./video/clothingConsistency";
+export { analyzeFace3dReconstruction } from "./video/face3dReconstruction";
+export { analyzeVideoCodecAnalysis } from "./video/videoCodecAnalysis";
+export { analyzeInterFrameForgery } from "./video/interFrameForgery";
+export { analyzeHeadPoseV2 } from "./video/headPoseV2";
+export { analyzeMicroExpressionV2 } from "./video/microExpressionV2";
 // Text v6
 export { analyzeZipfDeviation } from "./text/zipfDeviation";
 export { analyzeTokenPredictability } from "./text/tokenPredictability";
