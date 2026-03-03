@@ -14,7 +14,6 @@ import { getMethodTranslation } from "@/app/methods/methodsI18n";
 const NAV_KEYS = [
     { key: "nav.home", href: "/" },
     { key: "nav.about", href: "/about" },
-    { key: "nav.pricing", href: "/pricing" },
     { key: "nav.methods", href: "/methods" },
 ];
 
