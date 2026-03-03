@@ -296,15 +296,19 @@ export default function MethodsPage() {
                                 </div>
                                 <h3 className="methods-card-name">{getMethodTranslation(m.id, locale).name}</h3>
                                 <p className="methods-card-desc">{getMethodTranslation(m.id, locale).description}</p>
-
-                                {showSelectUI && (
-                                    <button
-                                        className={`methods-select-btn ${selectedId === m.id ? 'active' : ''}`}
-                                        onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSelectMethod(m.id); }}
-                                    >
-                                        {selectedId === m.id ? t("methods.currentMethod") : t("methods.useThis")}
-                                    </button>
-                                )}
+                                <div className="methods-card-footer">
+                                    {m.year && (
+                                        <span className="methods-card-year">{m.year}</span>
+                                    )}
+                                    {showSelectUI && (
+                                        <button
+                                            className={`methods-select-btn ${selectedId === m.id ? 'active' : ''}`}
+                                            onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSelectMethod(m.id); }}
+                                        >
+                                            {selectedId === m.id ? t("methods.currentMethod") : t("methods.useThis")}
+                                        </button>
+                                    )}
+                                </div>
                             </Link>
                         ))}
                     </div>
