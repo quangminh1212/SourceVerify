@@ -24,7 +24,6 @@ const SCROLL_NAV_KEYS = [
     { key: "nav.product", href: "/product" },
     { key: "nav.features", href: "/features" },
     { key: "nav.howItWorks", href: "/how-it-works" },
-    { key: "nav.pricing", href: "/pricing" },
     { key: "nav.methods", href: "/methods" },
 ];
 
