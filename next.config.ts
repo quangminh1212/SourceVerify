@@ -10,8 +10,12 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
-  // Turbopack config (Next.js 16 default)
+  // Turbopack config
   turbopack: {},
+  experimental: {
+    // Disable Turbopack persistent FS cache for dev to avoid SST file errors on Windows
+    turbopackFileSystemCacheForDev: false,
+  },
   async headers() {
     return [
       {
