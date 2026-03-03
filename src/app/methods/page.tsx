@@ -296,9 +296,7 @@ export default function MethodsPage() {
                                 </div>
                                 <h3 className="methods-card-name">{getMethodTranslation(m.id, locale).name}</h3>
                                 <p className="methods-card-desc">{getMethodTranslation(m.id, locale).description}</p>
-                                {m.year && (
-                                    <span className="methods-card-year">{m.year}</span>
-                                )}
+
                                 {showSelectUI && (
                                     <button
                                         className={`methods-select-btn ${selectedId === m.id ? 'active' : ''}`}
