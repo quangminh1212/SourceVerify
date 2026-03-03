@@ -10,9 +10,20 @@ import { LOCALE_LABELS, type Locale } from "@/i18n/translations";
 import { METHODS, CATEGORIES } from "@/app/methods/data";
 import { getMethodTranslation } from "@/app/methods/methodsI18n";
 
+// Header display navigation (visible in header)
 const NAV_KEYS = [
     { key: "nav.home", href: "/" },
     { key: "nav.about", href: "/about" },
+    { key: "nav.methods", href: "/methods" },
+];
+
+// Full page order for scroll navigation (includes hidden pages)
+const SCROLL_NAV_KEYS = [
+    { key: "nav.home", href: "/" },
+    { key: "nav.about", href: "/about" },
+    { key: "nav.product", href: "/product" },
+    { key: "nav.features", href: "/features" },
+    { key: "nav.howItWorks", href: "/how-it-works" },
     { key: "nav.methods", href: "/methods" },
 ];
 
@@ -69,17 +80,17 @@ export default function Header() {
     const SCROLL_THRESHOLD = 150; // accumulated scroll delta needed to trigger
 
     useEffect(() => {
-        const currentIdx = NAV_KEYS.findIndex(n => pathname === n.href);
-        if (currentIdx === -1 || currentIdx >= NAV_KEYS.length - 1) {
+        const currentIdx = SCROLL_NAV_KEYS.findIndex(n => pathname === n.href);
+        if (currentIdx === -1 || currentIdx >= SCROLL_NAV_KEYS.length - 1) {
             setNextPageHint("");
             return;
         }
         const nextIdx = currentIdx + 1;
-        setNextPageHint(NAV_KEYS[nextIdx].key);
+        setNextPageHint(SCROLL_NAV_KEYS[nextIdx].key);
     }, [pathname]);
 
     useEffect(() => {
-        const currentIdx = NAV_KEYS.findIndex(n => pathname === n.href);
+        const currentIdx = SCROLL_NAV_KEYS.findIndex(n => pathname === n.href);
         if (currentIdx === -1) return; // not a nav page, skip
 
         const handleWheel = (e: WheelEvent) => {
@@ -89,7 +100,7 @@ export default function Header() {
             const atBottom = (window.innerHeight + window.scrollY) >= (scrollHeight - 50);
             const atTop = window.scrollY <= 5;
 
-            if (e.deltaY > 0 && atBottom && currentIdx < NAV_KEYS.length - 1) {
+            if (e.deltaY > 0 && atBottom && currentIdx < SCROLL_NAV_KEYS.length - 1) {
                 scrollAccum.current += e.deltaY;
                 if (scrollAccum.current >= SCROLL_THRESHOLD) {
                     scrollCooldown.current = true;
@@ -97,7 +108,7 @@ export default function Header() {
                     const nextIdx = currentIdx + 1;
                     setShowTransition(true);
                     setTimeout(() => {
-                        router.push(NAV_KEYS[nextIdx].href);
+                        router.push(SCROLL_NAV_KEYS[nextIdx].href);
                         setTimeout(() => {
                             setShowTransition(false);
                             scrollCooldown.current = false;
@@ -112,7 +123,7 @@ export default function Header() {
                     const prevIdx = currentIdx - 1;
                     setShowTransition(true);
                     setTimeout(() => {
-                        router.push(NAV_KEYS[prevIdx].href);
+                        router.push(SCROLL_NAV_KEYS[prevIdx].href);
                         setTimeout(() => {
                             setShowTransition(false);
                             scrollCooldown.current = false;
