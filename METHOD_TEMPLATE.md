@@ -32,10 +32,10 @@ src/
 │       └── i18n/
 │           ├── en.json                        ← Tiếng Anh (BẮT BUỘC)
 │           ├── vi.json                        ← Tiếng Việt (BẮT BUỘC)
-│           ├── zh.json                        ← Tiếng Trung
-│           ├── ja.json                        ← Tiếng Nhật
-│           ├── ko.json                        ← Tiếng Hàn
-│           └── es.json                        ← Tiếng Tây Ban Nha
+│           ├── zh.json                        ← Tiếng Trung (BẮT BUỘC)
+│           ├── ja.json                        ← Tiếng Nhật (BẮT BUỘC)
+│           ├── ko.json                        ← Tiếng Hàn (BẮT BUỘC)
+│           └── es.json                        ← Tiếng Tây Ban Nha (BẮT BUỘC)
 ```
 
 ---
@@ -101,7 +101,7 @@ export function analyze{MethodName}(
 
 ## 2️⃣ Trang chi tiết — `src/app/methods/{mediaType}/{methodId}/page.tsx`
 
-### Mẫu chuẩn HOÀN CHỈNH (6 ngôn ngữ — mẫu metadata):
+### Mẫu chuẩn (BẮT BUỘC đủ 6 ngôn ngữ):
 
 ```tsx
 "use client";
@@ -120,25 +120,10 @@ export default function Page() {
 }
 ```
 
-### Mẫu TỐI THIỂU (2 ngôn ngữ — mẫu method mới):
-
-```tsx
-"use client";
-import MethodDetail from "../../_components/MethodDetail";
-import en from "./i18n/en.json";
-import vi from "./i18n/vi.json";
-
-const i18n = { en, vi };
-
-export default function Page() {
-    return <MethodDetail methodId="{method_id}" translations={i18n} />;
-}
-```
-
 ### Quy tắc:
 - `methodId` **phải khớp chính xác** với `id` trong `data.ts` METHODS array
-- Tối thiểu cần `en.json` và `vi.json`
-- Hoàn chỉnh cần thêm `zh.json`, `ja.json`, `ko.json`, `es.json`
+- **BẮT BUỘC** phải có đủ **6 file ngôn ngữ**: `en.json`, `vi.json`, `zh.json`, `ja.json`, `ko.json`, `es.json`
+- **KHÔNG chấp nhận** method chỉ có 2 ngôn ngữ (en/vi) — phải có đủ 6
 
 ---
 
@@ -236,19 +221,19 @@ import metadata_vi from "./image/metadata/i18n/vi.json";
 
 ## 🔍 Checklist kiểm tra Method hoàn chỉnh
 
-### ✅ Đầy đủ (như metadata — mẫu chuẩn):
+### ✅ Đầy đủ (BẮT BUỘC — tất cả đều phải có):
 - [ ] `src/lib/methods/{type}/{file}.ts` — Logic phân tích
-- [ ] `src/app/methods/{type}/{id}/page.tsx` — Trang chi tiết
-- [ ] `src/app/methods/{type}/{id}/i18n/en.json` — i18n tiếng Anh (nội dung tiếng Anh chất lượng cao)
-- [ ] `src/app/methods/{type}/{id}/i18n/vi.json` — i18n tiếng Việt (nội dung tiếng Việt chất lượng cao)
-- [ ] `src/app/methods/{type}/{id}/i18n/zh.json` — i18n tiếng Trung
-- [ ] `src/app/methods/{type}/{id}/i18n/ja.json` — i18n tiếng Nhật
-- [ ] `src/app/methods/{type}/{id}/i18n/ko.json` — i18n tiếng Hàn
-- [ ] `src/app/methods/{type}/{id}/i18n/es.json` — i18n tiếng Tây Ban Nha
+- [ ] `src/app/methods/{type}/{id}/page.tsx` — Trang chi tiết (import đủ 6 ngôn ngữ)
+- [ ] `src/app/methods/{type}/{id}/i18n/en.json` — i18n tiếng Anh (**BẮT BUỘC** — nội dung tiếng Anh chất lượng cao)
+- [ ] `src/app/methods/{type}/{id}/i18n/vi.json` — i18n tiếng Việt (**BẮT BUỘC** — nội dung tiếng Việt chất lượng cao)
+- [ ] `src/app/methods/{type}/{id}/i18n/zh.json` — i18n tiếng Trung (**BẮT BUỘC**)
+- [ ] `src/app/methods/{type}/{id}/i18n/ja.json` — i18n tiếng Nhật (**BẮT BUỘC**)
+- [ ] `src/app/methods/{type}/{id}/i18n/ko.json` — i18n tiếng Hàn (**BẮT BUỘC**)
+- [ ] `src/app/methods/{type}/{id}/i18n/es.json` — i18n tiếng Tây Ban Nha (**BẮT BUỘC**)
 - [ ] `data.ts` METHODS array — Đã đăng ký
 - [ ] `index.ts` barrel export — Đã export
 - [ ] `methodsI18n.ts` — Đã import cho listing page
-- [ ] en.json có `references` với title + url
+- [ ] en.json có `references` với title + url (link clickable)
 - [ ] en.json các trường `mechanism`, `parameters` có nội dung chi tiết
 - [ ] en.json hoàn toàn bằng tiếng Anh (không trộn tiếng Việt)
 
@@ -304,12 +289,12 @@ import metadata_vi from "./image/metadata/i18n/vi.json";
 }
 ```
 
-### Lỗi 4: page.tsx chỉ có 2 ngôn ngữ
+### Lỗi 4: page.tsx thiếu ngôn ngữ
 ```tsx
-// Tối thiểu chấp nhận được nhưng CHƯA hoàn chỉnh
+// ❌ SAI — KHÔNG chấp nhận thiếu ngôn ngữ
 const i18n = { en, vi };
 
-// Hoàn chỉnh (như mẫu metadata)
+// ✅ ĐÚNG — BẮT BUỘC đủ 6 ngôn ngữ
 const i18n = { en, vi, zh, ja, ko, es };
 ```
 
@@ -324,3 +309,89 @@ const i18n = { en, vi, zh, ja, ko, es };
 | Text | ~100 | ~100 | 0 |
 
 > **Lưu ý**: Phần lớn method mới (v3-v6) có page + i18n nhưng chỉ en/vi và nội dung en.json chất lượng thấp (trộn tiếng Việt, generic).
+
+---
+
+## 📚 Hướng dẫn References (Link tham chiếu)
+
+Mỗi method **PHẢI** có trường `references` trong file i18n (đặc biệt `en.json`) dưới dạng mảng objects `{title, url}`. References sẽ được **render thành link clickable** trên trang chi tiết method (section "References & Citations").
+
+### Cấu trúc references trong JSON:
+
+```json
+"references": [
+    {"title": "Tên bài báo / tiêu chuẩn", "url": "https://link-truc-tiep-den-bai-bao"},
+    {"title": "Tên tài liệu khác", "url": "https://doi.org/..."}
+]
+```
+
+### Quy tắc viết references:
+- **`title`** (bắt buộc): Tên đầy đủ của bài nghiên cứu/tiêu chuẩn, bao gồm tác giả và năm nếu có
+- **`url`** (khuyến nghị mạnh): Link trực tiếp đến bài báo gốc — ưu tiên DOI, ArXiv, hoặc trang chính thức
+- Nên có **tối thiểu 2-3 references**, lý tưởng **4-6 references** cho mỗi method
+- References sẽ hiển thị dưới dạng **ordered list** (`<ol>`) với link mở tab mới (`target="_blank"`)
+
+### Nguồn tham khảo theo loại method:
+
+#### 🖼️ Image Methods — Nguồn phổ biến:
+
+| Loại | Nguồn mẫu | URL |
+|------|-----------|-----|
+| Metadata/EXIF | JEITA CP-3451C — Exif Standard 2.32 | [https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E](https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E) |
+| Metadata/XMP | Adobe XMP Specification | [https://developer.adobe.com/xmp/docs/](https://developer.adobe.com/xmp/docs/) |
+| Metadata/IPTC | IPTC Photo Metadata Standard 2024.1 | [https://iptc.org/standards/photo-metadata/](https://iptc.org/standards/photo-metadata/) |
+| C2PA | C2PA Technical Specification 2.0 | [https://c2pa.org/specifications/specifications/2.0/specs/C2PA_Specification.html](https://c2pa.org/specifications/specifications/2.0/specs/C2PA_Specification.html) |
+| ELA/Pixel | Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics | [https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf](https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf) |
+| Frequency/DCT | Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis. IEEE TIFS. | [https://doi.org/10.1109/TIFS.2012.2190402](https://doi.org/10.1109/TIFS.2012.2190402) |
+| GAN Detection | Wang et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR. | [https://arxiv.org/abs/1912.11035](https://arxiv.org/abs/1912.11035) |
+| Noise Analysis | Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS. | [https://doi.org/10.1109/TIFS.2007.916285](https://doi.org/10.1109/TIFS.2007.916285) |
+| JPEG Artifacts | Farid, H. (2009). Exposing digital forgeries from JPEG ghosts. IEEE TIFS. | [https://doi.org/10.1109/TIFS.2008.2012215](https://doi.org/10.1109/TIFS.2008.2012215) |
+| Diffusion Detection | Corvi et al. (2023). On the Detection of Synthetic Images Generated by Diffusion Models. ICASSP. | [https://arxiv.org/abs/2211.00680](https://arxiv.org/abs/2211.00680) |
+| Color Analysis | Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP. | [https://doi.org/10.1109/TSP.2005.855406](https://doi.org/10.1109/TSP.2005.855406) |
+| Dresden DB | Gloe, T. & Böhme, R. (2010). The Dresden Image Database. ACM SAC. | [https://doi.org/10.1145/1774088.1774427](https://doi.org/10.1145/1774088.1774427) |
+
+#### 🎬 Video Methods — Nguồn phổ biến:
+
+| Loại | Nguồn mẫu | URL |
+|------|-----------|-----|
+| Deepfake Detection | Rossler et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV. | [https://arxiv.org/abs/1901.08971](https://arxiv.org/abs/1901.08971) |
+| Temporal Consistency | Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV. | [https://arxiv.org/abs/2108.06693](https://arxiv.org/abs/2108.06693) |
+| Lip Sync Detection | Haliassos et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR. | [https://arxiv.org/abs/2012.07657](https://arxiv.org/abs/2012.07657) |
+| Optical Flow | Amerini et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop. | [https://doi.org/10.1109/ICCVW.2019.00152](https://doi.org/10.1109/ICCVW.2019.00152) |
+| Audio-Visual | Chugh et al. (2020). Not Made for Each Other— Audio-Visual Dissonance-based Deepfake Detection. ACM MM. | [https://doi.org/10.1145/3394171.3413700](https://doi.org/10.1145/3394171.3413700) |
+| Frame Analysis | Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR. | [https://arxiv.org/abs/1912.13458](https://arxiv.org/abs/1912.13458) |
+
+#### 📝 Text Methods — Nguồn phổ biến:
+
+| Loại | Nguồn mẫu | URL |
+|------|-----------|-----|
+| GPT Detection | Guo et al. (2023). How Close is ChatGPT to Human Experts? NeurIPS. | [https://arxiv.org/abs/2301.07597](https://arxiv.org/abs/2301.07597) |
+| Perplexity | Mitchell et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML. | [https://arxiv.org/abs/2301.11305](https://arxiv.org/abs/2301.11305) |
+| Watermarking | Kirchenbauer et al. (2023). A Watermark for Large Language Models. ICML. | [https://arxiv.org/abs/2301.10226](https://arxiv.org/abs/2301.10226) |
+| Stylometry | Uchendu et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP. | [https://arxiv.org/abs/2010.07091](https://arxiv.org/abs/2010.07091) |
+| Burstiness | Tian, E. (2023). GPTZero: Towards Detection of AI-Generated Text. | [https://gptzero.me/technology](https://gptzero.me/technology) |
+| GLTR | Gehrmann et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL. | [https://arxiv.org/abs/1906.04043](https://arxiv.org/abs/1906.04043) |
+| Entropy Analysis | Lavergne et al. (2008). Detecting Fake Content with Relative Entropy Scoring. PAN Workshop. | [https://ceur-ws.org/Vol-502/](https://ceur-ws.org/Vol-502/) |
+| Zipf's Law | Powers, D. (1998). Applications and Explanations of Zipf's Law. ACL Workshop. | [https://aclanthology.org/W98-1218/](https://aclanthology.org/W98-1218/) |
+
+### Ví dụ references hoàn chỉnh cho method mới:
+
+```json
+{
+    "source": "Corvi et al. (2023). On the Detection of Synthetic Images Generated by Diffusion Models. ICASSP 2023.",
+    "references": [
+        {"title": "Corvi et al. (2023). On the Detection of Synthetic Images Generated by Diffusion Models. ICASSP.", "url": "https://arxiv.org/abs/2211.00680"},
+        {"title": "Wang et al. (2020). CNN-generated images are surprisingly easy to spot...for now. CVPR.", "url": "https://arxiv.org/abs/1912.11035"},
+        {"title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.", "url": "https://doi.org/10.1109/TIFS.2012.2190402"},
+        {"title": "Farid, H. (2022). Creating, Using, Misusing, and Detecting Deep Fakes. JOTS.", "url": "https://doi.org/10.54501/jots.v1i1.6"}
+    ]
+}
+```
+
+### Hiển thị trên UI:
+
+References sẽ được render trong component `MethodDetail.tsx` như sau:
+- Section **"References & Citations"** hiển thị dưới dạng **danh sách đánh số** (`<ol>`)
+- Mỗi reference có `url` sẽ hiển thị thành **link clickable** mở tab mới (🔗 icon kèm theo)
+- Reference không có `url` sẽ hiển thị dưới dạng text thuần
+- Section **"Academic Reference"** (trường `source`) cũng sẽ tự động link đến `references[0].url` nếu có
