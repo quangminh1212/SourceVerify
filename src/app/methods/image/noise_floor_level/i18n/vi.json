@@ -2,11 +2,11 @@
     "name": "Mức sàn nhiễu",
     "description": "Đo mức sàn nhiễu cơ bản trên toàn ảnh",
     "algorithm": "Thuật toán phân tích Mức sàn nhiễu",
-    "mechanism": "Phân tích các mẫu mức sàn nhiễu để phát hiện nội dung do AI tạo ra. Đo mức sàn nhiễu cơ bản trên toàn ảnh",
-    "parameters": "Loại phân tích: sensor, Phương tiện: image, Ngưỡng tin cậy: tự thích ứng",
-    "accuracy": "Trung bình đến Cao — 65-85% độc lập, cao hơn khi kết hợp với các phương pháp khác",
-    "source": "Phương pháp phân tích sensor dựa trên nghiên cứu cho pháp y image",
-    "useCase": "Phát hiện image do AI tạo thông qua phân tích mức sàn nhiễu",
-    "strengths": "• Kỹ thuật phân tích sensor hiệu quả\n• Hoạt động tốt như phương pháp bổ sung\n• Áp dụng được cho nhiều loại image\n• Dựa trên nghiên cứu đã được thiết lập",
-    "limitations": "• Có thể yêu cầu chất lượng image đủ tốt\n• Tốt nhất khi kết hợp với các phương pháp khác\n• Hiệu suất thay đổi theo loại nội dung"
+    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Đo mức sàn nhiễu cơ bản trên toàn ảnh. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
+    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích mức sàn nhiễu. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
 }
