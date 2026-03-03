@@ -312,6 +312,24 @@ import {
     analyzeConditionalUsage,
     analyzeRepetitivePhrase,
     analyzeConclusionIndicator,
+    // v13
+    analyzeRichardsonLucy, analyzeWienerResidual, analyzeSecondOrderGrad, analyzeDctEnergyCompact, analyzeSpatialRichModel, analyzeMidFreqEnergy, analyzeLaplacianVariance, analyzeSobelMagnitude, analyzeCannyDensity, analyzeCoocEntropy, analyzeBoxFilterResidual, analyzeMaximalGradFlow, analyzeDifferenceHistogram, analyzeSubBandDev, analyzeGradOrientHist, analyzeKirschEdge, analyzeLawsTextureE, analyzeGaborEnergy, analyzeScharrGradient, analyzeStructuralComplexity,
+    analyzeFaceXray, analyzeFaceBlendBound, analyzeColorHistShift, analyzeFaceSkinSmoothV, analyzeSpecularHighlight, analyzeContourContinuity, analyzeSkinMicroMotion, analyzeBGFreqMap, analyzeInterFrameBlend, analyzeEdgeSharpnessVar, analyzeNostrilDarkness, analyzeEarDetailConsistency, analyzeClothingEdgeBlend, analyzeTemporalJitter, analyzeSkinPoreSimulation,
+    analyzeZipfDeviation,
+    analyzeTokenPredictability,
+    analyzeLogLikelihoodRank,
+    analyzeEntropyPerWord,
+    analyzeCurieDetect,
+    analyzeVocabularyRichness,
+    analyzeMeanDepParse,
+    analyzeWordRarityScore,
+    analyzeClauseBalance,
+    analyzeTextRepetitionMicro,
+    analyzeTextDNAWatermark,
+    analyzeIntrinsicDimension,
+    analyzeSentenceEntropy,
+    analyzeLexicalDensity,
+    analyzeTextBurstiness2,
 } from "./methods";
 
 // ============================
@@ -677,6 +695,27 @@ export const METHOD_MAP: Record<string, string> = {
     posterization: "signal.posterization",
     mean_shift_cluster: "signal.meanShiftCluster",
     gradient_magnitude: "signal.gradientMagHist",
+    // Image v13
+    richardson_lucy: "signal.richardsonLucy",
+    wiener_residual: "signal.wienerResidual",
+    second_order_grad: "signal.secondOrderGrad",
+    dct_energy_compact: "signal.dctEnergyCompact",
+    spatial_rich_model: "signal.spatialRichModel",
+    mid_freq_energy: "signal.midFreqEnergy",
+    laplacian_variance: "signal.laplacianVar",
+    sobel_magnitude: "signal.sobelMagDist",
+    canny_density: "signal.cannyDensity",
+    cooc_entropy: "signal.coocEntropy",
+    box_filter_residual: "signal.boxFilterResid",
+    maximal_grad_flow: "signal.maxGradFlow",
+    difference_histogram: "signal.diffHistogram",
+    sub_band_dev: "signal.subBandDev",
+    grad_orient_hist: "signal.gradOrientHist",
+    kirsch_edge: "signal.kirschEdge",
+    laws_texture_e: "signal.lawsTextureE",
+    gabor_energy: "signal.gaborEnergy",
+    scharr_gradient: "signal.scharrGrad",
+    structural_complexity: "signal.structComplexity",
 };
 
 /** Text method ID → nameKey mapping */
@@ -792,6 +831,22 @@ export const TEXT_METHOD_MAP: Record<string, string> = {
     conditional_usage: "signal.conditionalUsage",
     repetitive_phrase: "signal.repetitivePhrase",
     conclusion_indicator: "signal.conclusionIndicator",
+    // Text v6
+    zipf_deviation: "signal.zipfDeviation",
+    token_predictability: "signal.tokenPredict",
+    log_likelihood_rank: "signal.logLikelihood",
+    entropy_per_word: "signal.entropyPerWord",
+    curie_detect: "signal.curieDetect",
+    vocabulary_richness: "signal.vocabRichness",
+    mean_dep_parse: "signal.meanDepParse",
+    word_rarity: "signal.wordRarity",
+    clause_balance: "signal.clauseBalance",
+    micro_repetition: "signal.microRepetition",
+    text_dna: "signal.textDNA",
+    intrinsic_dimension: "signal.intrinsicDim",
+    sentence_entropy: "signal.sentenceEntropy",
+    lexical_density: "signal.lexicalDensity",
+    text_burstiness2: "signal.textBurstiness2",
 };
 
 export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
@@ -911,6 +966,22 @@ export const VIDEO_METHOD_MAP: Record<string, string> = {
     edge_aa_video: "signal.edgeAAVideo",
     temporal_coherence_map: "signal.tempCoherenceMap",
     video_freq_spectrum: "signal.videoFreqSpectrum",
+    // Video v6
+    face_xray: "signal.faceXray",
+    face_blend_bound: "signal.faceBlendBound",
+    color_hist_shift: "signal.colorHistShift",
+    face_skin_smooth_v: "signal.faceSkinSmoothV",
+    specular_highlight: "signal.specularHighlight",
+    contour_continuity: "signal.contourContinuity",
+    skin_micro_motion: "signal.skinMicroMotion",
+    bg_freq_map: "signal.bgFreqMap",
+    inter_frame_blend: "signal.interFrameBlend",
+    edge_sharpness_var: "signal.edgeSharpnessVar",
+    nostril_darkness: "signal.nostrilDarkness",
+    ear_detail: "signal.earDetail",
+    clothing_edge_blend: "signal.clothingEdgeBlend",
+    temporal_jitter: "signal.temporalJitter",
+    skin_pore_sim: "signal.skinPoreSim",
 };
 
 export const ALL_VIDEO_METHOD_IDS = Object.keys(VIDEO_METHOD_MAP);
@@ -1123,6 +1194,27 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
         analyzePosterizationDetect(pixels, w, h),
         analyzeMeanShiftCluster(pixels, w, h),
         analyzeGradientMagnitudeHist(pixels, w, h),
+        // Image v13
+        analyzeRichardsonLucy(pixels, w, h),
+        analyzeWienerResidual(pixels, w, h),
+        analyzeSecondOrderGrad(pixels, w, h),
+        analyzeDctEnergyCompact(pixels, w, h),
+        analyzeSpatialRichModel(pixels, w, h),
+        analyzeMidFreqEnergy(pixels, w, h),
+        analyzeLaplacianVariance(pixels, w, h),
+        analyzeSobelMagnitude(pixels, w, h),
+        analyzeCannyDensity(pixels, w, h),
+        analyzeCoocEntropy(pixels, w, h),
+        analyzeBoxFilterResidual(pixels, w, h),
+        analyzeMaximalGradFlow(pixels, w, h),
+        analyzeDifferenceHistogram(pixels, w, h),
+        analyzeSubBandDev(pixels, w, h),
+        analyzeGradOrientHist(pixels, w, h),
+        analyzeKirschEdge(pixels, w, h),
+        analyzeLawsTextureE(pixels, w, h),
+        analyzeGaborEnergy(pixels, w, h),
+        analyzeScharrGradient(pixels, w, h),
+        analyzeStructuralComplexity(pixels, w, h),
     ];
 
     // Filter methods based on enabled set using O(1) reverse map lookup
@@ -1411,6 +1503,22 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                     analyzeEdgeAntiAliasingVideo(pixels, w, h),
                     analyzeTemporalCoherenceMap(pixels, w, h),
                     analyzeVideoFreqSpectrum(pixels, w, h),
+                    // Video v6
+                    analyzeFaceXray(pixels, w, h),
+                    analyzeFaceBlendBound(pixels, w, h),
+                    analyzeColorHistShift(pixels, w, h),
+                    analyzeFaceSkinSmoothV(pixels, w, h),
+                    analyzeSpecularHighlight(pixels, w, h),
+                    analyzeContourContinuity(pixels, w, h),
+                    analyzeSkinMicroMotion(pixels, w, h),
+                    analyzeBGFreqMap(pixels, w, h),
+                    analyzeInterFrameBlend(pixels, w, h),
+                    analyzeEdgeSharpnessVar(pixels, w, h),
+                    analyzeNostrilDarkness(pixels, w, h),
+                    analyzeEarDetailConsistency(pixels, w, h),
+                    analyzeClothingEdgeBlend(pixels, w, h),
+                    analyzeTemporalJitter(pixels, w, h),
+                    analyzeSkinPoreSimulation(pixels, w, h),
                 ];
 
                 const methods = allMethods.filter(s => {
@@ -1554,6 +1662,22 @@ export async function analyzeText(text: string, enabledMethods?: string[], custo
         analyzeConditionalUsage(text),
         analyzeRepetitivePhrase(text),
         analyzeConclusionIndicator(text),
+        // Text v6
+        analyzeZipfDeviation(text),
+        analyzeTokenPredictability(text),
+        analyzeLogLikelihoodRank(text),
+        analyzeEntropyPerWord(text),
+        analyzeCurieDetect(text),
+        analyzeVocabularyRichness(text),
+        analyzeMeanDepParse(text),
+        analyzeWordRarityScore(text),
+        analyzeClauseBalance(text),
+        analyzeTextRepetitionMicro(text),
+        analyzeTextDNAWatermark(text),
+        analyzeIntrinsicDimension(text),
+        analyzeSentenceEntropy(text),
+        analyzeLexicalDensity(text),
+        analyzeTextBurstiness2(text),
     ];
 
     const methods = allMethods.filter(s => {
