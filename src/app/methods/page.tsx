@@ -183,15 +183,13 @@ export default function MethodsPage() {
                                         <span className={`methods-card-badge ${CAT_COLORS[m.category]}`}>
                                             {t(`methods.cat${m.category.charAt(0).toUpperCase() + m.category.slice(1)}` as string)}
                                         </span>
-                                        {m.year && (
-                                            <span className="methods-card-badge methods-card-year">
-                                                {m.year}
-                                            </span>
-                                        )}
                                     </div>
                                 </div>
                                 <h3 className="methods-card-name">{getMethodTranslation(m.id, locale).name}</h3>
                                 <p className="methods-card-desc">{getMethodTranslation(m.id, locale).description}</p>
+                                {m.year && (
+                                    <span className="methods-card-year">{m.year}</span>
+                                )}
                                 {showSelectUI && (
                                     <button
                                         className={`methods-select-btn ${selectedId === m.id ? 'active' : ''}`}
