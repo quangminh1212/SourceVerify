@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { METHODS } from "@/app/methods/data";
 import { getMethodTranslation } from "@/app/methods/methodsI18n";
 
 interface UserInfo {
@@ -577,21 +578,19 @@ print(await response.stream.bytesToString());`,
 
 
             case "analysis-methods": {
-                const methods = [
-                    { id: "metadata", icon: "📋", cat: "metadata", weight: 2.5 },
-                    { id: "spectral", icon: "📊", cat: "frequency", weight: 4.0 },
-                    { id: "reconstruction", icon: "🔬", cat: "frequency", weight: 4.0 },
-                    { id: "noise", icon: "◫", cat: "pixel", weight: 3.5 },
-                    { id: "edge", icon: "⬡", cat: "pixel", weight: 3.0 },
-                    { id: "gradient", icon: "▤", cat: "pixel", weight: 3.5 },
-                    { id: "benford", icon: "📈", cat: "statistical", weight: 3.0 },
-                    { id: "chromatic", icon: "🌈", cat: "sensor", weight: 3.0 },
-                    { id: "texture", icon: "🧩", cat: "pixel", weight: 3.0 },
-                    { id: "cfa", icon: "⊞", cat: "sensor", weight: 3.5 },
-                    { id: "dct", icon: "▦", cat: "frequency", weight: 3.5 },
-                    { id: "color", icon: "◈", cat: "pixel", weight: 3.0 },
-                    { id: "prnu", icon: "⊕", cat: "sensor", weight: 4.0 },
-                ];
+                const iconByCategory: Record<string, string> = {
+                    pixel: "⬡",
+                    frequency: "📊",
+                    statistical: "📈",
+                    metadata: "📋",
+                    sensor: "🔬",
+                };
+                const methods = METHODS.slice(0, 13).map((method) => ({
+                    id: method.id,
+                    icon: iconByCategory[method.category] || "•",
+                    cat: method.category,
+                    weight: method.weight,
+                }));
                 const catLabel: Record<string, string> = {
                     pixel: t("api.methods.catPixel"),
                     frequency: t("api.methods.catFrequency"),

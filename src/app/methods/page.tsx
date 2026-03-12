@@ -117,6 +117,9 @@ export default function MethodsPage() {
     };
 
     const showSelectUI = isSelectMode && !isLoggedIn;
+    const visibleMediaTypes = MEDIA_TYPES.filter(mt =>
+        mt.key === "all" || METHODS.some(method => method.mediaType === mt.key)
+    );
 
     // Get categories available in the selected media type
     const availableCategories = activeMedia === "all"
@@ -160,7 +163,7 @@ export default function MethodsPage() {
     };
 
     // Current media label
-    const activeMediaLabel = MEDIA_TYPES.find(mt => mt.key === activeMedia);
+    const activeMediaLabel = visibleMediaTypes.find(mt => mt.key === activeMedia) || MEDIA_TYPES[0];
     const mediaCount = activeMedia === "all" ? METHODS.length : METHODS.filter(m => m.mediaType === activeMedia).length;
 
     // Sort mode labels
@@ -198,7 +201,7 @@ export default function MethodsPage() {
                                 </button>
                                 {mediaOpen && (
                                     <div className="methods-dropdown-menu">
-                                        {MEDIA_TYPES.map(mt => (
+                                        {visibleMediaTypes.map(mt => (
                                             <button
                                                 key={mt.key}
                                                 className={`methods-dropdown-item ${activeMedia === mt.key ? "active" : ""}`}
