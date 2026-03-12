@@ -79,6 +79,585 @@ src/
 
 ---
 
+<!-- METHOD_ACCURACY_REPORT:START -->
+## Method Accuracy Benchmark
+
+Generated on **2026-03-12T09:28:02.570Z** by `npm run benchmark:methods`.
+
+### Benchmark Rules
+
+- `strict accuracy`: correct / total evaluated, and `score = 50` counts as incorrect because the method stayed uncertain.
+- `classified accuracy`: correct / classified, excluding `score = 50` outputs.
+- `coverage`: classified / evaluated. Higher coverage means the method avoided the neutral `50` score more often.
+- Image and video-frame benchmarks use a balanced local dataset of **120 real** + **120 AI** images, resized to max **320px** for repeatability.
+- Video methods are measured as **single-frame proxy accuracy** because the repository currently has no labeled local video dataset.
+- Text methods are measured on a **synthetic local corpus** of human-like vs AI-like paragraphs because the repository currently has no labeled local text corpus.
+- Server-side API benchmarking uses **neutral file names** (`sample-0001.jpg`) to avoid filename label leakage inside `Metadata Analysis`.
+
+### Coverage Summary
+
+| Group | Methods | Corpus | Notes |
+|---|---:|---|---|
+| Image runtime methods | 186 | balanced local image set | direct pixel benchmark |
+| Video runtime methods | 165 | balanced local image set | frame proxy only, no temporal ground truth |
+| Text runtime methods | 149 | synthetic balanced text set | provisional accuracy only |
+| Server API signals | 7 | balanced local image set | includes final verdict + internal signals |
+
+### Top-Level Findings
+
+- Best image method strict accuracy: **Moiré Pattern** at **82.5%**.
+- Best video frame-proxy method strict accuracy: **Lip Sync Analysis** at **89.6%**.
+- Best text method strict accuracy: **First Person Usage** at **100.0%**.
+- Server analyzer final verdict strict accuracy: **52.5%** with **73.8%** coverage.
+
+<details>
+<summary>Image Methods (186)</summary>
+
+| Method | ID | Strict Acc | Classified Acc | Coverage | Score Gap | Errors | Avg ms | Status |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| Moiré Pattern | `image/moirePattern` | 82.5% | 82.5% | 100.0% | 17.8 | 0 | 0.1 | ok |
+| Isolated Pixel | `image/isolatedPixel` | 81.7% | 81.7% | 100.0% | 11.5 | 0 | 0.4 | ok |
+| SRM Filter Response | `image/srmFilter` | 77.5% | 77.5% | 100.0% | 8.3 | 0 | 0.1 | ok |
+| Anti-aliasing Consistency | `image/antiAliasingConsistency` | 69.6% | 69.6% | 100.0% | 8.8 | 0 | 0.3 | ok |
+| Image Complexity | `image/imageComplexity` | 68.8% | 68.8% | 100.0% | 2.2 | 0 | 0.2 | ok |
+| Wiener Filter Residual | `image/wienerResidual` | 67.5% | 67.5% | 100.0% | 3.2 | 0 | 0.1 | ok |
+| Noise Residual | `image/noise` | 67.5% | 67.8% | 99.6% | 11.8 | 0 | 2.5 | ok |
+| Bloom Artifact | `image/bloomArtifact` | 66.3% | 66.3% | 100.0% | 7.5 | 0 | 0.1 | ok |
+| Reflection Consistency | `image/reflectionConsistency` | 65.4% | 65.4% | 100.0% | 6.4 | 0 | 0.2 | ok |
+| Pixel Bit Plane | `image/pixelBitPlane` | 62.5% | 69.1% | 90.4% | 8.5 | 0 | 0.1 | ok |
+| Hot Pixel Detection | `image/hotPixelDetection` | 60.4% | 60.4% | 100.0% | 3.4 | 0 | 0.4 | ok |
+| Local Entropy | `image/localEntropy` | 60.4% | 60.4% | 100.0% | 1.7 | 0 | 1.3 | ok |
+| Spatial Rich Model | `image/spatialRichModel` | 59.6% | 59.6% | 100.0% | 2.5 | 0 | 0.2 | ok |
+| JPEG Coefficient Distribution | `image/jpegCoefficientDist` | 58.8% | 58.8% | 100.0% | 5.2 | 0 | 0.1 | ok |
+| Aperture Diffraction | `image/apertureDiffraction` | 57.9% | 57.9% | 100.0% | 2.9 | 0 | 0.1 | ok |
+| EfficientNet Feature Analysis | `image/efficientnetDetect` | 57.1% | 57.1% | 100.0% | 2.8 | 0 | 1.8 | ok |
+| Patch Similarity Matrix | `image/patchSimilarityMatrix` | 57.1% | 57.1% | 100.0% | 3.0 | 0 | 0.1 | ok |
+| Color Gamut Analysis | `image/colorGamut` | 56.3% | 56.3% | 100.0% | 1.1 | 0 | 0.6 | ok |
+| Color Moment Statistics | `image/colorMomentStatistics` | 56.3% | 56.3% | 100.0% | 4.3 | 0 | 3.5 | ok |
+| Texture Consistency | `image/texture` | 55.8% | 55.8% | 100.0% | 10.4 | 0 | 0.2 | ok |
+| Illuminant Map Analysis | `image/illuminantMap` | 55.4% | 55.4% | 100.0% | 0.7 | 0 | 0.2 | ok |
+| Cross Gradient | `image/crossGradient` | 54.6% | 54.6% | 100.0% | 9.0 | 0 | 0.1 | ok |
+| Lens Distortion | `image/lensDistortionImage` | 54.6% | 54.6% | 100.0% | 1.8 | 0 | 0.1 | ok |
+| DCT Block Artifacts | `image/dct` | 54.6% | 71.6% | 76.3% | 5.9 | 0 | 0.6 | ok |
+| Laplacian Variance | `image/laplacianVariance` | 54.2% | 54.2% | 100.0% | 7.8 | 0 | 0.1 | ok |
+| Skin Texture Frequency | `image/skinTextureFreq` | 54.2% | 54.2% | 100.0% | 0.2 | 0 | 0.1 | ok |
+| Color Channel Noise | `image/colorChannelNoise` | 53.8% | 53.8% | 100.0% | 2.9 | 0 | 0.1 | ok |
+| ResNet Feature Analysis | `image/resnetClassifier` | 52.9% | 52.9% | 100.0% | 1.0 | 0 | 0.3 | ok |
+| Texture Periodicity | `image/texturePeriodicity` | 52.9% | 52.9% | 100.0% | 0.8 | 0 | 0.3 | ok |
+| CFA Pattern Detection | `image/cfa` | 52.5% | 52.5% | 100.0% | 0.6 | 0 | 0.3 | ok |
+| Tone Mapping Detection | `image/toneMapping` | 52.5% | 52.5% | 100.0% | 1.1 | 0 | 0.3 | ok |
+| Gradient Micro-Texture | `image/gradient` | 52.5% | 55.3% | 95.0% | 2.5 | 0 | 1.0 | ok |
+| Micro Texture | `image/microTextureAnalysis` | 52.1% | 52.1% | 100.0% | -2.8 | 0 | 0.1 | ok |
+| Richardson-Lucy Deconv | `image/richardsonLucy` | 52.1% | 52.1% | 100.0% | 1.1 | 0 | 0.0 | ok |
+| Gram Matrix Analysis | `image/gramMatrix` | 51.7% | 51.7% | 100.0% | 2.8 | 0 | 0.1 | ok |
+| Histogram Gradient | `image/histogramGradient` | 51.7% | 53.2% | 97.1% | 6.0 | 0 | 1.1 | ok |
+| Gradient Orientation Hist | `image/gradOrientHist` | 51.7% | 79.0% | 65.4% | 9.9 | 0 | 0.3 | ok |
+| Steganalysis Detection | `image/steganalysisDetect` | 51.2% | 51.2% | 100.0% | 6.3 | 0 | 0.4 | ok |
+| Color Temperature Consistency | `image/colorTemperature` | 50.8% | 50.8% | 100.0% | 2.3 | 0 | 0.2 | ok |
+| Double JPEG Detection | `image/doubleJpeg` | 50.8% | 50.8% | 100.0% | -4.6 | 0 | 1.5 | ok |
+| Patch-level Forensics | `image/patchForensics` | 50.8% | 50.8% | 100.0% | 0.7 | 0 | 0.3 | ok |
+| Attention Map Consistency | `image/attentionConsistency` | 50.4% | 50.4% | 100.0% | 0.3 | 0 | 0.2 | ok |
+| Chromatic Aberration | `image/chromatic` | 50.4% | 50.4% | 100.0% | -6.8 | 0 | 0.1 | ok |
+| Color Coherence Vector | `image/colorCoherence` | 50.4% | 57.9% | 87.1% | 0.7 | 0 | 1.8 | ok |
+| Camera Model Identification | `image/cameraModel` | 50.0% | 50.0% | 100.0% | 7.0 | 0 | 0.3 | ok |
+| Color Profile Metadata | `image/colorProfileMeta` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Contrast Enhancement Detection | `image/contrastEnhancement` | 50.0% | 50.0% | 100.0% | 0.6 | 0 | 0.9 | ok |
+| DCT Energy Compaction | `image/dctEnergyCompact` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| EXIF Integrity Validation | `image/exifIntegrity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Fractal Dimension | `image/fractal` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 2.5 | ok |
+| GPS Consistency Analysis | `image/gpsConsistency` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| IPTC Data Verification | `image/iptcVerification` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Pixel Co-occurrence | `image/pixelCooccurrence` | 50.0% | 50.0% | 100.0% | -0.8 | 0 | 5.3 | ok |
+| Posterization | `image/posterizationDetect` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Sensor Pattern Noise | `image/prnu` | 50.0% | 50.0% | 100.0% | -5.3 | 0 | 24.6 | ok |
+| SIFT Keypoint Forensics | `image/siftForensics` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.8 | ok |
+| Spectral Nyquist Analysis | `image/spectral` | 50.0% | 50.0% | 100.0% | -1.6 | 0 | 227.9 | ok |
+| Spectral Decay Rate | `image/spectralDecayRate` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 6.5 | ok |
+| Structural Complexity | `image/structuralComplexity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.2 | ok |
+| Style Transfer Detection | `image/styleTransfer` | 50.0% | 50.0% | 100.0% | 3.6 | 0 | 0.5 | ok |
+| Thumbnail Consistency Analysis | `image/thumbnailAnalysis` | 50.0% | 50.0% | 100.0% | 0.2 | 0 | 0.2 | ok |
+| Timestamp Forensics | `image/timestampForensics` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Upscaling Detection | `image/upscalingDetection` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.7 | ok |
+| Splicing Detection | `image/splicingDetection` | 50.0% | 50.8% | 98.3% | 1.6 | 0 | 0.4 | ok |
+| Histogram Analysis | `image/histogram` | 50.0% | 64.5% | 77.5% | 2.4 | 0 | 1.5 | ok |
+| Autocorrelation Regularity | `image/autocorrelation` | 49.6% | 49.6% | 100.0% | -0.6 | 0 | 3.2 | ok |
+| Dynamic Range | `image/dynamicRangeAnalysis` | 49.6% | 49.6% | 100.0% | -2.7 | 0 | 0.1 | ok |
+| Edge Density Map | `image/edgeDensityMap` | 49.6% | 49.6% | 100.0% | -4.6 | 0 | 0.5 | ok |
+| Neural Compression Artifact Detection | `image/neuralCompression` | 49.6% | 49.6% | 100.0% | -3.1 | 0 | 0.3 | ok |
+| Perceptual Hash Analysis | `image/perceptualHash` | 49.6% | 57.8% | 85.8% | 5.0 | 0 | 0.2 | ok |
+| Second Order Gradient | `image/secondOrderGrad` | 48.8% | 48.8% | 100.0% | 4.9 | 0 | 0.1 | ok |
+| Census Transform Analysis | `image/censusTransform` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Contourlet Transform Analysis | `image/contourletAnalysis` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Convolutional Trace Analysis | `image/convolutionalTrace` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Curvelet Transform Analysis | `image/curveletTransform` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Discrete Cosine Energy Profile | `image/discreteCosineEnergy` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Gabor Phase Congruency | `image/gaborPhase` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Gabor Wavelet Filter Bank | `image/gaborWaveletBank` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Gradient Divergence Field | `image/gradientDivergence` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Gradient-Weighted Activation Map | `image/gradientWeightedCam` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Harris Corner Response | `image/harrisCorner` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Hessian Matrix Analysis | `image/hessianMatrix` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Laplacian Pyramid Residual | `image/laplacianPyramid` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Log-Gabor Filter Analysis | `image/logGaborFilter` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Hu Moment Invariants | `image/momentInvariants` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Multiscale Entropy Analysis | `image/multiscaleEntropy` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| NIQE Quality Score | `image/niqeScore` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Pixel Value Differencing | `image/pixelValueDiff` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Run Length Matrix Analysis | `image/runLengthMatrix` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Shearlet Transform Analysis | `image/shearletAnalysis` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Sparse Representation Analysis | `image/sparseRepresentation` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| SSIM Map Analysis | `image/ssimMap` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Steerable Pyramid Decomposition | `image/steerablePyramid` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.4 | ok |
+| SVD Decomposition Analysis | `image/svdDecomposition` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.2 | ok |
+| Total Variation Norm Analysis | `image/totalVariation` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.3 | ok |
+| Wavelet Packet Decomposition | `image/waveletPacket` | 48.3% | 48.3% | 100.0% | 1.5 | 0 | 0.3 | ok |
+| Brightness Gradient | `image/brightnessGradient` | 48.3% | 49.2% | 98.3% | 6.0 | 0 | 0.0 | ok |
+| Bilateral Symmetry | `image/bilateralSymmetry` | 47.9% | 47.9% | 100.0% | 5.3 | 0 | 0.7 | ok |
+| BRISQUE Quality Assessment | `image/brisque` | 47.9% | 47.9% | 100.0% | 4.3 | 0 | 1.8 | ok |
+| RGB Correlation | `image/rgbCorrelation` | 47.9% | 47.9% | 100.0% | -6.4 | 0 | 0.1 | ok |
+| Demosaicing Artifact Analysis | `image/demosaicingDetect` | 47.9% | 56.9% | 84.2% | 5.3 | 0 | 0.1 | ok |
+| Noiseprint Extraction | `image/noiseprintExtraction` | 47.5% | 47.5% | 100.0% | 1.4 | 0 | 0.9 | ok |
+| ViT Token Analysis | `image/vitDetection` | 47.5% | 47.5% | 100.0% | 1.1 | 0 | 0.3 | ok |
+| Scharr Gradient | `image/scharrGradient` | 47.5% | 48.7% | 97.5% | 6.4 | 0 | 0.2 | ok |
+| Laplacian Edge Sharpness | `image/laplacianEdge` | 46.7% | 50.0% | 93.3% | 1.6 | 0 | 11.6 | ok |
+| Error Level Analysis | `image/errorLevel` | 46.7% | 51.4% | 90.8% | 3.2 | 0 | 0.2 | ok |
+| Chroma Subsampling | `image/chromaSubsampling` | 46.7% | 54.6% | 85.4% | 2.4 | 0 | 0.2 | ok |
+| Gabor Energy Dist | `image/gaborEnergy` | 45.8% | 52.9% | 86.7% | 1.7 | 0 | 0.2 | ok |
+| Pixel Symmetry | `image/pixelSymmetry` | 45.4% | 45.4% | 100.0% | -0.2 | 0 | 0.1 | ok |
+| Contour Smoothness | `image/contourSmooth` | 45.4% | 88.6% | 51.2% | 10.8 | 0 | 0.1 | ok |
+| Resampling Detection | `image/resamplingDetect` | 44.6% | 44.6% | 100.0% | -3.2 | 0 | 5.1 | ok |
+| Color Channel Correlation | `image/color` | 44.2% | 45.3% | 97.5% | -6.1 | 0 | 1.0 | ok |
+| Noise Granularity | `image/noiseGranularity` | 43.8% | 43.8% | 100.0% | 0.1 | 0 | 0.2 | ok |
+| Edge Coherence | `image/edge` | 43.8% | 52.5% | 83.3% | 0.5 | 0 | 47.2 | ok |
+| Luma Gradient Angle | `image/lumaGradientAngle` | 43.8% | 63.6% | 68.8% | 8.7 | 0 | 0.3 | ok |
+| CLIP Embedding Analysis | `image/clipDetection` | 43.3% | 43.3% | 100.0% | -7.8 | 0 | 1.0 | ok |
+| Median Filtering Detection | `image/medianFilter` | 42.1% | 53.4% | 78.8% | -1.7 | 0 | 3.1 | ok |
+| Zernike Moment Analysis | `image/zernikeMoments` | 41.3% | 44.8% | 92.1% | -3.6 | 0 | 0.4 | ok |
+| Contrast Map | `image/contrastMap` | 41.3% | 46.0% | 89.6% | 1.8 | 0 | 0.3 | ok |
+| Depth Map Consistency | `image/depthMapConsistency` | 40.4% | 40.4% | 100.0% | -1.1 | 0 | 0.4 | ok |
+| Co-occurrence Entropy | `image/coocEntropy` | 40.4% | 55.1% | 73.3% | 2.7 | 0 | 0.1 | ok |
+| Sub-band Deviation | `image/subBandDev` | 39.6% | 43.8% | 90.4% | -4.8 | 0 | 0.1 | ok |
+| Spatial Coherence | `image/spatialCoherence` | 39.6% | 81.2% | 48.8% | 6.3 | 0 | 0.8 | ok |
+| Mutual Information | `image/mutualInfo` | 39.2% | 39.2% | 100.0% | -4.4 | 0 | 2.3 | ok |
+| Radon Transform Analysis | `image/radonTransform` | 38.8% | 38.8% | 100.0% | -6.8 | 0 | 0.6 | ok |
+| Noise Floor Level | `image/noiseFloorLevel` | 38.3% | 38.3% | 100.0% | -1.2 | 0 | 0.1 | ok |
+| Gamma Distortion | `image/gammaDistortion` | 38.3% | 49.5% | 77.5% | 0.8 | 0 | 0.2 | ok |
+| Mean Shift Cluster | `image/meanShiftCluster` | 37.5% | 37.5% | 100.0% | -4.3 | 0 | 0.1 | ok |
+| Saturation Distribution | `image/saturationDistribution` | 36.7% | 47.1% | 77.9% | -1.6 | 0 | 4.0 | ok |
+| Linear Pattern | `image/linearPatternDetect` | 36.3% | 36.3% | 100.0% | -8.9 | 0 | 0.6 | ok |
+| Sobel Magnitude Dist | `image/sobelMagnitude` | 36.3% | 43.7% | 82.9% | -0.2 | 0 | 0.4 | ok |
+| Mid-Frequency Energy | `image/midFreqEnergy` | 36.3% | 48.9% | 74.2% | -0.5 | 0 | 0.0 | ok |
+| Flat Region Ratio | `image/flatRegionRatio` | 35.8% | 35.8% | 100.0% | -2.9 | 0 | 0.2 | ok |
+| Image Phylogeny Analysis | `image/imagePhylogeny` | 35.8% | 35.8% | 100.0% | -7.6 | 0 | 0.2 | ok |
+| Maximal Gradient Flow | `image/maximalGradFlow` | 35.4% | 41.3% | 85.8% | -1.0 | 0 | 0.7 | ok |
+| Copy-Move Detection | `image/copyMove` | 33.3% | 33.3% | 100.0% | -11.5 | 0 | 9.7 | ok |
+| Channel Independence | `image/channelIndependence` | 32.9% | 32.9% | 100.0% | -4.2 | 0 | 0.1 | ok |
+| Benford's Law | `image/benford` | 32.5% | 32.5% | 100.0% | -18.6 | 0 | 2.1 | ok |
+| Tamura Texture Features | `image/tamura` | 32.5% | 34.8% | 93.3% | -1.7 | 0 | 12.0 | ok |
+| Vignette Analysis | `image/vignetteAnalysis` | 32.1% | 48.4% | 66.3% | 0.1 | 0 | 0.1 | ok |
+| Intensity Kurtosis | `image/intensityKurtosis` | 29.2% | 80.5% | 36.3% | 5.5 | 0 | 1.0 | ok |
+| Canny Edge Density | `image/cannyDensity` | 28.7% | 73.4% | 39.2% | 2.3 | 0 | 0.2 | ok |
+| Box Filter Residual | `image/boxFilterResidual` | 28.7% | 85.2% | 33.8% | 2.4 | 0 | 0.1 | ok |
+| White Balance Consistency | `image/whiteBalance` | 27.1% | 38.5% | 70.4% | -4.6 | 0 | 0.2 | ok |
+| Hue Consistency | `image/hueConsistency` | 26.7% | 40.5% | 65.8% | -2.8 | 0 | 0.2 | ok |
+| Laws Texture Energy | `image/lawsTextureE` | 25.4% | 62.9% | 40.4% | 0.4 | 0 | 0.1 | ok |
+| Gradient Magnitude | `image/gradientMagnitudeHist` | 24.6% | 46.1% | 53.3% | 0.1 | 0 | 0.3 | ok |
+| Color Entropy | `image/colorEntropy` | 21.7% | 40.0% | 54.2% | -3.5 | 0 | 0.2 | ok |
+| Local Phase Quantization | `image/lpq` | 21.3% | 46.4% | 45.8% | -1.2 | 0 | 3.4 | ok |
+| Kirsch Edge Response | `image/kirschEdge` | 18.3% | 81.5% | 22.5% | 1.0 | 0 | 0.1 | ok |
+| Chi-Square Uniformity | `image/chiSquareUniformity` | 12.5% | 12.5% | 100.0% | -28.0 | 0 | 0.4 | ok |
+| Difference Histogram | `image/differenceHistogram` | 12.1% | 19.6% | 61.7% | -8.3 | 0 | 0.1 | ok |
+| Blocking Artifact Grid Analysis | `image/blockingArtifact` | 0.0% | 0.0% | 0.8% | -0.3 | 0 | 0.3 | ok |
+| C2PA Content Credentials | `image/c2paVerification` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Resolution Consistency | `image/resolutionConsistency` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| XMP Provenance Analysis | `image/xmpProvenance` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| import_failed | `image/colorBanding` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/diffusionArtifact` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/entropyMap` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| analyzeFileStructure | `image/fileStructure` | n/a | n/a | n/a | n/a | 240 | 0.1 | runtime_errors: Cannot read properties of undefined (reading 'toLowerCase') |
+| import_failed | `image/fourierRing` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/frequencyBandRatio` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/gaborResponse` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/ganFingerprint` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/glcm` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/higherOrderStatistics` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/hogAnomaly` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/jpegGhost` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/lightingConsistency` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/localBinaryPattern` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/localVarianceMap` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/markovTransition` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/metadata` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\constants' imported from C:\Dev\ |
+| import_failed | `image/morphologicalGradient` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/perspectiveConsistency` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/phaseCongruency` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/powerSpectralDensity` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/quantizationFingerprint` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/radialSpectrum` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| analyzeMultiscaleReconstruction | `image/reconstruction` | n/a | n/a | n/a | n/a | 240 | 0.1 | runtime_errors: ctx.getImageData is not a function |
+| import_failed | `image/shadowConsistency` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| analyzeSoftwareFingerprint | `image/softwareFingerprint` | n/a | n/a | n/a | n/a | 240 | 0.1 | runtime_errors: Cannot read properties of undefined (reading 'toLowerCase') |
+| import_failed | `image/upsamplingArtifact` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/waveletStatistics` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/weberDescriptor` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+| import_failed | `image/zipfLaw` | n/a | n/a | n/a | n/a | 240 | n/a | import_error: Cannot find module 'C:\Dev\SourceVerify\src\lib\methods\pixelUtils' imported fro |
+
+</details>
+
+<details>
+<summary>Video Methods - Frame Proxy (165)</summary>
+
+| Method | ID | Strict Acc | Classified Acc | Coverage | Score Gap | Errors | Avg ms | Status |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| Lip Sync Analysis | `video/lipSyncAnalysis` | 89.6% | 89.6% | 100.0% | 14.6 | 0 | 0.1 | ok |
+| Audio-Visual Sync | `video/audioVisualSync` | 78.8% | 78.8% | 100.0% | 9.9 | 0 | 0.1 | ok |
+| Neck Transition | `video/neckTransition` | 77.5% | 77.5% | 100.0% | 7.0 | 0 | 0.1 | ok |
+| Clothing Fold Physics | `video/clothingFold` | 74.6% | 74.6% | 100.0% | 6.9 | 0 | 0.1 | ok |
+| Video Sharpness | `video/videoSharpness` | 74.2% | 74.2% | 100.0% | 4.6 | 0 | 0.2 | ok |
+| Motion Blur Direction | `video/motionBlurDir` | 73.3% | 73.3% | 100.0% | 9.2 | 0 | 0.2 | ok |
+| Texture Flow | `video/textureFlowAnalysis` | 73.3% | 73.3% | 100.0% | 5.1 | 0 | 0.2 | ok |
+| Motion Vector Analysis | `video/motionVectorAnalysis` | 72.9% | 72.9% | 100.0% | 4.7 | 0 | 0.1 | ok |
+| Bokeh Naturalness | `video/bokehNaturalness` | 70.8% | 70.8% | 100.0% | 2.4 | 0 | 0.1 | ok |
+| Phoneme Correlation | `video/phonemeCorrelation` | 70.8% | 70.8% | 100.0% | 12.2 | 0 | 0.0 | ok |
+| Depth Consistency | `video/depthConsistency` | 70.0% | 70.0% | 100.0% | 2.8 | 0 | 0.2 | ok |
+| Scene Transition | `video/sceneTransition` | 69.6% | 69.6% | 100.0% | 11.3 | 0 | 0.2 | ok |
+| Iris Detail | `video/irisDetail` | 66.3% | 66.3% | 100.0% | 6.9 | 0 | 0.0 | ok |
+| Skin Texture Realism | `video/skinTextureRealism` | 65.0% | 65.0% | 100.0% | 9.4 | 0 | 0.1 | ok |
+| Face Illumination | `video/faceIllumination` | 63.3% | 63.3% | 100.0% | 8.4 | 0 | 0.1 | ok |
+| Spatial Frequency Temporal | `video/spatialFreqTemporal` | 62.9% | 62.9% | 100.0% | 2.7 | 0 | 0.4 | ok |
+| Eyebrow Naturalness | `video/eyebrowNaturalness` | 62.5% | 62.5% | 100.0% | -2.5 | 0 | 0.1 | ok |
+| Micro-Expression Analysis | `video/microExpressionAnalysis` | 62.5% | 62.5% | 100.0% | -0.6 | 0 | 0.1 | ok |
+| Audio Spectral | `video/audioSpectral` | 62.1% | 62.1% | 100.0% | 3.4 | 0 | 0.1 | ok |
+| Temporal Coherence | `video/temporalCoherenceMap` | 61.3% | 61.3% | 100.0% | 5.1 | 0 | 0.1 | ok |
+| Eye Reflection Consistency | `video/eyeReflectionConsistency` | 60.8% | 60.8% | 100.0% | 9.6 | 0 | 0.3 | ok |
+| Color Histogram Shift | `video/colorHistShift` | 58.3% | 58.3% | 100.0% | 6.3 | 0 | 0.1 | ok |
+| Frame Edge Energy | `video/frameEdgeEnergy` | 57.9% | 57.9% | 100.0% | 5.7 | 0 | 0.0 | ok |
+| Scene Geometry | `video/sceneGeometryConsistency` | 57.5% | 57.5% | 100.0% | 2.0 | 0 | 0.1 | ok |
+| Specular Highlight | `video/specularHighlight` | 57.5% | 57.5% | 100.0% | 3.6 | 0 | 0.1 | ok |
+| Neck Skin | `video/neckSkinConsistency` | 56.7% | 56.7% | 100.0% | 8.5 | 0 | 0.0 | ok |
+| Nostril Darkness | `video/nostrildarkness` | 56.7% | 56.7% | 100.0% | 2.9 | 0 | 0.0 | ok |
+| Nose Geometry | `video/noseGeometry` | 55.8% | 55.8% | 100.0% | -0.5 | 0 | 0.2 | ok |
+| Video Saturation | `video/videoSaturation` | 54.6% | 54.6% | 100.0% | -1.9 | 0 | 0.4 | ok |
+| Head Pose Estimation | `video/headPoseEstimation` | 52.5% | 52.5% | 100.0% | 2.5 | 0 | 0.1 | ok |
+| Video Global Illum | `video/videoGlobalIllum` | 52.5% | 52.5% | 100.0% | 7.3 | 0 | 0.2 | ok |
+| Body Proportion | `video/bodyProportion` | 51.7% | 51.7% | 100.0% | 6.2 | 0 | 0.1 | ok |
+| Color Bleeding | `video/colorBleeding` | 51.7% | 51.7% | 100.0% | 0.5 | 0 | 0.1 | ok |
+| Face Landmark Consistency | `video/faceLandmarkConsistency` | 51.7% | 51.7% | 100.0% | 1.6 | 0 | 0.1 | ok |
+| Optical Flow Anomaly | `video/opticalFlowAnomaly` | 51.7% | 51.7% | 100.0% | -0.1 | 0 | 0.7 | ok |
+| Face Mask Edge | `video/faceMaskEdge` | 51.2% | 51.2% | 100.0% | 5.6 | 0 | 0.1 | ok |
+| Facial Boundary Frequency | `video/facialBoundaryFreq` | 51.2% | 51.2% | 100.0% | 4.5 | 0 | 0.1 | ok |
+| Audio Noise Floor | `video/audioNoiseFloor` | 50.8% | 50.8% | 100.0% | 0.8 | 0 | 0.0 | ok |
+| Background Freq Map | `video/backgroundFreqMap` | 50.4% | 50.4% | 100.0% | 1.8 | 0 | 0.1 | ok |
+| Facial Wrinkle Consistency | `video/facialWrinkle` | 50.4% | 50.4% | 100.0% | 3.9 | 0 | 0.4 | ok |
+| Frame Interpolation | `video/frameInterpolation` | 50.4% | 51.5% | 97.9% | 1.7 | 0 | 1.0 | ok |
+| Breathing Pattern | `video/breathingPattern` | 50.0% | 50.0% | 100.0% | 9.0 | 0 | 0.0 | ok |
+| Chroma Bleed | `video/chromaBleed` | 50.0% | 50.0% | 100.0% | -0.2 | 0 | 0.1 | ok |
+| Clothing Consistency | `video/clothingConsistency` | 50.0% | 50.0% | 100.0% | 1.5 | 0 | 0.1 | ok |
+| Contour Continuity | `video/contourContinuity` | 50.0% | 50.0% | 100.0% | 6.9 | 0 | 0.2 | ok |
+| Face X-Ray Boundary | `video/faceXray` | 50.0% | 50.0% | 100.0% | 6.1 | 0 | 0.1 | ok |
+| Gait Analysis | `video/gaitAnalysis` | 50.0% | 50.0% | 100.0% | 6.1 | 0 | 0.0 | ok |
+| Hair Dynamics | `video/hairDynamics` | 50.0% | 50.0% | 100.0% | 5.6 | 0 | 0.1 | ok |
+| Inter-Frame Forgery | `video/interFrameForgery` | 50.0% | 50.0% | 100.0% | -3.6 | 0 | 1.1 | ok |
+| Motion Blur Consistency | `video/motionBlurConsistency` | 50.0% | 50.0% | 100.0% | 0.1 | 0 | 0.5 | ok |
+| Temporal Color Histogram | `video/temporalColorHistogram` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Temporal Gradient | `video/temporalGradient` | 50.0% | 50.0% | 100.0% | 0.5 | 0 | 0.0 | ok |
+| Video Codec Analysis | `video/videoCodecAnalysis` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.2 | ok |
+| Video Compression Trace | `video/videoCompressionTrace` | 50.0% | 50.0% | 100.0% | 0.3 | 0 | 0.2 | ok |
+| Frame Rate Consistency | `video/videoFrameRateConsistency` | 50.0% | 50.0% | 100.0% | 0.4 | 0 | 0.0 | ok |
+| Video Grain | `video/videoGrainAnalysis` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Video Hash Analysis | `video/videoHashAnalysis` | 50.0% | 50.0% | 100.0% | -1.8 | 0 | 0.1 | ok |
+| Video Luma Range | `video/videoLumaRange` | 50.0% | 50.0% | 100.0% | -0.4 | 0 | 0.1 | ok |
+| Video Noise Pattern | `video/videoNoisePattern` | 50.0% | 50.0% | 100.0% | 5.3 | 0 | 0.6 | ok |
+| Ear Consistency | `video/earConsistency` | 49.6% | 49.6% | 100.0% | -1.0 | 0 | 0.1 | ok |
+| Hair Detail Analysis | `video/hairDetailAnalysis` | 49.6% | 49.6% | 100.0% | -2.7 | 0 | 0.1 | ok |
+| Micro Expression V2 | `video/microExpressionV2` | 49.6% | 49.6% | 100.0% | -0.8 | 0 | 0.2 | ok |
+| Speech Cadence | `video/speechCadence` | 49.6% | 49.6% | 100.0% | 6.4 | 0 | 0.1 | ok |
+| Chin-Jaw Detail | `video/chinJawDetail` | 49.2% | 49.2% | 100.0% | 3.6 | 0 | 0.0 | ok |
+| Deepfake Artifact | `video/deepfakeArtifact` | 49.2% | 49.2% | 100.0% | -2.1 | 0 | 0.1 | ok |
+| Flicker Analysis | `video/flickerAnalysis` | 49.2% | 49.2% | 100.0% | -3.5 | 0 | 0.3 | ok |
+| Hand Gesture Consistency | `video/handGestureConsistency` | 49.2% | 49.2% | 100.0% | -0.8 | 0 | 0.2 | ok |
+| Heartbeat Detection | `video/heartbeatDetection` | 49.2% | 49.2% | 100.0% | -1.7 | 0 | 0.1 | ok |
+| Reflection Physics | `video/reflectionPhysics` | 49.2% | 49.2% | 100.0% | 0.6 | 0 | 0.1 | ok |
+| Shadow Consistency Video | `video/shadowConsistencyVideo` | 49.2% | 49.2% | 100.0% | 2.2 | 0 | 0.2 | ok |
+| Pupil Dynamics | `video/pupilDynamics` | 48.8% | 48.8% | 100.0% | 0.4 | 0 | 0.0 | ok |
+| Reflection Consistency Video | `video/reflectionConsistencyVideo` | 48.8% | 48.8% | 100.0% | -1.3 | 0 | 0.2 | ok |
+| Video Blockiness | `video/videoBlockiness` | 48.8% | 48.8% | 100.0% | -0.3 | 0 | 0.1 | ok |
+| Audio Formant Analysis | `video/audioFormant` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Audio-Visual Delay | `video/audioVisualDelay` | 48.3% | 48.3% | 100.0% | 6.3 | 0 | 0.0 | ok |
+| Background Object Physics | `video/backgroundObjectPhysics` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| B-Frame Consistency Analysis | `video/bframeConsistency` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Color Quantization | `video/colorQuantization` | 48.3% | 48.3% | 100.0% | -3.2 | 0 | 0.1 | ok |
+| Face 3D Reconstruction | `video/face3dReconstruction` | 48.3% | 48.3% | 100.0% | 3.7 | 0 | 0.1 | ok |
+| Facial Action Timing Analysis | `video/facialActionTiming` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Facial Aging Consistency | `video/facialAgingConsistency` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Facial Reenactment | `video/facialReenactment` | 48.3% | 48.3% | 100.0% | -0.8 | 0 | 0.2 | ok |
+| FACS Action Unit Analysis | `video/facsAnalysis` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.2 | ok |
+| Gaze Vergence Analysis | `video/gazeVergence` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Hand Finger Count Analysis | `video/handFingerCount` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Head Nod/Shake Pattern | `video/headNodShake` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Head Pose V2 | `video/headPoseV2` | 48.3% | 48.3% | 100.0% | -2.3 | 0 | 0.1 | ok |
+| Identity Switching Detection | `video/identitySwitch` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Intra-frame Prediction Analysis | `video/intraPrediction` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Lip Reading Accuracy Score | `video/lipReadingScore` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Micro-Tremor Detection | `video/microTremor` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Motion Estimation Residual | `video/motionEstimationRes` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Phoneme-Viseme Mapping | `video/phonemeVisemeMap` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Pixel Jitter | `video/pixelJitter` | 48.3% | 48.3% | 100.0% | -0.9 | 0 | 0.1 | ok |
+| Pupillary Unrest Index | `video/pupillaryUnrest` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.2 | ok |
+| Quantization Parameter Analysis | `video/qpAnalysis` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.2 | ok |
+| Eye Saccade Analysis | `video/saccadeAnalysis` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.2 | ok |
+| Scene Cut Anomaly Detection | `video/sceneCutAnomaly` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.2 | ok |
+| Skin Specular Reflection | `video/skinSpecularReflection` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Stabilization Artifact | `video/stabilizationArtifact` | 48.3% | 48.3% | 100.0% | 2.9 | 0 | 0.0 | ok |
+| Temporal Face Embedding Drift | `video/temporalFaceEmbedding` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Temporal Frequency Anomaly | `video/temporalFrequencyAnomaly` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Video Denoising Trace | `video/videoDenoisingTrace` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Saturation Map | `video/videoSaturationMap` | 48.3% | 48.3% | 100.0% | 0.7 | 0 | 0.2 | ok |
+| Video Spectral Coherence | `video/videoSpectralCoherence` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Voice Fundamental Frequency | `video/voiceF0Analysis` | 48.3% | 48.3% | 100.0% | -0.1 | 0 | 0.1 | ok |
+| Skin Micro Motion | `video/skinMicroMotion` | 48.3% | 48.9% | 98.8% | -1.8 | 0 | 0.0 | ok |
+| Background Complexity | `video/backgroundComplexity` | 47.9% | 47.9% | 100.0% | 1.1 | 0 | 0.1 | ok |
+| Expression Naturalness | `video/expressionNaturalness` | 47.9% | 47.9% | 100.0% | -4.0 | 0 | 44.0 | ok |
+| Edge Sharpness Var | `video/edgeSharpnessVar` | 47.5% | 77.6% | 61.3% | 8.6 | 0 | 0.2 | ok |
+| Accessory Consistency | `video/accessoryConsistency` | 47.1% | 47.1% | 100.0% | 0.9 | 0 | 0.0 | ok |
+| Eye Contact Consistency | `video/eyeContactConsistency` | 47.1% | 47.1% | 100.0% | -2.8 | 0 | 0.0 | ok |
+| Nose Shadow | `video/noseShadow` | 47.1% | 47.1% | 100.0% | -0.5 | 0 | 0.0 | ok |
+| Clothing Edge Blend | `video/clothingEdgeBlend` | 46.7% | 46.7% | 100.0% | 2.0 | 0 | 0.0 | ok |
+| Ear Symmetry Analysis | `video/earSymmetryAnalysis` | 46.7% | 46.7% | 100.0% | -0.5 | 0 | 0.2 | ok |
+| Pixel Repetition | `video/pixelRepetitionVideo` | 46.7% | 46.7% | 100.0% | -6.5 | 0 | 0.1 | ok |
+| Temporal Jitter | `video/temporalJitter` | 46.7% | 46.7% | 100.0% | -4.9 | 0 | 0.1 | ok |
+| Video Artifact Grid | `video/videoArtifactGrid` | 46.7% | 46.7% | 100.0% | -0.9 | 0 | 0.1 | ok |
+| Body Movement Fluidity | `video/bodyMovementFluidity` | 46.3% | 46.3% | 100.0% | -0.5 | 0 | 0.1 | ok |
+| Skin Color Drift | `video/skinColorDrift` | 46.3% | 48.1% | 96.3% | -4.4 | 0 | 0.0 | ok |
+| Resolution Map | `video/videoResolutionMap` | 46.3% | 49.3% | 93.8% | 3.1 | 0 | 0.4 | ok |
+| Edge Antialiasing | `video/edgeAntiAliasingVideo` | 45.8% | 45.8% | 100.0% | -0.5 | 0 | 0.1 | ok |
+| Lip Texture Detail | `video/lipTextureDetail` | 45.8% | 45.8% | 100.0% | 1.9 | 0 | 0.0 | ok |
+| Background Perspective | `video/backgroundPerspective` | 45.8% | 66.7% | 68.8% | 11.0 | 0 | 0.1 | ok |
+| Blink Rate Analysis | `video/blinkRateAnalysis` | 45.4% | 45.4% | 100.0% | 1.0 | 0 | 1.0 | ok |
+| Shoulder Alignment | `video/shoulderAlignment` | 45.0% | 45.0% | 100.0% | -3.6 | 0 | 0.1 | ok |
+| Temporal Noise Pattern | `video/temporalNoise` | 45.0% | 45.0% | 100.0% | -9.3 | 0 | 0.1 | ok |
+| Inter-Frame Blend | `video/interFrameBlend` | 44.6% | 44.6% | 100.0% | 2.7 | 0 | 0.1 | ok |
+| Pupil Dilation | `video/pupilDilation` | 44.6% | 44.6% | 100.0% | -1.8 | 0 | 0.1 | ok |
+| Facial Muscle Physics | `video/facialMusclePhysics` | 43.8% | 46.9% | 93.3% | 6.6 | 0 | 0.1 | ok |
+| Facial Symmetry | `video/facialSymmetryVideo` | 43.3% | 47.9% | 90.4% | 3.3 | 0 | 0.0 | ok |
+| Skin Pore Simulation | `video/skinPoreSimulation` | 42.1% | 42.1% | 100.0% | -9.5 | 0 | 0.0 | ok |
+| Temporal Consistency | `video/temporalConsistency` | 42.1% | 42.1% | 100.0% | -1.6 | 0 | 0.1 | ok |
+| Video Noise Consistency | `video/videoNoiseConsistency` | 42.1% | 42.1% | 100.0% | -3.5 | 0 | 1.2 | ok |
+| Watermark Detection | `video/watermarkDetection` | 42.1% | 51.3% | 82.1% | 0.4 | 0 | 0.1 | ok |
+| Blood Flow rPPG | `video/bloodFlowRPPG` | 41.7% | 41.7% | 100.0% | -2.9 | 0 | 0.0 | ok |
+| Face Skin Smoothness | `video/faceSkinSmoothV` | 41.3% | 41.3% | 100.0% | -2.9 | 0 | 0.0 | ok |
+| Frame Drop Detection | `video/frameDropDetection` | 40.8% | 40.8% | 100.0% | -1.5 | 0 | 0.3 | ok |
+| Ear Detail | `video/earDetailConsistency` | 40.4% | 55.1% | 73.3% | 3.2 | 0 | 0.0 | ok |
+| Color Balance | `video/videoColorBalance` | 40.0% | 40.0% | 100.0% | -6.2 | 0 | 0.1 | ok |
+| Lens Distortion | `video/lensDistortionVideo` | 39.2% | 48.5% | 80.8% | -1.5 | 0 | 0.1 | ok |
+| Face Alignment | `video/faceAlignment` | 38.3% | 38.3% | 100.0% | -3.5 | 0 | 0.2 | ok |
+| Face Boundary Blend | `video/faceBoundaryBlend` | 37.9% | 37.9% | 100.0% | -2.2 | 0 | 0.0 | ok |
+| Edge Ringing | `video/edgeRinging` | 37.5% | 37.5% | 100.0% | -1.7 | 0 | 0.2 | ok |
+| Gaze Direction | `video/gazeDirection` | 37.5% | 37.5% | 100.0% | -5.1 | 0 | 0.1 | ok |
+| Face Blend Boundary | `video/faceBlendBound` | 35.8% | 35.8% | 100.0% | -1.2 | 0 | 0.1 | ok |
+| Forehead Texture | `video/foreheadTexture` | 35.0% | 35.0% | 100.0% | -5.6 | 0 | 0.1 | ok |
+| Background Stability | `video/backgroundStability` | 34.6% | 34.6% | 100.0% | -6.8 | 0 | 0.2 | ok |
+| Skin Texture Temporal | `video/skinTextureTemporal` | 34.2% | 34.2% | 100.0% | -13.2 | 0 | 0.1 | ok |
+| Object Boundary | `video/objectBoundary` | 34.2% | 81.2% | 42.1% | 2.5 | 0 | 0.2 | ok |
+| Finger Geometry | `video/fingerGeometry` | 32.5% | 32.5% | 100.0% | -4.0 | 0 | 0.3 | ok |
+| Forehead Wrinkle | `video/foreheadWrinkle` | 31.3% | 31.3% | 100.0% | -17.4 | 0 | 0.0 | ok |
+| Frame Energy Distribution | `video/frameEnergy` | 30.4% | 54.5% | 55.8% | 0.7 | 0 | 0.4 | ok |
+| Color Temporal Shift | `video/colorTemporalShift` | 29.6% | 29.6% | 100.0% | -9.3 | 0 | 0.5 | ok |
+| Video Freq Spectrum | `video/videoFreqSpectrum` | 29.6% | 46.1% | 64.2% | -1.4 | 0 | 0.0 | ok |
+| Spectral Flicker | `video/spectralFlicker` | 27.1% | 27.1% | 100.0% | -4.6 | 0 | 0.0 | ok |
+| Cheek Texture | `video/cheekTexture` | 27.1% | 33.0% | 82.1% | -2.0 | 0 | 0.0 | ok |
+| Facial Pore Texture | `video/facialPoreTexture` | 22.1% | 22.1% | 100.0% | -6.7 | 0 | 0.0 | ok |
+| Tongue Consistency | `video/tongueConsistency` | 21.7% | 21.7% | 100.0% | -8.4 | 0 | 0.0 | ok |
+| Jawline Consistency | `video/jawlineConsistency` | 20.0% | 20.0% | 100.0% | -7.4 | 0 | 1.5 | ok |
+| Face Warping Artifact | `video/faceWarpingArtifact` | 19.2% | 19.2% | 100.0% | -9.3 | 0 | 0.1 | ok |
+| Teeth Consistency | `video/teethConsistency` | 16.3% | 32.0% | 50.8% | -4.0 | 0 | 0.5 | ok |
+| Contrast Temporal | `video/contrastTemporal` | 15.8% | 25.7% | 61.7% | -3.3 | 0 | 0.5 | ok |
+| Hair Strand Consistency | `video/hairStrandConsistency` | 14.6% | 14.6% | 100.0% | -15.5 | 0 | 0.0 | ok |
+| Shadow Temporal Consistency | `video/shadowTemporal` | 6.3% | 44.1% | 14.2% | -0.8 | 0 | 0.8 | ok |
+
+</details>
+
+<details>
+<summary>Text Methods (149)</summary>
+
+| Method | ID | Strict Acc | Classified Acc | Coverage | Score Gap | Errors | Avg ms | Status |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| First Person Usage | `text/firstPersonUsage` | 100.0% | 100.0% | 100.0% | 23.0 | 0 | 0.0 | ok |
+| Pronoun Usage | `text/pronounUsagePattern` | 100.0% | 100.0% | 100.0% | 40.3 | 0 | 0.0 | ok |
+| Word Specificity | `text/wordSpecificityIndex` | 95.8% | 95.8% | 100.0% | 13.8 | 0 | 0.0 | ok |
+| Avg Word Length | `text/averageWordLength` | 95.8% | 100.0% | 95.8% | 19.5 | 0 | 0.0 | ok |
+| Argument Density Score | `text/argumentDensity` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Binoculars Detection | `text/binocularsDetect` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Causal Reasoning Analysis | `text/causalReasoning` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Coh-Metrix Cohesion Index | `text/cohMetrixIndex` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Contextual Embedding Variance | `text/contextualEmbeddingVar` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Cross-Entropy Variance | `text/crossEntropyVariance` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Discourse Relation Depth | `text/discourseRelationDepth` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| DNA-GPT Uniqueness Test | `text/dnaGptUniqueness` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Entity Grounding Analysis | `text/entityGrounding` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Fast-DetectGPT | `text/fastDetectgpt` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Ghostbuster Detection | `text/ghostbusterDetect` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Information-Theoretic Profile | `text/informationTheoreticProfile` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Likelihood Divergence | `text/likelihoodDivergence` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Local Coherence Model | `text/localCoherenceModel` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Maximum Softmax Probability | `text/maxSoftmaxProb` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| PHD Detection Method | `text/phdDetection` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Pragmatic Adequacy Score | `text/pragmaticAdequacy` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| RADAR AI Text Detection | `text/radarDetect` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Rank Probability Analysis | `text/rankProbability` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Register Variation Analysis | `text/registerVariation` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Semantic Coherence Graph | `text/semanticCoherenceGraph` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Syntactic Tree Depth Distribution | `text/syntacticTreeDepth` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Text Fingerprint Analysis | `text/textFingerprint` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Topic Model Divergence | `text/topicModelDivergence` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Vocabulary Age Profile | `text/vocabularyAge` | 79.2% | 79.2% | 100.0% | 12.5 | 0 | 0.0 | ok |
+| Analogy Simile | `text/analogySimile` | 75.0% | 75.0% | 100.0% | 13.5 | 0 | 0.0 | ok |
+| List Enumeration | `text/listEnumerationPattern` | 70.8% | 70.8% | 100.0% | 10.8 | 0 | 0.0 | ok |
+| Transition Smooth | `text/transitionSmooth` | 70.8% | 70.8% | 100.0% | 15.0 | 0 | 0.0 | ok |
+| Conclusion Indicator | `text/conclusionIndicator` | 66.7% | 66.7% | 100.0% | 10.0 | 0 | 0.0 | ok |
+| Conclusion Pattern | `text/conclusionPattern` | 66.7% | 66.7% | 100.0% | 5.3 | 0 | 0.0 | ok |
+| Conjunction Pair | `text/conjunctionPair` | 66.7% | 66.7% | 100.0% | 6.8 | 0 | 0.0 | ok |
+| Mean Dependency Depth | `text/meanDepParse` | 66.7% | 66.7% | 100.0% | 5.7 | 0 | 0.0 | ok |
+| Ambiguity Tolerance | `text/ambiguityTolerance` | 62.5% | 62.5% | 100.0% | 7.3 | 0 | 0.0 | ok |
+| Contraction Usage | `text/contractionUsage` | 62.5% | 62.5% | 100.0% | 4.0 | 0 | 0.0 | ok |
+| Dialogue Pattern | `text/dialoguePattern` | 62.5% | 62.5% | 100.0% | 5.0 | 0 | 0.0 | ok |
+| Personal Experience | `text/personalExperience` | 62.5% | 62.5% | 100.0% | 8.5 | 0 | 0.0 | ok |
+| Semicolon Usage | `text/semicolonUsage` | 62.5% | 62.5% | 100.0% | 5.5 | 0 | 0.0 | ok |
+| Micro Repetition | `text/textRepetitionMicro` | 62.5% | 62.5% | 100.0% | 4.0 | 0 | 0.0 | ok |
+| Colloquial Expression | `text/colloquialExpression` | 58.3% | 58.3% | 100.0% | 3.3 | 0 | 0.0 | ok |
+| Filler Word Usage | `text/fillerWordUsage` | 58.3% | 58.3% | 100.0% | 3.3 | 0 | 0.0 | ok |
+| Hedging Language | `text/hedgingLanguage` | 58.3% | 58.3% | 100.0% | 1.4 | 0 | 0.1 | ok |
+| Preposition Pattern | `text/prepositionPattern` | 58.3% | 58.3% | 100.0% | 3.3 | 0 | 0.0 | ok |
+| Anaphora Resolution | `text/anaphoraResolution` | 54.2% | 54.2% | 100.0% | 2.3 | 0 | 0.0 | ok |
+| Lexical Density | `text/lexicalDensity` | 54.2% | 54.2% | 100.0% | 1.3 | 0 | 0.0 | ok |
+| Quotation Usage | `text/quotationUsage` | 54.2% | 54.2% | 100.0% | 2.1 | 0 | 0.0 | ok |
+| Referential Density | `text/referentialDensity` | 54.2% | 54.2% | 100.0% | 0.8 | 0 | 0.0 | ok |
+| Superlative Usage | `text/superlativeUsage` | 54.2% | 72.2% | 75.0% | 9.9 | 0 | 0.0 | ok |
+| Abstract-Concrete Ratio | `text/abstractConcrete` | 50.0% | 50.0% | 100.0% | 2.0 | 0 | 0.0 | ok |
+| Acronym Usage | `text/acronymUsage` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Adverb Frequency | `text/adverbFrequency` | 50.0% | 50.0% | 100.0% | -1.3 | 0 | 0.0 | ok |
+| Argument Structure | `text/argumentStructure` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Comma Frequency | `text/commaFrequency` | 50.0% | 50.0% | 100.0% | -7.9 | 0 | 0.0 | ok |
+| Contraction Detect | `text/contractionDetect` | 50.0% | 50.0% | 100.0% | 0.3 | 0 | 0.0 | ok |
+| Cultural Reference | `text/culturalReference` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Curie Detection | `text/curieDetect` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Definition Pattern | `text/definitionPattern` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Emotional Arc | `text/emotionalArc` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Emotional Tone Variance | `text/emotionalTone` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Emphasis Pattern | `text/emphasisPattern` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Entropy Distribution | `text/entropyDistribution` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Entropy Per Word | `text/entropyPerWord` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Exclamation Pattern | `text/exclamationPattern` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Function Word Distribution | `text/functionWordDistribution` | 50.0% | 50.0% | 100.0% | -1.7 | 0 | 0.1 | ok |
+| Genre Conformity | `text/genreConformity` | 50.0% | 50.0% | 100.0% | -7.0 | 0 | 0.0 | ok |
+| Hapax Legomena | `text/hapaxLegomena` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Idiom Detection | `text/idiomDetection` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Information Density | `text/informationDensity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Instructional Tone | `text/instructionalTone` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Metaphor Density | `text/metaphorDensity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Named Entity Consistency | `text/namedEntityConsistency` | 50.0% | 50.0% | 100.0% | -3.5 | 0 | 0.0 | ok |
+| N-gram Frequency | `text/ngramFrequency` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Number Usage | `text/numberUsage` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Parenthetical Usage | `text/parentheticalUsage` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Perplexity Analysis | `text/perplexityAnalysis` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.3 | ok |
+| POS Tag Distribution | `text/posTagAnalysis` | 50.0% | 50.0% | 100.0% | -2.5 | 0 | 0.1 | ok |
+| Punctuation Pattern | `text/punctuationPattern` | 50.0% | 50.0% | 100.0% | -5.5 | 0 | 0.0 | ok |
+| Qualifier Density | `text/qualifierDensity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Question Frequency | `text/questionFrequency` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Question Density | `text/questionMarkDensity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Redundancy Detection | `text/redundancyDetection` | 50.0% | 50.0% | 100.0% | -2.3 | 0 | 0.0 | ok |
+| Repetition Pattern | `text/repetitionPattern` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Repetitive Phrase | `text/repetitivePhrase` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Rhetorical Device | `text/rhetoricalDevice` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Sentence Connectivity | `text/sentenceConnectivity` | 50.0% | 50.0% | 100.0% | -3.5 | 0 | 0.0 | ok |
+| Sentence Fragment | `text/sentenceFragmentUsage` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Sentence Start Variety | `text/sentenceStartVariety` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Sentiment Variance | `text/sentimentVariance` | 50.0% | 50.0% | 100.0% | -4.0 | 0 | 0.0 | ok |
+| Text Coherence Score | `text/textCoherence` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Text Compression Ratio | `text/textCompressionRatio` | 50.0% | 50.0% | 100.0% | 8.0 | 0 | 0.8 | ok |
+| Text Formality | `text/textFormality` | 50.0% | 50.0% | 100.0% | 1.0 | 0 | 0.0 | ok |
+| Token Predictability | `text/tokenPredictability` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Topic Consistency | `text/topicConsistency` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Transition Quality | `text/transitionQuality` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Vocabulary Diversity | `text/vocabularyDiversity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
+| Vocabulary Richness | `text/vocabularyRichness` | 50.0% | 50.0% | 100.0% | 0.3 | 0 | 0.0 | ok |
+| Word Frequency Rank | `text/wordFrequencyRank` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Word Rarity Score | `text/wordRarityScore` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Zipf Deviation | `text/zipfDeviation` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.0 | ok |
+| Semantic Density | `text/semanticDensity` | 50.0% | 100.0% | 50.0% | 20.7 | 0 | 0.0 | ok |
+| Abstractness | `text/abstractnessIndex` | 45.8% | 45.8% | 100.0% | -2.4 | 0 | 0.0 | ok |
+| Evidence Citation | `text/evidenceCitation` | 45.8% | 45.8% | 100.0% | -2.5 | 0 | 0.0 | ok |
+| Topic Depth | `text/topicDepthAnalysis` | 45.8% | 45.8% | 100.0% | -2.3 | 0 | 0.1 | ok |
+| Vocabulary Growth Rate | `text/vocabularyGrowthRate` | 45.8% | 45.8% | 100.0% | -1.3 | 0 | 0.0 | ok |
+| Word Length Distribution | `text/wordLengthDist` | 45.8% | 45.8% | 100.0% | -6.0 | 0 | 0.0 | ok |
+| Passive-Active Mix | `text/passiveActiveMix` | 45.8% | 57.9% | 79.2% | 4.0 | 0 | 0.0 | ok |
+| Negation Pattern | `text/negationPattern` | 45.8% | 100.0% | 45.8% | 9.8 | 0 | 0.0 | ok |
+| Conjunction Density | `text/conjunctionDensity` | 41.7% | 43.5% | 95.8% | -6.3 | 0 | 0.0 | ok |
+| Comparative Structure | `text/comparativeStructure` | 37.5% | 37.5% | 100.0% | -2.8 | 0 | 0.0 | ok |
+| Lexical Chain Repetition | `text/lexicalChainRepetition` | 37.5% | 37.5% | 100.0% | -3.5 | 0 | 0.0 | ok |
+| Narrative Structure | `text/narrativeStructure` | 37.5% | 37.5% | 100.0% | -6.3 | 0 | 0.0 | ok |
+| Typo Error Pattern | `text/typoErrorPattern` | 37.5% | 37.5% | 100.0% | -8.0 | 0 | 0.1 | ok |
+| Sentence Entropy | `text/sentenceEntropy` | 37.5% | 42.9% | 87.5% | -4.5 | 0 | 0.0 | ok |
+| Text Burstiness v2 | `text/textBurstiness2` | 37.5% | 45.0% | 83.3% | -3.0 | 0 | 0.0 | ok |
+| Conditional Usage | `text/conditionalUsage` | 33.3% | 33.3% | 100.0% | -3.8 | 0 | 0.0 | ok |
+| Modal Verb Frequency | `text/modalVerbFrequency` | 33.3% | 33.3% | 100.0% | -7.7 | 0 | 0.0 | ok |
+| Quantifier Usage | `text/quantifierUsage` | 33.3% | 33.3% | 100.0% | -5.0 | 0 | 0.0 | ok |
+| Text DNA Watermark | `text/textDNAWatermark` | 33.3% | 33.3% | 100.0% | -5.3 | 0 | 0.1 | ok |
+| Logical Connector | `text/logicalConnector` | 25.0% | 25.0% | 100.0% | -5.7 | 0 | 0.0 | ok |
+| Sentence Rhythm | `text/sentenceRhythm` | 25.0% | 46.2% | 54.2% | -1.3 | 0 | 0.0 | ok |
+| Definite Article | `text/definiteArticle` | 20.8% | 20.8% | 100.0% | -21.3 | 0 | 0.0 | ok |
+| Verb Tense | `text/verbTenseConsistency` | 20.8% | 20.8% | 100.0% | -10.7 | 0 | 0.0 | ok |
+| Intrinsic Dimension | `text/intrinsicDimension` | 20.8% | 29.4% | 70.8% | -3.5 | 0 | 0.0 | ok |
+| Log-Likelihood Rank | `text/logLikelihoodRank` | 16.7% | 25.0% | 66.7% | -4.0 | 0 | 0.0 | ok |
+| Clause Balance | `text/clauseBalance` | 8.3% | 12.5% | 66.7% | -19.0 | 0 | 0.0 | ok |
+| Subordinate Clause | `text/subordinateClause` | 8.3% | 66.7% | 12.5% | 1.3 | 0 | 0.0 | ok |
+| Lexical Sophistication | `text/lexicalSophistication` | 0.0% | 0.0% | 100.0% | -15.3 | 0 | 0.0 | ok |
+| Vocabulary Complexity | `text/vocabComplexity` | 0.0% | 0.0% | 100.0% | -18.5 | 0 | 0.0 | ok |
+| Technical Jargon | `text/technicalJargon` | 0.0% | 0.0% | 62.5% | -10.0 | 0 | 0.0 | ok |
+| Coherence Analysis | `text/coherenceAnalysis` | 0.0% | 0.0% | 50.0% | -8.8 | 0 | 0.0 | ok |
+| Topic Shift Analysis | `text/topicShiftAnalysis` | 0.0% | 0.0% | 50.0% | -20.0 | 0 | 0.0 | ok |
+| Burstiness Detection | `text/burstinessDetection` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Clause Depth | `text/clauseDepthAnalysis` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Collocation Strength | `text/collocationStrength` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.1 | ok |
+| Coreference Chain | `text/coreferenceChain` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Discourse Markers | `text/discourseMarkers` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Paragraph Structure | `text/paragraphStructure` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Passive Voice Frequency | `text/passiveVoiceFrequency` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Readability Score | `text/readabilityScore` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Sentence Length Variance | `text/sentenceLengthVariance` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Sentence Opener Diversity | `text/sentenceOpener` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Stylometric Analysis | `text/stylometricAnalysis` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Syntactic Complexity | `text/syntacticComplexity` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Temporal Expression | `text/temporalExpression` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+| Type-Token Ratio | `text/typeTokenRatio` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.1 | ok |
+| Writing Rhythm | `text/writingRhythm` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
+
+</details>
+
+<details>
+<summary>Server Analyzer Verdict + Signals (7)</summary>
+
+| Method | ID | Strict Acc | Classified Acc | Coverage | Score Gap | Errors | Avg ms | Status |
+|---|---|---:|---:|---:|---:|---:|---:|---|
+| Server Analyzer Verdict | `server/verdict` | 52.5% | 71.2% | 73.8% | 19.4 | 0 | 131.9 | ok |
+| Noise Residual | `server/noise-residual` | 80.4% | 80.4% | 100.0% | 22.7 | 0 | 131.9 | ok |
+| Spectral Nyquist | `server/spectral-nyquist` | 52.5% | 53.8% | 97.5% | -0.3 | 0 | 131.9 | ok |
+| Gradient Micro-Texture | `server/gradient-micro-texture` | 50.4% | 50.6% | 99.6% | -0.6 | 0 | 131.9 | ok |
+| Edge Coherence | `server/edge-coherence` | 45.8% | 60.8% | 75.4% | 4.3 | 0 | 131.9 | ok |
+| Color Correlation | `server/color-correlation` | 31.7% | 37.4% | 84.6% | -5.4 | 0 | 131.9 | ok |
+| Metadata Analysis | `server/metadata-analysis` | 0.0% | n/a | 0.0% | 0.0 | 0 | 131.9 | ok |
+
+</details>
+
+### Caveats
+
+- Image/video numbers are only as representative as the local benchmark images currently present in this repository.
+- Video results are **not** full video accuracy; they only measure how each frame-based method separates AI vs real on still frames.
+- Text results are **provisional** because the benchmark corpus is synthetic and intentionally balanced.
+- `Metadata Analysis` in the server pipeline is effectively a file-name heuristic, so its accuracy changes drastically if filenames contain source hints.
+
+<!-- METHOD_ACCURACY_REPORT:END -->
+
 ## All 148 Analysis Methods
 
 ### Image Methods (97) — `src/lib/methods/image/`
