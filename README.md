@@ -1,15 +1,16 @@
 # SourceVerify — AI-Generated Content Detector
 
-Advanced forensic analysis tool that detects AI-generated content in **images**, **videos**, and **text** using **148 independent analysis methods** based on peer-reviewed academic research. Built with Next.js 16 + TypeScript + Tailwind CSS 4.
+Advanced forensic analysis tool with a curated, paper-faithful runtime core for **images** and **text**. Methods that could not be defended as paper-faithful in the current browser architecture are archived from active runtime exposure. Built with Next.js 16 + TypeScript + Tailwind CSS 4.
 
 ## Features
 
-- **148 Analysis Methods** — 97 image + 16 video + 15 text + 20 metadata methods
+- **Curated Runtime Core** — Active detectors are restricted to the subset that is currently defensible against the cited descriptor/statistic or metadata-check literature
+- **Archived Experimental Routes** — Legacy method pages remain reachable for traceability, but non-verified methods are no longer active in analysis runtime
 - **Image & Video & Text** — Supports JPEG, PNG, WebP, GIF, MP4, WebM, and plain text
 - **Client-Side Processing** — All analysis runs locally in browser (zero server upload)
 - **Privacy-First** — No data leaves the user's device
 - **Multi-Language** — i18n support (EN, VI, KO, JA, ZH, etc.)
-- **Academic References** — Every method references published research papers
+- **Academic References** — Active runtime methods are limited to the verified core; archived routes preserve historical references for traceability
 
 ## Tech Stack
 
@@ -40,18 +41,18 @@ Or connect GitHub repo → Vercel Dashboard → Import → Deploy.
 ```
 src/
 ├── lib/
-│   ├── analyzer.ts          # Main orchestrator (image + video analysis)
+│   ├── analyzer.ts          # Main orchestrator with paper-faithful runtime filtering
 │   ├── serverAnalyzer.ts    # Server-side analysis entry
-│   ├── types.ts             # AnalysisResult, AnalysisMethod, FileMetadata
+│   ├── types.ts             # Shared types + verified runtime allowlist
 │   └── methods/
-│       ├── index.ts          # Barrel exports for all methods
+│       ├── index.ts          # Barrel exports for all method implementations
 │       ├── pixelUtils.ts     # Shared pixel utilities (gray(), etc.)
-│       ├── image/            # 97 image analysis methods
-│       ├── video/            # 16 video analysis methods
-│       └── text/             # 15 text analysis methods
+│       ├── image/            # Image method implementations
+│       ├── video/            # Archived/experimental video method implementations
+│       └── text/             # Text method implementations
 └── app/
     └── methods/
-        ├── data.ts           # Method registry (id, category, mediaType, weight)
+        ├── data.ts           # Active method registry filtered by verified allowlist
         ├── _components/      # Shared UI components
         ├── text/             # Text method pages + i18n
         └── [method]/         # Image/Video method pages + i18n
