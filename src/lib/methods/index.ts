@@ -132,6 +132,7 @@ export { analyzeResolutionConsistency } from "./image/resolutionConsistency";
 export { analyzeSoftwareFingerprint } from "./image/softwareFingerprint";
 
 // ===== VIDEO ANALYSIS METHODS =====
+export { analyzeVideoSpecific } from "../video";
 export { analyzeFaceLandmarkConsistency } from "./video/faceLandmarkConsistency";
 export { analyzeTemporalConsistency } from "./video/temporalConsistency";
 export { analyzeAudioVisualSync } from "./video/audioVisualSync";

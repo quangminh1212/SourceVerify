@@ -8,7 +8,7 @@ export function analyzeJawlineConsistency(pixels: Uint8ClampedArray, w: number, 
     if (w < 16 || h < 16) {
         return { name: "Jawline Consistency", nameKey: "signal.jawlineConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.jawlineConsistency.error", icon: "🦷" };
     }
-let lbpHist=new Array(256).fill(0),total=0;
+const lbpHist=new Array(256).fill(0);let total=0;
 for(let y=1;y<h-1;y+=3){for(let x=1;x<w-1;x+=3){const i=(y*w+x)*4;
 const c=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;let code=0;
 const offsets=[[-1,-1],[-1,0],[-1,1],[0,1],[1,1],[1,0],[1,-1],[0,-1]];

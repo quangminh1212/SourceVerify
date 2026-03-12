@@ -68,26 +68,22 @@ export default function Header() {
     const [user, setUser] = useState<GoogleUser | null>(null);
     const [isDark, setIsDark] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
-    const [nextPageHint, setNextPageHint] = useState("");
     const [showTransition, setShowTransition] = useState(false);
 
     const [settings, setSettings] = useState<AnalysisSettings>(DEFAULT_SETTINGS);
     const { locale, setLocale, t } = useLanguage();
+    const nextPageHint = useMemo(() => {
+        const currentIdx = SCROLL_NAV_KEYS.findIndex(n => pathname === n.href);
+        if (currentIdx === -1 || currentIdx >= SCROLL_NAV_KEYS.length - 1) {
+            return "";
+        }
+        return SCROLL_NAV_KEYS[currentIdx + 1].key;
+    }, [pathname]);
 
     // --- Scroll-to-navigate logic ---
     const scrollCooldown = useRef(false);
     const scrollAccum = useRef(0);
     const SCROLL_THRESHOLD = 150; // accumulated scroll delta needed to trigger
-
-    useEffect(() => {
-        const currentIdx = SCROLL_NAV_KEYS.findIndex(n => pathname === n.href);
-        if (currentIdx === -1 || currentIdx >= SCROLL_NAV_KEYS.length - 1) {
-            setNextPageHint("");
-            return;
-        }
-        const nextIdx = currentIdx + 1;
-        setNextPageHint(SCROLL_NAV_KEYS[nextIdx].key);
-    }, [pathname]);
 
     useEffect(() => {
         const currentIdx = SCROLL_NAV_KEYS.findIndex(n => pathname === n.href);

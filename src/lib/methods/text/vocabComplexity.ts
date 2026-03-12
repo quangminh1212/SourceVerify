@@ -10,7 +10,7 @@ export function analyzeVocabComplexity(text: string): AnalysisMethod {
     }
 
     const ws = text.split(/[\s,.;:!?]+/).filter(w => w.length > 0);
-    const syllableCount = (w: string) => { w = w.toLowerCase().replace(/[^a-z]/g, ''); if (w.length <= 3) return 1; let c = w.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').match(/[aeiouy]{1,2}/g); return c ? c.length : 1; };
+    const syllableCount = (w: string) => { w = w.toLowerCase().replace(/[^a-z]/g, ''); if (w.length <= 3) return 1; const c = w.replace(/(?:[^laeiouy]es|ed|[^laeiouy]e)$/, '').match(/[aeiouy]{1,2}/g); return c ? c.length : 1; };
     const syllables = ws.map(syllableCount);
     const avgSyl = syllables.length > 0 ? syllables.reduce((a, b) => a + b, 0) / syllables.length : 0;
     const complexWords = syllables.filter(s => s >= 3).length;
