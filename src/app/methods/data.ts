@@ -1,3 +1,5 @@
+import { PAPER_FAITHFUL_METHOD_ID_SET } from "@/lib/types";
+
 export type Category = "all" | "pixel" | "frequency" | "statistical" | "metadata" | "sensor";
 export type MediaType = "all" | "image" | "video" | "text";
 
@@ -51,7 +53,7 @@ export interface Method {
     year?: number;
 }
 
-export const METHODS: Method[] = [
+const ALL_METHODS: Method[] = [
     // Image + Video: metadata methods apply to both
     { id: "metadata", category: "metadata" as Category, mediaType: "image" as MediaType, weight: 0.07, year: 2003 },
     { id: "spectral", category: "frequency" as Category, mediaType: "image" as MediaType, weight: 0.06, year: 2007 },
@@ -577,6 +579,8 @@ export const METHODS: Method[] = [
     { id: "information_theoretic_profile", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02, year: 2023 },
     { id: "register_variation", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02, year: 2021 },
 ];
+
+export const METHODS: Method[] = ALL_METHODS.filter(method => PAPER_FAITHFUL_METHOD_ID_SET.has(method.id));
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [
     { key: "all", labelKey: "methods.catAll" },

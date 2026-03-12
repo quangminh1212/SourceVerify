@@ -11,6 +11,7 @@ export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
 export { formatFileSize } from "./utils";
 
 import type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
+import { PAPER_FAITHFUL_METHOD_ID_SET } from "./types";
 import { loadImage, extractBasicMetadata, validateFileMagicBytes, createConsistentContext } from "./utils";
 import {
     // Original 13 methods
@@ -849,8 +850,8 @@ export const TEXT_METHOD_MAP: Record<string, string> = {
     text_burstiness2: "signal.textBurstiness2",
 };
 
-export const ALL_METHOD_IDS = Object.keys(METHOD_MAP);
-export const ALL_TEXT_METHOD_IDS = Object.keys(TEXT_METHOD_MAP);
+export const ALL_METHOD_IDS = Object.keys(METHOD_MAP).filter(id => PAPER_FAITHFUL_METHOD_ID_SET.has(id));
+export const ALL_TEXT_METHOD_IDS = Object.keys(TEXT_METHOD_MAP).filter(id => PAPER_FAITHFUL_METHOD_ID_SET.has(id));
 
 /** Video method ID → nameKey mapping */
 export const VIDEO_METHOD_MAP: Record<string, string> = {
@@ -1522,10 +1523,8 @@ async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<
                 ];
 
                 const methods = allMethods.filter(s => {
-                    if (s.nameKey === "signal.videoProperties") return true;
-                    // Check video-specific methods
                     const vids = VIDEO_NAMEKEY_TO_IDS.get(s.nameKey);
-                    if (vids) return true; // always include video method
+                    if (vids) return vids.some(id => enabled.has(id));
                     const ids = NAMEKEY_TO_IDS.get(s.nameKey);
                     return ids ? ids.some(id => enabled.has(id)) : false;
                 });
