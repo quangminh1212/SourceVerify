@@ -1,5 +1,5 @@
 import type { AnalysisMethod } from "../../types";
-import { gray } from "../pixelUtils.ts";
+import { gray } from "../pixelUtils";
 
 /**
  * Signal 16: Gray Level Co-occurrence Matrix (GLCM)
