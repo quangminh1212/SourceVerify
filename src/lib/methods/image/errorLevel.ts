@@ -1,4 +1,4 @@
-import type { AnalysisMethod } from "../../types";
+ï»¿import type { AnalysisMethod } from "../../types";
 
 
 /**
@@ -102,8 +102,8 @@ export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, heig
         name: "Error Level Analysis", nameKey: "signal.errorLevel",
         category: "compression", score, weight: 0.4,
         description: score > 55
-            ? "Error levels are unusually uniform — AI images lack compression-induced variation"
-            : "Error levels vary naturally — consistent with real camera compression",
+            ? "Error levels are unusually uniform â€” AI images lack compression-induced variation"
+            : "Error levels vary naturally â€” consistent with real camera compression",
         descriptionKey: score > 55 ? "signal.ela.ai" : "signal.ela.real",
         icon: "?",
         details: `Mean error: ${mean.toFixed(2)}, CV: ${cv.toFixed(3)}, Blocks: ${blockErrors.length}. Real JPEGs have CV > 0.6.`,
