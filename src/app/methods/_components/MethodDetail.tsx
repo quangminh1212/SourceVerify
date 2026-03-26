@@ -5,6 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { METHODS, CAT_HEX, CAT_COLORS, CAT_ICON_PATHS, type Category } from "../data";
+import { generateDynamicFallback } from "@/lib/methods/fallbackGenerator";
 
 export type Reference = {
     title: string;
@@ -115,55 +116,19 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
         }
     }
 
-    if (!tr.algorithm) {
-        tr.algorithm = locale === "vi" ? `Hệ thống mô hình hoá ${tr.name}` : `${tr.name} Modeling Engine`;
-    }
-    
-    if (!tr.mechanism) {
-        if (method?.mediaType === "text") {
-            tr.mechanism = locale === "vi"
-                ? `Hệ thống phân tích văn bản hoạt động theo các bước:\n\n1. **Phân rã chuỗi**: Tách toàn bộ văn bản thành các vector token con (sub-words).\n2. **Khai thác đặc trưng**: Trích xuất các luồng xác suất phân phối, độ bất ngờ (perplexity) và đặc tính thống kê ẩn.\n3. **Đối chiếu mô hình sinh**: Đo lường sự sai lệch so với phân phối của con người tự nhiên (human baseline).\n4. **Tổng hợp điểm**: Chuyển đổi các dấu hiệu máy móc thành ma trận điểm cuối cùng.`
-                : `The text analysis system operates in stages:\n\n1. **Tokenization**: Parses the raw text into sub-word token vectors.\n2. **Feature Extraction**: Extracts latent statistical properties, probability distributions, and perplexity scores.\n3. **Generative Model Profiling**: Compares lexical variance against human written baselines.\n4. **Synthesis**: Converts machine-like structures into a unified scoring matrix.`;
-        } else if (method?.mediaType === "video") {
-            tr.mechanism = locale === "vi"
-                ? `Quá trình phân tích động được thực hiện qua các giai đoạn:\n\n1. **Phân tách Frame**: Xử lý giải nén video gốc thành các khung hình raw tĩnh.\n2. **Trích xuất dòng quang (Optical Flow)**: Tính toán sự liền mạch về mặt không gian và thời gian giữa các frame liên tiếp.\n3. **Phát hiện dị thường (Anomaly Target)**: Tìm kiếm các dấu vết can thiệp siêu nhỏ từ AI (sự sai lệch vi mô, mất độ gắn kết không gian).\n4. **Đánh giá cục bộ**: Mã hoá các bất thường thành biểu đồ rủi ro tạo sinh.`
-                : `The dynamic analysis pipeline computes progressively:\n\n1. **Frame Demultiplexing**: Decompresses the original video into static raw frames.\n2. **Optical Flow Extraction**: Computes spatial and temporal continuity across sequential temporal slices.\n3. **Anomaly Targeting**: Searches for micro-artifacts caused by AI generation (micro-inconsistencies, temporal jitter).\n4. **Heuristic Evaluation**: Encodes anomalies into a generative risk surface.`;
-        } else {
-            tr.mechanism = locale === "vi"
-                ? `Hệ thống phân tích hình ảnh hoạt động theo nhiều giai đoạn:\n\n1. **Khôi phục tín hiệu thô**: Giải nén dải tần số ảnh sang vùng biểu diễn tín hiệu nguyên bản.\n2. **Phân tích không gian & Tần số**: Đoán nhận các dấu vết bộ lọc thuật toán, lượng tử hoá màu sắc hoặc quy luật ngẫu nhiên của noise.\n3. **Đánh giá vi cấu trúc**: Kiểm tra sự liền mạch của các khối pixel và vùng tương phản vi mô.\n4. **Tổng hợp Vector (Fusion)**: Tính toán trọng số để đưa ra xác suất sinh tạo từ AI.`
-                : `The image analysis system operates across multiple layers:\n\n1. **Raw Signal Reconstruction**: Transforms the image frequency band into pristine signal representations.\n2. **Spatial & Frequency Analysis**: Discovers algorithmic filter footprints, color quantization, or unnatural noise arrays.\n3. **Micro-structure Validation**: Inspects the continuity of pixel blocks and micro-contrast zones.\n4. **Vector Fusion**: Computes weighted features to derive generative AI probability.`;
-        }
-    }
-    
-    if (!tr.parameters) {
-        tr.parameters = locale === "vi"
-            ? `Bộ phân tích heuristic: Kích hoạt\nBăng thông xử lý tần số: 0.1Hz - 0.4Hz (Tuỳ biến theo ${method?.mediaType})\nĐộ phân giải lấy mẫu (Sampling Rate): Đa tầng\nTiêu chuẩn ma trận: Iso-variance & Hyper-dimensional space validation`
-            : `Heuristic Analyzer: Activated\nFrequency processing bandwidth: 0.1Hz - 0.4Hz (Dependent on ${method?.mediaType})\nSampling Rate: Multi-tiered pipeline\nMatrix Standard: Iso-variance & Hyper-dimensional space validation`;
-    }
-    
-    if (!tr.accuracy) {
-        tr.accuracy = locale === "vi"
-            ? `Cao - Đạt mức tin cậy 87-94% trên các tập dữ liệu sạch chưa qua nén suy hao lớn. Tuy nhiên, hiệu năng có thể giảm tới 15% khi ${method?.mediaType} bị đăng tải lại qua các nền tảng mạng xã hội (Compression artifacts).`
-            : `High - Achieves an 87-94% confidence level on clean, pristine datasets. However, performance may degrade by up to 15% when the ${method?.mediaType} is heavily compressed or re-uploaded across social media platforms.`;
-    }
-    
-    if (!tr.strengths) {
-        tr.strengths = locale === "vi"
-            ? `• Phân tích sâu sắc các dấu vết vật lý / cấu trúc vô hình đối với mắt người\n• Thuật toán hoạt động không yêu cầu tập tham chiếu gốc (Blind detection)\n• Tốc độ quét cực nhanh (Thời gian thực)\n• Tính phản biện học thuật cực cao vì bám sát đặc thù khoa học máy tính`
-            : `• Insightful analysis of physical / structural layers invisible to naked eyes\n• Blind detection paradigm requires no pristine reference\n• Extremely fast scanning architecture (Real-time computed)\n• High academic rigor based heavily on fundamental computer science principles`;
-    }
-    
-    if (!tr.limitations) {
-        tr.limitations = locale === "vi"
-            ? `• Dễ sinh nhiễu (False Positive) nếu dữ liệu lạm dụng các phần mềm chỉnh sửa màu / filter quá độ\n• Yêu cầu dung lượng hoặc độ dài thông tin tối thiểu để bảo toàn độ chính xác tín hiệu\n• Có thể bị qua mặt bởi kỹ thuật Laundering AI ác tính cao (Adversarial attacks)`
-            : `• Vulnerable to False Positives if manual edits heavily manipulate raw signals\n• Demands minimum payload length/size to preserve signal integrity\n• Can be outsmarted by advanced malicious Adversarial Laundering attacks`;
-    }
-    
-    if (!tr.useCase) {
-        tr.useCase = locale === "vi"
-            ? `Rất lý tưởng phân tích bổ trợ trong điều tra báo chí mạng (Fact-checking), tình báo mã nguồn mở (OSINT) và pháp y kỹ thuật số để vạch trần các dấu hiệu thao túng sinh tạo đối với ${method?.mediaType}.`
-            : `Highly ideal as a supplementary check in journalistic Fact-checking, Open Source Intelligence (OSINT), and digital forensic pipelines to uncover generative semantic and synthetic manipulations in ${method?.mediaType}.`;
-    }
+    const mediaTypeLoc = locale === "vi" 
+        ? (method?.mediaType === "text" ? "văn bản" : method?.mediaType === "video" ? "video" : "hình ảnh (image)") 
+        : method?.mediaType;
+
+    const uniqueFb = method ? generateDynamicFallback(method, tr.name || method.id, locale) : undefined;
+
+    if (!tr.algorithm && uniqueFb) tr.algorithm = uniqueFb.algorithm;
+    if (!tr.mechanism && uniqueFb) tr.mechanism = uniqueFb.mechanism;
+    if (!tr.parameters && uniqueFb) tr.parameters = uniqueFb.parameters;
+    if (!tr.accuracy && uniqueFb) tr.accuracy = uniqueFb.accuracy;
+    if (!tr.strengths && uniqueFb) tr.strengths = uniqueFb.strengths;
+    if (!tr.limitations && uniqueFb) tr.limitations = uniqueFb.limitations;
+    if (!tr.useCase && uniqueFb) tr.useCase = uniqueFb.useCase;
 
     if (!tr.references || tr.references.length === 0) {
         tr.references = [{
