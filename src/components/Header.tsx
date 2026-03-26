@@ -260,22 +260,18 @@ export default function Header() {
                     <Link href="/" className="header-logo">
                         <svg width="28" height="28" viewBox="0 0 64 64" fill="none" className="logo-img">
                             <defs>
-                                <linearGradient id="glow-grad" x1="0" y1="1" x2="1" y2="0">
+                                <linearGradient id="check-border" x1="0" y1="1" x2="1" y2="0">
                                     <stop offset="0%" stopColor="#34A853"/>
                                     <stop offset="33%" stopColor="#4285F4"/>
                                     <stop offset="66%" stopColor="#EA4335"/>
                                     <stop offset="100%" stopColor="#FBBC04"/>
                                 </linearGradient>
-                                <filter id="glow">
-                                    <feGaussianBlur stdDeviation="2.5" result="blur"/>
-                                    <feMerge><feMergeNode in="blur"/><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-                                </filter>
                             </defs>
                             <circle cx="22" cy="22" r="14" fill="#4285F4" stroke="#fff" strokeWidth="2.5"/>
                             <circle cx="42" cy="22" r="14" fill="#EA4335" stroke="#fff" strokeWidth="2.5"/>
                             <circle cx="22" cy="42" r="14" fill="#34A853" stroke="#fff" strokeWidth="2.5"/>
                             <circle cx="42" cy="42" r="14" fill="#FBBC04" stroke="#fff" strokeWidth="2.5"/>
-                            <path d="M22 32l5.5 5.5L42 23" stroke="url(#glow-grad)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" filter="url(#glow)" opacity="0.7"/>
+                            <path d="M22 32l5.5 5.5L42 23" stroke="url(#check-border)" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M22 32l5.5 5.5L42 23" stroke="#fff" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         <span className="header-brand">SourceVerify</span>
