@@ -11,7 +11,11 @@ export type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
 export { formatFileSize } from "./utils";
 
 import type { AnalysisResult, AnalysisMethod, FileMetadata } from "./types";
-import { PAPER_FAITHFUL_METHOD_ID_SET } from "./types";
+import {
+    DEFAULT_VIDEO_METHOD_IDS,
+    PAPER_FAITHFUL_IMAGE_METHOD_IDS,
+    PAPER_FAITHFUL_TEXT_METHOD_IDS,
+} from "./types";
 import { loadImage, extractBasicMetadata, validateFileMagicBytes, createConsistentContext } from "./utils";
 import {
     // Original 13 methods
@@ -850,8 +854,8 @@ export const TEXT_METHOD_MAP: Record<string, string> = {
     text_burstiness2: "signal.textBurstiness2",
 };
 
-export const ALL_METHOD_IDS = Object.keys(METHOD_MAP).filter(id => PAPER_FAITHFUL_METHOD_ID_SET.has(id));
-export const ALL_TEXT_METHOD_IDS = Object.keys(TEXT_METHOD_MAP).filter(id => PAPER_FAITHFUL_METHOD_ID_SET.has(id));
+export const ALL_METHOD_IDS = [...PAPER_FAITHFUL_IMAGE_METHOD_IDS];
+export const ALL_TEXT_METHOD_IDS = [...PAPER_FAITHFUL_TEXT_METHOD_IDS];
 
 /** Video method ID → nameKey mapping */
 export const VIDEO_METHOD_MAP: Record<string, string> = {
@@ -1234,7 +1238,7 @@ async function analyzeImageFile(file: File, enabledMethods?: string[]): Promise<
 async function analyzeVideoFile(file: File, enabledMethods?: string[]): Promise<{ methods: AnalysisMethod[]; metadata: FileMetadata }> {
     const video = document.createElement("video");
     const url = URL.createObjectURL(file);
-    const enabled = new Set(enabledMethods || ALL_METHOD_IDS);
+    const enabled = new Set(enabledMethods || DEFAULT_VIDEO_METHOD_IDS);
 
     return new Promise((resolve, reject) => {
         // Timeout guard: reject after 30s to prevent hanging
