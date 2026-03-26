@@ -258,8 +258,11 @@ export default function Header() {
             <header className="header-bar">
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="logo-img" style={{ color: 'var(--color-accent-blue)' }}>
-                            <path d="M8 6L2 12l6 6M16 6l6 6-6 6M9 13.5l2.5 2.5L16 10" />
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="logo-img">
+                            <path d="M8 6L2 12" stroke="#4285F4" />
+                            <path d="M2 12L8 18" stroke="#EA4335" />
+                            <path d="M16 6L22 12L16 18" stroke="#FBBC05" />
+                            <path d="M9 13.5L11.5 16L16 10" stroke="#34A853" />
                         </svg>
                         <span className="header-brand">SourceVerify</span>
                     </Link>
