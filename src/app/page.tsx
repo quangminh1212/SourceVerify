@@ -247,40 +247,36 @@ export default function Home() {
 
             {/* Upload area */}
             <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 w-full max-w-[800px] mx-auto">
-              <label className="btn-primary flex items-center gap-2.5 cursor-pointer flex-shrink-0">
+              <label 
+                className={`btn-primary flex items-center gap-2.5 cursor-pointer flex-shrink-0 transition-all ${dragOver ? "!bg-blue-600 ring-4 ring-blue-500/20 scale-[1.02]" : ""}`}
+                onDrop={handleDrop}
+                onDragOver={e => { e.preventDefault(); setDragOver(true); }}
+                onDragLeave={() => setDragOver(false)}
+              >
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   <line x1="12" y1="3" x2="12" y2="15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                 </svg>
-                {t("home.uploadFile")}
+                <span>{t("home.uploadFile")} <span className="hidden sm:inline font-normal opacity-80 md:pl-0.5">{t("home.orDropHere")}</span></span>
                 <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES.join(",")} className="hidden"
                   onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
               </label>
-
-              <div
-                className={`btn-secondary cursor-pointer flex-shrink-0 ${dragOver ? "!border-[#4285f4] !bg-blue-50" : ""}`}
-                onDrop={handleDrop}
-                onDragOver={e => { e.preventDefault(); setDragOver(true); }}
-                onDragLeave={() => setDragOver(false)}
-              >
-                {t("home.orDropHere")}
-              </div>
 
               {/* Expandable URL Input Button */}
               <div 
                 className={`flex-shrink-0 relative flex items-center h-[46px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden border ${
                   showUrlInput 
-                    ? 'bg-[--color-bg-card] border-[--color-accent-blue] shadow-[0_0_0_3px_rgba(66,133,244,0.15)]' 
-                    : 'bg-[--color-bg-secondary] border-[--color-border-subtle] cursor-pointer hover:border-[#4285f4]'
+                    ? 'w-full max-w-[380px] bg-[--color-bg-card] border-[--color-accent-blue] shadow-[0_0_0_3px_rgba(66,133,244,0.15)]' 
+                    : 'w-[160px] bg-[--color-bg-secondary] border-[--color-border-subtle] cursor-pointer hover:border-[#4285f4]'
                 }`}
-                style={{ width: showUrlInput ? 'min(100%, 380px)' : '160px' }}
                 onClick={() => { if (!showUrlInput) setShowUrlInput(true); }}
               >
                 {/* Collapsed state (Text + Icon) */}
                 <div 
-                  className="absolute inset-0 flex items-center justify-center gap-2.5 text-sm font-medium text-[--color-text-secondary] transition-opacity duration-300"
-                  style={{ opacity: showUrlInput ? 0 : 1, pointerEvents: showUrlInput ? 'none' : 'auto' }}
+                  className={`absolute inset-0 flex items-center justify-center gap-2.5 text-sm font-medium text-[--color-text-secondary] transition-opacity duration-300 ${
+                    showUrlInput ? 'opacity-0 pointer-events-none' : 'opacity-100 pointer-events-auto'
+                  }`}
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -292,8 +288,9 @@ export default function Home() {
                 {/* Expanded state (Form) */}
                 <form 
                   onSubmit={(e) => { e.preventDefault(); handleUrlSubmit(urlInput); }} 
-                  className="absolute inset-0 flex items-center px-1.5 transition-opacity duration-300 delay-100"
-                  style={{ opacity: showUrlInput ? 1 : 0, pointerEvents: showUrlInput ? 'auto' : 'none' }}
+                  className={`absolute inset-0 flex items-center px-1.5 transition-opacity duration-300 delay-100 ${
+                    showUrlInput ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+                  }`}
                 >
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="absolute left-4 text-[--color-text-muted] opacity-60">
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
@@ -302,7 +299,7 @@ export default function Home() {
                   <input
                     ref={urlInputRef}
                     type="url"
-                    className="w-full h-full bg-transparent border-none text-sm focus:outline-none focus:ring-0 text-[--color-text-primary] placeholder-[--color-text-muted]"
+                    className="w-full h-full bg-transparent border-none text-sm focus:outline-none focus:ring-0 text-[--color-text-primary] placeholder-[--color-text-muted] min-w-0 shadow-none !pl-[38px] !pr-[72px]"
                     placeholder={t('home.urlPlaceholder')}
                     value={urlInput}
                     onChange={(e) => setUrlInput(e.target.value)}
@@ -310,14 +307,12 @@ export default function Home() {
                       if (!urlInput.trim() && !isExtractingUrl) setShowUrlInput(false);
                     }}
                     disabled={isExtractingUrl}
-                    style={{ minWidth: 0, boxShadow: 'none', paddingLeft: '2.5rem', paddingRight: '4.5rem' }}
                   />
                   <button
                     type="button"
-                    className="absolute right-11 p-1.5 text-[--color-text-muted] hover:text-[--color-text-primary] transition-colors"
+                    className={`absolute right-11 p-1.5 text-[--color-text-muted] hover:text-[--color-text-primary] transition-colors ${urlInput ? 'opacity-100' : 'opacity-50'}`}
                     onClick={(e) => { e.stopPropagation(); setShowUrlInput(false); setUrlInput(''); }}
                     title="Close"
-                    style={{ opacity: urlInput ? 1 : 0.5 }}
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                       <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -332,7 +327,7 @@ export default function Home() {
                     {isExtractingUrl ? (
                       <span className="w-4 h-4 border-[2.5px] border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'translateX(1px)' }}>
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="translate-x-[1px]">
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <polyline points="12 5 19 12 12 19" />
                       </svg>
