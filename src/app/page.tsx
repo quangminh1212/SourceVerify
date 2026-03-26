@@ -51,10 +51,20 @@ export default function Home() {
   const [urlInput, setUrlInput] = useState('');
   const [isExtractingUrl, setIsExtractingUrl] = useState(false);
   const [urlSource, setUrlSource] = useState<{ title: string; siteName: string } | null>(null);
+  const [showUrlInput, setShowUrlInput] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
+  const urlInputRef = useRef<HTMLInputElement>(null);
   const { locale, t } = useLanguage();
   const [analysisSettings, setAnalysisSettings] = useState<AnalysisSettings | null>(null);
+
+  // Focus URL input when expanded
+  useEffect(() => {
+    if (showUrlInput && urlInputRef.current) {
+      urlInputRef.current.focus();
+    }
+  }, [showUrlInput]);
+
 
 
   // Check auth state from localStorage
@@ -163,7 +173,7 @@ export default function Home() {
   const handleReset = useCallback(() => {
     if (preview) URL.revokeObjectURL(preview);
     setFile(null); setPreview(null); setResult(null); setError(null); setProgress(0); setIsAnalyzing(false);
-    setUrlInput(''); setUrlSource(null);
+    setUrlInput(''); setUrlSource(null); setShowUrlInput(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [preview]);
 
@@ -236,8 +246,8 @@ export default function Home() {
             )}
 
             {/* Upload area */}
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-              <label className="btn-primary flex items-center gap-2.5 cursor-pointer">
+            <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 pt-2 w-full max-w-[800px] mx-auto">
+              <label className="btn-primary flex items-center gap-2.5 cursor-pointer flex-shrink-0">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                   <polyline points="17 8 12 3 7 8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -247,62 +257,89 @@ export default function Home() {
                 <input ref={fileInputRef} type="file" accept={ACCEPTED_TYPES.join(",")} className="hidden"
                   onChange={e => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
               </label>
+
               <div
-                className={`btn-secondary cursor-pointer ${dragOver ? "!border-[#4285f4] !bg-blue-50" : ""}`}
+                className={`btn-secondary cursor-pointer flex-shrink-0 ${dragOver ? "!border-[#4285f4] !bg-blue-50" : ""}`}
                 onDrop={handleDrop}
                 onDragOver={e => { e.preventDefault(); setDragOver(true); }}
                 onDragLeave={() => setDragOver(false)}
               >
                 {t("home.orDropHere")}
               </div>
-            </div>
 
-            {/* URL Input Section */}
-            <div className="url-input-section">
-              <div className="url-input-divider">
-                <span className="url-input-divider-line" />
-                <span className="url-input-divider-text">{t('home.urlDivider')}</span>
-                <span className="url-input-divider-line" />
-              </div>
-              <form className="url-input-form" onSubmit={(e) => { e.preventDefault(); handleUrlSubmit(urlInput); }}>
-                <div className="url-input-wrapper">
-                  <svg className="url-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              {/* Expandable URL Input Button */}
+              <div 
+                className={`flex-shrink-0 relative flex items-center h-[46px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)] overflow-hidden border ${
+                  showUrlInput 
+                    ? 'bg-[--color-bg-card] border-[--color-accent-blue] shadow-[0_0_0_3px_rgba(66,133,244,0.15)]' 
+                    : 'bg-[--color-bg-secondary] border-[--color-border-subtle] cursor-pointer hover:border-[#4285f4]'
+                }`}
+                style={{ width: showUrlInput ? 'min(100%, 380px)' : '160px' }}
+                onClick={() => { if (!showUrlInput) setShowUrlInput(true); }}
+              >
+                {/* Collapsed state (Text + Icon) */}
+                <div 
+                  className="absolute inset-0 flex items-center justify-center gap-2.5 text-sm font-medium text-[--color-text-secondary] transition-opacity duration-300"
+                  style={{ opacity: showUrlInput ? 0 : 1, pointerEvents: showUrlInput ? 'none' : 'auto' }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-70">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                  <span className="whitespace-nowrap">{t('home.urlDivider')}</span>
+                </div>
+
+                {/* Expanded state (Form) */}
+                <form 
+                  onSubmit={(e) => { e.preventDefault(); handleUrlSubmit(urlInput); }} 
+                  className="absolute inset-0 flex items-center px-1.5 transition-opacity duration-300 delay-100"
+                  style={{ opacity: showUrlInput ? 1 : 0, pointerEvents: showUrlInput ? 'auto' : 'none' }}
+                >
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="absolute left-4 text-[--color-text-muted] opacity-60">
                     <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
                     <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
                   </svg>
                   <input
+                    ref={urlInputRef}
                     type="url"
-                    className="url-input-field"
+                    className="w-full h-full bg-transparent border-none text-sm focus:outline-none focus:ring-0 text-[--color-text-primary] placeholder-[--color-text-muted]"
                     placeholder={t('home.urlPlaceholder')}
                     value={urlInput}
                     onChange={(e) => setUrlInput(e.target.value)}
+                    onBlur={(e) => {
+                      if (!urlInput.trim() && !isExtractingUrl) setShowUrlInput(false);
+                    }}
                     disabled={isExtractingUrl}
+                    style={{ minWidth: 0, boxShadow: 'none', paddingLeft: '2.5rem', paddingRight: '4.5rem' }}
                   />
                   <button
+                    type="button"
+                    className="absolute right-11 p-1.5 text-[--color-text-muted] hover:text-[--color-text-primary] transition-colors"
+                    onClick={(e) => { e.stopPropagation(); setShowUrlInput(false); setUrlInput(''); }}
+                    title="Close"
+                    style={{ opacity: urlInput ? 1 : 0.5 }}
+                  >
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                  <button
                     type="submit"
-                    className="url-input-btn"
                     disabled={!urlInput.trim() || isExtractingUrl}
+                    className="absolute right-1.5 w-[34px] h-[34px] flex flex-shrink-0 items-center justify-center bg-[--color-accent-blue] text-white rounded-full hover:bg-[#3367d6] disabled:opacity-40 disabled:bg-[--color-border-subtle] disabled:text-[--color-text-muted] transition-all"
                   >
                     {isExtractingUrl ? (
-                      <span className="url-input-spinner" />
+                      <span className="w-4 h-4 border-[2.5px] border-white/30 border-t-white rounded-full animate-spin" />
                     ) : (
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transform: 'translateX(1px)' }}>
                         <line x1="5" y1="12" x2="19" y2="12" />
                         <polyline points="12 5 19 12 12 19" />
                       </svg>
                     )}
                   </button>
-                </div>
-                <div className="url-supported-platforms">
-                  <span className="url-platform-label">{t('home.urlSupported')}</span>
-                  <span className="url-platform-icons">
-                    {['YouTube', 'Facebook', 'TikTok', 'Instagram', 'X'].map(p => (
-                      <span key={p} className="url-platform-tag">{p}</span>
-                    ))}
-                    <span className="url-platform-tag url-platform-more">+10</span>
-                  </span>
-                </div>
-              </form>
+                </form>
+              </div>
             </div>
 
             <p className="text-xs text-[--color-text-muted] mt-1">
