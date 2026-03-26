@@ -1,5 +1,5 @@
 import type { AnalysisMethod } from "../../types";
-import { gray } from "../pixelUtils";
+import { gray } from "../pixelUtils.ts";
 
 /**
  * Signal 25: Frequency Band Energy Ratio
