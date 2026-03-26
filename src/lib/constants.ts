@@ -49,5 +49,5 @@ export const ACCEPTED_TYPES = [
     "video/mp4", "video/webm", "video/quicktime", "video/x-msvideo",
 ];
 
-/** Maximum file size (100MB) */
-export const MAX_FILE_SIZE = 100 * 1024 * 1024;
+/** Maximum file size (2GB) */
+export const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024;
