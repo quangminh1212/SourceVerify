@@ -1,10 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { LOCALE_LABELS, type Locale } from "@/i18n/translations";
 import { METHODS, CATEGORIES } from "@/app/methods/data";
@@ -257,7 +256,9 @@ export default function Header() {
             <header className="header-bar">
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
-                        <Image src="/logo.png" alt="SourceVerify" width={28} height={28} className="logo-img" priority />
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="logo-img" style={{ color: 'var(--color-accent-blue)' }}>
+                            <path d="M8 6L2 12l6 6M16 6l6 6-6 6M9 13.5l2.5 2.5L16 10" />
+                        </svg>
                         <span className="header-brand">SourceVerify</span>
                     </Link>
 
