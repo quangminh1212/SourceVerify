@@ -1,45 +1,61 @@
 import fs from 'fs';
 import path from 'path';
 
-// Load all method IDs from data.ts
-const dataTsPath = path.join(__dirname, 'src/app/methods/data.ts');
-const dataTsContent = fs.readFileSync(dataTsPath, 'utf8');
+const methodsDir = path.join(process.cwd(), 'src', 'lib', 'methods');
+const categories = ['image', 'video', 'text'];
 
-const idRegex = /\{ id: "([^"]+)",/g;
-let match;
-const allMethodIds = new Set<string>();
+let totalMethods = 0;
+const missingCitations: string[] = [];
+const missingTheory: string[] = [];
 
-while ((match = idRegex.exec(dataTsContent)) !== null) {
-    allMethodIds.add(match[1]);
+categories.forEach(cat => {
+    const dir = path.join(methodsDir, cat);
+    if (!fs.existsSync(dir)) return;
+
+    const files = fs.readdirSync(dir).filter(f => f.endsWith('.ts') && f !== 'index.ts');
+    
+    files.forEach(file => {
+        totalMethods++;
+        const content = fs.readFileSync(path.join(dir, file), 'utf-8');
+        
+        // Extract top block comment
+        const match = content.match(/\/\*\*([\s\S]*?)\*\//);
+        if (!match) {
+            missingTheory.push(`${cat}/${file} (No JSDoc)`);
+            missingCitations.push(`${cat}/${file} (No JSDoc)`);
+            return;
+        }
+
+        const jsdoc = match[1].toLowerCase();
+        
+        // Simple heuristic for citations
+        const hasCitation = jsdoc.includes('based on') || 
+                            jsdoc.includes('arxiv') || 
+                            /(cvpr|iccv|eccv|neurips|icml|ieee|siggraph|202\d|201\d|paper|journal)/.test(jsdoc);
+                            
+        // Simple heuristic for theory
+        // We assume any text that explains something, maybe more than 3 lines of comments, is theory
+        const lines = jsdoc.split('\n').map(l => l.trim().replace(/^\*\s*/, '')).filter(l => l.length > 0);
+        const hasTheory = lines.length >= 2; // Arbitrary, but usually methods have a description
+
+        if (!hasCitation) {
+            missingCitations.push(`${cat}/${file}`);
+        }
+        if (!hasTheory) {
+            missingTheory.push(`${cat}/${file}`);
+        }
+    });
+});
+
+console.log(`Checked ${totalMethods} methods.`);
+console.log(`\nMethods missing citations or explicit literature references (${missingCitations.length}):`);
+console.log(missingCitations.slice(0, 30).join('\n'));
+if(missingCitations.length > 30) {
+    console.log(`... and ${missingCitations.length - 30} more.`);
 }
 
-console.log(`Found ${allMethodIds.size} methods in data.ts`);
-
-// Check methodsI18n.ts
-const i18nPath = path.join(__dirname, 'src/lib/methodsI18n.ts');
-const i18nContent = fs.readFileSync(i18nPath, 'utf8');
-
-let missingInI18n = 0;
-for (const id of allMethodIds) {
-    if (!i18nContent.includes(`"${id}":`) && !i18nContent.includes(`'${id}':`)) {
-        console.log(`Missing in methodsI18n.ts: ${id}`);
-        missingInI18n++;
-    }
+console.log(`\nMethods missing theoretical description (${missingTheory.length}):`);
+console.log(missingTheory.slice(0, 30).join('\n'));
+if(missingTheory.length > 30) {
+    console.log(`... and ${missingTheory.length - 30} more.`);
 }
-console.log(`Total missing in methodsI18n: ${missingInI18n}`);
-
-// Check analyzer.ts
-const analyzerPath = path.join(__dirname, 'src/lib/analyzer.ts');
-const analyzerContent = fs.readFileSync(analyzerPath, 'utf8');
-
-let missingInAnalyzer = 0;
-for (const id of allMethodIds) {
-    // Usually mapped in METHOD_MAP or TEXT_METHOD_MAP or VIDEO_METHOD_MAP
-    if (!analyzerContent.includes(`"${id}":`) && !analyzerContent.includes(`'${id}':`)) {
-        console.log(`Missing in analyzer.ts mapping: ${id}`);
-        missingInAnalyzer++;
-    }
-}
-console.log(`Total missing in analyzer mapping: ${missingInAnalyzer}`);
-
-console.log('Sanity check complete!');
