@@ -74,8 +74,8 @@ export const metadata: Metadata = {
     canonical: "https://sourceverify.app",
   },
   icons: {
-    icon: "/logo.png",
-    apple: "/logo.png",
+    icon: "/icon.svg",
+    apple: "/icon.svg",
   },
 };
 
