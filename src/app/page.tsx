@@ -48,6 +48,9 @@ export default function Home() {
   const [viewMode, setViewMode] = useState<'basic' | 'advanced'>('basic');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(METHODS[0].id);
+  const [urlInput, setUrlInput] = useState('');
+  const [isExtractingUrl, setIsExtractingUrl] = useState(false);
+  const [urlSource, setUrlSource] = useState<{ title: string; siteName: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const resultRef = useRef<HTMLDivElement>(null);
   const { locale, t } = useLanguage();
@@ -120,29 +123,80 @@ export default function Home() {
     }
   }, [t, isLoggedIn, selectedMethod, analysisSettings]);
 
+  /** Extract media from a social media URL */
+  const handleUrlSubmit = useCallback(async (url: string) => {
+    const trimmed = url.trim();
+    if (!trimmed) return;
+    setError(null); setResult(null); setIsExtractingUrl(true); setUrlSource(null);
+    try {
+      const resp = await fetch('/api/extract-url', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: trimmed }),
+      });
+      const data = await resp.json();
+      if (!resp.ok || !data.success) {
+        setError(data.error || t('home.urlExtractFailed'));
+        setIsExtractingUrl(false);
+        return;
+      }
+      if (data.media?.base64) {
+        // Convert base64 to File
+        const res = await fetch(data.media.base64);
+        const blob = await res.blob();
+        const extractedFile = new File([blob], data.media.fileName || 'extracted.jpg', { type: data.media.mimeType || 'image/jpeg' });
+        setUrlSource({ title: data.title || '', siteName: data.siteName || '' });
+        setIsExtractingUrl(false);
+        setUrlInput('');
+        handleFile(extractedFile);
+      } else {
+        setError(t('home.urlNoMedia'));
+        setIsExtractingUrl(false);
+      }
+    } catch {
+      setError(t('home.urlExtractFailed'));
+      setIsExtractingUrl(false);
+    }
+  }, [handleFile, t]);
+
   const handleDrop = useCallback((e: React.DragEvent) => { e.preventDefault(); setDragOver(false); const f = e.dataTransfer.files[0]; if (f) handleFile(f); }, [handleFile]);
   const handleReset = useCallback(() => {
     if (preview) URL.revokeObjectURL(preview);
     setFile(null); setPreview(null); setResult(null); setError(null); setProgress(0); setIsAnalyzing(false);
+    setUrlInput(''); setUrlSource(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   }, [preview]);
 
-  // Ctrl+V paste support
+  // Ctrl+V paste support — images/videos or URLs
   useEffect(() => {
     const handlePaste = (e: ClipboardEvent) => {
-      if (file || isAnalyzing) return;
+      if (file || isAnalyzing || isExtractingUrl) return;
       const items = e.clipboardData?.items;
       if (!items) return;
+      // Check for files first
       for (const item of Array.from(items)) {
         if (item.type.startsWith('image/') || item.type.startsWith('video/')) {
           const pastedFile = item.getAsFile();
           if (pastedFile) { e.preventDefault(); handleFile(pastedFile); return; }
         }
       }
+      // Check for URL text
+      const text = e.clipboardData?.getData('text/plain')?.trim();
+      if (text && /^https?:\/\/.+/i.test(text)) {
+        // Check if it looks like a social media URL
+        const socialDomains = ['youtube', 'youtu.be', 'facebook', 'fb.watch', 'tiktok', 'instagram', 'twitter', 'x.com', 'reddit', 'pinterest', 'linkedin', 'flickr', 'imgur', 'vimeo', 'bilibili', 'weibo', 'threads', 'twitch'];
+        const isSocial = socialDomains.some(d => text.toLowerCase().includes(d));
+        if (isSocial) {
+          e.preventDefault();
+          setUrlInput(text);
+          handleUrlSubmit(text);
+          return;
+        }
+      }
     };
     window.addEventListener('paste', handlePaste);
     return () => window.removeEventListener('paste', handlePaste);
-  }, [file, isAnalyzing, handleFile]);
+  }, [file, isAnalyzing, isExtractingUrl, handleFile, handleUrlSubmit]);
 
   return (
     <main className="relative min-h-screen flex flex-col">
@@ -203,6 +257,54 @@ export default function Home() {
               </div>
             </div>
 
+            {/* URL Input Section */}
+            <div className="url-input-section">
+              <div className="url-input-divider">
+                <span className="url-input-divider-line" />
+                <span className="url-input-divider-text">{t('home.urlDivider')}</span>
+                <span className="url-input-divider-line" />
+              </div>
+              <form className="url-input-form" onSubmit={(e) => { e.preventDefault(); handleUrlSubmit(urlInput); }}>
+                <div className="url-input-wrapper">
+                  <svg className="url-input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                  <input
+                    type="url"
+                    className="url-input-field"
+                    placeholder={t('home.urlPlaceholder')}
+                    value={urlInput}
+                    onChange={(e) => setUrlInput(e.target.value)}
+                    disabled={isExtractingUrl}
+                  />
+                  <button
+                    type="submit"
+                    className="url-input-btn"
+                    disabled={!urlInput.trim() || isExtractingUrl}
+                  >
+                    {isExtractingUrl ? (
+                      <span className="url-input-spinner" />
+                    ) : (
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <polyline points="12 5 19 12 12 19" />
+                      </svg>
+                    )}
+                  </button>
+                </div>
+                <div className="url-supported-platforms">
+                  <span className="url-platform-label">{t('home.urlSupported')}</span>
+                  <span className="url-platform-icons">
+                    {['YouTube', 'Facebook', 'TikTok', 'Instagram', 'X'].map(p => (
+                      <span key={p} className="url-platform-tag">{p}</span>
+                    ))}
+                    <span className="url-platform-tag url-platform-more">+10</span>
+                  </span>
+                </div>
+              </form>
+            </div>
+
             <p className="text-xs text-[--color-text-muted] mt-1">
               {t("home.pasteHint")} <kbd className="px-1.5 py-0.5 rounded bg-[--color-bg-secondary] border border-[--color-border-subtle] text-[10px] font-mono text-[--color-text-secondary]">{t("home.pasteKey")}</kbd> {t("home.pasteAction")}
             </p>
@@ -213,6 +315,16 @@ export default function Home() {
         {file && !result && (
           <div className="w-full max-w-2xl mx-auto animate-fade-in-up">
             <div className="card p-4 sm:p-6">
+              {/* Source info for URL-extracted media */}
+              {urlSource && (
+                <div className="url-source-badge">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
+                  </svg>
+                  <span>{urlSource.siteName || t('home.urlExtracted')}{urlSource.title ? ` — ${urlSource.title}` : ''}</span>
+                </div>
+              )}
               <div className="relative rounded-xl overflow-hidden bg-[--color-bg-tertiary]">
                 {file.type.startsWith("video/") ? (
                   <video src={preview!} controls className="w-full max-h-[360px] object-contain" />
