@@ -129,15 +129,8 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
     if (!tr.strengths && uniqueFb) tr.strengths = uniqueFb.strengths;
     if (!tr.limitations && uniqueFb) tr.limitations = uniqueFb.limitations;
     if (!tr.useCase && uniqueFb) tr.useCase = uniqueFb.useCase;
-
-    if (!tr.references || tr.references.length === 0) {
-        tr.references = [{
-            title: locale === "vi"
-                ? `${tr.name || methodId}: Các phương pháp phát hiện dựa trên mô hình học thuật hệ thống`
-                : `${tr.name || methodId}: Detection Methods and Systematic Academic Models`,
-            url: `https://scholar.google.com/scholar?q=${encodeURIComponent((tr.name || methodId) + " generative AI detection forensic analysis")}`
-        }];
-    }
+    if (!tr.source && uniqueFb) tr.source = uniqueFb.source;
+    if ((!tr.references || tr.references.length === 0) && uniqueFb) tr.references = uniqueFb.references;
 
     if (!method) {
         return (
