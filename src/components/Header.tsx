@@ -259,11 +259,11 @@ export default function Header() {
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
                         <svg width="28" height="28" viewBox="0 0 64 64" fill="none" className="logo-img">
-                            <circle cx="20" cy="20" r="14" fill="#4285F4"/>
-                            <circle cx="44" cy="20" r="14" fill="#EA4335"/>
-                            <circle cx="20" cy="44" r="14" fill="#34A853"/>
-                            <circle cx="44" cy="44" r="14" fill="#FBBC04"/>
-                            <path d="M21 31l6 6L43 22" stroke="#fff" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <circle cx="22" cy="22" r="14" fill="#4285F4"/>
+                            <circle cx="42" cy="22" r="14" fill="#EA4335"/>
+                            <circle cx="22" cy="42" r="14" fill="#34A853"/>
+                            <circle cx="42" cy="42" r="14" fill="#FBBC04"/>
+                            <path d="M22 32l5.5 5.5L42 23" stroke="#fff" strokeWidth="5.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         <span className="header-brand">SourceVerify</span>
                     </Link>
