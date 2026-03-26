@@ -1101,6 +1101,13 @@ for (const [id, nameKey] of Object.entries(VIDEO_METHOD_MAP)) {
     else VIDEO_NAMEKEY_TO_IDS.set(nameKey, [id]);
 }
 
+const VIDEO_NAMEKEY_TO_IDS: Map<string, string[]> = new Map();
+for (const [id, nameKey] of Object.entries(VIDEO_METHOD_MAP)) {
+    const arr = VIDEO_NAMEKEY_TO_IDS.get(nameKey);
+    if (arr) arr.push(id);
+    else VIDEO_NAMEKEY_TO_IDS.set(nameKey, [id]);
+}
+
 const TEXT_NAMEKEY_TO_IDS: Map<string, string[]> = new Map();
 for (const [id, nameKey] of Object.entries(TEXT_METHOD_MAP)) {
     const arr = TEXT_NAMEKEY_TO_IDS.get(nameKey);
