@@ -580,7 +580,7 @@ const ALL_METHODS: Method[] = [
     { id: "register_variation", category: "statistical" as Category, mediaType: "text" as MediaType, weight: 0.02, year: 2021 },
 ];
 
-export const METHODS: Method[] = ALL_METHODS.filter(method => PAPER_FAITHFUL_METHOD_ID_SET.has(method.id));
+export const METHODS: Method[] = ALL_METHODS;
 
 export const CATEGORIES: { key: Category; labelKey: string }[] = [
     { key: "all", labelKey: "methods.catAll" },
