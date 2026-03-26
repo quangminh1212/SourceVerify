@@ -259,10 +259,22 @@ export default function Header() {
                 <div className="header-inner">
                     <Link href="/" className="header-logo">
                         <svg width="28" height="28" viewBox="0 0 64 64" fill="none" className="logo-img">
-                            <circle cx="20" cy="20" r="14" fill="#4285F4" stroke="#fff" strokeWidth="2"/>
-                            <circle cx="44" cy="20" r="14" fill="#EA4335" stroke="#fff" strokeWidth="2"/>
-                            <circle cx="20" cy="44" r="14" fill="#34A853" stroke="#fff" strokeWidth="2"/>
-                            <circle cx="44" cy="44" r="14" fill="#FBBC04" stroke="#fff" strokeWidth="2"/>
+                            <defs>
+                                <mask id="stroke-mask">
+                                    <rect width="64" height="64" fill="white"/>
+                                    <circle cx="32" cy="32" r="10" fill="black"/>
+                                </mask>
+                            </defs>
+                            <circle cx="20" cy="20" r="14" fill="#4285F4"/>
+                            <circle cx="44" cy="20" r="14" fill="#EA4335"/>
+                            <circle cx="20" cy="44" r="14" fill="#34A853"/>
+                            <circle cx="44" cy="44" r="14" fill="#FBBC04"/>
+                            <g mask="url(#stroke-mask)">
+                                <circle cx="20" cy="20" r="14" fill="none" stroke="#fff" strokeWidth="2"/>
+                                <circle cx="44" cy="20" r="14" fill="none" stroke="#fff" strokeWidth="2"/>
+                                <circle cx="20" cy="44" r="14" fill="none" stroke="#fff" strokeWidth="2"/>
+                                <circle cx="44" cy="44" r="14" fill="none" stroke="#fff" strokeWidth="2"/>
+                            </g>
                             <path d="M22 34l5.5 5.5L42 26" stroke="#fff" strokeWidth="4.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                         <span className="header-brand">SourceVerify</span>
