@@ -8,6 +8,11 @@ import { pathToFileURL } from "node:url";
 import { createCanvas, loadImage } from "canvas";
 
 import { analyzeImageBuffer } from "../src/lib/serverAnalyzer.ts";
+import {
+    DEFAULT_VIDEO_NAME_KEYS,
+    PAPER_FAITHFUL_IMAGE_NAME_KEYS,
+    PAPER_FAITHFUL_TEXT_NAME_KEYS,
+} from "../src/lib/types.ts";
 
 const ROOT_DIR = path.resolve(import.meta.dirname, "..");
 const README_PATH = path.join(ROOT_DIR, "README.md");
@@ -23,6 +28,10 @@ const LOG_PATH = path.join(DEBUG_DIR, `method-benchmark-${TIMESTAMP}.log`);
 const SUMMARY_PATH = path.join(DEBUG_DIR, `method-benchmark-${TIMESTAMP}.json`);
 
 fs.mkdirSync(DEBUG_DIR, { recursive: true });
+
+const IMAGE_ALLOWED_NAME_KEYS = new Set(PAPER_FAITHFUL_IMAGE_NAME_KEYS);
+const TEXT_ALLOWED_NAME_KEYS = new Set(PAPER_FAITHFUL_TEXT_NAME_KEYS);
+const VIDEO_ALLOWED_NAME_KEYS = new Set(DEFAULT_VIDEO_NAME_KEYS);
 
 function log(message) {
     const line = `[${new Date().toISOString()}] ${message}`;
@@ -44,6 +53,22 @@ function formatPercent(value) {
 
 function formatNumber(value, digits = 1) {
     return Number.isFinite(value) ? value.toFixed(digits) : "n/a";
+}
+
+function inferMimeType(filePath) {
+    switch (path.extname(filePath).toLowerCase()) {
+        case ".jpg":
+        case ".jpeg":
+            return "image/jpeg";
+        case ".png":
+            return "image/png";
+        case ".webp":
+            return "image/webp";
+        case ".bmp":
+            return "image/bmp";
+        default:
+            return "application/octet-stream";
+    }
 }
 
 function escapeMarkdown(value) {
@@ -161,6 +186,8 @@ async function loadImageSample(candidate, index) {
         originalFileName: path.basename(candidate.filePath),
         neutralFileName: `sample-${String(index + 1).padStart(4, "0")}${extension}`,
         filePath: candidate.filePath,
+        originalWidth: image.width,
+        originalHeight: image.height,
         width,
         height,
         pixels: new Uint8ClampedArray(imageData.data),
@@ -376,6 +403,7 @@ function createEmptyStats() {
         durations: [],
         firstError: null,
         displayName: null,
+        nameKey: null,
     };
 }
 
@@ -383,6 +411,7 @@ function updateStats(stats, sample, result, durationMs) {
     stats.evaluated += 1;
     stats.durations.push(durationMs);
     stats.displayName ??= result?.name ?? null;
+    stats.nameKey ??= result?.nameKey ?? null;
 
     if (!result || typeof result.score !== "number") {
         stats.errors += 1;
@@ -444,6 +473,7 @@ function finalizeStats(method, stats, sampleCount, corpusLabel) {
         file: method.file,
         exportName: method.exportName,
         name: stats.displayName ?? method.exportName,
+        nameKey: stats.nameKey,
         status: method.status === "ready" && stats.errors === 0
             ? "ok"
             : method.status === "ready" && stats.errors > 0
@@ -468,6 +498,10 @@ function finalizeStats(method, stats, sampleCount, corpusLabel) {
         scoreGap: Number.isFinite(avgAiScore) && Number.isFinite(avgRealScore) ? avgAiScore - avgRealScore : NaN,
         avgMs: average(stats.durations),
     };
+}
+
+function filterRuntimeSubset(results, allowedNameKeys) {
+    return results.filter((result) => result.nameKey && allowedNameKeys.has(result.nameKey));
 }
 
 async function benchmarkMethods(methods, samples, invoke, corpusLabel) {
@@ -510,7 +544,7 @@ async function benchmarkMethods(methods, samples, invoke, corpusLabel) {
         for (const sample of samples) {
             const started = performance.now();
             try {
-                const result = await invoke(method.fn, sample);
+                const result = await invoke(method, sample);
                 updateStats(stats, sample, result, performance.now() - started);
             } catch (error) {
                 stats.errors += 1;
@@ -640,6 +674,42 @@ function renderTable(results) {
     return [header, separator, ...rows].join("\n");
 }
 
+const IMAGE_METADATA_METHOD_IDS = new Set([
+    "image/exifIntegrity",
+    "image/iptcVerification",
+    "image/gpsConsistency",
+    "image/timestampForensics",
+    "image/colorProfileMeta",
+    "image/resolutionConsistency",
+]);
+
+function invokeImageMethod(method, sample) {
+    if (IMAGE_METADATA_METHOD_IDS.has(method.id)) {
+        return method.fn(
+            {
+                fileName: sample.originalFileName,
+                fileSize: fs.statSync(sample.filePath).size,
+                fileType: inferMimeType(sample.filePath),
+                width: sample.originalWidth,
+                height: sample.originalHeight,
+                isVideo: false,
+                exifData: {},
+            },
+            {},
+        );
+    }
+
+    return method.fn(sample.pixels, sample.width, sample.height);
+}
+
+function invokeVideoMethod(method, sample) {
+    return method.fn(sample.pixels, sample.width, sample.height);
+}
+
+function invokeTextMethod(method, sample) {
+    return method.fn(sample.text);
+}
+
 function sortResults(results) {
     return [...results].sort((left, right) => {
         const leftScore = Number.isFinite(left.strictAccuracy) ? left.strictAccuracy : -1;
@@ -675,7 +745,9 @@ function generateMarkdownReport(report) {
         "- `classified accuracy`: correct / classified, excluding `score = 50` outputs.",
         "- `coverage`: classified / evaluated. Higher coverage means the method avoided the neutral `50` score more often.",
         `- Image and video-frame benchmarks use a balanced local dataset of **${report.imageDataset.realCount} real** + **${report.imageDataset.aiCount} AI** images, resized to max **${IMAGE_MAX_DIM}px** for repeatability.`,
-        "- Video methods are measured as **single-frame proxy accuracy** because the repository currently has no labeled local video dataset.",
+        "- Only the **paper-faithful runtime subset** is reported below; proxy/simplified methods are excluded from the final tables.",
+        "- Dedicated video-only methods remain excluded by default until they are re-implemented faithfully from source papers.",
+        "- Any video-compatible numbers here therefore represent only the vetted frame-based subset, not full temporal/audio video detection.",
         "- Text methods are measured on a **synthetic local corpus** of human-like vs AI-like paragraphs because the repository currently has no labeled local text corpus.",
         "- Server-side API benchmarking uses **neutral file names** (`sample-0001.jpg`) to avoid filename label leakage inside `Metadata Analysis`.",
         "",
@@ -683,15 +755,15 @@ function generateMarkdownReport(report) {
         "",
         "| Group | Methods | Corpus | Notes |",
         "|---|---:|---|---|",
-        `| Image runtime methods | ${imageResults.length} | balanced local image set | direct pixel benchmark |`,
-        `| Video runtime methods | ${videoResults.length} | balanced local image set | frame proxy only, no temporal ground truth |`,
+        `| Image runtime methods | ${imageResults.length} | balanced local image set | vetted paper-faithful subset only |`,
+        `| Video runtime methods | ${videoResults.length} | balanced local image set | dedicated video subset currently disabled by fidelity gate |`,
         `| Text runtime methods | ${textResults.length} | synthetic balanced text set | provisional accuracy only |`,
         `| Server API signals | ${serverSignals.length + 1} | balanced local image set | includes final verdict + internal signals |`,
         "",
         "### Top-Level Findings",
         "",
         `- Best image method strict accuracy: **${escapeMarkdown(imageResults[0]?.name ?? "n/a")}** at **${formatPercent(imageResults[0]?.strictAccuracy)}**.`,
-        `- Best video frame-proxy method strict accuracy: **${escapeMarkdown(videoResults[0]?.name ?? "n/a")}** at **${formatPercent(videoResults[0]?.strictAccuracy)}**.`,
+        `- Best video runtime method strict accuracy: **${escapeMarkdown(videoResults[0]?.name ?? "n/a")}** at **${formatPercent(videoResults[0]?.strictAccuracy)}**.`,
         `- Best text method strict accuracy: **${escapeMarkdown(textResults[0]?.name ?? "n/a")}** at **${formatPercent(textResults[0]?.strictAccuracy)}**.`,
         `- Server analyzer final verdict strict accuracy: **${formatPercent(report.server.verdictResult.strictAccuracy)}** with **${formatPercent(report.server.verdictResult.coverage)}** coverage.`,
         "",
@@ -703,7 +775,7 @@ function generateMarkdownReport(report) {
         "</details>",
         "",
         "<details>",
-        `<summary>Video Methods - Frame Proxy (${videoResults.length})</summary>`,
+        `<summary>Video Methods (${videoResults.length})</summary>`,
         "",
         renderTable(videoResults),
         "",
@@ -726,7 +798,7 @@ function generateMarkdownReport(report) {
         "### Caveats",
         "",
         "- Image/video numbers are only as representative as the local benchmark images currently present in this repository.",
-        "- Video results are **not** full video accuracy; they only measure how each frame-based method separates AI vs real on still frames.",
+        "- Video-specific methods are intentionally excluded from the default runtime report until their implementations match the cited papers more closely.",
         "- Text results are **provisional** because the benchmark corpus is synthetic and intentionally balanced.",
         "- `Metadata Analysis` in the server pipeline is effectively a file-name heuristic, so its accuracy changes drastically if filenames contain source hints.",
         "",
@@ -775,26 +847,30 @@ async function main() {
 
     log(`Discovered ${imageMethods.length} image methods, ${videoMethods.length} video methods, ${textMethods.length} text methods.`);
 
-    const imageResults = await benchmarkMethods(
+    const rawImageResults = await benchmarkMethods(
         imageMethods,
         imageSamples,
-        (fn, sample) => fn(sample.pixels, sample.width, sample.height),
+        invokeImageMethod,
         "image-balanced-local",
     );
 
-    const videoResults = await benchmarkMethods(
+    const rawVideoResults = await benchmarkMethods(
         videoMethods,
         imageSamples,
-        (fn, sample) => fn(sample.pixels, sample.width, sample.height),
+        invokeVideoMethod,
         "video-frame-proxy",
     );
 
-    const textResults = await benchmarkMethods(
+    const rawTextResults = await benchmarkMethods(
         textMethods,
         textSamples,
-        (fn, sample) => fn(sample.text),
+        invokeTextMethod,
         "text-synthetic-balanced",
     );
+
+    const imageResults = filterRuntimeSubset(rawImageResults, IMAGE_ALLOWED_NAME_KEYS);
+    const videoResults = filterRuntimeSubset(rawVideoResults, VIDEO_ALLOWED_NAME_KEYS);
+    const textResults = filterRuntimeSubset(rawTextResults, TEXT_ALLOWED_NAME_KEYS);
 
     const server = await benchmarkServerAnalyzer(imageSamples);
 
@@ -814,6 +890,11 @@ async function main() {
             total: textSamples.length,
             aiCount: textSamples.filter((sample) => sample.label === "ai").length,
             realCount: textSamples.filter((sample) => sample.label === "real").length,
+        },
+        discoveredMethods: {
+            image: imageMethods.length,
+            video: videoMethods.length,
+            text: textMethods.length,
         },
         imageResults,
         videoResults,
