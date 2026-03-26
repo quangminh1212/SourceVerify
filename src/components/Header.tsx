@@ -68,6 +68,7 @@ export default function Header() {
     const [isDark, setIsDark] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [showTransition, setShowTransition] = useState(false);
+    const [mounted, setMounted] = useState(false);
 
     const [settings, setSettings] = useState<AnalysisSettings>(DEFAULT_SETTINGS);
     const { locale, setLocale, t } = useLanguage();
@@ -134,8 +135,9 @@ export default function Header() {
         return () => window.removeEventListener('wheel', handleWheel);
     }, [pathname, router]);
 
-    // Dark mode + settings initialization
+    // Dark mode + settings initialization + mark as mounted
     useEffect(() => {
+        setMounted(true);
         const stored = localStorage.getItem("sv_theme");
         const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
         const dark = stored ? stored === "dark" : prefersDark;
@@ -235,13 +237,13 @@ export default function Header() {
     return (
         <>
             {/* Page transition overlay */}
-            {showTransition && typeof document !== 'undefined' && createPortal(
+            {mounted && showTransition && createPortal(
                 <div className="page-transition-overlay" />,
                 document.body
             )}
 
             {/* Scroll navigation indicator at bottom */}
-            {nextPageHint && typeof document !== 'undefined' && createPortal(
+            {mounted && nextPageHint && createPortal(
                 <div className="scroll-nav-indicator">
                     <div className="scroll-nav-inner">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -459,7 +461,7 @@ export default function Header() {
 
             {/* === Settings Modal (portal to body to escape header stacking context) === */}
             {
-                settingsOpen && typeof document !== 'undefined' && createPortal(
+                mounted && settingsOpen && createPortal(
                     <SettingsModal
                         settings={settings}
                         locale={locale}
