@@ -1,22 +1,18 @@
 {
-    "name": "Adverb Frequency",
-    "description": "Analyzes adverb usage patterns — AI 文本 often overuses adverbs",
-    "algorithm": "Adverb Frequency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes adverb usage patterns — AI 文本 often overuses adverbs. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through adverb 频率 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "副词滥用度分析",
+    "description": "分析句法上对程度副词和方式副词的依赖程度",
+    "algorithm": "基于词性标注的副词-动词比率分析器",
+    "mechanism": "该方法通过词性(POS)标注解析文本，计算修饰动词或形容词的副词比例。为了使文本听起来更具描述性、专业性或说服力，大语言模型(LLMs)经常使用程式化的程度和方式副词（例如“极大地”、“无缝地”、“完美地”、“至关重要地”）。相反，人类作家通常受过训练，倾向于使用更精准有力的动词，而不是用副词来修饰薄弱的动词。通过追踪这些修饰词相对于核心谓语的出现频率，该系统能有效识别AI生成内容中典型的“句法冗余(Fluff)”。",
+    "parameters": "分析类型：句法词性(POS)解析\n媒体：文本\n输入：带格式化文本/原始文本\n最小长度：100词\n输出：副词密度异常度(0-100)\n处理方式：分词与词性标注",
+    "accuracy": "中至高 — 70-85%。在识别LLM试图模仿营销式或说服性写作风格时极其有效。",
+    "source": "文体学NLP分析与语料库语言学研究。",
+    "useCase": "检测那些通过过度使用过渡性副词和修饰性副词来掩盖实质内容深度不足的生成文本。",
+    "strengths": "• 专注抓取LLM特定的写作修辞倾向（“冗余化”）\n• 只需快速的词性标注处理，无需完整的语义依存解析\n• 对各类行销文本和博客文章非常有效",
+    "limitations": "• 容易与缺乏经验的人类新手作家的写作风格重叠\n• 可能会误判部分风格独特的人类创意写作（如抒情散文）\n• 需要目标语言具有高精度的词性标注模型支撑",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

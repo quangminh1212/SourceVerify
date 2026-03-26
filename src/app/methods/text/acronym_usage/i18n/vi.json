@@ -1,12 +1,18 @@
 {
-    "name": "Sử dụng từ viết tắt",
-    "description": "Phân tích mẫu từ viết tắt và chữ cái đầu",
-    "algorithm": "Thuật toán phân tích Sử dụng từ viết tắt",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu từ viết tắt và chữ cái đầu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng từ viết tắt. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Hồ sơ Sử dụng Từ viết tắt",
+    "description": "Phân tích các mẫu định nghĩa, tần suất và tính phù hợp ngữ cảnh của từ viết tắt",
+    "algorithm": "Công cụ Ngữ cảnh hóa Từ viết tắt Heuristic",
+    "mechanism": "Phương pháp này đánh giá cách một văn bản giới thiệu và sử dụng các từ viết tắt. Các chuyên gia con người trong một lĩnh vực thường sử dụng từ viết tắt chuyên ngành một cách tự nhiên, ngầm hiểu rằng người đọc đã có kiến thức nền. Ngược lại, do được tinh chỉnh theo RLHF để ưu tiên tính an toàn và rõ ràng, các LLM thường 'giải thích quá mức' các từ viết tắt. Chúng có xu hướng ép buộc định nghĩa cả những từ viết tắt phổ biến (vd: 'NASA (Cơ quan Hàng không và Vũ trụ Hoa Kỳ)') và áp dụng cứng ngắc quy tắc 'định nghĩa trong lần sử dụng đầu tiên' ngay cả trong ngữ cảnh thân mật hoặc chuyên môn hẹp. Bằng cách xác định tỷ lệ từ viết tắt được định nghĩa so với không định nghĩa và theo dõi tần suất của chúng, hệ thống sẽ tính toán mức 'phạt do giải thích quá mức'.",
+    "parameters": "Loại phân tích: Ánh xạ cú pháp Heuristic\nPhương tiện: Văn bản\nĐầu vào: Văn bản thô hoặc có định dạng\nYêu cầu: Tối thiểu 100 từ với >1 từ viết tắt in hoa tiềm năng\nĐầu ra: Điểm tự nhiên (0-100)\nXử lý: Cây quy tắc Heuristic",
+    "accuracy": "Trung bình — 65-80%. Rất hiệu quả trong việc phát hiện phong cách viết kiểu 'dạy đời' trịch thượng của AI.",
+    "source": "Nghiên cứu về ngữ dụng học và các quy tắc kiểm duyệt (alignment) của LLM.",
+    "useCase": "Phát hiện văn bản tạo bởi các LLM tuân thủ quá mức quy tắc kiểm duyệt, trong đó chúng ưu tiên sự rõ ràng tuyệt đối hơn là sự ngắn gọn ngữ cảnh kiểu con người.",
+    "strengths": "• Nhắm mục tiêu trực tiếp vào các đặc điểm tinh chỉnh RLHF thay vì chỉ kiểm tra phân phối token\n• Xử lý heuristic siêu tốc mà không cần tải thư viện NLP nặng\n• Rất hiệu quả trong việc bắt các văn bản mang sắc thái 'trợ lý ảo'",
+    "limitations": "• Có thể đánh dấu sai các tác giả con người tuân thủ quá nghiêm ngặt các nguyên tắc viết (như APA)\n• Không có tác dụng với các bài viết tự nhiên không có cụm từ viết tắt\n• Hiệu quả nhất khi dùng làm tín hiệu xác nhận (phụ trợ)",
+    "references": [
+        {
+            "title": "Ouyang, L., et al. (2022). Training language models to follow instructions with human feedback. NeurIPS.",
+            "url": "https://arxiv.org/abs/2203.02155"
+        }
+    ]
 }

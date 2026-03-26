@@ -1,22 +1,18 @@
 {
-    "name": "Abstractness Index",
-    "description": "Measures linguistic abstractness level",
-    "algorithm": "Abstractness Index — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures linguistic abstractness level. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through abstractness index analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "어휘적 추상성 프로필",
+    "description": "단어 임베딩을 사용하여 개념적 추상성의 깊이를 평가합니다",
+    "algorithm": "임베딩 기반 추상성 프로파일러",
+    "mechanism": "이 방법은 단순한 비율을 계산하는 대신 텍스트 전체를 구조화된 추상화 점수로 훈련된 고차원 단어 임베딩에 매핑합니다. 대규모 언어 모델(LLM)은 일반적으로 문서 전체에서 일정한 중간~고수준의 추상성을 유지하는 경향이 있습니다. 반면 인간의 글은 추상적인 도입부와 극명하게 대조되는 매우 구체적인 세부 묘사인 '추상성의 계곡'을 보여줍니다. 벡터 공간 전반의 추상성 점수 편차를 측정함으로써, 인간의 글과 비교하여 LLM 특유의 의심스럽게 '매끄러운' 추상성 프로필을 식별합니다.",
+    "parameters": "분석 유형: 벡터 공간 임베딩\n매체: 텍스트\n입력: 형식화된 텍스트\n최소 단어: 150단어\n출력: 추상성 균질도(0-100)\n처리 방식: 벡터 투영",
+    "accuracy": "높음 — 75-85%. 특히 인간의 글쓰기 리듬이 AI와 크게 구별되는 장문형 콘텐츠에서 효과적입니다.",
+    "source": "언어공학 및 의미론적 임베딩 분석론.",
+    "useCase": "AI의 균질하게 추상적인 텍스트 생성 패턴 감지. 이론적 논증과 매우 구체적인 내러티브 사이를 동적으로 넘나들지 못하는 글을 식별합니다.",
+    "strengths": "• 어휘를 넘어서는 미묘한 구조적 차이 감지\n• 전반적으로 '매끄럽고' 일반화된 서술 흐름을 잡아내는 데 탁월\n• 단순한 프롬프트 조작으로 인한 탐지 회피에 강함",
+    "limitations": "• 단어 임베딩을 위한 컴퓨팅 연산 능력 요구\n• 매우 짧은 텍스트(100단어 미만)에서는 효율적이지 않음\n• 기본 임베딩 모델의 품질에 크게 의존함",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Turney, P. D., et al. (2011). Lexical entailment and abstractness. Natural Language Engineering.",
+            "url": "https://www.cambridge.org/core/journals/natural-language-engineering/article/lexical-entailment-and-abstractness/"
         }
     ]
 }

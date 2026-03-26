@@ -1,19 +1,15 @@
 {
-    "name": "Anaphora Resolution",
-    "description": "Analyzes anaphora resolution patterns",
-    "algorithm": "Anaphora Resolution — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes anaphora resolution patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through anaphora resolution analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "指代消解依赖性",
+    "description": "分析代词使用与明确的名词重复在上下文指代中的频率差异",
+    "algorithm": "共指依赖分析器",
+    "mechanism": "该方法研究文本如何处理“回指”（anaphora）——即使用代词（如“它”、“他们”、“她”）来指代先前已确立的名词。人类在潜意识中严重依赖回指，因为人类的认知上下文能够自然地顺畅承接。然而，由于大语言模型基于自注意力(self-attention)机制运作，且安全训练侧重于绝对的清晰度，它们常常表现出“回指回避”综合征。LLM在统计学上倾向于不断地显式重复核心名词（“该公司宣布...”、“该公司表示...”、“该公司的目标...”），而不是使用代词（“它”、“其”）。通过追踪名词回指与代词回指的比例，该系统可以揭露机器生成内容那种过度谨慎、死板的结构搭建痕迹。",
+    "parameters": "分析类型：句法共指追踪\n媒体：文本\n输入：纯文本字符串\n最小长度：200词\n输出：显式共指重复比率(0-100)\n处理方式：依存句法分析与命名实体识别(NER)",
+    "accuracy": "中上 — 70-82%。在识别“企业公文风格”或过度正式的AI摘要时非常有效。",
+    "source": "认知语法学与大模型自注意力依赖性偏差研究。",
+    "useCase": "检测那些通过避免人类自然的代词使用、来换取句子级别的绝对清晰度的大语言模型生成的文本。",
+    "strengths": "• 深刻瞄准了Transformer模型的根本注意力机制本质，而不仅仅是词汇层\n• 对于叙事和信息提供型文本效果极佳\n• 足够隐蔽，标准的“人类化写作”提示词很难成功规避此检测",
+    "limitations": "• 容易对起草法律文档或高度正式商业文献的人类作者产生误判\n• 需要运行计算量巨大的深度共指消解自然语言处理模型\n• 对于短文本，该检测性能会显著下降",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"

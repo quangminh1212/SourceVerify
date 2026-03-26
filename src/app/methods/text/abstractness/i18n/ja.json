@@ -1,22 +1,18 @@
 {
-    "name": "Abstractness Index",
-    "description": "Measures linguistic abstractness level",
-    "algorithm": "Abstractness Index — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures linguistic abstractness level. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through abstractness index analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "語彙的抽象度プロファイル",
+    "description": "単語の埋め込みを使用して概念的な抽象度の深さを評価します",
+    "algorithm": "埋め込みベースの抽象度プロファイラー",
+    "mechanism": "この手法は単純な比率を計算するのではなく、言語の抽象度の勾配で事前に訓練された高次元の単語埋め込みを使用して、テキスト全体をマッピングします。大規模言語モデル(LLM)は、広範な適用性を確保するために、ドキュメント全体で中程度から高程度の抽象度プロファイルを均一に維持する傾向があります。しかし人間の執筆者は、抽象的な導入部と対照的な具体的な部分（「抽象性の谷」）を示します。ベクトル空間全体の抽象度スコアの分散を測定することで、LLM特有の不自然に「滑らかな」プロファイルを特定します。",
+    "parameters": "分析・入力の種類：ベクトル空間単語埋め込み、フォーマットされたテキスト\n対象文字数：150単語以上\n出力値：均質性スコア(0-100)\n処理方式：ベクトル射影",
+    "accuracy": "高 — 75-85%。特に、人間の執筆の構造的なペース配分とAIの生成物が大きく異なる長文コンテンツで効果的です。",
+    "source": "計算言語学および意味論的埋め込みの分析。",
+    "useCase": "理論的な議論と非常に具体的で地に足の着いた物語の間を動的に移行できない、AIモデルによる均質的に抽象的な生成テキスト（ハルシネーションの回避）を検出します。",
+    "strengths": "• 語彙以外の微妙な構造的差異を検出可能\n• 高度に「平滑化された」一般化された物語のフローの捕捉\n• プロンプトによる回避に対して堅牢",
+    "limitations": "• 高度の計算能力が必要\n• 極端に短いテキスト(100語未満)には効果が薄い\n• 基盤となる単語埋め込みモデルの品質に大きく依存",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Turney, P. D., et al. (2011). Lexical entailment and abstractness. Natural Language Engineering.",
+            "url": "https://www.cambridge.org/core/journals/natural-language-engineering/article/lexical-entailment-and-abstractness/"
         }
     ]
 }

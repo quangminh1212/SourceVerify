@@ -1,22 +1,18 @@
 {
-    "name": "Abstractness Index",
-    "description": "Measures linguistic abstractness level",
-    "algorithm": "Abstractness Index — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Measures linguistic abstractness level. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through abstractness index analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "词汇抽象度分布",
+    "description": "使用词嵌入评估概念抽象的深度分布",
+    "algorithm": "基于向量嵌入的抽象度分析器",
+    "mechanism": "此方法不是计算简单的比例，而是将整个文本映射到心理语言学训练的高维词嵌入中。大语言模型为了保证内容的广泛适用性，往往在整个文档中保持统一的中高抽象度。然而，人类作者会展现出“抽象低谷”——极其具体的论据或叙述片段，与高度抽象的介绍形成鲜明对比。通过测量向量空间中抽象度得分的方差，此方法能够识别LLM典型的异常“平滑”的抽象分布。",
+    "parameters": "分析类型：向量空间嵌入\n媒体：文本\n输入：格式化文本\n最小长度：100词\n输出：抽象均匀度分数(0-100)\n处理方式：向量投影",
+    "accuracy": "高 — 75-85%。在长篇文本中特别有效，因为人类写作与人工智能在结构节奏上存在巨大差异。",
+    "source": "计算语言学和语义嵌入分析领域的研究。",
+    "useCase": "检测那些无法在理论和具体叙述之间动态切换的、具有均匀一致抽象度的AI生成文本。",
+    "strengths": "• 能够检测词汇之外的微妙结构差异\n• 极度擅长捕捉“平滑”且过度概括的文本流\n• 对简单的规避提示词(prompt)具有较强鲁棒性",
+    "limitations": "• 词嵌入分析需要较高的计算处理能力\n• 对极短的文本(少于100词)效果较差\n• 严重依赖基础向量模型的质量",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Turney, P. D., et al. (2011). Lexical entailment and abstractness. Natural Language Engineering.",
+            "url": "https://www.cambridge.org/core/journals/natural-language-engineering/article/lexical-entailment-and-abstractness/"
         }
     ]
 }

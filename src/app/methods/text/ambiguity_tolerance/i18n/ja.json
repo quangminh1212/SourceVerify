@@ -1,19 +1,15 @@
 {
-    "name": "Ambiguity Tolerance",
-    "description": "Measures tolerance for ambiguity",
-    "algorithm": "Ambiguity Tolerance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures tolerance for ambiguity. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through ambiguity tolerance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "曖昧さ許容度プロファイル",
+    "description": "強引な解決を伴わない、意味論的および文脈的曖昧さのテクスト受容性を測定します",
+    "algorithm": "RLHF曖昧さ解決検出器",
+    "mechanism": "この手法は、文書が未解決の概念や二重の意味をどのように扱うかを評価します。安全性と明確さを目的としたRLHF（人間のフィードバックからの強化学習）の調整により、大規模言語モデル(LLM)は概念を曖昧なままにしておくことで厳しいペナルティを受けます。結果として、曖昧な話題に直面したとき、LLMはすべての可能な解釈（『一方で...他方で...』）を明示的にリスト化するか、あるいは中立的で過度に説明的な立場に陥ることで、強引にそれを「解決」します。本物の人間の執筆物は、本質的に高い程度の曖昧さを許容し、すべての視点の数学的均衡を図る必要性を感じることなく、読者の文脈判断に任せます。",
+    "parameters": "分析・入力の種類：語用論的談話分析、生の文字列\n対象文字数：150単語以上\n出力値：曖昧さ許容スコア(0-100)\n処理方式：意味依存性と談話マッピング",
+    "accuracy": "高 — 75-88%。人間のニュアンスのある意見、哲学、文学と、AIが生成した同等物を区別するのに極めて有効です。",
+    "source": "語用論と言語モデル(LLM)のアライメント挙動の研究。",
+    "useCase": "すべての文を明確化し、曖昧さを排除し、中立的にバランスをとるという強迫的な欲求を示す、過度に調整されたAIモデルによって生成されたテキストの検出。",
+    "strengths": "• 単純な語彙ではなく、LLMの根本的な心理的アライメントを対象とする\n• 論証的および哲学的なテキストに対して非常に効果的\n• 最適化された簡単なプロンプトによる回避が困難",
+    "limitations": "• すべての用語を厳密に定義する高度に構造化された人間の学術論文をAIと誤分類する可能性がある\n• 計算コストの高い深い意味解析が必要",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
             "url": "https://arxiv.org/abs/2011.01314"

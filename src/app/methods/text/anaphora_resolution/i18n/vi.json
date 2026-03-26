@@ -1,12 +1,18 @@
 {
-    "name": "Giải quyết hồi chiếu",
-    "description": "Phân tích mẫu giải quyết hồi chiếu",
-    "algorithm": "Thuật toán phân tích Giải quyết hồi chiếu",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu giải quyết hồi chiếu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích giải quyết hồi chiếu. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Hồ sơ Giải quyết Phép nối (Anaphora)",
+    "description": "Phân tích tần suất sử dụng đại từ (it, they) so với việc lặp lại danh từ để duy trì tính liên kết",
+    "algorithm": "Bộ phân tích phụ thuộc cốt lõi (Coreference)",
+    "mechanism": "Phương pháp này nghiên cứu cách văn bản xử lý 'anaphora' – việc sử dụng đại từ (như 'nó', 'chúng', 'anh ấy') để thay thế cho danh từ đã xuất hiện trước đó. Con người dựa rất nhiều vào đại từ một cách vô thức vì bộ não chúng ta tự mang theo bối cảnh từ câu trước. Tuy nhiên, các cấu trúc Transformer (do cơ chế self-attention và được huấn luyện chống mơ hồ) thường có hội chứng 'né tránh đại từ'. Để luôn đảm bảo câu văn rõ nghĩa tuyệt đối, LLM có xu hướng lặp lại chính xác danh từ gốc ('Công ty thông báo...', 'Công ty cũng cho biết...', 'Mục tiêu của công ty...') thay vì dùng đại từ ('Họ', 'Nó'). Bằng cách đo tỷ lệ lặp danh từ gốc so với đại từ, hệ thống lật tẩy được sự đề phòng quá mức đặc trưng của văn bản máy.",
+    "parameters": "Loại phân tích: Cú pháp liên kết (Coreference)\nPhương tiện: Văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 200 từ\nĐầu ra: Tỷ lệ lặp danh từ trung tâm (0-100)\nXử lý: Phân tích phụ thuộc (Dependency parsing) & Nhận diện thực thể (NER)",
+    "accuracy": "Trung bình đến Cao — 70-82%. Đặc biệt hiệu quả trong việc nhận diện các bài tóm tắt AI mang phong cách doanh nghiệp (corporate style).",
+    "source": "Nghiên cứu về ngữ pháp nhận thức và thiên kiến cơ chế self-attention của LLM.",
+    "useCase": "Phát hiện văn bản tạo bởi AI luôn ưu tiên sự rõ ràng tuyệt đối ở cấp độ từng câu bằng cách né tránh cách dùng đại từ tự nhiên của con người.",
+    "strengths": "• Nhắm vào bản chất cốt lõi của mô hình Transformer chứ không chỉ từ vựng\n• Cực kỳ hiệu quả đối với các văn bản tường thuật và cung cấp thông tin\n• Tinh vi đến mức các prompt 'hãy viết như người' thường thất bại trong việc qua mặt",
+    "limitations": "• Dễ đánh dấu nhầm các văn bản pháp lý hoặc kỹ thuật có tính trang trọng cao của con người viết\n• Cần mô hình phân tích NLP nặng (Coreference resolution)\n• Hiệu suất giảm mạnh đối với các đoạn văn bản ngắn",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        }
+    ]
 }

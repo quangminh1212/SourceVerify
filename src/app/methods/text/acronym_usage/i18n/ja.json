@@ -1,22 +1,18 @@
 {
-    "name": "Acronym Usage",
-    "description": "Analyzes acronym and abbreviation patterns",
-    "algorithm": "Acronym Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes acronym and abbreviation patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through acronym usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "頭字語と略語のプロファイリング",
+    "description": "頭字語の定義、頻度、状況の適切さのパターンを分析します",
+    "algorithm": "ヒューリスティックな頭字語コンテクスチュアリザ",
+    "mechanism": "この手法は、テキストが頭字語や略語をどのように導入し使用するかを評価します。その分野の人間の専門家は、通常、読者の背景知識を前提として、業界特有の頭字語をシームレスに使用します。対照的に、安全性と明確さに関する方針（RLHFなど）に従って広範なデータで訓練された大規模言語モデル(LLM)は、頭字語を「過剰に説明」することがよくあります。彼らは、非常に一般的な頭字語（例：『NASA（アメリカ航空宇宙局）』）であっても強迫的に定義し、非公式または専門的な文脈であっても不自然に「最初の使用時に定義する」という厳密なルールを維持します。定義された頭字語とそうでないものの比率を特定し、その頻度を追跡することで、システムは「過剰説明のペナルティ」を計算します。",
+    "parameters": "分析・入力の種類：ヒューリスティックな構文マッピング、テキスト\n対象文字数：100単語以上で、1つ以上の大文字の略語が含まれていること\n出力値：自然度スコア(0-100)\n処理方式：ルールベースのヒューリスティックツリー",
+    "accuracy": "中等度 — 65-80%。入力テーマが仮定する形式の程度に大きく依存します。AIの「マンスプレイニング（過剰説明）」を検出するのに最適です。",
+    "source": "語用論的およびLLMアライメント安全性の研究。",
+    "useCase": "人間のような文脈による省略よりも、絶対的な明確さを優先する過剰に調整されたLLMによって生成されたテキストの検出。",
+    "strengths": "• 次のトークン分布だけでなく、コアなRLHFアライメントの特徴をターゲットにする\n• 重いNLP計算なしでの高速なヒューリスティックマッピング\n• 百科事典のような文章のキャッチに効果的",
+    "limitations": "• APA形式のような厳格なスタイルガイドに従う人間の執筆者に誤判定を起こす可能性\n• 自然に略語を避けるテキストには効果がない\n• 補助的なシグナルとして機能させるのが最適",
     "references": [
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Ouyang, L., et al. (2022). Training language models to follow instructions with human feedback. NeurIPS.",
+            "url": "https://arxiv.org/abs/2203.02155"
         }
     ]
 }

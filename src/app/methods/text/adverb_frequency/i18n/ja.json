@@ -1,22 +1,18 @@
 {
-    "name": "Adverb Frequency",
-    "description": "Analyzes adverb usage patterns — AI テキスト often overuses adverbs",
-    "algorithm": "Adverb Frequency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes adverb usage patterns — AI テキスト often overuses adverbs. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through adverb 周波数 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "副詞の過剰使用プロファイリング",
+    "description": "程度や様態の副詞への構文的依存を分析します",
+    "algorithm": "POSベースの副詞と動詞の比率分析器",
+    "mechanism": "この手法は、品詞（POS）タグ付けを使用してテキストを解析し、動詞または形容詞を修飾する副詞の比率を計算します。テキストをより説得力のある記述に変えようとする試みの中で、大規模言語モデル(LLM)は、定型的な程度および様態の副詞（「非常に」「シームレスに」「完全に」「極めて」など）に頻繁に依存します。対照的に、人間の執筆者は、弱い動詞を副詞で補うのではなく、より強力で正確な動詞を使用するように訓練されることがよくあります。中核となる述語に対するこれらの修飾語の普及率を追跡することで、システムはAI生成コンテンツに典型的な「構文的な水増し」を特定します。",
+    "parameters": "分析・入力の種類：構文的なPOS解析、テキスト\n対象文字数：100単語以上\n出力値：副詞密度の異常スコア(0-100)\n処理方式：トークン化と品詞タグ付け",
+    "accuracy": "中等度〜高 — 70-85%。説得力のある記述やマーケティングスタイルの文章を使用しようとするLLMの試みを浮き彫りにするのに非常に効果的です。",
+    "source": "計量文体論に基づくNLP分析とコーパス言語学の研究。",
+    "useCase": "過剰な過渡的および修飾的な副詞を使用して、実質的な深さの欠如を隠しているテキストを検出します。",
+    "strengths": "• LLMの特定の文体的傾向（「水増し」）を対象とする\n• 意味依存性解析を完全に必要としない高速なPOSタグ付け処理\n• マーケティングテキストなど多岐にわたるテキストで有効",
+    "limitations": "• 経験の浅い人間の著者の執筆スタイルと重複する\n• 人間の特定の創造的な文章を誤判定する可能性\n• 対象言語の正確な品詞タグ付けが必要",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

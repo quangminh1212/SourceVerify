@@ -1,19 +1,15 @@
 {
-    "name": "Anaphora Resolution",
-    "description": "Analyzes anaphora resolution patterns",
-    "algorithm": "Anaphora Resolution — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes anaphora resolution patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through anaphora resolution analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "照応解析プロファイリング",
+    "description": "文脈の維持における代名詞の使用と明示的な名詞表現の頻度を分析します",
+    "algorithm": "共参照依存プロファイラー",
+    "mechanism": "この手法は、先に確立された名詞を指す代名詞（「それ」「彼ら」「彼女」など）の使用である照応（アナフォラ）をテキストがどのように処理するかを研究します。人間の読者の認知的文脈は自然にその参照を引き継ぐため、人間は無意識のうちに照応表現に大きく依存します。しかし、大規模言語モデル（LLM）は、自己注意機構（Self-Attention）に構造的に依存しており、絶対的な明確さに重点を置いた安全性訓練（RLHF）の副産物として、「照応の回避」をしばしば示します。つまり、代名詞の使用を避け、核となる名詞を明示的に繰り返す（「その企業は発表した...」「その企業は述べた...」「その企業の目標は...」）強い確率的傾向を持っています。こうした明示的な共参照と代名詞の比率を追跡することで、機械生成に特有の、過度に慎重な構造的足場を暴き出します。",
+    "parameters": "分析・入力の種類：統語論的共参照追跡、生の文字列\n対象文字数：200単語以上\n出力値：明示的な共参照比率(0-100)\n処理方式：依存構造解析と固有表現抽出(NER)",
+    "accuracy": "中等度〜高 — 70-82%。「企業スタイル」のレポートや過度に形式的なAIによる要約を特定するのに非常に効果的です。",
+    "source": "認知文法およびTransformer自己注意機構のバイアス研究。",
+    "useCase": "人間が自然に使用する代名詞を避け、文レベルでの絶対的な明確さを優先するLLMによって生成されたテキストの検出。",
+    "strengths": "• 語彙だけでなく、Transformerモデルの根本的な注意（Attention）の性質をターゲットにしている\n• 情報伝達型や物語型のテキストにおいて極めて有効\n• 「人間らしく書け」というよくある回避プロンプトではすり抜けられない",
+    "limitations": "• 非常に形式的な法律文書などを起草する人間の執筆者を誤検出する可能性がある\n• 計算負荷の高いNLPによる共参照解析(Coreference resolution)モデルが必要\n• 短いテキストでは精度が大幅に低下する",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"

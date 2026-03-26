@@ -1,12 +1,18 @@
 {
-    "name": "Phép so sánh & tương tự",
-    "description": "Phát hiện sử dụng phép so sánh và tương tự",
-    "algorithm": "Thuật toán phân tích Phép so sánh & tương tự",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện sử dụng phép so sánh và tương tự. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phép so sánh & tương tự. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Hồ sơ Phép Tương đồng & So sánh",
+    "description": "Phân tích tính dễ đoán cấu trúc và khoảng cách ngữ nghĩa của các biện pháp tu từ so sánh",
+    "algorithm": "Bộ Đánh giá Khoảng cách Ngữ nghĩa Tương đồng",
+    "mechanism": "Phương pháp này đánh giá tính sáng tạo và bước nhảy ngữ nghĩa của các phép so sánh ẩn dụ trong văn bản. Các LLM có xu hướng dựa vào những sự so sánh mang tính khuôn mẫu cao, có xác suất thống kê xuất hiện nhiều trong dữ liệu huấn luyện (ví dụ: 'như một cỗ máy bôi trơn', 'như một bức tranh đa sắc'). Ngay cả khi được yêu cầu sáng tạo, các phép so sánh của AI thường liên kết nguồn và đích một cách quá hoàn hảo về mặt toán học ngữ nghĩa, thiếu đi những bước nhảy vọt 'xa vời', lộn xộn hoặc mang tính văn hóa bản địa đặc trưng của con người sáng tạo. Bằng cách tính khoảng cách ngữ nghĩa giữa các thực thể được so sánh qua vector nhúng, hệ thống sẽ nhận diện những so sánh 'an toàn' rập khuôn chỉ thị AI tạo ra.",
+    "parameters": "Loại phân tích: Khoảng cách vector ngữ nghĩa\nPhương tiện: Văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 từ\nĐầu ra: Điểm dễ đoán tu từ (0-100)\nXử lý: Độ tương đồng Cosine vector nhúng",
+    "accuracy": "Trung bình — 65-80%. Cực kỳ hiệu quả đối với các bài viết sáng tạo, nội dung quảng cáo và văn học.",
+    "source": "Nghiên cứu ngôn ngữ học nhận thức và nhận diện ẩn dụ điện toán.",
+    "useCase": "Phát hiện văn bản AI ngụy trang dưới dạng bài viết sáng tạo bằng cách bóc trần những phép so sánh quá hoàn hảo, an toàn theo xác suất và rập khuôn sáo rỗng.",
+    "strengths": "• Xuất sắc trong việc bắt bài AI khi nó cố gắng viết tiểu thuyết hoặc bài luận sáng tạo\n• Nhận dạng sự thiếu hụt sức sáng tạo vượt-ngoài-lệ-thường của con người thực sự\n• Hoạt động độc lập với các phân tích từ vựng tiêu chuẩn",
+    "limitations": "• Chỉ hoạt động nếu văn bản thực sự sử dụng phép so sánh hoặc từ tượng hình\n• Có thể phân loại sai các bài viết của con người sử dụng quá nhiều từ sáo rỗng (cliché)\n• Đòi hỏi mô hình nhúng ngữ nghĩa (embeddings) nặng về tính toán",
+    "references": [
+        {
+            "title": "Beigman Klebanov, B. et al. (2016). Semantic classifications for detection of verb metaphors. ACL.",
+            "url": "https://aclanthology.org/P16-2017/"
+        }
+    ]
 }

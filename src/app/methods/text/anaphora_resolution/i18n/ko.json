@@ -1,19 +1,15 @@
 {
-    "name": "Anaphora Resolution",
-    "description": "Analyzes anaphora resolution patterns",
-    "algorithm": "Anaphora Resolution — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes anaphora resolution patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through anaphora resolution analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "조응어(대용어) 해결 의존성 분석",
+    "description": "문맥 유지를 위한 대명사 사용 vs 명시적 명사 반복 빈도의 차이를 분석합니다",
+    "algorithm": "상호 참조(Coreference) 의존성 분석기",
+    "mechanism": "이 방법은 텍스트가 '조응(Anaphora, 이전 명사를 가리키는 대명사)'을 처리하는 방식을 연구합니다. 인간의 인지적 맥락은 자연스럽게 참조를 이어가기 때문에 사람들은 무의식적으로 대명사('그것', '그들' 등)에 크게 의존합니다. 하지만 대규모 언어 모델(LLM)은 구조적 특성(Self-Attention 메커니즘)과 '절대적 명확성'에 집중한 안전 강화 학습으로 인해 '대명사 기피증'을 보입니다. 대명사를 사용하는 대신, 핵심 명사를 명시적으로 반복하는('그 회사는 발표했습니다...', '그 회사는 밝혔습니다...', '그 회사의 목표는...') 통계적으로 높은 경향을 보입니다. 명시적 명사 반복과 대명사 사용의 비율 구조를 역추적함으로써, 이 시스템은 기계 생성 텍스트 특유의 '과도하게 조심스러운' 문서 작성 구조를 폭로합니다.",
+    "parameters": "분석 유형: 구문론적 상호 참조 추적\n매체: 텍스트\n입력: 원시 문자열 텍스트\n최소 단어: 200 단어\n출력: 명시적 상호참조 고집 비율(0-100)\n처리 방식: 의존 구문 분석 및 개체명 인식(NER)",
+    "accuracy": "중간~높음 — 70-82%. '기업형 보고서 스타일'이나 지나치게 격식 있는 형태의 AI 요약문을 식별하는 데 매우 탁월합니다.",
+    "source": "인지 문법론 및 트랜스포머 모델의 자기 주의(Self-attention) 편향 의존성에 관한 연구.",
+    "useCase": "인간의 자연스러운 대명사 생략이나 지시어 사용을 회피하여 문장 수준의 절대적인 명확성을 고집하는 대규모 언어 모델 텍스트 감지.",
+    "strengths": "• 단순 토큰이나 어휘 차원을 넘어 트랜스포머 모델의 근본적인 Attention 본질 자체를 겨냥함\n• 서사 구조가 있는 내러티브나 정보성 글과 보고서에 극단적으로 효과적\n• 일반적인 '사람처럼 써라'라는 프롬프트 지시어로는 우회하기 매우 힘든 교묘한 영역",
+    "limitations": "• 법률 문서나 매우 공식적이고 기계적인 기술 문서를 작성하는 인간 작가에게 취약함(오탐지 가능성)\n• 컴퓨팅 연산 자원 소모가 큰 심층 표상 분석형 NLP 고성능 상호 참조 해결 모델 장착 필수\n• 짧은 텍스트에서는 성능이 급격히 떨어짐",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"

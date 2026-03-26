@@ -1,22 +1,18 @@
 {
-    "name": "Analogy & Simile",
-    "description": "Detects analogy and simile usage",
-    "algorithm": "Analogy & Simile — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects analogy and simile usage. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through analogy & simile analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "類推・直喩プロファイリング",
+    "description": "比喩の構造的予測可能性と意味論的距離を分析します",
+    "algorithm": "意味論的距離類推評価器",
+    "mechanism": "この手法は、テキスト内の類推や直喩の創造性と意味の飛躍を評価します。大規模言語モデル(LLM)は、訓練データに豊富に存在する、高度に因習的で統計的に確実な比喩（「油を差した機械のように」など）に依存する傾向があります。創造的であることを求められた場合でも、AIによる直喩は、情報元と対象領域を数学的に完璧に一致させることが多く、本物の人間が持つ、混沌とした、文化に根ざした、あるいは「飛躍しすぎた」型破りな創造性に欠けています。ベクトル埋め込み（単語のベクトル化）を使用して比較されるエンティティ間の意味的距離を測定することにより、AI生成を示す構造的に「安全な」、またはステレオタイプな類推を特定します。",
+    "parameters": "分析・入力の種類：意味論的ベクトル距離、生の文字列\n対象文字数：100単語以上\n出力値：比喩の予測可能性スコア(0-100)\n処理方式：埋め込みのコサイン類似度",
+    "accuracy": "中等度 — 65-80%。クリエイティブライティング、マーケティングのコピー、文学で非常に効果的です。",
+    "source": "認知言語学および計算的メタファー識別研究。",
+    "useCase": "確率論的に過度に安全で、使い古された「完璧すぎる」類推を特定することにより、人間の創造的な執筆であることを偽装したAI生成テキストの検出。",
+    "strengths": "• AIがフィクションやクリエイティブなエッセイを書こうとする試みを捉えるのに優れている\n• 分布外にある本物の人間的な創造性の欠如を特定する\n• 標準的な語彙分析とは独立して機能する",
+    "limitations": "• テキストに実際に比喩や直喩が含まれている場合にのみ分析が開始される\n• 非常に陳腐な人間の文章を誤判定する可能性がある\n• 計算負荷の高い意味的埋め込みが必要",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Beigman Klebanov, B. et al. (2016). Semantic classifications for detection of verb metaphors. ACL.",
+            "url": "https://aclanthology.org/P16-2017/"
         }
     ]
 }

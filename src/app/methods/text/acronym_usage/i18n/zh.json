@@ -1,22 +1,18 @@
 {
-    "name": "Acronym Usage",
-    "description": "Analyzes acronym and abbreviation patterns",
-    "algorithm": "Acronym Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes acronym and abbreviation patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through acronym usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "首字母缩略词与缩写分析",
+    "description": "分析缩略词的定义、频率和语境连贯性模式",
+    "algorithm": "启发式缩略词语境分析系统",
+    "mechanism": "该方法评估文本中首字母缩略词的引入和使用方式。人类行业专家通常会自然地使用符合垂直领域背景的缩略词，默认读者具有基本了解。相反，受安全性和清晰度机制（RLHF）约束的大语言模型（LLMs），常常陷入“过度解释”。它们会对极度常见的缩略词（如‘NASA (美国国家航空航天局)’）进行重复冗余的定义，不论是非正式语境还是高度专业语境，始终刻板地遵循“首次使用全称”的原则。通过比对“有解释说明”与“无解释说明”的缩略词比例与频率，系统会计算出一个“过度解释惩罚值”。",
+    "parameters": "分析类型：启发式句法映射\n媒体：文本\n输入：带格式化文本/原始文本\n条件限制：至少100个单词并且包含>1个大写缩写\n输出：自然度有效值(0-100)\n处理方式：基于规则的启发式检测架构",
+    "accuracy": "中等 — 65-80%。高度依赖提示词或输入主题所被假定的正式度。极其擅长捕捉AI的“过度科普化（mansplaining）”写作风格。",
+    "source": "自然语言的语用学与大语言模型RLHF对齐安全性研究。",
+    "useCase": "检测那些优先选择刻板和绝对清晰度、而非人类自然的上下文简化方式的重度对齐LLM文本。",
+    "strengths": "• 针对大语言模型的RLHF对齐特征，而不仅仅依据下一个词元概率预估\n• 处理非常快速，无需大量复杂的词嵌入网络加载\n• 擅于抓取“套话”和“百科式”写作内容",
+    "limitations": "• 会对严格遵守标准撰写规范（例如APA规范）的人类作者产生误判现象\n• 无法在天生不常出现缩写的内容发挥作用\n• 更适合作为次要的确证分析辅助手段",
     "references": [
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Ouyang, L., et al. (2022). Training language models to follow instructions with human feedback. NeurIPS.",
+            "url": "https://arxiv.org/abs/2203.02155"
         }
     ]
 }

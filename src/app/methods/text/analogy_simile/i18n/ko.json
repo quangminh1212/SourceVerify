@@ -1,22 +1,18 @@
 {
-    "name": "Analogy & Simile",
-    "description": "Detects analogy and simile usage",
-    "algorithm": "Analogy & Simile — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects analogy and simile usage. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through analogy & simile analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "유추 및 직유 프로파일링",
+    "description": "유추 및 직유의 구조적 예측 가능성과 의미론적 거리를 분석합니다",
+    "algorithm": "의미론적 거리 기반 유추 평가기",
+    "mechanism": "이 방법은 텍스트 내 유추와 직유의 창의성과 의미론적 비약도를 평가합니다. 대규모 언어 모델(LLM)은 학습 데이터에서 풍부하게 발견되는 매우 관습적이고 통계적 확률이 높은 비유(예: '잘 길들여진 기계처럼', '직물처럼 짜인')에 크게 의존하는 경향이 있습니다. 창의성을 요구하는 프롬프트에서도 AI의 비유는 исход 대상과 목표 대상 영역을 수학적으로 너무 완벽하게 일치시켜, 인간 본연의 창의성에서 나타나는 혼란스럽고 무작위적이거나 문화 특유의 '비약적인' 전개가 부족합니다. 벡터 임베딩을 통해 비교되는 개체들 간의 의미론적 거리를 측정함으로써, 시스템은 AI의 생성물임을 암시하는 구조적으로 지나치게 '안전하고' 고정관념화된 뻔한 유추를 식별합니다.",
+    "parameters": "분석 유형: 의미론적 벡터 거리 (Semantic vector distance)\n매체: 텍스트\n입력: 문자열 형식\n최소 단어: 100 단어\n출력: 유추 예측 가능성 점수(0-100)\n처리 방식: 임베딩 임베딩 코사인 유사도 연산",
+    "accuracy": "중간 — 65-80%. 창작 문학, 마케팅 문구 및 에세이에서 매우 효과적인 감지 능력을 보여줍니다.",
+    "source": "인지언어학 및 컴퓨터 은유(Metaphor) 식별 연구 파이프라인.",
+    "useCase": "확률론적으로 안전한 결과값에 기대어 너무 완벽하고 진부한 유추 패턴을 식별함으로서, 창작물인 척 위장한 AI 생성 텍스트를 감지.",
+    "strengths": "• 픽션 또는 일기, 수필 등을 창작하려는 AI의 시도를 잡아내는 데 탁월함\n• 인간처럼 예측 분포를 뛰어넘는 진정한 의미의 '독창적 창의성' 부재를 식별\n• 표준 단어 빈도수 분석과 독립적으로 작동하여 상호 보완성 제공",
+    "limitations": "• 텍스트에 실제로 비유나 은유, 직유가 포함된 경우에만 분석이 트리거됨\n• 상투적인 클리셰를 너무 많이 사용하는 인간 작가의 글을 AI로 오인할 수 있음\n• 복잡하고 연산 부하가 큰 의미론적 모델 임베딩(semantic embeddings) 구조가 필요함",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Beigman Klebanov, B. et al. (2016). Semantic classifications for detection of verb metaphors. ACL.",
+            "url": "https://aclanthology.org/P16-2017/"
         }
     ]
 }

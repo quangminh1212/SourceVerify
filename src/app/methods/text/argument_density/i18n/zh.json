@@ -1,12 +1,18 @@
 {
-    "name": "Argument Density Score",
-    "description": "Measures density and quality of argumentative structures — AI text often has superficial argumentation.",
-    "algorithm": "Argument Density Score分析算法",
-    "mechanism": "Argument Density Score系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "论点密度评分分布",
+    "description": "衡量文本中独立论据与大前提的数量与总词数的比例信息结构",
+    "algorithm": "论辩命题逻辑提取分析器",
+    "mechanism": "该方法旨在评估文本的信息承载效率。在被要求生成长格式文本时，大语言模型(LLMs)频繁出现“论辩注水(padding)”行为——它们会围绕着一个单一的中心思想，生成大量冗长的段落，却不引入任何新颖的大前提、细致的证据或者补充推论。该方法深入提取文本中完全独立的逻辑命题(如论点、证据和支撑结构)，并将其与文本整体的大体词频量关联计算出“论点密度得分”。极高的文本词数伴随着无可救药的低命题数，极为强烈地暴露出这是AI为了满足字数要求而进行句法堆积的通病；相反，真正的高水平人类专家倾向于写出密度极大的高效率干货文本。",
+    "parameters": "分析类型：论辩命题提取\n媒体：文本\n输入：纯文本/带格式文本字符串\n最小长度：150词\n输出：逻辑密度与论点计分(0-100)\n处理方式：语用逻辑抽取",
+    "accuracy": "中上 — 70-85%。对于学术论文、专栏文章(op-eds)与社会评论文章拥有极佳的精确度。",
+    "source": "论辩挖掘(Argumentation mining)以及计算语言学分析研究。",
+    "useCase": "精准检测那些乍一听令人信服且冠冕堂皇、实则废话连篇又极度缺乏如同人类专家一般的深层分层实质性论点的AI生成注水长文。",
+    "strengths": "• 精确切入大语言模型想要“避免虚假信息(hallucinations)”这一原则而选择“废话灌水”的行为动机\n• 对于分析超长篇大论极为有效\n• 完全独立于AI使用了多么隐蔽的高级词汇",
+    "limitations": "• 非常容易对故意“凑字数”的人类作者（例如临考学生）产生误标\n• 在诗歌或极简小说的天然低密度文本域中失效\n• 需要精度极高的逻辑命题自然语言网络模型",
+    "references": [
+        {
+            "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",
+            "url": "https://doi.org/10.1162/COLI_a_00295"
+        }
+    ]
 }

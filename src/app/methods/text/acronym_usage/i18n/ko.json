@@ -1,22 +1,18 @@
 {
-    "name": "Acronym Usage",
-    "description": "Analyzes acronym and abbreviation patterns",
-    "algorithm": "Acronym Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes acronym and abbreviation patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through acronym usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "두문자어 및 약어 프로파일링",
+    "description": "두문자어 정의, 빈도 및 문맥적 적절성의 패턴을 분석합니다",
+    "algorithm": "휴리스틱 두문자어 문맥 분석기",
+    "mechanism": "이 방법은 텍스트가 두문자어와 약어를 어떻게 도입하고 사용하는지 평가합니다. 해당 분야의 인간 전문가는 일반적으로 독자의 기본 지식을 가정하여 산업에 특화된 두문자어를 자연스럽게 사용합니다. 대조적으로, 안전성과 명확성을 위한 RLHF 가이드라인에 맞춰 방대한 코퍼스에서 훈련된 대규모 언어 모델(LLM)은 종종 두문자어를 '과도하게 설명'합니다. 모델은 매우 잘 알려진 두문자어('NASA(미국항공우주국)')조차 강박적으로 정의하며, 비공식적이거나 매우 전문적인 문맥에서도 '첫 사용 시 반드시 정의'한다는 인위적으로 엄격한 규칙을 유지합니다. 설명이 동반된 두문자어와 그렇지 않은 두문자어의 비율을 식별하고 그 빈도를 추적함으로써 시스템은 '과다 설명 패널티'를 계산합니다.",
+    "parameters": "분석 유형: 휴리스틱 구문 매핑\n매체: 텍스트\n입력: 형식화된 마크업/텍스트\n필수 조건: 하나 이상의 대문자 약어가 포함된 최소 100 단어\n출력: 자연스러움 점수 (0-100)\n처리 방식: 규칙 기반 휴리스틱 트리",
+    "accuracy": "중간 — 65-80%. 프롬프트 주제의 예상되는 격식 수준에 크게 의존합니다. AI의 가르치려 드는 서술 또는 백과사전식 글쓰기를 감지하는 데 탁월합니다.",
+    "source": "화용론 및 LLM 안전성 강화 연구.",
+    "useCase": "인간처럼 자연스러운 문맥 상의 축약보다 المطل적 명확성을 우선시하도록 과도하게 정렬된(Overly-aligned) LLM 텍스트 감지.",
+    "strengths": "• 단순한 다음 토큰 확률 분포가 아닌 핵심적인 RLHF 정렬 특성을 겨냥\n• 부하가 큰 임베딩 연산 없는 빠른 휴리스틱 매핑\n• 정보 안내 봇 스타일의 글쓰기를 포착하는 데 효과적",
+    "limitations": "• 엄격한 스타일 가이드(예: APA 포맷)를 준수하는 인간 저자에게 취약함\n• 약어 사용을 처음부터 기피하는 텍스트에서는 비효율적\n• 보조 또는 보완적 감지 신호로 사용하는 것이 최적",
     "references": [
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Ouyang, L., et al. (2022). Training language models to follow instructions with human feedback. NeurIPS.",
+            "url": "https://arxiv.org/abs/2203.02155"
         }
     ]
 }

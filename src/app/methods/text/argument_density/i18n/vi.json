@@ -1,12 +1,18 @@
 {
-    "name": "Phân tích Argument Density Score",
-    "description": "Đo mật độ và chất lượng cấu trúc lập luận — văn bản AI thường có lập luận hời hợt.",
-    "algorithm": "Thuật toán phân tích Argument Density Score",
-    "mechanism": "Hệ thống Argument Density Score phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Mật độ Lập luận (Argument Density)",
+    "description": "Đo lường tỷ lệ các luận điểm và tiền đề độc lập so với tổng số từ",
+    "algorithm": "Bộ trích xuất Mệnh đề Lập luận",
+    "mechanism": "Phương pháp này đánh giá hiệu suất thông tin của một văn bản. Khi được yêu cầu viết dài, các LLM thường 'độn chữ' (argumentative padding) — tạo ra những đoạn văn dài dòng chỉ xoay quanh một ý chính duy nhất mà không đưa ra luận điểm, bằng chứng khoa học hay sắc thái mới. Bằng cách trích xuất tổng số mệnh đề lập luận độc lập (claims, premises) và tính toán tỷ lệ của chúng với độ dài vật lý của văn bản, phương pháp này đưa ra 'điểm mật độ lập luận'. Số từ quá cao nhưng số mệnh đề độc lập lại thấp chỉ ra hiện tượng 'bôi chữ' đặc trưng của AI khi cố đạt yêu cầu về độ dài, trong khi các chuyên gia con người có xu hướng viết súc tích với mật độ thông tin dày đặc hơn nhiều.",
+    "parameters": "Loại phân tích: Trích xuất mệnh đề\nPhương tiện: Văn bản\nĐầu vào: Văn bản thô hoặc có định dạng\nĐộ dài tối thiểu: 150 từ\nĐầu ra: Điểm mật độ lập luận (0-100)\nXử lý: Trích xuất tuyên bố ngữ nghĩa",
+    "accuracy": "Trung bình đến Cao — 70-85%. Cực kỳ chính xác với các bài luận, bài xã luận và báo cáo học thuật.",
+    "source": "Khai phá lập luận (Argumentation mining) và ngôn ngữ học máy tính.",
+    "useCase": "Phát hiện văn bản AI dài dòng, nghe có vẻ thuyết phục nhưng lại cực kỳ trống rỗng, thiếu đi các lớp luận điểm thực chất như của chuyên gia.",
+    "strengths": "• Nhắm vào hành vi 'né hallucination' bằng cách viết vòng vo của LLM\n• Rất hiệu quả khi phân tích các nội dung dài (long-form content)\n• Hoạt động độc lập với các lựa chọn từ vựng cụ thể",
+    "limitations": "• Dễ đánh dấu nhầm nếu cấu trúc bài viết của học sinh, sinh viên cố tình 'bôi chữ' cho đủ độ dài\n• Không hiệu quả với các thể loại tự nhiên thưa thớt như thơ hoặc truyện tối giản\n• Đòi hỏi logic phân tích mệnh đề có độ chính xác cao",
+    "references": [
+        {
+            "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",
+            "url": "https://doi.org/10.1162/COLI_a_00295"
+        }
+    ]
 }
