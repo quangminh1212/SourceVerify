@@ -1,26 +1,22 @@
 {
-    "name": "Color Gamut Analysis",
-    "description": "Detects out-of-gamut or unnaturally distributed colors. AI images often produce colors that exceed the natural camera gamut with excessive vibrancy.",
-    "algorithm": "Color Gamut Range and Saturation Distribution Analysis",
-    "mechanism": "Measures extreme, near-clipping, and high-saturation-high-brightness pixel ratios to identify AI-generated color patterns.",
-    "parameters": "Sampling: 50000 pixels, Metrics: extreme ratio, clip ratio, vibrant ratio",
-    "accuracy": "Moderate - 68-78%",
-    "source": "Popescu and Farid (2005), IEEE TSP",
-    "useCase": "Identifying unnaturally vibrant colors in AI-generated content",
-    "strengths": "• Identifies physically impossible color combinations\n• Camera-independent analysis approach\n• Reveals AI-specific color space usage patterns\n• Fast analysis of color distribution\n• Strong indicator when out-of-gamut colors detected",
-    "limitations": "• Camera color profiles vary widely between manufacturers\n• Post-processing and color grading change gamut coverage\n• Wide-gamut displays and HDR expand valid color space\n• ICC profile-aware editors produce legitimate wide-gamut\n• Some AI models now generate within natural gamut",
+    "name": "Color Gamut (Vibrancy & Clipping) Analysis",
+    "description": "Detects physically impossible, out-of-gamut colors or unnaturally hyper-vibrant saturation distributed across the image. Genuine camera sensors and glass lenses are bound by strict optical limits and physical color profiles, naturally curtailing extreme color intensities. Generative AI models often synthesize colors purely in unconstrained mathematical latent spaces, occasionally hallucinating wildly oversaturated, 'neon-like', or unnaturally pure primary colors that exceed the physical bounds of analog photon capture.",
+    "algorithm": "Hardware Color Space Clipping & Extreme Saturation Ratio",
+    "mechanism": "The algorithm samples a large pixel pool and projects them into standardized color spaces. It mathematically hunts for 'clipping'—where RGB values max out unnaturally at the absolute extremes (0 or 255) over large swaths without corresponding natural lighting extremes. More importantly, it calculates the 'Vibrant Ratio', counting pixels that possess both extreme brightness and extreme saturation simultaneously. Authentic photographs almost never produce vast quantities of highly saturated AND bright pixels simultaneously unless capturing a direct laser or LED. AI generators, unrestrained by real-world lighting physics, freely output these 'fantasy' colors to create visually arresting but physically impossible aesthetics.",
+    "parameters": "Sampling pool: 50,000+ pixels, Metrics: Extreme Ratio, Clipping Ratio (pixels pinned to 0 or 255), Vibrant Ratio (High Saturation + High Brightness)",
+    "accuracy": "Moderate (68-78%) - Highly accurate at catching 'raw', highly stylized AI generation, but severely hampered by modern manual color grading (e.g., Lightroom) which pushes authentic photos into the same extreme gamuts.",
+    "source": "Popescu & Farid (2005) / Sharma (2003) - Digital Color Imaging & Out-of-Gamut Detection",
+    "useCase": "Acting as an 'optical bounding box' to sniff out unnaturally glowing, hyper-saturated 'fantasy' colors or physically severed color clipping that exposes the image as an unconstrained synthetic render.",
     "references": [
-        {
-            "title": "Finlayson, G.D. et al. (2005). On the Removal of Shadows from Images. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2005.106"
-        },
-        {
-            "title": "Larson, G.W. et al. (1998). A Visibility Matching Tone Reproduction. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.656788"
-        },
         {
             "title": "Sharma, G. (2003). Digital Color Imaging Handbook. CRC Press.",
             "url": "https://doi.org/10.1201/9781420041484"
+        },
+        {
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
-    ]
+    ],
+    "strengths": "• Extremely fast and computationally cheap, requiring only simple color-space conversion mathematics on a sampled subset of pixels.\n• Highly effective at identifying 'hallucinated' neon colors or impossible lighting situations extremely common in 'cyberpunk' or 'fantasy' themed AI generations.\n• Operates completely independent of the originating camera model's specific hardware quirks.",
+    "limitations": "• Incredibly vulnerable to false positives when evaluating legitimate photos heavily pushed by professional human colorists, HDR photography, or images captured on modern wide-gamut smartphone sensors.\n• Completely blind and useless on muted, pastel, grayscale, or heavily desaturated AI images where colors never approach the gamut boundaries.\n• Advanced AI models specifically fine-tuned on strictly constrained photographic datasets to mimic muted 'film looks' effortlessly bypass this detection."
 }

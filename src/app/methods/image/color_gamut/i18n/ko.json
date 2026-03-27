@@ -1,26 +1,22 @@
 {
-    "name": "색역 분석",
-    "description": "감지합니다 out-of-gamut or unnaturally distributed colors. AI images often produce colors that exceed the natural camera gamut with excessive vibrancy.",
-    "algorithm": "Color Gamut Range and Saturation Distribution Analysis",
-    "mechanism": "측정합니다 extreme, near-clipping, and high-채도-high-밝기 pixel ratios 식별하기 위해 AI 생성 color 패턴.",
-    "parameters": "Sampling: 50000 pixels, Metrics: extreme ratio, clip ratio, vibrant ratio",
-    "accuracy": "중간 - 68-78%",
-    "source": "Popescu and Farid (2005), IEEE TSP",
-    "useCase": "Identifying unnaturally vibrant colors in AI 생성 content",
+    "name": "초과 색영역 역치(Color Gamut) 및 광학 포화도 붕괴 검증",
+    "description": "이미지 전반에 걸쳐 물리적으로 존재 불가능한 '초과 색영역(Out-of-gamut)' 도료나, 기괴할 정도로 형광빛이 도는 오버스펙 채도(Vibrancy)의 분포를 모조리 잡아냅니다. 정상적인 진짜 카메라의 유리 렌즈와 센서 부품은 엄격한 광학적 한계와 물리적 컬러 프로파일 범주(sRGB 등)의 쇠사슬에 묶여 있어 극단적인 빛과 색을 자연스레 억제합니다. 그러나 생성형 AI 모델들은 망막이나 렌즈 없이 제약이 1도 없는 허허벌판 수학적 잠재 공간(Latent Space)에서 맘대로 색을 배합하다 보니, 이따금 아날로그 빛의 수용 한계를 아득히 찢어버리고 현실에선 불가능한 '기이할 정도로 순수하고 눈이 시린' 100% 원색 네온 컬러를 환각처럼 토해냅니다.",
+    "algorithm": "하드웨어 색 공간 클리핑(Clipping) 추적 & 색상 채도 포화 비율(Vibrancy Ratio) 저격",
+    "mechanism": "알고리즘 수사관은 이미지에서 통계적으로 유의미한 수만 개의 픽셀 표본을 뽑아내어 표준 색 공간(HSV 등)으로 비틀어 넣습니다. 그런 다음 매우 가혹하게 광학적 '클리핑(색이 과포화되어 0이나 255 극단값에 쳐박힌 계곡)'이, 상응하는 강렬한 조명도 없는 상황에서 뻔뻔하게 넓은 면적에 펼쳐져 있는가를 탐색합니다. 무엇보다 알고리즘은 '광채 비율(Vibrant Ratio)'을 계산해, 극단적으로 밝으면서(High Value) 동시에 극단적으로 채도가 높은(High Saturation) 돌연변이 픽셀의 머릿수를 헤아립니다. 진짜 물리학 세계에서 레이저나 고휘도 LED 전구를 직접 찍지 않는 이상, 미친 듯이 밝으면서 미친 듯이 탁하지 않은 원색이 자연물에서 대량으로 뿜어져 나올 확률은 우주적으로 0에 가깝습니다. 하지만 빛의 물리 법칙을 쥐뿔도 모르는 AI 제너레이터들은 인간의 뇌를 자극하는 '환상적인' 아트를 뽑아내기 위해, 이런 미친 가짜 광채를 거리낌 없이 살포하며 스스로의 정체를 폭로하고 맙니다.",
+    "parameters": "수사 대상 표본 추출: > 50,000개 픽셀군, 처형 척도 3요소: 색상 극단값 비율(Extreme Ratio), 한계선 충돌 클리핑 비율(0/255에 박제된 픽셀), 기형적 과포화 발광체 비율(비정상적으로 쨍함+밝음)",
+    "accuracy": "보통 이상 (68-78%) - 날것 그대로 튀어나온 '화려한' AI 아트를 패죽이는 데는 타의 추종을 불허하지만, 현대의 악랄한 컬러리스트들이 라이트룸(Lightroom) 등으로 진짜 사진을 떡칠해 색을 억지로 끌어올리면 어이없게도 같은 혐의를 뒤집어씌웁니다.",
+    "source": "Popescu & Farid (2005) / Sharma (2003) - 디지털 색상 공학 및 비-물리 스펙트럼 화상 조작 위변조 포렌식",
+    "useCase": "보이지 않는 '광학적 한계울타리'를 쳐두고, 울타리를 멋대로 뛰어넘다 못해 비정상적으로 빛을 뿜어대는 '플라스틱 네온 컬러'나 빛이 끊어져 뭉개진 클리핑 구간의 냄새를 맡아, 이 이미지가 실체 없는 텅 빈 수학적 가상 공간에서 멋대로 빚어진 가짜(Synthetic render)임을 폭로합니다.",
     "references": [
-        {
-            "title": "Finlayson, G.D. et al. (2005). On the Removal of Shadows from Images. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2005.106"
-        },
-        {
-            "title": "Larson, G.W. et al. (1998). A Visibility Matching Tone Reproduction. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.656788"
-        },
         {
             "title": "Sharma, G. (2003). Digital Color Imaging Handbook. CRC Press.",
             "url": "https://doi.org/10.1201/9781420041484"
+        },
+        {
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
     ],
-    "strengths": "• 식별합니다 physically impossible color combinations\n• Camera-independent 분석 approach\n• Reveals AI-specific 색 공간 usage 패턴\n• Fast 분석 of color 분포\n• Strong indicator when out-of-gamut colors detected",
-    "limitations": "• Camera color profiles vary widely 사이의 manufacturers\n• Post-processing and color grading change gamut coverage\n• Wide-gamut displays and HDR expand valid 색 공간\n• ICC profile-aware editors produce legitimate wide-gamut\n• Some AI models now generate 내의 natural gamut"
+    "strengths": "• 그저 뽑아낸 표본 픽셀 값들을 가지고 아주 단순 무식한 색 공간 변환 수학 방정식만 돌리면 되므로, 계산하는 시스템이 전혀 지치지 않고 초고속으로 빛처럼 작동합니다.\n• 소위 '사이버펑크(Cyberpunk)'나 '다크 판타지(Fantasy)' 풍으로 떡칠한 미드저니 초기 구버전, 혹은 싸구려 AI 모델들이 흔하게 일으키는 어처구니없는 조명 환각이나 이세계 네온 불빛 오류를 때려 부수는 데 전무후무한 파괴력을 지닙니다.\n• 카메라 렌즈 제조사가 저마다 가지고 있는 개별적인 하드웨어 장난질(노이즈 편차 등)과는 완전히 무관한 차원에서 독립적으로 적을 요격합니다.",
+    "limitations": "• 인간의 악의적인 욕심(오진 유발): 사진작가가 화려한 보정 필터(프리셋)를 들이부은 채도 폭발 인스타그램 사진, 억지로 콘트라스트를 찢어발긴 HDR 사진, 혹은 최신형 스마트폰 디스플레이용 DCI-P3(Rec. 2020) 과다색 영역으로 찍힌 순수한 진짜 사진도 마구잡이로 가짜라며 총을 난사하는 끔찍하고 치명적인 오판(False Positives)의 주범입니다.\n• 애당초 사진이 회색빛 우울증(Grayscale), 무덤덤한 파스텔톤, 미니멀리즘으로 쫙 빠진 채도 0퍼센트의 AI 생성물이라면, 색영역 경계에 닿을 일이 아예 없으므로 눈만 껌뻑거리는 완벽한 바보 장님으로 전락합니다.\n• AI 기술자들이 이를 악물고 '필름 느낌(Film look)'이나 '시네마틱 아날로그 룩' 데이터셋으로만 인공지능을 훈련시켜 채도 폭발을 막아버리면, 이 방어선은 너무나도 싱겁게 무너져 내립니다."
 }

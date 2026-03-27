@@ -1,26 +1,22 @@
 {
-    "name": "色域分析",
-    "description": "检测 out-of-gamut or unnaturally distributed colors. AI images often produce colors that exceed the natural camera gamut with excessive vibrancy.",
-    "algorithm": "Color Gamut Range and Saturation Distribution Analysis",
-    "mechanism": "测量 extreme, near-clipping, and high-饱和度-high-亮度 pixel ratios 以识别 AI生成的 color 模式.",
-    "parameters": "Sampling: 50000 pixels, Metrics: extreme ratio, clip ratio, vibrant ratio",
-    "accuracy": "中等 - 68-78%",
-    "source": "Popescu and Farid (2005), IEEE TSP",
-    "useCase": "Identifying unnaturally vibrant colors in AI生成的 content",
+    "name": "突破物理色域(Color Gamut)与极度发光过饱和分析",
+    "description": "如同安装了光学雷达一般，死死盯住并捕猎那些物理学上绝对不可能存在、彻底突破客观色彩空间阈值（Out-of-gamut），或在画面中呈现出极度反常、病态且极其刺眼的过饱和霓虹高光的变异色彩。真实的相机传感器以及昂贵的玻璃镜头，天生就被大自然无情的物理光学定律和硬件色彩描述文件（如sRGB或Adobe RGB）给绑死了，绝无可能记录下过度离谱的色彩强度。但生成式AI模型在算画时，由于没有受到任何真实的物理光子束缚，纯粹是在一个不受管制的数学潜空间（Latent space）里胡编乱造，因此时不时就会如同吃错了药一般“幻觉”出一些瞎眼刺目、过度饱和甚至宛如外星霓虹灯一般的绝对纯粹原色，这完全是一种极其荒谬的伪造美学。",
+    "algorithm": "硬件色彩空间暴力碾压过载（Clipping）与极限饱和阈值探针",
+    "mechanism": "算力探针会从茫茫像素海中强行剥离出五万至十万个离散样本，狠狠地将它们砸进标准化的色彩检验空间（比如HSV或CIE-LCH）。接着，它开始在数学层面上执行极其冷血的猎杀任务——寻找“过载溢出（Clipping）”。即：在这张图里，是否有一大片区域没有任何足够强烈的光源支撑，但其RGB数值却极其生硬、死皮赖脸地卡死在极端的255或0上？更要命的是，它会精算“极其刺眼比例（Vibrant Ratio）”，去逐个点名那些竟然胆敢同时拥有极其变态的亮度（High Brightness）和骇人饱和度（High Saturation）的像素点。在没有任何人造激光器或高压LED直射的真实自然摄影中，高饱和度与高亮度几乎不可能同时在一个大面积像素群体内联手爆发。但对那些完全不懂真实光学物理法则的闲杂AI绘图机器人而言，它们只需在键盘上随便改几个数字，就能大把大把地撒下这种用于博人眼球却在物理层面极其伪劣的“幻想色系”。",
+    "parameters": "待宰样本池: 超过50,000个像素点抽取, 三大断头台指标: 极值暴走比例(Extreme Ratio), 暴力割裂/死锁比例(Clipping Ratio，即被死死钉在0或255的像素), 虚假霓虹比例(Vibrant Ratio，同时拥有极高饱和度+极高亮度值)",
+    "accuracy": "勉强不错 (68-78%) - 在一枪爆头那些喜欢浓墨重彩、刚出炉还热乎的“原生”AI生成废料时，它就像开了挂一样精准；但一旦撞上了那些被人类后期修图师在Lightroom里面下了死手疯狂拉爆光色的真实大片，它就会像个瞎子一样把好人给当场击毙。",
+    "source": "Popescu与Farid双煞 (2005) 联合 Sharma (2003) - 《数字色彩影像手记》与《破壁伪类光学取证》",
+    "useCase": "化身为一个无情的“光学铁笼子”，一旦闻到那些极其不自然、发着诡异邪恶荧光且极度过饱和的“赛博庞克塑料色”或物理上被硬性一刀切断的死锁像素块（Clipping），立刻就能将这张看似惊艳绝伦的图片当众扒光，暴露出其只不过是用纯数学算力强行捏造的无脑结块废品的丑陋本质。",
     "references": [
-        {
-            "title": "Finlayson, G.D. et al. (2005). On the Removal of Shadows from Images. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2005.106"
-        },
-        {
-            "title": "Larson, G.W. et al. (1998). A Visibility Matching Tone Reproduction. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.656788"
-        },
         {
             "title": "Sharma, G. (2003). Digital Color Imaging Handbook. CRC Press.",
             "url": "https://doi.org/10.1201/9781420041484"
+        },
+        {
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
     ],
-    "strengths": "• 识别 physically impossible color combinations\n• Camera-independent 分析 approach\n• Reveals AI-specific 色彩空间 usage 模式\n• Fast 分析 of color 分布\n• Strong indicator when out-of-gamut colors detected",
-    "limitations": "• Camera color profiles vary widely 之间 manufacturers\n• Post-processing and color grading change gamut coverage\n• Wide-gamut displays and HDR expand valid 色彩空间\n• ICC profile-aware editors produce legitimate wide-gamut\n• Some AI models now generate 内的 natural gamut"
+    "strengths": "• 它的屠戮速度极其狂暴，因为它完全不需要什么天价的计算消耗，仅仅只需在所抽查的少量像素点集上套用极其基础廉价的色彩空间转换方程式即可，简直是对算力极限的蔑视。\n• 是镇压那些喜欢在生成中玩弄“赛博朋克”或是大量运用“魔幻高光”的那些无脑 Midjourney 狂热分子生成物的无敌大杀器；面对那些被AI臆想出来的离谱霓虹光效组合，可谓是一抓一个准。\n• 它高高在上，完全不受制于图片到底是出自佳能、索尼还是尼康哪条流水线，因为它根本不在乎下方的物理硬件差异，它只杀那些突破物理极限的数字败类。",
+    "limitations": "• 这是一个令人发指的“冤假错案流水线（False Positives）”：如果某张真实的绝美风光照落入了一位狂热修图师的手中并且被狠拉通道，亦或是那些被最新款旗舰手机那块广色域（Rec. 2020）疯狂加料的传感器拍出来的HDR（高动态光照渲染）照片，都会被这台无语的机器不分青红皂白地全部扫射判为死刑（假图）。\n• 对那些色调压抑凄凉的低饱和高级灰、柔美朦胧的莫兰迪色系或是死气沉沉的黑白修辞AI图片它将束手无策，彻底瘫痪；因为它们的色彩甚至连物理边界的门槛都不曾摸到。\n• 那些城府极深的新时代AI大模型训练师，正故意用受限且极其灰暗、带有胶片滤镜感的数据集去给AI“洗脑”，使得AI吐出来的画作巧妙地躲过了色彩大爆炸的陷阱，令该算法完全白忙一场。"
 }

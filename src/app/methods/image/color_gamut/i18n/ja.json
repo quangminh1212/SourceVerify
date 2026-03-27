@@ -1,26 +1,22 @@
 {
-    "name": "色域分析",
-    "description": "検出します out-of-gamut or unnaturally distributed colors. AI images often produce colors that exceed the natural camera gamut with excessive vibrancy.",
-    "algorithm": "Color Gamut Range and Saturation Distribution Analysis",
-    "mechanism": "測定します extreme, near-clipping, and high-彩度-high-明るさ pixel ratios を識別するために AI生成の color パターン.",
-    "parameters": "Sampling: 50000 pixels, Metrics: extreme ratio, clip ratio, vibrant ratio",
-    "accuracy": "中 - 68-78%",
-    "source": "Popescu and Farid (2005), IEEE TSP",
-    "useCase": "Identifying unnaturally vibrant colors in AI生成の content",
+    "name": "広色域（色彩鮮やかさとクリッピング）解析",
+    "description": "物理的に不可能な、色域外の色、または画像全体に不自然に分布する極端に鮮やかな彩度を検出します。本物のカメラセンサーとガラスレンズは、厳格な光学的限界と物理的なカラープロファイルに縛られており、極端な色の強度を自然に抑制します。生成AIモデルは、制約のない数学的な潜在空間のみで合成を行うことが多いため、時折、アナログのフォトンキャプチャの物理的な限界を超える、極度に過飽和な「ネオン風」または不自然に純粋な原色を幻覚のように生成します。",
+    "algorithm": "ハードウェアの色空間クリッピングと極端な彩度の比率分析",
+    "mechanism": "このアルゴリズムは、大量のピクセルプールをサンプリングし、標準化された色空間に投影します。そして、数学的に「クリッピング（白飛び・黒つぶれ）」——つまり、対応する自然光の極端さがないまま、広い範囲でRGBの色情報が不自然に絶対極値（0または255）に張り付いている場所——を探し出します。さらに重要な点として、極端な明るさ（明度）と極端な彩度を両方同時に持っているピクセルを数える「鮮やかさ比率（Vibrant Ratio）」を計算します。本物の写真では、LEDやレーザーの直射を捉えない限り、極度に彩度が高く、かつ明るいピクセルが大量に同時に発生することはほとんどありません。しかし現実世界の照明の物理学にとらわれないAIジェネレーターは、視覚的には目を引くけれども物理的には不可能な美学を生み出すために、これらの「ファンタジー」の色を自由に（無制約に）出力します。",
+    "parameters": "サンプリングプール: 50,000ピクセル以上, 指標: 極端比率（Extreme Ratio）, クリッピング比率（0または255に張り付いたピクセル）, 鮮やかさ比率（高彩度＋高明度）",
+    "accuracy": "中程度（68-78%） - 「生」の高度にスタイル化されたAI生成を捕まえるのには非常に正確ですが、本物の写真を同じ極端な色域に押し上げる最新の手動カラーグレーディング（Lightroomなど）によって大幅に妨げられます。",
+    "source": "Popescu & Farid (2005) / Sharma (2003) - デジタルカラー画像と色域外検出",
+    "useCase": "AI生成であることを暴く、物理的に切り取られたままのカラークリッピングや、不自然に輝く過飽和な「ファンタジー」色を嗅ぎ分ける「光学的バウンディングボックス」として機能します。",
     "references": [
-        {
-            "title": "Finlayson, G.D. et al. (2005). On the Removal of Shadows from Images. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2005.106"
-        },
-        {
-            "title": "Larson, G.W. et al. (1998). A Visibility Matching Tone Reproduction. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.656788"
-        },
         {
             "title": "Sharma, G. (2003). Digital Color Imaging Handbook. CRC Press.",
             "url": "https://doi.org/10.1201/9781420041484"
+        },
+        {
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
     ],
-    "strengths": "• 識別します physically impossible color combinations\n• Camera-independent 分析 approach\n• Reveals AI-specific 色空間 usage パターン\n• Fast 分析 of color 分布\n• Strong indicator when out-of-gamut colors detected",
-    "limitations": "• Camera color profiles vary widely 間の manufacturers\n• Post-processing and color grading change gamut coverage\n• Wide-gamut displays and HDR expand valid 色空間\n• ICC profile-aware editors produce legitimate wide-gamut\n• Some AI models now generate 内の natural gamut"
+    "strengths": "• 非常に高速で計算コストが低く、サンプリングされたピクセルのサブセットに対して単純な色空間変換の数学を実行するだけで済みます。\n• 「サイバーパンク」や「ファンタジー」をテーマにしたAI生成で非常に一般的な、「幻覚による」ネオン色や、あり得ない照明状況を特定するのに非常に効果的です。\n• 元のカメラモデルの特定のハードウェアの特性（癖）から完全に独立して動作します。",
+    "limitations": "• プロのカラーリストによって頻繁に加工された正規の写真、HDR写真、または最新の広色域（Rec. 2020）スマートフォンセンサーでキャプチャされた画像を評価する場合、誤検知（偽陽性）に対して信じられないほど脆弱です。\n• 色が色域の境界に近づくことのない、ミュートされた（くすんだ）、パステル調の、グレースケールの、または大幅に彩度が低下したAI画像では、完全に盲目であり役に立ちません。\n• ミュートされた「フィルムルック」を難なく模倣するために、厳密に制約された写真データセットで特別に微調整された高度なAIモデルは、この検出をバイパスします。"
 }
