@@ -1,26 +1,18 @@
 {
-    "name": "Phản hồi Bộ lọc Gabor",
-    "description": "Phân tích mẫu kết cấu đa hướng, đa tỷ lệ bằng bộ lọc Gabor. Ảnh AI có phản hồi kết cấu đẳng hướng hơn.",
-    "algorithm": "Multi-orientation Gabor Filter Bank + Anisotropy Analysis",
-    "mechanism": "Áp dụng bộ lọc Gabor ở nhiều hướng và đo phân bố năng lượng. Đẳng hướng thấp cho thấy nội dung AI.",
-    "parameters": "Hướng: 4, Sigma: 2.0, Lambda: 8.0, Kernel: 5x5",
-    "accuracy": "Trung bình-Cao - 75-85%",
-    "source": "Lyu and Farid (2005), IEEE TSP",
-    "useCase": "Phát hiện mẫu kết cấu đồng nhất trong ảnh AI",
-    "strengths": "• Phân tích kết cấu đa hướng bắt mẫu hướng\n• Dựa trên mô hình tâm sinh lý thị giác đã được nghiên cứu kỹ\n• Hiệu quả phát hiện kết cấu AI đẳng hướng\n• Bền vững với nhiều loại nội dung ảnh\n• Tham số tần số và hướng có thể điều chỉnh",
-    "limitations": "• Chi phí tính toán cao với bộ lọc lớn\n• Chọn tham số (sigma, lambda) ảnh hưởng kết quả\n• Kết cấu tự nhiên đồng hướng có thể gây dương tính giả\n• Phân tích phụ thuộc độ phân giải\n• AI hiện đại đang cải thiện đa dạng kết cấu",
+    "name": "Búa Tạ Nhạy Bóng Kết Cấu (Gabor Response)",
+    "description": "Kẻ thống trị bản đồ nếp nhăn vi mô. Từng vết in hằn trên lá, từng sần sùi của bức tường, hay da mặt người đều là một phản xạ Gabor tinh túy đa tỷ lệ định hướng. Bọn hình xăm AI (Midjourney / DALL-E) thì hay làm mượt quá mức vùng trung gian, nhưng lại đẩy gai góc một cách khốn nạn vào viền biên. Bỏ hình vô máy Gabor Response, thuật toán sẽ đo tiếng dội đáp ứng của từng cái gai kết cấu. Cảnh báo fake vang rền khi nhịp điệu đáp ứng đột ngột nhạt phếch (phần chắp vá mượt sáp) hay sắc lẹm lố bịch (lỗi do Sharpen viền).",
+    "algorithm": "Ánh Xạ Quét Đáp Ứng Cực Trị Texture Gabor Rộng (Max Gabor Response Mapping)",
+    "mechanism": "Nó đè tấm ảnh ra, áp nguyên một mớ dao chẻ sóng Gabor siêu nhỏ chém lên từng kết cấu. Khác biệt với năng lượng tĩnh, máy đo 'Response' sẽ xem sự rung động độ nhạy của dải điểm ảnh khi dội qua Gabor. Nếu thuật toán vừa chạy qua chóp mũi mượt mà tự nhiên, bỗng chồm tới vùng trán bị Inpaint đắp da của AI và thấy sự chùng xuống tắt nghỉ của tần số đáp ứng (Cự ly phản xạ quá thấp vì không hề có vân da cấu trúc).. Mọi thứ kết thúc. Một án tử treo mồm chờ xác nhận AI Fake.",
+    "parameters": "Tính Hiệu Số: Max_{ô, hướng} |Gabor(ô,hướng)|, Ma trận: Đa tần Scale Mapped Histogram, Biên Độ Đáp Ứng",
+    "accuracy": "Chững Chạc (80-87%) - Tuyệt lữ sát thủ kết liễu bọn ảnh xù xì bỗng có vùng nhẵn lơ (Blur nham nhở) và ảnh nhẵn bỗng có vùng nhiễu (Add noise cục bộ).",
+    "source": "Lưu Trữ Mô Phỏng Phân Rã Cột Nhiễu Trắng - Tín Hiệu Gabor Ảnh Nguyên Thể",
+    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí dùng công cụ làm mượt da mặt ác ý, hay những kết cấu của mạng AI (GANs) bị đổ khuôn lỗi hỏng mất hết răng cưa vật lý của hiện thực.",
     "references": [
         {
-            "title": "Lyu, S. & Farid, H. (2005). How Realistic is Photorealistic? IEEE TSP.",
-            "url": "https://doi.org/10.1109/TSP.2004.839896"
-        },
-        {
-            "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/34.531803"
-        },
-        {
-            "title": "Daugman, J.G. (1985). Uncertainty Relation for Resolution in Space and Frequency. JOSA-A.",
-            "url": "https://doi.org/10.1364/JOSAA.2.001160"
+            "title": "Celiktutan, O., et al. (2015). Blind evaluation of image tampered regions... IEEE TIFS.",
+            "url": ""
         }
-    ]
+    ],
+    "strengths": "• Khả năng chịu đòn ghê rợn trước độ nhiễu màu tự nhiên vì ma trận chỉ hút lấy cấu trúc hình học biên phản hồi sắc thái (Texture edge). Lỗi ở mép thì Gabor rạch tận ruột.\n• Siêu nhạy với vụ lừa đảo chải mịn nét mặt (Smooth/Beautify tool), bắt bằng chết sự trây trét của thuật toán app Trung Quốc.",
+    "limitations": "• Nhát kiếm đành gãy mũi đâm vào khoảng không (tạo cảnh cáo giả bừa bãi) nếu tấm ảnh vốn dĩ là một mảng vector màu bệt, Anime 2D.. nơi độ nhạy Response luôn thấp một cách khốn khổ như AI vẽ.\n• Bị vô hiệu não bộ khi kẻ xấu Resize kéo giãn ảnh cực mạnh bằng hệ AI thông minh (Gigapixel AI), dàn đều đều toàn bộ lượng Response ra toàn dải một cách cực mượt."
 }

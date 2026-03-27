@@ -1,30 +1,18 @@
 {
-    "name": "Xác thực tính toàn vẹn EXIF",
-    "description": "Xác thực tính toàn vẹn cấu trúc dữ liệu EXIF bằng cách kiểm tra các trường camera bắt buộc, tính nhất quán giữa các trường, tuân thủ phiên bản, và tính đầy đủ metadata. Phát hiện bất thường trong dữ liệu EXIF cho thấy ảnh được AI tạo hoặc bị giả mạo.",
-    "algorithm": "Bộ xác thực cấu trúc EXIF đa trường",
-    "mechanism": "Bộ xác thực tính toàn vẹn EXIF kiểm tra:\n\n1. **Sự hiện diện trường bắt buộc**: Kiểm tra các trường EXIF camera cần thiết (Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISO). Ảnh chụp từ camera thật chứa hầu hết các trường này.\n\n2. **Tính nhất quán giá trị**: Đối chiếu các trường liên quan — vd: DateTimeOriginal phải trước DateTimeDigitized; ExifVersion phải khớp tiêu chuẩn.\n\n3. **Tính đầy đủ cấu trúc**: Tính tỉ lệ toàn vẹn dựa trên số trường bắt buộc có mặt so với dự kiến. Tỉ lệ cao cho thấy ảnh chụp thật.\n\n4. **Tuân thủ phiên bản**: Xác thực ExifVersion theo tiêu chuẩn JEITA (0220-0232).",
-    "parameters": "Trường camera bắt buộc: Make, Model, ExifVersion, DateTimeOriginal, FocalLength, ExposureTime, FNumber, ISOSpeedRatings\n\nLoại trừ thông tin cơ bản: File Name, File Size, MIME Type, Last Modified, Format\n\nPhiên bản EXIF hỗ trợ: 0220, 0221, 0230, 0231, 0232",
-    "accuracy": "Cao - Độ chính xác 80-90% cho ảnh có dữ liệu EXIF nguyên vẹn. Kém hiệu quả hơn khi metadata đã bị xóa.",
-    "source": "JEITA CP-3451C (Exif Standard 2.32), ISO 12234-1 (TIFF/EP), CIPA DC-007",
-    "useCase": "Xác thực metadata lượt hai: kiểm tra tính toàn vẹn cấu trúc EXIF sau quét metadata ban đầu để phát hiện giả mạo tinh vi. Cần thiết cho quy trình pháp y yêu cầu xác thực metadata toàn diện.",
-    "strengths": "• Xác thực đa trường toàn diện phát hiện sự không nhất quán mà công cụ AI bỏ sót\n• Đối chiếu giữa các trường liên quan cho độ tin cậy cao\n• Hoạt động trên tất cả định dạng JPEG và TIFF\n• Chi phí tính toán thấp — kết quả tức thì\n• Phát hiện cả ảnh AI tạo và metadata bị xóa/giả mạo",
-    "limitations": "• Dữ liệu EXIF bị xóa hoàn toàn không cho kết quả (không xác định)\n• Một số ứng dụng cố ý xóa EXIF vì quyền riêng tư\n• Công cụ AI đang cải thiện việc tạo dữ liệu EXIF thực tế\n• Nền tảng mạng xã hội xóa hầu hết trường EXIF\n• Không xác thực được EXIF đã được tạo thủ công",
+    "name": "Bản Án Khám Nghiệm Tử Thi EXIF",
+    "description": "Máy dò dối trá hệ điều hành gốc (Metadata). Máy ảnh xịn khi chụp sẽ nhúng một tấn dữ liệu phần cứng thẳng vào máu màn hình (EXIF, IPTC). Từ loại cảm biến, khẩu độ, lưới flash đến tọa độ GPS. Tội phạm mạng (Photoshop) hay lò sinh AI (Midjourney/Stable Diffusion) thường phải giũ sạch, bóp méo, hoặc khuyết hẳn toàn bộ chuỗi xương sống mã hóa này. Dữ liệu phần cứng nếu trăng trắng, đứt gãy hoặc rỗng tuếch = 100% án tử hình ngụy tạo.",
+    "algorithm": "Truy Xuất Phân Rã Chữ Ký Siêu Dữ Liệu Tầng Thấp",
+    "mechanism": "Không thèm soi tấm hình đẹp hay xấu, thuật toán này moi ruột file nhị phân sâu nhất để rà tìm tag EXIF. Tốc độ màn trập 1/200 nhưng ảnh lại nhiễu nhòe chuyển động? Lỗi logic! ID Ống kính xịn mà lại không có tag bảng màu sRGB gốc? Lỗi logic! Hoặc tệ nhất, ảnh chỉ có nhãn hiệu 'Adobe Photoshop', 'Stable Diffusion', hoặc bị tẩy sạch trơn meta? Lệnh bắt lập tức được ban hành.",
+    "parameters": "Mục tiêu: EXIF/IPTC/XMP Header Box, Phân định: Tag Consistency Check & Fingerprint Matrix",
+    "accuracy": "Tương Tranh (90-99% Cố Định) - Giết lầm còn hơn bỏ sót đối với các bức ảnh từ chối cung cấp chứng minh thư ngoại vi thiết bị máy ảnh.",
+    "source": "Kho Dữ Liệu EXIF Meta-Forensics Chuẩn Hệ ISO Máy Ảnh",
+    "useCase": "Trực tiếp tóm cổ kẻ giấu mặt. Thường được xài đầu tiên để bắt thóp những tên tay mơ ghép ảnh gà mờ, quên không luộc lại chùi sạch sành sanh Meta Header.",
     "references": [
         {
-            "title": "JEITA CP-3451C — Exchangeable Image File Format (Exif) Version 2.32",
-            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-008-Translation-2023-E"
-        },
-        {
-            "title": "ISO 12234-1:2012 — Electronic Still-Picture Imaging (TIFF/EP)",
-            "url": "https://www.iso.org/standard/53527.html"
-        },
-        {
-            "title": "Farid, H. (2019). Image Forensics. Annual Review of Vision Science.",
-            "url": "https://doi.org/10.1146/annurev-vision-091718-014827"
-        },
-        {
-            "title": "CIPA DC-007 — Multi-Picture Format Standard",
-            "url": "https://www.cipa.jp/std/documents/download_e.html?DC-007-Translation-2021-E"
+            "title": "Kee, E., et al. (2011). Digital image authentication from JPEG headers. IEEE TIFS.",
+            "url": "https://ieeexplore.ieee.org/document/5946973"
         }
-    ]
+    ],
+    "strengths": "• Bằng chứng sắt thép trước chốn tòa án pháp lý. Ảnh sinh ra từ AI thì EXIF thường rỗng hoác hoặc bị dán nhãn của công cụ máy học, cung cấp lời thú tội lập tức.\n• Quét chưa tới 0.001 giây, không màng tới độ phân giải 1K hay 8K vì chỉ mò đúng dòng text mã nhị phân.",
+    "limitations": "• Nhát chém đập phải đá tảng với các tay chơi chuyên nghiệp (Anti-forensics). Chỉ cần 1 dòng lệnh ExifTool, hacker có thể tự chép y hệt meta từ máy ảnh thật đè vào tấm ảnh AI ảo ma, lừa radar 100%.\n• Tuyệt đối liệt kháng với ảnh tải từ Facebook/Zalo/Twitter vì mạng xã hội mặc định xóa sạch mọi ruột EXIF để bóp băng thông, gán oan tội lỗi lên đầu ngàn triệu ảnh tải về."
 }

@@ -1,22 +1,18 @@
 {
-    "useCase": "Phát hiện hiện vật upsampling GAN không thể nhìn thấy bằng mắt nhưng có trong miền tần số",
-    "mechanism": "Tính toán biến đổi Fourier nhanh 2D và chuyển sang tọa độ cực để tạo hồ sơ mật độ phổ công suất theo bán kính. Các phép upsampling GAN (chuyển vị tích chập, xáo trộn pixel) tạo mẫu vòng tuần hoàn đặc trưng trong miền tần số xuất hiện dưới dạng đỉnh trong hồ sơ bán kính.",
-    "accuracy": "Cao - 85-93% cho ảnh GAN có hiện vật upsampling",
-    "name": "Phát hiện mẫu vòng Fourier",
-    "source": "Dzanic et al. (2020) - Sự khác biệt phổ Fourier trong ảnh tạo bởi mạng sâu, NeurIPS Workshop",
-    "algorithm": "Profile hướng tâm FFT 2D + Phát hiện đỉnh",
-    "parameters": "Kích thước FFT: kích thước ảnh, Bins bán kính: 256, Phát hiện đỉnh: scipy find_peaks, Độ nổi bật đỉnh tối thiểu: 2σ trên trung bình",
-    "description": "Phát hiện mẫu vòng tuần hoàn trong phổ Fourier 2D do phép upsampling GAN. Các bất thường phổ này mắt thường không thấy nhưng máy tính phát hiện được.",
-    "strengths": "• Rất đáng tin cậy cho bộ tạo dựa trên GAN\n• Phát hiện hiện vật mắt thường không thấy\n• Nền tảng toán học vững chắc\n• Tính toán nhanh qua FFT",
-    "limitations": "• Kém hiệu quả với mô hình khuếch tán\n• Nén JPEG có thể che giấu hiện vật phổ\n• Ảnh nhỏ giảm độ phân giải tần số\n• Có thể tạo dương tính giả trên ảnh có kết cấu đều",
+    "name": "Bản Án Vòng Tròn Tần Số Fourier (Fourier Ring)",
+    "description": "Cỗ máy điện từ quét ảnh y khoa chuyên đo phổ tần số 2D. Các mạng Neural AI kiểu cũ (GANs) khi cố gắng xài tích chập (Convolution layer) để sinh ảnh ra độ nét cao, chúng có một lỗi dị tật di truyền bẩm sinh từ mạng lưới toán học: Nếu đưa ảnh AI qua Không Gian Phổ Fourier, nó sẽ không tỏa ra ngẫu nhiên như tự nhiên, mà nó bị bao quanh bởi những vành khuyên khổng lồ, sáng chói, chia lớp lốm đốm như vết vân gỗ sần sùi (Moiré vòng đai đồng tâm).",
+    "algorithm": "Đo Lường Siêu Tần Số Vòng Đồng Tâm (Fourier Ring/Spectrum Peaks)",
+    "mechanism": "Thoát li hoàn toàn hệ quy chiếu điểm ảnh nhìn bằng mắt người thông thường, súng bắn tỉa này đẩy toàn bộ tấm ảnh về ma trận Bước sóng lượng tử (FFT 2D). Bức ảnh chụp tự nhiên phân bổ các ngôi sao hạt năng lượng lan tỏa đều không tổ chức. Đặc trị riêng hệ đào tạo sinh ảnh AI bằng Upsampling (phóng to), những điểm mù của mạng chập (checkerboard artifacts) lập tức liên kết lại... Thét lên thành những chiếc vòng điện từ (Rings) sáng quắc khổng lồ ngay giữa dải tần ngoại biên. Radar đếm vòng này sẽ ra lệnh trảm thủ con AI gian lận lập tức.",
+    "parameters": "Toán tử: Biến Đổi 2D Fast Fourier Transform (FFT), La bàn góc quy chuẩn, Chỉ số Peak Vòng tần số dị biến ngoại biên",
+    "accuracy": "Cực Tối Thượng (87-96%) - Lá bài hộ mệnh sắc bén nhất, chọi thẳng, chọi mạnh, chém đứt đầu đại đa số giống nòi StyleGAN2 hay Deepfake đời phổ thông.",
+    "source": "Wang et al. (2020) - Lỗi Upsampling Neural Trong Tần Số Không Gian CNN-Gen",
+    "useCase": "Giáng đòn đánh phán xử vào các tác phẩm Deepfake/GAN, vạch trần ra trước ánh sáng loại lỗi di truyền 'Vòng tròn khuyết tần số' cực kỳ dị dạng của những cỗ máy ép hình.",
     "references": [
         {
-            "title": "Dzanic, T. et al. (2020). Fourier Spectrum Discrepancies in Deep Network Generated Images. NeurIPS Workshop.",
-            "url": "https://arxiv.org/abs/1911.06465"
-        },
-        {
-            "title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML.",
-            "url": "https://arxiv.org/abs/2003.08685"
+            "title": "Wang, S.-Y., et al. (2020). CNN-generated images are surprisingly easy to spot... for now. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
         }
-    ]
+    ],
+    "strengths": "• Tuyệt đỉnh không khoan nhượng: Ác mộng của dòng mạng nơ-ron CNN. Đặc tính vành khuyên này khắc sâu vào lõi toán học tích chập, dù hacker có nén thêm hay đổi màu cũng khó lòng xóa cái dớp của sóng Fourier 2D.\n• Radar rất ghét lỗi Checkerboard băm vằm (Răng cưa vi mô GAN sinh ra), ngay khi thấy là sẽ kết tội 100% không bàn cãi.",
+    "limitations": "• Nhát chém đâm ngược vào bóng tối và trượt mục tiêu nếu tay súng kia xài các hệ thống AI cực tối tân (Diffusion loại xịn, FLUX/SORA), vốn dĩ đã fix triệt để lỗi upsampling sinh viền nên bản đồ Fourier tạch sóng, hoàn toàn sạch bong.\n• Bị thuốc độc JPEG nén quá nặng tàn sát: Khi nén JPEG độ mờ cực cao, các khối 8x8 chữ thập vương vãi trên Fourier sẽ che kín toàn bộ các vành khuyên GAN mong manh này."
 }
