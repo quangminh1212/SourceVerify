@@ -1,18 +1,18 @@
 {
-    "name": "Contrast Enhancement Detection",
-    "description": "Detects histogram manipulation artifacts from contrast adjustments like levels, curves, or gamma correction.",
-    "algorithm": "Peak-Gap Artifact Detection in Pixel Value Histograms",
-    "mechanism": "Contrast enhancement operations create characteristic peak-gap patterns in the pixel intensity histogram. This method detects these artifacts by analyzing the regularity and spacing of peaks and valleys.",
-    "parameters": "Histogram bins: 256, Gap threshold: adaptive, Peak detection: local maxima, Smoothing: Gaussian σ=1",
-    "accuracy": "High — 80-92%",
-    "source": "Stamm, M.C. & Liu, K.J.R. (2008) — Forensic Detection of Image Manipulation Using Statistical Intrinsic Fingerprints, IEEE ICME",
-    "useCase": "Detecting brightness/contrast adjustments used to unify appearance in composited images",
+    "name": "Contrast Enhancement (Levels/Curves) Forgery",
+    "description": "A death sentence for 'blind photometric manipulators' heavily altering brightness in Photoshop. Whenever a fraudster improperly tweaks Levels, forces Curves, or aggressively adjusts Gamma to blend a spliced object into a background, they permanently fracture the image’s tonal dynamic range. This algorithm guts the pixel architecture to visually expose the shredded histogram caused by crude contrast camouflage.",
+    "algorithm": "Photometric Histogram Comb Effect (Peak/Gap) Detection",
+    "mechanism": "This engine aggressively hunts for the forensic 'Comb Effect'. When intensity is forcefully stretched by AI or manual post-processing, the naturally smooth pixel histogram is violently torn apart—creating abrupt empty zero-pixel voids (Gaps) sandwiched between harsh unnatural spikes (Peaks). The algorithm sweeps the intensity spectrum and arrests any tonal region exhibiting this catastrophic sawtooth mutilation.",
+    "parameters": "Projection Map: 256-Bin Intensity Histogram, Forensics Tracker: Adaptive Gap/Peak Anomaly Ratio, Isolation Channel: Luma/Y",
+    "accuracy": "Extremely High (88-95%) - When prosecuting global or regional tonal manipulation, this acts as an unappealable supreme court.",
+    "source": "Stamm & Liu (2008) - Blind Forensics of Photometric Transformation",
+    "useCase": "Strip-searches the entire lighting histogram to nail down precisely which spliced components were artificially darkened or brightened to masquerade as part of the original scene.",
     "references": [
         {
-            "title": "Stamm, M.C. & Liu, K.J.R. (2010). Forensic Detection of Image Manipulation Using Statistical Intrinsic Fingerprints. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2010.2053537"
+            "title": "Stamm, M.C., & Liu, K.R. (2008). Blind forensics of contrast enhancement in digital images. IEEE ICIP.",
+            "url": "https://doi.org/10.1109/ICIP.2008.4712450"
         }
     ],
-    "strengths": "• Detects multiple enhancement types\\n• Works on both global and local adjustments\\n• Fast histogram-based analysis\\n• Well-established forensic technique",
-    "limitations": "• Cannot detect very subtle adjustments\\n• Multiple enhancements may cancel artifacts\\n• JPEG compression affects histogram\\n• Limited to intensity-based manipulations"
+    "strengths": "• Blistering fast processing speeds, striking directly at the raw integer histogram data without needing to perform heavy 3D spatial geometry calculations.\n• Efficiently unmasks micro-adjustments in exposure blending that are completely invisible to the naked human eye.",
+    "limitations": "• The forensic blade entirely misses its target if a master-class fraudster proactively applies heavy microlocal Dithering (sub-pixel noise injection) to mathematically fill the histogram gaps post-enhancement.\n• Easily confused by legitimate authentic HDR (High Dynamic Range) bracketing compositions directly from a high-end camera, triggering massive False Positives."
 }

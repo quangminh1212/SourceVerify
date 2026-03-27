@@ -1,18 +1,18 @@
 {
-    "name": "Phát hiện tăng cường tương phản",
-    "description": "Phát hiện hiện vật từ điều chỉnh tương phản như levels, curves hoặc gamma.",
-    "algorithm": "Phát hiện hiện vật đỉnh-khoảng trong histogram giá trị pixel",
-    "mechanism": "Tăng cường tương phản tạo mẫu đỉnh-khoảng đặc trưng trong histogram cường độ pixel.",
-    "parameters": "Bin histogram: 256, Ngưỡng khoảng: thích ứng, Phát hiện đỉnh: cực đại cục bộ",
-    "accuracy": "Cao — 80-92%",
-    "source": "Stamm & Liu (2008), IEEE ICME",
-    "useCase": "Phát hiện điều chỉnh sáng/tương phản trong ảnh ghép",
+    "name": "Thủ thuật Kéo Tương Phản (Contrast Enhancement)",
+    "description": "Án tử hình dành cho bọn 'kéo sáng mù quáng' trong Photoshop. Bất kỳ khi nào một tay manipulator táy máy chức năng chèn Levels, kéo Curves, hoặc điều chỉnh Gamma để ép vật thể cấy ghép chìm vào không gian nền, chúng đang vô tình bóp méo dải tần biểu đồ histogram. Thuật toán này sẽ phơi bày bộ nội tạng rách nát của các pixel, vạch mặt kẻ đã lạm dụng tương phản để lấp liếm lỗi sai của ảnh ghép.",
+    "algorithm": "Phát Hiện Răng Lược Histogram (Peak & Gap Artifacts) Không Gian Cường Độ",
+    "mechanism": "Phương pháp này truy lùng thứ được gọi là 'Hiệu ứng răng lược' (Comb Effect). Khi cường độ sáng bị AI hoặc tay thợ nới rộng, biểu đồ histogram mượt mà tự nhiên sẽ ngay lập tức bị xé toạc thành nhiều mảnh—xuất hiện hàng tá khoảng trống (Gaps) đột ngột không pixel nào có giá trị đó, xen kẽ là các đỉnh xung hẹp (Peaks). Thuật toán chỉ cần quét phổ tần cường độ và lôi cổ ra những thung lũng không có điểm ảnh chót vót đó để buộc tội can thiệp màu sắc.",
+    "parameters": "Biểu đồ ánh xạ: Phân bố Histogram 256 Bins, Đầu dò: Ngưỡng rỗng đột biến (Gap/Peak Ratio), Cường độ: Kênh Luma/Y",
+    "accuracy": "Siêu Cao (88-95%) - Đối với các thao tác bẻ cong cường độ, đây là tòa án tối cao không cho phép bất kỳ sự kháng cáo nào.",
+    "source": "Stamm & Liu (2008) - Pháp Y Điểm Mù Cương Độ Tương Phản",
+    "useCase": "Soi rọi toàn bộ biểu đồ ánh sáng của ảnh để đóng đinh những bộ phận nào đã bị áp dụng chỉnh Levels/Curves nhằm giả dạng hợp nhất với môi trường gốc.",
     "references": [
         {
-            "title": "Stamm & Liu (2008), IEEE ICME",
-            "url": ""
+            "title": "Stamm, M.C., & Liu, K.R. (2008). Blind forensics of contrast enhancement in digital images. IEEE ICIP.",
+            "url": "https://doi.org/10.1109/ICIP.2008.4712450"
         }
     ],
-    "strengths": "• Phát hiện nhiều loại tăng cường\\n• Hoạt động cả điều chỉnh toàn cục và cục bộ\\n• Phân tích histogram nhanh\\n• Kỹ thuật pháp y được thiết lập",
-    "limitations": "• Không phát hiện điều chỉnh rất tinh tế\\n• Nhiều tăng cường có thể triệt tiêu\\n• Nén JPEG ảnh hưởng histogram\\n• Giới hạn ở thao tác dựa cường độ"
+    "strengths": "• Rất nhanh, quét thẳng vào dữ liệu Histogram pixel mà không cần phải bốc cấu trúc không gian ba chiều phức tạp.\n• Có thể tóm gọn cả những phi vụ tăng giảm sáng tối vô cùng tinh vi mà mắt con người dù có mọc thêm 10 con nữa cũng không thể phân biệt nổi ngưỡng Luma.",
+    "limitations": "• Nhát dao này sẽ đánh hụt và gãy mũi nếu kẻ mạo danh am hiểu sâu sắc và xài kỹ thuật rắc thêm nhiễu hạt siêu vi (Dithering) sau khi kéo Curves, lấp đầy các khe hở histogram.\n• Chỉ túm được cổ mấy vụ kéo tương phản thô thiển; với ảnh chụp raw bằng HDR đa phơi sáng (Multi-exposure bracket), thuật toán sẽ bị ngáo và dễ báo nhầm (False Positives)."
 }

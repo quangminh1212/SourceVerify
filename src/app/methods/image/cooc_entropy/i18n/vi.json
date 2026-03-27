@@ -1,12 +1,18 @@
 {
-    "name": "Entropy đồng xuất hiện",
-    "description": "Tính entropy ma trận đồng xuất hiện",
-    "algorithm": "Thuật toán phân tích Entropy đồng xuất hiện",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Tính entropy ma trận đồng xuất hiện. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích entropy đồng xuất hiện. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Lưới Ngục Entropy Điểm Ảnh (Co-occurrence Entropy)",
+    "description": "Máy đo bức xạ hỗn loạn của thế giới số (GLCM - Gray Level Co-occurrence Matrix). Một bức ảnh chụp tự nhiên từ thấu kính luôn mang theo mình một tổ chức mô hình kết cấu vi mô hài hòa, có thể dự đoán được (ví dụ như thớ vải, hạt sương). Nhưng bọn tội phạm kỹ thuật số (hoặc AI tạo ảnh) thường xuyên nhào nặn điểm ảnh bừa bãi. Phép đo này tàn nhẫn phơi bày: một là cấu trúc quá hỗn độn điên loạn vì ghép tạp nham, hai là phẳng lì chết chóc như nhựa do AI cố cày nhẵn bề mặt.",
+    "algorithm": "Phân Tích Ma Trận Đồng Xuất Hiện Mức Xám (GLCM Entropy Measurement)",
+    "mechanism": "Thuật toán này bắt cóc mọi điểm ảnh trên bức hình và tra khảo xem 'vị láng giềng' của chúng (pixel kế cận) đang có mối quan hệ màu sắc cường độ như thế nào. Từ đó, nó vẽ ra một Lưới ma trận đồng xuất hiện (GLCM) kinh khiếp. Nó đếm tổng số lượng thông tin (Entropy) ẩn chứa. AI siêu sao cỡ nào đi nữa cũng không bao giờ có thể tự thêu dệt được một dạng kết cấu phân bố độ xám tự nhiên tinh vi giống như tự nhiên. Lưới này bắn cảnh báo ngay khi thấy vùng ghép xuất hiện điểm mù entropy 'vô hồn'.",
+    "parameters": "Hạch tâm: Gray-Level Co-occurrence Matrix (GLCM), Phương trình: Shannon Entropy Formula, Khoảng cách hướng: D=1, Góc đa chiều",
+    "accuracy": "Khá Ổn (68-83%) - Tỏ ra cực kỳ bạo chúa với trò cắt dán từ các bối cảnh khác mây mù hoặc AI cố bóc mẽ nét khối (in-painting lỗi).",
+    "source": "Haralick et al. (1973) - Cấu Trúc Đặc Trưng Vật Lý Mảnh",
+    "useCase": "Trở thành tòa thẩm phán khắc nghiệt chuyên lột trần mọi mảng da, kết cấu đất đá hoặc lông tóc bị dán ghép—chứng minh ngay tại chỗ rằng đám pixel này chỉ là đống hoang tàn rỗng tuếch do kẻ gian tạo ra.",
+    "references": [
+        {
+            "title": "Haralick, R.M., Shanmugam, K., & Dinstein, I. (1973). Textural features for image classification. IEEE TSMC.",
+            "url": "https://ieeexplore.ieee.org/document/4309314"
+        }
+    ],
+    "strengths": "• Đo lường sự vô kỷ luật của nhiễu nhám kết cấu một cách vô hình, vượt qua hoàn toàn mắt người.\n• Bức tử ngay lập tức sự 'trắng mịn không tì vết' sinh ra từ AI Diffusion (cố làm mượt da người nhưng phá hủy toàn bộ entropy lỗ chân lông quang học tự nhiên).",
+    "limitations": "• Nhát chém đập nhầm False Positive vào các kết cấu chụp trong sương mù, trời đêm hoặc bầu trời quang đãng, nơi Entropy hoàn toàn có lượng thông tin siêu thấp bẩm sinh.\n• Ảnh bị bợt nát tung tóe qua Facebook/WhatsApp làm thuật toán bị mất phương hướng cục bộ trong mạng lưới GLCM."
 }

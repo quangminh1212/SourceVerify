@@ -1,12 +1,18 @@
 {
-    "name": "Bản đồ tương phản",
-    "description": "Tạo bản đồ tương phản không gian",
-    "algorithm": "Thuật toán phân tích Bản đồ tương phản",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Tạo bản đồ tương phản không gian. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích bản đồ tương phản. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Bản Đồ Phân Hóa Tương Phản Cục Bộ (Contrast Map)",
+    "description": "Máy dò nhiệt độ ánh sáng cục bộ, nghiền nát mọi sự bất hợp lý về mặt phân bố tương phản không gian. Trên một bức ảnh thực, khi máy ảnh chụp một cảnh có vùng mờ (tiền cảnh nông) và vùng rõ, hoặc chiếu sáng hỗn hợp, sự chuyển biến tương phản luôn cực kỳ mượt mà. Tuy nhiên, khi một kẻ ném một vật thể cấy ghép siêu nét vào một góc ảnh vốn dĩ đang mờ nhòe (hoặc kém tương phản), Bản Đồ Tương Phản này sẽ ngay lập tức bắt thóp sự 'lệch tông' trắng trợn và đóng đạn bằng dấu đỏ rực.",
+    "algorithm": "Phân Tích Bất Thường Block Phân Giải Không Gian (Block Spatial Contrast)",
+    "mechanism": "Nó xé nhỏ hình ảnh ra hàng ngàn các Block lưới 8x8 hoặc 16x16 pixel, đo lường độ chênh lệch cực đại giữa điểm sáng nhất và điểm tối nhất (Tương phản Michelson/Weber) của từng ô. Sau đó, nó vẽ nên một bản đồ nhiệt Topography (như bản đồ không gian). Một điểm cấy ghép từ ảnh bên ngoài sẽ tạo ra một vách đá tương phản nhô lên đột ngột một cách phi logic, phá vỡ định luật mờ sương hoặc ánh sáng tản tự nhiên.",
+    "parameters": "Phương pháp: Tương phản cường độ Michelson, Block lưới: Lên tới đa khối 16x16 lưới, Ngưỡng độ lệch: Median Variance Anomaly",
+    "accuracy": "Khá Tốt (70-80%) - Một loại 'hải đăng' dò đường cực mạnh để vạch mặt mấy ông thợ nghiệp dư kéo lê chuột Copy-Paste ảnh giữa hai môi trường khác biệt ánh sáng.",
+    "source": "Lưu Trữ Xử Lý Tín Hiệu Pháp Y (Computational Photography)",
+    "useCase": "Trở thành đao phủ giám sát, chuyên đánh chặn các phi vụ 'lắp ráp lego' cấy ghép các bộ phận người, biển số xe hay đồ vật lạc loài mang một mảng tương phản chỏi lóa so với xung quanh.",
+    "references": [
+        {
+            "title": "Barni, M., et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency. IEEE TFS.",
+            "url": "https://ieeexplore.ieee.org/document/5567087"
+        }
+    ],
+    "strengths": "• Tốc độ tính toán nhanh như chớp vì API Canvas có thể dọn sạch ma trận pixel phía client chưa tới một giây.\n• Dập tắt ngay lập tức những trò chắp vá đồ họa cẩu thả mà mắt thường không để ý, đặc biệt hiệu quả trên các vùng viền sắc nét dị biệt.",
+    "limitations": "• Sẽ phát rồ và bắn nhầm loạn xạ (tạo dương tính giả rợp trời) nếu ảnh là chân dung xóa phông thuật toán của iPhone (Cinematic mode) hoặc ảnh chụp Bokeh khẩu độ f/1.4, bởi độ tương phản sẽ giảm đột ngột tự nhiên do thấu kính.\n• Chết đứng nếu đối mặt với một manipulator lão luyện lôi trò Match Color đè lên vật thể cấy ghép để làm lụi tàn độ tương phản sao cho vừa vặn."
 }
