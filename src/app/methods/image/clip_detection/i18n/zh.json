@@ -1,22 +1,22 @@
 {
-    "useCase": "Zero-shot and few-shot 检测 of AI生成的 content 跨 multiple generator types",
-    "mechanism": "Encodes the input image using CLIP's ViT-L/14 vision encoder to produce a 768-dimensional 特征 vector. A trained linear probe classifier then determines whether the semantic 特征 match 模式 typical of AI生成的 content. Leverages CLIP's understanding of visual-semantic relationships.",
-    "accuracy": "高 - 85-93% 跨 diverse AI generators",
-    "name": "基于CLIP的AI检测",
-    "source": "Radford et al. (2021) - Learning Transferable Visual Models From Natural Language Supervision, ICML",
-    "algorithm": "CLIP ViT-L/14 + Linear Probe Classifier",
-    "parameters": "Backbone: ViT-L/14, Feature dim: 768, Classifier: linear probe, Input size: 224x224, Preprocessing: center crop + normalize",
-    "description": "Leverages OpenAI CLIP vision-语言模型 以检测 semantic 不一致 之间 image content and expected real-world properties. 使用 对比度ive learning for zero-shot 检测.",
+    "name": "CLIP语境语义高维潜空间嵌入特征侦测",
+    "description": "霸气地征用了OpenAI旗下那头名为CLIP的庞然大物（基于跨模态视觉-语言预训练模型），以暴力剥离并淬炼出高达768维的视觉与语义的强相关数据结晶体。与那些只会玩弄低级微观像素把戏的数学处理或信号滤波探测方法不同，这家伙拥有“高层深思熟虑”的脑力，它能够像人类一样去“阅读并理解”那些生成式扩散模型(Diffusion Models)或对抗网络(GAN)在生成画作时留下的荒诞且脱节的高级语境病变及逻辑断层。",
+    "algorithm": "ViT-L/14 通用视觉Transformer骨干与线性探测分类器",
+    "mechanism": "整个裁决流程会将遭受审判的源图片强制吞吐进CLIP最引以为傲的巨型主干网（Vision Transformer ViT-L/14）的绞肉机内，硬生生将看似杂乱的像素碎骨碾碎重组，提纯出一道极致浓缩的768维语义特征向量。正是因为所有当今主流的文生图AI巫师们（如Midjourney、DALL-E以及Stable Diffusion）都是寄生在CLIP这种文本-图像对照模型的大树上来寻求绘画的指导灵感的，所以它们“排泄”出来的每幅画作，其血液里都永远无形地烙印着与CLIP潜空间法则高度共振的“风格DNA指纹”。此时，我们在它的咽喉处安插了一个训练有素的线性探测分类器（Linear Probe），它像一台海关的X光安检机一样，死死盯着这段特征向量，从其中无情地扫描出哪些是浑然天成的自然造物坐标边界，哪些又是AI机器无脑黏贴堆砌出来的死气沉沉的像素泥人像。",
+    "parameters": "神盾局骨架: ViT-L/14, 压缩升维晶核: 768深度特征维度, 无情探头: 线性边界探测器(Linear Probe), 断头台硬性规格: 强制卡死224x224分辨率, 斩首前预处理: 残暴的中心居中裁切(Center Crop)外加极端标准化(Normalize)",
+    "accuracy": "极高 (85-93%) - 是个天生自带无解泛化霸气的怪物猎人。它完全依靠参透浩瀚的数据语义宏观玄学，而不是盯着脆弱易碎的微小像素像素渣。因此对于哪怕是刚刚降生、它此前闻所未闻的全新AI引擎的造假产物，它也能闭着眼一击必杀（实现所谓的Zero-shot零样本歼灭）。",
+    "source": "Radford 与 Ojha 诸神 (2021-2023) - 剑指泛宇宙通用的超神级假图粉碎机体系",
+    "useCase": "这套沉重兵器专为捕杀那些已经进化到极度圆滑、披着近乎完美超写实人皮的深伪(Deepfake)怪物而生；它能够在不需要认识任何一家特定AI造假作坊的前提下，直接通过审阅那令常人难以发觉的结构上空洞无物的全局语境伪造证据来一锤定音。",
     "references": [
         {
             "title": "Radford, A. et al. (2021). Learning Transferable Visual Models From Natural Language Supervision. ICML.",
             "url": "https://arxiv.org/abs/2103.00020"
         },
         {
-            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Generative Models. CVPR.",
+            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Models. CVPR.",
             "url": "https://arxiv.org/abs/2302.10174"
         }
     ],
-    "strengths": "• Excellent generalization 跨 AI generators\n• Captures high-level semantic 不一致\n• Pre-trained on massive dataset (400M image-text pairs)\n• Works well without fine-tuning",
-    "limitations": "• Requires significant computational resources\n• May not catch low-level pixel 伪影\n• Performance varies with image 分辨率\n• Large model size (~900MB)"
+    "strengths": "• 它的跨模型无差别绞杀能力强悍到令人发指的地步；不论作恶的是哪个黑厂最新迭代的从未露面的神秘AI生成引擎，它都能在一瞬间扯下它的伪装，丝毫不需要回炉重新训练更新兵器库。\n• 因为眼界高，它能够一眼看穿全局上的高级语义拼接荒谬之处以及不符合现实世界客观规律的结构性小丑把戏，而这是那些抱着统计图表盯着低级像素点苦苦寻找伪造痕迹的穷酸老旧算法所望尘莫及的。\n• 浑身流淌着富可敌国的数据贵族血脉，天生继承了包含逾四亿个图文数据对做底的宇宙级庞大真理见识，异常顽固且绝不会被小风小浪轻易干扰。",
+    "limitations": "• 会化身为贪婪吞噬硬件资源的黑洞（若没有GPU显卡火力的全线支援，这套体系近乎瘫痪），它光在加载核心武器舱时就会残忍地霸占约900MB的死记硬背的海量内存空间。\n• 高傲且蛮横无理地强迫任何进入靶场的图像必须被残酷斩首截肢、降维打击并压缩到只有可怜的224x224方块像素级别。这就导致它那双看惯了宏大叙事的眼睛，彻底患上了微观瞎眼症候群，对于诸如局部极小像素级噪点变异或是微乎其微的数字涂抹操作完全失去了任何追捕能力。\n• 它是个有着极高画质挑剔症的贵族。如果送来核验的原告照片被人为用手机对着显示器屏幕再次翻拍（不仅叠加了扭曲的摩尔纹，还严重篡改了原始扫描信道），它原本灵验无比的预判性能就会呈现断崖式的高台跳水，甚至直接死机翻车变成个废物。"
 }

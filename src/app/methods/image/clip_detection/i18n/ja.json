@@ -1,22 +1,22 @@
 {
-    "useCase": "Zero-shot and few-shot 検出 of AI生成の content にわたる multiple generator types",
-    "mechanism": "Encodes the input image using CLIP's ViT-L/14 vision encoder to produce a 768-dimensional 特徴 vector. A trained linear probe classifier then determines whether the semantic 特徴 match パターン typical of AI生成の content. Leverages CLIP's understanding of visual-semantic relationships.",
-    "accuracy": "高 - 85-93% にわたる diverse AI generators",
-    "name": "CLIPベースAI検出",
-    "source": "Radford et al. (2021) - Learning Transferable Visual Models From Natural Language Supervision, ICML",
-    "algorithm": "CLIP ViT-L/14 + Linear Probe Classifier",
-    "parameters": "Backbone: ViT-L/14, Feature dim: 768, Classifier: linear probe, Input size: 224x224, Preprocessing: center crop + normalize",
-    "description": "Leverages OpenAI CLIP vision-言語モデル を検出するために semantic 不整合 間の image content and expected real-world properties. 使用します コントラストive learning for zero-shot 検出.",
+    "name": "CLIPセマンティック特徴埋め込み検出",
+    "description": "OpenAIのCLIP（表現学習による自然言語と画像の対照学習）モデルの強力な視覚言語事前学習を利用して、768次元の視覚的セマンティック埋め込みを抽出します。数学的または信号処理の方法とは異なり、これは高レベルのディープラーニングを活用して、拡散モデルやGANによってネイティブに残された視覚的な不一致や意味的な痕跡を「理解」します。",
+    "algorithm": "ViT-L/14 Vision Transformer & 線形プローブ分類器",
+    "mechanism": "アルゴリズムは、画像をCLIPのVision Transformer（ViT-L/14）バックボーンに通し、生のピクセルを密集した768次元のセマンティック特徴ベクトルに変換します。AIジェネレーター（Midjourney、DALL-Eなど）はCLIPなどの類似モデルをコアのセマンティックガイダンスとして使用しているため、その出力には、CLIPの潜在空間と強く共鳴する文体的な「指紋」が本質的に含まれています。訓練された線形プローブ（Linear Probe）分類器は、この埋め込みベクトル内をスキャンし、合成されたピクセル配列から自然の幾何学を区別する特定のセマンティックの境界と座標を探し出します。",
+    "parameters": "バックボーン: ViT-L/14, 次元数: 768, 分類器: リニアプローブ, 入力解像度: 224x224, 前処理: センタークロップ + 正規化",
+    "accuracy": "高（85-93%） - 壊れやすいピクセルのアーティファクトではなく、幅広いセマンティックな理解に依存しているため、未知の複数のジェネレーターアーキテクチャ（ゼロショット検出）全体に非常によく汎化します。",
+    "source": "Radford et al. (2021) / Ojha et al. (2023) - 普遍的なフェイク画像検出器",
+    "useCase": "高度で包括的なセマンティックの不一致を評価することにより、未知のさまざまなジェネレーターにまたがる、非常に洗練された写真のようにリアルなAI生成のディープフェイクを検出します。",
     "references": [
         {
             "title": "Radford, A. et al. (2021). Learning Transferable Visual Models From Natural Language Supervision. ICML.",
             "url": "https://arxiv.org/abs/2103.00020"
         },
         {
-            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Generative Models. CVPR.",
+            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Models. CVPR.",
             "url": "https://arxiv.org/abs/2302.10174"
         }
     ],
-    "strengths": "• Excellent generalization にわたる AI generators\n• Captures high-level semantic 不整合\n• Pre-trained on massive dataset (400M image-text pairs)\n• Works well without fine-tuning",
-    "limitations": "• Requires significant computational resources\n• May not catch low-level pixel アーティファクト\n• Performance varies with image 解像度\n• Large model size (~900MB)"
+    "strengths": "• 驚異的なクロスモデルの汎化能力を誇ります。再訓練を必要とせずに、まったく新しい未知のAIエンジンの画像を検出できます。\n• 低レベルの統計的アルゴリズムでは完全に見逃してしまう、複雑で高レベルのセマンティックおよび構造的な不可能性を特定します。\n• 巨大な基礎的な事前学習データセット（4億以上の画像とテキストのペア）の堅牢性を受け継いでいます。",
+    "limitations": "• 莫大な計算能力を要求し（GPUを強く推奨）、巨大なメモリフットプリント（〜900MB）を消費します。\n• 強制的なダウンサンプリング/トリミング（224x224）が必要なため、微細な低レベルのピクセルアーティファクトや局所的なノイズに対しては事実上盲目になります。\n• 元の画像が大幅に再スキャンされた場合（画面の写真など）、パフォーマンスが大幅に低下する可能性があります。"
 }

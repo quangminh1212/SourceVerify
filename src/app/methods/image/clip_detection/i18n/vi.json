@@ -1,22 +1,22 @@
 {
-    "useCase": "Phát hiện zero-shot và few-shot nội dung AI trên nhiều loại bộ tạo",
-    "mechanism": "Mã hóa ảnh đầu vào bằng bộ mã hóa thị giác ViT-L/14 của CLIP để tạo vector đặc trưng 768 chiều. Bộ phân loại tuyến tính đã huấn luyện xác định xem đặc trưng ngữ nghĩa có khớp mẫu điển hình của nội dung AI hay không.",
-    "accuracy": "Cao - 85-93% trên nhiều loại bộ tạo AI",
-    "name": "Phát hiện AI dựa trên CLIP",
-    "source": "Radford et al. (2021) - Học mô hình thị giác có thể chuyển giao từ giám sát ngôn ngữ tự nhiên, ICML",
-    "algorithm": "CLIP ViT-L/14 + Bộ phân loại tuyến tính",
-    "parameters": "Backbone: ViT-L/14, Chiều đặc trưng: 768, Bộ phân loại: tuyến tính, Đầu vào: 224x224, Tiền xử lý: cắt giữa + chuẩn hóa",
-    "description": "Sử dụng mô hình thị giác-ngôn ngữ CLIP của OpenAI để phát hiện bất nhất quán ngữ nghĩa. Dùng học đối lập cho phát hiện zero-shot.",
-    "strengths": "• Tổng quát hóa xuất sắc trên nhiều bộ tạo AI\n• Nắm bắt sự không nhất quán ngữ nghĩa cấp cao\n• Được huấn luyện trên tập dữ liệu khổng lồ (400M cặp ảnh-text)\n• Hoạt động tốt không cần tinh chỉnh",
-    "limitations": "• Yêu cầu tài nguyên tính toán đáng kể\n• Có thể không phát hiện hiện vật mức pixel thấp\n• Hiệu suất thay đổi theo độ phân giải\n• Kích thước mô hình lớn (~900MB)",
+    "name": "Nhận Diện Dấu Vết Ngữ Nghĩa Bằng CLIP Embedding",
+    "description": "Khai thác sức mạnh khổng lồ của mô hình Tiền huấn luyện Ngôn ngữ-Hình ảnh (CLIP) từ OpenAI để trích xuất 768 chiều vector ngữ nghĩa đối chiếu. Khác hoàn toàn với các thuật toán vật lý hay xử lý tín hiệu thông thường, phương pháp này dùng deep learning tầng cao để tự 'gắn kết' và 'hiểu' các mâu thuẫn về mặt chi tiết logic mà các mô hình Diffusion và GAN thường vô tình để lại.",
+    "algorithm": "Vision Transformer ViT-L/14 & Bộ Phân Loại Linear Probe",
+    "mechanism": "Thuật toán nhồi bức ảnh qua lõi Vision Transformer (ViT-L/14) của CLIP, nghiền nát và chưng cất các pixel thô thành một khối vector ngữ nghĩa đặc 768 chiều. Bởi vì gốc rễ của mọi AI sinh ảnh (như Midjourney, DALL-E) đều dùng chính CLIP hoặc các mô hình tương tự để 'đọc hiểu' prompt, nên các tác phẩm chúng đẻ ra luôn dính đầy 'dấu vân tay' phong cách cộng hưởng dữ dội với không gian ẩn của CLIP. Một bộ Linear Probe đã được huấn luyện sẽ ngồi ngay trên đầu khối vector này, soi quét từng tọa độ biên giới ngữ nghĩa tinh vi dùng để phân định ranh giới rạch ròi giữa vật thể tự nhiên và những sắp xếp lưới pixel tạo sinh.",
+    "parameters": "Backbone: ViT-L/14, Số chiều Vector: 768, Bộ phân loại: Linear Probe, Đầu vào ép buộc: 224x224, Tiền xử lý: Cắt trung tâm & Chuẩn hóa",
+    "accuracy": "Mức Cao (85-93%) - Là vị thần xuất chúng trong việc tổng quát hóa, dễ dàng nhận diện và tóm gọn cả những mô hình AI hoàn toàn mới chưa từng gặp mặt (Zero-shot) nhờ khả năng thấu hiểu tổng quan ngữ nghĩa thay vì phụ thuộc vào nhiễu pixel cỏn con.",
+    "source": "Radford et al. (2021) / Ojha et al. (2023) - Hệ Thống Truy Quét Ảnh Giả Toàn Cầu",
+    "useCase": "Săn lùng các tác phẩm deepfake tạo sinh siêu chân thực, bóc trần những mâu thuẫn hình học từ vô vàn các cỗ máy tạo ảnh vô danh trên mạng internet.",
     "references": [
         {
             "title": "Radford, A. et al. (2021). Learning Transferable Visual Models From Natural Language Supervision. ICML.",
             "url": "https://arxiv.org/abs/2103.00020"
         },
         {
-            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Generative Models. CVPR.",
+            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Models. CVPR.",
             "url": "https://arxiv.org/abs/2302.10174"
         }
-    ]
+    ],
+    "strengths": "• Tự hào với năng lực bao quát xuyên mô hình; nó có thể đấm gục những hệ thống AI hoàn toàn xa lạ mà chẳng cần phải được tái huấn luyện (retrain) từ đầu.\n• Tóm gọn những điểm phi lý trầm trọng về cấu trúc ngữ nghĩa cấp cao—những thứ mà mọi thuật toán thống kê đời cũ bị mù hoàn toàn.\n• Kế thừa sự rắn rỏi tuyệt đối từ việc được nhồi nhét tới 400 triệu cặp dữ liệu ảnh-đoạn văn bản.",
+    "limitations": "• Ngốn phần cứng và siêu khát điện (Cực kỳ khuyến nghị xài GPU), đồng thời tốn bộ nhớ khủng khiếp (~900MB cho con quái thú lõi ViT-L).\n• Bị ép thắt cổ chai về độ phân giải (bắt buộc crop về 224x224), nghĩa là nó bị thong manh và làm ngơ mọi sai sót nhiễu ảnh hiển vi ở cấp độ từng điểm ảnh cục bộ.\n• Tính hiệu quả sẽ cắm đầu lao dốc nếu bức ảnh bị scan cẩu thả, hoặc chịu sự tra tấn của định dạng màn hình mờ (chụp lại màn hình điện thoại/máy tính)."
 }

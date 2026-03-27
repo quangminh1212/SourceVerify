@@ -1,22 +1,22 @@
 {
-    "useCase": "Zero-shot and few-shot detection of AI-generated content across multiple generator types",
-    "mechanism": "Encodes the input image using CLIP's ViT-L/14 vision encoder to produce a 768-dimensional feature vector. A trained linear probe classifier then determines whether the semantic features match patterns typical of AI-generated content. Leverages CLIP's understanding of visual-semantic relationships.",
-    "accuracy": "High - 85-93% across diverse AI generators",
-    "name": "CLIP-based AI Detection",
-    "source": "Radford et al. (2021) - Learning Transferable Visual Models From Natural Language Supervision, ICML",
-    "algorithm": "CLIP ViT-L/14 + Linear Probe Classifier",
-    "parameters": "Backbone: ViT-L/14, Feature dim: 768, Classifier: linear probe, Input size: 224x224, Preprocessing: center crop + normalize",
-    "description": "Leverages OpenAI CLIP vision-language model to detect semantic inconsistencies between image content and expected real-world properties. Uses contrastive learning for zero-shot detection.",
-    "strengths": "• Excellent generalization across AI generators\n• Captures high-level semantic inconsistencies\n• Pre-trained on massive dataset (400M image-text pairs)\n• Works well without fine-tuning",
-    "limitations": "• Requires significant computational resources\n• May not catch low-level pixel artifacts\n• Performance varies with image resolution\n• Large model size (~900MB)",
+    "name": "CLIP Semantic Feature Embedding Detection",
+    "description": "Leverages the powerful Vision-Language pre-training of OpenAI's CLIP (Contrastive Language-Image Pre-training) model to extract 768-dimensional visual-semantic embeddings. Unlike mathematical or signal processing methods, this leverages high-level deep learning to 'comprehend' visual inconsistencies and semantic traces natively left behind by diffusion models and GANs.",
+    "algorithm": "ViT-L/14 Vision Transformer & Linear Probe Classifier",
+    "mechanism": "The algorithm feeds the image through CLIP's Vision Transformer (ViT-L/14) backbone, transforming raw pixels into a dense 768-dimensional semantic feature vector. Because AI generators (like Midjourney, DALL-E) use CLIP or similar models as their core semantic guidance, their outputs inherently contain stylistic 'fingerprints' that resonate strongly with CLIP's latent space. A trained linear probe classifier scans this embedding vector for specific semantic boundaries and coordinates that distinguish natural geometry from synthesized pixel arrangements.",
+    "parameters": "Backbone: ViT-L/14, Feature Dim: 768, Classifier: Linear Probe, Input Resolution: 224x224, Preprocessing: Center Crop + Normalize",
+    "accuracy": "High (85-93%) - Exceptionally adept at generalizing across multiple unseen generator architectures (Zero-shot detection) as it relies on broad semantic understanding rather than brittle pixel artifacts.",
+    "source": "Radford et al. (2021) / Ojha et al. (2023) - Universal Fake Image Detectors",
+    "useCase": "Detecting sophisticated, photorealistic AI-generated deepfakes across a variety of unknown generators by evaluating high-level overarching semantic inconsistencies.",
     "references": [
         {
             "title": "Radford, A. et al. (2021). Learning Transferable Visual Models From Natural Language Supervision. ICML.",
             "url": "https://arxiv.org/abs/2103.00020"
         },
         {
-            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Generative Models. CVPR.",
+            "title": "Ojha, U. et al. (2023). Towards Universal Fake Image Detectors that Generalize Across Models. CVPR.",
             "url": "https://arxiv.org/abs/2302.10174"
         }
-    ]
+    ],
+    "strengths": "• Boasts incredible cross-model generalization capabilities; it can detect images from brand new, unseen AI engines without needing retraining.\n• Identifies complex high-level semantic and structural impossibilities that low-level statistical algorithms completely miss.\n• Inherits the robustness of a massive foundational pre-training dataset (400+ million pairs).",
+    "limitations": "• Demands heavy computational power (GPU heavily recommended) and carries a massive memory footprint (~900MB).\n• Requires forced downsampling/cropping (224x224), rendering it practically blind to microscopic, low-level pixel artifacts or localized noise.\n• Performance can degrade significantly if the original image is heavily re-scanned (e.g., photo of a screen)."
 }
