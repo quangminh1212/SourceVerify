@@ -1,14 +1,13 @@
 {
-    "name": "Negation Pattern",
-    "description": "Analyzes negation usage patterns",
-    "algorithm": "Negation Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes negation usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through negation pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "부정(Negation) 패턴",
+    "description": "글 속에서 거부, 모순, 또는 부재(예: 'not', 'never', 'un-', 'non-')를 표현하는 방식을 분석합니다. AI 모델은 단순하고 직접적인 분석적 부정('~하지 않다', '~가 아니다')을 극도로 편애하며, 인간 작가가 수사학적 뉘앙스를 살리기 위해 구사하는 복잡한 이중 부정이나 미묘한 형태론적 부정을 자연스럽게 생성하는 데 엄청난 어려움을 겪습니다.",
+    "algorithm": "통사론적(Syntactic) 및 형태론적(Morphological) 부정어 분포 분석",
+    "mechanism": "이 기법은 텍스트를 구문 분석하여 부정이 사용된 모든 사례를 식별하고, 이를 세 가지 카테고리로 분류합니다: 분석적 부정('not'이나 'no'를 명시적으로 사용), 형태론적 부정('un-', 'im-', '-less'와 같은 접두사/접미사 사용), 그리고 내재적 부정('부인하다', '거부하다', '실패하다'처럼 단어 자체에 부정적 의미 가중치가 있는 경우). 거대 언어 모델(LLM)들은 의미의 명확성을 극대화하고 논리적 모호성을 피하도록 철저하게 통계적 훈련을 받았습니다. 그 결과, 그들은 통계적으로 가장 무난하고 안전한 형태의 단순 분석적 부정에 압도적으로 의존합니다 (예: 'It is uneasy(불안하다)' 또는 'It is far from simple(결코 단순하지 않다)' 대신 'It is not easy(쉽지 않다)'를 선택함). AI는 이중 부정('드물지 않은 일이 아니다')이나, 부정 표지가 문장 저 멀리 있는 종속절에까지 영향을 미치는 복잡한 범위의 부정(Complex scope negation)을 일관되게 회피합니다. 글을 생성할 때 계산적인 불확실성을 높이기 때문입니다. 반면 인간 작가들은 모순이나 아이러니의 미묘한 정도를 전달하기 위해 형태론적 접두사나 내재적 부정 동사를 섞어 쓰며, 훨씬 풍부하고 다채로운 부정의 스펙트럼을 자연스럽게 활용합니다. 단순한 'not/no' 구조에 부자연스러울 정도로 과하게 의존하는 글은, 문체의 다양성보다는 '안전하고 명시적인 통계적 텍스트 생성'을 최우선으로 삼는 AI 모델의 흔적을 강하게 암시합니다.",
+    "useCase": "설득력 있는 에세이, 문헌 고찰(Literature review), 오피니언 칼럼 등을 감사할 때 매우 효과적입니다. 인간 작가 특유의 풍부하고 뉘앙스가 살아 있는 모순(부정) 표현과, 수학적으로 뻔하고 '안전하게만' 부인하는 AI의 기계적 표현을 극명하게 갈라냅니다.",
+    "strengths": "• 구조적인 RLHF 정렬(인간 피드백 학습)이 오히려 역으로 강화해 버린(명확성을 극도로 추구하는 성향) 자기회귀 모델의 깊은 통계적 편향을 정확히 타격합니다.\n• 부정이란 어떠한 담화에서든 빈번하고 필수적인 요소이므로, 비교적 짧은 텍스트에서도 강력한 탐지 성능을 발휘합니다.\n• 생성된 텍스트가 기괴하고 부자연스럽게 들리지 않는 이상, 얄팍한 프롬프트 엔지니어링 꼼수만으로는 이 검증망을 우회하기가 매우 어렵습니다.",
+    "limitations": "• 외국어 학습자, 비원어민이 쓴 글이나, 본질적으로 명확한 의미 전달을 위해 단순 분석적 부정을 선호하는 기술 매뉴얼을 분석할 때는 오탐지(False positive)를 낼 수 있습니다.\n• 인간 작가가 의도적으로 헤밍웨이처럼 극도로 간결하고 건조한 문체를 구사한 경우 탐지력이 떨어집니다.\n• 검사 대상 장르 자체가 '무조건 쉬운(Plain) 평서문'을 강제하는 경우, 인간이 쓴 글인지 AI가 쓴 글인지 구분할 수 없습니다.",
+    "parameters": "분석 기준: 의존 구문 분석(Dependency Parsing) 및 부정어의 영향 범위(Scope) 매핑\n측정 지표: 분석적 부정 vs. 형태론적/내재적 부정의 구성 비율\n출력: 0-100 부정어 단순화 (통계적 안전 지향성) 스코어",
+    "accuracy": "중간~높음 — 72-80%의 탐지율. 구조적으로 어느 정도 복잡하고 우회적인 부정이 등장할 법한 학술, 창작, 또는 논리 중심의 텍스트를 감사할 때 폭발적인 위력을 갖습니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

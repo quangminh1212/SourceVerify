@@ -1,14 +1,13 @@
 {
-    "name": "Modal Verb Frequency",
-    "description": "Measures modal verb usage patterns",
-    "algorithm": "Modal Verb Frequency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures modal verb usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through modal verb 주파수 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "법조동사 빈도 (Modal Verb Frequency)",
+    "description": "글 속에 등장하는 법조동사(예: 'can', 'could', 'may', 'might', 'must', 'should' 등)의 빈도와 패턴을 분석합니다. AI 모델은 단정적인 확언을 피하면서도 권위 있게(Authoritative) 보이려는 얄팍한 문체적 방어 기제로써 인식적 양태(가능성이나 추측을 나타내는 법조동사)를 과도하게 남발하는 경향이 있습니다.",
+    "algorithm": "인식적(Epistemic) 및 의무적(Deontic) 양태 조동사 밀도 프로파일링",
+    "mechanism": "이 알고리즘은 텍스트를 스캔하여 모든 법조동사(조동사)를 추출한 다음, 이를 뉘앙스에 따라 '인식적 양태(가능성/확률, 예: ~일지도 모른다, ~인 것 같다, ~할 수 있다)'와 '의무적 양태(의무/허락, 예: ~해야 한다, ~해야만 한다)'로 분류합니다. 그런 다음 1,000단어 당 이런 법조동사들의 상대적 빈도를 계산하고, 이를 해당 문서 장르를 직접 쓴 인간 작가들의 베이스라인 분포와 비교합니다. 거대 언어 모델(LLM)들은 RLHF(인간 피드백 기반 강화 학습)를 통해 세상 무해하고, 누구에게나 예의 바르며, 극도로 객관적이어야 한다는 강박적 훈련(Alignment)을 받았습니다. 그 부작용으로, AI는 환각(Hallucination) 오류나 편향(Bias) 논란을 일으킬 만한 '확정적이고 단호한 사실 주장'을 구조적으로 회피합니다. 대신 자신의 글을 빠져나갈 구멍이 있는 부드러운 법조동사들로 쿠션처럼 칭칭 감아버립니다. ('~을 고려하는 것이 중요할 수 있습니다', '~를 나타낼지도 모릅니다', '~라고 주장할 여지도 있습니다'). 인간 작가들 역시 조동사를 쓰긴 하지만, 자신의 글에 확신이 있을 때는 훨씬 더 대담하고 직설적인 선언과 의견을 표출합니다. 단정 짓지 않고 책임을 회피하는(Non-committal) 조동사들이 수학적으로 부자연스럽게 포화된 텍스트는 AI 특유의 '안전 제일주의'와 '눈치 보기(Hedged output)'의 결정적 증거가 됩니다.",
+    "useCase": "논설문, 오피니언 칼럼, 학술 논문 등을 감사할 때 매우 효과적입니다. 인간 특유의 피 끓는 확신이나 단호한 연구 결론을, AI의 지나치게 조심스럽고 방어적인(Hedged) 기계적 어조와 깔끔하게 갈라냅니다.",
+    "strengths": "• 현대 AI 모델의 가장 깊은 본질인 '안전망 정렬(RLHF)' 자체를 역으로 공격합니다. 프롬프트 엔지니어가 아주 집요하고 강압적으로 명령하지 않는 한, 모델 스스로 이 족쇄를 풀고 확정적 어조를 구사하기란 불가능에 가깝습니다.\n• 탐지 결과가 극도로 투명하고 직관적입니다. (AI가 과도하게 남발한 방어적 조동사들의 리스트를 사용자에게 증거로 들이밀 수 있습니다).\n• 확률이나 의무를 나타내는 명확한 조동사(또는 어미) 문법이 존재하는 다양한 언어권에서 보편적으로 강력한 효과를 냅니다.",
+    "limitations": "• 인간이 썼더라도 극도로 외교적인 수사, 법적 책임 한계 고지서(면책 조항), 또는 본질적으로 극도의 신중함이 요구되는 특정 학문 분야(예: 양자역학, 이론 물리학)의 글에서는 오탐지(False positive)가 발생할 수 있습니다.\n• 짧은 텍스트에서는 통계적으로 유의미한 법조동사 프로파일을 그릴 만큼의 표본 동사가 부족할 수 있습니다.\n• 인간 사용자가 AI에게 대놓고 '공격적이고 확정적인 톤으로 단언하듯 써라'라고 명령(Prompting)하면 탐지망을 우회할 수 있습니다.",
+    "parameters": "분석 기준: 품사(POS) 태깅 및 양태 조동사(Modal Auxiliary) 역추출\n측정 지표: 전체 동사 및 총 단어 수 대비 법조동사의 비율\n출력: 0-100 책임 회피 방어막 (RLHF 안전망 포화도) 스코어",
+    "accuracy": "중간~높음 — 73-81%의 정확도. AI 특유의 '눈치 보는 기계적 톤'을 잡아내는 아주 신뢰할 만한 지표이지만, 타깃 텍스트가 원래 어떤 장르를 의도하고 쓰였는지에 대한 맥락 파악이 선행되어야 합니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

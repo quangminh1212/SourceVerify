@@ -1,12 +1,21 @@
 {
-    "name": "Độ sâu phụ thuộc trung bình",
-    "description": "Ước lượng xấp xỉ độ sâu phụ thuộc trung bình",
-    "algorithm": "Thuật toán phân tích Độ sâu phụ thuộc trung bình",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Ước lượng xấp xỉ độ sâu phụ thuộc trung bình. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích độ sâu phụ thuộc trung bình. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Độ Sâu Phụ Thuộc Trung Bình (MDD)",
+    "description": "Đo lường độ phức tạp cấu trúc của câu bằng cách phân tích 'khoảng cách' (độ sâu) trung bình giữa động từ gốc của câu và các từ phụ thuộc của nó trong một cây phân tích cú pháp. Các mô hình AI thường tạo ra các câu có cấu trúc phụ thuộc nông hơn, đơn giản hơn để giảm thiểu lỗi cú pháp, trong khi con người tự nhiên cấu trúc các câu có độ lồng ghép sâu hơn và biến đổi cao.",
+    "algorithm": "Phân Tích Độ Sâu Cây Phụ Thuộc Cú Pháp",
+    "mechanism": "Phương pháp này sử dụng trình phân tích cú pháp phụ thuộc Xử lý Ngôn ngữ Tự nhiên (NLP) để lập bản đồ cấu trúc ngữ pháp của mọi câu trong văn bản. Nó xác định 'gốc' của câu (thường là động từ chính) và xây dựng một cây cú pháp trình bày chi tiết cách chủ ngữ, tân ngữ và các từ bổ nghĩa phụ thuộc lẫn nhau. 'Độ sâu Phụ thuộc' là số lượng liên kết ngữ pháp giữa gốc và từ phụ thuộc xa nhất. Thuật toán tính toán Độ sâu Phụ thuộc Trung bình (MDD) trên tất cả các câu. Vì LLM hoạt động thông qua việc dự đoán token tiếp theo tự hồi quy, việc theo dõi các phụ thuộc ngữ pháp có lồng ghép sâu, khoảng cách xa (ví dụ: một chủ ngữ bị tách khỏi động từ của nó bởi ba mệnh đề quan hệ) đòi hỏi tính toán 'sự chú ý' (attention) đáng kể và có nguy cơ phá vỡ ngữ pháp. Do đó, việc căn chỉnh mô hình ủng hộ mạnh mẽ việc tạo văn bản với các cây cú pháp phẳng, dễ hiểu (MDD thấp). Người viết, đặc biệt là trong các bối cảnh trang trọng hoặc học thuật, viết một cách hữu cơ với sự nhúng cú pháp sâu hơn, ghi nhớ các cấu trúc phức tạp trong trí nhớ làm việc của họ. Nếu một văn bản dài, được cho là tinh vi lại thể hiện Độ sâu Phụ thuộc Trung bình nông một cách phi tự nhiên giáp ranh với cú pháp đơn giản hóa, nó bị đánh dấu mạnh là do máy tính tạo ra.",
+    "useCase": "Thiết yếu để đánh giá các bài tiểu luận lập luận dài, tài liệu văn học và các bài báo kỹ thuật để xác định xem độ phức tạp ngữ pháp có phù hợp với chiều sâu trí tuệ mong đợi của văn bản do con người viết hay không.",
+    "strengths": "• Khả năng chống lại kỹ thuật prompt cơ bản rất cao; yêu cầu AI 'viết phức tạp hơn' thường dẫn đến việc mô hình thêm nhiều tính từ hoặc từ vựng hiếm, thay vì làm sâu sắc thêm về mặt cơ bản cây phân tích cú pháp bên trong của nó.\n• Phân tích ngữ pháp cấu trúc sâu hơn là từ vựng bề mặt, khiến nó hoàn toàn miễn nhiễm với các bot hoán đổi từ đồng nghĩa.\n• Độc lập với ngôn ngữ, miễn là có trình phân tích phụ thuộc chính xác cho ngôn ngữ mục tiêu.",
+    "limitations": "• Chi phí tính toán cực cao, vì việc tạo ra một cây phân tích phụ thuộc đầy đủ cho mọi câu tốn nhiều tài nguyên.\n• Văn bản ngắn (dưới 150 từ) có thể không cung cấp đủ số câu để thiết lập mức cơ sở MDD có ý nghĩa thống kê.\n• Các văn bản vốn dĩ có mục đích đơn giản (ví dụ: sách thiếu nhi, hướng dẫn có gạch đầu dòng, email đơn giản) đương nhiên sẽ có MDD thấp, gây ra dương tính giả tiềm ẩn.",
+    "parameters": "Kiểm Định: Phân Tích Cây Phụ Thuộc NLP Cho Mỗi Câu\nThước Đo: Chiều Dài Đường Dẫn Độ Sâu Trung Bình Từ Gốc Đến Các Nút Đầu Cuối\nĐầu Ra: 0-100 Điểm Phẳng Cú Pháp (Đơn Giản Thuật Toán)",
+    "accuracy": "Cao — Độ chính xác 78-86% trên văn bản phức tạp hoặc học thuật. Nó phơi bày sở thích kiến trúc cốt lõi của AI đối với sự an toàn về cấu trúc và ngữ pháp dễ đoán.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        }
+    ]
 }

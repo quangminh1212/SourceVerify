@@ -1,26 +1,21 @@
 {
-    "name": "Distribución de Etiquetas POS",
-    "description": "Analiza categoría gramatical tag distribución patrones para detectar generado por IA text, que often shows unnatural grammatical structure distribucións.",
-    "useCase": "Detecting AI text through abnormal grammatical category distribucións compared to natural escritura humana",
-    "mechanism": "Realiza categoría gramatical tagging on input text and computes the frequency distribución of each POS category (nouns, verbs, adjectives, adverbs, etc.). generado por IA text tends to over-rely on certain syntactic constructions, producing flatter distribucións or unusual ratios entre categories (e.g., higher adjective-to-noun ratio). The method compares observed distribucións against reference human corpora using chi-squared goodness-of-fit tests.",
-    "accuracy": "Moderada - 72-82% on standard benchmarks",
-    "source": "Fröhling & Zubiaga (2021) - Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover, PeerJ Computer Science",
-    "algorithm": "POS Tagging + Chi-Squared Goodness-of-Fit + KL Divergence",
-    "parameters": "POS Tagset: Universal Dependencies, Window: full document, Comparison: reference corpus baselines, Granularity: fine-grained 36-tag",
-    "strengths": "• Language-structure based rather than content-based\n• Works a través de different AI model architectures\n• Computacionalmente eficiente\n• Interpretable results for linguists",
-    "limitations": "• Requires sufficient text length for reliable statistics\n• May vary a través de text genres and domains\n• Advanced AI models increasingly mimic human POS distribucións\n• Less effective on short texts (<100 words)",
+    "name": "Variación de Secuencia de Categorías Gramaticales (POS)",
+    "description": "Analiza la diversidad y previsibilidad de las estructuras sintácticas rastreando la secuencia y distribución de las etiquetas de Categorías Gramaticales (Parts-of-Speech, POS). Los generadores de IA tienden a depender de patrones de oraciones estructuralmente formulaicos (ej. construcciones estándar de Sujeto-Verbo-Objeto con ubicaciones de adjetivos completamente predecibles). Esto conduce a una varianza patéticamente baja en cómo se encadenan las etiquetas gramaticales a lo largo del texto en comparación con las variaciones caóticas y rítmicas de la escritura humana viva.",
+    "algorithm": "Perfilado de N-Gramas Sintácticos y Distribución POS",
+    "mechanism": "El algoritmo primero desnuda el texto usando un analizador de dependencias o etiquetador POS para convertir todas las palabras en sus categorías gramaticales crudas (Sustantivos, Verbos, Adjetivos, Preposiciones, etc.). Luego extrae dos métricas primarias letales: 1) Distribución POS (la proporción de frecuencia general de cada etiqueta, donde la IA a menudo se delata abusando de determinantes y adjetivos genéricos) y 2) Variación de Secuencia POS (la entropía o caos de de las secuencias POS en bloques de 3-gramas y 4-gramas). Los escritores humanos fracturan las convenciones gramaticales todo el tiempo por efecto estilístico, inyectan cláusulas dependientes complejas, e interrumpen de forma irregular, creando una alta entropía (imprevisibilidad) en sus secuencias POS. El texto generado por IA, cobardemente optimizado para una generación fluida pero 'segura', favorece brutalmente las estructuras gramaticales estadísticamente más probables, resultando en ritmos sintácticos repetitivos y altamente predecibles (ej. repetir 'Determinante + Adjetivo + Sustantivo + Verbo' hasta el infinito). El sistema estrella estas secuencias observadas contra los corpus de línea base humana para calcular la puntuación de artificialidad.",
+    "useCase": "Altamente efectivo para diseccionar ensayos formales, artículos de noticias y escritura corporativa profesional donde el mimetismo estructural por parte de la IA es una plaga común.",
+    "strengths": "• Es un tanque blindado contra los ataques básicos de sustitución de sinónimos (como cambiar 'utilizar' por 'usar') porque el maldito esqueleto gramatical subyacente sigue intacto e inalterado.\n• Al operar a un nivel puramente estructural (huesos), lo hace altamente letal en diferentes temas y dominios técnicos sin importar el contenido (carne).",
+    "limitations": "• Susceptible a daños colaterales (falsos positivos) al enfrentarse a escritura humana muerta, altamente estructurada y formulaica (como documentos legales infernales, manuales técnicos secos o ensayos estandarizados académicos).\n• Exige una cantidad decente de texto (usualmente >150 palabras) para poder mapear la distribución estructural y la entropía matemática con precisión asesina.",
+    "parameters": "Análisis: Etiquetado POS (Dependencias Universales) y Entropía de N-Gramas Sintácticos\nMétrica: Probabilidades de Transición POS y Ratios de Distribución de Etiquetas\nResultado: 0-100 Puntuación de Previsibilidad Sintáctica (Esqueleto Artificial)",
+    "accuracy": "Moderada a Alta — 75-85% de impacto letal. Es devastador cuando se combina con métodos basados en el léxico y la perplejidad, ya que el algoritmo audita los 'huesos' y no la 'carne' del texto.",
     "references": [
         {
             "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover. PeerJ Computer Science.",
             "url": "https://doi.org/10.7717/peerj-cs.443"
         },
         {
-            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",
-            "url": "https://arxiv.org/abs/1906.03351"
-        },
-        {
-            "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",
-            "url": "https://doi.org/10.1007/978-3-319-41754-7_43"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         }
     ]
 }

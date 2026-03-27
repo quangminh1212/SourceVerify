@@ -1,14 +1,13 @@
 {
-    "name": "Negation Pattern",
-    "description": "Analyzes negation usage patterns",
-    "algorithm": "Negation Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes negation usage patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through negation pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "否定パターン（Negation Pattern）",
+    "description": "テキストがどのように否定、矛盾、または不在を表現しているか（例：「〜ない（not）」、「決して〜ない（never）」、「不〜（un-）」、「非〜（non-）」）を調べます。AIモデルは、単純で直接的な分析的否定（「〜しない（do not）」、「〜ではない（is not）」）を重用する傾向があり、人間のライターが修辞的なニュアンスのために使用する、複雑な、二重の、または微妙な形態論的否定を本物らしく生成するのに苦労します。",
+    "algorithm": "統語論的および形態論的否定の分布分析",
+    "mechanism": "この手法は、テキストを解析して否定のすべてのインスタンスを特定し、それらを3つのカテゴリにマッピングします：分析的（明示的に「not」または「no」を使用）、形態論的（「un-」「im-」「-less」のような接頭辞/接尾辞を使用）、および内在的（「否定する（deny）」「拒絶する（refuse）」「失敗する（fail）」のような否定的な意味の重みを持つ単語）。大規模言語モデル（LLM）は、明確さを最大化し論理的な曖昧さを避けるように統計的にトレーニングされています。その結果、モデルは最も安全で、統計的に最も一般的な形態の否定、つまり単純な分析的否定（例：「簡単ではない（It is not easy）」であり、「不安である（It is uneasy）」や「単なるものとは程遠い（It is far from simple）」ではない）に主に依存します。AIは、二重否定（「珍しくない（not uncommon）」）や、否定マーカーが離れた節に適用される複雑なスコープ（適用範囲）の否定を一貫して避けます。これらは生成中の計算上の不確実性を高めるためです。人間のライターは自然に豊かな否定のスペクトルを用い、多くの場合、形態論的な接頭辞や内在的な否定動詞を使用して、矛盾や皮肉の微妙な度合いを伝えます。単純な「not/no」の構造への不自然な過度の依存は、文体的な多様性よりも、安全で明示的な統計的生成を優先しているAIであることを強く示しています。",
+    "useCase": "説得力のあるエッセイ、文献レビュー、およびオピニオン記事の監査に非常に効果的であり、人間の著者の豊かでニュアンスのある矛盾表現と、AIの直接的で数学的に「安全」な否定表現を区別します。",
+    "strengths": "• 構造的なRLHFアライメントが実際に強化している（最大限の明確さの追求）、自己回帰モデルにおける深い統計的バイアスをターゲットにしています。\n• 否定はすべての言説において頻繁かつ必要な部分であるため、比較的短いテキストでも非常に効果的です。\n• 結果として得られるテキストを異様に不自然に聞こえさせることなく、単純なプロンプトエンジニアリングで回避することは困難です。",
+    "limitations": "• 非ネイティブスピーカー、言語学習者、または明確にするために単純な分析的否定を本質的に好む技術マニュアルによって書かれたテキストを分析する場合、誤検知が発生しやすくなります。\n• 人間のライターが意図的にシンプルでヘミングウェイのような文体を持っている場合は、効果が低くなります。\n• 対象となるジャンルがプレーンな（平易な）言語を厳格に義務付けている場合、人間のシンプルな文章とAIの文章を区別できません。",
+    "parameters": "解析: 依存関係の解析と否定のスコープ（適用範囲）のマッピング\n評価基準: 分析的否定と形態論的/内在的否定の比率\n出力結果: 0-100 否定の単純さ（統計的安全性）スコア",
+    "accuracy": "中〜高 — 72-80%の精度。複雑な否定が構造的に期待される学術的、創造的、または議論的なテキストを分析する場合に最も強力です。",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

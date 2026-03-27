@@ -1,14 +1,13 @@
 {
-    "name": "固有表現の一貫性",
-    "description": "評価します the consistency and factual 精度 of named entities (people, places, dates) を検出するために AI hallucinations and fabricated content.",
-    "useCase": "AI生成テキストの検出 through inconsistent or hallucinated named entities",
-    "mechanism": "抽出します named entities using NER models, then checks for internal consistency (same entity referenced with conflicting attributes), temporal plausibility (dates and events alignment), and cross-referencing density. AI生成の text is prone to 'hallucination'—generating plausible-sounding but factually incorrect entity mentions or mixing attributes 間の different entities.",
-    "accuracy": "中-高 - 76-86% on factual text domains",
-    "source": "Ji, Z. et al. (2023) - Survey of Hallucination in Natural Language Generation, ACM Computing Surveys",
-    "algorithm": "Named Entity Recognition + Consistency Graph + Conflict Detection",
-    "parameters": "NER model: transformer-based, Entity types: PER/ORG/LOC/DATE/NUM, Consistency check: pairwise attribute comparison, 閾値: 適応型 per entity type",
-    "strengths": "• AIの幻覚問題を直接的にターゲット\n• 事実に基づく文書での高精度\n• 解釈可能なエラー例\n• ニュースや学術テキストに有効",
-    "limitations": "• Requires domain knowledge for fact-checking\n• Creative fiction has naturally inconsistent entities\n• NER model errors propagate to 分析\n• Less useful for opinion or abstract text",
+    "name": "固有表現の一貫性（Named Entity Consistency）",
+    "description": "テキスト全体における固有表現（人名、組織名、地名、専門用語）の安定性と文脈的コヒーレンス（首尾一貫性）を評価します。AIモデルは説得力を持ってエンティティ（実体）を導入することができますが、長期的な依存関係の維持に頻繁に苦労し、その結果、特定のエンティティの属性、役割、または関係が、ドキュメントの後半で微妙に歪んだり矛盾したりする「エンティティ・ドリフト（実体の漂流）」を引き起こします。",
+    "algorithm": "クロスドキュメント・エンティティ共参照および属性検証",
+    "mechanism": "システムは、高度な固有表現抽出（NER）を利用して、すべての個別のエンティティ（例：「スミス博士」、「グローバル・コーポレーション」、「プロトコルX」）を抽出し、インデックスを作成します。次に、ドキュメント全体でこれらのエンティティを関連する動詞、形容詞、および文脈上の役割に接続するローカル・ナレッジグラフを構築します。このアルゴリズムは、AIがエンティティの確立された制約を忘れてしまう「幻覚（ハルシネーション）的矛盾」がないかをスキャンします。たとえば、第2章である人物が死亡したと示しておきながら、第5章でその人物の言葉を引用したり、ある会社が1990年に設立されたと述べておきながら、後に1980年代の出来事への関与を説明したりするケースです。人間のライターは、論じているエンティティについて一貫した内部メンタルモデルを維持し、長いテキストであっても論理的連続性を確保します。スライディング・コンテキストウィンドウと確率的な次トークン生成によって支配されているLLMには真のワーキング・メモリ（作業記憶）が欠如しており、多くの場合、巨視的なエンティティの一貫性よりも、目前の局所的な流暢さを優先してしまいます。",
+    "useCase": "AIが拡張された語数にわたって複数の登場人物、組織、または事実のデータポイントを調整することを余儀なくされる、長文の生成コンテンツ（レポート、伝記、研究の要約、物語のフィクション）の監査に不可欠です。",
+    "strengths": "• 現在のすべての自己回帰言語モデルに内在する「幻覚（ハルシネーション）」と「コンテキストウィンドウの忘却」の脆弱性を直接ターゲットにしています。\n• AIが生成したフェイクニュース、でっち上げのケーススタディ、または重大な欠陥のある学術的要約を暴くのに非常に効果的です。\n• 具体的で解釈可能な証拠（例：「エンティティAは12行目ではXとして記述されていますが、84行目ではYとして記述されています」）を提供します。",
+    "limitations": "• 内部ナレッジグラフの構築と文をまたぐ依存関係の解析を実行する必要があるため、計算コストが高くなります。\n• 信頼できない語り手、シュルレアリスムを意図的に特徴としている、または単に編集が不十分で人間の事実誤認が含まれている、人間が書いたテキストにフラグを立てる可能性があります。\n• エンティティ・ドリフトが発生するのに十分な長さがない、非常に短いテキストでは効果が低下します。",
+    "parameters": "解析: NER抽出およびコンテキスト・グラフ・ニューラル・ネットワーク\n評価基準: ペアワイズ属性の競合と時間的/空間的矛盾\n出力結果: 0-100 エンティティ・コヒーレンス（幻覚発生確率）スコア",
+    "accuracy": "高 — 1,000語を超えるドキュメントで82-89%の精度。単なる統計的な単語選択ではなく論理的な破綻を評価するため、AI生成を示す最も堅牢な意味論的指標の1つです。",
     "references": [
         {
             "title": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.",

@@ -1,14 +1,13 @@
 {
-    "name": "Paragraph Structure",
-    "description": "Analyzes paragraph organization",
-    "algorithm": "Paragraph Structure — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes paragraph organization. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through paragraph structure analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "段落の構造（Paragraph Structure）",
+    "description": "段落の長さ、リズム、および内部構造を調べます。AIモデルは自然と、明確なトピックセンテンス、それを裏付ける証拠、および結論としての要約を中心に構成された、非常に均一で中程度の長さのテキストブロックをデフォルトとします。一方、人間のライターは、物語の流れを制御するために、非常に短くパンチの効いた段落と、長く蛇行する段落を頻繁に混在させます。",
+    "algorithm": "段落長の分散と内部移行の分析",
+    "mechanism": "この手法は、各段落を分離し、その単語数、文の数、および内部の流れ（標準的なトピックセンテンスと結論センテンスの存在）を分析します。大規模言語モデル（LLM）は、可読性と構造的な安全性のために最適化されています。その結果、モデルは「構造的な均質性」に苦しんでいます。エッセイ、ブログ、またはレポートを生成する場合、AIはほぼ常に非常に似た長さの段落（例：一貫して4〜6文、80〜120語）を生成します。さらに、これらの段落は厳密に定型的です。移行句（「さらに（Furthermore,）」「加えて（In addition,）」）で始まり、概念を提示し、ミクロな結論で終わります。これにより、視覚的に「ブロック状」で単調な読書体験が生まれます。人間のライターははるかに不規則です。人間は、複雑なアイデアを探求する10文からなる巨大な段落を書き、その直後に劇的な強調のために1文だけの段落を書くことがあります。システムは、段落の長さの統計的分散と、ドキュメント全体での厳格な内部のセマンティクス（意味論的）構造の繰り返しを決定することにより、「段落の単調さスコア」を計算します。",
+    "useCase": "エッセイ、ブログ記事、および記事を監査し、すべての段落の見た目と機能がまったく同じである「テキストの壁」のような単調さを特定するのに非常に効果的です。これは、ゼロショット（事前の指示なし）のAI生成の古典的な特徴です。",
+    "strengths": "• 個々の単語や文が人間によって書き直されたとしても残る、AIの文章の視覚的および構造的な「指紋」を検出します。\n• 標準的なテンプレートに大きく依存する、低コストな生成コンテンツ（SEOスパムや自動化された宿題など）を特定するのに優れています。",
+    "limitations": "• 科学的要約、標準化されたテストのエッセイ（TOEFL/IELTSなど）、または均一性が義務付けられている厳格な企業の要約など、高度に構造化されたフォーマルな文章を分析する場合、誤検知が発生しやすくなります。\n• 分散を確立できない非常に短いテキスト（3段落未満）では使用できません。\n• 段落の長さを劇的に変化させるようにAIに明示的に指示するプロンプトエンジニアリングによって回避される可能性があります。",
+    "parameters": "解析: 段落のセグメンテーション（区切り）と内部構造のマッピング\n評価基準: 単語/文の数の分散とトピックセンテンスの予測可能性\n出力結果: 0-100 構造的均質性（単調さ）スコア",
+    "accuracy": "中〜高 — 70-80%の精度。特に文の長さの分散（Sentence Length Variance）分析と組み合わせた場合、「怠惰な」AI生成の非常に強力な指標となります。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

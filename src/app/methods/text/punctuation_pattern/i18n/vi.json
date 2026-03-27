@@ -1,22 +1,17 @@
 {
-    "name": "Mẫu Dấu Câu",
-    "description": "Phân tích mẫu sử dụng dấu câu để phát hiện AI.",
-    "useCase": "Nhận diện văn bản AI qua dấu câu dễ đoán",
-    "mechanism": "Phát hiện chuyển tiếp cường độ mạnh as proxy cho dấu câu và phân tích tính đều đặn khoảng cách. Văn bản AI có mẫu dấu câu dễ đoán hơn.",
-    "accuracy": "Trung bình - 70-80%",
-    "source": "Fagni et al. (2021) - TweepFake, PLOS ONE",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Mô Hình Và Nhịp Điệu Dấu Câu",
+    "description": "Phân tích tần suất, sự đa dạng và vị trí cấu trúc của các dấu câu để phát hiện nhịp điệu đồng đều, dễ đoán đặc trưng của Mô Hình Ngôn Ngữ Lớn. Trong khi người viết thường sử dụng dấu câu một cách sáng tạo để tạo nhịp độ, cảm xúc và nhấn mạnh (ví dụ: dấu gạch ngang (em-dash), dấu chấm phẩy, dấu chấm hỏi tu từ), các mô hình AI có xu hướng mặc định ở cách đặt câu an toàn về mặt cấu trúc, đơn điệu, phụ thuộc nhiều vào dấu chấm và dấu phẩy tiêu chuẩn, đồng thời lạm dụng dấu hai chấm để tạo danh sách.",
+    "algorithm": "Phân Tích Cú Pháp Biên Và Entropy Dấu Câu",
+    "mechanism": "Thuật toán loại bỏ tất cả các ký tự chữ và số để chỉ phân tích bộ khung dấu câu của văn bản. Nó tính toán hai số liệu chính: 1) Entropy Dấu Câu (đo lường tính không thể đoán trước của các chuỗi dấu câu) và 2) Khoảng Cách Chuyển Tiếp (khoảng cách đồng đều giữa các dấu câu). Các LLM thể hiện mức entropy dấu câu thấp nguy hiểm do bị phạt đối với các rủi ro ngữ pháp trong quá trình đào tạo RLHF. Chúng tạo ra một cấu trúc có nhịp điệu cao 'nhiều dấu phẩy, kết thúc bằng dấu chấm, liệt kê bằng dấu hai chấm'. Ngược lại, kỹ năng viết của con người cho thấy phương sai lớn về độ dài câu được giới hạn bởi các lựa chọn dấu câu mang tính phong cách, không đều. Hệ thống đối chiếu các mật độ chuyển tiếp này với các đường cơ sở AI đã biết để gắn cờ các văn bản sở hữu một 'nhịp tim' đánh máy đều đặn một cách giả tạo.",
+    "useCase": "Rất hiệu quả để kiểm tra thư xin việc, truyền thông doanh nghiệp và các bài tiểu luận nơi một nhịp điệu dấu câu vô trùng, hoàn toàn đồng đều cho thấy sự tạo ra bằng máy móc hơn là luồng suy nghĩ của con người.",
+    "strengths": "• Hoàn toàn miễn nhiễm với việc thay thế từ đồng nghĩa hoặc diễn giải lại đơn giản, vì bộ khung dấu câu cơ bản thường vẫn còn nguyên vẹn.\n• Yêu cầu rất ít chi phí tính toán so với phân tích ngữ nghĩa sâu.",
+    "limitations": "• Dễ bị dương tính giả khi phân tích văn bản quản lý cao như hợp đồng pháp lý, tóm tắt học thuật hoặc hướng dẫn kỹ thuật, vốn dĩ đòi hỏi dấu câu đồng đều, dễ đoán.\n• Dễ dàng bị đánh bại nếu biên tập viên con người chèn thủ công các dấu câu đa dạng (như dấu gạch ngang (em-dash) hoặc dấu chấm than) vào bản nháp AI.",
+    "parameters": "Kiểm Định: Trích Xuất Bộ Khung Đánh Máy và Entropy Chuỗi\nThước Đo: Phương Sai Dấu Câu so với Tính Dễ Đoán Cấu Trúc\nĐầu Ra: 0-100 Điểm Dễ Đoán Dấu Câu (Tính Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 70-80%. Được sử dụng tốt nhất một cách hiệp đồng với Phương Sai Độ Dài Câu và Mật Độ Từ Vựng thay vì một thước đo độc lập dứt khoát.",
     "references": [
         {
-            "title": "Fagni et al. (2021) - TweepFake, PLOS ONE",
-            "url": "https://scholar.google.com/scholar?q=Fagni%20et%20al.%20(2021)%20-%20TweepFake%2C%20PLOS%20ONE"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+            "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0244932"
         },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",

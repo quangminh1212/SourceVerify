@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích PHD Detection Method",
-    "description": "Triển khai PHD (mô hình proxy + minh họa con người) cho nhận dạng văn bản AI không phụ thuộc detector.",
-    "algorithm": "Thuật toán phân tích PHD Detection Method",
-    "mechanism": "Hệ thống PHD Detection Method phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phân Tích PHD (Proxy + Xác Minh Con Người)",
+    "description": "Một khuôn khổ phát hiện zero-shot tinh vi đánh giá văn bản bằng cách sử dụng mô hình ngôn ngữ 'Proxy' (Thay thế/Đại diện) kết hợp với các đường cơ sở 'Xác Minh Con Người'. Bởi vì các mô hình AI thương mại (như GPT-4 hoặc Claude 3) là 'hộp đen' không tiết lộ xác suất token bên trong của chúng, phương pháp này sử dụng một mô hình proxy nhỏ hơn, có thể truy cập được để ước tính cách máy móc có thể đã tạo ra văn bản và đối chiếu các ước tính đó với các mẫu viết của con người đã được xác minh.",
+    "algorithm": "Đường Cong Xác Suất Ước Tính Bằng Proxy và Liên Kết Xác Minh",
+    "mechanism": "Thuật toán sử dụng một Mô hình Proxy mã nguồn mở, có thể truy cập được (như Llama-3 hoặc Mistral) để phân tích văn bản mục tiêu. Mô hình Proxy đọc văn bản và tính toán xác suất của mỗi từ được tạo ra theo trình tự. Đồng thời, hệ thống so sánh các xác suất có nguồn gốc từ proxy này với một bộ dữ liệu mạnh mẽ về 'Xác minh của con người'—các mẫu văn bản của con người đã được xác minh có phương sai ngữ nghĩa cao, sắc thái thông tục và khả năng dự đoán không đồng đều. Nếu phân phối xác suất của văn bản phù hợp gọn gàng với đường dẫn tạo thế hệ được tối ưu hóa của Mô hình Proxy (hiển thị 'đường cong máy móc' xác suất cao, trơn tru), văn bản được phân loại là do AI tạo ra. Nếu văn bản đi chệch khỏi các dự đoán của mô hình proxy một cách dữ dội và liên kết chặt chẽ hơn với phương sai hỗn loạn của tập dữ liệu xác minh của con người, nó được phân loại là con người. Phương pháp này bỏ qua nhu cầu truy cập trực tiếp vào mã nguồn của AI ban đầu bằng cách giả định rằng tất cả các mô hình ngôn ngữ tiên tiến đều chia sẻ các kiến trúc toán học và sở thích gradient cơ bản giống nhau.",
+    "useCase": "Cần thiết để phát hiện các văn bản được tạo bởi các mô hình 'hộp đen' độc quyền, mã nguồn đóng (như GPT-4o của OpenAI hoặc Gemini của Google) nơi phân tích độ hoang mang truyền thống, chính xác là không thể vì dữ liệu bên trong của mô hình bị ẩn khỏi công chúng.",
+    "strengths": "• Không phụ thuộc vào bộ dò tìm và có khả năng phục hồi cao: Nó không cần phải được đào tạo trên mô hình AI cụ thể đã tạo ra văn bản.\n• Rất hiệu quả chống lại các mô hình thương mại, mã nguồn đóng bằng cách sử dụng các proxy mã nguồn mở.\n• Giảm thông báo sai bằng cách neo phán đoán của nó một cách nghiêm ngặt vào dữ liệu xác minh thực tế của con người thay vì lý thuyết thống kê thuần túy.",
+    "limitations": "• Tốn kém về mặt tính toán so với các số liệu thống kê đơn giản như phân tích n-gram, vì nó yêu cầu chạy văn bản thông qua một mạng nơ-ron trực tiếp (mô hình proxy).\n• Nếu một mô hình proxy mã nguồn mở kém hơn nhiều so với mô hình hộp đen đã tạo ra văn bản, thì mối tương quan về khả năng dự đoán có thể bị phá vỡ tạm thời.\n• Có thể gặp khó khăn với các tài liệu mang tính kỹ thuật cao, nơi văn bản của con người phản ánh một cách tự nhiên bản chất cấu trúc cao, có thể dự đoán được của AI.",
+    "parameters": "Kiểm Định: Ước Tính Xác Suất Token Bằng LLM Proxy\nThước Đo: Căn Chỉnh Đường Cong Proxy so với Đường Cơ Sở Xác Minh Của Con Người\nĐầu Ra: 0-100 Điểm PHD (Mức Độ Giả Tạo Được Máy Proxy Dự Đoán)",
+    "accuracy": "Cao — Độ chính xác 85-95% trong các tình huống hộp đen. Cung cấp một trong những cơ chế phát hiện zero-shot mạnh mẽ nhất hiện có cho các mô hình AI độc quyền, hiện đại.",
+    "references": [
+        {
+            "title": "Bao, J. et al. (2024). POGER: Proxy-Guided Efficient Re-sampling for Black-box AI-Generated Text Detection. IJCAI.",
+            "url": "https://arxiv.org/abs/2311.12933"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

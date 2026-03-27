@@ -1,14 +1,13 @@
 {
-    "name": "Narrative Structure",
-    "description": "Analyzes narrative arc structure",
-    "algorithm": "Narrative Structure — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes narrative arc structure. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through narrative structure analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "서사 구조 (Narrative Structure)",
+    "description": "글의 속도감(Pacing), 막(Act)의 분할, 그리고 시간적 흐름을 검사합니다. AI 모델은 고도로 대칭적이고 예측 가능하며 '평면적인' 서사 곡선(Narrative arc)을 만들어내는 경향이 있습니다. 갈등을 너무 성급하게 봉합해 버리거나, 유기적인 완급 조절 없이 이야기나 글을 수학적으로 정확히 등분된 섹션(예: 기계적인 5단락 에세이, 자로 잰 듯한 3막 구조 소설)으로 틀어막습니다.",
+    "algorithm": "시간적 담화 분석 및 서사 곡선 대칭성(Arc Symmetry) 탐지",
+    "mechanism": "이 알고리즘은 텍스트를 여러 구간으로 분할하고 담화 표지(Discourse marker), 시간적 전환(예: '그날 늦게', '한편'), 그리고 '갈등/해결'을 나타내는 키워드의 분포를 분석하여 글의 서사적 궤적을 지도로 그립니다. 거대 언어 모델(LLM)들은 제한된 컨텍스트 윈도우 안에서 '구조적 완성도'와 '안전성'을 최우선으로 최적화하도록 훈련되었습니다. 글이나 소설을 써보라고 하면, LLM은 본능적으로 고도로 표준화된 템플릿(짧은 도입부, 분량이 거의 똑같은 본문 단락/사건들, 그리고 논란의 여지 없이 깔끔한 결론)으로 도피합니다. AI는 '지저분하고' 유기적인 호흡, 허무한 결말(Anti-climax), 또는 구조적으로 심하게 비대칭적인 서사(글의 80%를 빌드업에 쏟아붓고 단 20% 만에 갑작스럽게 결말을 내버리는 등)를 창조하는 데 치명적인 어려움을 겪습니다. 반면 인간 작가는 본능적으로 글의 완급 조절합니다. 특정 상황 묘사에 꽂혀 길게 늘여 쓰기도 하고, 플래시백(과거 회상)을 쓰거나, 서사의 진행 속도를 확 끌어올리기도 합니다. 시스템은 이 글의 '서사적 대칭성 점수(Narrative Symmetry Score)'를 계산합니다. 점수가 너무 완벽한 경우—즉, 도입, 발단, 절정, 결말이 수학적으로 너무나 예측 가능한 단어 수(분량) 지점에서 오차 없이 발생하는 경우—이는 훈련된 템플릿에만 집착하는 AI가 공장식으로 찍어낸 글임을 강력하게 시사합니다.",
+    "useCase": "창작 소설, 학생의 에세이, 마케팅 글을 감사할 때 핵심적으로 사용됩니다. 기계 부품처럼 뻣뻣하게 공식화되어 '너무 완벽하거나', 인간의 사고가 가진 자연스러운 유기성(Organic flow)이 결여된 콘텐츠를 색출해 냅니다.",
+    "strengths": "• 사용자가 구체적이고 변칙적인 구조적 개요를 주지 않고 그저 'X에 대한 글을 써줘'라고 대충 명령하는 '제로샷(Zero-shot)' AI 생성물을 잡아내는 데 극도의 효율을 자랑합니다.\n• 모델 기저에 깔려 있는 뼈대(구조적 편향) 자체를 탐지하므로, 인간이 겉에 있는 단어 몇 개를 동의어로 바꾸거나 윤문하더라도 절대 피해갈 수 없습니다.",
+    "limitations": "• 엄격한 규칙을 따르는 인간의 글—예를 들어 정통 5단락 학술 에세이, 형식이 굳어진 기업 보고서, 또는 '역피라미드' 구조를 철저히 지키는 뉴스 기사—을 분석할 때는 오탐지(False positive)를 일으킬 수 있습니다.\n• 완전한 서사적 곡선을 그릴 수조차 없는 매우 짧은 글(300단어 미만)에서는 무용지물입니다.\n• 프롬프트 엔지니어가 작정하고 AI에게 '아방가르드하고 비선형적인 구조로 글의 호흡을 길적쭉죽하게 늘여서 써라'라고 심층 세팅을 해버리면 이 방어망이 뚫릴 수 있습니다.",
+    "parameters": "분석 기준: 담화 분절화 및 시간적 표지(Marker)의 전개 분포\n측정 지표: 서사 곡선의 좌우 대칭성 및 페이싱(Pacing)의 분산도\n출력: 0-100 구조적 경직도 (AI 템플릿식 예측 가능성) 스코어",
+    "accuracy": "중간 — 65-75%의 정확도. 사용자의 '게으른 프롬프트(대충 써달라고 지시한 경우)'를 잡아내는 훌륭한 2차 지표이지만, 인간이 의도적으로 딱딱하게 쓴 글에 억울한 페널티를 주지 않으려면 해당 글의 장르에 대한 상황적 맥락이 함께 고려되어야 합니다.",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

@@ -1,22 +1,17 @@
 {
-    "name": "被动语态频率",
-    "description": "分析 the ratio and 分布 of 被动语态 constructions, 其 AI text tends to overuse compared to 人类写作.",
-    "useCase": "检测AI生成文本 through systematic overuse of 被动语态 constructions",
-    "mechanism": "识别 被动语态 constructions 通过分析 auxiliary verb + past participle 模式 and dependency parse structures. Computes the passive-to-active ratio per paragraph and its 方差. AI生成的 text, particularly from instruction-tuned models, tends to use 被动语态 more uniformly than humans, who naturally vary voice usage based on emphasis, stylistic preference, and information structure.",
-    "accuracy": "低-中 - 65-75% as standalone 特征",
-    "source": "Herbold, S. et al. (2023) - A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays, Scientific Reports",
-    "algorithm": "Dependency Parse Voice Detection + Ratio Analysis + Variance Measurement",
-    "parameters": "Detection method: dependency parse 模式, Granularity: per-paragraph, Metrics: passive ratio, passive 方差, passive clustering",
-    "strengths": "• Captures a known stylistic bias of AI systems\n• Easy to compute and interpret\n• Works well as part of 特征 ensemble\n• Consistent signal 跨 AI models",
-    "limitations": "• Low standalone discriminative power\n• Academic and scientific text naturally uses 被动语态\n• Modern LLMs can be prompted to avoid 被动语态\n• Language-specific (mainly English)",
+    "name": "被动语态滥用频率 (Passive Voice Frequency)",
+    "description": "计算文本中被动动词的绝对密度和分布情况。由于其底层极度渴望“安全对齐”、追求虚假的“中立性”，以及一种病态般的“害怕选边站队担责任”的倾向，AI 模型在写作时会默认疯狂使用被动语态来替代主动语态。这导致其生成的文本中，被动语态的出现频率不仅远远凌驾于人类作家之上，而且分布得异常均匀。",
+    "algorithm": "助动词依存关系过滤与被动语态密度测绘",
+    "mechanism": "该算法会利用依存句法分析对全文进行地毯式扫描，专门剥离出那些缺乏明确动作主体的“助动词+过去分词”结构（例如：“被观察到（was observed）”、“被认为是（is considered）”、“遭到了执行”）。它会精准计算这些冷血结构在每 1,000 个单词中的绝对出现频率。大语言模型（LLM）被人类工程师拿着鞭子严苛地微调过，目的是让它们听起来永远保持一种客观、权威且“事不关己”的语气——而这恰恰是被动语态最核心的修辞功能。因此，当 AI 被要求撰写论文、报告或总结时，它的大脑会自动滑向被动句的深渊。反观人类作家，即便是坐在最严肃的学术会议室里写文件，也会极度克制、且带有明确战术目的（通常是为了把动作的“受害者或客体”推向聚光灯）才会去使用被动语态。系统会将文本的原始被动动词频率与特定文体领域的人类基准线进行对比，从而计算出一个“被动语态尸僵度（Passive Saturation Score）”。当高密度的被动结构像工业流水线上的产品一样均匀散布在文本的每个角落时，这基本就是在用大喇叭宣告：这是一台机器写的字。",
+    "useCase": "这是用来给学术水文、冷冰冰的商业报告和新闻摘要做 X 光透视的绝佳武器它能精准捕捉到那种带有强烈“AI 生成综合征”的无菌、极端注重防御的塑料客观语气。",
+    "strengths": "• 它的炮口直接对准了 LLM 因为底层对齐训练（RLHF）而被打下的“娘胎里的文风烙印”。\n• 提供了一个没有任何主观解释空间、数学上极其干脆的客观指标。\n• 这是一种“跨物种”级别的破绽，不论是 ChatGPT、Claude 还是 Gemini，在面对这个雷达时表现出的丑态高度一致。",
+    "limitations": "• 如果你拿着它去扫瞄人类律师写的法律合同、医生的医学期刊文章或者是干瘪的实验室报告，它会警报狂响疯狂误杀。因为在那些领域里，人类本身就被行业规定逼成了满嘴被动语态的机器。\n• 防御极其脆弱。只要使用者懂得在提示词里怒吼一句：“全文必须给我用主动语态重写！”，这道防线就会瞬间土崩瓦解。\n• 在字数极少的短文面前束手无策，因为数据不够，连最基础的统计学密度池都建不起来。",
+    "parameters": "雷达切片: 针对“助动词+分词”混合结构的依存句法解剖\n定罪量表: 每千字被动动词的爆发频率 与 段落间的密度方差\n行刑判决: 0-100 被动语态僵化度 (人工智能虚假客观) 审判分数",
+    "accuracy": "中等量级打击 — 维持在 65-75% 的命中率。它不是用来一锤定音的致命武器，它最好的归宿是作为宏大文本分析联合矩阵中的一个高频辅助预警雷达。",
     "references": [
         {
             "title": "Herbold, S. et al. (2023). A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays. Scientific Reports.",
             "url": "https://doi.org/10.1038/s41598-023-45644-9"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
             "title": "Biber, D. (1988). Variation Across Speech and Writing. Cambridge University Press.",

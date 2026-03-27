@@ -1,14 +1,13 @@
 {
-    "name": "代名詞使用パターン",
-    "description": "分析します 代名詞 分布 (personal, demonstrative, relative) を検出するために AI生成の text's distinctive 代名詞 avoidance パターン.",
-    "useCase": "Detecting AI text through systematic differences in 代名詞 usage frequency and variety",
-    "mechanism": "Categorizes and quantifies 代名詞 usage にわたる subcategories: first-person (I, we, me), second-person (you, your), third-person (he, she, they), demonstrative (this, that, these), and relative (は, that, who). AI生成の text typically underuses first-person 代名詞s, overuses impersonal constructions ('it is', 'one can'), and shows less pronominal variety. The method computes 代名詞 density, category ratios, and positional パターン.",
-    "accuracy": "中 - 70-80% on opinion and narrative text",
-    "source": "Pennebaker, J. W. (2011) - The Secret Life of Pronouns: What Our Words Say About Us, Bloomsbury Press",
-    "algorithm": "Pronoun Categorization + Density Analysis + Category Ratio Comparison + Positional Mapping",
-    "parameters": "Categories: PRP/PRP$/WP/DT, Density: per 100 words, Ratios: 1st/3rd person, self-reference index, Normalization: genre-adjusted",
-    "strengths": "• 代名詞は強い心理的・文体的シグナルを含む\n• 抽出と分析が容易\n• 個人的・意見テキストに有効\n• 広範な心理言語学研究に裏付けられている",
-    "limitations": "• Less useful for technical or instructional text\n• Cultural and genre differences affect baseline\n• AI can be prompted to use specific 代名詞 パターン\n• Needs genre-specific reference 分布s",
+    "name": "代名詞使用パターンの分析 (Pronoun Usage Pattern)",
+    "description": "代名詞（人称、指示、関係）の分布と頻度を分析し、大規模言語モデルに特有の「心理的な距離感」と「不自然な中立性」を検出します。人間は一人称代名詞（「私」、「私の」、「私たち」）を使用して自分の経験に基づいて文章を書いたり、読者に直接語りかけたり（「あなた」）する傾向がありますが、AIは切り離された全知の視点をデフォルトとする傾向があり、非人称、三人称、および指示代名詞を過度に乱用します。",
+    "algorithm": "代名詞密度およびペルソナプロファイリング",
+    "mechanism": "アルゴリズムは、テキスト内のすべての代名詞（一人称、二人称、三人称、指示、関係、不定）を分類します。次に、特定の心理言語学的比率を計算します：自己言及インデックス（筆者がテキストの中に自分自身を置く頻度）、直接呼びかけインデックス（読者が意識される頻度）、および非人称パディングインデックス（「〜に注意することが重要である」または「〜を考慮しなければならない」のような構造の頻度）。特定の書き方のジャンル（オピニオン記事、物語、または説得力のあるエッセイなど）について確立されたベースラインとこれらの比率を比較することにより、システムは「どこでもない場所からの視点」（RLHFで訓練されたAIモデルに特有の、非常に無菌的でリスクを回避する代名詞の痕跡）に苦しむテキストを特定します。",
+    "useCase": "本物の人間の心理的な存在感が期待される、大学入試のエッセイ、カバーレター、論説文、および個人的な物語の監査に非常に効果的です。",
+    "strengths": "• 代名詞の使用と人間の行動および認知状態を結びつける、何十年にもわたる確立された心理言語学の研究を活用しています。\n• 根本的に個人的であることが意図されているテキストにおいて、AIの「ゴーストライティング（代筆）」を検出する精度が非常に高いです。",
+    "limitations": "• 技術文書、法的契約書、科学研究論文など、自然に非人称的なテキストではパフォーマンスが大幅に低下します。\n• 高度なプロンプトエンジニアリング（「これを一人称の個人的な視点から書いてください」）によって、人工的な代名詞の分布が部分的に隠蔽される可能性があります。",
+    "parameters": "解析: POSタグ付け（代名詞の分類）および比率計算\n評価基準: 自己言及インデックス vs 非人称パディングインデックス\n出力結果: 0-100 代名詞の無菌性（人工性）スコア",
+    "accuracy": "やや高いから高 — 物語や意見のテキストでは75-85%の精度。技術的または正式な学術テキストでは精度が55%未満に低下します。",
     "references": [
         {
             "title": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.",
@@ -17,10 +16,6 @@
         {
             "title": "Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access.",
             "url": "https://doi.org/10.1109/ACCESS.2023.3341807"
-        },
-        {
-            "title": "Newman, M. L. et al. (2003). Lying Words: Predicting Deception from Linguistic Styles. Personality and Social Psychology Bulletin.",
-            "url": "https://doi.org/10.1177/0146167203251529"
         }
     ]
 }

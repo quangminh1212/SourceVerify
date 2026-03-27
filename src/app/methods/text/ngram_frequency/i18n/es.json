@@ -1,22 +1,17 @@
 {
-    "name": "Análisis de Frecuencia N-gram",
-    "description": "Analiza word and character n-grama distribucións para detectar patrones characteristic of generado por IA text.",
-    "useCase": "Detecting AI text through análisis estadístico of word sequence patrones",
-    "mechanism": "Extrae character-level and word-level n-grama frequency distribucións and compares them against known distribucións for human and generado por IA text. AI text generators produce characteristic n-grama patrones — often over-representing common phrases and under-representing rare but natural human constructions.",
-    "accuracy": "Moderada-Alta - 75-85% on diverse text samples",
-    "source": "Lavergne et al. (2008) - Detecting Fake Content with Relative Entropy Scoring, PAN-SEPLN",
-    "algorithm": "N-gram Extraction + Frequency Distribution Analysis + KL-Divergence Scoring",
-    "parameters": "N-gram sizes: 2-5, Level: character + word, Comparison: KL-divergence, chi-square, Corpus: reference distribucións",
-    "strengths": "• Language-model agnostic approach\n• Can analyze very short texts\n• Computacionalmente eficiente\n• Captures subtle distribución differences",
-    "limitations": "• Requires reference distribucións for calibration\n• Domain-specific text may skew results\n• Modern AI models converge toward natural distribucións\n• Cross-domain generalization can be weak",
+    "name": "Distribución de Frecuencia de N-gramas (N-gram Frequency Distribution)",
+    "description": "Analiza la frecuencia de secuencias de palabras contiguas (N-gramas). Los modelos de IA dependen patológicamente de la probabilidad estadística para construir oraciones, lo que los condena a usar repetitivamente un grupo estrecho y predecible de combinaciones de palabras altamente probables (ej. 'Es importante destacar', 'En conclusión'). Los escritores humanos utilizan por naturaleza una distribución de vocabulario muchísimo más salvaje e impredecible, infestada con una alta tasa de N-gramas 'raros' y excéntricos.",
+    "algorithm": "Análisis de Probabilidad de Secuencia de Tokens y Puntuación de Divergencia KL",
+    "mechanism": "Este algoritmo descuartiza el texto extrayendo N-gramas (típicamente bloques de 2 a 5 palabras encadenadas) y mapea su autopsia de frecuencia. Los Grandes Modelos de Lenguaje (LLMs) están diseñados para una sola cosa: adivinar el puto siguiente token estadísticamente más probable. Como un efecto colateral ineludible, su vómito textual se aglomera siempre en el 'centro' estructural seguro y aburrido del lenguaje humano, apoyándose con desesperación en las combinaciones de palabras más quemadas y frecuentes que inhaló en sus datos de entrenamiento. Mientras que la escritura humana tiene una cola de distribución gorda ('fat tail' - un uso glorioso y frecuente de combinaciones de frases raras, idiotas o completamente inventadas), el texto de la IA muestra una curva enfermizamente estrecha y empinada, dominada como un monopolio por frases de transición comunes. El sistema arrastra la distribución de N-gramas del texto sospechoso al matadero, comparándola contra los cadáveres base de corpus humanos mediante Divergencia Kullback-Leibler (KL) o mediciones brutales de entropía cruzada. Un texto compuesto de un enjambre asqueante de N-gramas de alta probabilidad, completamente castrado del 'ruido' estadístico o de las colocaciones raras típicas y caóticas del cerebro humano, recibe una aplastante puntuación de probabilidad de IA.",
+    "useCase": "El veneno absoluto para someter a tribunales a artículos monstruosamente largos, ensayos pretenciosos y basura SEO escrita en masa. Aniquila textos ensamblados íntegramente con combinaciones de frases cobardes, asépticas y brutalmente sobreexplotadas.",
+    "strengths": "• Ridículamente inmune a las tretas de cambiar una palabrita por un sinónimo; si a un estudiante se le ocurre reemplazar una palabra dentro de un 5-grama común, la estructura gramatical infectada que la rodea sigue siendo condenatoriamente predecible.\n• Destructivo e incontestable en textos largos, donde la brutal Ley de los Grandes Números de la estadística se vuelve irrefutable.\n• Mercenario indiferente al idioma, siempre que haya un corpus de referencia base de humanos reales para comparar en esa lengua.",
+    "limitations": "• Caerá en la trampa de los falsos positivos si lo obligas a comer ladrillos rígidos o documentos hiper-regulados, como dictámenes legales, comunicaciones corporativas asfixiantes o resúmenes científicos estandarizados; textos que por ley exigen una redacción encorsetada y repetitiva hasta la muerte.\n• Estrangula al procesador si le exiges torturar documentos elefantinos extrayendo super N-gramas gigantes (n > 4).\n• Inútil y ciego en textos minúsculos (menos de 100 palabras) donde ni siquiera puedes ver la sombra de una tendencia estadística matemática sólida.",
+    "parameters": "Análisis: Extracción Violenta de N-gramas (n=2 a n=5) y Mapeo del Miasma de Frecuencia\nMétrica: Desviación Probabilística del Token vs. Cerebro Humano Base (Medición Despiadada KL-Divergence)\nResultado: 0-100 Puntuación de Banalidad Predecible (Sintaxis Plastificada)",
+    "accuracy": "Alta — Aniquilación del 75-85% al aplicarlo bien. Es el pilar titánico y más aterrador de la detección de texto de IA, el ancla principal en la que muchos otros métodos confían para sus cacerías multivariables.",
     "references": [
         {
             "title": "Lavergne, T. et al. (2008). Detecting Fake Content with Relative Entropy Scoring. PAN-SEPLN.",
             "url": "https://ceur-ws.org/Vol-502/"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",

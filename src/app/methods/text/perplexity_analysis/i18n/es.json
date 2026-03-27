@@ -1,22 +1,17 @@
 {
-    "name": "Análisis de Perplejidad",
-    "description": "Mide text perplejidad para detectar generado por IA text, que tends to have lower perplejidad than escritura humana.",
-    "useCase": "Detección de texto generado por IA mediante la medición de predictability of word sequences",
-    "mechanism": "Calcula per-token perplejidad using modelos de lenguaje para medir how predictable each word is given its context. generado por IA text typically exhibits lower, more uniform perplejidad because modelos de lenguaje optimize for precisely this metric, while texto humano shows more variation and occasional surprising word choices.",
-    "accuracy": "Moderada-Alta - 78-88% en texto generado por IA estándar",
-    "source": "Mitchell et al. (2023) - DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature, ICML",
-    "algorithm": "Language Model Perplexity Scoring + Statistical Threshold Analysis",
-    "parameters": "Modelo: GPT-2 based, Ventana de contexto: 1024 tokens, Puntuación: probabilidad logarítmica por token, Umbral: adaptativo",
-    "strengths": "• No requiere entrenamiento en modelos de IA específicos\n• Funciona con diferentes generadores de texto IA\n• Inferencia rápida con modelos pre-entrenados\n• Puede analizar texto de cualquier longitud",
-    "limitations": "• Menos efectivo en texto IA editado o parafraseado\n• El texto específico de dominio puede tener perplejidad naturalmente baja\n• Los textos cortos proporcionan señales menos fiables\n• El rendimiento varía según el idioma",
+    "name": "Análisis de Perplejidad del Texto (Perplexity)",
+    "description": "Mide la 'previsibilidad' estadística subyacente del texto. Los Grandes Modelos de Lenguaje operan prediciendo el siguiente token matemáticamente más probable con una terquedad maquinal. En consecuencia, el texto generado por IA está fundamentalmente diseñado para no ser sorpresivo para un modelo de lenguaje, resultando en una puntuación de 'perplejidad' miserablemente baja. Los escritores humanos, por el contrario, inyectan constantemente elecciones de palabras psicópatas, idiosincrásicas o creativas que escupen sobre las expectativas del modelo respecto a la siguiente palabra, llevando a una perplejidad promedio masivamente más alta.",
+    "algorithm": "Evaluación de Token por Log-Verosimilitud y Divergencia de Línea Base",
+    "mechanism": "Este algoritmo arroja el texto de entrada a las fauces de un modelo de lenguaje evaluador (a menudo un modelo de código abierto como GPT-2 o un inquisidor personalizado) y mide la probabilidad logarítmica de cada maldito token dada su historia y contexto precedente. La 'Perplejidad' es esencialmente una métrica matemática de cuán 'sorprendido' y descolocado queda el modelo evaluador por el texto que lee. En el texto vomitado por IA, como fue ensamblado originalmente seleccionando palabras altamente obvias y probables, el modelo evaluador 'adivinará' fácilmente la secuencia, produciendo una puntuación de perplejidad plana, aburrida y baja. Los humanos no escribimos usando probabilidades estadísticas; lanzamos localismos sucios, cambios de tema abruptos sin advertencia, metáforas cruzadas y un fraseo único que un triste modelo de lenguaje no puede predecir ni en sueños. Cuando el modelo evaluador se estrella contra estas peculiaridades orgánicas humanas, su confianza, como sus números, colapsa, y la perplejidad del texto se dispara al cielo. El sistema calcula una 'Puntuación de Previsibilidad Artificial' aplastando la perplejidad promedio total del texto contra las sagradas fronteras establecidas de la escritura humana.",
+    "useCase": "El mecanismo fundacional y absoluto para casi todos los sistemas modernos de cacería de IA, crítico para escanear a velocidades grotescas grandes volúmenes de texto—como ensayos parasitarios de estudiantes, basura de marketing y artículos de noticias prefabricados—para dictaminar si la generación del vocabulario obedece a una esclava curva estadística o al caótico impulso humano.",
+    "strengths": "• Letal y ridículamente efectivo contra la generación de IA en crudo y sin refinar proveniente de modelos estándar (como el escupitajo por defecto de ChatGPT).\n• Se arrastra universalmente a través de diferentes temas y géneros lingüísticos básicos sin mendigar conjuntos de reglas especializadas.\n• Enraizado en la sangrienta mecánica fundamental de cómo operan todos los malditos LLMs autorregresivos.",
+    "limitations": "• Vulnerable al sabotaje por ajustes de 'temperatura' durante la generación, o por ingenieros de prompts maliciosos (ej. 'escribe esta basura con alta perplejidad' o 'usa vocabulario alienígena').\n• Los textos hiper-técnicos o de nicho clínico (como necropsias en revistas médicas, contratos legales inflexibles o código de placa de caldera) mueren de baja perplejidad natural porque su terminología tiene un rigor cuasi-militar, provocando crueles falsos positivos como si fueran engendros de máquinas.\n• Se asfixia y colapsa con textos enanos (de menos de 100 palabras) donde la estadística pura no tiene espacio ni pulmones para establecer una línea base que no sea un chiste.",
+    "parameters": "Análisis: Puntuación de Probabilidad Logarítmica por Token a través del Modelo Verdugo\nMétrica: Promedio de Perplejidad Base y Varianza de Previsibilidad Mecánica\nResultado: 0-100 Puntuación de Previsibilidad Artificial (Baja Perplejidad)",
+    "accuracy": "Despiadada — Precisión aplastante del 80-90% en textos de IA predeterminados y sin alterar. Sin embargo, su precisión cae al abismo en escritos brutalmente editados, 'humanizados' a la fuerza, o generados con temperaturas de locura inducida.",
     "references": [
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
             "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",

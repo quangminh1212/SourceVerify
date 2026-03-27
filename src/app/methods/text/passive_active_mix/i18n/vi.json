@@ -1,12 +1,21 @@
 {
-    "name": "Kết hợp chủ-bị động",
-    "description": "Phân tích phân bổ giọng chủ động vs bị động",
-    "algorithm": "Thuật toán phân tích Kết hợp chủ-bị động",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ giọng chủ động vs bị động. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích kết hợp chủ-bị động. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Tỷ Lệ Thể Bị Động - Chủ Động",
+    "description": "Phân tích sự cân bằng và tần suất chuyển đổi giữa các cấu trúc câu chủ động và bị động. Các mô hình AI, được căn chỉnh chặt chẽ vì tính trung lập và khách quan, có xu hướng lạm dụng quá mức thể bị động để tránh gán quyền tự quyết hoặc đổ lỗi trực tiếp (ví dụ: 'những sai lầm đã được tạo ra' thay vì 'chúng tôi đã mắc sai lầm'), hoặc chúng duy trì một tỷ lệ nhất quán một cách không tự nhiên trong suốt văn bản. Người viết là con người chuyển đổi thể linh hoạt hơn rất nhiều dựa trên ý định cảm xúc, sự nhấn mạnh và nhịp độ kể chuyện.",
+    "algorithm": "Lập Bản Đồ Tự Quyết Cú Pháp và Phương Sai Chuyển Đổi Thể",
+    "mechanism": "Thuật toán này sử dụng phân tích cú pháp phụ thuộc để phân loại mọi mệnh đề trong văn bản thành Chủ động (Chủ ngữ-Động từ-Tân ngữ) hoặc Bị động (Tân ngữ-Động từ-bởi-Chủ ngữ). Nó tính toán hai số liệu chính: tỷ lệ tuyệt đối của các câu Bị động so với Chủ động và 'Tỷ lệ chuyển đổi thể' (văn bản chuyển đổi giữa hai thể bao nhiêu lần). Các Mô hình Ngôn ngữ Lớn (LLM) được đào tạo RLHF để có vẻ có thẩm quyền, an toàn và khách quan. Việc đào tạo này vô tình trừng phạt việc sử dụng ngôi thứ nhất chủ động trong nhiều bối cảnh, khiến AI phụ thuộc nhiều vào các cấu trúc bị động ('Điều quan trọng cần lưu ý là...', 'Dữ liệu đã được phân tích...'). Ngay cả khi được nhắc viết một cách chủ động, các văn bản AI thường thiết lập một tỷ lệ sử dụng giọng điệu trì trệ, nhất quán về mặt toán học. Người viết là con người rất thất thường: họ có thể viết một đoạn giới thiệu hung hăng, hoàn toàn chủ động, chuyển sang phần phương pháp luận rất bị động và trở lại phần kết luận chủ động. Sự chuyển đổi giọng nói của con người được thúc đẩy bởi nhịp điệu kể chuyện và trọng tâm tu từ, tạo ra các cụm câu chủ động hoặc bị động bùng nổ. Hệ thống tính toán 'Điểm Giả Tạo Về Tự Quyết' bằng cách đo lường cả sự phụ thuộc quá mức vào các cấu trúc bị động và sự thiếu phân cụm hữu cơ trong các lần chuyển đổi thể.",
+    "useCase": "Rất quan trọng để phân tích các giao tiếp của công ty, bài luận học thuật và bài báo, phân biệt giọng điệu vô trùng, khách quan một cách giả tạo của máy móc với những thay đổi thể có chủ ý, năng động của một tác giả là con người.",
+    "strengths": "• Rất hiệu quả trong việc phát hiện văn bản AI cố gắng tỏ ra 'chuyên nghiệp' hoặc 'học thuật', vì các lời nhắc này hầu như luôn kích hoạt sự thiên vị thể bị động của AI.\n• Rất khó để người dùng bình thường qua mặt, vì hầu hết các kỹ sư prompt tập trung vào từ vựng hơn là các cấu trúc tự quyết mang tính ngữ pháp sâu sắc.",
+    "limitations": "• Dễ bị dương tính giả trong các bài báo khoa học, báo cáo phòng thí nghiệm hoặc hướng dẫn kỹ thuật nơi các tác giả con người được yêu cầu nghiêm ngặt bởi các hướng dẫn phong cách (ví dụ: hướng dẫn định dạng APA trong quá khứ) chỉ sử dụng thể bị động.\n• Kém hiệu quả trên các văn bản thông thường, mang tính hội thoại cao (như tin nhắn văn bản) nơi thể bị động hiếm khi được sử dụng bởi cả AI và con người.",
+    "parameters": "Kiểm Định: Phân Tích Cú Pháp Phụ Thuộc Cho Cấu Trúc Chủ Ngữ-Động Từ-Tân Ngữ\nThước Đo: Tỷ Lệ Bị Động/Chủ Động và Phân Cụm Chuyển Đổi Thể\nĐầu Ra: 0-100 Điểm Giả Tạo Tự Quyết (Sự Cứng Nhắc Về Thể)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-85%. Thước đo rất đáng tin cậy cho các bối cảnh viết trang trọng, giáo dục và chuyên môn, nơi AI lập chỉ mục quá mức về an toàn 'khách quan'.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

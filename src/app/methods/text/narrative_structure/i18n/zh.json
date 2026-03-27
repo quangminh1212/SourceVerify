@@ -1,14 +1,13 @@
 {
-    "name": "Narrative Structure",
-    "description": "Analyzes narrative arc structure",
-    "algorithm": "Narrative Structure — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes narrative arc structure. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through narrative structure analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "叙事骨架分析 (Narrative Structure)",
+    "description": "扫描文本的行文节奏、幕布划分和时间流逝速度。AI 模型天生带有极为严重的“强迫症”，倾向于生成高度对称、一眼望到底、平平板板的叙事弧线。它们通常会以火箭般的速度草草了结戏剧冲突，或者把文章用尺子精准等分成几个块（比如死板的“八股文”式五段论散文，或者左右极度对称的“三幕剧”小故事），完全缺乏人类那种起伏跌宕的有机节奏感。",
+    "algorithm": "时间演进语篇分析与叙事弧线对称性侦测",
+    "mechanism": "该算法会将文本进行分层解剖，通过追踪语篇标记词、时间戳跃迁（例如“那天深夜”、“与此同时”）以及“冲突/解决”高频词的散布模式，来绘制整篇文章的“叙事心电图”。在大语言模型（LLM）的算力底层，它们被训练成要在有限的上下文窗口里做到绝对的“结构完整”和“不犯错”。所以一旦你让它写个故事或小短文，它的肉体记忆就会触发，自动套用那个被刻在基因里的标准“流水线模具”：一个短平快的开头，几段字数几乎一模一样的经过，最后加上一个四平八稳、和稀泥的光明结尾。AI 极其不擅长也极度害怕去创造那种“杂乱无章”、长短句交错的有机节奏，它们写不出反高潮跌落，更不敢写那种畸形的叙事比例（比如花 80% 的篇幅进行压抑的铺垫，最后只用 20% 的字数一刀毙命）。而人类作家在创作时，呼吸节奏是自由的；他们会在某一个无关紧要的环境描写上突然走火入魔长篇大论，经常玩弄闪回，或者突然一脚油门拉升剧情节奏。系统会计算出一份“叙事对称性评分（Narrative Symmetry Score）”。如果这个得分“完美得像用圆规画出来的”——开篇、情感推进、高潮和落幕，全都精准地踩在可以被数学公式预测的字数节点上，这就构成了极其强烈的呈堂证供，证明这篇文章是 AI 盲目服从其训练模版、流水线压模生成的工业废品。",
+    "useCase": "这是用于审判“所谓的创意小说写作”、学生期末论文以及注水营销软文的核心利器。专门猎杀那种骨架死板僵硬、工整到“假得发指”、完全剥离了人类思维毛刺感和有机涌动流的塑料文章。",
+    "strengths": "• 这是一个对付“零样本（Zero-shot）”偷懒生成的绝脉杀手。只要用户敢图省事，直接对 AI 喊一句“帮我写一篇关于 X 的文章”，而不去手把手地投喂一个错乱复杂的叙事大纲，AI 就会立刻掉入这个陷阱。\n• 它的扫描透视眼直接穿透了词汇表层，打在模型最底层的结构偏见上。这就意味着，哪怕人类事后把文章里的词汇全洗一遍，只要他没去给文章做“断骨增高（大修篇幅结构）”，这个雷达照样能把他揪出来。",
+    "limitations": "• 容易误伤友军。如果拿它去扫那些本来就把人类逼成机器的八股文格式（比如极其严苛的五段论学术报告、格式锁死的企业白皮书、或者严格遵守“倒金字塔”结构的新闻通稿），雷达会疯狂发出假阳性警报。\n• 对于那些连 300 个词都凑不齐的极短文本是毫无意义的，因为字数太少，这把尺子根本拉不出一条完整的叙事抛物线。\n• 如果作案者是个骨灰级 Prompt 玩家，在后台把 AI 狂抽一顿，强逼它“必须模仿意识流、用碎片化的网状前卫结构来写”，这项指标就会被暴力豁免。",
+    "parameters": "雷达切片: 语篇裂变解构与时间标记词滴定分布\n定罪量表: 叙事抛物线的诡异对称性与行刑节奏的死水方差\n行刑判决: 0-100 骨架尸僵度 (流水线工业模具预测率) 审判分数",
+    "accuracy": "中等 — 握有 65-75% 的判准率。它是抓捕“偷懒式 Prompt（提示词喂狗）”的极品二级外围指标，但如果用它，你必须先搞清楚这篇文章所在的体裁是不是本来就要求写成那种死板格式，以免把遵纪守法的人类给冤死了。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

@@ -1,12 +1,21 @@
 {
-    "name": "Tần suất động từ khiếm khuyết",
-    "description": "Đo mẫu sử dụng động từ khiếm khuyết",
-    "algorithm": "Thuật toán phân tích Tần suất động từ khiếm khuyết",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mẫu sử dụng động từ khiếm khuyết. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích tần suất động từ khiếm khuyết. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Tần Suất Động Từ Khuyết Thiếu",
+    "description": "Phân tích tần suất và phân phối của các động từ khuyết thiếu (ví dụ: 'có thể', 'nên', 'phải'). Các mô hình AI có xu hướng lạm dụng các động từ khuyết thiếu nhận thức (thể hiện khả năng/sự cần thiết) như một cơ chế an toàn về phong cách để nghe có vẻ có thẩm quyền nhưng không cam kết, tránh các tuyên bố tuyệt đối.",
+    "algorithm": "Lập Hồ Sơ Mật Độ Khuyết Thiếu Nhận Thức và Nghĩa Vụ",
+    "mechanism": "Thuật toán này quét văn bản để trích xuất tất cả các động từ khiếm khuyết, phân loại chúng thành các phương thức nhận thức (khả năng/xác suất, ví dụ: 'có lẽ', 'dường như', 'có thể') và nghĩa vụ (bắt buộc/cho phép, ví dụ: 'phải', 'nên'). Hệ thống sau đó tính toán tần suất tương đối của các động từ khuyết thiếu này trên 1.000 từ và so sánh phân phối với dữ liệu cơ sở của con người cho loại tài liệu cụ thể. Các Mô hình Ngôn ngữ Lớn (LLM) được tinh chỉnh sâu sắc thông qua RLHF (Học tăng cường từ Phản hồi của Con người) để trở nên hữu ích, vô hại và khách quan trên toàn cầu. Do đó, về mặt cấu trúc, chúng tránh đưa ra các khẳng định thực tế mang tính dứt khoát có thể bị coi là ảo giác hoặc thiên vị. Thay vào đó, chúng đệm đầu ra của mình bằng mật độ cao các động từ khuyết thiếu làm mềm: 'điều quan trọng cần xem xét là...', 'điều này có thể chỉ ra...', 'người ta có thể lập luận...'. Người viết, mặc dù có sử dụng động từ khuyết thiếu, nói chung thể hiện các tuyên bố hoặc ý kiến mạnh mẽ hơn, có chủ ý hơn. Một văn bản thể hiện sự bão hòa không tự nhiên về mặt toán học của các động từ khuyết thiếu không cam kết cho thấy rõ đặc điểm đầu ra 'an toàn', rào đón của quá trình tạo bằng AI.",
+    "useCase": "Rất hiệu quả trong việc kiểm tra các bài tiểu luận thuyết phục, bài xã luận và bài viết học thuật, phân biệt được sự tin tưởng của con người và nghiên cứu mang tính dứt khoát với giọng điệu rào đón, quá thận trọng của AI.",
+    "strengths": "• Nhắm mục tiêu trực tiếp vào sự căn chỉnh an toàn (RLHF) được tích hợp trong các mô hình AI hiện đại, điều mà mô hình gần như không thể vượt qua nếu không có kỹ thuật prompt nặng nề, rõ ràng.\n• Rất dễ diễn giải và minh bạch; bằng chứng (danh sách các động từ khuyết thiếu bị lạm dụng) có thể được chứng minh rõ ràng cho người dùng.\n• Hiệu quả trên nhiều ngôn ngữ sử dụng các dấu hiệu khuyết thiếu hoặc trợ động từ rõ ràng cho xác suất/nghĩa vụ.",
+    "limitations": "• Dễ bị dương tính giả khi phân tích các văn bản ngoại giao cao của con người, tuyên bố miễn trừ trách nhiệm pháp lý hoặc các lĩnh vực học thuật cụ thể (như vật lý lý thuyết) vốn dĩ đòi hỏi ngôn ngữ rào đón, thận trọng.\n• Văn bản ngắn có thể không chứa đủ động từ để tạo ra một hồ sơ khuyết thiếu có ý nghĩa thống kê.\n• Có thể bị qua mặt nếu người dùng can thiệp rõ ràng để AI viết với giọng điệu 'hung hăng', 'dứt khoát' hoặc 'tuyệt đối'.",
+    "parameters": "Kiểm Định: Gán Nhãn POS và Trích Xuất Trợ Động Từ Khuyết Thiếu\nThước Đo: Tỷ Lệ Động Từ Khuyết Thiếu So Với Tổng Số Động Từ Và Tổng Số Từ\nĐầu Ra: 0-100 Điểm Bão Hòa Rào Đón (An Toàn Căn Chỉnh)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 73-81%. Đây là một chỉ báo rất đáng tin cậy về giọng điệu AI cơ bản, mặc dù nó yêu cầu ngữ cảnh liên quan đến thể loại mong muốn của văn bản.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

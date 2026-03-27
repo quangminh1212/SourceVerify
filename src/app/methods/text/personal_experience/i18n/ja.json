@@ -1,22 +1,21 @@
 {
-    "name": "Personal Experience",
-    "description": "Analyzes personal experience markers",
-    "algorithm": "Personal Experience — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes personal experience markers. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through personal experience analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "個人的経験のマーカー（Personal Experience Markers）",
+    "description": "テキストから、個人の実体験を示す本物の言語的マーカーを調べます。大規模言語モデルは一人称の物語（例：「私が子供だった頃…」）をシミュレートできますが、これらの生成物には、人間のライターが本物の記憶を思い出すときに自然に埋め込む、具体的で詳細な感覚的描写、感情の連続性、および局所的な空間/時間の参照が欠けていることがよくあります。",
+    "algorithm": "エピソード記憶の言語的特徴抽出",
+    "mechanism": "このアルゴリズムは、3つの特徴セットの収束をスキャンします：エピソードの特異性（正確な時間、非常に具体的な場所、変則的な物理的詳細）、感覚的語彙（匂い、触覚、特定の色、または局所的な音に関連する単語）、および感情と時間のグラウンディング（過去の特定のイベントに感情がどのように固定されているか）。個人的な物語を書くように指示されると、LLMは高レベルで、比喩を多用した抽象的な文章（例：「勤勉の価値を実感したとき、太陽が私の顔を照らしました」）を生成する傾向があります。彼らは普遍的な感情の決まり文句を過剰に使用し、ありふれているが本物の詳細表現（例：「こぼれたソーダでハンドルがベタベタしていた」）を極端に少なく表現します。さらに、AIは道徳的な教訓を常に繰り返さずに、長い物語全体を通して感情の連続性を維持するのに苦労します。システムは、一般的な「物語の定型表現」の存在に対して、これらの本物の「エピソードマーカー」の密度を測定し、「信憑性欠如スコア」を計算します。",
+    "useCase": "本物の人間の経験を確立することが主な目的である、大学入学の小論文、個人的なブログ記事、カバーレター、および製品レビューの信憑性を検証するために不可欠です。",
+    "strengths": "• AIが生成した「お涙頂戴の物語」、偽の製品レビュー、および一般的な大学の志望理由書を検出するのに非常に効果的です。\n• 複雑で一貫した、ありふれた人間の記憶を幻覚（生成）するという、統計モデルの根本的な無能力をターゲットにしています。",
+    "limitations": "• 人間のライターが意図的に抽象的、哲学的に書いている場合、または感覚的な詳細を省略した高度に専門的な経歴を書いている場合、誤検知が発生しやすくなります。\n• 高度なプロンプトエンジニアリング（「人間として振る舞い、非常に具体的な感覚的詳細やありふれた観察を含める」）は、この指標の有効性を大幅に低下させる可能性があります。",
+    "parameters": "解析: 空間/時間マーカーのNER（固有表現抽出）および感覚/感情のグラウンディングの語彙分析\n評価基準: 物語の定型表現に対するエピソードの特異性の密度\n出力結果: 0-100 信憑性欠如（シミュレートされた経験）スコア",
+    "accuracy": "中程度 — 70-80%の精度。プロンプトされていないAIの怠惰な物語を捕まえるのには優れていますが、反復してプロンプトされた、非常に詳細な合成ストーリーには苦戦する可能性があります。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
         },
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         }
     ]
 }

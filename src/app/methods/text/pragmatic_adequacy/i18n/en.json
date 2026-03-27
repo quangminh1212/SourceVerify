@@ -1,22 +1,21 @@
 {
-    "name":  "Pragmatic Adequacy Score",
-    "description":  "Evaluates pragmatic adequacy — whether text appropriately uses context, implicature, and speech acts (human-like pragmatics).",
-    "algorithm":  "Pragmatic Adequacy Score Analysis Algorithm",
-    "mechanism":  "The Pragmatic Adequacy Score system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1163/9789004368811_003",
-                           "title":  "Grice, H.P. (1975). Logic and Conversation. Syntax and Semantics 3: Speech Acts. Academic Press."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1126/science.1218633",
-                           "title":  "Frank, M.C. \u0026 Goodman, N.D. (2012). Predicting Pragmatic Reasoning in Language Games. Science."
-                       }
-                   ]
+    "name": "Pragmatic Adequacy Score",
+    "description": "Evaluates the text for pragmatic competence—the ability to use language appropriately in social contexts, employ implicature (implying meaning without explicitly stating it), and execute authentic speech acts. While AI excels at grammar (syntax) and dictionary meaning (semantics), it often fails at pragmatics, producing text that is socially tone-deaf, overly literal, or explicitly over-explains concepts that human speakers would naturally leave implied.",
+    "algorithm": "Contextual Implicature and Speech Act Analysis",
+    "mechanism": "The algorithm evaluates the text against Grice's Maxims of Conversation (Quantity, Quality, Relation, and Manner). AI models naturally violate the Maxim of Quantity (by being too verbose or over-explaining the obvious) and the Maxim of Manner (by using hyper-formal transition markers like 'Furthermore' or 'In conclusion' in informal contexts). The system uses a specialized NLP model fine-tuned on pragmatic reasoning to measure the ratio of 'explicit grounding' (spelling everything out) versus 'implicit grounding' (relying on shared human context). It also analyzes the appropriateness of speech acts (e.g., how an apology, a request, or a refusal is formulated) compared to the intended genre and tone. Texts that demonstrate conversational efficiency, subtle irony, cultural implicature, and appropriate social distance receive high human scores, while texts that read like a localized encyclopedia entry are flagged as AI.",
+    "useCase": "Highly effective for auditing conversational bots, customer service emails, social media posts, and creative writing where human social nuance is critical.",
+    "strengths": "• Targets a fundamental weakness of current LLMs: their lack of real-world social grounding and tendency to over-explain.\n• Highly effective against 'zero-shot' AI generations where the prompter forgot to explicitly define a complex social persona.",
+    "limitations": "• Susceptible to false positives when analyzing texts written by individuals with pragmatic language impairments, non-native speakers, or highly pedantic human writers.\n• Difficult to apply to purely technical or scientific writing where explicit, exhaustive explanation (violating Grice's maxims) is actually the required standard.",
+    "parameters": "Analysis: Gricean Maxim Violation Detection and Speech Act Classification\nMetric: Ratio of Explicit Expansion to Contextual Implicature\nOutput: 0-100 Pragmatic Deficit (Artificiality) Score",
+    "accuracy": "Moderate — 65-75% accuracy. Highly dependent on the genre of the text (works exceptionally well on informal/creative text, poorly on technical manuals).",
+    "references": [
+        {
+            "title": "Grice, H.P. (1975). Logic and Conversation. Syntax and Semantics 3: Speech Acts. Academic Press.",
+            "url": "https://doi.org/10.1163/9789004368811_003"
+        },
+        {
+            "title": "Frank, M.C. & Goodman, N.D. (2012). Predicting Pragmatic Reasoning in Language Games. Science.",
+            "url": "https://doi.org/10.1126/science.1218633"
+        }
+    ]
 }

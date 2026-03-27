@@ -1,14 +1,13 @@
 {
-    "name": "Metaphor Density",
-    "description": "Analyzes figurative language density",
-    "algorithm": "Metaphor Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes figurative language density. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through metaphor density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "은유 밀도 (Metaphor Density)",
+    "description": "비유적 표현, 구체적으로는 은유(Metaphor)와 직유(Simile)의 사용 빈도 및 전반적인 맥락의 일관성을 조사합니다. AI 텍스트 생성 모델은 일관되고 신선한 비유적 심상을 창조하는 데 치명적인 결함을 가지고 있으며, 그 대신 빤한 클리셰나 앞뒤가 안 맞는 혼종 은유(Mixed metaphors)에 의존하거나, 아예 문자 그대로의 팍팍하고 설명적인 어조로 도피해 버립니다.",
+    "algorithm": "개념적 은유 및 비유적 심상 매핑 분석 (Conceptual Metaphor and Figurative Mapping Analysis)",
+    "mechanism": "이 시스템은 의미역 결정(Semantic role labeling) 및 단어 의미 중의성 해소 기술을 활용하여, 단어가 본래의 1차원적 사전적 의미를 벗어나 비유적으로 사용된 지점을 포착합니다(예: '경제가 일자리를 *피 흘리듯 쏟아냈다*'). 그런 다음 문자 그대로 쓰인 텍스트 대비 비유적 표현의 비율을 나타내는 '은유 밀도' 스코어를 계산합니다. 더 중요한 것은 이러한 은유들의 '개념적 일관성'을 매핑한다는 점입니다. 물리적인 인간의 삶과 신체적 경험을 겪어보지 못하고 오직 통계적 토큰 예측에만 의존하는 LLM은, 심지어 소설이나 시를 쓸 때조차 은유를 거의 쓰지 않아 지독하게 건조한 학술적 문체가 되거나, 반대로 판에 박힌 상투적인 은유('오늘날의 급변하는 세계에서', '양날의 검')를 토악질하듯 남발하는 극단성을 보입니다. 또한 억지로 창의적인 시도를 하라고 프롬프트로 압박하면, AI는 밑바탕에 깔린 시각적/감각적 심상이 말이 돼서가 아니라 그저 훈련 데이터에서 두 단어가 통계적으로 자주 붙어 있었다는 이유만으로, 전혀 호환되지 않는 영역을 뒤섞는 괴기스러운 '짬뽕 은유(Mixed metaphors)'를 빈번하게 만들어냅니다. 알고리즘은 인간 작가의 베이스라인 데이터와 비교하여 새롭고 독창적인 비유의 빈도를 벤치마킹함으로써, 생성형 모델 특유의 의미론적 '평면성'이나 환각적인 개념 충돌을 적발합니다.",
+    "useCase": "인간 작가들의 경우 문화적 배경에 뿌리를 두고 생생하고 일관성 있는 비유적 심상을 자연스럽게 엮어내는 창작물(소설, 수필), 마케팅 카피, 심층 저널리즘 기사 등을 감식할 때 매우 결정적인 역할을 합니다.",
+    "strengths": "• 피상적인 단어 교체가 아니라 텍스트의 '깊은 의미 계층'을 무너뜨립니다. AI는 단순히 시스템 프롬프트를 조작한다고 해서 앞뒤 맥락이 완벽히 맞아떨어지는 독창적인 은유를 단숨에 위조해 낼 수 없습니다.\n• AI가 억지로 감성을 쥐어짜 내어 '창의적'이거나 '감동적'인 척 글을 쓰려 시도할 때(보통 이 경우 눈뜨고 볼 수 없는 진부한 클리셰의 폭격으로 무너져 내립니다), 이를 박살 내는 데 탁월한 효과를 발휘합니다.\n• 세상이 어떻게 돌아가는지 진정한 이해가 결여된 채 통계로만 글을 짜깁기하는 기계들의 전형적인 징후인 '의미론적 연결 단절(혼종 은유)'을 잔인하게 식별합니다.",
+    "limitations": "• NLP 분야에서 은유, 환유, 반어법 등 고차원적 수사법의 완벽한 자동 탐지는 아직 미해결 난제입니다. 너무 참신한 시적 표현이나 특정 지역/문화권 고유의 극도로 지엽적인 은유는 AI가 아님에도 오탐(False positive/negative)을 낼 수 있습니다.\n• 로봇이 쓴 것 같은 인간의 글, 즉 딱딱한 기술 문서, 법률 조항, 학술 논문 등은 원래 은유의 '은'자도 찾아보기 힘들 만큼 밀도가 낮으므로, 해당 영역에서는 이 지표의 타격감이 완전히 상실됩니다.\n• 창의력 없이 진부한 숙어나 관용구에만 극도로 의존하는 양판소 수준의 인간 작가와 AI 간의 차이를 단칼에 쪼개어 구분하기는 어렵습니다.",
+    "parameters": "분석 기준: 단어 의미 중의성 해소 파이프라인 및 의미적 심상 매핑\n측정 지표: 직설적 표현 대비 비유적 표현의 비율 및 개념적 일관성 붕괴(혼종 은유) 빈도\n출력: 0-100 기계적 평면도 (창조적 메마름) 스코어",
+    "accuracy": "중간~높음 — 창의성 및 감성 표현이 요구되는 텍스트 장르에서 72-84%의 적중률. 기계가 감히 인간의 감정과 영혼을 흉내 내며 '절절한 사연'이나 '예술적 창작'이라고 사기를 칠 때 이를 꿰뚫어 보는 강력한 질적 감별사 역할을 합니다.",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

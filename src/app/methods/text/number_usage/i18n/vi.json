@@ -1,12 +1,21 @@
 {
-    "name": "Sử dụng số",
-    "description": "Phân tích mẫu biểu thức số",
-    "algorithm": "Thuật toán phân tích Sử dụng số",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu biểu thức số. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng số. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Biểu Hiện Sử Dụng Chữ Số",
+    "description": "Kiểm tra cách các con số, thống kê và số liệu được tích hợp và định dạng trong văn bản. Các mô hình AI có xu hướng trình bày các con số ở các định dạng được tiêu chuẩn hóa, dự đoán cao (ví dụ: tuân thủ cứng nhắc phong cách AP, sử dụng quá nhiều tỷ lệ phần trăm chính xác hoặc trích dẫn thống kê cân bằng giả tạo) và đấu tranh để sao chép cách con người viết số không nhất quán, phụ thuộc vào ngữ cảnh.",
+    "algorithm": "Định Dạng Số và Lập Bản Đồ Độ Chính Xác Thống Kê",
+    "mechanism": "Thuật toán này quét văn bản để trích xuất tất cả các biểu thức số, phân tích định dạng của chúng (chữ số so với từ được viết ra), độ chính xác (số liệu chính xác so với ước tính) và phân phối cú pháp. Các Mô hình Ngôn ngữ Lớn (LLM) được điều chỉnh để trình bày thông tin một cách có thẩm quyền và rõ ràng. Do đó, khi tạo văn bản liên quan đến dữ liệu, chúng mặc định ở định dạng 'sách giáo khoa' rất chính xác (ví dụ: 'Năm 2023, 47,3% nhân khẩu học...'). Chúng hiếm khi trộn định dạng một điểm một cách không nhất quán trong cùng một đoạn văn trừ khi được nhắc rõ ràng. Tuy nhiên, người viết luôn không nhất quán: một người có thể viết 'ba trăm người' trong câu một và '300 du khách' trong câu tiếp theo, hoặc sử dụng các ước tính thông tục như 'vài tá' hoặc 'khoảng một nửa'. Hơn nữa, văn bản AI thường thể hiện 'sự cân bằng ảo giác thống kê'—khi tạo ra các số liệu thống kê giả, nó có xu hướng phân phối các con số một cách đồng đều (tránh quá nhiều số kết thúc bằng 0 hoặc 5 để có vẻ 'chân thực', trớ trêu thay lại tạo ra một mô hình ngẫu nhiên giả có thể phát hiện được bằng toán học). Hệ thống tính toán 'Điểm Cứng Nhắc Dữ Liệu Số' bằng cách đánh giá việc tuân thủ các quy tắc định dạng nghiêm ngặt và sự phân bố của các ước tính so với các con số chính xác.",
+    "useCase": "Rất quan trọng để kiểm tra các báo cáo tài chính, tóm tắt khoa học, bài báo và bất kỳ nội dung nào nhiều dữ liệu, phân biệt định dạng số vô trùng, 'hoàn hảo' của máy móc với báo cáo hữu cơ, đôi khi lộn xộn của con người.",
+    "strengths": "• Rất hiệu quả trên các văn bản định hướng dữ liệu hoặc phân tích nơi các con số xuất hiện thường xuyên.\n• Phát hiện các quy tắc định dạng cơ bản được mã hóa cứng vào sự căn chỉnh của AI, mà người dùng bình thường hiếm khi nghĩ đến việc thay đổi thông qua prompt.\n• Rất xuất sắc trong việc xác định số liệu thống kê 'ảo giác' của AI bằng cách phân tích sự phân bố cơ bản của các số ngẫu nhiên được tạo ra.",
+    "limitations": "• Dễ mắc lỗi dương tính giả khi phân tích các tài liệu được quản lý chặt chẽ (như báo cáo tài chính đã được kiểm toán, báo chí được chỉnh sửa sâu hoặc các bài nghiên cứu định dạng APA nghiêm ngặt) nơi người viết bị buộc phải sử dụng định dạng số cứng nhắc.\n• Kém hiệu quả đối với tiểu thuyết sáng tạo hoặc văn bản triết học hoàn toàn không có số.\n• Có thể bị qua mặt bởi những người dùng yêu cầu rõ ràng AI sử dụng các ước tính thông tục (ví dụ: 'viết điều này bằng cách sử dụng các ước tính sơ bộ').",
+    "parameters": "Kiểm Định: Trích Xuất Số Dựa Vào Regex và Hồ Sơ Định Dạng\nThước Đo: Tính Nhất Quán và Độ Chính Xác So Với Tỷ Lệ Ước Tính\nĐầu Ra: 0-100 Điểm Cứng Nhắc Dữ Liệu Số (Sự Giả Tạo Định Dạng)",
+    "accuracy": "Trung bình — Độ chính xác 65-75%. Một số liệu chuyên môn hóa cao cung cấp tín hiệu tuyệt vời trong các văn bản có nhiều dữ liệu nhưng nên bỏ qua trong các văn bản thiếu dữ liệu số.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

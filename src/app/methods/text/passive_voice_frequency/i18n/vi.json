@@ -1,22 +1,17 @@
 {
-    "name": "Tần suất câu bị động",
-    "description": "Phân tích tỷ lệ và phân bố cấu trúc câu bị động, loại cấu trúc mà văn bản AI thường lạm dụng so với con người.",
-    "useCase": "Phát hiện văn bản AI thông qua lạm dụng có hệ thống cấu trúc câu bị động",
-    "mechanism": "Nhận diện cấu trúc bị động bằng phân tích mẫu trợ động từ + quá khứ phân từ và cấu trúc phân tích phụ thuộc. Tính tỷ lệ bị động/chủ động theo đoạn và phương sai. Văn bản AI, đặc biệt mô hình instruction-tuned, sử dụng bị động đồng nhất hơn con người, vốn thay đổi tự nhiên dựa trên nhấn mạnh, phong cách và cấu trúc thông tin.",
-    "accuracy": "Thấp-Trung bình - 65-75% khi đứng riêng",
-    "source": "Herbold, S. et al. (2023) - Human-Written vs ChatGPT-Generated Essays, Scientific Reports",
-    "algorithm": "Dependency Parse Voice Detection + Ratio Analysis + Variance Measurement",
-    "parameters": "Phương pháp: mẫu phân tích phụ thuộc, Độ chi tiết: theo đoạn, Chỉ số: tỷ lệ bị động, phương sai, phân cụm",
-    "strengths": "• Nắm bắt thiên lệch phong cách đã biết của AI\n• Dễ tính toán và giải thích\n• Hoạt động tốt trong tập hợp đặc trưng\n• Tín hiệu nhất quán trên các mô hình AI",
-    "limitations": "• Sức mạnh phân biệt thấp khi đứng riêng\n• Văn bản khoa học tự nhiên dùng bị động\n• LLM hiện đại có thể được hướng dẫn tránh bị động\n• Phụ thuộc ngôn ngữ (chủ yếu tiếng Anh)",
+    "name": "Tần Suất Thể Bị Động",
+    "description": "Tính toán mật độ tuyệt đối và sự phân bố của các động từ bị động. Do sự căn chỉnh an toàn, sự trung lập giả tạo và xu hướng tránh cam kết với một góc nhìn cụ thể, các mô hình AI mặc định sử dụng các cấu trúc bị động thay vì chủ động, dẫn đến tần suất sử dụng thể bị động cao hơn đáng kể và đồng đều hơn so với văn bản của con người.",
+    "algorithm": "Phụ Thuộc Động Từ Trợ Giúp và Lập Bản Đồ Mật Độ Bị Động",
+    "mechanism": "Thuật toán này quét văn bản bằng cách sử dụng phân tích cú pháp phụ thuộc, đặc biệt cô lập các cấu trúc 'động từ trợ giúp + quá khứ phân từ' (ví dụ: 'đã được quan sát', 'được xem xét') thiếu một chủ thể hành động trực tiếp. Nó tính toán tần suất tổng thể của các cấu trúc này trên 1.000 từ. Các Mô hình Ngôn ngữ Lớn (LLM) được tinh chỉnh nghiêm ngặt để duy trì giọng điệu khách quan, có thẩm quyền và không cam kết—những đặc điểm gắn liền với thể bị động. Do đó, khi AI tạo ra một bài luận, báo cáo hoặc bản tóm tắt, nó tự nhiên hướng tới các cấu trúc câu bị động. Những người viết là con người, ngay cả trong các bối cảnh trang trọng, cũng sử dụng thể bị động một cách tiết kiệm và có mục đích (thường là để nhấn mạnh đối tượng của một hành động thay vì diễn viên). Hệ thống tính toán một 'Điểm Bão Hòa Bị Động' bằng cách đo lường tần suất thô của các động từ bị động so với các đường cơ sở đã được thiết lập cho các thể loại cụ thể. Một mật độ cao các cấu trúc bị động được phân phối đồng đều trên toàn bộ văn bản chỉ ra mạnh mẽ sự tạo chữ của máy móc.",
+    "useCase": "Rất hữu ích để kiểm tra các bài báo học thuật, báo cáo kinh doanh và tóm tắt tin tức, phát hiện giọng điệu vô trùng, 'an toàn' và khách quan một cách giả tạo, là triệu chứng của AI sinh thành.",
+    "strengths": "• Nhắm mục tiêu trực tiếp vào một thành kiến văn phong đã biết trong các LLM gây ra bởi đào tạo căn chỉnh của chúng (RLHF).\n• Cung cấp một số liệu khách quan về mặt toán học, có thể giải thích dễ dàng.\n• Độ nhất quán cao trên các mô hình AI khác nhau (ChatGPT, Claude, Gemini).",
+    "limitations": "• Tạo ra dương tính giả trên các văn bản pháp lý do con người viết, tạp chí y khoa và các báo cáo phòng thí nghiệm cứng nhắc nơi thể bị động là một tiêu chuẩn của ngành.\n• Có thể dễ dàng bị qua mặt bằng kỹ thuật prompt đơn giản (ví dụ: 'viết lại toàn bộ văn bản này bằng thể chủ động').\n• Không thể sử dụng chính xác trên các văn bản rất ngắn nơi không thể thiết lập mật độ thống kê.",
+    "parameters": "Kiểm Định: Phân Tích Cú Pháp Phụ Thuộc Cho Cấu Trúc Động Từ Trợ Giúp + Phân Từ\nThước Đo: Tần Suất Động Từ Bị Động Trên 1.000 Từ và Sự Đồng Đều Đoạn Văn\nĐầu Ra: 0-100 Điểm Bão Hòa Bị Động (Tính Khách Quan Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 65-75%. Tốt nhất nên được sử dụng như một tính năng bổ sung trong một chuỗi phân tích văn bản rộng hơn thay vì một số liệu quyết định độc lập.",
     "references": [
         {
-            "title": "Herbold, S. et al. (2023). Human-Written vs ChatGPT Essays. Scientific Reports.",
+            "title": "Herbold, S. et al. (2023). A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays. Scientific Reports.",
             "url": "https://doi.org/10.1038/s41598-023-45644-9"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
             "title": "Biber, D. (1988). Variation Across Speech and Writing. Cambridge University Press.",

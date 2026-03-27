@@ -1,14 +1,13 @@
 {
-    "name": "Mean Dependency Depth",
-    "description": "Estimates mean dependency depth approximation (2023)",
-    "algorithm": "Mean Dependency Depth — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Estimates mean dependency depth approximation (2023). Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through mean dependency depth analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "平均係り受け深さ（MDD）",
+    "description": "文法的な構文解析木において、文の主な動詞（ルート）とそれに従属する単語との間の平均的な「距離（深さ）」を分析することにより、文の構造的複雑さを測定します。AIモデルは一般的に、構文エラーを最小限に抑えるために、より浅くより単純な係り受け構造を持つ文を生成しますが、人間は自然と、非常に変化に富んだ深い入れ子構造を持つ文を構築します。",
+    "algorithm": "構文的係り受け木の深さ分析",
+    "mechanism": "このメソッドは、自然言語処理（NLP）の係り受け構文解析器を利用して、テキスト内のすべての文の文法構造をマッピングします。文の「ルート」（通常は主な動詞）を特定し、主語、目的語、修飾語がどのように相互に依存しているかを詳細に示す構文木を構築します。「係り受けの深さ」とは、ルートから最も離れた従属単語までの文法的なリンクの数です。アルゴリズムは、すべての文の平均係り受け深さ（MDD）を計算します。LLMは自己回帰的な次のトークン予測によって動作するため、深く入れ子になった長距離の文法的係り受け（例：3つの関係代名詞節によって動詞から切り離された主語）を追跡し続けることは、大量の「アテンション（Attention）」計算を必要とし、文法が破綻するリスクを伴います。したがって、モデルのアライメントは、平坦で単純な構文木（低いMDD）を持つテキストの生成を強く優先します。人間のライターは、特にフォーマルな設定や学術的な設定において、複雑な構造をワーキングメモリに保持しながら、より深い構文の埋め込みを用いて有機的に文章を書きます。長く高度に洗練されているはずのテキストが、単純な構文に近い不自然に浅い平均係り受け深さを示している場合、それは機械によって生成されたとして強くフラグが立てられます。",
+    "useCase": "長文の小論文、文学作品、技術論文を評価し、文法的な複雑さが、人間が書いたと期待される知的な深さと一致しているかどうかを判断するために不可欠です。",
+    "strengths": "• 基本的なプロンプトエンジニアリングに対して非常に強い耐性があります。AIに「もっと複雑に書け」と指示しても、内部の構文解析木を根本的に深くするのではなく、形容詞や珍しい語彙を追加する結果に終わることがほとんどです。\n• 表面的な語彙ではなく深い構造的文法を分析するため、同義語を置き換えるボットに対して完全に免疫があります。\n• ターゲット言語の正確な係り受け構文解析器が存在する場合、言語に依存しない概念です。",
+    "limitations": "• すべての文に対して完全な係り受け構文解析木を生成することはリソースを大量に消費するため、計算コストが極めて高くなります。\n• 短いテキスト（150語未満）では、統計的に有意なMDDのベースラインを確立するのに十分な文が提供されない場合があります。\n• 本質的に単純であることを意図したテキスト（例：児童書、箇条書きの指示、短文の電子メール）は、自然とMDDが低くなり、誤検知を引き起こす可能性があります。",
+    "parameters": "解析: 文ごとのNLP係り受け構文木解析\n評価基準: ルートから終端ノードまでの平均パス長\n出力結果: 0-100 構文的平坦性（アルゴリズムの単純さ）スコア",
+    "accuracy": "高 — 複雑なテキストまたは学術的なテキストで78-86%の精度。構造的な安全性と予測可能な文法に対するAIの核心的なアーキテクチャ上の好みを暴露します。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

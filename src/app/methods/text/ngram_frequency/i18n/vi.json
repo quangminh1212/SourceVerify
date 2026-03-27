@@ -1,22 +1,17 @@
 {
-    "name": "Phân tích Tần suất N-gram",
-    "description": "Phân tích phân bố n-gram từ và ký tự để phát hiện mẫu đặc trưng của văn bản AI.",
-    "useCase": "Phát hiện văn bản AI qua phân tích thống kê mẫu chuỗi từ",
-    "mechanism": "Trích xuất phân bố tần suất n-gram cấp ký tự và cấp từ, so sánh với phân bố đã biết của văn bản con người và AI. Trình tạo văn bản AI tạo ra mẫu n-gram đặc trưng — thường đại diện quá mức các cụm từ phổ biến và thiếu đại diện các cấu trúc hiếm nhưng tự nhiên.",
-    "accuracy": "Trung bình-Cao - 75-85% trên mẫu văn bản đa dạng",
-    "source": "Lavergne et al. (2008) - Detecting Fake Content, PAN-SEPLN",
-    "algorithm": "N-gram Extraction + Frequency Distribution Analysis + KL-Divergence Scoring",
-    "parameters": "Kích thước N-gram: 2-5, Cấp: ký tự + từ, So sánh: KL-divergence, chi-square",
-    "strengths": "• Phương pháp không phụ thuộc mô hình ngôn ngữ\n• Phân tích được văn bản rất ngắn\n• Tính toán hiệu quả\n• Bắt được sự khác biệt phân bố tinh vi",
-    "limitations": "• Cần phân bố tham chiếu để hiệu chuẩn\n• Văn bản chuyên ngành có thể gây lệch\n• Mô hình AI hiện đại hội tụ về phân bố tự nhiên\n• Tổng quát hóa xuyên miền có thể yếu",
+    "name": "Phân Phối Tần Suất N-gram",
+    "description": "Phân tích tần suất của các chuỗi từ liên tiếp (N-grams). Các mô hình AI phụ thuộc rất nhiều vào xác suất thống kê để cấu trúc câu, dẫn đến việc chúng sử dụng lặp đi lặp lại một tập hợp hẹp các cụm từ phổ biến, có khả năng cao (ví dụ: 'Điều quan trọng cần lưu ý là', 'Tóm lại'). Người viết tự nhiên sử dụng một phân phối từ vựng rộng hơn nhiều, ít dự đoán hơn với tỷ lệ xuất hiện các N-gram 'hiếm' cao hơn.",
+    "algorithm": "Xác Suất Chuỗi Mã Thông Báo và Tính Điểm Phân Kỳ KL",
+    "mechanism": "Thuật toán trích xuất các N-gram (thường từ 2-gram đến 5-gram) từ văn bản đầu vào và lập bản đồ phân phối tần suất của chúng. Các Mô hình Ngôn ngữ Lớn (LLM) hoạt động bằng cách dự đoán mã thông báo tiếp theo có khả năng cao nhất về mặt thống kê. Do đó, đầu ra của chúng tự nhiên tập trung quanh 'trung tâm' cấu trúc của ngôn ngữ con người — phụ thuộc rất nhiều vào các tổ hợp từ thường xuyên nhất được tìm thấy trong dữ liệu đào tạo của chúng. Trong khi văn bản do con người viết thể hiện phân phối 'đuôi béo' (sử dụng thường xuyên các cụm từ hiếm, mang phong cách riêng hoặc hoàn toàn mới), văn bản AI thể hiện một phân phối dốc, hẹp bị chi phối bởi các cụm từ chuyển tiếp và thành ngữ phổ biến. Hệ thống so sánh phân phối N-gram của văn bản với kho ngữ liệu cơ sở của con người bằng cách sử dụng Phân kỳ Kullback-Leibler (KL) hoặc các phép đo entropy chéo. Một văn bản chứa quá nhiều N-gram có khả năng cao, thiếu 'nhiễu' thống kê hoặc các cụm từ hiếm đại diện cho sự thay đổi nhận thức của con người, sẽ nhận được điểm xác suất AI cao.",
+    "useCase": "Cần thiết để quét nội dung dài, tiểu luận học thuật và các bài báo SEO để xác định những văn bản được xây dựng hoàn toàn từ các tổ hợp cụm từ tĩnh 'an toàn', quá mức và chung chung.",
+    "strengths": "• Rất mạnh mẽ chống lại việc hoán đổi từ đồng nghĩa đơn giản; việc thay thế một từ trong 5-gram phổ biến vẫn để lại cấu trúc ngữ pháp xung quanh rất dễ đoán.\n• Cực kỳ hiệu quả trên các văn bản dài hơn nơi quy luật số lớn về phân phối thống kê trở nên không thể phủ nhận.\n• Không phụ thuộc vào ngôn ngữ, miễn là có kho ngữ liệu tham chiếu cơ sở cho ngôn ngữ mục tiêu.",
+    "limitations": "• Dễ bị dương tính giả trong các tài liệu pháp lý cứng nhắc, phương thức truyền thông công ty được tiêu chuẩn hóa cao hoặc các bản tóm tắt khoa học vốn đòi hỏi cách diễn đạt rất hạn chế, phổ biến.\n• Tốn kém về mặt tính toán đối với các tài liệu rất lớn nếu tính toán các N-gram bậc cao (n > 4).\n• Không hiệu quả trên các văn bản rất ngắn (dưới 100 từ) nơi phân phối thống kê không thể được thiết lập một cách có ý nghĩa.",
+    "parameters": "Kiểm Định: Trích Xuất N-gram (n=2 đến n=5) và Bản Đồ Tần Suất\nThước Đo: Phân Phối Xác Suất Mã Thông Báo So Với Cơ Sở (Phân Kỳ KL)\nĐầu Ra: 0-100 Điểm Dự Đoán N-gram",
+    "accuracy": "Cao — Độ chính xác 75-85%. Một trong những số liệu nền tảng và đáng tin cậy nhất để phát hiện văn bản AI, làm neo cho nhiều hệ thống phân tích đa phương pháp.",
     "references": [
         {
-            "title": "Lavergne, T. et al. (2008). Detecting Fake Content. PAN-SEPLN.",
+            "title": "Lavergne, T. et al. (2008). Detecting Fake Content with Relative Entropy Scoring. PAN-SEPLN.",
             "url": "https://ceur-ws.org/Vol-502/"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",

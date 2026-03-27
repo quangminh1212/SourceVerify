@@ -1,26 +1,21 @@
 {
-    "name": "POS Tag Distribution",
-    "description": "Analyzes part-of-speech tag distribution patterns to detect AI-generated text, which often shows unnatural grammatical structure distributions.",
-    "useCase": "Detecting AI text through abnormal grammatical category distributions compared to natural human writing",
-    "mechanism": "Performs part-of-speech tagging on input text and computes the frequency distribution of each POS category (nouns, verbs, adjectives, adverbs, etc.). AI-generated text tends to over-rely on certain syntactic constructions, producing flatter distributions or unusual ratios between categories (e.g., higher adjective-to-noun ratio). The method compares observed distributions against reference human corpora using chi-squared goodness-of-fit tests.",
-    "accuracy": "Moderate - 72-82% on standard benchmarks",
-    "source": "Fröhling & Zubiaga (2021) - Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover, PeerJ Computer Science",
-    "algorithm": "POS Tagging + Chi-Squared Goodness-of-Fit + KL Divergence",
-    "parameters": "POS Tagset: Universal Dependencies, Window: full document, Comparison: reference corpus baselines, Granularity: fine-grained 36-tag",
-    "strengths": "• Language-structure based rather than content-based\n• Works across different AI model architectures\n• Computationally efficient\n• Interpretable results for linguists",
-    "limitations": "• Requires sufficient text length for reliable statistics\n• May vary across text genres and domains\n• Advanced AI models increasingly mimic human POS distributions\n• Less effective on short texts (<100 words)",
+    "name": "POS (Part-of-Speech) Sequence Variation",
+    "description": "Analyzes the diversity and predictability of syntactic structures by tracking the sequence and distribution of Parts-of-Speech (POS) tags. AI generators tend to rely on structurally formulaic sentence patterns (e.g., standard Subject-Verb-Object constructions with predictable adjective placements), leading to less variance in how grammatical tags are sequenced across the text compared to the chaotic, rhythmic variations of human writing.",
+    "algorithm": "Syntactic N-Gram and POS Distribution Profiling",
+    "mechanism": "The algorithm first parses the text using a dependency parser or POS tagger to convert all words into their grammatical categories (Nouns, Verbs, Adjectives, Prepositions, etc.). It then calculates two primary metrics: 1) POS Distribution (the overall frequency ratio of each tag, where AI often overuses determiners and generic adjectives) and 2) POS Sequence Variation (the entropy of 3-gram and 4-gram POS sequences). Human writers frequently break grammatical conventions for stylistic effect, use complex dependent clauses, and interject irregularly, creating a high entropy of POS sequences. AI-generated text, optimized for fluent but safe generation, heavily favors the most statistically probable grammatical structures, resulting in repetitive, highly predictable syntactic rhythms (e.g., 'Determiner + Adjective + Noun + Verb' repeated endlessly). The system compares these observed sequences against human baseline corpora to compute an artificiality score.",
+    "useCase": "Highly effective for analyzing formal essays, news articles, and professional writing where structural mimicry by AI is common.",
+    "strengths": "• Highly robust against simple vocabulary substitution attacks (like changing 'utilize' to 'use') because the underlying grammatical skeleton remains unchanged.\n• Operates at a structural level, making it highly cross-compatible with different topics and domains.",
+    "limitations": "• Susceptible to false positives in highly structured, formulaic human writing (such as legal documents, technical manuals, or standardized test essays).\n• Requires a sufficiently long text (usually >150 words) to accurately map the structural distribution and sequence entropy.",
+    "parameters": "Analysis: POS Tagging (Universal Dependencies) and Syntactic N-Gram Entropy\nMetric: POS Transition Probabilities and Tag Distribution Ratios\nOutput: 0-100 Syntactic Predictability (Artificiality) Score",
+    "accuracy": "Moderate to High — 75-85% accuracy. Very strong when combined with lexical and perplexity-based methods, as it analyzes the 'skeleton' rather than the 'flesh' of the text.",
     "references": [
         {
             "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover. PeerJ Computer Science.",
             "url": "https://doi.org/10.7717/peerj-cs.443"
         },
         {
-            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",
-            "url": "https://arxiv.org/abs/1906.03351"
-        },
-        {
-            "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",
-            "url": "https://doi.org/10.1007/978-3-319-41754-7_43"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         }
     ]
 }

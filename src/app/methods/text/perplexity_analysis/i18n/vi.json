@@ -1,22 +1,17 @@
 {
-    "name": "Phân tích Perplexity",
-    "description": "Đo perplexity văn bản để phát hiện văn bản AI, loại văn bản thường có perplexity thấp hơn văn bản con người.",
-    "useCase": "Phát hiện văn bản AI bằng cách đo tính dự đoán được của chuỗi từ",
-    "mechanism": "Tính perplexity cho từng token bằng mô hình ngôn ngữ để đo mức độ dự đoán được của mỗi từ trong ngữ cảnh. Văn bản AI thường có perplexity thấp và đồng nhất hơn vì mô hình ngôn ngữ tối ưu cho chỉ số này, trong khi văn bản con người có nhiều biến đổi hơn.",
-    "accuracy": "Trung bình-Cao - 78-88% trên văn bản AI tiêu chuẩn",
-    "source": "Mitchell et al. (2023) - DetectGPT, ICML",
-    "algorithm": "Language Model Perplexity Scoring + Statistical Threshold Analysis",
-    "parameters": "Mô hình: GPT-2, Cửa sổ ngữ cảnh: 1024 tokens, Chấm điểm: log xác suất mỗi token, Ngưỡng: tự thích ứng",
-    "strengths": "• Không cần huấn luyện trên mô hình AI cụ thể\n• Hoạt động trên nhiều trình tạo văn bản AI\n• Suy luận nhanh với mô hình pre-trained\n• Phân tích được văn bản mọi độ dài",
-    "limitations": "• Kém hiệu quả trên văn bản AI đã chỉnh sửa\n• Văn bản chuyên ngành có thể có perplexity thấp tự nhiên\n• Văn bản ngắn cho tín hiệu kém tin cậy\n• Hiệu suất thay đổi theo ngôn ngữ",
+    "name": "Phân Tích Độ Hoang Mang Của Văn Bản (Perplexity)",
+    "description": "Đo lường 'khả năng dự đoán' thống kê cơ bản của văn bản. Các Mô hình Ngôn ngữ Lớn hoạt động bằng cách dự đoán token tiếp theo có xác suất cao nhất về mặt toán học. Do đó, văn bản do AI tạo ra về cơ bản được thiết kế để không gây ngạc nhiên cho mô hình ngôn ngữ, dẫn đến điểm 'độ hoang mang' (perplexity) thấp. Ngược lại, những người viết là con người thường xuyên đưa ra những lựa chọn từ ngữ khó đoán, mang đặc điểm cá nhân hoặc sáng tạo vi phạm kỳ vọng của mô hình về từ tiếp theo, dẫn đến độ hoang mang trung bình cao hơn nhiều.",
+    "algorithm": "Đánh Giá Log-Likelihood Số Hiệu và Sự Phân Kỳ So Với Đường Cơ Sở",
+    "mechanism": "Thuật toán này chạy văn bản đầu vào thông qua một mô hình ngôn ngữ đánh giá (thường là một mô hình mã nguồn mở như GPT-2 hoặc một bộ đánh giá tùy chỉnh) và đo lường xác suất log của từng token dựa trên ngữ cảnh trước đó của nó. 'Độ hoang mang' về cơ bản là một phép đo toán học về mức độ 'ngạc nhiên' của mô hình đánh giá đối với văn bản. Trong văn bản do AI tạo ra, bởi vì văn bản ban đầu được xây dựng bằng cách chọn các từ có xác suất cao, một mô hình đánh giá sẽ dễ dàng 'đoán' trình tự, mang lại điểm số độ hoang mang thấp, đồng đều. Con người không viết bằng cách sử dụng xác suất thống kê; chúng ta sử dụng những từ thông tục, những thay đổi chủ đề đột ngột, những ẩn dụ hỗn hợp và những cách diễn đạt độc đáo mà một mô hình ngôn ngữ không thể dễ dàng dự đoán. Khi mô hình đánh giá gặp phải những đặc điểm kỳ quặc này của con người, độ tự tin của nó giảm xuống và độ hoang mang của văn bản tăng đột biến. Hệ thống tính toán 'Điểm Khả Năng Dự Đoán Giả Tạo' bằng cách phân tích độ hoang mang trung bình tổng thể của văn bản so với các ranh giới đã thiết lập của con người.",
+    "useCase": "Cơ chế nền tảng cho hầu hết các hệ thống phát hiện AI hiện đại, cần thiết để quét nhanh khối lượng lớn văn bản—chẳng hạn như bài luận của sinh viên, bản sao tiếp thị và bài báo—để xác định xem việc tạo từ vựng cơ bản tuân theo đường cong thống kê hay sự bốc đồng của con người.",
+    "strengths": "• Cực kỳ hiệu quả chống lại việc tạo AI không có prompt trước, zero-shot từ các mô hình tiêu chuẩn (như đầu ra mặc định của ChatGPT).\n• Hoạt động phổ quát trên các chủ đề khác nhau và các thể loại ngôn ngữ cơ bản mà không yêu cầu bộ quy tắc chuyên biệt.\n• Bắt nguồn từ cơ chế nền tảng của cách tất cả các LLM tự hồi quy hoạt động.",
+    "limitations": "• Dễ bị qua mặt thông qua việc điều chỉnh 'nhiệt độ' trong quá trình tạo hoặc kỹ thuật prompt cố ý (ví dụ: 'viết điều này với độ hoang mang cao' hoặc 'sử dụng từ vựng kỳ lạ').\n• Các văn bản mang tính kỹ thuật cao hoặc thích hợp (như tạp chí y khoa, hợp đồng pháp lý hoặc mã boilerplate) thường có độ hoang mang thấp tự nhiên vì thuật ngữ của chúng cứng nhắc và có cấu trúc cao, dẫn đến dương tính giả cho việc tạo bằng máy móc.\n• Gặp khó khăn với các văn bản rất ngắn (dưới 100 từ) nơi không thể thiết lập các đường cơ sở thống kê quan trọng.",
+    "parameters": "Kiểm Định: Chấm Điểm Xác Suất Log Cho Từng Token Qua Mô Hình Đánh Giá\nThước Đo: Trung Bình Độ Hoang Mang Đường Cơ Sở Cùng Với Phương Sai Dự Đoán\nĐầu Ra: 0-100 Điểm Khả Năng Dự Đoán Giả Tạo (Độ Hoang Mang Thấp)",
+    "accuracy": "Cao — Độ chính xác 80-90% trên văn bản AI tiêu chuẩn, không chỉnh sửa. Tuy nhiên, độ chính xác giảm đáng kể đối với các đầu ra có nhiệt độ biến đổi được chỉnh sửa nhiều, 'nhân hóa' hoặc cố ý được prompt.",
     "references": [
         {
-            "title": "Mitchell, E. et al. (2023). DetectGPT. ICML.",
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
             "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",

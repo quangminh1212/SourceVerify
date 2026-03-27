@@ -1,12 +1,21 @@
 {
-    "name": "Mẫu giới từ",
-    "description": "Phân tích phân bổ giới từ",
-    "algorithm": "Thuật toán phân tích Mẫu giới từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ giới từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mẫu giới từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mô Hình Phân Phối Giới Từ",
+    "description": "Phân tích tần suất và vị trí cấu trúc của các giới từ (ví dụ: 'của', 'trong', 'để', 'cho', 'với'). Các Mô Hình Ngôn Ngữ Lớn có xu hướng phụ thuộc quá nhiều vào các cụm giới từ để kết nối các mệnh đề chung chung và duy trì một nhịp điệu đều đặn, trang trọng. Điều này dẫn đến mật độ giới từ cao hơn về mặt thống kê và chuỗi (chaining) có thể dự đoán cao (ví dụ: danh từ + 'của' + danh từ + 'trong' + danh từ) so với văn bản tự nhiên của con người, vốn sử dụng các cấu trúc cú pháp đa dạng hơn.",
+    "algorithm": "Lập Hồ Sơ Mật Độ và Chuỗi Giới Từ",
+    "mechanism": "Thuật toán phân tích cú pháp văn bản để cô lập tất cả các yếu tố giới từ. Sau đó, nó tính toán ba số liệu cụ thể: 1) Tần suất xuất hiện vượt mức (đo tỷ lệ phần trăm thô của giới từ so với tổng số từ, vì AI thường vượt quá ngưỡng điển hình của con người), 2) Chuỗi giới từ (phát hiện các cụm giới từ liên tiếp như 'trong việc theo đuổi sự xuất sắc trong lĩnh vực khoa học', một dấu ấn kinh điển của việc AI tạo ra các từ 'lấp chỗ trống') và 3) Sự đa dạng từ vựng (AI có xu hướng chủ yếu sử dụng 10 giới từ phổ biến nhất, trong khi người viết sử dụng từ vựng không gian/thời gian rộng hơn, nhiều sắc thái hơn). Bằng cách so sánh các số liệu này với các đường cơ sở ngôn ngữ học đã được thiết lập, hệ thống gắn cờ các văn bản sử dụng giới từ như một loại 'keo dán' toán học để xâu chuỗi các khối ngữ nghĩa sáo rỗng lại với nhau.",
+    "useCase": "Rất hiệu quả để kiểm tra các bài tiểu luận của sinh viên, báo cáo doanh nghiệp và tóm tắt học thuật, nơi AI thường được sử dụng để kéo dài số lượng từ và bắt chước cách đệm từ trong văn phong học thuật trang trọng.",
+    "strengths": "• Nhắm vào một tật ngữ pháp trong tiềm thức mà những người tạo prompt hiếm khi nghĩ đến việc sửa đổi hoặc che giấu.\n• Rất bền bỉ trước việc thay thế từ đồng nghĩa đơn giản, vì giới từ tạo thành cốt lõi cấu trúc của câu.",
+    "limitations": "• Dễ bị dương tính giả khi phân tích văn bản học thuật hoặc pháp lý chân chính, vốn dĩ phụ thuộc nhiều vào các cụm giới từ phức tạp để đảm bảo tính chính xác.\n• Yêu cầu một mẫu văn bản đủ lớn (thường > 200 từ) để thiết lập một mô hình phân phối có ý nghĩa thống kê.",
+    "parameters": "Kiểm Định: Gắn Thẻ POS (Cô Lập Giới Từ) và Chuỗi Cú Pháp\nThước Đo: Độ Sâu Của Chuỗi Giới Từ Liên Tiếp và Mật Độ Tổng Thể\nĐầu Ra: 0-100 Điểm Phụ Thuộc Quá Mức Vào Giới Từ (Tính Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 70-80%. Được sử dụng tốt nhất như một thước đo hỗ trợ cùng với mật độ từ vựng và phương sai độ dài câu, thay vì một bài kiểm tra dứt khoát độc lập.",
+    "references": [
+        {
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
+        },
+        {
+            "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models. PeerJ Computer Science.",
+            "url": "https://doi.org/10.7717/peerj-cs.443"
+        }
+    ]
 }

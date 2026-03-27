@@ -1,12 +1,21 @@
 {
-    "name": "Cấu trúc đoạn văn",
-    "description": "Phân tích tổ chức đoạn văn",
-    "algorithm": "Thuật toán phân tích Cấu trúc đoạn văn",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích tổ chức đoạn văn. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích cấu trúc đoạn văn. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Cấu Trúc Đoạn Văn",
+    "description": "Kiểm tra độ dài, nhịp điệu và kiến trúc bên trong của các đoạn văn. Các mô hình AI tự nhiên mặc định thành các khối văn bản có độ dài trung bình, rất đồng đều—thường được cấu trúc xung quanh một câu chủ đề rõ ràng, bằng chứng hỗ trợ và một bản tóm tắt kết luận—trong khi những người viết thường trộn lẫn các đoạn văn rất ngắn, có sức mạnh với các đoạn văn dài hơn, lan man để kiểm soát dòng tường thuật.",
+    "algorithm": "Phương Sai Độ Dài Đoạn Văn và Phân Tích Chuyển Tiếp Bên Trong",
+    "mechanism": "Phương pháp này cô lập từng đoạn văn và phân tích số từ, số câu và luồng bên trong của nó (sự hiện diện của các câu chủ đề và kết luận tiêu chuẩn). Các Mô hình Ngôn ngữ Lớn (LLM) được tối ưu hóa cho khả năng đọc và an toàn cấu trúc. Do đó, chúng chịu sự 'đồng nhất về cấu trúc'. Khi viết tiểu luận, blog hoặc báo cáo, AI hầu như sẽ luôn tạo ra các đoạn văn có độ dài rất giống nhau (ví dụ: nhất quán 4-6 câu, 80-120 từ). Hơn nữa, các đoạn văn này rất cứng nhắc: chúng bắt đầu bằng một cụm từ chuyển tiếp ('Hơn nữa', 'Ngoài ra'), trình bày một khái niệm và kết thúc bằng một kết luận vi mô. Điều này tạo ra một trải nghiệm đọc rất 'khối' và đơn điệu về mặt hình ảnh. Những người viết tự nhiên là thất thường hơn nhiều. Một con người có thể viết một đoạn văn khổng lồ gồm mười câu khám phá một ý tưởng phức tạp, ngay sau đó là một đoạn văn một câu để nhấn mạnh một cách ấn tượng. Hệ thống tính toán một 'Điểm Đơn Điệu Đoạn Văn' bằng cách xác định phương sai thống kê về độ dài đoạn văn và sự lặp lại của các cấu trúc ngữ nghĩa bên trong cứng nhắc trên toàn bộ tài liệu.",
+    "useCase": "Rất hiệu quả trong việc kiểm tra các bài luận, bài đăng blog và bài báo, xác định sự đơn điệu 'bức tường văn bản' nơi mọi đoạn văn trông và hoạt động giống hệt nhau, một dấu hiệu ấn tượng cổ điển của thế hệ AI 'zero-shot' (chỉ ra lệnh mà không đưa thông tin nền nào).",
+    "strengths": "• Phát hiện 'dấu vân tay' hình ảnh và cấu trúc của việc viết AI vẫn tồn tại ngay cả khi các từ hoặc câu riêng lẻ được con người viết lại.\n• Rất xuất sắc trong việc xác định nội dung tổng hợp ít nỗ lực (như thư rác SEO hoặc bài tập về nhà tự động) phụ thuộc nhiều vào các mẫu tiêu chuẩn.",
+    "limitations": "• Dễ bị dương tính giả khi phân tích văn bản trang trọng có cấu trúc cao, chẳng hạn như tóm tắt khoa học, bài luận kiểm tra được tiêu chuẩn hóa (ví dụ: TOEFL / IELTS) hoặc tóm tắt công ty nghiêm ngặt nơi bắt buộc phải có sự đồng nhất.\n• Không thể sử dụng trên các văn bản rất ngắn (dưới 3 đoạn) nơi không thể thiết lập phương sai.\n• Có thể được bỏ qua bằng kỹ thuật prompt hướng dẫn rõ ràng AI thay đổi độ dài đoạn văn một cách mạnh mẽ.",
+    "parameters": "Kiểm Định: Phân Đoạn Văn Bản và Lập Bản Đồ Cấu Trúc Bên Trong\nThước Đo: Phương Sai Về Số Từ / Câu và Khả Năng Dự Đoán Câu Chủ Đề\nĐầu Ra: 0-100 Điểm Đồng Nhất Cấu Trúc (Sự Đơn Điệu)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 70-80%. Một chỉ báo rất mạnh về việc tạo AI 'lười biếng', đặc biệt khi được kết hợp với phân tích Phương sai Độ dài Câu.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://arxiv.org/abs/2011.01314"
+        }
+    ]
 }

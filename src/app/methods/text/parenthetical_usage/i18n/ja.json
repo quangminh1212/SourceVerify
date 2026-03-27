@@ -1,14 +1,13 @@
 {
-    "name": "Parenthetical Usage",
-    "description": "Measures parenthetical expression 周波数",
-    "algorithm": "Parenthetical Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures parenthetical expression 周波数. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through parenthetical usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "挿入句の使用（Parenthetical Clause Usage）",
+    "description": "丸括弧内のテキスト（このように）、ダッシュ記号—このように—、またはコンマで区切られたものなど、挿入句の頻度と複雑さを分析します。AIモデルは、挿入句を厳密に乾燥した説明的な明確化のために使用する傾向がありますが、人間は、自発的な個人的意見、皮肉、または主要な文の論理的な流れを乱す二次的で脱線した考えを挿入するために挿入句を頻繁に使用します。",
+    "algorithm": "構文の分岐と挿入句の意味的ドリフト（ズレ）分析",
+    "mechanism": "このアルゴリズムは、依存関係解析と正規表現を使用して、テキスト内のすべての挿入構造（丸括弧、角括弧、およびダッシュの句）を分離します。頻度と意味的距離という2つのコア指標を評価します。大規模言語モデル（LLM）は、非常にまとまりがあり、わかりやすいようにトレーニングされています。自分自身の思考の流れを中断することはめったにありません。AIが挿入句を使用する場合、それはほぼ例外なく、用語の定義（例：「連邦準備制度（Fed）」）または日付の引用（例：「ジョージ・ワシントン（1732–1799）」）のためです。対照的に、人間のライターは、主要な動詞に戻る前に中心的な考えを中断して、脱線した冗談、限定的な疑念、または完全に別のサブストーリーを挿入するという「文の途中の気付き」を頻繁に経験します。システムは、メインの文と比較した挿入句の「意味的ドリフト（ズレ）」を測定します。単純で定義的な挿入句の頻度が高い場合は機械のアライメントを示し、複雑で脱線した中断は人間の有機的な認知プロセスを強く示唆しています。",
+    "useCase": "会話文、ブログ記事、およびオピニオン記事を分析し、AIの無機質で説明的な挿入句と、人間のライターの自発的で、中断を伴い、しばしば乱雑な挿入句を区別するのに非常に効果的です。",
+    "strengths": "• LLMが明示的なプロンプトなしに有機的に複製するのに苦労する、人間の「意識の流れ」の記述スタイルを検出するのに優れています。\n• 丸括弧内で単純な頭字語や概念を過剰に定義するという、AIの古典的な特徴を特定するのに非常に正確です。",
+    "limitations": "• 人間が引用、頭字語の定義、または厳格な明確化のためだけに挿入句を使用することを余儀なくされる可能性のある、高度に技術的、学術的、または法的な文書を分析する場合、誤検知が発生しやすくなります。\n• 挿入句がまったく発生しない非常に短いテキストでは効果が低くなります。",
+    "parameters": "解析: 正規表現（Regex）による括弧/ダッシュの抽出と依存関係の解析\n評価基準: 挿入句の頻度と意味的ドリフトの分散\n出力結果: 0-100 構文的割り込み（人工性）スコア",
+    "accuracy": "中〜高 — 70-80%の精度。自発的な人間の思考と、高度に計画された直線的なAI生成を区別するための、強力で微妙なニュアンスを持つシグナルです。",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

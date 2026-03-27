@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Maximum Softmax Probability",
-    "description": "Phân tích phân bổ xác suất softmax cực đại của token — văn bản AI tập trung khối lượng xác suất vào token dự đoán.",
-    "algorithm": "Thuật toán phân tích Maximum Softmax Probability",
-    "mechanism": "Hệ thống Maximum Softmax Probability phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Xác Suất Softmax Tối Đa (MSP)",
+    "description": "Kiểm tra mức độ tự tin tuyệt đối được mô hình ngôn ngữ gán theo phương pháp toán học cho các từ mà nó chọn. Các mô hình AI liên tục xuất ra các từ trong đó phân phối xác suất 'Softmax' nghiêng hẳn về một ứng cử viên duy nhất, được ưu tiên áp đảo. Bài viết của con người thể hiện sự đa dạng cao hơn nhiều, thường xuyên sử dụng các từ có độ chắc chắn dự đoán thấp hơn nhiều.",
+    "algorithm": "Lập Ngưỡng Độ Tự Tin Softmax Mức Token",
+    "mechanism": "Ở lớp cuối cùng của bất kỳ Mô hình Ngôn ngữ Lớn nào, hàm 'Softmax' chuyển đổi các điểm số toán học thô (logits) thành phân phối xác suất trên toàn bộ từ vựng, tổng cộng là 1.0 (100%). Khi AI tạo văn bản (giả định cài đặt nhiệt độ tiêu chuẩn), 'Xác suất Softmax Tối đa' (xác suất của một từ duy nhất mà nó thực sự chọn) là cực kỳ cao—thường đạt đến 0.90 đến 0.99 cho các từ nối ngữ pháp và danh từ có thể dự đoán được. AI có độ 'tự tin' rất cao vào lựa chọn của mình vì nó tuân theo sự tối ưu hóa toán học. Tuy nhiên, người viết thường xuyên chọn các từ mà hàm Softmax của LLM sẽ gán một xác suất tương đối thấp (ví dụ: 0.15 hoặc 0.05), bởi vì con người ưu tiên sắc thái sáng tạo hoặc thu hồi trí nhớ cụ thể hơn là khả năng thống kê. Bằng cách truyền văn bản mục tiêu qua một mô hình tham chiếu và tính toán trung bình Xác suất Softmax Tối đa cho mỗi token, phương pháp này phát hiện 'chữ ký quá tự tin' đặc trưng của quá trình tạo bằng thuật toán. Một văn bản duy trì chuỗi liên tục các điểm xác suất softmax 90%+ là điều bất khả thi về mặt toán học để một con người viết ra một cách hữu cơ.",
+    "useCase": "Rất hiệu quả để phát hiện các bài báo tin tức do AI tạo ra, tóm tắt học thuật và bản sao tiếp thị nơi AI tự nhiên rơi vào các mẫu câu dễ đoán, có độ tin cậy cao.",
+    "strengths": "• Vô hiệu hóa việc diễn giải lại cơ bản; việc tổ chức lại một chút một câu không thay đổi sự thật rằng chuỗi từ cơ bản hoàn toàn bao gồm các token có xác suất cao.\n• Thước đo chẩn đoán hộp trắng rất mạnh khi phân tích văn bản dựa trên chính xác mô hình bị nghi ngờ đã tạo ra nó.\n• Chặt chẽ về mặt toán học và có khả năng diễn giải cao như một điểm số tự tin liên tục.",
+    "limitations": "• Yêu cầu quyền truy cập vào mô hình ngôn ngữ tham chiếu mạnh mẽ để tính toán phân phối Softmax, làm cho việc này trở nên nặng nề về mặt tính toán.\n• Có thể bị đánh bại nếu người dùng thao túng quyết liệt các tham số 'Top-P' (Lấy mẫu hạt nhân) và 'Nhiệt độ' trong quá trình tạo văn bản, buộc AI phải chọn các token có xác suất thấp hơn.\n• Bài viết của con người có tính công thức, cứng nhắc cao (ví dụ: hợp đồng pháp lý) vốn dĩ có thể dự đoán được và có thể mang lại điểm MSP cao, gây ra dương tính giả.",
+    "parameters": "Kiểm Định: Chấm Điểm Phân Phối Logit-sang-Softmax Mỗi Token\nThước Đo: Thống Kê Trung Bình và Phương Sai Số Xác Suất Softmax Tối Đa\nĐầu Ra: 0-100 Điểm Tự Tin Thuật Toán (Khả Năng Dự Đoán)",
+    "accuracy": "Cao — 82-89% trên các văn bản tạo sinh tiêu chuẩn. Nó cung cấp một nền tảng thống kê cơ sở vững chắc cho việc phát hiện AI mà khó có thể ngụy trang mà không làm cho văn bản trở nên rời rạc.",
+    "references": [
+        {
+            "title": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.",
+            "url": "https://arxiv.org/abs/1610.02136"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ]
 }

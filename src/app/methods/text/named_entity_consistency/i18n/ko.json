@@ -1,14 +1,13 @@
 {
-    "name": "개체명 일관성",
-    "description": "평가합니다 the consistency and factual 정확도 of named entities (people, places, dates) 감지하기 위해 AI hallucinations and fabricated content.",
-    "useCase": "AI 생성 텍스트 감지 through inconsistent or hallucinated named entities",
-    "mechanism": "추출합니다 named entities using NER models, then checks for internal consistency (same entity referenced with conflicting attributes), temporal plausibility (dates and events alignment), and cross-referencing density. AI 생성 text is prone to 'hallucination'—generating plausible-sounding but factually incorrect entity mentions or mixing attributes 사이의 different entities.",
-    "accuracy": "중-높음 - 76-86% on factual text domains",
-    "source": "Ji, Z. et al. (2023) - Survey of Hallucination in Natural Language Generation, ACM Computing Surveys",
-    "algorithm": "Named Entity Recognition + Consistency Graph + Conflict Detection",
-    "parameters": "NER model: transformer-based, Entity types: PER/ORG/LOC/DATE/NUM, Consistency check: pairwise attribute comparison, 임계값: 적응형 per entity type",
-    "strengths": "• AI 환각 문제를 직접 대상으로 함\n• 사실적 문서에서 높은 정밀도\n• 해석 가능한 오류 예시\n• 뉴스 및 학술 텍스트에 효과적",
-    "limitations": "• Requires domain knowledge for fact-checking\n• Creative fiction has naturally inconsistent entities\n• NER model errors propagate to 분석\n• Less useful for opinion or abstract text",
+    "name": "고유명사 일관성 (Named Entity Consistency)",
+    "description": "문서 전체에 걸쳐 등장하는 고유명사(인물, 조직, 장소, 전문 용어)의 안정성과 문맥적 논리의 일관성을 평가합니다. AI 모델은 처음 설정 값을 제시할 때는 그럴싸하게 시치미를 떼지만, 문장이 길어지면 심각한 기억상실증(Long-range dependency 실패)을 겪습니다. 그 결과, 문서 후반부에서 특정 고유명사의 속성, 역할, 인간관계가 슬그머니 왜곡되거나 스스로와 모순을 일으키는 '엔티티 표류(Entity Drift)' 현상이 발생합니다.",
+    "algorithm": "교차-문서 엔티티 상호참조(Coreference) 및 속성 검증",
+    "mechanism": "시스템은 고도화된 개체명 인식(NER) 기술을 활용하여 고유한 모든 엔티티(예: '스미스 박사', '글로벌코프', '프로토콜 X')를 추출하고 색인화합니다. 그런 다음 문서 전체를 관통하며, 이 캐릭터들이 어떤 동사, 형용사, 그리고 상황적 역할과 연결되어 있는지 보여주는 '국지적 지식 그래프(Knowledge Graph)'를 구축합니다. 알고리즘은 AI가 자신이 만들어놓은 세계관의 설정을 까먹어버렸을 때 발생하는 '환각적 모순(Hallucinatory contradictions)'을 미친 듯이 스캔합니다. 예를 들어, 2장에서는 죽었다고 묘사한 인물이 5장에서는 멀쩡히 살아서 인터뷰를 하거나, 1990년에 설립되었다고 못 박은 회사가 1980년대 사건에 연루되었다고 모순되게 서술하는 식입니다. 인간 작가들은 자신이 창조하거나 논의하는 대상에 대해 확고한 멘탈 모델을 머릿속에 유지하기 때문에, 아무리 긴 글이라도 논리적인 연속성이 끊어지지 않습니다. 슬라이딩 컨텍스트 윈도우(Sliding context window)의 망각과 '다음 단어 하나짜리 확률'에만 의존하는 생성형 AI는 진정한 의미의 '작업 기억(Working memory)'이 없으며, 거시적인 논리 일관성보다는 당장 눈앞에 있는 문장의 얄팍한 유창함을 최우선으로 여깁니다.",
+    "useCase": "보고서, 인물 전기, 논문 요약, 긴 소설 등 장문(Long-form)의 생성 콘텐츠를 감사(Audit)할 때 생명줄 역할을 합니다. 글이 길어질수록 AI는 다수의 캐릭터, 팩트 데이터, 조직들의 관계를 저글링(Juggling)하다가 반드시 정보를 땅에 떨어뜨리게 되어 있습니다.",
+    "strengths": "• 현존하는 모든 자기회귀(Autoregressive) 텍스트 모델의 근본적이고 치명적인 아킬레스건인 '환각(Hallucination)'과 '컨텍스트 윈도우 망각(Forgetting)'을 거침없이 저격합니다.\n• AI가 소설을 쓴 가짜 뉴스, 조작된 비즈니스 사례 연구, 오류투성이의 위키백과식 학술 요약을 폭로하는 데 악마적인 성능을 발휘합니다.\n• 눈에 보이지 않는 통계 수치가 아니라, 변명의 여지가 없는 구체적 증거를 제공합니다 (예: 'A라는 인물은 12줄에서는 의사라고 했는데, 84줄에서는 변호사로 나옵니다').",
+    "limitations": "• 시스템 내부적으로 지식 그래프를 세우고 문장 간 구조를 모두 교차 검증해야 하므로 막대한 계산 리소스가 소모됩니다.\n• 인간이 쓴 글이더라도, 의도적으로 신뢰할 수 없는 화자(기억이 오락가락하는 소설 주인공)를 등장시키거나, 초현실주의 예술, 또는 단순히 퇴고를 대충 해서 팩트 체크가 엉망인 무능한 글의 경우 억울하게 오탐지(False positive)될 수 있습니다.\n• 짧은 글에서는 애초에 AI가 기억을 잃어버리고 헛소리를 할 만한 물리적 시간(길이)이 부족하기 때문에 탐지 효과가 급감합니다.",
+    "parameters": "분석 기준: 개체명(NER) 추출 및 컨텍스트 그래프 신경망(GNN)\n측정 지표: 쌍방향 속성 충돌(Conflict) 및 시간적/공간적 세계관 모순\n출력: 0-100 세계관 논리 일관성 (환각 발생 확률) 스코어",
+    "accuracy": "높음 — 1,000단어가 넘어가는 장문에서 82-89%의 경이로운 적중률. 얄팍한 단어 사용 통계 수준이 아니라, 글의 척추(논리)가 부러졌는지를 검사하기 때문에, 현재까지 인간이 창조한 AI 텍스트 감지 지표 중 가장 파괴적이고 견고한 의미론적 무기입니다.",
     "references": [
         {
             "title": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.",

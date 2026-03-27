@@ -1,26 +1,21 @@
 {
-    "name": "品詞タグ分布",
-    "description": "分析します 品詞 tag 分布 パターン を検出するために AI生成の text, は often shows unnatural grammatical structure 分布s.",
-    "useCase": "Detecting AI text through abnormal grammatical category 分布s compared to natural 人間の文章",
-    "mechanism": "実行します 品詞 tagging on input text and computes the frequency 分布 of each POS category (nouns, verbs, adjectives, adverbs, etc.). AI生成の text tends to over-rely on certain syntactic constructions, producing flatter 分布s or unusual ratios 間の categories (e.g., higher adjective-to-noun ratio). The method compares observed 分布s against reference human corpora using chi-squared goodness-of-fit tests.",
-    "accuracy": "中 - 72-82% on standard benchmarks",
-    "source": "Fröhling & Zubiaga (2021) - Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover, PeerJ Computer Science",
-    "algorithm": "POS Tagging + Chi-Squared Goodness-of-Fit + KL Divergence",
-    "parameters": "POS Tagset: Universal Dependencies, Window: full document, Comparison: reference corpus baselines, Granularity: fine-grained 36-tag",
-    "strengths": "• Language-structure based rather than content-based\n• Works にわたる different AI model architectures\n• 計算効率が高い\n• Interpretable results for linguists",
-    "limitations": "• Requires sufficient text length for reliable statistics\n• May vary にわたる text genres and domains\n• Advanced AI models increasingly mimic human POS 分布s\n• Less effective on short texts (<100 words)",
+    "name": "品詞（POS）の出現順序の分散",
+    "description": "品詞（Parts-of-Speech: POS）タグの配列と分布を追跡することにより、構文構造の多様性と予測可能性を分析します。AIジェネレーターは、構造的に定型化された文のパターン（たとえば、予測可能な形容詞の配置を伴う標準的な主語-動詞-目的語の構成）に依存する傾向があります。これにより、人間が書いた文章のリズミカルでカオスな変化と比較して、テキスト全体で文法タグがどのように配列されるかの分散が少なくなります。",
+    "algorithm": "構文的N-GramおよびPOS分布プロファイリング",
+    "mechanism": "このアルゴリズムは、最初に依存関係パーサーまたはPOSタガーを使用してテキストを解析し、すべての単語を文法カテゴリー（名詞、動詞、形容詞、前置詞など）に変換します。次に、2つの主要な指標を計算します。1）POS分布（各タグの全体的な頻度比率。AIはしばしば限定詞や一般的な形容詞を過剰に使用します）、および2）POS配列の分散（3-gramおよび4-gramのPOS配列のエントロピー）です。人間のライターは、文体的な効果のために文法規則を頻繁に破り、複雑な従属節を使用し、不規則に挿入句を入れるため、POS配列のエントロピーが高くなります。一方、流暢だが安全な生成のために最適化されたAI生成テキストは、統計的に最も可能性の高い文法構造を極端に好むため、反復的で予測可能性が非常に高い構文リズム（例：「限定詞＋形容詞＋名詞＋動詞」の延々とした繰り返し）になります。システムは、これらの観察された配列を人間のベースラインコーパスと比較して、人工性スコアを計算します。",
+    "useCase": "AIによる構造的な模倣が一般的な、フォーマルなエッセイ、ニュース記事、および専門的な文章の分析に非常に効果的です。",
+    "strengths": "• 根底にある文法的な骨組みは変わらないため、単純な語彙の置き換え攻撃（「利用する（utilize）」を「使う（use）」に変更するなど）に対して非常に堅牢です。\n• 構造レベルで機能するため、さまざまなトピックやドメインとのクロス互換性が高くなります。",
+    "limitations": "• 高度に構造化された定型的な人間の文章（法的文書、技術マニュアル、標準化されたテストのエッセイなど）では、誤検知が発生しやすくなります。\n• 構造の分布と配列のエントロピーを正確にマッピングするには、十分な長さのテキスト（通常は150語以上）が必要です。",
+    "parameters": "解析: POSタグ付け（Universal Dependencies）および構文的N-Gramエントロピー\n評価基準: POS遷移確率とタグ分布比率\n出力結果: 0-100 構文的予測可能性（人工性）スコア",
+    "accuracy": "中〜高 — 75-85%の精度。テキストの「肉」ではなく「骨格」を分析するため、語彙やパープレキシティに基づく手法と組み合わせると非常に強力になります。",
     "references": [
         {
             "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover. PeerJ Computer Science.",
             "url": "https://doi.org/10.7717/peerj-cs.443"
         },
         {
-            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",
-            "url": "https://arxiv.org/abs/1906.03351"
-        },
-        {
-            "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",
-            "url": "https://doi.org/10.1007/978-3-319-41754-7_43"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         }
     ]
 }

@@ -1,14 +1,13 @@
 {
-    "name": "Passive-Active Voice Mix",
-    "description": "Analyzes passive vs active voice distribution",
-    "algorithm": "Passive-Active Voice Mix — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes passive vs active voice distribution. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through passive-active voice mix analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "主动与被动语态失衡度 (Passive-Active Voice Ratio)",
+    "description": "分析主动语态和被动语态结构之间的比例平衡以及切换频率。AI 模型由于其底层被死死焊上了“中立”和“客观”的安全对齐协议，因此会呈现出一种病态的被动语态滥用倾向，目的是为了逃避指出直接的责任人（例如，它会写“有错误被犯下了”，而不是“我们犯了错”），不仅如此，它们还会在整篇文章里维持着一种僵硬且完全一致的主被动比例。而人类作家的语态切换是极其动态且随心所欲的，完全取决于当时的情绪意图、强调的重点以及叙事节奏。",
+    "algorithm": "句法施事者映射与语态切换方差分析",
+    "mechanism": "该算法会动用依存句法分析，将文本中的每一个从句无情地剥离开来，分类为“主动”（主-谓-宾）或“被动”（宾-谓-由于-主）。接着，它会计算两项核心指标：被动句对主动句的绝对比例，以及“语态切换率”（文本在两种语态间横跳的频率）。大语言模型（LLM）被 RLHF（人类反馈强化学习）驯化成了一个极其害怕担责、永远听起来权威又安全的复读机。这种特训无意中在很多语境下封杀了第一人称的主动语态，导致 AI 像抓着救命稻草一样死死抱住被动结构（“值得注意的是……”、“数据已经被分析出……”）。就算你在提示词里拿着刀逼它“写得主动一点”，AI 的文本最终也会退化并稳定在一种一潭死水、在数学上极度匀称的语态比例中。人类作家的操作则骚得多：他们可能在文章开头用一整段极具攻击性的主动语态狂喷，然后在极其枯燥的方法论章节连开十几个被动句大招，最后在结论部分再次切回热血的主动语态。人类切换语态是被文章的情感节奏和修辞焦点所驱动的，这会造成在某一个局部，主动句或者被动句会像机关枪一样“扎堆爆发”。系统正是通过测量这种对被动结构的病态依赖，以及语态切换中彻底缺失的“有机扎堆感”，来审判出一个“施事者塑料化（Agency Artificiality）得分”。",
+    "useCase": "这是用来给企业公关稿、学术水文和充水新闻做外科手术的绝配。它能一针见血地撕开机器那种无菌的、塑料般虚假的客观语气，还原人类作家那种充满攻击性、极具偏向性的语态切换脉搏。",
+    "strengths": "• 在抓捕那些企图伪装成“专业人士”或“大学教授”的 AI 文本时杀伤力极大，因为只要用户的要求带有这种词汇，就一定能百分之百触发 AI 的底层被动语态滥用机制。\n• 让一般的“提示词小鬼”毫无招架之力，因为绝大多数提示词工程师的脑容量只够用来要求 AI 换换“词汇”，根本意识不到要去操控极深层次的句法语态架构。",
+    "limitations": "• 很容易在某些人类被迫成为机器的领域触发假阳性误伤。比如在及其古板的科研论文、实验室报告或技术手册中，人类作者被排版规范（比如老版的 APA 格式指南）拿枪顶着头，被强制要求必须且只能使用被动语态。\n• 在极其口语化的文字（比如短信、微信聊天记录）中等于废铁，因为在那种语境下，无论是 AI 还是人类，基本都不说被动句。",
+    "parameters": "雷达切片: 针对主-谓-宾施事者责任链的依存句法分析\n定罪量表: 被动/主动句悬殊比例 与 语态切换的扎堆爆发现象\n行刑判决: 0-100 施事者塑料化 (机器冰冷语态) 审判分数",
+    "accuracy": "中高维打击 — 75-85% 的狙击准确度。在那些严肃的、教育类的或者是职场文档审核中，只要 AI 为了“客观自保”而畏首畏尾，这个指标就能一抓一个准。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

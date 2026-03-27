@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ ẩn dụ",
-    "description": "Phân tích mật độ ngôn ngữ hình tượng",
-    "algorithm": "Thuật toán phân tích Mật độ ẩn dụ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mật độ ngôn ngữ hình tượng. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ ẩn dụ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Ẩn Dụ",
+    "description": "Kiểm tra tần suất và sự gắn kết có hệ thống của ngôn ngữ hình tượng, cụ thể là ẩn dụ và so sánh. Các mô hình tạo văn bản AI thường gặp khó khăn trong việc tạo ra hình ảnh ẩn dụ mới lạ, xuyên suốt, thay vào đó lại rơi vào tình trạng sử dụng sáo ngữ, ẩn dụ hỗn hợp hoặc duy trì giọng điệu giải thích, nghĩa đen hoàn toàn.",
+    "algorithm": "Phân Tích Ẩn Dụ Khái Niệm và Bản Đồ Hình Tượng",
+    "mechanism": "Hệ thống này sử dụng gán nhãn vai trò ngữ nghĩa và phân định nghĩa của từ để phát hiện các trường hợp từ được sử dụng ngoài các định nghĩa nghĩa đen cốt lõi của chúng (ví dụ: 'nền kinh tế *chảy máu* việc làm'). Nó tính toán điểm 'Mật độ Ẩn dụ' đại diện cho tỷ lệ biểu thức hình tượng so với văn bản nghĩa đen. Quan trọng hơn, nó lập bản đồ sự gắn kết khái niệm của các ẩn dụ này. LLM, hoạt động dựa trên dự đoán token thống kê thay vì trải nghiệm thực tế của con người, có xu hướng sử dụng ẩn dụ quá ít (dẫn đến giọng điệu học thuật, khô khan ngay cả trong văn bản sáng tạo) hoặc lạm dụng các ẩn dụ được tiêu chuẩn hóa cao, sáo rỗng (ví dụ: 'trong thế giới phát triển nhanh chóng hiện nay', 'con dao hai lưỡi'). Hơn nữa, khi bị buộc phải sáng tạo, AI thường tạo ra các 'ẩn dụ hỗn hợp'—kết hợp các trường ngữ nghĩa không tương thích bởi vì các token nằm liền kề về mặt thống kê trong dữ liệu huấn luyện, chứ không phải vì hình ảnh hình ảnh cơ bản có ý nghĩa. Bằng cách so sánh tần suất ngôn ngữ hình tượng mới lạ với kho ngữ liệu cơ sở của con người đối với thể loại viết cụ thể, thuật toán này làm nổi bật 'sự bằng phẳng' về mặt ngữ nghĩa hoặc sự không phù hợp về khái niệm mang tính ảo giác điển hình của các mô hình tạo sinh.",
+    "useCase": "Rất quan trọng để phân tích văn bản sáng tạo, bản sao tiếp thị, báo chí và bài luận cá nhân, nơi các tác giả con người dệt nên hình ảnh ẩn dụ sống động, có cơ sở văn hóa và nhất quán một cách tự nhiên.",
+    "strengths": "• Xâm nhập vào các lớp ngữ nghĩa sâu sắc; AI không thể dễ dàng làm giả các ẩn dụ mới lạ, mạch lạc chỉ bằng cách thay đổi cấu trúc nhắc nhở (prompt).\n• Rất hiệu quả trong việc phát hiện những nỗ lực của AI trong việc viết 'sáng tạo' hoặc 'cảm xúc', thường sụp đổ thành một cụm các sáo ngữ mệt mỏi.\n• Xác định sự mất kết nối ngữ nghĩa (ẩn dụ hỗn hợp), là dấu hiệu cổ điển của việc tạo văn bản thống kê thiếu sự hiểu biết thực sự về thế giới.",
+    "limitations": "• Phát hiện ẩn dụ là một vấn đề mở trong NLP; việc nhận ra các ẩn dụ thơ mộng mang tính văn hóa cụ thể hoặc rất mới lạ có thể gây ra dương tính giả hoặc âm tính giả.\n• Văn bản chuyên ngành khoa học, luật hoặc kỹ thuật của con người vốn dĩ có mật độ ẩn dụ cực kỳ thấp, làm vô hiệu hóa tính hiệu quả của chỉ số này trong các lĩnh vực đó.\n• Không thể dễ dàng phân biệt giữa AI và một người viết phụ thuộc nhiều vào các thành ngữ thiếu sáng tạo.",
+    "parameters": "Kiểm Định: Phân Định Nghĩa Từ & Lập Bản Đồ Ngữ Nghĩa\nThước Đo: Tỷ Lệ Giữa Biểu Thức Nghĩa Đen / Hình Tượng, Sự Gắn Kết Khái Niệm\nĐầu Ra: 0-100 Điểm Bằng Phẳng Ngữ Nghĩa / Sự Phong Phú Hình Tượng",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 72-84% trong các thể loại văn bản sáng tạo/thể hiện. Nó hoạt động như một công cụ sàng lọc định tính mạnh mẽ cho các văn bản tự nhận là mang tính cá nhân sâu sắc hoặc nghệ thuật.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

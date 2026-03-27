@@ -1,22 +1,17 @@
 {
-    "name": "N-gram 빈도 분석",
-    "description": "분석합니다 word and character n-gram 분포s 감지하기 위해 패턴 characteristic of AI 생성 text.",
-    "useCase": "Detecting AI text through 통계 분석 of word sequence 패턴",
-    "mechanism": "추출합니다 character-level and word-level n-gram frequency 분포s and compares them against known 분포s for human and AI 생성 text. AI text generators produce characteristic n-gram 패턴 — often over-representing common phrases and under-representing rare but natural human constructions.",
-    "accuracy": "중-높음 - 75-85% on diverse text samples",
-    "source": "Lavergne et al. (2008) - Detecting Fake Content with Relative Entropy Scoring, PAN-SEPLN",
-    "algorithm": "N-gram Extraction + Frequency Distribution Analysis + KL-Divergence Scoring",
-    "parameters": "N-gram sizes: 2-5, Level: character + word, Comparison: KL-divergence, chi-square, Corpus: reference 분포s",
-    "strengths": "• Language-model agnostic approach\n• Can analyze very short texts\n• 계산 효율적\n• Captures subtle 분포 differences",
-    "limitations": "• Requires reference 분포s for calibration\n• Domain-specific text may skew results\n• Modern AI models converge toward natural 분포s\n• Cross-domain generalization can be weak",
+    "name": "N-gram 빈도 분포",
+    "description": "연속된 단어들의 묶음(N-gram)이 등장하는 빈도를 분석합니다. AI 모델은 문장을 구성할 때 통계적 확률에 극도로 의존하기 때문에, 등장 확률이 매우 높고 뻔한 단어 조합들(예: '주목해야 할 점은', '결론적으로')을 좁은 풀 안에서 지겹도록 반복적으로 차출해 씁니다. 반면 인간 작가는 훨씬 더 넓고 종잡을 수 없는 폭넓은 어휘 분포를 자연스럽게 활용하며, 자신만의 독특하거나 '희귀한' N-gram 조합을 높은 비율로 생산해 냅니다.",
+    "algorithm": "토큰 시퀀스 확률 및 KL 발산(Kullback-Leibler Divergence) 스코어링",
+    "mechanism": "이 알고리즘은 입력된 텍스트에서 N-gram(보통 2개~5개의 단어 묶음)을 추출하여 그 빈도 분포의 지도를 그립니다. 거대 언어 모델(LLM)의 작동 원리 자체가 '통계적으로 가장 그럴싸한 다음 단어'를 예측하는 것입니다. 그 결과, AI의 출력물은 필연적으로 인간 언어의 구조적 '정중앙(가장 낡고 흔한 표현들)'으로 뭉치게 되며, 방대한 학습 데이터에서 가장 뻔하게 자주 등장했던 단어 조합에 극도로 의존합니다. 인간의 글이 꼬리가 두꺼운 분포('Fat tail' distribution: 희귀하고 기발하거나 완전히 새로운 구절 조합이 꽤 자주 등장함)를 보이는 반면, AI의 글은 뻔한 접속사와 관용구들이 압도적인 비율을 차지하는 뾰족하고 편협한 종 모양의 분포를 그립니다. 시스템은 쿨백-라이블러 발산(Kullback-Leibler Divergence)이나 교차 엔트로피(Cross-entropy) 측정 기법을 사용하여, 해당 텍스트의 N-gram 분포를 진짜 인간들이 쓴 방대한 코퍼스의 기준점(Baseline)과 겹쳐 봅니다. 인간의 인지적 변형에서 나타나는 전형적인 통계적 '노이즈'나 희귀한 연어(Collocation) 결합이 멸종된 채, 오로지 고확률 N-gram 조합들로만 떡칠된 텍스트는 AI 확률 산출에서 치명적인 고득점을 받게 됩니다.",
+    "useCase": "장문 콘텐츠, 학술 에세이, 돈벌이용 SEO 블로그 글 등을 스캔하여, 통계적으로 '안전하기만 한' 남용되고 뻔한 프레이즈 조합만으로 무성의하게 조립된 텍스트를 발본색원하는 데 필수적인 핵심 무기입니다.",
+    "strengths": "• 얄팍하게 동의어 몇 개를 교체하는 꼼수를 완벽하게 쳐냅니다. 5-gram의 가장 흔한 구절 안에서 단어 1개만 바꾼다고 해도, 그 주변을 감싸고 있는 문법적 구조의 확률망 구도는 여전히 AI의 예측 가능성 안에 갇혀 있기 때문입니다.\n• 통계 분포의 '대수의 법칙(Law of large numbers)'이 부정할 수 없는 절대 권력을 행사하는 긴 텍스트에서 파괴적인 위력을 발휘합니다.\n• 분석 대상 언어에 대한 기준 코퍼스(Baseline reference corpus)만 존재한다면, 언어의 장벽을 초월하여 적용할 수 있습니다.",
+    "limitations": "• 변주를 극도로 통제하고 본질적으로 천편일률적인 표현과 판에 박힌 어휘만을 엄격하게 강요하는 뻣뻣한 법률 문서, 고도로 표준화된 기업 공식 문서, 과학적 초록 등을 검사할 때는 억울한 오탐지(False positive)를 낼 수 있습니다.\n• 계산해야 할 N-gram의 차수가 높아지면(n > 4) 초거대 용량의 문서를 분석할 때 컴퓨터 연산 자원을 가차 없이 집어삼킵니다.\n• 통계적 분포 곡선 자체가 유의미하게 형성될 수조차 없는 매우 짧은 글(100단어 미만)에서는 쓸모가 없습니다.",
+    "parameters": "분석 기준: 연쇄 단어(N-gram, n=2~5) 추출 및 통계적 빈도 맵핑\n측정 지표: 인간 기준점(Baseline) 대비 토큰 확률 분포의 이탈도 (KL-발산)\n출력: 0-100 N-gram 예측 가능성 (뻔함의 정도) 스코어",
+    "accuracy": "높음 — 75-85%의 정확도. AI 텍스트 탐지 기술에서 가장 근본적이고 신뢰할 수 있는 핵심 지표 중 하나이며, 수많은 다중 머신러닝 분석 시스템들의 가장 튼튼한 닻 역할을 합니다.",
     "references": [
         {
             "title": "Lavergne, T. et al. (2008). Detecting Fake Content with Relative Entropy Scoring. PAN-SEPLN.",
             "url": "https://ceur-ws.org/Vol-502/"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",

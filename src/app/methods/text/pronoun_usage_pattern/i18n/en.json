@@ -1,14 +1,13 @@
 {
     "name": "Pronoun Usage Pattern",
-    "description": "Analyzes pronoun distribution (personal, demonstrative, relative) to detect AI-generated text's distinctive pronoun avoidance patterns.",
-    "useCase": "Detecting AI text through systematic differences in pronoun usage frequency and variety",
-    "mechanism": "Categorizes and quantifies pronoun usage across subcategories: first-person (I, we, me), second-person (you, your), third-person (he, she, they), demonstrative (this, that, these), and relative (which, that, who). AI-generated text typically underuses first-person pronouns, overuses impersonal constructions ('it is', 'one can'), and shows less pronominal variety. The method computes pronoun density, category ratios, and positional patterns.",
-    "accuracy": "Moderate - 70-80% on opinion and narrative text",
-    "source": "Pennebaker, J. W. (2011) - The Secret Life of Pronouns: What Our Words Say About Us, Bloomsbury Press",
-    "algorithm": "Pronoun Categorization + Density Analysis + Category Ratio Comparison + Positional Mapping",
-    "parameters": "Categories: PRP/PRP$/WP/DT, Density: per 100 words, Ratios: 1st/3rd person, self-reference index, Normalization: genre-adjusted",
-    "strengths": "• Pronouns carry strong psychological and stylistic signals\n• Easy to extract and analyze\n• Effective on personal and opinion text\n• Backed by extensive psycholinguistic research",
-    "limitations": "• Less useful for technical or instructional text\n• Cultural and genre differences affect baseline\n• AI can be prompted to use specific pronoun patterns\n• Needs genre-specific reference distributions",
+    "description": "Analyzes the distribution and frequency of pronouns (personal, demonstrative, and relative) to detect the psychological distance and artificial neutrality characteristic of Large Language Models. While humans naturally anchor their writing in personal experience using first-person pronouns ('I', 'my', 'we') or directly address the reader ('you'), AI tends to default to a detached, omniscient perspective, heavily overusing impersonal, third-person, and demonstrative pronouns.",
+    "algorithm": "Pronominal Density and Persona Profiling",
+    "mechanism": "The algorithm categorizes every pronoun in the text (first-person, second-person, third-person, demonstrative, relative, and indefinite). It computes specific psycho-linguistic ratios: the Self-Reference Index (how often the author places themselves in the text), the Direct Address Index (how often the reader is acknowledged), and the Impersonal Padding Index (the frequency of structures like 'It is important to note that...' or 'One must consider...'). By comparing these ratios against established baselines for specific writing genres (e.g., opinion pieces, narratives, or persuasive essays), the system identifies texts that suffer from the 'view from nowhere'—a highly sterile, risk-averse pronominal footprint unique to RLHF-trained AI models.",
+    "useCase": "Highly effective for auditing college admission essays, cover letters, opinion editorials, and personal narratives where genuine human psychological presence is expected.",
+    "strengths": "• Leverages decades of established psycholinguistic research linking pronoun usage to human behavioral and cognitive states.\n• Highly accurate in detecting AI 'ghostwriting' in texts that are fundamentally meant to be personal.",
+    "limitations": "• Performance drops significantly on naturally impersonal texts like technical documentation, legal contracts, or scientific research papers.\n• Advanced prompt engineering ('Write this from a personal, first-person perspective') can partially mask artificial pronoun distributions.",
+    "parameters": "Analysis: POS Tagging (Pronoun Categorization) and Ratio Computation\nMetric: Self-Reference Index vs. Impersonal Padding Index\nOutput: 0-100 Pronoun Sterility (Artificiality) Score",
+    "accuracy": "Moderate to High — 75-85% accuracy on narrative and opinion texts. Accuracy drops below 55% on technical or formal academic texts.",
     "references": [
         {
             "title": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.",
@@ -17,10 +16,6 @@
         {
             "title": "Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access.",
             "url": "https://doi.org/10.1109/ACCESS.2023.3341807"
-        },
-        {
-            "title": "Newman, M. L. et al. (2003). Lying Words: Predicting Deception from Linguistic Styles. Personality and Social Psychology Bulletin.",
-            "url": "https://doi.org/10.1177/0146167203251529"
         }
     ]
 }

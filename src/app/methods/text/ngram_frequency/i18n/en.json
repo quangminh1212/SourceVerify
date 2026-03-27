@@ -1,22 +1,17 @@
 {
-    "name": "N-gram Frequency Analysis",
-    "description": "Analyzes word and character n-gram distributions to detect patterns characteristic of AI-generated text.",
-    "useCase": "Detecting AI text through statistical analysis of word sequence patterns",
-    "mechanism": "Extracts character-level and word-level n-gram frequency distributions and compares them against known distributions for human and AI-generated text. AI text generators produce characteristic n-gram patterns — often over-representing common phrases and under-representing rare but natural human constructions.",
-    "accuracy": "Moderate-High - 75-85% on diverse text samples",
-    "source": "Lavergne et al. (2008) - Detecting Fake Content with Relative Entropy Scoring, PAN-SEPLN",
-    "algorithm": "N-gram Extraction + Frequency Distribution Analysis + KL-Divergence Scoring",
-    "parameters": "N-gram sizes: 2-5, Level: character + word, Comparison: KL-divergence, chi-square, Corpus: reference distributions",
-    "strengths": "• Language-model agnostic approach\n• Can analyze very short texts\n• Computationally efficient\n• Captures subtle distribution differences",
-    "limitations": "• Requires reference distributions for calibration\n• Domain-specific text may skew results\n• Modern AI models converge toward natural distributions\n• Cross-domain generalization can be weak",
+    "name": "N-gram Frequency Distribution",
+    "description": "Analyzes the frequency of contiguous word sequences (N-grams). AI models heavily rely on statistical probability to construct sentences, leading them to repeatedly use a narrow set of highly probable, common word combinations (e.g., 'It is important to note', 'In conclusion'). Human writers naturally utilize a much wider, less predictable vocabulary distribution with a higher rate of 'rare' N-grams.",
+    "algorithm": "Token Sequence Probability and KL-Divergence Scoring",
+    "mechanism": "The algorithm extracts N-grams (typically 2-grams to 5-grams) from the input text and maps their frequency distribution. Large Language Models (LLMs) operate by predicting the most statistically likely next token. Consequently, their output naturally clusters around the structural 'center' of human language—relying heavily on the most frequent word combinations found in their training data. While human writing exhibits a 'fat tail' distribution (frequent use of rare, idiosyncratic, or entirely novel phrase combinations), AI text exhibits a steep, narrow distribution dominated by common transitional phrases and idioms. The system compares the text's N-gram distribution against baseline human corpora using Kullback-Leibler (KL) Divergence or cross-entropy measurements. A text that is overly comprised of highly probable N-grams, lacking the statistical 'noise' or rare collocations typical of human cognitive variance, receives a high AI probability score.",
+    "useCase": "Essential for scanning long-form content, academic essays, and SEO articles to identify text built entirely from statistically 'safe', overused, and generic phrase combinations.",
+    "strengths": "• Highly robust against simple synonym swapping; replacing one word in a common 5-gram still leaves the surrounding grammatical structure highly predictable.\n• Extremely effective on longer texts where the statistical distribution law of large numbers becomes undeniable.\n• Language-agnostic, provided a baseline reference corpus exists for the target language.",
+    "limitations": "• Susceptible to false positives in rigid legal documents, highly standardized corporate communications, or scientific abstracts which natively demand highly restrictive, common phrasing.\n• Computationally expensive on very large documents if calculating higher-order N-grams (n > 4).\n• Ineffective on very short texts (under 100 words) where statistical distribution cannot be meaningfully established.",
+    "parameters": "Analysis: N-gram Extraction (n=2 to n=5) and Frequency Mapping\nMetric: Token Probability Distribution vs. Baseline (KL-Divergence)\nOutput: 0-100 N-gram Predictability Score",
+    "accuracy": "High — 75-85% accuracy. One of the foundational and most reliable metrics for AI text detection, anchoring many multi-method analysis systems.",
     "references": [
         {
             "title": "Lavergne, T. et al. (2008). Detecting Fake Content with Relative Entropy Scoring. PAN-SEPLN.",
             "url": "https://ceur-ws.org/Vol-502/"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",

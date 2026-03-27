@@ -1,26 +1,21 @@
 {
-    "name": "词性标注分布",
-    "description": "分析 词性 tag 分布 模式 以检测 AI生成的 text, 其 often shows unnatural grammatical structure 分布s.",
-    "useCase": "Detecting AI text through abnormal grammatical category 分布s compared to natural 人类写作",
-    "mechanism": "执行 词性 tagging on input text and computes the frequency 分布 of each POS category (nouns, verbs, adjectives, adverbs, etc.). AI生成的 text tends to over-rely on certain syntactic constructions, producing flatter 分布s or unusual ratios 之间 categories (e.g., higher adjective-to-noun ratio). The method compares observed 分布s against reference human corpora using chi-squared goodness-of-fit tests.",
-    "accuracy": "中等 - 72-82% on standard benchmarks",
-    "source": "Fröhling & Zubiaga (2021) - Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover, PeerJ Computer Science",
-    "algorithm": "POS Tagging + Chi-Squared Goodness-of-Fit + KL Divergence",
-    "parameters": "POS Tagset: Universal Dependencies, Window: full document, Comparison: reference corpus baselines, Granularity: fine-grained 36-tag",
-    "strengths": "• Language-structure based rather than content-based\n• Works 跨 different AI model architectures\n• 计算效率高\n• Interpretable results for linguists",
-    "limitations": "• Requires sufficient text length for reliable statistics\n• May vary 跨 text genres and domains\n• Advanced AI models increasingly mimic human POS 分布s\n• Less effective on short texts (<100 words)",
+    "name": "词性 (POS) 序列方差分析",
+    "description": "通过追踪词性（Parts-of-Speech, POS）标签的排列顺序和分布，来剖析句子句法结构的多样性和可预测性。AI 生成器极其依赖那种公式化、结构刻板的句型（比如：带有一眼望到头的形容词修饰的标准主-谓-宾结构）。与人类写作那种充满跳跃感、节奏混乱且生动的变化相比，AI 文本中语法标签序列的方差极小。",
+    "algorithm": "句法 N-Gram 与词性分布拓扑",
+    "mechanism": "该算法首先如同解剖刀一般，使用依存句法分析器或词性标注器将文本扒光，把所有单词转换成它们底层的语法类别（名词，动词，形容词，介词等）。然后它会榨取两个核心指标：1）词性分布（每种标签的总体频率比例。AI 会在这里暴露出严重滥用限定词和万金油形容词的毛病）以及 2）词性序列变异度（3-gram 和 4-gram 词性列的熵值）。人类作家为了追求修辞和语气效果，会极其频繁地打破语法常规模板，滥用复杂的从句，并毫无规律地插入语，从而制造出极高的词性序列熵（也就是不可预测性）。而 AI 生成的文本为了追求“绝对安全和流畅”，会死死抱住统计学上概率最高的那几种语法骨架，导致产生一种像钟表一样机械循环、高度可预测的句法节奏（例如：“限定词 + 形容词 + 名词 + 动词” 这种句型被无尽地复读）。系统会将这些被监控到的句法序列与人类基线语料库进行暴力对比，从而计算出机械骨骼（虚假度）得分。",
+    "useCase": "在剖析正式论文、新闻报道和专业公文时具有极强的杀伤力，因为这些领域正是 AI 最喜欢使用“八股文”句法结构重灾区。",
+    "strengths": "• 对所谓的“同义词替换洗稿攻击”（比如把“利用”改成“使用”）具有核级别的免疫力。因为无论你怎么换皮，底层那套僵硬的语法骨架根本没变。\n• 它是纯粹在物理结构层面运作的技术，因此可以无视文本的主题和专业领域，具有极强的跨界通用性。",
+    "limitations": "• 当遇到人类写的那些本来就死气沉沉、高度公式化的文本（比如法律合同、枯燥的技术手册、或者套模板的八股文考试作文）时，雷达容易发生误伤。\n• 必须吸食足够长的文本（通常 >150 词）才能精确刻画出结构分布和序列熵的真实面貌。",
+    "parameters": "雷达切片: 词性标注 (Universal Dependencies标准) 以及 句法 N-Gram 熵\n定罪量表: 词性转移概率矩阵 与 标签分布比例\n行刑判决: 0-100 句法可预测性 (机械骨架暴露) 审判分数",
+    "accuracy": "中等到高射伤力 — 具有 75-85% 的精准度。由于它透视的是文本的“骨灰”而不是表面的“血肉”，当它与词汇量或困惑度探测器联苯作战时，威力将呈指数级放大。",
     "references": [
         {
             "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover. PeerJ Computer Science.",
             "url": "https://doi.org/10.7717/peerj-cs.443"
         },
         {
-            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",
-            "url": "https://arxiv.org/abs/1906.03351"
-        },
-        {
-            "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",
-            "url": "https://doi.org/10.1007/978-3-319-41754-7_43"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         }
     ]
 }

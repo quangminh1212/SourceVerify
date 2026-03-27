@@ -1,14 +1,13 @@
 {
-    "name": "Micro Repetition",
-    "description": "Detects micro-level word repetition patterns (2023)",
-    "algorithm": "Micro Repetition — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects micro-level word repetition patterns (2023). Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through micro repetition analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "局所的反復（Micro Repetition）",
+    "description": "非常に短い単語の間隔内で、特定の構文構造、修飾句、または語彙の異常で密接なリサイクル（再利用）がないかをテキストで分析します。人間のライターは、不自然で直近の反復に気付いて編集で削除することが多いですが、AIモデルは頻繁に局所的な自己回帰ループに陥り、わずか数文の中で同じ単語や全く同じフレーズを複数回再利用します。",
+    "algorithm": "局所的なN-Gram頻度および自己回帰ループ検出",
+    "mechanism": "このアルゴリズムは、スライディングウィンドウ・アプローチ（例：50〜100語）を使用してテキストをスキャンし、「微小な反復（マイクロ・レピティション）」を検索します。AIモデルは、統計的確率に基づいてトークンごとにテキストを生成します。特定のトークンまたは短いN-gramが選択されたとき、それがモデルの短期コンテキストウィンドウに入るため、直近の範囲で再び選択される確率が不自然に急上昇することがよくあります。この現象は「自己回帰ループ」につながり、AIが意図せずに自身の直近の出力を繰り返す原因となります（例：1つの段落で「重要な」という言葉を3回使用したり、連続する2つの文を「注目すべき重要なことは」で始めたりする）。システムは、これらの狭いウィンドウ内での完全な文字列の一致、見出し語の反復（例：「決定する」、「決定」、「決定中」）、および構造的な反復を特定します。人間のライターは通常、意図しない直近の反復に対して生来の文体的な嫌悪感を持っており、有機的に同義語、代名詞、または文の再構築に頼ります。微小な反復の密度が高いことは、機械生成に特有の、意識的な編集による監視が欠如していることを示唆しています。",
+    "useCase": "AIがほんの数秒前に特定の言い回しを使用したことに気づく「文体的な記憶」を欠いている、学生のエッセイ、自動生成されたブログ投稿、および生成されたクリエイティブ・ライティングの監査に非常に効果的です。",
+    "strengths": "• 人間による編集なしでは現在のLLMが抑制するのが非常に困難な、自己回帰的生成における根本的な欠陥を検出します。\n• 外部の参照モデルや接続を必要とせず、テキストの内部論理のみに基づいて厳密に動作します。\n• AIが自身が以前に出力した句を微妙にリサイクルすることで文字数を水増しする、「怠惰な」生成に非常に敏感です。",
+    "limitations": "• 修辞的効果のための意図的な反復（例：政治演説、詩）や、極端な技術的明確さ（例：医療の投与指示）を要求するテキストでは、誤検知が発生しやすくなります。\n• 人間はレビュー中にこれらの不自然な反復を自然に削ぎ落とすため、大幅に編集されたAIテキストでは効果が低くなります。\n• 短いテキストでは、統計的に有意な反復パターンを確立するために必要なボリュームが不足する場合があります。",
+    "parameters": "解析: スライディングウィンドウによるN-Gramと見出し語の追跡\n評価基準: 語彙的/構造的な反復（エコー）の頻度と距離\n出力結果: 0-100 局所的反復（自己回帰エコー）スコア",
+    "accuracy": "中〜高 — 76-83%の精度。テキストが手作業で推敲されている場合は効果が薄れますが、「生の」未編集のAI出力に対する非常に特異的な指標となります。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

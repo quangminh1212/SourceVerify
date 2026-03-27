@@ -1,22 +1,17 @@
 {
-    "name": "Punctuation Pattern",
-    "description": "Analyzes punctuation usage patterns for AI detection.",
-    "useCase": "Identifying AI text through predictable punctuation",
-    "mechanism": "Detects sharp intensity transitions as proxy for punctuation marks and analyzes their spacing regularity. AI text shows more predictable punctuation patterns.",
-    "accuracy": "Moderate - 70-80%",
-    "source": "Fagni et al. (2021) - TweepFake, PLOS ONE",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Window size: adaptive, Quantization: 8-64 levels, Metrics: entropy, CV, correlation",
-    "strengths": "- Effective for detecting AI-generated text\n- Language-agnostic statistical approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger false positives\n- Short texts provide less reliable signals\n- Performance varies across writing styles",
+    "name": "Punctuation Rhythm and Pattern",
+    "description": "Analyzes the frequency, variety, and structural placement of punctuation marks to detect the highly predictable, uniform rhythm typical of Large Language Models. While human writers often use punctuation creatively for pacing, emotion, and emphasis (e.g., em-dashes, semicolons, rhetorical question marks), AI models default to structurally safe, monotonous punctuation, heavily relying on standard periods and commas while overusing colons for list generation.",
+    "algorithm": "Syntactic Boundary and Punctuation Entropy Analysis",
+    "mechanism": "The algorithm strips away all alphanumeric characters to analyze only the punctuation skeleton of the text. It calculates two primary metrics: 1) Punctuation Entropy (measuring the unpredictability of punctuation sequences) and 2) Transition Spacing (the uniform distance between punctuation marks). LLMs exhibit dangerously low punctuation entropy because they are penalized for grammatical risks during RLHF training. They produce a highly rhythmic 'comma-heavy, period-capped, colon-listing' structure. In contrast, human writing shows high variance in sentence length bounded by irregular, stylistic punctuation choices. The system maps these transition densities against known AI baselines to flag texts that possess an artificially steady typographic heartbeat.",
+    "useCase": "Highly effective for auditing cover letters, corporate communications, and essays where a perfectly uniform, sterile punctuation rhythm indicates machine generation rather than human flow.",
+    "strengths": "• Utterly immune to synonym replacement or simple paraphrasing, as the underlying punctuation skeleton usually remains entirely intact.\n• Requires very little computational overhead compared to deep semantic analysis.",
+    "limitations": "• Susceptible to false positives when analyzing highly regulated writing like legal contracts, academic abstracts, or technical manuals, which inherently demand uniform, predictable punctuation.\n• Easily defeated if a human editor manually injects varied punctuation (like em-dashes or exclamation points) into the AI draft.",
+    "parameters": "Analysis: Typographic Skeleton Extraction and Sequence Entropy\nMetric: Punctuation Variance vs. Structural Predictability\nOutput: 0-100 Punctuation Predictability (Artificiality) Score",
+    "accuracy": "Moderate — 70-80% accuracy. Best used synergistically with Sentence Length Variance and Lexical Density rather than as a definitive standalone metric.",
     "references": [
         {
-            "title": "Fagni et al. (2021) - TweepFake, PLOS ONE",
-            "url": "https://scholar.google.com/scholar?q=Fagni%20et%20al.%20(2021)%20-%20TweepFake%2C%20PLOS%20ONE"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+            "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0244932"
         },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",

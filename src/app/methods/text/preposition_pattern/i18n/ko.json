@@ -1,22 +1,21 @@
 {
-    "name": "Preposition Pattern",
-    "description": "Analyzes preposition distribution",
-    "algorithm": "Preposition Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes preposition distribution. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through preposition pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "전치사 패턴 분포 (Preposition Distribution Pattern)",
+    "description": "전치사(예: 'of', 'in', 'to', 'for', 'with' 등)의 출현 빈도와 구조적 배치 패턴을 분석합니다. 거대 언어 모델(LLM)은 일반적인 절(Clause)들을 연결하고 일관되고 격식 있는 리듬을 유지하기 위해 전치사구에 과도하게 의존하는 경향이 있습니다. 그 결과, 다양하고 파격적인 구문 구조를 사용하는 자연스러운 인간의 글쓰기에 비해 전치사의 밀도가 통계적으로 비정상적으로 높고, 예측 가능한 '전치사 연쇄(예: 명사 + 'of' + 명사 + 'in' + 명사)'가 빈번하게 발생합니다.",
+    "algorithm": "전치사 밀도 및 연쇄 프로파일러",
+    "mechanism": "이 알고리즘은 텍스트를 파싱하여 모든 전치사 요소를 분리해냅니다. 그런 다음 세 가지 구체적인 지표를 계산합니다. 1) 과잉 대표성(총 단어 수 대비 전치사의 단순 백분율 측정, AI는 종종 인간의 전형적인 임계치를 초과함), 2) 전치사 연쇄('과학 분야에서의 탁월함에 대한 추구 안에서(in the pursuit of excellence in the field of science)'와 같은 연속적인 전치사구 감지, 이는 AI가 분량을 부풀릴 때 쓰는 전형적인 특징임), 3) 어휘적 다양성(인간 작가는 훨씬 더 넓고 미묘한 공간적/시간적 어휘를 사용하는 반면, AI는 가장 흔한 상위 10개의 전치사에 극도로 의존함). 이러한 지표를 확립된 언어학적 베이스라인과 대조함으로써, 시스템은 전치사를 수학적 '접착제'로 사용하여 텅 빈 의미 덩어리들을 그럴듯하게 엮어낸 텍스트를 적발합니다.",
+    "useCase": "AI가 글의 길이를 억지로 늘리고 격식 있는 학술적 문체를 흉내 내기 위해 자주 악용되는 학생 에세이, 기업 보고서 및 학술 논문 초록을 감사하는 데 극도로 효과적입니다.",
+    "strengths": "• 프롬프트 작성자가 고치거나 숨길 생각을 거의 하지 못하는, 기계의 무의식적인 문법적 버릇(Tic)을 정확하게 타격합니다.\n• 전치사는 문장의 뼈대를 형성하므로, 단순한 동의어 교체(단어 바꾸기) 공격에 대한 방어력이 매우 뛰어납니다.",
+    "limitations": "• 정확성과 엄밀성을 위해 태생적으로 복잡한 전치사구에 크게 의존하는 진짜 학술 논문이나 법률 문서를 분석할 때 오탐지(False positive)를 낼 수 있습니다.\n• 통계적으로 유의미한 분포 패턴을 확립하려면 충분히 큰 텍스트 샘플(일반적으로 200단어 이상)이 필요합니다.",
+    "parameters": "분석 기준: 품사 태깅(POS Tagging, 전치사 분리) 및 구문 연쇄\n측정 지표: 연속되는 전치사 종속의 깊이 및 전체 밀도\n출력: 0-100 전치사 과의존 (인위성) 스코어",
+    "accuracy": "중간 — 70-80%의 정확도. 절대적인 단일 판독 기준으로 쓰기보다는, 어휘 밀도(Lexical density) 및 문장 길이 변동성(Sentence length variance)과 같은 지표들과 결합하여 보조 지표로 사용할 때 가장 강력합니다.",
     "references": [
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written 포Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         },
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models. PeerJ Computer Science.",
+            "url": "https://doi.org/10.7717/peerj-cs.443"
         }
     ]
 }

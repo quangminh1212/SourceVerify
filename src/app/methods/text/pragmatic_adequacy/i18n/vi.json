@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Pragmatic Adequacy Score",
-    "description": "Đánh giá sự thỏa đáng ngữ dụng — liệu văn bản có sử dụng phù hợp ngữ cảnh, hàm ý và hành vi lời nói.",
-    "algorithm": "Thuật toán phân tích Pragmatic Adequacy Score",
-    "mechanism": "Hệ thống Pragmatic Adequacy Score phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Điểm Đáp Ứng Ngữ Dụng (Pragmatic Adequacy)",
+    "description": "Đánh giá văn bản về năng lực ngữ dụng—khả năng sử dụng ngôn ngữ phù hợp trong các bối cảnh xã hội, sử dụng hàm ý (hàm ý ý nghĩa mà không nói rõ ràng) và thực hiện các hành động ngôn từ đích thực. Mặc dù AI rất xuất sắc về ngữ pháp (cú pháp) và nghĩa từ điển (ngữ nghĩa), nhưng nó thường thất bại ở ngữ dụng học, tạo ra văn bản thiếu tinh tế về mặt xã hội, quá bám sát nghĩa đen hoặc giải thích quá rõ ràng các khái niệm mà người nói là con người tự nhiên sẽ để lại dưới dạng hàm ý.",
+    "algorithm": "Phân Tích Hàm Ý Theo Ngữ Cảnh và Hành Động Ngôn Từ",
+    "mechanism": "Thuật toán đánh giá văn bản dựa trên các Phương châm Hội thoại của Grice (Số lượng, Chất lượng, Quan hệ và Cách thức). Các mô hình AI tự nhiên vi phạm Phương châm về Số lượng (bằng cách quá dài dòng hoặc giải thích quá lố những điều hiển nhiên) và Phương châm về Cách thức (bằng cách sử dụng các điểm đánh dấu chuyển tiếp siêu trang trọng như 'Hơn nữa' hoặc 'Tóm lại' trong các ngữ cảnh thân mật). Hệ thống sử dụng một mô hình NLP chuyên dụng được tinh chỉnh về lập luận ngữ dụng để đo lường tỷ lệ giữa 'nền tảng rõ ràng' (giải thích rành rọt mọi thứ) so với 'nền tảng ngầm định' (dựa trên ngữ cảnh chung của con người). Nó cũng phân tích sự phù hợp của các hành động ngôn từ (ví dụ: cách hình thành một lời xin lỗi, một yêu cầu hoặc một lời từ chối) so với thể loại và giọng điệu dự kiến. Các văn bản thể hiện hiệu quả hội thoại, sự mỉa mai tinh tế, hàm ý văn hóa và khoảng cách xã hội phù hợp nhận được điểm số con người cao, trong khi các văn bản đọc giống như một mục bách khoa toàn thư được bản địa hóa bị gắn cờ là AI.",
+    "useCase": "Rất hiệu quả để kiểm tra các bot đàm thoại, email dịch vụ khách hàng, bài đăng trên mạng xã hội và viết lách sáng tạo, nơi sắc thái xã hội của con người là cực kỳ quan trọng.",
+    "strengths": "• Nhắm vào điểm yếu cơ bản của các LLM hiện tại: chúng thiếu nền tảng xã hội trong thế giới thực và có xu hướng giải thích quá lố.\n• Rất hiệu quả chống lại các thế hệ AI 'zero-shot' nơi người tạo prompt quên xác định rõ ràng một tính cách xã hội phức tạp.",
+    "limitations": "• Dễ bị dương tính giả khi phân tích các văn bản được viết bởi những cá nhân bị suy giảm ngôn ngữ ngữ dụng, người không bản xứ hoặc những người viết quá tự phụ (thích dùng từ đao to búa lớn).\n• Khó áp dụng cho văn bản mang tính kỹ thuật hoặc khoa học thuần túy, nơi giải thích rõ ràng, thấu đáo (vi phạm các phương châm của Grice) thực sự là tiêu chuẩn bắt buộc.",
+    "parameters": "Kiểm Định: Phát Hiện Vi Phạm Phương Châm Gricean và Phân Loại Hành Động Ngôn Từ\nThước Đo: Tỷ Lệ Giữa Giải Thích Rõ Ràng so với Hàm Ý Ngữ Cảnh\nĐầu Ra: 0-100 Điểm Thiếu Hụt Ngữ Dụng (Tính Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 65-75%. Phụ thuộc nhiều vào thể loại văn bản (hoạt động đặc biệt tốt đối với văn bản sáng tạo/thân mật, kém đối với hướng dẫn kỹ thuật).",
+    "references": [
+        {
+            "title": "Grice, H.P. (1975). Logic and Conversation. Syntax and Semantics 3: Speech Acts. Academic Press.",
+            "url": "https://doi.org/10.1163/9789004368811_003"
+        },
+        {
+            "title": "Frank, M.C. & Goodman, N.D. (2012). Predicting Pragmatic Reasoning in Language Games. Science.",
+            "url": "https://doi.org/10.1126/science.1218633"
+        }
+    ]
 }

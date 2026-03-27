@@ -1,25 +1,24 @@
 {
-    "name": "Nhất quán thực thể có tên",
-    "description": "Đánh giá tính nhất quán và chính xác thực tế của các thực thể có tên (người, địa điểm, ngày tháng) để phát hiện ảo giác AI và nội dung bịa đặt.",
-    "useCase": "Phát hiện văn bản AI thông qua thực thể có tên không nhất quán hoặc ảo giác",
-    "mechanism": "Trích xuất thực thể có tên bằng mô hình NER, sau đó kiểm tra tính nhất quán nội bộ (cùng thực thể nhưng thuộc tính mâu thuẫn), tính hợp lý thời gian (ngày tháng và sự kiện), và mật độ tham chiếu chéo. Văn bản AI dễ bị 'ảo giác'—tạo ra đề cập thực thể nghe hợp lý nhưng sai sự thật.",
-    "accuracy": "Trung bình-Cao - 76-86% trên miền văn bản thực tế",
-    "source": "Ji, Z. et al. (2023) - Survey of Hallucination in Natural Language Generation, ACM Computing Surveys",
-    "algorithm": "Named Entity Recognition + Consistency Graph + Conflict Detection",
-    "parameters": "Mô hình NER: transformer, Loại thực thể: PER/ORG/LOC/DATE/NUM, Kiểm tra: so sánh thuộc tính cặp, Ngưỡng: tự thích ứng",
-    "strengths": "• Nhắm trực tiếp vào vấn đề ảo giác AI\n• Độ chính xác cao trên tài liệu thực tế\n• Ví dụ lỗi dễ giải thích\n• Hiệu quả trên tin tức và văn bản học thuật",
-    "limitations": "• Cần kiến thức miền để kiểm tra sự thật\n• Văn học sáng tạo có thực thể không nhất quán tự nhiên\n• Lỗi mô hình NER lan truyền sang phân tích\n• Ít hữu ích cho văn bản ý kiến hoặc trừu tượng",
+    "name": "Tính Nhất Quán Thực Thể",
+    "description": "Đánh giá sự ổn định và tính mạch lạc theo ngữ cảnh của các thực thể có tên (người, tổ chức, địa điểm, thuật ngữ chuyên ngành) xuyên suốt văn bản. Mặc dù các mô hình AI có thể giới thiệu các thực thể một cách thuyết phục, nhưng chúng thường gặp khó khăn với sự phụ thuộc tầm xa, dẫn đến 'sự trôi dạt thực thể' khi các thuộc tính, vai trò hoặc mối quan hệ của một thực thể cụ thể bị bóp méo hoặc tự mâu thuẫn một cách tinh vi ở phần sau của tài liệu.",
+    "algorithm": "Đồng Tham Chiếu Thực Thể Xuyên Văn Bản và Xác Minh Thuộc Tính",
+    "mechanism": "Hệ thống sử dụng Nhận dạng Thực thể có tên (NER) tiên tiến để trích xuất và lập chỉ mục tất cả các thực thể riêng biệt (ví dụ: 'Tiến sĩ Smith', 'GlobalCorp', 'Giao thức X'). Sau đó, nó xây dựng một sơ đồ tri thức cục bộ kết nối các thực thể này với các động từ, tính từ và vai trò ngữ cảnh liên quan của chúng trên toàn bộ tài liệu. Thuật toán quét tìm các 'mâu thuẫn ảo giác'—các trường hợp AI quên các ràng buộc đã được thiết lập của một thực thể. Ví dụ: chỉ ra rằng một người đã chết ở chương hai nhưng lại trích dẫn lời họ ở chương năm, hoặc tuyên bố một công ty được thành lập vào năm 1990 nhưng sau đó lại mô tả sự tham gia của nó vào một sự kiện những năm 1980. Người viết duy trì một mô hình tư duy nội bộ mạch lạc về các thực thể mà họ thảo luận, đảm bảo tính liên tục hợp lý ngay cả trong các văn bản dài. LLM, bị chi phối bởi các cửa sổ ngữ cảnh trượt và việc tạo token tiếp theo theo xác suất, thiếu trí nhớ làm việc thực sự, thường ưu tiên sự trôi chảy cục bộ ngay lập tức hơn là tính nhất quán thực thể vĩ mô.",
+    "useCase": "Rất quan trọng để kiểm tra nội dung được tạo ra có định dạng dài (báo cáo, tiểu sử, tóm tắt nghiên cứu, tiểu thuyết tự sự), nơi AI buộc phải sắp xếp nhiều nhân vật, tổ chức hoặc điểm dữ liệu thực tế trong một số lượng từ mở rộng.",
+    "strengths": "• Nhắm mục tiêu trực tiếp vào các lỗ hổng 'ảo giác' và 'quên cửa sổ ngữ cảnh' vốn có ở tất cả các mô hình ngôn ngữ tự hồi quy hiện tại.\n• Rất hiệu quả trong việc vạch trần tin tức giả do AI tạo ra, các nghiên cứu điển hình bịa đặt hoặc các bản tóm tắt học thuật có nhiều sai sót.\n• Cung cấp bằng chứng cụ thể, có thể diễn giải được (ví dụ: 'Thực thể A được mô tả là X ở dòng 12, nhưng lại là Y ở dòng 84').",
+    "limitations": "• Tốn kém về mặt tính toán vì nó yêu cầu xây dựng các sơ đồ tri thức nội bộ và thực hiện phân tích cú pháp phụ thuộc chéo câu.\n• Có thể gắn cờ các văn bản do con người viết cố tình làm nổi bật những người kể chuyện không đáng tin cậy, chủ nghĩa siêu thực hoặc đơn giản là chứa chỉnh sửa kém và lỗi sai sự thật của con người.\n• Hiệu quả giảm đối với các văn bản rất ngắn nơi không có đủ độ dài để xảy ra sự trôi dạt thực thể.",
+    "parameters": "Kiểm Định: Trích Xuất NER Và Mạng Thần Kinh Đồ Thị Ngữ Cảnh\nThước Đo: Xung Đột Thuộc Tính Từng Cặp Và Mâu Thuẫn Không Gian/Thời Gian\nĐầu Ra: 0-100 Điểm Gắn Kết Thực Thể (Xác Suất Ảo Giác)",
+    "accuracy": "Cao — Độ chính xác 82-89% trên các tài liệu trên 1.000 từ. Nó là một trong những chỉ báo ngữ nghĩa mạnh mẽ nhất về việc tạo bằng AI, vì nó đánh giá sự phá vỡ tính logic chứ không chỉ là sự lựa chọn từ ngữ mang tính thống kê.",
     "references": [
         {
-            "title": "Ji, Z. et al. (2023). Survey of Hallucination in NLG. ACM Computing Surveys.",
+            "title": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.",
             "url": "https://doi.org/10.1145/3571730"
         },
         {
-            "title": "Manakul, P. et al. (2023). SelfCheckGPT. EMNLP.",
+            "title": "Manakul, P. et al. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs. EMNLP.",
             "url": "https://arxiv.org/abs/2303.08896"
         },
         {
-            "title": "Min, S. et al. (2023). FActScore. EMNLP.",
+            "title": "Min, S. et al. (2023). FActScore: Fine-grained Atomic Evaluation of Factual Precision. EMNLP.",
             "url": "https://arxiv.org/abs/2305.14251"
         }
     ]

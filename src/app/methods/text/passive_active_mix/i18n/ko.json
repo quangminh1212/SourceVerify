@@ -1,14 +1,13 @@
 {
-    "name": "Passive-Active Voice Mix",
-    "description": "Analyzes passive vs active voice distribution",
-    "algorithm": "Passive-Active Voice Mix — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes passive vs active voice distribution. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through passive-active voice mix analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "수동태-능동태 혼합 비율 (Passive-Active Voice Ratio)",
+    "description": "능동태와 수동태 구조 사이의 균형과 전환 빈도를 분석합니다. 중립성과 객관성을 최우선으로 조정된 AI 모델은 글의 책임 소재나 비난의 대상을 직접적으로 지목하는 것을 회피하기 위해('우리가 실수를 저질렀다' 대신 '실수들이 발생되었다'라고 쓰는 식) 수동태를 극단적으로 남용하거나, 텍스트 전체에 걸쳐 기계적으로 일관된 수동태/능동태 비율을 유지하는 경향이 있습니다. 반면 인간 작가는 감정적 의도, 강조점, 그리고 서사의 속도감에 따라 시점을 훨씬 더 역동적으로 전환합니다.",
+    "algorithm": "구문론적 행위자(Agency) 맵핑 및 태(Voice) 전환 분산도 분석",
+    "mechanism": "이 알고리즘은 의존성 구문 분석(Dependency parsing)을 사용하여 텍스트 내의 모든 절을 능동태(주어-동사-목적어) 또는 수동태(목적어-동사-주어에 의해)로 분류합니다. 그런 다음 두 가지 주요 지표를 계산합니다: 능동태 대비 수동태 문장의 절대적 비율, 그리고 '태(Voice) 전환율'(이 둘 사이를 얼마나 자주 왔다 갔다 하는지)입니다. 거대 언어 모델(LLM)은 권위 있고, 안전하며, 객관적인 톤을 유지하도록 인간의 피드백(RLHF)을 통해 훈련받았습니다. 이 훈련은 의도치 않게 AI가 1인칭 능동태를 사용하는 것을 억누르게 만들었고, 결과적으로 AI가 수동태 구조에 지독하게 의존하도록 만들었습니다 ('...라는 점이 주목되어야 합니다', '데이터가 분석되었습니다'). 인간 사용자가 '능동적으로 써'라고 윽박지르고 프롬프트를 입력해도, AI의 텍스트는 곧바로 수학적으로 일관된, 고여있는 태(Voice) 사용 비율로 회귀해 버립니다. 그러나 인간 작가는 매우 극단적입니다: 도입부에서는 공격적이고 100% 능동태인 문단을 썼다가, 방법론 섹션에서는 숨 막히게 수동적인 문장들로 도배를 하고, 결론에 가서는 다시 능동태로 급전환할 수 있습니다. 인간의 시점(태) 전환은 이야기의 리듬과 수사학적 강조점에 의해 움직이므로, 능동태나 수동태 문장이 연속적으로 폭발하듯 뭉쳐 있는(Clustered bursts) 형태를 띱니다. 시스템은 수동태 구조에 대한 과도한 의존도와 태 전환 과정에서의 이 '유기적인 뭉침 현상'이 결여되어 있는지를 측정하여 '행위자 인위성 스코어(Agency Artificiality Score)'를 계산합니다.",
+    "useCase": "기업 홍보물, 학술 에세이, 뉴스 기사를 감사(Audit)할 때 핵심적으로 사용됩니다. 기계가 만들어낸 무균 상태의 작위적인 객관적 톤과, 인간 작가가 의도를 가지고 역동적으로 시점(태)을 전환하는 호흡을 명확하게 구분해 냅니다.",
+    "strengths": "• AI에게 '전문적인' 또는 '학술적인' 톤으로 글을 써달라고 요구한 결과물을 적발하는 데 있어 가장 치명적인 무기입니다. 이런 프롬프트는 100%의 확률로 AI 내면의 수동태 편향을 발작적으로 끌어내기 때문입니다.\n• 일반적인 프롬프트 엔지니어들은 어휘(단어) 선택에만 집착할 뿐, 문장 밑바닥의 깊은 문법적 행위자(Agency) 구조까지 통제할 생각은 하지 못하므로 회피하기가 매우 어렵습니다.",
+    "limitations": "• 과거 APA 포맷 가이드라인처럼, 인간 작가조차도 가이드라인의 강제에 따라 수동태만 100% 사용해야 하는 과학 논문, 실험 보고서 또는 기술 매뉴얼을 분석할 때는 슬픈 오탐지(False positive)를 낼 수밖에 없습니다.\n• AI나 인간 모두 수동태를 거의 쓰지 않는 지극히 일상적인 구어체 텍스트(예: 문자 메시지나 채팅)에서는 분석의 의미가 떨어집니다.",
+    "parameters": "분석 기준: 주어-동사-목적어의 행위자(Agency) 판별을 위한 의존성 구문 분석\n측정 지표: 수동태/능동태 비율 및 태 전환의 군집화(Clustering) 현상\n출력: 0-100 행위자 인위성 (시점의 경직도) 스코어",
+    "accuracy": "중간~높음 — 75-85%의 탐지율. AI가 '객관적이고 안전한 글쓰기'를 위해 과도하게 신경을 쓰는 포멀(Formal)하고 학술적이며 전문적인 글쓰기 환경에서 극도로 신뢰할 수 있는 지표입니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

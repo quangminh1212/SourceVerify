@@ -1,26 +1,21 @@
 {
-    "name": "Mẫu sử dụng đại từ",
-    "description": "Phân tích phân bố đại từ (nhân xưng, chỉ định, quan hệ) để phát hiện mẫu né tránh đại từ đặc trưng của văn bản AI.",
-    "useCase": "Phát hiện văn bản AI qua khác biệt hệ thống trong tần suất và sự đa dạng sử dụng đại từ",
-    "mechanism": "Phân loại và lượng hóa sử dụng đại từ theo nhóm: ngôi thứ nhất (tôi, chúng tôi), ngôi thứ hai (bạn), ngôi thứ ba (anh ấy, cô ấy, họ), chỉ định (này, đó), và quan hệ (mà, nào). Văn bản AI thường ít dùng đại từ ngôi thứ nhất, lạm dụng cấu trúc vô nhân xưng, và ít đa dạng đại từ hơn.",
-    "accuracy": "Trung bình - 70-80% trên văn bản ý kiến và tường thuật",
-    "source": "Pennebaker, J. W. (2011) - The Secret Life of Pronouns, Bloomsbury Press",
-    "algorithm": "Pronoun Categorization + Density Analysis + Category Ratio Comparison + Positional Mapping",
-    "parameters": "Phân loại: PRP/PRP$/WP/DT, Mật độ: trên 100 từ, Tỷ lệ: ngôi 1/ngôi 3, chỉ số tự tham chiếu, Chuẩn hóa: theo thể loại",
-    "strengths": "• Đại từ mang tín hiệu tâm lý và phong cách mạnh\n• Dễ trích xuất và phân tích\n• Hiệu quả trên văn bản cá nhân và ý kiến\n• Được hỗ trợ bởi nghiên cứu ngôn ngữ tâm lý rộng",
-    "limitations": "• Ít hữu ích cho văn bản kỹ thuật hoặc hướng dẫn\n• Khác biệt văn hóa và thể loại ảnh hưởng đường cơ sở\n• AI có thể được hướng dẫn dùng mẫu đại từ cụ thể\n• Cần phân bố tham chiếu theo thể loại",
+    "name": "Phân Tích Cách Sử Dụng Đại Từ",
+    "description": "Phân tích sự phân bố và tần suất của các đại từ (nhân xưng, chỉ định và quan hệ) để phát hiện khoảng cách tâm lý và tính trung lập giả tạo đặc trưng của các Mô Hình Ngôn Ngữ Lớn. Trong khi con người tự nhiên gắn chặt bài viết của họ vào kinh nghiệm cá nhân bằng cách sử dụng đại từ nhân xưng ngôi thứ nhất ('tôi', 'của tôi', 'chúng tôi') hoặc trực tiếp xưng hô với người đọc ('bạn'), AI có xu hướng mặc định ở một góc nhìn toàn tri, tách biệt, lạm dụng quá mức các đại từ phi nhân xưng, ngôi thứ ba và chỉ định.",
+    "algorithm": "Lập Hồ Sơ Mật Độ Đại Từ và Ngôi Xưng",
+    "mechanism": "Thuật toán phân loại mọi đại từ trong văn bản (ngôi thứ nhất, ngôi thứ hai, ngôi thứ ba, chỉ định, quan hệ và bất định). Nó tính toán các tỷ lệ tâm lý-ngôn ngữ học cụ thể: Chỉ số Tự tham chiếu (mức độ thường xuyên tác giả đặt mình vào văn bản), Chỉ số Xưng hô trực tiếp (mức độ thường xuyên người đọc được nhắc đến) và Chỉ số Đệm phi nhân xưng (tần suất của các cấu trúc như 'Điều quan trọng cần lưu ý là...' hoặc 'Người ta phải cân nhắc...'). Bằng cách so sánh các tỷ lệ này với các đường cơ sở đã được thiết lập cho các thể loại viết cụ thể (ví dụ: bài viết quan điểm, văn kể chuyện hoặc tiểu luận thuyết phục), hệ thống xác định các bài viết mắc phải 'góc nhìn từ hư vô'—một dấu ấn đại từ vô trùng, né tránh rủi ro, đặc trưng riêng của các mô hình AI được đào tạo bằng RLHF.",
+    "useCase": "Rất hiệu quả để kiểm tra các bài luận xin học bổng/đại học, thư xin việc, bài xã luận và các câu chuyện kể cá nhân nơi sự hiện diện tâm lý thực sự của con người được mong đợi.",
+    "strengths": "• Khai thác nhiều thập kỷ nghiên cứu tâm lý-ngôn ngữ học đã được thiết lập liên kết việc sử dụng đại từ với trạng thái hành vi và nhận thức của con người.\n• Độ chính xác cao trong việc phát hiện AI 'viết hộ' trong các bài viết về cơ bản có mục đích thể hiện tính cá nhân.",
+    "limitations": "• Hiệu suất giảm đáng kể đối với các bài viết phi nhân xưng tự nhiên như tài liệu kỹ thuật, hợp đồng pháp lý hoặc bài báo nghiên cứu khoa học.\n• Kỹ thuật tạo prompt nâng cao ('Hãy viết bài này từ góc nhìn cá nhân, ngôi thứ nhất') có thể che dấu một phần sự phân bố đại từ nhân tạo.",
+    "parameters": "Kiểm Định: Gắn Thẻ POS (Phân Loại Đại Từ) và Tính Toán Tỷ Lệ\nThước Đo: Chỉ Số Tự Tham Chiếu so với Chỉ Số Đệm Phi Nhân Xưng\nĐầu Ra: 0-100 Điểm Cứng Nhắc Đại Từ (Tính Giả Tạo)",
+    "accuracy": "Khá đến Cao — Độ chính xác 75-85% đối với văn bản tự sự và quan điểm. Độ chính xác giảm xuống dưới 55% đối với văn bản học thuật kỹ thuật hoặc mang tính trang trọng.",
     "references": [
         {
-            "title": "Pennebaker, J. W. (2011). The Secret Life of Pronouns. Bloomsbury Press.",
+            "title": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.",
             "url": "https://doi.org/10.1016/j.jesp.2011.12.005"
         },
         {
-            "title": "Crothers, E. et al. (2023). Machine-Generated Text: Threat Models and Detection. IEEE Access.",
+            "title": "Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access.",
             "url": "https://doi.org/10.1109/ACCESS.2023.3341807"
-        },
-        {
-            "title": "Newman, M. L. et al. (2003). Lying Words: Predicting Deception. PSPB.",
-            "url": "https://doi.org/10.1177/0146167203251529"
         }
     ]
 }

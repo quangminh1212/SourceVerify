@@ -1,22 +1,21 @@
 {
-    "name": "Preposition Pattern",
-    "description": "Analyzes preposition distribution",
-    "algorithm": "Preposition Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes preposition distribution. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through preposition pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "前置詞パターンの分布 (Preposition Distribution Pattern)",
+    "description": "前置詞（例：「of」、「in」、「to」、「for」、「with」など）の頻度と構造的な配置を分析します。大規模言語モデルは、一般的な節を接続し、安定したフォーマルなリズムを維持するために、前置詞句に過度に依存する傾向があります。その結果、より多様な構文構造を使用する自然な人間の文章と比較して、推計学的に前置詞の密度が高くなり、予測可能性が非常に高い前置詞の連鎖（例：名詞＋「of」＋名詞＋「in」＋名詞）が生じます。",
+    "algorithm": "前置詞の密度および連鎖プロファイラー",
+    "mechanism": "このアルゴリズムは、テキストを解析してすべての前置詞要素を切り出します。次に、3つの具体的な指標を計算します。1）過剰表現（AIは人間の典型的な閾値を超えることが多いため、総単語数に対する前置詞の生のパーセンテージを測定）、2）前置詞の連鎖（「科学の分野における卓越性の追求において（in the pursuit of excellence in the field of science）」のような連続する前置詞句の検出。これはAIの「穴埋め」生成の典型的な特徴です）、および3）語彙の多様性（AIはトップ10の最も一般的な前置詞に大きく依存する傾向がありますが、人間のライターはより幅広く、ニュアンスに富んだ空間的/時間的な語彙を利用します）。これらの指標を確立された言語学的なベースラインと照らし合わせることで、システムは前置詞を数学的な「接着剤」として使用して、中身のない意味ブロックをつなぎ合わせているテキストにフラグを立てます。",
+    "useCase": "AIが文字数を稼ぎ、フォーマルな学術的装飾を模倣するためによく用いられる、学生のエッセイ、企業レポート、学術抄録の監査に非常に効果的です。",
+    "strengths": "• プロンプターが意図的に変更したり隠したりすることをほとんど考えない、無意識の文法的癖をターゲットにしています。\n• 前置詞は文の構造的な核を形成するため、単純な同義語の置き換えに対して非常に強い耐性があります。",
+    "limitations": "• 本物の学術論文や法的文書（正確性を期すために複雑な前置詞句に自然に依存しているもの）を分析する場合、誤検知が発生しやすくなります。\n• 統計的に有意な分布パターンを確立するには、十分な長さのテキストサンプル（通常は200語以上）が必要です。",
+    "parameters": "解析: POSタグ付け（前置詞の分離）および構文連鎖\n評価基準: 連続する前置詞の深さと全体的な密度\n出力結果: 0-100 前置詞の過剰依存（人工性）スコア",
+    "accuracy": "中程度 — 70-80%の精度。単独の決定的なテストとしてではなく、語彙密度や文の長さの分散と並行して、補助的な指標として使用するのが最適です。",
     "references": [
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         },
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models. PeerJ Computer Science.",
+            "url": "https://doi.org/10.7717/peerj-cs.443"
         }
     ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Vi lặp lại",
-    "description": "Phát hiện mẫu lặp lại từ ở cấp vi mô",
-    "algorithm": "Thuật toán phân tích Vi lặp lại",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu lặp lại từ ở cấp vi mô. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích vi lặp lại. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Vi Lặp (Lặp Cục Bộ)",
+    "description": "Phân tích văn bản để tìm kiếm việc tái sử dụng bất thường, chặt chẽ các cấu trúc cú pháp, cụm từ bổ nghĩa hoặc từ vựng cụ thể trong một khoảng từ rất ngắn. Mặc dù con người thường phát hiện và chỉnh sửa các lỗi lặp từ ngay lập tức gây lúng túng, các mô hình AI thường rơi vào các vòng lặp tự hồi quy cục bộ, sử dụng lại cùng một từ hoặc cụm từ chính xác nhiều lần chỉ trong vài câu.",
+    "algorithm": "Tần Suất N-Gram Cục Bộ và Phát Hiện Vòng Lặp Tự Hồi Quy",
+    "mechanism": "Thuật toán này quét văn bản bằng phương pháp cửa sổ trượt (ví dụ: 50 đến 100 từ), tìm kiếm 'vi lặp'. Các mô hình AI tạo văn bản từng token dựa trên xác suất thống kê. Khi một token hoặc N-gram ngắn cụ thể được chọn, xác suất nó được chọn lại ở ngay khu vực lân cận thường tăng đột biến một cách giả tạo vì nó đi vào cửa sổ ngữ cảnh ngắn hạn của mô hình. Hiện tượng này dẫn đến 'vòng lặp tự hồi quy' nơi AI vô tình lặp lại đầu ra gần đây của chính nó (ví dụ: sử dụng từ 'quan trọng' ba lần trong một đoạn văn duy nhất hoặc bắt đầu hai câu liên tiếp bằng 'Điều quan trọng cần lưu ý'). Hệ thống xác định đối sánh chuỗi chính xác, sự lặp lại từ khóa bổ nghĩa (ví dụ: 'quyết định', 'các quyết định', 'đang quyết định') và sự lặp lại cấu trúc trong các cửa sổ chặt chẽ này. Người viết thường sở hữu một sự ác cảm bẩm sinh về phong cách đối với sự lặp lại ngay lập tức, ngoài ý muốn và sẽ hữu cơ dựa vào các từ đồng nghĩa, đại từ hoặc cấu trúc lại câu. Mật độ vi lặp cao cho thấy sự thiếu giám sát biên tập có ý thức đặc trưng của việc tạo văn bản bằng máy.",
+    "useCase": "Rất hiệu quả để kiểm tra các bài luận của sinh viên, các bài đăng trên blog tự động và văn bản sáng tạo được tạo ra, nơi AI thiếu 'trí nhớ phong cách' để nhận ra rằng nó vừa sử dụng một cách diễn đạt cụ thể vài giây trước.",
+    "strengths": "• Phát hiện một lỗ hổng cơ bản trong quá trình tạo tự hồi quy rất khó để các LLM hiện tại triệt tiêu mà không cần chỉnh sửa của con người.\n• Hoạt động hoàn toàn dựa trên logic bên trong của văn bản, không yêu cầu các mô hình tham chiếu hoặc kết nối bên ngoài.\n• Cực kỳ nhạy cảm với việc tạo 'lười biếng' nơi AI cố thêm số lượng từ bằng cách tinh vi sử dụng lại các mệnh đề trước đó của chính nó.",
+    "limitations": "• Dễ bị dương tính giả trong các văn bản đòi hỏi sự lặp lại có chủ ý để tạo hiệu ứng tu từ (ví dụ: diễn văn chính trị, thơ) hoặc tính rõ ràng kỹ thuật khắc nghiệt (ví dụ: hướng dẫn liều lượng y khoa).\n• Kém hiệu quả hơn đối với văn bản AI đã được chỉnh sửa kỹ lưỡng, vì con người có bản năng cắt tia những sự lặp lại lúng túng này trong quá trình xem xét.\n• Văn bản ngắn có thể thiếu khối lượng cần thiết để thiết lập một mô hình lặp lại có ý nghĩa thống kê.",
+    "parameters": "Kiểm Định: Theo Dõi N-Gram và Từ Bổ Nghĩa Qua Cửa Sổ Trượt\nThước Đo: Tần Suất và Khoảng Cách Của Các Tiếng Vang Từ Vựng/Cấu Trúc\nĐầu Ra: 0-100 Điểm Lặp Lại Cục Bộ (Tiếng Vang Tự Hồi Quy)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 76-83%. Nó là một chỉ báo rất cụ thể cho đầu ra AI 'thô', chưa qua chỉnh sửa, mặc dù nó mất hiệu quả nếu văn bản đã được đánh bóng thủ công.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

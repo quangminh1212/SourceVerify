@@ -1,14 +1,13 @@
 {
-    "name": "Paragraph Structure",
-    "description": "Analyzes paragraph organization",
-    "algorithm": "Paragraph Structure — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes paragraph organization. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through paragraph structure analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "문단 구조 (Paragraph Structure)",
+    "description": "문단의 길이, 호흡, 그리고 내부 건축 구조를 검사합니다. AI 모델은 태생적으로 '명확한 주제문(Topic sentence) - 뒷받침하는 근거 - 결론 요약'으로 구성된 অত্যন্ত 균일하고 중간 길이를 가진 벽돌 같은 텍스트 블록을 만들어내는 것을 기본값 설정으로 삼습니다. 반면 인간 작가는 이야기의 페이스를 조절하기 위해 아주 짧고 강렬한 단문 문단과, 길고 구불구불 이어지는 장문 문단을 수시로 섞어서 배치합니다.",
+    "algorithm": "문단 길이의 분산(Variance) 및 내부 전환(Transition) 분석",
+    "mechanism": "이 기법은 각 문단을 개별적으로 분리한 뒤, 그 안의 단어 수, 문장 수, 그리고 내부적인 흐름(정형화된 주제문과 결론문의 존재 여부)을 분석합니다. 거대 언어 모델(LLM)은 가독성과 구조적 안전성을 최우선으로 최적화되어 있습니다. 그 부작용으로, AI는 지독한 '구조적 동질성(Structural homogeneity)'이라는 질병을 앓습니다. 에세이, 블로그 글, 또는 보고서를 생성할 때 AI는 거의 예외 없이 복사 붙여넣기 한 듯 서로 길이가 비슷한 문단들(예: 일관되게 4~6문장, 80~120단어 분량)을 찍어냅니다. 게다가 이 문단들의 내부는 끔찍할 정도로 공식화되어 있습니다: 항상 뻔한 전환구('Furthermore,', 'In addition,', '게다가', '또한')로 시작해서, 개념을 하나 늘어놓고, 작은 소결론으로 끝을 맺습니다. 이것이 바로 시각적으로 꽉 막힌 '벽돌 같고' 숨 막히게 단조로운 독서 경험을 만들어내는 원흉입니다. 인간 작가는 이보다 훨씬 변덕스럽습니다. 복잡한 아이디어를 풀어내기 위해 10문장짜리 거대한 문단을 쓴 다음, 극적인 강조를 위해 단 한 문장짜리 문단을 곧바로 이어붙이는 파격을 밥 먹듯이 저지릅니다. 시스템은 전체 문서에 걸쳐 문단 길이의 통계적 분산값과, 뻣뻣한 내부 의미 구조의 반복성을 측정하여 '문단 단조로움 스코어(Paragraph Monotony Score)'를 계산합니다.",
+    "useCase": "에세이, 블로그 포스트, 기사 등을 감사할 때 매우 효과적입니다. 모든 문단들의 생김새와 기능이 무서울 정도로 똑같은 이른바 '텍스트 장벽(Wall of text)' 단조로움을 시각적으로 색출해 내며, 이는 대충 뽑아낸(Zero-shot) AI 생성물의 가장 전형적인 지문입니다.",
+    "strengths": "• 인간이 개별 단어나 문장을 아무리 윤문하고 고쳐 써도 절대 지워지지 않는 서구적인 '거시적/시각적 지문'을 정확히 탐지해 냅니다.\n• 표준 템플릿에 심하게 의존하는 저질의 양산형 콘텐츠(예: SEO용 블로그 스팸, 영혼 없이 자동 생성된 학생 과제)를 적발하는 데 탁월한 성능을 발휘합니다.",
+    "limitations": "• 과학 저널의 초록(Abstract), 엄격하게 규격화된 시험용 에세이(TOEFL/IELTS 등), 또는 작성 자체가 기계적인 균일성을 엄격히 강요하는 딱딱한 기업 요약 보고서 등, 고도로 구조화된 포멀한 인간의 글을 분석할 때는 오탐지(False positive)가 발생할 수 있습니다.\n• 분산값을 통계적으로 도출할 수 없는 매우 짧은 텍스트(문단 3개 미만)에서는 사용할 수 없습니다.\n• 프롬프트 엔지니어가 각잡고 AI에게 '각 문단의 길이를 극단적으로 다르게, 파격적으로 써라'라고 명령하면 이 지표망을 회피할 수도 있습니다.",
+    "parameters": "분석 기준: 문단 단위 분절화 및 해당 문단 내부의 뼈대(구조) 맵핑\n측정 지표: 단어/문장 수의 분산도 및 주제문(Topic-Sentence)의 예측 가능성\n출력: 0-100 구조적 동질도 (시각적 단조로움 및 벽돌화) 스코어",
+    "accuracy": "중간~높음 — 70-80%의 탐지율. '가장 게으른' 형태의 AI 텍스트 생성을 잡아내는 매우 강력하고 직관적인 지표이며, 문장 길이 분산(Sentence Length Variance) 분석과 결합될 때 폭발적인 시너지를 냅니다.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

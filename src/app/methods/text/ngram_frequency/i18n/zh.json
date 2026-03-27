@@ -1,22 +1,17 @@
 {
-    "name": "N-gram频率分析",
-    "description": "分析 word and character n-gram 分布s 以检测 模式 characteristic of AI生成的 text.",
-    "useCase": "Detecting AI text through 统计分析 of word sequence 模式",
-    "mechanism": "提取 character-level and word-level n-gram frequency 分布s and compares them against known 分布s for human and AI生成的 text. AI text generators produce characteristic n-gram 模式 — often over-representing common phrases and under-representing rare but natural human constructions.",
-    "accuracy": "中-高 - 75-85% on diverse text samples",
-    "source": "Lavergne et al. (2008) - Detecting Fake Content with Relative Entropy Scoring, PAN-SEPLN",
-    "algorithm": "N-gram Extraction + Frequency Distribution Analysis + KL-Divergence Scoring",
-    "parameters": "N-gram sizes: 2-5, Level: character + word, Comparison: KL-divergence, chi-square, Corpus: reference 分布s",
-    "strengths": "• Language-model agnostic approach\n• Can analyze very short texts\n• 计算效率高\n• Captures subtle 分布 differences",
-    "limitations": "• Requires reference 分布s for calibration\n• Domain-specific text may skew results\n• Modern AI models converge toward natural 分布s\n• Cross-domain generalization can be weak",
+    "name": "N-gram 频数分布嗅探 (N-gram Frequency Distribution)",
+    "description": "分析连续词汇片段（N-gram，即 N 元语法）的出现频率。AI 模型在造句时，骨子里是一台冷血的概率计算器，这导致它们会像复读机一样，反反复复地套用一小撮概率极高、烂大街的套话组合（例如“值得注意的是”、“综上所述”）。而人类作家在遣词造句时，天生就携带着不可预测的混乱基因，他们会拉扯出一张宽阔得多、难以预测的词汇分布网，并疯狂地产出高比例的“罕见”语块组合。",
+    "algorithm": "词元链条概率解剖与 KL 散度 (KL-Divergence) 行刑测算",
+    "mechanism": "该算法会像榨汁机一样，从输入文本中提取出无数的 N-gram 切片（通常是切成 2 到 5 个词语的块），并绘制出它们在文章里的频数分布图。大语言模型（LLM）的生存法则是“永远去预测统计学上最稳妥的下一个词”。因此，它们的呕吐物会极其壮观地向着人类语言结构的“绝对安全红心”塌缩——极度依赖它们在训练库里见过的最高频词汇组合。人类写作的概率图谱有一条长长翘起的“肥尾（Fat tail）”（这意味着人类频繁地在使用极其冷门、充满个人乖张恶趣味、甚至前无古人的词汇杂交组合）；而在 AI 的雷达图上，却只能看到一座又陡又窄、被陈词滥调和过渡废话完全占领的孤岛。系统会动用 Kullback-Leibler (KL) 散度或者交叉熵（Cross-entropy）这种极刑级别的数学度量，将嫌疑文本的 N-gram 分布图死死地按在人类自然语料的基准图纸上进行比对。如果一篇文章密密麻麻全是由“高概率、烂大街”的词块拼凑而成，剥离了人类特有的认知方差和神经质般的“统计学语法噪音”，它就会被系统直接贴上终极的 AI 仿造标签。",
+    "useCase": "这是大面积扫荡长篇水文、学生掺水论文和批量制造的低劣 SEO 营销号文章的战略核武器。它能在秒级时间内，识别出那些完全由统计学上“绝对安全、被嚼烂了的塑料模块”拼接而成的工业废文。",
+    "strengths": "• 对所谓的“同义词替换伪装术”拥有碾压级的抗性。算计者就算在一串常见的 5-gram 词块里偷偷换掉一个词，也掩盖不了周围那群高危语法的狐狸尾巴，机器的预测概率依然极高。\n• 在长篇大论中，杀伤力呈指数级暴增。当字数足够多时，统计学上的“大数定律”就会化身为根本无法辩驳的铁证。\n• 只要雷达库里有目标语言的人类语料基准红线，它就可以做到全语种通杀，毫无语言壁垒。",
+    "limitations": "• 容易在一类特殊的地雷区里炸偏（误报）：那就是那些本就要求像机器一样死板、严苛钳制遣词造句的死人文章里，比如冰冷的法律合同卷宗、格式强迫症晚期的企业流水线公文，以及僵硬的科研论文摘要。\n• 一旦算计者发疯，非要让算法去切那些含有高阶 N-gram (n > 4) 的几十万字巨型文档，算法服务器的算力引擎会被瞬间抽干。\n• 对那些短得可怜的文本（少于 100 词的口水话）完全失效，因为样本量太小，统计图谱根本还没来得及立起来。",
+    "parameters": "雷达切片: N-gram 语块绞碎提取 (n=2 到 n=5) 及尸检频数映射\n定罪量表: 词元链条落点概率 与 人类自然基准库 的绝对偏离度 (KL 散度剖析)\n行刑判决: 0-100 语块陈腐宿命度 (塑料行文预测率) 审判分数",
+    "accuracy": "地毯式精准 — 稳居 75-85% 的判准率。它是整个 AI 文本围剿体系里最底层、最硬核的数学界碑之一，无数套多模态探测系统都是踩在它的地基上盖起来的。",
     "references": [
         {
             "title": "Lavergne, T. et al. (2008). Detecting Fake Content with Relative Entropy Scoring. PAN-SEPLN.",
             "url": "https://ceur-ws.org/Vol-502/"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning: A Systematic Review. NLDB.",

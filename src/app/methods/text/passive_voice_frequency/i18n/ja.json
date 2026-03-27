@@ -1,22 +1,17 @@
 {
-    "name": "受動態使用頻度",
-    "description": "分析します the ratio and 分布 of 受動態 constructions, は AI text tends to overuse compared to 人間の文章.",
-    "useCase": "AI生成テキストの検出 through systematic overuse of 受動態 constructions",
-    "mechanism": "識別します 受動態 constructions を分析することで auxiliary verb + past participle パターン and dependency parse structures. Computes the passive-to-active ratio per paragraph and its 分散. AI生成の text, particularly from instruction-tuned models, tends to use 受動態 more uniformly than humans, who naturally vary voice usage based on emphasis, stylistic preference, and information structure.",
-    "accuracy": "低-中 - 65-75% as standalone 特徴",
-    "source": "Herbold, S. et al. (2023) - A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays, Scientific Reports",
-    "algorithm": "Dependency Parse Voice Detection + Ratio Analysis + Variance Measurement",
-    "parameters": "Detection method: dependency parse パターン, Granularity: per-paragraph, Metrics: passive ratio, passive 分散, passive clustering",
-    "strengths": "• Captures a known stylistic bias of AI systems\n• Easy to compute and interpret\n• Works well as part of 特徴 ensemble\n• Consistent signal にわたる AI models",
-    "limitations": "• Low standalone discriminative power\n• Academic and scientific text naturally uses 受動態\n• Modern LLMs can be prompted to avoid 受動態\n• Language-specific (mainly English)",
+    "name": "受動態の頻度（Passive Voice Frequency）",
+    "description": "受動態（受け身）の動詞構造の絶対的な密度と分布を計算します。安全性のためのアライメント（調整）、人工的な中立性、そして特定の視点へのコミット（明言）を避ける傾向により、AIモデルは能動態よりも受動態の構造をデフォルトとして使用し、その結果、人間の文章よりも大幅に高く、より均一な頻度で受動態を使用します。",
+    "algorithm": "助動詞の依存関係と受動態密度のマッピング",
+    "mechanism": "このアルゴリズムは依存関係解析を使用してテキストをスキャンし、直接的な行動の主体を欠く「助動詞＋過去分詞」の構造（例：「観察された（was observed）」、「見なされる（is considered）」）を特に分離します。1,000語あたりのこれらの構造の全体的な頻度を計算します。大規模言語モデル（LLM）は、客観的で、権威があり、断定を避けるトーン（これらは受動態と強く関連する特徴です）を維持するように厳密にファインチューニングされています。その結果、AIがエッセイ、レポート、または要約を生成するとき、自然と受動態の文構造に傾倒します。人間のライターは、フォーマルな文脈であっても、受動態を控えめに、そして意図的に（通常は行為者よりも行動の対象を強調するために）使用します。システムは、特定のジャンルで確立されたベースライン（基準値）と受動態動詞の生の頻度を測定することにより、「受動態飽和スコア」を計算します。テキスト全体に均等に分布する受動態構造の高い密度は、機械による生成を強く示唆しています。",
+    "useCase": "学術論文、ビジネスレポート、およびニュースの要約を監査し、AI生成の兆候である、無機質で「安全」な、人工的に客観的なトーンを検出するのに非常に役立ちます。",
+    "strengths": "• アライメントトレーニング（RLHF）によって引き起こされるLLMの既知の文体的バイアスを直接ターゲットにします。\n• 解釈しやすく、数学的に客観的な指標を提供します。\n• 異なるAIモデル（ChatGPT、Claude、Gemini）間で一貫性が高いです。",
+    "limitations": "• 人間が書いた法的なテキスト、医学雑誌、および受動態が業界標準である厳密な実験報告書では、誤検知が生じます。\n• 単純なプロンプトエンジニアリング（例：「これをすべて能動態で書き直してください」）によって簡単に回避できます。\n• 統計的な密度を確立できない非常に短いテキストでは、正確に使用できません。",
+    "parameters": "解析: 助動詞＋分詞構造の依存関係解析\n評価基準: 1,000語あたりの受動態動詞の頻度と段落の均一性\n出力結果: 0-100 受動態の飽和度（人工的な客観性）スコア",
+    "accuracy": "中程度 — 65-75%の精度。単独の決定的な指標としてではなく、より広いテキスト分析パイプライン内の補助的な機能として使用するのが最適です。",
     "references": [
         {
             "title": "Herbold, S. et al. (2023). A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays. Scientific Reports.",
             "url": "https://doi.org/10.1038/s41598-023-45644-9"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
             "title": "Biber, D. (1988). Variation Across Speech and Writing. Cambridge University Press.",

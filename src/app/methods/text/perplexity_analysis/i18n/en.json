@@ -1,22 +1,17 @@
 {
-    "name": "Perplexity Analysis",
-    "description": "Measures text perplexity to detect AI-generated text, which tends to have lower perplexity than human writing.",
-    "useCase": "Detecting AI-generated text by measuring predictability of word sequences",
-    "mechanism": "Calculates per-token perplexity using language models to measure how predictable each word is given its context. AI-generated text typically exhibits lower, more uniform perplexity because language models optimize for precisely this metric, while human text shows more variation and occasional surprising word choices.",
-    "accuracy": "Moderate-High - 78-88% on standard AI-generated text",
-    "source": "Mitchell et al. (2023) - DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature, ICML",
-    "algorithm": "Language Model Perplexity Scoring + Statistical Threshold Analysis",
-    "parameters": "Model: GPT-2 based, Context window: 1024 tokens, Scoring: per-token log probability, Threshold: adaptive",
-    "strengths": "• Does not require training on specific AI models\n• Works across different AI text generators\n• Fast inference with pre-trained models\n• Can analyze text of any length",
-    "limitations": "• Less effective on edited or paraphrased AI text\n• Domain-specific text may have naturally low perplexity\n• Short texts provide less reliable signals\n• Performance varies across languages",
+    "name": "Text Perplexity Analysis",
+    "description": "Measures the baseline statistical 'predictability' of the text. Large Language Models operate by predicting the most mathematically probable next token. Consequently, AI-generated text is fundamentally designed to be unsurprising to a language model, resulting in a low 'perplexity' score. Human writers, conversely, frequently make unpredictable, idiosyncratic, or creative word choices that violate a model's expectation of the next word, leading to much higher average perplexity.",
+    "algorithm": "Log-Likelihood Token Evaluation and Baseline Divergence",
+    "mechanism": "This algorithm runs the input text through an evaluative language model (often an open-source model like GPT-2 or a customized evaluator) and measures the log-probability of every single token given its preceding context. 'Perplexity' is essentially a mathematical measurement of how 'surprised' the evaluating model is by the text. In AI-generated text, because the text was originally constructed by selecting highly probable words, an evaluating model will easily 'guess' the sequence, yielding a low, uniform perplexity score. Humans do not write using statistical probability; we use colloquialisms, abrupt topic shifts, mixed metaphors, and unique phrasing that a language model cannot easily predict. When the evaluating model encounters these human quirks, its confidence drops, and the text's perplexity spikes. The system calculates an 'Artificial Predictability Score' by analyzing the overall average perplexity of the text against established human boundaries.",
+    "useCase": "The foundational mechanism for almost all modern AI detection systems, essential for quickly scanning large volumes of text—such as student essays, marketing copy, and news articles—to determine if the underlying vocabulary generation follows a statistical curve or human impulse.",
+    "strengths": "• Extremely effective against zero-shot, unprompted AI generation from standard models (like ChatGPT's default output).\n• Operates universally across different topics and basic linguistic genres without requiring specialized rule sets.\n• Rooted in the fundamental mechanics of how all autoregressive LLMs function.",
+    "limitations": "• Susceptible to circumvention via 'temperature' adjustments during generation, or deliberate prompt engineering (e.g., 'write this with high perplexity' or 'use strange vocabulary').\n• Highly technical or niche texts (like medical journals, legal contracts, or boilerplate code) often have naturally low perplexity because their terminology is rigid and highly structured, leading to false positives for machine generation.\n• Struggles with very short texts (under 100 words) where significant statistical baselines cannot be established.",
+    "parameters": "Analysis: Per-Token Log-Probability Scoring via Evaluator Model\nMetric: Baseline Perplexity Average and Predictability Variance\nOutput: 0-100 Artificial Predictability (Low-Perplexity) Score",
+    "accuracy": "High — 80-90% accuracy on standard, unedited AI text. However, accuracy drops significantly on heavily edited, 'humanized', or intentionally prompted variable-temperature outputs.",
     "references": [
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
             "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",

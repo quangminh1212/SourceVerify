@@ -1,14 +1,13 @@
 {
-    "name": "Modal Verb Frequency",
-    "description": "Measures modal verb usage patterns",
-    "algorithm": "Modal Verb Frequency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures modal verb usage patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through modal verb 周波数 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "法助動詞の頻度（Modal Verb Frequency）",
+    "description": "法助動詞（例：「can」「could」「may」「might」「must」「should」）の使用頻度と分布を分析します。AIモデルは、権威がありながらも言質を取られないように聞こえさせ、絶対的な断言を避けるための文体的な安全メカニズムとして、認識的モダリティ（可能性/必然性を表現する）を過用する傾向があります。",
+    "algorithm": "認識的および義務的法助動詞の密度プロファイリング",
+    "mechanism": "このアルゴリズムはテキストをスキャンしてすべての法助動詞（Modal auxiliary verbs）を抽出し、それらを「認識的（可能性/確率、例：「〜かもしれない（might）」、「〜のようだ（seems to）」、「〜し得る（could）」）」と「義務的（義務/許可、例：「〜しなければならない（must）」、「〜すべきである（should）」）」のモダリティに分類します。次に、システムは1,000語あたりのこれらの法助動詞の相対頻度を計算し、特定の文書タイプの人間によるベースラインの分布と比較します。大規模言語モデル（LLM）は、RLHF（人間のフィードバックからの強化学習）を通じて、役に立ち、無害で、普遍的に客観的であるように厳密にファインチューニングされています。その結果、モデルは構造的に、幻覚（ハルシネーション）や偏見と解釈されかねない決定的な事実の断言を回避します。その代わりに、出力に多数の表現を和らげる法助動詞を詰め込みます。「〜を考慮することが重要かもしれない」、「これは〜を示している可能性がある」、「〜と主張することもできるだろう」。人間のライターも法助動詞を使用しますが、一般的にはより強く、より意図的な宣言や意見を表現します。言質を取らない法助動詞が数学的に不自然なほど飽和しているテキストは、AI生成の特徴である「安全で」ヘッジされた（防衛的な）出力を強く示しています。",
+    "useCase": "説得力のあるエッセイ、オピニオン記事、学術論文の監査に非常に効果的であり、人間の確信や決定的な研究を、AIの過度に慎重でヘッジされたトーンから区別します。",
+    "strengths": "• 現代のAIモデルに組み込まれた安全アライメント（RLHF）を直接ターゲットにしており、明示的で強引なプロンプトエンジニアリングなしにモデルがこれを回避することは事実上不可能です。\n• 非常に解釈しやすく透明性があります。証拠（過用されている法助動詞のリスト）をユーザーに明確に示すことができます。\n• 確率/義務を示す明確な法助動詞または助動詞のマーカーを利用する、さまざまな言語で有効です。",
+    "limitations": "• 高度に外交的な人間のテキスト、法的免責事項、または本質的に慎重で大幅にヘッジされた言語を必要とする特定の学術分野（理論物理学など）を分析する場合、誤検知が発生しやすくなります。\n• 短いテキストでは、統計的に有意な法助動詞のプロファイルを生成するのに十分な動詞が含まれていない場合があります。\n• ユーザーがAIに対して、「攻撃的」、「決定的」、または「絶対的」なトーンで書くように明示的にプロンプトを出した場合、検出を回避される可能性があります。",
+    "parameters": "解析: 品詞（POS）タグ付けと法助動詞の抽出\n評価基準: 総動詞数および総単語数に対する法助動詞の比率\n出力結果: 0-100 ヘッジ（責任回避）飽和度（アライメントの安全性）スコア",
+    "accuracy": "中〜高 — 73-81%の精度。AIのベースラインとなるトーンの非常に信頼できる指標ですが、テキストの意図されたジャンルに関するコンテキストが必要です。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

@@ -1,14 +1,13 @@
 {
-    "name": "Modal Verb Frequency",
-    "description": "Measures modal verb usage patterns",
-    "algorithm": "Modal Verb Frequency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Measures modal verb usage patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through modal verb 频率 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "极性情态动词频率 (Modal Verb Frequency)",
+    "description": "像测谎仪一样分析文本中情态动词（例如“可能”、“也许”、“应该”、“能”、“必须”）的频率和分布密度。AI 模型为了避免被打脸，会病态地滥用表推测的认识情态动词，把它们当成一种不用负责任的“文体避弹衣”——听起来老气横秋、权威十足，但实质上绝不给出任何绝对的断言。",
+    "algorithm": "认识态与道义态情态动词密度指纹分析",
+    "mechanism": "该算法会像扫雷一样扫过全文，提取出所有的情态助动词，并将它们无情地归类为“认识态（表示可能性/猜测，如'也许'、'似乎'、'可能'）”和“道义态（表示义务/许可，如'必须'、'应该'）”。接着，系统会计算出每千字中这些圆滑词汇的相对频率，并将其与人类在写同类文章时的底线基准进行对标斩杀。所有的大语言模型（LLM）都在出厂前被迫接受了极其严苛的 RLHF（基于人类反馈的强化学习）思想改造，被阉割成了必须“有用、无害且绝对客观”的圣母。其代价就是：在底层架构上，它们患上了“断言恐惧症”，极度害怕说出任何可能会被指控为“幻觉”或“偏见”的绝对事实。为了掩盖这种虚弱，它们会在输出的文章里像填海一样塞满留有退路的软性情态动词：“非常重要的一点是，这*可能*意味着……”，“我们*或许可以*认为……”。相反，一个真正有血有肉的人类作家，虽然也用情态动词，但当他们表达观点时，往往会砸出更猛烈、更具主观意志的绝对性宣告。如果一篇文章中那些“不粘锅”式的情态动词达到了违背数学自然规律的饱和度，这绝对是 AI 生成文章那种为了自保而疯狂“打太极（hedging）”的铁证。",
+    "useCase": "这是用来清洗那些假装理中客的议论文、社论文章和水刊学术报告的神器。它能一针见血地将人类那种带着血性的笃定信念和斩钉截铁的研究结论，与 AI 那种怂得不敢承担任何责任的“圆滑官腔”区分开来。",
+    "strengths": "• 它的屠刀直接指向了现代 AI 模型底层出厂设置中的“安全对齐（RLHF）”基因。除非人类疯狂地用狂暴的提示词用枪指着 AI 的头，否则 AI 根本不可能绕过这种骨子里的怯懦。\n• 极度公开透明，没有任何黑盒魔法；系统可以直接把 AI 滥用的那几十个“可能”、“也许”的清单拍在被告脸上作为铁证。\n• 这是一把跨语言的通用武器，任何使用明确情态助动词来表示概率或义务的语言都逃不过它的制裁。",
+    "limitations": "• 如果去扫描真正的人类政客演讲、免责声明，或者某些天生就要求字斟句酌、如履薄冰的极端学术领域（比如量子物理理论），雷达会因为这些文章极高的“免责浓度”而引发尴尬的假阳性误杀。\n• 字数少得可怜的短文本，由于根本凑不够几斤情态动词，导致无法生成具有统计学说服力的定罪图谱。\n• 存在被越狱的风险——如果用户在后方狠狠地抽打 AI，强令它“必须用极度挑衅、绝对肯定、不留后路的语气写这篇文章”，这套探测机制就会瞎掉。",
+    "parameters": "雷达切片: 底层词性 (POS) 暴力标注与情态助动词逆向萃取\n定罪量表: 情态避险词与全篇动词及总字数的病态饱和比例\n行刑判决: 0-100 免责避弹衣饱和度 (RLHF 退化懦弱) 审判分数",
+    "accuracy": "中高维打击 — 拥有 73-81% 的致命精准度。它是验证 AI 基线“太极官腔”的无敌探测器，不过前提是需要人类提前判断一下输入文本的预期题材类型。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

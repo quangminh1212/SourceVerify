@@ -1,26 +1,21 @@
 {
-    "name": "Phân bố thẻ từ loại",
-    "description": "Phân tích phân bố thẻ từ loại (POS) để phát hiện văn bản AI, loại văn bản thường có phân bố cấu trúc ngữ pháp bất thường.",
-    "useCase": "Phát hiện văn bản AI thông qua phân bố danh mục ngữ pháp bất thường so với văn bản con người",
-    "mechanism": "Thực hiện gán thẻ từ loại trên văn bản đầu vào và tính phân bố tần suất của mỗi danh mục POS (danh từ, động từ, tính từ, trạng từ, v.v.). Văn bản AI thường phụ thuộc quá mức vào một số cấu trúc cú pháp, tạo ra phân bố phẳng hơn hoặc tỷ lệ bất thường giữa các danh mục. Phương pháp so sánh phân bố quan sát với kho ngữ liệu tham chiếu bằng kiểm định chi-bình phương.",
-    "accuracy": "Trung bình - 72-82% trên bộ dữ liệu chuẩn",
-    "source": "Fröhling & Zubiaga (2021) - Feature-based Detection of Automated Language Models, PeerJ Computer Science",
-    "algorithm": "POS Tagging + Chi-Squared Goodness-of-Fit + KL Divergence",
-    "parameters": "Bộ thẻ: Universal Dependencies, Cửa sổ: toàn văn bản, So sánh: đường cơ sở kho ngữ liệu, Độ chi tiết: 36 thẻ",
-    "strengths": "• Dựa trên cấu trúc ngôn ngữ thay vì nội dung\n• Hoạt động trên nhiều kiến trúc mô hình AI\n• Hiệu quả tính toán\n• Kết quả dễ giải thích cho nhà ngôn ngữ học",
-    "limitations": "• Cần độ dài văn bản đủ lớn để thống kê tin cậy\n• Có thể thay đổi theo thể loại và lĩnh vực\n• Mô hình AI tiên tiến ngày càng bắt chước phân bố POS con người\n• Kém hiệu quả trên văn bản ngắn (<100 từ)",
+    "name": "Biến Thể Trình Tự Từ Loại (POS)",
+    "description": "Phân tích tính đa dạng và khả năng dự đoán của các cấu trúc cú pháp bằng cách theo dõi trình tự và mức độ phân phối của các thẻ Từ loại (Part-of-Speech). Các trình tạo AI có xu hướng dựa vào các mẫu câu có cấu trúc công thức (ví dụ: các cấu trúc Chủ-Vị-Tân chuẩn với các vị trí tính từ có thể đoán trước), dẫn đến ít phương sai hơn trong cách các thẻ ngữ pháp được sắp xếp trên toàn bộ văn bản so với các biến thể nhịp nhàng, hỗn loạn của văn bản do con người viết.",
+    "algorithm": "Lập Hồ Sơ N-Gram Cú Pháp và Phân Phối POS",
+    "mechanism": "Đầu tiên, thuật toán phân tích văn bản bằng trình phân tích cú pháp phụ thuộc hoặc trình gắn thẻ POS để chuyển đổi tất cả các từ thành các danh mục ngữ pháp của chúng (Danh từ, Động từ, Tính từ, Giới từ, v.v.). Sau đó, nó tính toán hai số liệu chính: 1) Phân phối POS (tỷ lệ tần số tổng thể của mỗi thẻ, trong đó AI thường lạm dụng quá nhiều các từ hạn định và tính từ chung chung) và 2) Biến thể trình tự POS (entropy của các chuỗi POS 3-gram và 4-gram). Các tác giả con người thường xuyên phá vỡ các quy ước ngữ pháp vì hiệu ứng phong cách, sử dụng các mệnh đề phụ thuộc phức tạp và xen vào một cách bất thường, tạo ra một entropy cao của các chuỗi POS. Văn bản do AI tạo ra, được tối ưu hóa cho thế hệ trôi chảy nhưng an toàn, cực kỳ ủng hộ các cấu trúc ngữ pháp có thể xảy ra nhất về mặt thống kê, dẫn đến nhịp điệu cú pháp lặp đi lặp lại, có thể dự đoán cao (ví dụ: 'Từ hạn định + Tính từ + Danh từ + Động từ' được lặp lại vô tận). Hệ thống so sánh các trình tự quan sát được này với các bộ ngữ liệu cơ sở của con người để tính toán điểm số giả tạo.",
+    "useCase": "Rất hiệu quả để phân tích các bài luận trang trọng, bài báo và văn bản chuyên nghiệp, nơi AI thường bắt chước rập khuôn cấu trúc.",
+    "strengths": "• Rất mạnh mẽ chống lại các cuộc tấn công thay thế từ vựng đơn giản (như thay đổi 'sử dụng' thành 'dùng') bởi vì bộ xương ngữ pháp cơ bản vẫn không thay đổi.\n• Hoạt động ở cấp độ cấu trúc, làm cho nó có khả năng tương thích chéo cao với các chủ đề và lĩnh vực khác nhau.",
+    "limitations": "• Dễ bị dương tính giả trong các văn bản của con người có cấu trúc chặt chẽ, mang tính công thức (chẳng hạn như tài liệu pháp lý, hướng dẫn kỹ thuật hoặc bài luận thi tiêu chuẩn).\n• Yêu cầu một văn bản đủ dài (thường > 150 từ) để lập bản đồ phân phối cấu trúc và entropy trình tự một cách chính xác.",
+    "parameters": "Kiểm Định: Gắn Thẻ POS (Phụ Thuộc Phổ Quát) và Entropy N-Gram Cú Pháp\nThước Đo: Xác Suất Chuyển Đổi POS và Tỷ Lệ Phân Phối Thẻ\nĐầu Ra: 0-100 Điểm Có Thể Dự Đoán Bằng Cú Pháp (Tính Giả Tạo)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-85%. Rất mạnh khi kết hợp với các phương pháp dựa trên từ vựng và độ hoang mang, vì nó phân tích 'bộ xương' chứ không phải 'thịt' của văn bản.",
     "references": [
         {
-            "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models. PeerJ Computer Science.",
+            "title": "Fröhling, L. & Zubiaga, A. (2021). Feature-based Detection of Automated Language Models: Tackling GPT-2, GPT-3, and Grover. PeerJ Computer Science.",
             "url": "https://doi.org/10.7717/peerj-cs.443"
         },
         {
-            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",
-            "url": "https://arxiv.org/abs/1906.03351"
-        },
-        {
-            "title": "Beresneva, D. (2016). Computer-Generated Text Detection Using Machine Learning. NLDB.",
-            "url": "https://doi.org/10.1007/978-3-319-41754-7_43"
+            "title": "Bandi, A. et al. (2023). Lexical Features of AI-Generated vs Human-Written Text. IEEE.",
+            "url": "https://ieeexplore.ieee.org/document/10323389"
         }
     ]
 }

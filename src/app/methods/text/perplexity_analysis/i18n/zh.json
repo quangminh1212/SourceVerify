@@ -1,22 +1,17 @@
 {
-    "name": "困惑度分析",
-    "description": "测量 text 困惑度 以检测 AI生成的 text, 其 tends to have lower 困惑度 than 人类写作.",
-    "useCase": "检测AI生成文本 通过测量 predictability of word sequences",
-    "mechanism": "计算 per-token 困惑度 using 语言模型 以测量 how predictable each word is given its context. AI生成的 text typically exhibits lower, more uniform 困惑度 because 语言模型 optimize for precisely this metric, while 人类文本 shows more variation and occasional surprising word choices.",
-    "accuracy": "中-高 - 78-88%（标准AI生成文本）",
-    "source": "Mitchell et al. (2023) - DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature, ICML",
-    "algorithm": "Language Model Perplexity Scoring + Statistical Threshold Analysis",
-    "parameters": "模型: GPT-2 based, 上下文窗口: 1024 tokens, 评分: 每个token的对数概率, 阈值: 自适应",
-    "strengths": "• 不需要在特定AI模型上训练\n• 适用于不同的AI文本生成器\n• 使用预训练模型快速推理\n• 可分析任意长度的文本",
-    "limitations": "• 对编辑或改写的AI文本效果较差\n• 领域特定文本可能自然具有低困惑度\n• 短文本提供的信号不太可靠\n• 性能因语言而异",
+    "name": "文本困惑度深度剖析 (Perplexity)",
+    "description": "测量文本底层的统计学“可预测性”。大语言模型 (LLM) 的运行本质，就是像一台冷酷的印钞机一样，永远去预测下一个在数学上最符合常理的概率词。因此，AI 生成的文本在骨子里就是为了让另一个语言模型“毫不意外”而设计的，这就导致了其得分极低的“困惑度”。人类作家的脑回路恰恰相反，我们总是能丢出一些不可预测的、古怪的、或者极具创造力的词汇，这些词汇会粗暴地撕裂模型对下一个词的预期，从而产生极高的平均困惑度。",
+    "algorithm": "对数似然词元评估与基线偏离度矩阵",
+    "mechanism": "该算法会把输入的文本生吞活剥，扔进一个用来当裁判的语言模型（通常是 GPT-2 这样的开源骨架或是定制的审查器），并逐字精准测量在已知上文的情况下，每一个词元（Token）出现的对数概率。“困惑度（Perplexity）”本质上是一个数学探针，用来测量这位裁判模型在阅读这篇文本时有多么“吃惊”。面对 AI 生成的文本时，因为这篇文本从一开始就是用高概率的“稳妥词汇”堆砌而成的，裁判模型就能像未卜先知一样轻松“猜中”每一个词序列，从而得出一个低到令人发指、且平滑得毫无波澜的困惑度分数。但人类绝对不按概率学来写字；我们会甩出市井俚语、发生极其突兀的话题大撒把、滥用时空错乱的混合隐喻、以及抛出语言模型绞尽脑汁也猜不到的蛇皮短语。当裁判模型一头撞上这些人类特有的神经质操作时，它的自信心就会瞬间崩盘，文本的困惑度指标就会像心脏起搏器一样疯狂飙升。系统正是通过将文本的整体平均困惑度与人类的常理边界进行对撞分析，从而审判出一个“人造物可预测性得分”。",
+    "useCase": "这是几乎所有现代 AI 猎杀系统的“绝对底座”。用来快速对海量的学生散文、无良营销文案和新闻注水文章进行地毯式扫描——一针见血地扒出这些文字的底层逻辑，究竟是顺从了冰冷的概率统计曲线，还是源于人类大脑的瞬间冲动。",
+    "strengths": "• 在裸绞由标准大模型（比如未加任何掩饰的 ChatGPT 默认输出）生成的毫无防备的零样本（zero-shot）AI 文本时，杀伤力极其恐怖。\n• 它不需要针对各个领域去背一套复杂的“小抄规矩”，就能无视话题和文体，在全球语境下进行降维打击。\n• 这种攻击手段直接挖断了所有自回归大语言模型 (Autoregressive LLMs) 赖以生存的工作原理根基。",
+    "limitations": "• 防御系统也很脆弱，只要使用者在出图时动动手脚拔高“生成温度（temperature）”，或者是用钓鱼提示词（比如“一定要用极高困惑度写这段话”、“给我用最诡异的词汇组合”），就能强行绕开。\n• 在面对极度硬核又无聊的利基文本（比如天书般的医学期刊、死板的买卖合同、或者程序员复制粘贴的样板代码）时会发生大规模冤假错案。因为这些文字的词汇就是被焊死的，天生困惑度就低得离谱，很容易被误判为机器生成的残次品。\n• 在极其迷你的短文本（少于 100 词）面前就是一个瞎子，由于样本量惨不忍睹，根本建不起统计学的基线池。",
+    "parameters": "雷达切片: 依托裁判模型施行的词元级对数概率判决\n定罪量表: 基础困惑度均值 与 可预判性的震荡方差\n行刑判决: 0-100 词汇轨迹塑料化 (病态低困惑度) 审判分数",
+    "accuracy": "重机枪级别 — 在面对未加任何伪装的标准 AI 原生态文本时，拥有令人窒息的 80-90% 命中率。但如果目标文本被人为精修过、“刻意人设化”、或是使用了高温度随机乱切的作弊战术，雷达的准度就会出现断崖式下跌。",
     "references": [
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
             "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
         },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",

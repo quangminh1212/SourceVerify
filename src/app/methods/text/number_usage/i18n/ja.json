@@ -1,22 +1,21 @@
 {
-    "name": "Number Usage",
-    "description": "Analyzes numeric expression patterns",
-    "algorithm": "Number Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes numeric expression patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through number usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "数字の使用表現（Number Usage Expression）",
+    "description": "テキスト内で数字、統計、および図表がどのように統合され、フォーマットされているかを調べます。AIモデルは、高度に予測可能で標準化されたフォーマット（例：AP通信スタイルへの厳格な準拠、正確なパーセンテージの過度な使用、または不自然にバランスの取れた統計の引用）で数字を提示する傾向があり、人間が数字を書く際の、一貫性がなくコンテキストに依存した方法を再現するのに苦労します。",
+    "algorithm": "数値フォーマットと統計的精度のマッピング",
+    "mechanism": "このアルゴリズムはテキストをスキャンしてすべての数値表現を抽出し、そのフォーマット（数字とスペルアウトされた単語）、精度（正確な測定基準と近似値）、および構文上の分布を分析します。大規模言語モデル（LLM）は、情報を権威をもって明確に提示するように調整（アライメント）されています。そのため、データを含むテキストを生成する場合、モデルは非常に正確で「教科書的」なフォーマット（例：「2023年には、人口の47.3%が...」）をデフォルトとします。明示的に指示されない限り、同じ段落内でフォーマットを一貫性なく混在させることはめったにありません。しかし、人間のライターは本質的に一貫性がありません。ある文では「三百人（three hundred people）」と書き、次の文では「300人の訪問者（300 visitors）」と書いたり、「数十人（a couple dozen）」や「およそ半分（roughly half）」のような口語的な概数を使用したりします。さらに、AIのテキストはしばしば「統計的ハルシネーションのバランス」を示します。つまり、架空の統計を生成する際、数字を均等に分布させる傾向があります（「本物」らしく見せるために0や5で終わる数字が多すぎるのを避け、皮肉なことに、数学的に検出可能な偽のランダム性のパターンを作り出します）。システムは、厳密なフォーマット規則の遵守と、正確な数字に対する近似値の分布を評価することによって、「数値的硬直性スコア」を計算します。",
+    "useCase": "財務報告書、科学的要約、ニュース記事、およびあらゆるデータ重視のコンテンツを監査し、機械の「完璧」で無機質な数値フォーマットと、人間の有機的で時に乱雑な報告とを区別するために不可欠です。",
+    "strengths": "• 数字が頻繁に登場するデータ駆動型または分析的なテキストで非常に効果的です。\n• AIのアライメントにハードコーディングされた、基礎となるフォーマット規則を検出します。一般のユーザーは、プロンプトを通じてこれを変更しようと考えることはめったにありません。\n• 生成された乱数の基礎となる分布を分析することにより、AIが「ハルシネーション（幻覚）」を起こした統計を特定するのに優れています。",
+    "limitations": "• 監査済みの財務諸表、厳密に編集されたジャーナリズム、または厳密なAPAフォーマットの調査論文など、人間のライターが厳密な数値フォーマットを使用せざるを得ない、高度に規制されたドキュメントを分析する場合、誤検知が発生しやすくなります。\n• 数字がまったく存在しないクリエイティブなフィクションや哲学的なテキストでは効果が低くなります。\n• AIに口語的な概数を使用するように明示的に指示するユーザー（例：「これをおおよその見積もりを使用して書いてください」）によって回避される可能性があります。",
+    "parameters": "解析: 正規表現（Regex）による数値の抽出とフォーマットのプロファイリング\n評価基準: フォーマットの一貫性および精度 vs 近似値の比率\n出力結果: 0-100 数値的硬直性（フォーマットの人工性）スコア",
+    "accuracy": "中程度 — 65-75%の精度。データの多いテキストでは優れたシグナルを提供する高度に専門化された指標ですが、数値データが不足しているテキストでは無視する必要があります。",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
         }
     ]
 }

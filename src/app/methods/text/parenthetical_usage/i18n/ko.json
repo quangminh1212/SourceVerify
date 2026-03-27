@@ -1,14 +1,13 @@
 {
-    "name": "Parenthetical Usage",
-    "description": "Measures parenthetical expression 주파수",
-    "algorithm": "Parenthetical Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures parenthetical expression 주파수. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through parenthetical usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "삽입어구 사용 (Parenthetical Clause Usage)",
+    "description": "괄호 안의 텍스트(이런 식으로), 엠대시(em-dash)—이런 식으로—또는 쉼표로 분리된 삽입어구의 빈도와 복잡성을 분석합니다. AI 모델은 삽입어구를 엄격하게 건조하고 설명적인 부연 설명을 위해서만 사용하는 경향이 있는 반면, 인간은 문장의 주된 논리적 흐름을 깨뜨리는 즉흥적인 개인적 의견, 비꼬기(Sarcasm), 또는 곁가지로 새는 이차적인 생각을 쑤셔 넣기 위해 삽입어구를 빈번하게 사용합니다.",
+    "algorithm": "구문론적 분기 및 삽입어구 의미 표류(Semantic Drift) 분석",
+    "mechanism": "이 알고리즘은 의존성 구문 분석(Dependency parsing)과 정규식(Regex)을 사용하여 텍스트 내의 모든 삽입 구조(소괄호, 대괄호 및 엠대시 절)를 분리해 냅니다. 그런 다음 빈도수(Frequency)와 의미론적 거리(Semantic distance)라는 두 가지 핵심 지표를 평가합니다. 거대 언어 모델(LLM)은 매우 일관성 있고 직설적이도록 훈련되었습니다. LLM은 결코 자기 자신의 사고 흐름을 스스로 방해(Interrupt)하지 않습니다. AI가 괄호를 사용할 때, 그것은 거의 전적으로 용어의 정의(예: '연방준비제도(Fed)')나 연도의 인용(예: '조지 워싱턴(1732–1799)')을 위해서만 쓰입니다. 이와는 대조적으로, 인간 작가들은 글을 쓰는 도중에 불현듯 딴생각이 떠오르는 '문장 중간의 깨달음(Mid-sentence realizations)'을 자주 겪습니다. 이들은 본동사로 돌아가기 전에 핵심 생각을 중단하고, 뜬금없는 농담이나 반론을 제기하는 의심, 또는 완전히 독립적인 서브 플롯을 문장 중간에 주입합니다. 시스템은 메인 문장과 비교하여 삽입절이 얼마나 딴소리를 하는지를 나타내는 '의미 표류(Semantic Drift)'를 측정합니다. 단순하고 정의를 내리는 괄호의 빈도가 높으면 기계적 정렬(Machine alignment)을 나타내며, 반대로 복잡하고 곁가지로 새는 방해꾼 같은 삽입어구는 인간의 유기적인 인지 처리 과정을 강력하게 시사합니다.",
+    "useCase": "대화형 글, 블로그 포스트, 오피니언 기사를 감사(Audit)할 때 매우 효과적이며, AI의 무균 상태인 설명충 괄호와 인간 작가의 즉석적이고, 방해를 일삼으며, 종종 난잡하기 짝이 없는 괄호를 기가 막히게 구분해 냅니다.",
+    "strengths": "• LLM이 확실한 프롬프트(Prompt) 지시 없이는 자연스럽게 모방하기 힘든, 인간 특유의 '의식의 흐름(Stream of consciousness)' 글쓰기 스타일을 포착하는 데 탁월합니다.\n• 괄호 안에 단순한 약어나 개념을 굳이 과도하게 친절히 설명하려 드는, AI의 고전적인 지문을 식별하는 데 매우 정확합니다.",
+    "limitations": "• 인간조차 인용, 약어 정의 또는 엄격한 부연 설명을 위해서만 규칙적으로 괄호를 사용하도록 강제 받는 고도로 기술적이고 학술적이거나 법률적인 문서를 분석할 때는 오탐지(False positive)가 발생할 가능성이 높습니다.\n• 삽입어구가 아예 등장하지 않는 매우 짧은 텍스트에서는 그 효용성이 떨어집니다.",
+    "parameters": "분석 기준: 정규식 기반 괄호/대시 추출 및 의존성 구문 분석\n측정 지표: 삽입어구 빈도수 및 의미 표류(Semantic Drift) 분산\n출력: 0-100 구문론적 난입/방해 (인위성) 스코어",
+    "accuracy": "중간~높음 — 70-80%의 탐지율. 고도로 계획된 일직선상의 AI 텍스트 생성과 인간의 즉흥적인 딴생각을 날카롭게 분리해 내는 미묘하고도 강력한 시그널입니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

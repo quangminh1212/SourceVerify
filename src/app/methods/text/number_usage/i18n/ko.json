@@ -1,22 +1,21 @@
 {
-    "name": "Number Usage",
-    "description": "Analyzes numeric expression patterns",
-    "algorithm": "Number Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes numeric expression patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through number usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "숫자 사용 표현법 (Number Usage Expression)",
+    "description": "글 속에서 숫자, 통계, 수치가 어떻게 통합되고 어떤 포맷으로 쓰였는지 검사합니다. AI 모델은 고도로 예측 가능하고 규격화된 포맷(예: 엄격한 AP 문체 가이드 준수, 불필요할 만큼 정밀한 소수점 퍼센트 남용, 또는 작위적으로 균형을 맞춘 통계 인용)으로 숫자를 제시하는 경향이 있으며, 반대로 인간이 숫자를 쓸 때 보여주는 문맥 의존적이고 비일관적인 표기법을 모방하는 데는 큰 어려움을 겪습니다.",
+    "algorithm": "수치 포맷팅 및 통계적 정밀도 맵핑(Mapping)",
+    "mechanism": "이 알고리즘은 텍스트를 스캔하여 모든 숫자 표현을 추출하고, 그 포맷(아라비아 숫자 표기 vs. 알파벳으로 풀어쓰기), 정밀도(정확한 소수점 수치 vs. 대략적인 어림수), 그리고 구문론적 분포를 분석합니다. 거대 언어 모델(LLM)들은 정보를 '권위 있고 명확하게' 전달하도록 인간의 피드백(RLHF)을 통해 교정되었습니다. 따라서 데이터가 포함된 글을 생성할 때, AI는 기본값으로 cực히 정밀하고 '교과서적인' 포맷으로 도피합니다 (예: '2023년에는 해당 인구의 47.3%가...'). 확실한 지시(Prompt)가 없는 한, AI는 한 단락 안에서 숫자 표기 방식을 비일관적으로 섞어서 쓰는 짓을 거의 하지 않습니다. 반면, 인간 작가는 본질적으로 일관성이 부족합니다. 한 문장에서는 '삼백 명(three hundred people)'이라고 풀어 쓰다가 바로 다음 문장에서는 '300명의 방문객'이라고 숫자로 쓰기도 하고, '두어 다스(a couple dozen)'나 '대략 절반쯤(roughly half)' 같은 구어체적 어림수를 밥 먹듯이 사용합니다. 더욱이, AI가 작성한 글은 종종 '통계적 환각의 균형(Statistical hallucination balance)'을 보여줍니다. 즉, 가짜 통계를 꾸며낼 때 숫자들이 너무 균등하게 분포하는 경향을 보입니다 (아이러니하게도 너무 '진짜처럼' 보이려고 0이나 5로 끝나는 숫자를 피하려다 보니, 거꾸로 수학적으로 탐지 가능한 수준의 가짜 무작위성 패턴을 만들어냅니다). 시스템은 얼마나 엄격한 포맷 규칙에 집착하는지, 그리고 '정확한 수치' 대비 '대략적 어림수'의 분포 비율을 평가하여 '수치적 경직성 스코어(Numeric Rigidity Score)'를 계산합니다.",
+    "useCase": "재무 보고서, 과학 논문 초록, 뉴스 기사 및 데이터가 헤비하게 들어간 모든 콘텐츠를 감사(Audit)할 때 핵심적으로 사용됩니다. 기계가 뱉어낸 '기분 나쁠 정도로 완벽하고' 무균 상태인 숫자 포맷과, 인간의 유기적이고 때로는 지저분한 실제 보고서를 명확하게 구분해 냅니다.",
+    "strengths": "• 숫자가 빈번하게 등장하는 데이터 중심 텍스트나 분석 보고서에서 극도의 파괴력을 자랑합니다.\n• 일반적인 사용자는 프롬프트를 통해 수정할 생각조차 하지 못하는, AI의 기저에 하드코딩된 '안전한 포맷팅 규칙' 자체를 적발해 냅니다.\n• AI가 생성한 무작위 숫자의 기저 분포를 수학적으로 역추적하여, AI가 '환각(Hallucination)'으로 지어낸 가짜 통계를 식별하는 데 매우 탁월합니다.",
+    "limitations": "• 인간 작가가 억지로라도 엄격한 숫자 포맷을 따라야만 하는 극도로 규제된 문서(예: 회계 감사를 거친 재무제표, 빡빡하게 데스크의 교정을 거친 언론 기사, 또는 철저한 APA 포맷의 연구 논문)를 분석할 때는 억울한 오탐지(False positive)가 발생할 확률이 높습니다.\n• 숫자가 아예 등장하지 않는 창작 소설이나 철학적 텍스트에서는 쓰레기 지표로 전락합니다.\n• 작정하고 AI에게 구어체적 어림수를 쓰라고 지시하는 사용자(예: '대충 어림잡아서 동네 친구한테 말하듯이 써줘') 앞에서는 무력화될 수 있습니다.",
+    "parameters": "분석 기준: 정규식(Regex) 기반 숫자 추출 및 표기 포맷 프로파일링\n측정 지표: 포맷의 강박적 일관성 및 정밀 수치 vs. 대략적 어림수의 비율\n출력: 0-100 수치적 경직도 (포맷의 작위성) 스코어",
+    "accuracy": "중간 — 65-75%의 정확도. 숫자가 많이 등장하는 문서에서는 최고의 시그널을 제공하지만, 숫자 데이터가 부족한 텍스트에서는 완전히 무시되어야 하는 고도로 특화된 지표입니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
         }
     ]
 }
