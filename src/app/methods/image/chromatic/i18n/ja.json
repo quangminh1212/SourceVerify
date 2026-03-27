@@ -1,22 +1,22 @@
 {
-    "name": "色収差分析",
-    "description": "検出します color fringing at high-コントラスト edges produced by real camera lenses. AI生成の images typically lack this optical アーティファクト since they dont simulate lens physics.",
-    "algorithm": "Chromatic Aberration Pattern Detection",
-    "mechanism": "測定します color channel misalignment にわたる the image. Real camera lenses produce predictable radial chromatic aberration. AI images either lack this or produce physically implausible パターン.",
-    "parameters": "Channel pairs: R-G, R-B, G-B, Measurement: phase 相関, Radial model: Brown-Conrady",
-    "accuracy": "中-高 - 75-85% when chromatic aberration is detectable",
-    "source": "Johnson and Farid (2006), ACM Workshop on Multimedia and Security",
-    "useCase": "Detecting absence or 不整合 of lens-induced chromatic aberration",
+    "name": "色収差（Chromatic Aberration）解析",
+    "description": "高コントラストの境界での色にじみ（色収差）を検出します。実際のカメラレンズは、すべての波長の光を同じ焦点面に完全に結像するのに苦労し、放射軸に沿って予測可能な光学的な色のずれを生じさせます。物理的なレンズなしで機能する生成AIモデルは、このアーティファクトが完全に欠如しているか、放射状ではない物理的に不可能な色のハロー（光輪）を合成します。",
+    "algorithm": "放射位相反関およびレンズ歪みモデリング",
+    "mechanism": "このアルゴリズムは、赤、緑、青のカラーチャネル間のサブピクセルのズレ（倍率色収差）を測定します。本物の写真では、このズレは（Brown-Conradyモデルのような）放射光学の公式に従って、画像の端に向かって予測可能に増加します。AIが画像を生成するとき、それは通常レンズの物理学を無視してピクセル値を直接合成します。したがって、AI画像は色収差がゼロであるか、写真のように「スタイル化」されている場合、統一された放射中心と揃わないランダムな色にじみを生じさせるか、不可能なチャネルシフト（例：緑が青や赤よりも遠くにシフトする）を示します。",
+    "parameters": "チャネルペア: R-G, R-B, G-B, 測定: 位相反関 / サブピクセルエッジ変位, 放射モデル: 光学中心に対して検証",
+    "accuracy": "中〜高（75-85%） - 光学パターンがレンズの物理学に厳密に従っている場合、真正性の非常に強い指標となります。過度にトリミングされた画像や、光学的に設計された高級レンズでは効果が低くなる可能性があります。",
+    "source": "Johnson and Farid (2006) - 色収差によるデジタル偽造の暴露",
+    "useCase": "レンズの物理学の欠如を通したAI生成の検出、または貼り付けられた領域で放射収差モデルが突然ずれる局所的な画像合成の特定。",
     "references": [
         {
-            "url": "https://doi.org/10.1145/1180639.1180649",
-            "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM Workshop MMS."
+            "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMS.",
+            "url": "https://doi.org/10.1145/1180639.1180649"
         },
         {
-            "url": "https://doi.org/10.1007/s11263-010-0403-1",
-            "title": "Yerushalmy, I. & Hel-Or, H. (2011). Digital Image Forgery Detection Based on Lens and Sensor Aberration. IJCV."
+            "title": "Yerushalmy, I. & Hel-Or, H. (2011). Digital Image Forgery Detection Based on Lens Aberration. IJCV.",
+            "url": "https://doi.org/10.1007/s11263-010-0403-1"
         }
     ],
-    "strengths": "• Based on physical optics of real lenses\n• AI generators rarely simulate lens physics\n• Predictable radial パターン in real photos\n• Strong 真正性 indicator when present",
-    "limitations": "• Not all real photos have detectable aberration\n• High-quality lens corrections may remove traces\n• Small or cropped images reduce 検出\n• Some AI models are learning to add fake aberration"
+    "strengths": "• 物理的なレンズ光学に深く根ざしており、膨大な計算オーバーヘッドなしには、現在のAIアーキテクチャでは数学的に正確にシミュレートできない。\n• 写真のようにリアルに見えるが、システム的な光学の欠陥を欠いている高解像度のAI出力に対して非常に効果的。\n• 2つの異なるレンズが2つの矛盾する収差中心を持つことになるため、「フランケンシュタイン」画像（スプライシング合成）を捕らえるのに優れている。",
+    "limitations": "• 高価な単焦点レンズ（アポクロマートなど）は自然に色収差を最小限に抑えるため、ソフトウェアが光学的な欠陥を想定している場合、AIの偽陽性を引き起こす可能性がある。\n• 小さな画像のトリミング（見かけの光学中心をシフトさせる）や、積極的なJPEG圧縮によって完全に破壊される。\n• 編集ソフトウェア（Lightroom、Camera Raw）には、この重要なフォレンジックの痕跡を消去する自動「色収差除去」ツールが備わっている。"
 }

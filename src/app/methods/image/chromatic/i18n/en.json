@@ -1,22 +1,22 @@
 {
-    "name": "Chromatic Aberration",
-    "description": "Detects color fringing at high-contrast edges produced by real camera lenses. AI-generated images typically lack this optical artifact since they dont simulate lens physics.",
-    "algorithm": "Chromatic Aberration Pattern Detection",
-    "mechanism": "Measures color channel misalignment across the image. Real camera lenses produce predictable radial chromatic aberration. AI images either lack this or produce physically implausible patterns.",
-    "parameters": "Channel pairs: R-G, R-B, G-B, Measurement: phase correlation, Radial model: Brown-Conrady",
-    "accuracy": "Moderate-High - 75-85% when chromatic aberration is detectable",
-    "source": "Johnson and Farid (2006), ACM Workshop on Multimedia and Security",
-    "useCase": "Detecting absence or inconsistency of lens-induced chromatic aberration",
+    "name": "Chromatic Aberration Analysis",
+    "description": "Detects color fringing (chromatic aberration) at high-contrast edges. Real camera lenses struggle to perfectly focus all wavelengths of light onto the same focal plane, producing predictable optical color shifting along radial axes. Generative AI models, functioning without physical lenses, either lack this artifact entirely or synthesize physically impossible, non-radial colored halos.",
+    "algorithm": "Radial Phase Correlation & Lens Distortion Modeling",
+    "mechanism": "The algorithm measures sub-pixel misalignment between the Red, Green, and Blue color channels (Lateral Chromatic Aberration). In authentic photography, this misalignment increases predictably toward the edges of the image according to radial optical formulas (like the Brown-Conrady model). When an AI generates an image, it synthesizes pixel values directly, typically ignoring lens physics. Thus, an AI image will either have zero chromatic aberration, or if 'styled' to look like a photo, it will generate random color fringing that fails to align with a unified radial center, or exhibits impossible channel shifts (e.g., Green shifting further than Blue and Red).",
+    "parameters": "Channel Pairs: R-G, R-B, G-B, Measurement: Phase Correlation / Sub-pixel Edge Displacement, Radial Model: Validated against optical center",
+    "accuracy": "Moderate to High (75-85%) - Very strong indicator of authenticity if the optical pattern strictly follows lens physics. Can be less effective on heavily cropped or optically engineered premium lenses.",
+    "source": "Johnson and Farid (2006) - Exposing Digital Forgeries Through Chromatic Aberration",
+    "useCase": "Detecting AI generation through the absence of lens physics, or identifying localized image splicing where the radial aberration model suddenly misaligns in the pasted region.",
     "references": [
         {
-            "url": "https://doi.org/10.1145/1180639.1180649",
-            "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM Workshop MMS."
+            "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMS.",
+            "url": "https://doi.org/10.1145/1180639.1180649"
         },
         {
-            "url": "https://doi.org/10.1007/s11263-010-0403-1",
-            "title": "Yerushalmy, I. & Hel-Or, H. (2011). Digital Image Forgery Detection Based on Lens and Sensor Aberration. IJCV."
+            "title": "Yerushalmy, I. & Hel-Or, H. (2011). Digital Image Forgery Detection Based on Lens Aberration. IJCV.",
+            "url": "https://doi.org/10.1007/s11263-010-0403-1"
         }
     ],
-    "strengths": "• Based on physical optics of real lenses\n• AI generators rarely simulate lens physics\n• Predictable radial pattern in real photos\n• Strong authenticity indicator when present",
-    "limitations": "• Not all real photos have detectable aberration\n• High-quality lens corrections may remove traces\n• Small or cropped images reduce detection\n• Some AI models are learning to add fake aberration"
+    "strengths": "• Deeply rooted in physical lens optics, which current AI architectures mathematically cannot simulate accurately without heavy computational overhead.\n• Highly effective against high-resolution AI outputs that appear photorealistic but lack systemic optical flaws.\n• Excellent at catching 'Frankenstein' images (splicing), as two different lenses will have two conflicting aberration centers.",
+    "limitations": "• Expensive prime lenses (e.g., apochromatic) naturally minimize chromatic aberration, which can trigger AI false-positives if the software expects optical flaws.\n• Completely destroyed by small image cropping (which shifts the apparent optical center) or aggressive JPEG compression.\n• Editing software (Lightroom, Camera Raw) has automated 'Remove Chromatic Aberration' tools that erase this vital forensic footprint."
 }

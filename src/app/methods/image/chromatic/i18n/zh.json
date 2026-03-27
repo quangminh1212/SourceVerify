@@ -1,22 +1,22 @@
 {
-    "name": "色差分析",
-    "description": "检测 color fringing at high-对比度 edges produced by real camera lenses. AI生成的 images typically lack this optical 伪影 since they dont simulate lens physics.",
-    "algorithm": "Chromatic Aberration Pattern Detection",
-    "mechanism": "测量 color channel misalignment 跨 the image. Real camera lenses produce predictable radial chromatic aberration. AI images either lack this or produce physically implausible 模式.",
-    "parameters": "Channel pairs: R-G, R-B, G-B, Measurement: phase 相关性, Radial model: Brown-Conrady",
-    "accuracy": "中-高 - 75-85% when chromatic aberration is detectable",
-    "source": "Johnson and Farid (2006), ACM Workshop on Multimedia and Security",
-    "useCase": "Detecting absence or 不一致 of lens-induced chromatic aberration",
+    "name": "色差(Chromatic Aberration)学光学分析",
+    "description": "在高对比度边缘处侦测彩色边纹(即色差)。现实世界中的相机物理镜头很难将所有波长的光线完美聚焦在完全相同的焦平面上，这会沿径向轴产生极其可预测的光学颜色偏移。既然生成式AI模型在合成图像时是在纯数学空间中进行的，完全没有真正物理镜头的干预，那么它们诞生的图像通常要么完全没有这种瑕疵，要么如果刻意去模仿，就会画蛇添足地合成出根本不符合径向物理规律或者完全不可能存在的荒谬彩色光晕。",
+    "algorithm": "径向相位相关性与镜头畸变数学建模",
+    "mechanism": "该算法会无情地剖析并测量红(Red)、绿(Green)、蓝(Blue)三个色彩通道之间亚像素级别的错位（即横向色差）。在真正使用镜头拍摄的严谨摄影作品中，这种色彩偏离会根据径向的经典光学公式（比如Brown-Conrady模型）向着画面的边缘极其规律且可预测地递增扩大。而当一个AI开始伪造生成图像时，它只是粗暴地直接合成所有的像素值，通常完全无视了任何的镜头物理光学原则。因此，一张AI图像要么其色差值完美到令人发指的零瑕疵，要么就是如果被投喂并学习成为'摄影风格'，它就会在边缘处随机乱糊出随意的色彩边纹——这些边纹的离散中心点不仅根本无法收敛对齐成一个统一的径向圆心，更甚至会表现出物理学上根本不被允许的通道撕裂偏移。",
+    "parameters": "比对通道组: R-G, R-B, G-B, 侦测刻度: 相位相关性 / 亚像素级的边缘位移, 径向理论模型: 严格对抗校准光学中心",
+    "accuracy": "中等偏高 (75-85%) - 如果图像上的光学图案严格且绝对地遵守实体前置镜头的物理散射定律，那么它就是一块验明真身的铁金字招牌。如果照片遭遇了边缘大面积裁剪、或者是使用了搭载在万元超高端相机的经过光学精密矫正处理的天价昂贵镜头，那么这个算法会被大幅削弱。",
+    "source": "Johnson 与 Farid (2006) - 从色差瑕疵中侦破的数字图像欺诈",
+    "useCase": "通过验证图像中物理镜头色差的'物理缺席'，直接宣判并揭露AI图像的生成老底；同时非常适合精准抓住并锁定通过局部裁剪拼接图像时的把柄（因为伪造的拼贴区域其原本相机的径向色散中心在这张新主图图里会产生灾难级的严重错位）。",
     "references": [
         {
-            "url": "https://doi.org/10.1145/1180639.1180649",
-            "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM Workshop MMS."
+            "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMS.",
+            "url": "https://doi.org/10.1145/1180639.1180649"
         },
         {
-            "url": "https://doi.org/10.1007/s11263-010-0403-1",
-            "title": "Yerushalmy, I. & Hel-Or, H. (2011). Digital Image Forgery Detection Based on Lens and Sensor Aberration. IJCV."
+            "title": "Yerushalmy, I. & Hel-Or, H. (2011). Digital Image Forgery Detection Based on Lens Aberration. IJCV.",
+            "url": "https://doi.org/10.1007/s11263-010-0403-1"
         }
     ],
-    "strengths": "• Based on physical optics of real lenses\n• AI generators rarely simulate lens physics\n• Predictable radial 模式 in real photos\n• Strong 真实性 indicator when present",
-    "limitations": "• Not all real photos have detectable aberration\n• High-quality lens corrections may remove traces\n• Small or cropped images reduce 检测\n• Some AI models are learning to add fake aberration"
+    "strengths": "• 深深地将追踪的重型铁锚钉入物理镜片光学的最底层的核心根基中，对于目前这群极其娇贵且算力匮乏的AI架构来说，想要在整个庞大的神经网络内通过数学模拟去完全精确再现这种光学现象且避免巨大运算开销更是天方夜谭。\n• 对付那些光鲜亮丽且表面上看似超写实完美的超高分辨率AI输出重灾区表现出了压倒性的统治力，毕竟它们骨子里完全缺乏这种系统且脏乱的物理光学残缺。\n• 是揪出那些类似将多个素材生拼硬凑的'弗兰肯斯坦'拼接怪物的行家里手，仅仅是因为两个完全不同镜头的照片的像差发散圆心会在拼接点产生猛烈且滑稽的物理冲突。",
+    "limitations": "• 那些花高价买来的专业顶级定焦镜头（比如APO复消色差镜头），它们天生就能从物理材质上极大地压制并消灭色差，这就造成了如果你强行用软件苛求光学缺陷，那么算法就有可能对这群土豪的真实照片发出AI警报（报错）。\n• 如果这照片经历过恶毒的边缘大幅裁剪行为（由于切割会彻底位移使得表观光学中心的位置变成一团谜），或者被粗暴地喂给了社交媒体疯狂重压缩的JPEG处理线，那这套算法法宝就彻底宣布作废。\n• 不少用于摄影后期的专业修图软件（如Lightroom、Camera Raw），里面都带有一键无脑的'自动移除色差'工具选项，这种洗地的懒人功能会极其轻易地把这块宝贵的法医验证痕迹给彻底擦得干干净净。"
 }
