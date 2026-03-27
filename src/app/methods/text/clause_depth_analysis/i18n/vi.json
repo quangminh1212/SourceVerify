@@ -1,17 +1,16 @@
 {
-    "name": "Phân tích độ sâu mệnh đề",
-    "description": "Đo độ sâu lồng ghép mệnh đề trong câu để phát hiện xu hướng cấu trúc nhúng nông của văn bản AI.",
-    "useCase": "Phát hiện văn bản AI qua mẫu mệnh đề phụ thuộc đồng nhất và nông",
-    "mechanism": "Phân tích câu thành hệ thống phân cấp mệnh đề và đo độ sâu nhúng (mệnh đề chính → mệnh đề phụ → mệnh đề nhúng). Tính độ sâu tối đa, trung bình, phương sai và phân bố theo câu. Văn bản AI thường có độ sâu mệnh đề tối đa thấp hơn và ít biến đổi, phản ánh chiến lược đóng gói thông tin phẳng hơn so với con người.",
-    "accuracy": "Trung bình - 71-81% trên văn bản dài",
-    "source": "Hunt, K. W. (1965) - Grammatical Structures Written at Three Grade Levels, NCTE",
-    "algorithm": "Clause Boundary Detection + Depth Calculation + Statistical Distribution Analysis",
-    "parameters": "Bộ phân tích: phân đoạn mệnh đề phụ thuộc, Chỉ số: tối đa/trung bình/phương sai/phân bố, Câu tối thiểu: 5 từ, Văn bản tối thiểu: 10 câu",
-    "strengths": "• Nắm bắt độ phức tạp đóng gói thông tin\n• Đặc trưng có cơ sở ngôn ngữ học\n• Bổ sung cho chỉ số cấp câu\n• Hiệu quả trên văn bản trang trọng và học thuật",
-    "limitations": "• Độ chính xác phụ thuộc bộ phân tích\n• Một số thể loại tự nhiên ưa cấu trúc mệnh đề đơn giản\n• LLM hiện đại có thể tạo nhúng phức tạp\n• Cần phát hiện ranh giới mệnh đề tin cậy",
+    "name": "Hồ sơ Độ sâu Mệnh đề Cú pháp (Clause Depth)",
+    "description": "Đo lường độ sâu tối đa theo chiều dọc của các mệnh đề phụ thuộc lồng ghép đệ quy bên trong câu.",
+    "algorithm": "Máy Đánh giá Độ sâu Phụ thuộc Đệ quy",
+    "mechanism": "Bắt nguồn từ phân tích đơn vị T của Hunt (1965) và lý thuyết tính địa phương của phụ thuộc của Gibson, phương pháp này đánh giá độ sâu phân tầng tối đa của các câu bị nhồi nhét (ví dụ: nhét một câu vào bên trong một câu khác). Con người có thể dùng não để theo dõi các mệnh đề lồng ghép phức tạp, sâu hoắm (ví dụ: 'Ông lão mà đã nhìn thấy con chó mà đã đuổi theo con mèo đột nhiên gục ngã'), nhưng trong văn viết đời thường, chúng ta thường né tránh chúng một cách phản xạ để giải phóng tải lượng nhận thức cực lớn. Ngược lại, các học giả con người lại hay đẩy độ sâu này đến giới hạn vặn xoắn cực đoan nhất. LLM có khả năng toán học hoàn hảo để theo dõi vô số các phụ thuộc cú pháp sâu mà không bị bung ngữ pháp, nhưng mức độ 'nhiệt độ' (temperature) sinh văn bản và tiêu chuẩn dễ đọc của RLHF lại ép chúng phải cắt xén thẳng tay các cấu trúc đệ quy quá sâu để đảm bảo tính đại chúng siêu dễ đọc. Bằng cách vẽ biểu đồ độ lệch chuẩn của độ sâu cây cấu trúc trên toàn văn bản, phương pháp này sẽ khoanh vùng được cái 'vùng lồng ghép nông cho đến trung bình' an toàn, dễ đoán - vương quốc độc quyền của văn bản do AI sản xuất.",
+    "useCase": "Phân định văn bản AI 'an toàn cho mọi nhà' với bài viết chân thực của con người – vốn thường đu đưa chóng mặt giữa độ lồng ghép sâu hoắm của văn phong học thuật và sự cụt lủn vỡ vụn của văn phong trò chuyện.",
+    "strengths": "• Khui ra cơ chế cốt lõi về sự an toàn cấu trúc và tính dễ đọc được hàn chết vào các module 'attention' của LLM hiện đại.\n• Cực kỳ chính xác để tách biệt văn bản máy dũa vuông vức ra khỏi các bài viết học thuật dày đặc của chuyên gia.\n• Xây dựng dựa trên hàng thập kỷ nghiên cứu tâm lý ngôn ngữ học đã được giới chuyên môn công nhận về giới hạn nhận thức.",
+    "limitations": "• Chỉ số đầu ra của AI lại dẫm chân lên và trùng lặp cực lớn với văn phong của học sinh cấp 3 con người, vì sinh viên cũng được dạy viết sao cho rõ ràng và súc tích vừa phải.\n• Cực kỳ ngốn tài nguyên máy tính khi xử lý các tài liệu dài ngoằng, không có dấu câu do phải vắt kiệt sức để vẽ cây phân tích.\n• Các hệ thống phân tích nhầm lẫn trên văn bản con người viết cẩu thả, sai bét ngữ pháp có thể làm sai lệch ảo các tính toán độ sâu.",
+    "parameters": "Kiểm Định: Đơn vị T / Độ Sâu Lồng Ghép Cú Pháp\nThước Đo: Phương Sai Độ Sâu Tối Đa Trên Cây Cú Pháp\nĐầu Ra: 0-100 Điểm Số Rập Khuôn Đồng Nhất Độ Sâu (Depth Homogeneity Score)",
+    "accuracy": "Tầm Trung đến Cao — 72-82% trên nội dung dài. Rất sát thủ khi bóc trần rào cản độ phức tạp 'lững lờ ở mức giữa' kiểm soát AI.",
     "references": [
         {
-            "title": "Hunt, K. W. (1965). Grammatical Structures Written at Three Grade Levels. NCTE.",
+            "title": "Hunt, K. W. (1965). Grammatical Structures Written at Three Grade Levels. NCTE Research Report No. 3.",
             "url": "https://eric.ed.gov/?id=ED113735"
         },
         {

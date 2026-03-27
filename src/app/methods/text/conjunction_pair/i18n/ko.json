@@ -1,14 +1,13 @@
 {
-    "name": "Conjunction Pair",
-    "description": "Analyzes correlative conjunction pairs",
-    "algorithm": "Conjunction Pair — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes correlative conjunction pairs. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through conjunction pair analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "상관 접속사 쌍(Conjunction Pair)",
+    "description": "짝을 이루는 상관 접속사(예: 'A뿐만 아니라 B도(not only... but also)', 'A나 B 둘 중 하나(either... or)')의 빈도와 소름 돋게 완벽한 구문론적 대칭성을 분석합니다.",
+    "algorithm": "구문론적 대칭성(Syntactic Symmetry) & 상관 쌍 추출",
+    "mechanism": "거대 언어 모델(LLM)들은 문법적으로 한 치의 오차도 없는 텍스트를 출력하도록 혹독하게 훈련받았습니다. 이러한 강박적 완벽주의의 가장 큰 특징 중 하나가 바로 'not only [X] but also [Y]', 'neither [X] nor [Y]', 'both [X] and [Y]'와 같은 격식 있는 상관 접속사를 엄청나게 남발한다는 것입니다. 더 치명적인 것은, AI가 이러한 쌍을 '수학적으로 완벽한 구문 대칭'으로 실행한다는 점입니다. 즉, 'not only' 직후에 오는 문법 구조가 'but also' 뒤의 구조와 토씨 하나 안 틀리고 완벽하게 일치합니다. 반면 전문적인 교열을 거치지 않은 일반적인 인간 작가들은 이러한 딱딱한 쌍을 덜 사용할 뿐만 아니라, 사용하더라도 병렬 구조 오류(Parallel structure error)를 내는 경우가 허다합니다(예: 'not only 명사... but also 동사'). 이 기법은 이러한 상관 쌍을 추출하여 그 밀도와 내부의 병렬 대칭성을 계산합니다. 흠잡을 데 없이 완벽한 상관 구조가 빽빽하게 등장한다면, 이는 인간 특유의 자연스러운 변칙성보다 숨 막히는 '교과서 문법'을 최우선으로 삼는 알고리즘 텍스트 생성기(AI)의 소행임을 가리킵니다.",
+    "useCase": "교과서에나 나올 법한 완벽한 상관 접속사 문법에 심하게 의존하여 권위 있는 척 무게를 잡는, 인공적으로 유창한 에세이, 마케팅 문구 및 딱딱한 기사 적발.",
+    "strengths": "• 모델이 개념들을 격식 있게 비교하거나 종합하려 드는 '설득력 있는' 또는 '분석적인' AI 프롬프트 결과물에 대해 치명적인 타격을 입힙니다.\n• 표면적인 단어가 아닌 그 아래의 깊은 구문론적 대칭성을 평가하므로, 얄팍한 단어 스피너(Word spinner)나 유의어 치환 꼼수가 전혀 통하지 않습니다.\n• 인간의 불완전함을 역이용합니다. 병렬 구조 오류는 인간에게는 흔하지만, 현대의 LLM에서는 사실상 멸종된 실수입니다.",
+    "limitations": "• 전문적인 편집을 거친 신문 기사, 법률 문서, 학술 논문 등 인간의 고도로 정제된 텍스트를 평가할 때 애꿎은 문서를 AI로 몰아붙일(False positive) 위험이 큽니다.\n• 애당초 작가가 누구든 상관 접속사 쌍이 등장할 일이 없는 아주 짧은 단문 텍스트나 가벼운 일상 대화문에서는 완전히 무용지물입니다.\n• 프롬프터가 AI에게 대놓고 '비격식적인 어투로, 문법 다 파괴해서 써'라고 명령하면 쉽게 방어망을 뚫고 지나갈 수 있습니다.",
+    "parameters": "분석 기준: 상관 접속사 추출 & 구문 의존성(Dependency) 파싱\n측정 지표: 접속사 쌍의 밀도 & 구문론적 병렬성(Parallelism)\n출력: 0-100 상관 형식주의 (교과서 문법 강박) 스코어",
+    "accuracy": "중상 — 70-85%. AI가 찍어낸 B2B 마케팅 문구, 설득형 에세이, 분석적 비교 글에 대해 특히 치명적인 살상력을 자랑합니다. 일상적인 텍스트나 소설에는 쓸모가 없습니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

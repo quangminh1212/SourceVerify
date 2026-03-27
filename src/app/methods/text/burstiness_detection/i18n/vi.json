@@ -1,14 +1,14 @@
 {
-    "name": "Phát hiện Burstiness",
-    "description": "Phân tích mẫu burstiness trong văn bản để phân biệt nội dung AI và con người viết.",
-    "useCase": "Phát hiện văn bản AI qua phân tích biến đổi độ dài và phức tạp câu",
-    "mechanism": "Đo lường biến đổi (burstiness) trong cấu trúc câu, độ dài và phức tạp xuyên suốt văn bản. Văn bản con người tự nhiên xen kẽ giữa câu đơn giản và phức tạp, đoạn ngắn và dài. Văn bản AI duy trì mức phức tạp đồng nhất hơn, dẫn đến điểm burstiness thấp.",
+    "name": "Đánh Giá Điểm Gián Đoạn (Burstiness)",
+    "description": "Đối chiếu nhịp điệu và sự phân rã của các đặc trưng ngôn ngữ trên toàn bộ chuỗi văn bản.",
+    "useCase": "Bóc trần các bài viết chung chung, an toàn của LLM vì chúng thiếu đi sự tập trung ngắt nghỉ các mạch thông tin đa chiều đặc trưng của người viết.",
+    "mechanism": "Các tác giả con người vốn dĩ sử dụng các cấu trúc nhịp điệu nhận thức phức tạp, liên tục xen kẽ các chùm thông tin dài, dày đặc (burst) với các mảng câu chuyển tiếp ngắn gọn. Tuy nhiên, vì các LLM tự hồi quy (autoregressive) ưu tiên chọn token thông qua hàm chuẩn hóa softmax kết hợp với tham số flattening nhiệt độ, văn bản do máy móc tạo ra bị thiên lệch cực lớn về điểm gián đoạn thấp (tính đồng nhất cấu trúc). Phương pháp này tìm ra hiệu ứng làm phẳng của thuật toán sinh chuỗi, nhận dạng độ trơ nhịp điệu do thuật toán cứ bám víu vào các xác suất trung vị thay vì bùng nổ ý tưởng theo đợt tự nhiên.",
     "accuracy": "Trung bình - 72-82% khi sử dụng độc lập",
     "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts?, arXiv",
-    "algorithm": "Sentence Length Variance + Structural Complexity Scoring + Moving Window Analysis",
-    "parameters": "Kích thước cửa sổ: 5 câu, Chỉ số: phương sai độ dài, chỉ số phức tạp, entropy chuyển tiếp",
-    "strengths": "• Chỉ số đơn giản và dễ giải thích\n• Tương đối độc lập ngôn ngữ\n• Kết hợp tốt với các phương pháp text khác\n• Tính toán nhanh trên mọi độ dài",
-    "limitations": "• Độ chính xác thấp hơn khi dùng độc lập\n• Văn bản học thuật, kỹ thuật tự nhiên có burstiness thấp\n• Mô hình AI đang cải thiện khả năng bắt chước biến đổi\n• Văn bản rất ngắn không đáng tin cậy",
+    "algorithm": "Phân rã Xác suất Không đồng nhất & Clustering",
+    "parameters": "Phân tích: Burstiness Scoring\nPhép đo: Tỷ lệ Phương sai trên Trung bình\nĐầu ra: 0-100 Điểm dị thường",
+    "strengths": "• Được các trường đại học lớn xác thực rộng rãi qua nhiều nghiên cứu hướng vào kết cấu sinh của GPT-3/GPT-4.\n• Siêu nhạy hiệu năng với các tập văn bản đồ sộ kéo dài hàng chục đoạn.\n• Mô tả chuẩn xác sự 'nhàm chán' cấu trúc của các tham số xuất nhiệt độ thấp.",
+    "limitations": "• Bài báo cáo kỹ thuật hoặc quy chế hành chính của con người vốn đã sở hữu điểm gián đoạn mấp mô sẵn.\n• Xác thực hụt với văn bản quá ngắn (<250 từ) do thiếu hụt điểm dữ liệu nhịp dòng.\n• Có thể bị qua mặt nếu Prompt chỉ định thẳng LLM 'phải thay đổi cấu trúc câu dài ngắn liên tục'.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",

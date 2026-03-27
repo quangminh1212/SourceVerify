@@ -1,26 +1,21 @@
 {
-    "name": "Phân tích chuỗi đồng tham chiếu",
-    "description": "Kiểm tra chuỗi đồng tham chiếu để nhận diện văn bản AI thông qua mẫu theo dõi thực thể và tham chiếu đại từ bất thường.",
-    "useCase": "Phát hiện văn bản AI thông qua chuỗi tham chiếu thực thể không nhất quán hoặc đơn giản hóa quá mức",
-    "mechanism": "Xây dựng chuỗi đồng tham chiếu liên kết các đề cập cùng thực thể trong văn bản (đại từ, cụm danh từ, tên riêng). Văn bản AI thường có chuỗi đồng tham chiếu ngắn hơn, ít phức tạp hơn và đôi khi nhầm lẫn thực thể. Phương pháp đo phân bố độ dài chuỗi, khoảng cách tham chiếu và độ phức tạp phân nhánh.",
-    "accuracy": "Trung bình-Cao - 75-85% trên văn bản dài",
-    "source": "Dugan, L. et al. (2024) - RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors, ACL",
-    "algorithm": "Coreference Resolution + Chain Statistics + Anomaly Scoring",
-    "parameters": "Mô hình: neural coreference, Chuỗi tối thiểu: 2 đề cập, Chỉ số: mật độ chuỗi, khoảng cách TB, hệ số phân nhánh, Tối thiểu: 200 từ",
-    "strengths": "• Nắm bắt sự mạch lạc cấp diễn ngôn sâu\n• Hiệu quả với văn xuôi và tiểu luận dài\n• Phát hiện lỗi theo dõi thực thể tinh vi\n• Trực giao với đặc trưng bề mặt",
-    "limitations": "• Tốn kém tính toán cho văn bản dài\n• Bản thân giải đồng tham chiếu không hoàn hảo\n• Văn bản ngắn cho quá ít chuỗi để phân tích\n• Hiệu suất phụ thuộc chất lượng mô hình",
+    "name": "Chuỗi Phân giải Đồng tham chiếu (Coreference Chain)",
+    "description": "Đo lường độ dài và độ phức tạp của các chuỗi theo dõi thực thể (ví dụ: cách các đại từ liên kết ngược về danh từ gốc ở xa) để phát hiện mô hình nhận thức mạch văn nông cạn của AI.",
+    "algorithm": "Dò Tìm Đồng Tham Chiếu Neural & Chấm Điểm Chuỗi Thực Thể",
+    "mechanism": "Khi viết, con người luôn duy trì một 'mô hình tư duy' dài hạn và phức tạp về các chủ thể mà mình đang đề cập. Chúng ta có thể tự tin giới thiệu một thực thể (ví dụ: 'Alexander Đại đế') ở đoạn một, và thoải mái gọi lại ông bằng 'anh ấy', 'nhà chinh phạt' hoặc 'của ông ta' ở tận vài đoạn sau, tạo nên một 'chuỗi đồng tham chiếu' sâu sắc. Trong khi đó, các mô hình AI tự hồi quy, bị giới hạn bởi 'cửa sổ ngữ cảnh' và hoàn toàn không có 'trí nhớ' tuyến tính thực sự về cấu trúc câu chuyện, lại rất chật vật với điều này. Để tránh việc dùng đại từ gây hiểu nhầm (ambiguous resolution), một AI được căn chỉnh an toàn sẽ có xu hướng bảo thủ 'reset' lại chuỗi tham chiếu bằng cách liên tục lặp lại danh từ riêng thay vì dùng đại từ. Phương pháp này triển khai một mạng neural để lập bản đồ mọi thực thể và các đại từ tương ứng xuyên suốt văn bản. Một tài liệu do AI tạo ra thường phơi bày những chuỗi đồng tham chiếu đứt gãy, vụn vặt và ngắn một cách bất thường—chứng minh cho một quá trình sinh văn bản nông cạn, thiếu đi khái niệm 'vật thể tồn tại vĩnh cửu' (object permanence) sâu sắc của tư duy con người.",
+    "useCase": "Lật tẩy nguồn gốc nhân tạo trong các bài tiểu luận dài, truyện ngắn hay phân tích lịch sử, nơi AI liên tục lặp lại một cách vụng về tên nhân vật / thực thể thay vì tin tưởng để người đọc tự theo dõi các chuỗi đại từ phức tạp.",
+    "strengths": "• Bắt thóp được những lỗ hổng mạch lạc cấp độ diễn ngôn (discourse-level) sâu sắc mà các công cụ kiểm tra từ vựng hay ngữ pháp bề mặt hoàn toàn mù tịt.\n• Cực kỳ hiệu quả khi đối đầu với các siêu AI tiên tiến đã thành thạo ngữ pháp cục bộ nhưng vẫn thất bại trong việc ghi nhớ cấu trúc toàn cục của văn bản.\n• Miễn nhiễm vĩnh viễn với các chiến thuật qua mặt bằng cách tráo từ đồng nghĩa hay sửa lỗi chính tả.",
+    "limitations": "• Ngốn tài nguyên tính toán ở mức khủng khiếp; đòi hỏi phải có một mạng neural chuyên dụng chỉ để lập bản đồ chuỗi thực thể trước khi thực sự quét phân tích.\n• Văn bản ngắn (dưới 200 từ) sẽ cho ra quá ít chuỗi, khiến dữ liệu không mang ý nghĩa thống kê.\n• Dễ bắt nhầm (false positives) các văn bản pháp lý hoặc kỹ thuật cực kỳ khô khan, nơi con người bị bắt buộc phải lặp lại danh từ chính xác và cấm dùng đại từ để tránh kiện tụng.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Đồng Tham Chiếu Bằng Neural Network\nThước Đo: Mật Độ Chuỗi, Khoảng Cách Tham Chiếu Trung Bình, và Hệ Số Phân Nhánh\nĐầu Ra: 0-100 Điểm Số Nhận Thức Tham Chiếu Nông Cạn",
+    "accuracy": "Khá Cao — 75-85%. Thể hiện sức sát thương chí mạng trên các văn bản tự sự hoặc bài luận dài có yêu cầu theo dõi các danh từ phức tạp.",
     "references": [
         {
-            "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation. ACL.",
+            "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors. ACL.",
             "url": "https://arxiv.org/abs/2405.07940"
         },
         {
             "title": "Clark, K. & Manning, C. D. (2016). Deep Reinforcement Learning for Mention-Ranking Coreference Models. EMNLP.",
             "url": "https://doi.org/10.18653/v1/D16-1245"
-        },
-        {
-            "title": "Pu, J. et al. (2023). On the Zero-Shot Generalization of Machine-Generated Text Detectors. EMNLP Findings.",
-            "url": "https://arxiv.org/abs/2310.05165"
         }
     ]
 }

@@ -1,18 +1,17 @@
 {
-    "name": "Curie Detection",
-    "description": "Analyzes sentence length CV for uniformity detection (2023)",
-    "algorithm": "Curie Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes sentence length CV for uniformity detection (2023). Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through curie detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "居里均匀性侦测 (Curie Length CV)",
+    "description": "通过计算句子长度的变异系数（CV），用极其冷酷的纯数学手段暴露出机器生成文本中那种令人窒息的、令人起飞的结构均匀性。",
+    "algorithm": "句子长度变异系数 (CV) 拓扑测算",
+    "mechanism": "“居里（Curie）”检测探针死死盯住了自回归文本生成技术的一个根本性副产品：结构同化（Structural homogenization）。大型语言模型（LLM）在逐字吐取时，会疯狂地在这棵决策树上寻找一条最安全的路径以使得文本听起来“通顺”且局部困惑度（Perplexity）最低。这种算法层面的底层“求稳”逻辑，在数学上带来了一个致命的后果：它写出来的所有句子，其长度都会无可救药地向一个极其狭窄的中间值收敛。本探针通过计算变异系数（CV）——即句子长度的标准差除以平均数——来无情地量化文本的骨骼节奏。人类作家在写作时，会本能地将短小精悍的三个字短句，与拖泥带水、长达十行的长篇大论混合在一起，以操纵读者的呼吸感、阅读节奏和情绪重音，其结果就是 CV 极高。而相比之下，AI 总是会不可避免地陷入一种由中等长度句子组成的“催眠节奏”中，既不敢极其简短，也不敢极其冗长。如果文章的变异系数低到了病态的程度，这就构成了该文本的骨骼已经被算法强行“抛光压平”的铁证。",
+    "useCase": "专杀那些像念经一样节奏死板的所谓“深度”散文、长篇报道和学区房式说明文——在这些文章里，AI 用一列列长度完全一致的句子列阵，暴露了它根本没有人类心跳起伏的机器本质。",
+    "strengths": "• 算力开销极其轻量，但杀伤力犹如狙击枪爆头；它完全鄙视虚头巴脑的极度复杂神经网络，而是直接用最纯粹的基础数学规律碾压伪装者。\n• 初级大模型基本对其毫无招架之力，因为 AI 底部的数据集分布和预测引擎的本性，注定了它们必然会走向这种“求取平均值”的宿命。\n• 真正的破壁机、语言不可知论者：只要你的语言有标点符号能断句，不管是英文、中文还是外星文，这套数学公式都照杀不误。",
+    "limitations": "• 是只吃长文的怪兽：必须提供足够多的样本点（至少 10-15 句话），否则在统计学上根本无法建立一个有定罪意义的平均数和标准差。\n• 容易误伤友军：如果拿它去扫描那些纯正人类写的、为了绝对规范化而定制的机器说明书、“八股文”体裁或者婴幼儿读物，它会疯狂报警报错。\n• 容易被针对性越狱：如果一个狡猾的提示词工程师在后台吼一句：“给我混用极其短的短句跟极其复杂的长句”，这层底层逻辑也会被暂时打破。",
+    "parameters": "雷达切片: 句子硬边界分词断句 & 全局统计数学建模\n定罪量表: 变异系数 (句子长度标准差 / 平均句子长度)\n行刑判决: 0-100 行文骨架同化 (心跳节奏丧失) 宣判指数",
+    "accuracy": "高致命性 — 75-85%。特别是对于那些没有经过老油条精心调教、直接用默认温度（Default temperature）一路平推过去裸奔输出的 GPT-3.5 或是 Claude，其威慑力几乎是毁天灭地的。",
     "references": [
         {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
-            "url": "https://arxiv.org/abs/1908.09203"
+            "title": "Sadasivan, V. S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
+            "url": "https://arxiv.org/abs/2303.11156"
         },
         {
             "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",

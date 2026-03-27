@@ -1,14 +1,14 @@
 {
-    "name": "Detección de Ráfagas",
-    "description": "Analiza the explosividad patrones en texto to distinguish generado por IA from escrito por humanos content.",
-    "useCase": "Detecting AI text through análisis of longitud de oración and complexity variation",
-    "mechanism": "Mide the variation (explosividad) in sentence structures, lengths, and complexity throughout a text. Human writing naturally varies entre simple and complex sentences, short and long paragraphs. generado por IA text tends to maintain a more uniform level of complexity, resulting in lower explosividad scores.",
+    "name": "Evaluador de Irregularidad Semántica",
+    "description": "Contrasta el ritmo y la agrupación de características lingüísticas en la totalidad de un pasaje textual.",
+    "useCase": "Exponer textos de IA genéricos altamente alineados que carecen de la agrupación episódica de ideas complejas intrínseca a la expresión técnica humana.",
+    "mechanism": "Los autores humanos emplean de manera inherente complejas estructuras rítmicas cognitivas, intercalando intermitentemente largas y densas 'ráfagas' informativas con series yuxtapuestas de oraciones de transición sencillas. Por el contrario, debido a que los LLM autorregresivos modernos optimizan la selección de tokens mediante la normalización softmax, sujeta a técnicas de aplanamiento de probabilidad por temperatura, la generación de máquinas se inclina fuertemente hacia una baja 'ráfaga' (homogeneidad estructural). Este método identifica el efecto de suavizado extremo en la generación abstracta de tokens, marcando el ritmo artificial estancado cuando un codificador se desvía constantemente hacia la mediana matemática en lugar de tener picos episódicos de genialidad o detalle contextual.",
     "accuracy": "Moderada - 72-82% as standalone method",
     "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection, arXiv",
-    "algorithm": "Sentence Length Variance + Structural Complexity Scoring + Moving Window Analysis",
-    "parameters": "Tamaño de ventana: 5 sentences, Metrics: length varianza, complexity index, transition entropía",
-    "strengths": "• Métrica simple e interpretable\n• Independiente del idioma en cierta medida\n• Funciona bien combinado con otros métodos de texto\n• Cálculo rápido en cualquier longitud de texto",
-    "limitations": "• Lower precisión as standalone detector\n• Academic and technical writing naturally has low explosividad\n• AI models are improving at mimicking human variability\n• Very short texts are unreliable",
+    "algorithm": "Análisis de Agrupación y Probabilidad No Homogénea",
+    "parameters": "Análisis: Puntuación de ráfagas dispersas\nMétrica: Relación varianza/media (Distribución)\nSalida: Puntuación de anomalía rítmica (0-100)",
+    "strengths": "• Validado ampliamente en múltiples estudios académicos dirigidos a artefactos de GPT-3/GPT-4.\n• Extremadamente eficaz contra grandes volúmenes de texto que escalan cientos de párrafos.\n• Caracteriza con absoluta precisión el \"aburrimiento\" estilístico que poseen inherentemente las salidas con Temperatura Cero.",
+    "limitations": "• La documentación burocrática formal o informes técnicos altamente normativos reflejan intrínsecamente este comportamiento estéril a la fuerza.\n• Falla constantemente en matrices cortas (<250 palabras) que carecen por completo de datos válidos de varianza rítmica.\n• Puede ser evadido temporalmente ordenándole al modelo en el prompt que intencionalmente varíe la longitud matemática de las frases.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",

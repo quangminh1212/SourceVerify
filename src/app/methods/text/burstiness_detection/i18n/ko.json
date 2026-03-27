@@ -1,14 +1,14 @@
 {
-    "name": "돌발성 탐지",
-    "description": "분석합니다 the 돌발성 패턴 텍스트에서 to distinguish AI 생성 from 인간이 작성한 content.",
-    "useCase": "Detecting AI text through 분석 of 문장 길이 and complexity variation",
-    "mechanism": "측정합니다 the variation (돌발성) in sentence structures, lengths, and complexity throughout a text. Human writing naturally varies 사이의 simple and complex sentences, short and long paragraphs. AI 생성 text tends to maintain a more uniform level of complexity, resulting in lower 돌발성 scores.",
+    "name": "시맨틱 버스티니스(Burstiness) 평가기",
+    "description": "전체 텍스트에 걸친 언어적 특징의 군집화와 리듬을 대조합니다.",
+    "useCase": "인간 표현에 필수적인 복잡한 정보 클러스터링이 없고 인위적으로 매끄러운 텍스트 흐름을 가진 일반적인 LLM 결과물을 노출시킵니다.",
+    "mechanism": "인간 작가는 본질적으로 복잡한 인지적 리듬 구조를 갖추고 있어, 길고 정보 밀도가 높은 '버스트(폭발적 문장)' 사이에 단순한 전환 문구를 삽입하는 경향이 있습니다. 반면, 현대의 자동 회귀 LLM은 온도 기반(Temperature-based)의 확률 평탄화 단계인 소프트맥스 정규화를 통해 토큰을 선택하므로, 기계 생성 텍스트는 버스티니스가 낮고 구조적 동질성이 매우 강하게 나타납니다. 이 방법은 인코더가 단발적인 아이디어 급증을 회피하고 일관되게 중앙값 확률에 이끌릴 때 매끄럽게 인쇄되는 일반화된 인공적 리듬을 탐지합니다.",
     "accuracy": "중간 - 72-82% as standalone method",
     "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection, arXiv",
-    "algorithm": "Sentence Length Variance + Structural Complexity Scoring + Moving Window Analysis",
-    "parameters": "윈도우 크기: 5 sentences, Metrics: length 분산, complexity index, transition 엔트로피",
-    "strengths": "• 간단하고 해석 가능한 지표\n• 어느 정도 언어에 독립적\n• 다른 텍스트 방법과 결합 시 잘 작동\n• 모든 길이의 텍스트에서 빠른 계산",
-    "limitations": "• Lower 정확도 as standalone detector\n• Academic and technical writing naturally has low 돌발성\n• AI models are improving at mimicking human variability\n• Very short texts are unreliable",
+    "algorithm": "비균질 확률 및 군집화(Clustering) 분석",
+    "parameters": "분석: 버스티니스(Burstiness) 채점\n지표: 분산 대 평균 비율(분포)\n출력: 0-100 변동치 예외 점수",
+    "strengths": "• GPT-3/GPT-4의 주요 인공적 신호를 타겟으로 하는 여러 학술 연구를 통해 광범위하게 검증됨.\n• 수백 개의 문단에 걸쳐 확장된 대용량 텍스트 분석에 매우 효과적.\n• 제로 템퍼러처(Zero-temperature, 창의성을 최소화한 파라미터) 출력에 내재된 스타일적 '단조로움'을 완벽히 특성화.",
+    "limitations": "• 인간이 작성한 기술 보고서나 공식적인 관료적 문서는 본질적으로 버스티니스가 낮아 오탐 위험 존재.\n• 리듬 변동성 데이터가 충분하지 않은 짧은 구문(250단어 미만)에서는 일관되게 탐지 실패.\n• 프롬프트를 통해 '문단 길이를 다양성 있게 주입하라'고 지시함으로써 손쉽게 우회가 가능.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",

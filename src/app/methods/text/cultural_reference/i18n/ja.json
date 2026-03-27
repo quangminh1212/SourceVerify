@@ -1,22 +1,21 @@
 {
-    "name": "Cultural Reference",
-    "description": "Detects cultural references and conテキスト",
-    "algorithm": "Cultural Reference — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects cultural references and conテキスト. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through cultural reference analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "文化的参照（ローカライズ）プロファイリング",
+    "description": "文化的参照の特異性、深さ、および文脈上の正確さを調べ、AI生成に典型的な世界的に一般的な「平坦な文化」を検出します。",
+    "algorithm": "固有表現抽出および文化的特異性スコアリング",
+    "mechanism": "人間の書き手は、自分たちの生きた経験、地理的な場所、および特定のサブカルチャー（下位文化）に深く結びついた文化的参照（イディオム、歴史的事件、ポップカルチャー、地域現象）を埋め込みます。これらの参照は、しばしば曖昧であったり、高度に文脈依存であったり、または遊び心を持って覆されたりします。しかし、大規模言語モデルは、徹底的にサニタイズ（浄化）された世界的に集約されたデータセットで訓練されています。彼らの主な目標は幅広い理解を得ることと疎外感を避けることであるため、「文化の平坦化（cultural flattening）」に苦しんでいます。参照を含めるように促された場合、AIモデルは圧倒的に誰もが知っているありふれた試金石（例えば、文学ならシェイクスピア、知能ならアインシュタイン、または一般的な世界的な休日など）をデフォルトとして使用し、特定の時代やインターネット・サブカルチャーのニュアンスのある局所的な時代精神（ツァイトガイスト）を正確に捉えることにしばしば失敗します。さらに、AIは頻繁に「文化的ハルシネーション」を起こし、その文化圏の人間なら絶対に混ぜ合わせないような互換性のない参照を不器用に組み合わせます。このNLPベースの手法は、文化的なエンティティを抽出し、それらの希少性、地域的特異性、およびテーマの一貫性を評価します。普遍的に「安全」で一般的な文化的マーカーへの過度な依存は、合成的な著作者であることを強く示唆しています。",
+    "useCase": "AIが「親しみやすく」聞こえようとした結果、意図した文化の浅薄で世界的に一般的なカリカチュア（風刺画）になってしまっているクリエイティブ・ライティング、オピニオン記事、および文化的解説の分析。",
+    "strengths": "• AIが人間の会話スタイルを模倣しようとしながらも、生きた経験の欠如を明らかにしてしまう「合成的な親しみやすさ（synthetic relatability）」の検出に非常に効果的です。\n• 深い意味論的知識を標的とするため、基本的な統計的回避技術（意図的なタイプミスや同義語の置き換えなど）の影響を受けません。\n• 非常に特定の地理的またはサブカルチャー的な人口統計からのものであると主張するテキストの分析に優れています。",
+    "limitations": "• 幅広い国際的な読者に向けて意図的に書き、曖昧なローカルな参照を意図的に避けている人間の書き手に対する誤検知の影響を受けやすくなります。\n• 現代のインターネット文化と急速に変化するスラングを正確に反映するために、文化的エンティティのデータベースを継続的に更新する必要があります。\n• 文化的参照を含めることが自然に正当化されるほど十分に長い、またはカジュアルなテキストにのみ有効です。",
+    "parameters": "解析: エンティティ抽出および文化的特異性データベース・マッピング\n評価基準: 参照の希少性インデックス vs 世界的なクリシェ（決まり文句）の頻度\n出力結果: 0-100 文化の平坦化（一般的な親しみやすさ）スコア",
+    "accuracy": "中程度 — 65-75%。ジャンルに大きく依存します。真正性のための二次的なシグナルとしては優れていますが、人間の文章は主観的な性質を持つため、これ単独で決定的なものになることはほとんどありません。",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
             "url": "https://arxiv.org/abs/2011.01314"
+        },
+        {
+            "title": "Bender, E. M. et al. (2021). On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? ACM FAccT.",
+            "url": "https://dl.acm.org/doi/10.1145/3442188.3445922"
         }
     ]
 }

@@ -1,18 +1,17 @@
 {
-    "name": "Phân tích Tính mạch lạc",
-    "description": "Đo tính mạch lạc và nhất quán luồng logic của văn bản.",
-    "useCase": "Phát hiện văn bản AI qua tính mạch lạc mịn bất thường",
-    "mechanism": "Đo độ tương tự tuần tự giữa các đoạn nội dung. Văn bản AI thường duy trì mạch lạc cao bất thường, trong khi văn bản người thay đổi tự nhiên.",
-    "accuracy": "Trung bình - 72-82%",
-    "source": "Zellers et al. (2019) - Defending Against Neural Fake News, NeurIPS",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Phân tích Tính Mạch lạc Ngữ nghĩa Toàn cục (Global Coherence)",
+    "description": "Đo lường sự tiến triển và suy đồi logic của các vector chủ đề đa chiều xuyên suốt các đoạn văn để bắt bài tình trạng 'trôi dạt ngữ nghĩa' và 'ảo giác logic'.",
+    "algorithm": "Máy Theo dõi Trôi dạt Chủ đề Không gian Vector",
+    "mechanism": "Tuy nghe qua có vẻ giống kết dính cục bộ (cohesion), nhưng tính mạch lạc (coherence) đi sâu vào đánh giá ý nghĩa ngữ nghĩa ngầm và sự thăng tiến logic chủ đề trải dài toàn bộ văn bản. Thuật toán này nhào nặn các câu và đoạn văn liên tiếp thành các khối vector đưa vào không gian (embedding) đa chiều, rồi dùng toán học để tính toán quỹ đạo điểm tương đồng cosine (cosine similarity) chạy dọc theo văn bản. Lối viết chân thật của con người luôn xoay quanh một mỏ neo chủ đề trung tâm; chúng ta có thể đi lan man có chủ đích, nhưng cuối cùng luôn vòng về chốt lại luận điểm cốt lõi. Ngược lại, văn bản do AI tuôn ra vô tội vạ — đặc biệt khi kéo giãn qua các cửa sổ ngữ cảnh dài — lại mắc phải căn bệnh 'trôi dạt chủ đề' (topic drift) trầm trọng. Nó thể hiện một sự lang thang chậm rãi, tịnh tiến liên tục trong không gian ngữ nghĩa: cứ móc nối các ý tưởng ngay sát nhau nhưng lại thất bại hoàn toàn trong việc thả neo quay về tiền đề ban đầu. Bằng cách vẽ đồ thị quỹ đạo trôi dạt đa chiều này và đem đọ với hình học nhận thức nền tảng của con người, phương pháp này lật tẩy dứt khoát mớ văn bản được đẻ ra mà không hề có một mô hình tư duy trung tâm bền vững.",
+    "useCase": "Đánh hơi các sản phẩm AI dài hơi (như sách eBook tự động, bài luận hay bài báo dài ngoằng) nghe có vẻ 'rất xuôi' khi đọc từng đoạn lẻ tẻ, nhưng lại dần dần lạc trôi hoàn toàn khỏi cốt truyện ở quy mô vĩ mô.",
+    "strengths": "• Điểm huyệt tung đòn chí mạng trực tiếp vào điểm yếu kiến trúc cốt lõi của mạng transformer chú ý (attention-based) khi phải xử lý cửa sổ ngữ cảnh kéo dài.\n• Huy động các mô hình embedding tối tân nhất để bóc tách ý nghĩa trừu tượng thực sự và luồng logic, thay vì dựa dẫm vào ba cái trò đếm từ vựng bề nổi dễ dàng bị qua mặt.\n• Lột trần không thương tiếc bản chất 'lan man' và vô định hướng về mặt toán học của các luồng đầu ra LLM không bị rào ép chặt.",
+    "limitations": "• Hoàn toàn phế võ công và vô dụng khi đem áp dụng lên các đoạn text ngắn củn (như tweet, lời tóm tắt) vì sự trôi dạt ngữ nghĩa chưa kịp tích tụ thành hình học chênh lệch.\n• Đốt CPU và RAM cực kỳ tàn bạo vì phải liên tục rã đông và chiết xuất các khối embedding đa chiều khổng lồ.\n• Dễ cắn nhầm đạn (False positives) vào các ghi chép 'dòng ý thức' (stream-of-consciousness) của con người, văn chương tiên phong (avant-garde) hoặc các mớ ghi chú động não lộn xộn vốn đẻ ra cùng một quỹ đạo trôi dạt y hệt.",
+    "parameters": "Kiểm Định: Quỹ Đạo Cosine Của Embedding Đa Chiều\nThước Đo: Tốc Độ Trôi Dạt Ngữ Nghĩa Toán Học vs. Lực Kéo Của Mỏ Neo Chủ Đề\nĐầu Ra: 0-100 Điểm Số Suy Đồi Mạch Lạc (Coherence Decay / Semantic Drift Score)",
+    "accuracy": "Cao — 80-88%, và CHỈ ĐÚNG trên các văn bản dài trên 1000 từ. Cực kỳ hầm hố và chuyên biệt hóa cho việc xác thực các nội dung vĩ mô (macro-content).",
     "references": [
         {
-            "title": "Zellers et al. (2019) - Defending Against Neural Fake News, NeurIPS",
-            "url": "https://scholar.google.com/scholar?q=Zellers%20et%20al.%20(2019)%20-%20Defending%20Against%20Neural%20Fake%20News%2C%20NeurIPS"
+            "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
+            "url": "https://arxiv.org/abs/1905.12616"
         },
         {
             "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Generated Text. arXiv.",

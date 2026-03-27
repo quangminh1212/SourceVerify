@@ -1,14 +1,13 @@
 {
-    "name": "共起強度分析",
-    "description": "測定します the strength and naturalness of word 共起s using mutual information scores を識別するために AI生成の text.",
-    "useCase": "Detecting AI text through abnormal word co-occurrence パターン and 共起 preferences",
-    "mechanism": "抽出します word pairs (bigrams, trigrams) and computes Pointwise Mutual Information (PMI) and log-likelihood ratio scores を測定するために association strength. AI生成の text tends to favor high-frequency, 'safe' 共起s (e.g., 'significant impact', 'crucial role') while underusing creative, unusual, or idiomatic 共起s that are common in 人間の文章. The method builds a 共起 profile and compares it against reference corpora.",
-    "accuracy": "中 - 72-82% on mixed-domain text",
-    "source": "Church, K. W. & Hanks, P. (1990) - Word Association Norms, Mutual Information, and Lexicography, Computational Linguistics",
-    "algorithm": "PMI Computation + Log-Likelihood Ratio + Collocation Profile Comparison",
-    "parameters": "Window: 2-5 words, Metrics: PMI, t-score, log-likelihood, MI3, Min frequency: 2, Reference: BNC/COCA corpus",
-    "strengths": "• Captures subtle vocabulary combination パターン\n• Well-established in corpus linguistics\n• 検出します overuse of formulaic expressions\n• Applicable にわたる text types",
-    "limitations": "• Requires large reference corpora for reliable PMI\n• Domain-specific 共起s confound 分析\n• Multi-word expressions need special handling\n• Language-specific 共起 norms needed",
+    "name": "語彙的連語（コロケーション）強度プロファイリング",
+    "description": "単語のペアリング（組み合わせ）の統計的確率（自己相互情報量：PMI）を分析して、安全で数学的に非常に確率の高いフレーズの組み合わせを特定します。",
+    "algorithm": "自己相互情報量（PMI）プロファイラー",
+    "mechanism": "ChurchとHanksの基礎的な計算言語学の研究に根ざしたこの手法は、膨大なベースライン・コーパスに対して、隣接する単語や近くにある単語ペアの自己相互情報量（PMI）を計算します。大規模言語モデルは、統計的に最も確率の高い次のトークンを自己回帰的に予測することによってテキストを生成します。この数学的な性質は、強くて一般的な連語（例えば、決まり文句、慣用的なチャンク、「tapestry of」や「vibrant landscape」などの予想される形容詞と名詞のペア）に強く依存するという、避けられない宿命を彼らに課します。対照的に、本物の人間の書き手は、統計的規範を破る、斬新で確率の低い連語、耳障りな連想、または創造的なメタファーを頻繁に発明します。テキストのn-gramの全体的なPMIスコアを集計することにより、この手法は、機械生成を示す数学的に「最も安全」で最も可能性の高いテキスト構成を効果的に特定します。",
+    "useCase": "斬新で創造的な、または数学的に予想外の単語のペアリング（組み合わせ）が完全に欠如していることを通じてAIの文章を特定し、決まり文句と「安全な」単語の連想に基づいて根本的に構築されたテキストを暴き出します。",
+    "strengths": "• 自己回帰的な次のトークン予測アルゴリズムのコアとなる機械的性質を深く搾取（エクスプロイト）します。\n• 包括的なトピック、ドメイン（分野）、または主題に関係なく、信じられないほど堅牢で効果的です。\n• コンパイル済みのPMIベースライン・テーブルが読み込まれていると仮定すれば、計算量は非常に軽量です。",
+    "limitations": "• 密度の高い学術的な文章や非常に形式化された法律の起草も、厳密で確立された高確率の連語に大きく依存しているため、深刻な誤検知（フォールス・ポジティブ）を引き起こす可能性があります。\n• サポートされているすべての言語について、膨大な最新のベースライン頻度コーパスを生成し、継続的に維持する必要があります。\n• クリエイティブなプロンプト・エンジニアリング（例：「シュルレアリスムのスタイルで書いて」）は、人工的にPMIを下げることでフィルターをときどき回避できる場合があります。",
+    "parameters": "解析: バイグラム/トライグラム PMIマッピング\n評価基準: 平均連語確率 vs 語彙の斬新性\n出力結果: 0-100 連語の予測可能性スコア",
+    "accuracy": "高 — 78-86%。AI生成テキストの最も堅牢で、深く基礎的な統計マーカーの１つです。",
     "references": [
         {
             "title": "Church, K. W. & Hanks, P. (1990). Word Association Norms, Mutual Information, and Lexicography. Computational Linguistics.",

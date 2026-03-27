@@ -1,14 +1,13 @@
 {
-    "name": "Conjunction Density",
-    "description": "Measures conjunction usage patterns",
-    "algorithm": "Conjunction Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures conjunction usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through conjunction density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "접속사 밀도(Conjunction Density) & 병렬 구문 결핍 분석",
+    "description": "기계적으로 과도하게 매끄러운 합성 작문을 적발하기 위해 총 단어 수 대비 등위 및 종속 접속사의 출현 빈도를 측정합니다.",
+    "algorithm": "구문론적 연결(Syntactic Linkage) 프로파일링 & 접속사 비율 계산",
+    "mechanism": "거대 언어 모델(LLM)들은 처음부터 논리적 일관성과 가독성을 극대화하도록 최적화되어 있습니다. 이들은 오해의 소지를 철저히 없애기 위해 '그리고', '하지만', '왜냐하면', '비록 ~할지라도', '반면에' 같은 노골적인 접속사를 사용하여 문장과 문장을 결벽증적으로 용접해 댑니다. 독자의 지능을 믿고 문장 간의 숨겨진 의미를 행간에서 추론하게 내버려 두는 법이 없습니다. 반면 진짜 인간 작가들은 연결어 없이 문장들을 툭툭 던지듯 나란히 배치하는 '병치법(Parataxis)'(예: '비가 내렸다. 우리는 안에 머물렀다.')을 자주 구사하며, 문맥과 암묵적인 논리적 비약을 통해 세련된 글맛을 살려냅니다. 이 기법은 텍스트의 품사(POS) 태그를 낱낱이 파헤쳐 전체 단어 수 대비 접속사의 엄격한 비율을 계산합니다. 비정상적으로 치솟은 접속사 밀도는, 문장 간의 논리적 이음새를 설명하지 않고는 배기지 못하도록 프로그래밍된 '과잉 접속(Hyper-connective)' AI의 강박증을 고스란히 드러내며, 그 결과 기름칠한 듯 지나치게 미끌거리고 인공적인 문장 흐름을 만들어냅니다.",
+    "useCase": "자연스러운 서사의 단절이나 여백을 허용하지 않고, 문장들 사이의 인과관계를 일일이 설명하려 드는 인공적으로 매끄럽고 기름진 기사, 에세이, 소설 작품 식별.",
+    "strengths": "• 인간 독자들이 직관적으로 느끼면서도 말로 콕 집어 설명하기 어려워하는 AI 텍스트 특유의 '불쾌할 정도로 지나치게 매끄러운' 느낌을 과학적으로 짚어내는 데 탁월합니다.\n• 텍스트 표면의 단어가 아닌 뼈대를 이어주는 '구문론적 접착제'를 직접 겨냥하므로, 얄팍한 유의어 치환(동의어 바꾸기) 꼼수로는 방어할 수 없습니다.\n• 가벼운 품사(POS) 태깅 알고리즘에 기반하여 연산 비용이 스펀지처럼 가볍고 엄청나게 빠릅니다.",
+    "limitations": "• 애당초 명시적이고 물샐틈없는 논리적 연결이 생명인 진짜 인간의 법률 문서, 고도의 기술 매뉴얼, 지시문을 검사할 경우 AI로 오인(False positive)할 위험이 큽니다.\n• 접속사의 빈도 차이가 통계적 유의미성을 가지기 힘든 아주 짧은 단문에서는 성능이 바닥으로 떨어집니다.\n• 프롬프팅 고인물이 AI에게 대놓고 '접속사 쓰지 마', '문장을 토막 내서 뚝뚝 끊어지게 써(Asyndeton)'라고 명령하면 속수무책으로 당합니다.",
+    "parameters": "분석 기준: 품사(POS) 태그 카운팅 & 구문론적 결합 구조\n측정 지표: 접속사 대 비율 (100단어당 밀도)\n출력: 0-100 과잉 연결성 (접속사 남용) 스코어",
+    "accuracy": "중상 — 75-85%. 이 단일 지표 하나만 믿기보다는 문장 길이의 분산(Variance) 및 전환 마커 분석과 결합된 보조 지표로 활용할 때 파괴력이 극대화됩니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

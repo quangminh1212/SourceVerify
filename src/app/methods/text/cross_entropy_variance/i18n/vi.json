@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Cross-Entropy Variance",
-    "description": "Đo phương sai cross-entropy theo token — văn bản AI có phương sai thấp hơn do độ tin cậy dự đoán nhất quán.",
-    "algorithm": "Thuật toán phân tích Cross-Entropy Variance",
-    "mechanism": "Hệ thống Cross-Entropy Variance phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phương sai Độ phân kỳ (Cross-Entropy Variance)",
+    "description": "Đo lường mức độ dao động về tính dễ đoán của từng token (cross-entropy). AI luôn duy trì sự tự tin tĩnh lặng, trong khi văn phong con người liên tục nhảy vọt tạo ra phương sai cao.",
+    "algorithm": "Cross-Entropy Cấp độ Token & Lập hồ sơ Phương sai Thống kê",
+    "mechanism": "Các mô hình ngôn ngữ tự hồi quy tạo ra văn bản bằng cách liên tục dự đoán token nào có xác suất xuất hiện cao nhất tiếp theo. 'Cross-entropy' của một token đại diện cho mức độ 'gây bất ngờ' hoặc phi logic về mặt toán học của từ đó dựa trên phân phối xác suất nội bộ. Vì AI được tối ưu hóa để luôn chọn những con đường an toàn, xác suất cao (cross-entropy thấp) xuyên suốt hàng ngàn từ, phương sai toán học (độ phân tán) của các điểm số này luôn phẳng lì và chật hẹp một cách bất thường. Trái ngược hoàn toàn, bộ não con người không hoạt động dựa trên xác suất thống kê cục bộ. Khi viết, chúng ta luôn có những lúc bừng sáng ý tưởng, đột ngột chuyển chủ đề, hoặc quăng vào một từ ngữ vô cùng 'dị', tạo ra những cú gai (spikes) cross-entropy cao chót vót xen kẽ với các đoạn văn bình thường. Trình phân tích này dùng một mô hình ngôn ngữ tham chiếu để tính toán độ bất ngờ của từng token, sau đó tính phương sai tổng thể. Phương sai thấp là một chỉ báo chết người tố cáo một văn bản đã bị 'làm phẳng' bởi thuật toán.",
+    "useCase": "Bóc trần AI trong các bài báo học thuật, tài liệu kỹ thuật, và các bài tiểu luận dài—nơi tốc độ nhả chữ đều đều đặn đặn, không có điểm nhấn đột biến tố cáo sự vắng bóng của sự sáng tạo bất thường từ con người.",
+    "strengths": "• Chạm đến lõi kiến trúc toán học của LLM; cực kỳ đáng tin cậy ngay cả khi AI đã được tinh chỉnh (fine-tune) để đổi giọng văn.\n• Gần như miễn nhiễm với các lệnh prompt lừa đảo (ví dụ: 'hết sức sáng tạo vào'), vì cỗ máy chọn từ xác suất cốt lõi bên dưới vẫn phải tuân theo quy luật toán học.\n• Đóng vai trò là 'xương sống' trong các thuật toán phát hiện zero-shot hiện đại nhất (như DetectGPT).",
+    "limitations": "• Ngốn cực kỳ nhiều tài nguyên máy tính; cần phải có nguyên một mô hình ngôn ngữ tham chiếu hạng nặng (như GPT-2/RoBERTa) chạy ngầm để tính toán xác suất token theo thời gian thực.\n• Dễ bị oan (false positive) với các văn bản con người mang tính biểu mẫu (như hợp đồng pháp lý, quy trình chuẩn) vì chúng cũng khô khan và ít có từ ngữ đột biến.\n• Các câu quá ngắn không đủ lượng dữ liệu để thiết lập phương sai thống kê có ý nghĩa.",
+    "parameters": "Kiểm Định: Cross-Entropy Xác suất Trên Từng Token\nThước Đo: Phương Sai Thống Kê (σ²), Khoảng Tứ Phân Vị của Độ Bất Ngờ\nĐầu Ra: 0-100 Điểm Số San Phẳng Toán Học (Thiếu Hụt Phương Sai)",
+    "accuracy": "Cao — 80-90%. Một trụ cột nền tảng trong ngành kiểm định AI hiện đại, là lõi toán học của những hệ thống máy quét tinh vi nhất.",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ]
 }

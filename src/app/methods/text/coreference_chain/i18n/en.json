@@ -1,14 +1,13 @@
 {
-    "name": "Coreference Chain Analysis",
-    "description": "Examines coreference resolution chains to identify AI-generated text through abnormal entity tracking and pronominal reference patterns.",
-    "useCase": "Detecting AI text through inconsistent or oversimplified entity reference chains",
-    "mechanism": "Constructs coreference chains linking mentions of the same entity throughout the text (pronouns, noun phrases, proper names). AI-generated text often shows shorter coreference chains, less complex reference resolutions, and occasional entity confusion—where referents are ambiguously or incorrectly resolved. The method measures chain length distribution, referential distance, and chain branching complexity.",
-    "accuracy": "Moderate-High - 75-85% on long-form text",
-    "source": "Dugan, L. et al. (2024) - RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors, ACL",
-    "algorithm": "Coreference Resolution + Chain Statistics + Anomaly Scoring",
-    "parameters": "Model: neural coreference resolver, Min chain length: 2 mentions, Metrics: chain density, avg distance, branching factor, Text min: 200 words",
-    "strengths": "• Captures deep discourse-level coherence\n• Effective on long-form narratives and essays\n• Detects subtle entity tracking failures\n• Orthogonal to surface-level features",
-    "limitations": "• Computationally expensive for long texts\n• Coreference resolution itself is imperfect\n• Short texts yield too few chains for analysis\n• Performance depends on coreference model quality",
+    "name": "Coreference Chain Resolution",
+    "description": "Analyzes the length and complexity of entity tracking chains (how often pronouns successfully refer back to a distant proper noun) to detect shallow cognitive modeling.",
+    "algorithm": "Neural Coreference Tracking & Entity Chain Scoring",
+    "mechanism": "Human writers maintain complex, long-term mental models of the subjects they write about. We confidently introduce an entity (e.g., 'Alexander the Great') in paragraph one, and comfortably refer back to him as 'he', 'the conqueror', or 'his' several paragraphs later, creating a deep 'coreference chain'. Autoregressive AI models, bound by context windows and lacking an actual 'memory' of the narrative structure, struggle with this. To avoid ambiguous pronoun resolution, a well-aligned AI will conservatively 'reset' the chain by continually re-stating the proper noun (e.g., mentioning 'Alexander the Great' again in paragraph three instead of 'he'). This method deploys a neural coreference resolver to map every entity mention and its corresponding pronouns across the text. An AI-generated document typically exhibits pathologically short, fractured coreference chains, indicating a surface-level, stateless generation process that lacks deep object permanence.",
+    "useCase": "Exposing synthetic origins in long-form essays, short stories, and historical analyses where the AI awkwardly over-repeats character or abstract entity names instead of trusting the reader to follow complex pronoun chains.",
+    "strengths": "• Captures deep, discourse-level coherence failures that are invisible to superficial syntactic or lexical checkers.\n• Highly effective against advanced models that have mastered local sentence grammar but still fail at document-level structural memory.\n• Immune to basic spelling or synonym-spinning evasion strategies.",
+    "limitations": "• Exceedingly expensive to compute, requiring a dedicated neural network just to map the entity chains before analysis can even begin.\n• Short texts (under 200 words) yield too few chains to form a statistically significant profile.\n• Can produce false positives on highly technical or legal documents where human authors are legally required to avoid pronouns and repeat proper nouns to prevent ambiguity.",
+    "parameters": "Analysis: Neural Coreference Mapping\nMetric: Chain Density, Average Referential Distance, and Branching Factor\nOutput: 0-100 Shallow Referential Tracking Score",
+    "accuracy": "Moderate to High — 75-85%. Exhibits lethal precision on long-form narrative texts and essays mapping complex noun interactions.",
     "references": [
         {
             "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors. ACL.",
@@ -17,10 +16,6 @@
         {
             "title": "Clark, K. & Manning, C. D. (2016). Deep Reinforcement Learning for Mention-Ranking Coreference Models. EMNLP.",
             "url": "https://doi.org/10.18653/v1/D16-1245"
-        },
-        {
-            "title": "Pu, J. et al. (2023). On the Zero-Shot Generalization of Machine-Generated Text Detectors. EMNLP Findings.",
-            "url": "https://arxiv.org/abs/2310.05165"
         }
     ]
 }

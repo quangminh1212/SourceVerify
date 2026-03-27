@@ -1,14 +1,13 @@
 {
-    "name": "Conclusion Indicator",
-    "description": "Detects conclusion marker patterns",
-    "algorithm": "Conclusion Indicator — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Detects conclusion marker patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through conclusion indicator analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "废话结语与病态总结探测 (Conclusion Indicator)",
+    "description": "如同用 X 光机扫描一样，精准侦测那些极度容易被预测、在数学逻辑上被强行拼接上去的模板化总结性结尾段落。",
+    "algorithm": "废话标记符与强迫性总结启发式算法",
+    "mechanism": "经过 RLHF（人类反馈强化学习）深度洗脑的 AI，在写作时有一个极其刺眼且令人作呕的行为特征，那就是“强迫症式的总结（Compulsory conclusion）”。无论你的 Prompt 有多短促、聊天的话题有多么日常摸鱼、或者故事情节根本就不需要画蛇添足地去搞个“升华”，商业化的大语言模型（LLM）由于底层逻辑的设定，都会像个刻板的老干部一样，强行在句尾把你前面说过的所有破事儿再用“会议总结”的口吻复述一遍。它们在执行这套流程时，使用的是极其俗套、读之无味弃之可惜的教科书式废话连接词（如“总而言之”、“最后”、“综上所述”、“总的来说”、“结语”）。与此形成鲜明对比的是，真正有血有肉的人类在写作时——特别是在发牢骚的邮件、贴吧对线、或者戛然而止的创意爽文里——往往连个招呼都不打就直接结尾了，根本不会去写什么狗屁“总结段落”。本探针会像极其苛刻的审计员一样，暴力剥离并解剖文本最后 15% 的骨架，在提取这些显性的废话总结标记的同时，还会使用数学张量来交叉对比这个“结尾”与“正文主体”之间的语义重叠度（Semantic overlap）。当发现极高比例的语义冗余（翻译成人话就是“纯粹的同义词废话嚼舌根”）与那些烂大街的过渡结语结合在一起时，系统就会立刻拉响防空警报：这绝地是被 AI 那个毫无灵魂的自动化“打包（Wrap-up）”模块强行缝合出来的工业废料。",
+    "useCase": "扯下那些由 AI 批量生成的废话小作文、邮件、博客水文和自媒体推文的伪装，曝光它们在文章末尾如同狗皮膏药一般死死贴着、毫无意义且疯狂自我重复的强迫症式总结。",
+    "strengths": "• 在面对那些只给 ChatGPT 或 Claude 随便扔了一句“Zero-shot”指令就自动吐出来的原生态狗屎文本时，拥有如同死神点名一般极高的必杀率（True-positive）。\n• 精准捕获了一种深深刻在 AI 骨髓里、且级别极高的“结构性行为定势”。哪怕是懂点皮毛的 Prompt 工程师，若是急着交差，也极难想起要专门加一句“给我住手，不要写结尾总结”来屏蔽它。\n• 属于极轻量级的杀手锏：它的算力开销四舍五入等于不用电，在面对海量文档进行批量屠杀式扫描时，速度快得令人发指。",
+    "limitations": "• 防御力为零的致命弱点：如果使用者在粘贴发布之前，顺手把最后一段整块删掉，这个探针就会瞬间变成瞎子，彻底失效。\n• 极品双刃剑：如果把它扔进正规的学术论文期刊、严谨的科学报告或是必须附带执行摘要（Executive summaries）的商业企划书里，它会像疯狗一样到处乱咬，产生极其恐怖的误杀率（False-positive），因为这些领域的人类本身就是被逼着写总结的。\n• 探测器启动条件存在门槛：只对达到一定篇幅（通常大于 200 个词）、足以唤醒 AI 底层深处的“小作文八股文排版”引擎的文本才有效。",
+    "parameters": "雷达切片: 尾部修辞骨架 & 语义嚼舌根（冗余）度\n定罪量表: 俗套总结符浓度 vs 正文语义克隆重叠率\n行刑判决: 0-100 强迫症结尾八股文指数 (Automated Wrap-Up Score)",
+    "accuracy": "极高致命性 — 面对普通指令下生成的纯原生态、零修改 AI 文本，一枪爆头率高达 85-95%。但如果敌军懂行，随手做个最后的截肢手术（删掉最后一段），这把狙击枪就会直接炸膛报废。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

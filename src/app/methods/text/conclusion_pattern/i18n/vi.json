@@ -1,12 +1,21 @@
 {
-    "name": "Mẫu kết luận",
-    "description": "Phân tích mẫu cấu trúc kết luận",
-    "algorithm": "Thuật toán phân tích Mẫu kết luận",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu cấu trúc kết luận. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mẫu kết luận. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân tích Cấu trúc Kết bài (Conclusion Pattern)",
+    "description": "Giải phẫu kiến trúc tu từ bên trong đoạn kết luận để dò tìm những cái kết rập khuôn, cứng nhắc như được đúc từ một khuôn mẫu có sẵn.",
+    "algorithm": "Phân Tích Kết Luận 3 Phần & Lập Hồ Sơ Luồng Ngữ Nghĩa",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn bị ép học thuộc lòng các khuôn mẫu tiểu luận được tiêu chuẩn hóa cao độ. Khi phải viết kết bài, chúng gần như chắc chắn sẽ thi triển một cấu trúc 3 phần cứng đơ: 1) Nhai lại hoặc diễn đạt lại luận điểm ở mở bài, 2) Tóm lược siêu tốc các lập luận chính trong thân bài, và 3) Chốt hạ bằng một câu đạo lý viển vông, mang tính triết học hoặc 'hướng về tương lai' (ví dụ: 'Khi xã hội tiến bước...', 'Chỉ có thời gian mới trả lời được...'). Những người viết tay chân chính tự nhiên sẽ có độ hỗn loạn cấu trúc (structural entropy) cao hơn hẳn ở đoạn kết; họ có thể chốt bằng một câu trích dẫn đau đáu, một câu hỏi bỏ ngỏ, một lời kêu gọi hành động bất ngờ, hoặc đơn giản là dừng bút ngay tắp lự sau khi dứt điểm ý cuối cùng mà chẳng thèm gói ghém lại. Phương pháp này lập bản đồ luồng ngữ nghĩa của phân đoạn cuối văn bản, sục sạo chuyên biệt để tìm kiếm cái 'chữ ký kiến trúc: Nhai lại - Tóm tắt - Đạo lý' rất dễ đoán, vốn là đặc sản của AI đã qua mài giũa RLHF.",
+    "useCase": "Nhận diện các bài báo, tiểu luận và nội dung dài có kết bài bằng định dạng tóm tắt '3 bước' vô hồn, rập khuôn điển hình của công nghệ sinh văn bản tự động.",
+    "strengths": "• Bắt bài cực tốt các ca mớm lời (prompt) 'có đầu tư', nơi người dùng đã xóa đi các cụm từ lộ liễu rác rưởi ('Tóm lại là'), nhưng AI vẫn giữ nguyên bộ khung cấu trúc hình học bẩm sinh của nó.\n• Cực kỳ lợi hại trên các văn bản học thuật hoặc trang trọng—nơi kết luận là bắt buộc, nhưng độ vặn vẹo trong tư duy của con người thường sẽ đập nát cái khuôn mẫu 3 phần cứng nhắc kia.\n• Đánh giá luồng ngữ nghĩa sâu (deep semantic flow) thay vì bắt lỗi từ vựng bề mặt, khiến nó miễn nhiễm với trò vặt tráo đổi từ đồng nghĩa.",
+    "limitations": "• Dễ dính 'lưới nhầm' (false positives) nếu mang đi quét các bài văn mẫu của học sinh cấp 3—những bài vốn được nặn ra để bợ đỡ các tiêu chí chấm điểm thi chuẩn hóa.\n• Hoàn toàn mù tịt trước các bài viết AI mà prompter đã tự tay chèn một câu chốt hạ tự chế hoặc ra lệnh cho mô hình 'kết thúc thật đột ngột'.\n• Yêu cầu văn bản phải đủ dài, có các pha mở bài, thân bài và kết bài rõ rệt để có thể thiết lập đường cơ sở cấu trúc nhằm đối chiếu.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Luồng Tự Sự & Độ Hỗn Loạn Cấu Trúc\nThước Đo: Tỷ Lệ Nhai Lại Luận Điểm & Tần Suất Đạo Lý Suông\nĐầu Ra: 0-100 Điểm Số Rập Khuôn Cấu Trúc 3 Phần (Synthetic Structure Score)",
+    "accuracy": "Cao — 75-85%. Thể hiện sức sát thương chí mạng đối với các loại văn bản LLM mang tính 'cung cấp thông tin' hoặc 'giáo dục'. Tỷ lệ bắt nhầm tăng vọt ở các bài văn mẫu học sinh.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

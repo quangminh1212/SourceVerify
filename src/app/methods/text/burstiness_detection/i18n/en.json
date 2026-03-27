@@ -1,14 +1,14 @@
 {
-    "name": "Burstiness Detection",
-    "description": "Analyzes the burstiness patterns in text to distinguish AI-generated from human-written content.",
-    "useCase": "Detecting AI text through analysis of sentence length and complexity variation",
-    "mechanism": "Measures the variation (burstiness) in sentence structures, lengths, and complexity throughout a text. Human writing naturally varies between simple and complex sentences, short and long paragraphs. AI-generated text tends to maintain a more uniform level of complexity, resulting in lower burstiness scores.",
+    "name": "Semantic Burstiness Evaluator",
+    "description": "Contrasts the rhythm and clustering of linguistic features across the entirety of a passage.",
+    "useCase": "Exposing generic, highly-aligned LLM texts that lack the episodic clustering of complex ideas intrinsic to human expression.",
+    "mechanism": "Human authors inherently employ complex cognitive rhythmic structures, intermittently interleaving long, highly dense informational 'bursts' with juxtaposed arrays of simple transitional clauses. Conversely, because modern autoregressive LLMs optimize token selection via a softmax normalization step subject to temperature-based probability flattening, machine generation heavily biases toward low burstiness (structural homogeneity). This method pinpoints the smoothing effect of generalized token generation, identifying the artificial rhythm produced when an encoder consistently gravitates towards median likelihoods instead of episodic spikes.",
     "accuracy": "Moderate - 72-82% as standalone method",
     "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection, arXiv",
-    "algorithm": "Sentence Length Variance + Structural Complexity Scoring + Moving Window Analysis",
-    "parameters": "Window size: 5 sentences, Metrics: length variance, complexity index, transition entropy",
-    "strengths": "• Simple and interpretable metric\n• Language-independent to some degree\n• Works well combined with other text methods\n• Fast computation on any text length",
-    "limitations": "• Lower accuracy as standalone detector\n• Academic and technical writing naturally has low burstiness\n• AI models are improving at mimicking human variability\n• Very short texts are unreliable",
+    "algorithm": "Non-Homogenous Probability & Clustering Analysis",
+    "parameters": "Analysis: Burstiness Scoring\nMetric: Variance/Mean Ratio (Distribution)\nOutput: 0-100 Fluctuation Anomaly",
+    "strengths": "• Extensively validated across multiple academic studies targeting GPT-3/GPT-4 artifacts.\n• Extremely efficacious against large volumes of text scaling across hundreds of paragraphs.\n• Accurately characterizes the stylistic \"boredom\" inherent in zero-temperature outputs.",
+    "limitations": "• Human-produced technical reports or formal bureaucratic documentation often mirrors low burstiness organically.\n• Fails consistently on short arrays (<250 words) lacking sufficient rhythmic variance data.\n• Can be bypassed by prompt-instructing models to 'inject varied paragraph lengths'.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",

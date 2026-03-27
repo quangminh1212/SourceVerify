@@ -1,14 +1,13 @@
 {
-    "name": "Conditional Usage",
-    "description": "Analyzes conditional sentence patterns",
-    "algorithm": "Conditional Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes conditional sentence patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through conditional usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "条件およびヘッジ（ぼかし）表現の分析",
+    "description": "条件文パターン（例：「もしXならばY」）や仮定構造の頻度と複雑さを分析します。",
+    "algorithm": "仮定法構文プロファイリングおよび条件マーカー抽出",
+    "mechanism": "商用大規模言語モデルは、特に事実、アドバイス、または将来の予測に関して、絶対的で決定的な声明を出すことに対して、トレーニング中に重いペナルティを与えられます。「安全性」とニュアンスを維持するために、彼らは執拗なまでに条件論理と仮定によるヘッジ（ぼかし表現）（「もし～の場合は」、「～のイベントが発生した際には」、「～を決定した場合は」、「～でない限り」）に依存します。また、彼らの条件構造は幾何学的に完璧であり、「もし（if）」の節と、完璧な「そうするだろう（then/would/could）」の解決を厳密にペアにします。逆に、人間の書き手は多くの場合、より大胆で、より断定的であり、断片化された、または不完全な条件思考を頻繁に構築します。この手法は、これらの条件マーカーの密度を抽出および評価し、それらの構文的解決をマッピングします。完璧に解決された、過度に慎重な条件文が高い頻度で出現する場合、現代のAIに典型的な「有用で、無害で、正直な」アライメント（調整）が施されていることを強く示唆します。",
+    "useCase": "過剰な仮定のシナリオの後ろに隠れて決定的な立場を取ることを拒否する、AI生成のアドバイザリー記事、法的または医学的免責事項、意見記事、および回答の検出。",
+    "strengths": "• RLHF（人間からのフィードバックに基づく強化学習）に合わせたAIモデルに固有の「日和見主義的（fence-sitting）」で無責任な性質を検出するのに非常に効果的です。\n• 条件付けの構文的機能はグローバルに存在するため、さまざまな言語間で優れた拡張性（スケーラビリティ）を発揮します。\n• 重い意味論的埋め込み（セマンティック・エンベディング）ではなく依存関係の解析に依存しているため、計算が高速です。",
+    "limitations": "• 重い条件論理が実際に要求される、本物の法的文書、科学的仮説、または非常に専門的なマニュアルでは、誤検知の影響を受けやすくなります。\n• ユーザーがAIに対して「絶対的な確実性」を持ち、「ヘッジ表現なし」で書くように明示的にプロンプトを出した場合、回避される可能性があります。\n• 仮定のシナリオが自然と少なくなる物語のフィクションではあまり効果がありません。",
+    "parameters": "解析: 条件節の抽出\n評価基準: 仮定マーカーの密度および解決の対称性\n出力結果: 0-100 条件ヘッジ（無責任・ぼかし）スコア",
+    "accuracy": "高 — アドバイザリー、分析、またはQAスタイルのテキストで75-85%。非常に断定的なクリエイティブ・ライティングでは有効性が低下します。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

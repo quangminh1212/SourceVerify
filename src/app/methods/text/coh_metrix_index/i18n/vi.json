@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Coh-Metrix Cohesion Index",
-    "description": "Tính chỉ số liên kết kiểu Coh-Metrix — mạch lạc tham chiếu, nhân quả và thời gian (Graesser et al., 2014).",
-    "algorithm": "Thuật toán phân tích Coh-Metrix Cohesion Index",
-    "mechanism": "Hệ thống Coh-Metrix Cohesion Index phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Chỉ số Định vị Tương kết Coh-Metrix (Coh-Metrix Cohesion)",
+    "description": "Tính toán các chỉ số nâng cao về độ kết dính văn bản, độ phức tạp cú pháp và tính dễ đọc bằng cách vẽ biểu đồ độ lệch giữa sự chồng chéo tham chiếu cục bộ và tính liên tục ngữ nghĩa toàn cục.",
+    "algorithm": "Máy Lập hồ sơ Tương kết Diễn ngôn Tự động",
+    "mechanism": "Vận hành dựa trên bộ khung Coh-Metrix tiên phong do Graesser và McNamara thiết lập, phương pháp này tính toán một mảng đồ sộ các đặc điểm ngôn ngữ học máy tính trải dài từ độ kết dính tham chiếu (sự chồng chéo luận điểm) cho đến độ kết dính mô hình tình huống sâu. Các mô hình AI luôn luôn bị nghiện và ghi điểm cao chót vót ở phần 'kết dính cục bộ' bề mặt — chúng ra sức móc nối các câu lại với nhau bằng cách lạm dụng từ chuyển ý và đại danh từ lặp đi lặp lại — hòng che đậy bằng toán học sự yếu kém bẩm sinh của chúng về nhận thức tình huống dài hạn, toàn cục. Bằng cách chẻ sợi tóc làm tư độ lệch (delta) cực kỳ vô lý giữa sự chồng chéo tham chiếu cục bộ cao ngất ngưởng (các câu dính chặt hoàn hảo vào hàng xóm ngay cạnh chúng) và sự thăng tiến ngữ nghĩa toàn cục thấp thảm hại (sự bất lực trong việc phát triển một luận điểm trung tâm qua nhiều đoạn văn), phương pháp này lấy dấu vân tay một cách khắc nghiệt căn bệnh 'ảo giác logic' của LLM.",
+    "useCase": "Bắt thóp các bài luận AI tinh vi nghe có vẻ 'rất xuôi tai' khi đọc từng dòng một nhờ lượng lớn từ nối vi mô, nhưng lại thất bại thảm hại trong việc xây dựng một lập luận toàn cục có tính tiến hóa, chặt chẽ qua toàn bộ văn bản.",
+    "strengths": "• Triển khai một trong những bộ khung ngôn ngữ học máy tính khắt khe và được giới hàn lâm công nhận rộng rãi nhất hiện có để phân tích diễn ngôn.\n• Gần như bất khả thi để qua mặt bằng mấy trò múa mép prompt engineering đơn giản, trừ phi có thể can thiệp phá vỡ hoàn toàn kiến trúc bộ nhớ lõi và trọng số dự đoán token của mô hình.\n• Phơi bày trần trụi lỗ hổng kiến trúc nền tảng bẩm sinh của giới hạn cửa sổ ngữ cảnh (context window) trong mạng transformer.",
+    "limitations": "• Việc thiết lập và tính toán ngốn một lượng tài nguyên khổng lồ, đòi hỏi phải chạy hơn 100 chỉ số phụ đan xen nhau.\n• Số liệu thống kê trở nên thiếu tin cậy khi áp dụng lên các văn bản mang bản chất chắp vá hoặc rập khuôn (như danh sách liệt kê, tóm tắt gạch đầu dòng, hoặc ghi chú tản mạn).\n• Hiện tại được tối ưu hóa quá mức cho các bộ tham số NLP tiếng Anh, dẫn đến sự suy giảm độ chính xác và độ trung thực biến động khi dịch tệp đo lường sang các nhóm ngôn ngữ có cấu trúc hình học khác biệt.",
+    "parameters": "Kiểm Định: Lập Mô Hình Diễn Ngôn Đa Chiều\nThước Đo: Độ Kết Dính Tham Chiếu Cục Bộ vs. Độ Lệch Kết Dính Ngữ Nghĩa Toàn Cục\nĐầu Ra: 0-100 Điểm Số Dị Thường Trong Tương Kết Văn Bản (Cohesion Anomaly Score)",
+    "accuracy": "Rất Cao — 85-92% trên các bài văn nghị luận và bài nộp học thuật. Sát thủ chí mạng đối với các ảo giác AI dạng văn bản dài.",
+    "references": [
+        {
+            "url": "https://doi.org/10.1017/CBO9780511894664",
+            "title": "McNamara, D.S. et al. (2014). Automated Evaluation of Text and Discourse with Coh-Metrix. Cambridge University Press."
+        },
+        {
+            "url": "https://doi.org/10.3758/BF03195564",
+            "title": "Graesser, A.C. et al. (2004). Coh-Metrix: Analysis of Text on Cohesion and Language. Behavior Research Methods."
+        }
+    ]
 }

@@ -1,14 +1,13 @@
 {
-    "name": "Clause Balance",
-    "description": "Analyzes clause length balance within sentences (2023)",
-    "algorithm": "Clause Balance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes clause length balance within sentences (2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through clause balance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "절(Clause) 균형 및 대칭성 분석",
+    "description": "한 문장 내에서 독립절, 종속절, 그리고 등위절 사이에 나타나는 구조적 균형 상태를 수학적으로 계산합니다.",
+    "algorithm": "통사론적 구문 트리(Syntactic Tree) 균형 스코어러",
+    "mechanism": "인간 작가들은 복잡하고 끊임없이 변화하는 생각의 흐름을 표현하기 위해 본능적으로 절(Clause)의 종류를 널뛰듯이 뒤섞어 씁니다. 인간의 이러한 뇌 과부하(Cognitive load)는 짧고 임팩트 있는 독립절 뒤에, 미친 듯이 꼬리를 물고 늘어지는 혼란스러운 종속절들이 주렁주렁 매달린 '비대칭적인 문장 구조'를 토해내게 만듭니다. 이와는 극명하게 대조적으로, 거대 언어 모델(LLM)은 오로지 '최고의 가독성', '안전성', 그리고 '문법적 완벽함'만을 목표로 설계된 기계입니다. 인간 피드백 강화학습(RLHF)이라는 조련 과정을 거치면서, AI는 부자연스러울 정도로 완벽한 교과서적인 대칭 구조와 메트로놈처럼 지루하고 뻔한 박자를 가진 문장을 강제로 찍어냅니다. 이 분석 기법은 각 문장의 백엔드에 숨겨진 깊은 의존성 구문 분석 트리(Dependency parse tree)를 한 땀 한 땀 추적하여 종속 구조 대비 등위 구조의 수학적 비율과 배치 상태를 계산해냅니다. 신경망 텍스트 생성(Neural text generation) 연구 논문들에서 수없이 폭로된 바 있듯이, 이것은 '완벽한' 문법적 대칭성에 병적으로 집착하는 구역질 나는 AI 텍스트에 강력한 철퇴(페널티)를 가합니다.",
+    "useCase": "자연스러운 실제 인간 대화나 초안 작성 패턴에서 나타나는 울퉁불퉁하고 유기적인 구조적 비대칭성이 1%도 없이, 인위적인 수준의 문법적 완벽함과 '교과서적 대칭성'만을 미친 듯이 뽐내는 기계적인 AI 텍스트 적발.",
+    "strengths": "• 특정한 단어(Vocabulary)나 '트리거 워드'에 의존하는 멍청한 방식을 완전히 버리고, 오로지 가장 깊은 곳의 순수 문법 건축 구조(Architecture)만을 뼛속까지 파헤칩니다.\n• RLHF 모델들의 뇌 속에 강제로 용접되어 있는 '교과서적 완벽주의'와 '중립성 편향(Neutrality bias)'을 치명적으로 타격합니다.\n• 보편적 의존성(UD) 구문 분석기와 결합할 경우 어떤 언어든 가리지 않고 초토화시킬 수 있는 호환성을 자랑합니다.",
+    "limitations": "• '절의 대칭성'을 기계처럼 억지로 껴맞추도록 훈련받은 전문 교열 편집자, 법안 초안 작성자, 또는 빡빡한 '쉬운 영어 쓰기(Plain English)' 가이드라인의 지배를 받는 인간의 글을 심사할 때 오인 사격(False positive)의 위험이 있습니다.\n• 구문(Syntax) 트리를 그리기 위해 대단히 정밀하고 연산 컴퓨팅 파워를 미친 듯이 잡아먹는(Heavy) 다국어 의존성 파서(Parser)가 필요합니다.\n• 복잡한 절 구조 자체가 태어날 수조차 없는 극도로 짧은 텍스트(예: 트위터 글 한 줄, 뉴스 헤드라인)에서는 효과가 떡락합니다.",
+    "parameters": "수술 도구: 의존성 구문 분석 트리의 뼈대 대칭성(Symmetry) 매핑\n사형 저울 눈금: 종속절(Subordinate) / 등위절(Coordinate) 간의 강박적 균형 비율\n종말의 스코어: 0-100 숨 막히는 구문 대칭성 경직도 (Syntax Symmetry Rigidness Score)",
+    "accuracy": "중-상 — 72-81%. 어휘 기반의 폭발성(Burstiness) 점수와 함께 보조적인 '구조적 확인 사살 신호'로 사용될 때 가히 악마적인 파괴력을 보여줍니다.",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

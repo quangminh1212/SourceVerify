@@ -1,14 +1,13 @@
 {
-    "name": "절 깊이 분석",
-    "description": "측정합니다 the nesting depth of clauses 내의 sentences 감지하기 위해 AI 생성 text's tendency toward shallow embedding structures.",
-    "useCase": "Detecting AI text through uniform and shallow subordinate clause 패턴",
-    "mechanism": "Parses sentences into clause hierarchies and 측정 embedding depth (main clause → subordinate clause → embedded clause). Computes maximum depth, mean depth, depth 분산, and depth 분포 per sentence. AI 생성 text typically shows lower maximum clause depth and less variation in depth 에 걸친 sentences, reflecting a flatter information packaging strategy compared to human writers who naturally vary 사이의 simple and deeply embedded constructions.",
-    "accuracy": "중간 - 71-81% on essay-length texts",
-    "source": "Hunt, K. W. (1965) - Grammatical Structures Written at Three Grade Levels, NCTE Research Report",
-    "algorithm": "Clause Boundary Detection + Depth Calculation + Statistical Distribution Analysis",
-    "parameters": "Parser: dependency-based clause segmenter, Depth metrics: max/mean/분산/분포, Sentence min: 5 words, Text min: 10 sentences",
-    "strengths": "• Captures information packaging complexity\n• Linguistically well-motivated 특징\n• Complementary to sentence-level metrics\n• Effective on formal and academic writing",
-    "limitations": "• Parser-dependent 정확도\n• Some genres favor simple clause structures naturally\n• Modern LLMs can produce complex embeddings\n• Requires reliable clause boundary 감지",
+    "name": "통사론적 절 깊이(Clause Depth) 프로파일링",
+    "description": "문장 내에서 반복적으로 중첩(Nesting)된 종속절들이 수직으로 파고들어 간 최대 깊이를 측정합니다.",
+    "algorithm": "재귀적 의존성 깊이(Recursive Dependency Depth) 평가기",
+    "mechanism": "헌트(Hunt, 1965)의 T-유닛 분석과 깁슨(Gibson)의 의존성 국소성 이론에 뿌리를 둔 이 기법은 마트료시카 인형처럼 문장 안에 다른 문장이 욱여넣어진(Embedded) 계층적 깊이를 평가합니다. 인간은 복잡하고 아주 깊게 중첩된 절(예: '고양이를 뒤쫓던 그 개를 보았던 그 남자가 갑자기 쓰러졌다')을 머릿속으로 추적할 수는 있지만, 문맥을 놓치지 않으려 할 때 뇌에 걸리는 극심한 부하(Cognitive load) 때문에 일상적인 글쓰기에서는 그런 짓을 혐오하고 본능적으로 피합니다. 반대로 글을 꼬아 쓰는 인간 학자들은 이 깊이를 변태적일 정도로 극단적인 한계까지 밀어붙이곤 합니다. 거대 언어 모델(LLM)은 문법을 파괴하지 않고도 끝없이 깊은 통사적 의존성을 추적할 수 있는 수학적으로 완벽한 능력을 갖추고 있지만, 모델의 생성 온도(Temperature)와 RLHF(인간 피드백 강화학습)를 통한 '가독성 튜닝'은 대중이 읽기 쉽게 만들기 위해 기계가 지나치게 깊은 재귀적 꼬리물기를 시도하는 것을 강제로 잘라내 버립니다. 문서 전체 구조 트리의 깊이에 대한 표준 편차를 맵핑함으로써, 이 방법론은 오직 AI만이 서식하는 안전하고 뻔한 '얕음-중간' 정도의 중첩 깊이 안전지대를 정확히 짚어냅니다.",
+    "useCase": "무난하고 대중적인 AI 텍스트를, 극단적으로 깊게 파고드는 학술적 중첩 구조나 반대로 툭툭 끊어지는 짧고 파편화된 인간의 일상적인 텍스트로부터 분리해 냅니다.",
+    "strengths": "• 현대 LLM의 어텐션 헤드(Attention heads) 내부에 용접되어 있는 핵심적인 구조적 안전 및 가독성 메커니즘을 적나라하게 파헤칩니다.\n• 너무 튀지 않게 중화(Neutralized)된 기계 텍스트와 꽉꽉 들어찬 인간 전문가의 학술적 텍스트를 구별하는 데 매우 정확합니다.\n• 수십 년간 축적된 인간의 인지적 한계에 관한 주류 심리언어학 연구 논문들에 단단히 기반을 두고 있습니다.",
+    "limitations": "• AI의 출력 깊이 수치는, '명확하고 적당히 간결하게 쓰라'고 정규 교육을 받은 평범한 고등학생 수준의 인간 글쓰기 깊이 수치와 매우 무섭게 겹칩니다(Overlap).\n• 완전한 구문 분석 트리(Parsing tree)를 억지로 그려내야 하기 때문에 마침표 하나 없이 주절거리는 아주 긴 문서에서는 컴퓨팅 자원을 박살 내듯이 소모합니다.\n• 엉망진창으로 쓰였거나 문법이 박살 난 인간의 글에서는 파싱 에러가 발생하여 깊이 계산이 인위적으로 왜곡될 수 있습니다.",
+    "parameters": "분석 기준: T-유닛 / 통사적 중첩(Embedding) 깊이\n측정 지표: 최대 구문 트리 깊이 분산(Variance)\n출력: 0-100 깊이 동질성(Homogeneity) 스코어 - 똑같은 깊이만 반복하는 앵무새 지수",
+    "accuracy": "중-상 — 장문(Long-form) 콘텐츠에서 72-82%. AI의 두뇌를 지배하는 '너무 어렵지도 너무 쉽지도 않게 쓰기(Middle-of-the-road)'라는 강박적 복잡성 제약을 폭로하는 데 특효약입니다.",
     "references": [
         {
             "title": "Hunt, K. W. (1965). Grammatical Structures Written at Three Grade Levels. NCTE Research Report No. 3.",

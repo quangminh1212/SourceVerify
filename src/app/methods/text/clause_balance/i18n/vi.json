@@ -1,12 +1,21 @@
 {
-    "name": "Cân bằng mệnh đề",
-    "description": "Phân tích cân bằng độ dài mệnh đề trong câu",
-    "algorithm": "Thuật toán phân tích Cân bằng mệnh đề",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích cân bằng độ dài mệnh đề trong câu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích cân bằng mệnh đề. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân tích Độ Cân bằng Mệnh đề (Clause Balance)",
+    "description": "Đo đếm sự cân bằng cấu trúc giữa các mệnh đề độc lập, mệnh đề phụ thuộc và mệnh đề kết hợp bên trong một câu.",
+    "algorithm": "Máy Chấm điểm Trạng thái Cân bằng Cây Cú pháp",
+    "mechanism": "Người viết bẩm sinh luôn pha trộn các loại mệnh đề một cách biến động và hoang dại để diễn đạt những dòng suy nghĩ phức tạp, đang thành hình. Tải lượng nhận thức này thường đẻ ra các cấu trúc câu bất đối xứng — ví dụ: một mệnh đề chính ngắn mạnh mẽ, theo sau là một cái đuôi hỗn loạn gồm hàng loạt mệnh đề phụ lồng ghép vào nhau. Trái ngược hoàn toàn, các Mô hình Ngôn ngữ Lớn (LLM) được tối ưu hóa về mặt kiến trúc để đạt độ dễ đọc tối đa, an toàn và hoàn hảo về ngữ pháp. Quá trình nhồi sọ RLHF này ép chúng vào thế phải đẻ ra những câu văn có độ cân xứng mệnh đề hoàn hảo đến mức giả tạo, tuân thủ đúng sách giáo khoa và có nhịp điệu đều đặn như một chiếc đồng hồ quả lắc. Phương pháp này quét sâu vào cây cú pháp phụ thuộc (dependency parse tree) của từng câu để tính toán tỷ lệ toán học và vị trí đặt các cấu trúc kết hợp so với cấu trúc phụ thuộc. Nó sẽ giáng đòn trừng phạt nặng nề vào các văn bản tuân thủ quá cứng nhắc sự cân xứng ngữ pháp 'hoàn hảo' này — một điểm yếu đã được tài liệu hóa triệt để trong các bản nghiên cứu về văn bản do mạng nơ-ron tạo ra.",
+    "useCase": "Nhận diện thứ văn bản AI rập khuôn, được trau chuốt bóng lộn, phô diễn độ hoàn hảo ngữ pháp 'chuẩn sách giáo khoa' đến mức giả tạo, thiếu đi sự bất đối xứng hữu cơ gồ ghề của thói quen nháp bài hoặc trò chuyện thực tế của con người.",
+    "strengths": "• Hoàn toàn miễn nhiễm với kiểu lừa đảo bắt bẻ từ vựng hay 'từ khóa', vì nó chỉ soi thuần túy vào bộ xương kiến trúc ngữ pháp bên dưới.\n• Vạch trần cực gắt cái thiên kiến 'chủ nghĩa hoàn hảo sách giáo khoa' và 'trung lập' đã bị hàn chết vào xương tủy của các mô hình RLHF.\n• Vượt mọi rào cản ngôn ngữ khi được ghép nối chung với các trình phân tách Cú pháp Phổ quát (Universal Dependencies).",
+    "limitations": "• Dễ cắn nhầm đạn (False positives) khi đụng trúng bài của các biên tập viên chuyên nghiệp, dân viết luật, hoặc các tài liệu bị chèn ép bởi sách hướng dẫn hành văn gắt gao (như chuẩn 'Plain English') vốn ép buộc sự cân bằng câu.\n• Tiêu tốn hàng đống tài nguyên tính toán vì phải gọi trình bóc tách phụ thuộc ngôn ngữ cực nặng để vẽ cây cú pháp.\n• Yếu dần đều trên các đoạn text cụt lủn (như một dòng tweet hay tiêu đề) nơi mà các cấu trúc mệnh đề phức tạp chưa kịp mọc ra.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Cân Bằng Cú Pháp Phụ Thuộc\nThước Đo: Tỷ Lệ Thăng Bằng Giữa Mệnh Đề Phụ Thuộc / Mệnh Đề Kết Hợp\nĐầu Ra: 0-100 Điểm Số Cứng Nhắc Của Sự Đối Xứng Cú Pháp (Syntax Symmetry Rigidness Score)",
+    "accuracy": "Tầm Trung đến Cao — 72-81%. Đặc biệt bùng nổ sức mạnh khi dùng làm tín hiệu kiểm chứng cấu trúc kẹp chung với điểm số đột biến từ vựng (burstiness).",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

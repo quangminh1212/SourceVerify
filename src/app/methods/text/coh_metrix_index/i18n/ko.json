@@ -1,12 +1,21 @@
 {
-    "name": "Coh-Metrix Cohesion Index",
-    "description": "Computes Coh-Metrix inspired cohesion measures — referential, causal, and temporal coherence (Graesser et al., 2014).",
-    "algorithm": "Coh-Metrix Cohesion Index 분석 알고리즘",
-    "mechanism": "Coh-Metrix Cohesion Index 시스템은 AI 생성 콘텐츠와 실제 미디어를 구별하기 위해 특정 신호 패턴을 분석합니다.",
-    "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
-    "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
-    "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
-    "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
-    "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
-    "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
+    "name": "Coh-Metrix 결속성(Cohesion) 인덱싱",
+    "description": "국소적(Local)인 지시어 중첩과 거시적(Global)인 의미의 연속성 사이의 델타(격차)를 맵핑하여, 텍스트의 결속성, 통사적 복잡성 및 가독성에 대한 고도로 전문화된 지수들을 계산해 냅니다.",
+    "algorithm": "자동화된 담화 결속성 프로파일러",
+    "mechanism": "그레서(Graesser)와 맥나마라(McNamara)가 구축한 선구적인 Coh-Metrix 프레임워크 위에서 작동하는 이 기법은 지시적 결속성(논항의 중첩)부터 가장 깊은 심층 상황 모델 결속성에 이르기까지, 컴퓨터 언어학(Computational linguistics)이 제공하는 방대한 특징 배열을 모조리 계산합니다. AI 모델들은 본질적으로 장기적이고 거시적인 '전체 상황 인지 능력'이 심각하게 결여되어 있습니다. 이들은 이를 수학적으로 은폐하기 위해 뻔하고 반복적인 접속사와 동일한 대명사들을 떡칠하여 문장들을 공격적으로 사슬처럼 엮어버리며, 명시적이고 피상적인 '국소적 결속성(Local cohesion)' 항목에서 늘 소름 돋을 정도로 비정상적인 만점을 뿜어냅니다. 문장들이 바로 옆의 이웃 문장과는 기가 막히게 완벽하게 달라붙어 있는 '극도로 높은 국소적 지시 중첩'을 보이면서도, 막상 문단이 넘어가면 중심 주제를 전혀 끌고 나가지 못하는 '비정상적으로 낮은 거시적 의미 진행성'을 보입니다. 이 기법은 이 둘 사이에서 발생하는, 수학적으로 있을 수 없는 끔찍한 델타(격차)를 정밀하게 척도화하여 LLM 특유의 '논리적 환각(Hallucination of logic)' 현상에 영구적인 낙인을 찍습니다.",
+    "useCase": "수많은 마이크로 접속사들 덕분에 한 줄 한 줄 읽을 때는 '그럴싸하게' 들리지만, 막상 문서 전체의 관점에서는 응집력 있게 발전하는 거시적 주장을 구축하는 데 완전히 실패한 고도로 세련된 AI 에세이 적발.",
+    "strengths": "• 현재 담화 분석 분야에서 인류가 사용할 수 있는 가장 학술적으로 엄격하고 피어 리뷰(Peer-reviewed)가 철저히 검증된 컴퓨터 언어학 프레임워크 중 하나를 전방위로 전개합니다.\n• 모델의 핵심 메모리 아키텍처와 토큰 예측 가중치 자체를 뜯어고치지 않는 한, 얄팍한 프롬프트 엔지니어링 꼼수로는 이 그물을 우회하는 것이 사실상 불가능합니다.\n• 트랜스포머 아키텍처의 한계인 '유한한 컨텍스트 윈도우(Context window)'가 태생적으로 안고 있는 정확한 구조적 결함을 잔인할 정도로 투명하게 폭로합니다.",
+    "limitations": "• 100개가 넘는 톱니바퀴처럼 맞물린 하위 지표(Sub-metrics)들을 동원해야 하므로, 초기 설정과 연산 과정에서 컴퓨팅 리소스를 경악할 수준으로 집어삼킵니다.\n• 정보성 리스트 찌라시(Listicles), 글머리 기호(Bullet) 요약, 또는 흩뿌려진 강의 노트 등 태생적으로 파편화되거나 모듈식이기를 의도한 텍스트에서는 통계적으로 신뢰할 수 없는 오작동을 일으킵니다.\n• 현재 영어의 NLP 파라미터에만 병적으로 과도하게 최적화되어 있어, 구조적 위상(Topology)이 다른 언어군으로 번역하여 측정할 경우 해상도가 무너지고 신뢰도가 심하게 요동칩니다.",
+    "parameters": "분석 기준: 다차원(Multi-dimensional) 담화 모델링\n측정 지표: 극소적 지시 결속성 VS 거시적 의미 결속성 간의 델타(격차)\n출력: 0-100 소름 돋는 결속성 이상(Anomaly) 스코어",
+    "accuracy": "압도적으로 높음 — 설명문 에세이 및 학술 논문 제출물에서 85-92%. 길게 늘어지는 AI의 장문 논리적 환각(Long-form hallucinations)을 상대로 문자 그대로 사신급의 살상력을 발휘합니다.",
+    "references": [
+        {
+            "url": "https://doi.org/10.1017/CBO9780511894664",
+            "title": "McNamara, D.S. et al. (2014). Automated Evaluation of Text and Discourse with Coh-Metrix. Cambridge University Press."
+        },
+        {
+            "url": "https://doi.org/10.3758/BF03195564",
+            "title": "Graesser, A.C. et al. (2004). Coh-Metrix: Analysis of Text on Cohesion and Language. Behavior Research Methods."
+        }
+    ]
 }

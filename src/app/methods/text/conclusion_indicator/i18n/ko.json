@@ -1,14 +1,13 @@
 {
-    "name": "Conclusion Indicator",
-    "description": "Detects conclusion marker patterns",
-    "algorithm": "Conclusion Indicator — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects conclusion marker patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through conclusion indicator analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "결론 표지(Conclusion Indicator) 프로파일링",
+    "description": "총괄적인 결론 단락이 등장하는 기계적인 타이밍과, 수학적으로 강요된 경직된 문단 구조를 귀신같이 적발합니다.",
+    "algorithm": "담화 표지(Discourse Marker) & 총괄적 휴리스틱(Summative Heuristic)",
+    "mechanism": "RLHF(인간 피드백 기반 강화 학습) 세뇌를 거친 AI 글쓰기의 가장 끔찍하고 노골적인 행동 징후는 바로 '강박적 결론 내리기(Compulsory conclusion)'입니다. 프롬프트의 길이가 얼마나 짧든, 주제가 얼마나 사적이든, 심지어 이야기 흐름상 결론이 전혀 필요 없는 상황이든 상관없이, 상업용 거대 언어 모델(LLM)들은 자신이 앞서 늘어놓은 포인트들을 어떻게든 얌전하게 요약하고 마무리 지으려 발악합니다. 그들은 '결론적으로', '궁극적으로', '요약하자면', '전반적으로', '종합해 보면' 같은, 토가 나올 정도로 뻔하고 교과서적인 수사학적 마커들을 동원하여 이 강박을 해소합니다. 반면, 진짜 살아 숨 쉬는 인간의 글쓰기—특히 가벼운 이메일, 온라인 커뮤니티 게시글, 혹은 갑작스럽게 감정이 고조되며 끝나는 창작물이나 칼럼—는 이런 낡아빠진 형식적인 요약 단락을 통째로 생략해 버리는 경우가 지천으로 깔려 있습니다. 이 기법은 텍스트 전체 구조 중 정확히 '마지막 15%' 구간을 무자비하게 해부하여, 노골적인 요약성 담화 표지들을 지도화(Mapping)하고, 이 결론부가 텍스트 본문과 얼마나 중복되는지(Semantic overlap) 그 의미론적 잉여성을 수학적으로 계산합니다. 단순한 '동어 반복(Nonsense repetition)'에 불과한 높은 의미론적 중복성이, 판에 박힌 기계적 결론 마커와 콤보를 이루는 순간, 이 텍스트는 AI 특유의 창의성 없는 '자동 포장(Automated wrap-up)' 시스템이 찍어낸 공장제 폐기물로 강력하게 적색수배됩니다.",
+    "useCase": "텍스트의 꽁무니에 아무짝에도 쓸모없고 동어반복적인 요약본을 기계적으로, 그리고 황소고집처럼 갖다 붙여 놓은 AI 생성 에세이, 이메일, 블로그 포스트 및 기사들을 폭로.",
+    "strengths": "• ChatGPT나 Claude 같은 메이저 모델들에게 대충 툭 던져진 '제로샷(Zero-shot)' 프롬프트 결과물에 대해서는 거의 백발백중 수준의 치명적인 오리지널 적중률(True-positive)을 자랑합니다.\n• 초보자나 급하게 결과물만 뽑아내려는 프롬프터들이 미처 '결론은 쓰지 마'라고 명령할 생각조차 하지 못하는, LLM 뼛속 깊이 각인된 고차원적인 구조적 강박 행동을 정확히 타격합니다.\n• 연산 자원을 깃털만큼도 먹지 않으며, 수만 장의 문서를 쓸어 담아 검사할 때도 미친 듯이 가볍고 빠릅니다.",
+    "limitations": "• 이용자가 글을 제출하거나 업로드하기 전에, 마우스로 맨 마지막 문단을 드래그해서 지워버리기만 해도 이 방어선은 즉시 붕괴되고 완전히 무용지물이 됩니다.\n• 구조적으로 당연히, 그리고 반드시 총괄적 결론 문단이 들어가야만 하는 정식 학술 논문, 과학 보고서, 경영진 요약 초록(Executive summaries) 등에서는 애꿎은 인간 학자를 복제인간으로 몰아붙일(False-positive) 위험이 대폭발합니다.\n• AI의 내부 '에세이 포맷' 생성 엔진이 풀가동될 정도로 텍스트가 어느 정도 길어야만(보통 최소 200단어 이상) 탐지 그물이 작동합니다.",
+    "parameters": "분석 기준: 수사학적 종결 구조(End-Structure) & 의미론적 잉여성(Redundancy)\n측정 지표: 요약 마커 빈도 vs 본문 의미 중복도(Semantic Overlap) 비율\n출력: 0-100 기계적 결론 템플릿 (자동 랩업 증후군) 스코어",
+    "accuracy": "매우 높음 — 일반적인 프롬프트에서 뽑아낸 날것의(수정되지 않은) AI 출력물에 대해서는 85-95%의 살상력. 단, 인간이 마지막 문단을 수동으로 '절단'해버리면 그 즉시 추적 능력을 완전히 상실합니다.",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

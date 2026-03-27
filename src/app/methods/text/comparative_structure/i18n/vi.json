@@ -1,12 +1,21 @@
 {
-    "name": "Cấu trúc so sánh",
-    "description": "Phân tích mẫu sử dụng so sánh",
-    "algorithm": "Thuật toán phân tích Cấu trúc so sánh",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu sử dụng so sánh. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích cấu trúc so sánh. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Đánh giá Cấu trúc So sánh (Comparative Structure)",
+    "description": "Kiểm tra tần suất, tính đối xứng và sự cân bằng tu từ bị ép buộc về mặt toán học của các cấu trúc so sánh và bậc nhất.",
+    "algorithm": "Trích xuất Điểm chuẩn So sánh Cú pháp",
+    "mechanism": "Khi được giao nhiệm vụ đánh giá các lựa chọn, viết review sản phẩm hay làm tiểu luận, các mô hình ngôn ngữ lớn (LLM) bản năng sẽ sinh ra những cấu trúc so sánh cực kỳ cân bằng, đối xứng và trung lập một cách ngang bướng (ví dụ: 'Một mặt thì X thế này, nhưng mặt khác thì Z lại thế kia'). Do phải chịu sự kìm kẹp của quá trình Học Tăng Cường từ Phản Hồi Con Người (RLHF) nhằm tối đa hóa sự an toàn vô hại và tính trung lập, LLM bị nghiện nặng việc sử dụng các từ nối phân tích so sánh quá ư trịnh trọng và 'ba phải' ('tuy nhiên', 'ngược lại', 'trong khi một số người cho rằng'). Trái lại, cách so sánh của con người thật thường mất cân bằng, đầy tính định kiến cá nhân, bất đối xứng về mặt cấu trúc và ít xài mấy cái từ nối sáo rỗng trong sách giáo khoa. Công cụ này trích xuất cây cú pháp để tóm gọn việc lạm dụng quá đà các khối so sánh cân đối hoàn hảo và trịnh trọng này, chấm điểm mức độ giống nhau giữa văn bản với các template 'ưu và nhược điểm' vô trùng của AI.",
+    "useCase": "Bóc phốt các bài review sản phẩm, hướng dẫn mua sắm, các bài viết so sánh hoặc bài luận do AI viết, có biểu hiện 'ba phải', cố đấm ăn xôi để duy trì sự trung lập hoàn hảo về mặt toán học cho cả hai phe.",
+    "strengths": "• Bắn tỉa cực kỳ chuẩn xác vào cái tính cách 'trợ lý ảo nhiệt tình' thảo mai và dĩ hòa vi quý đã bị cấy chết vào nhân của các LLM thương mại hiện đại.\n• Hoàn toàn dựa vào phân tích cú pháp (syntactic parsing) thay vì phải kéo cày trong không gian vector ngữ nghĩa nặng nề, giúp luồng xử lý nhanh như chớp và dễ dàng mở rộng.\n• Điểm mặt chỉ tên xuất sắc hội chứng 'trung lập ép buộc' và sự vô trùng tu từ vốn là hậu quả hiển nhiên của lớp huấn luyện an toàn RLHF.",
+    "limitations": "• Là một thước đo cực kỳ đặc thù, chỉ thực sự có võ khi ép dẻo vào các văn bản dạng đánh giá, review, so sánh hoặc tranh luận; hoàn toàn phế võ công khi ném vào tiểu thuyết hay thơ ca.\n• Có rủi ro cắn nhầm đạn (false positives) vào các văn bản do con người viết chuyên phục vụ cho ngoại giao, học thuật nghiêm ngặt hay văn bản doanh nghiệp, nơi mà sự trung lập ép buộc là quy định bắt buộc.\n• Dễ dàng bị hóa giải nếu một prompter lão làng cố tình ra lệnh cho AI rũ bỏ sự trung lập, bắt nó phải mang đậm định kiến, hung hăng hoặc chửi đổng về một phe.",
+    "parameters": "Kiểm Định: Khớp Mẫu Cú Pháp & Cây Phụ Thuộc Ngữ Pháp\nThước Đo: Mật Độ Mệnh Đề So Sánh & Tính Đối Xứng Tu Từ\nĐầu Ra: 0-100 Điểm Số Cân Bằng Tu Từ (Hội Chứng Trung Lập Bị Ép Buộc)",
+    "accuracy": "Cao — 80-85% nhưng CHỈ KHI được áp dụng độc quyền trên các văn bản mang tính đánh giá, so sánh hoặc review. Gần như vô dụng ngoài vùng lãnh thổ này.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

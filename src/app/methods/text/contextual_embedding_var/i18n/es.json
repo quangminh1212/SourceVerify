@@ -1,12 +1,21 @@
 {
-    "name": "Contextual Embedding Variance",
-    "description": "Measures variance of contextual word embeddings — AI text shows less intra-sentence embedding variation.",
-    "algorithm": "Algoritmo de análisis Contextual Embedding Variance",
-    "mechanism": "El sistema Contextual Embedding Variance analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Varianza de Incrustaciones Contextuales",
+    "description": "Mide la varianza de las incrustaciones de palabras contextuales (ej., desde BERT) para detectar la baja desviación intra-oracional característica de los modelos de IA autorregresivos.",
+    "algorithm": "Extracción de Incrustaciones Transformer y Perfilado de Varianza de Vectores",
+    "mechanism": "Los LLMs autorregresivos generan texto prediciendo constantemente el próximo token estadísticamente más probable basado en la ventana de contexto. Debido a que están matemáticamente obligados a maximizar la probabilidad, las oraciones resultantes mantienen una trayectoria semántica estrecha y altamente predecible. Si se grafican las incrustaciones contextuales (representaciones vectoriales) de las palabras en una oración generada por IA, se agrupan estrechamente con muy baja varianza de promedio. Los escritores humanos, por el contrario, no operan mediante predicción del siguiente token. Frecuentemente extraen de diversos esquemas cognitivos, introduciendo metáforas novedosas, cambios bruscos de tema o vocabulario estilísticamente sorprendente en medio de una oración, lo que causa picos drásticos y alta varianza en los vectores de incrustación. Este método calcula la varianza matemática de estas incrustaciones contextuales; una trayectoria anormalmente suave y de baja varianza señala fuertemente una generación sintética limitada por la probabilidad.",
+    "useCase": "Detección de texto sintético de alta calidad que elude verificaciones gramaticales superficiales mediante el análisis de las relaciones matemáticas profundas entre palabras, tal como son percibidas por los modelos Transformer.",
+    "strengths": "• Analiza el mecanismo matemático fundamental de la generación de texto LLM (distribución de probabilidad), haciéndolo extremadamente robusto contra indicaciones ingeniosas o ajustes de parámetros.\n• Altamente efectivo independientemente del tema, género o vocabulario específico utilizado.\n• Opera sobre lógica vectorial matemática absoluta en lugar de reglas estilísticas subjetivas.",
+    "limitations": "• Computacionalmente costoso; requiere cargar un modelo codificador pesado (como BERT o RoBERTa) para extraer las incrustaciones contextuales en tiempo real.\n• Puede desencadenar falsos positivos en texto humano altamente formulaico, como contratos legales repetitivos o manuales técnicos estandarizados.\n• Requiere textos de al menos un párrafo de longitud para establecer un perfil matemático de varianza estadísticamente significativo.",
+    "parameters": "Análisis: Extracción de Incrustación de Vectores y Distancia del Vecino Más Cercano\nMétrica: Desviación Estándar de la Incrustación Contextual Intra-Oracional\nResultado: 0-100 Puntuación de Trayectoria Sintética (Baja Varianza)",
+    "accuracy": "Alta — 85-90%. Uno de los métodos de detección más rigurosos académicamente disponibles. Altamente resistente a técnicas simples de evasión como el intercambio de sinónimos.",
+    "references": [
+        {
+            "title": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.",
+            "url": "https://doi.org/10.18653/v1/N19-1423"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
+            "url": "https://arxiv.org/abs/2306.04723"
+        }
+    ]
 }

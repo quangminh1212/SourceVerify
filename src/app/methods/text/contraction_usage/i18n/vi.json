@@ -1,12 +1,21 @@
 {
-    "name": "Sử dụng viết tắt",
-    "description": "Đo tần suất viết tắt — AI thường ít dùng viết tắt",
-    "algorithm": "Thuật toán phân tích Sử dụng viết tắt",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo tần suất viết tắt — AI thường ít dùng viết tắt. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng viết tắt. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Hồ sơ Né tránh Dạng Rút gọn (Contraction Avoidance)",
+    "description": "Đo lường tần suất sử dụng các dạng từ viết đầy đủ so với các dạng viết tắt/rút gọn (ví dụ: 'do not' so với 'don't') để phát hiện sự trang trọng giả tạo.",
+    "algorithm": "Tỷ lệ Hình thái Mở rộng & Mức độ Trang trọng Từ vựng",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn mặc định mang một đặc điểm cốt lõi là giọng điệu lịch sự, trang trọng và đầy thẩm quyền—đây là tàn dư từ quá trình huấn luyện căn chỉnh (ví dụ: RLHF) nhằm ngăn chúng phát ngôn bừa bãi hoặc thiếu chuyên nghiệp. Hậu quả trực tiếp là chúng mắc phải 'chứng thiên kiến hình thái mở rộng': luôn có xu hướng viết đầy đủ toàn bộ các từ ('cannot', 'do not', 'it is', 'they are') thay vì dùng các dạng rút gọn tự nhiên của con người ('can't', 'don't', 'it's', 'they're'). Trong khi đó, người viết thật, kể cả trong các văn cảnh tương đối chuyên nghiệp, vẫn thường xuyên pha trộn các từ rút gọn để giữ nhịp điệu trôi chảy và tính mượt mà của giao tiếp. Mặc dù phương pháp này chủ yếu hoạt động trên các ngôn ngữ có tính năng rút gọn từ (như tiếng Anh, tiếng Pháp), cốt lõi của nó là tính toán tỷ lệ giữa các cặp động từ/đại từ bị viết dãn dấp (viết đầy đủ) so với cơ hội có thể viết tắt được. Sự vắng bóng hoàn toàn của các từ rút gọn, đặc biệt là trong các bài viết mang tính thuyết phục, blog cá nhân hay kể chuyện, là một dấu hiệu tố cáo sự tồn tại của máy móc.",
+    "useCase": "Phân tích các bài blog, email, nội dung marketing và bài luận thông thường, nơi giọng điệu cứng nhắc, thiếu vắng từ rút gọn làm lộ tẩy một AI đang cố gồng mình tỏ ra uyên bác.",
+    "strengths": "• Cực kỳ hiệu quả đối với các lệnh prompt yêu cầu viết 'thoải mái' hoặc 'hội thoại' mà AI vẫn không thể vứt bỏ được bản tính trang trọng được lập trình sẵn của mình.\n• Nhanh, độ chính xác tuyệt đối (deterministic) và hầu như không tốn tài nguyên máy tính, chỉ dựa vào việc quét Regex và ánh xạ từ vựng đơn giản.\n• Những AI thông thường rất khó vượt qua nếu người dùng không ép buộc chúng một cách cụ thể bằng lệnh 'phải dùng từ viết tắt'.",
+    "limitations": "• Rất dễ bắt nhầm (false positives) các văn bản cực kỳ nghiêm túc của con người (như luận án tiến sĩ, hợp đồng pháp lý hoặc thông cáo báo chí), nơi luật lệ cấm tiệt việc dùng từ rút gọn.\n• Hoàn toàn vô dụng với các ngôn ngữ không có khái niệm cấu trúc rút gọn từ (ví dụ: Tiếng Trung, Tiếng Nhật, Tiếng Hàn, Tiếng Việt), biến đây thành một thước đo độc quyền cho tiếng Anh và ngôn ngữ phương Tây.\n• Dễ dàng bị 'bẻ khóa' bởi các chuyên gia prompt chỉ bằng việc thêm câu thần chú 'hãy dùng thật nhiều từ rút gọn' vào lệnh.",
+    "parameters": "Kiểm Định: Quét Regex Từ Vựng & Tỷ Lệ Hình Thái Học\nThước Đo: Tần Suất Viết Đầy Đủ (So với Cơ hội Viết tắt)\nĐầu Ra: 0-100 Điểm Số Cứng Nhắc Trang Trọng (Lỗ Hổng Thiếu Dạng Rút Gọn)",
+    "accuracy": "Trung Bình — 65-75%. Phụ thuộc rất nặng vào thể loại văn bản được mong đợi. Cực kỳ hữu dụng khi làm chỉ báo phụ trợ, đứng cạnh phân tích độ hiếm từ vựng và phương sai độ dài câu.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

@@ -1,22 +1,21 @@
 {
-    "name": "Contraction Usage",
-    "description": "Measures contraction 周波数 — AI tends to use fewer contractions",
-    "algorithm": "Contraction Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures contraction 周波数 — AI tends to use fewer contractions. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through contraction usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "短縮形回避プロファイリング（Contraction Avoidance）",
+    "description": "人工的なフォーマルさを検出するために、省略せずに完全に綴られた助動詞と短縮形の頻度の比率（例：「do not」対「don't」）を測定します。",
+    "algorithm": "語彙のフォーマル度および形態論的拡張プロファイル",
+    "mechanism": "大規模言語モデルは本質的に、過度に口語的または非専門的に聞こえるのを防ぐように設計されたアライメント・トレーニング（例：RLHF）の副産物として、丁寧でフォーマル、かつ権威あるトーンを維持するように初期設定されています。その直接的な結果として、彼らは自然な人間の短縮形（'can't', 'don't', 'it's', 'they're'）を使用するのではなく、単語を完全に綴る（'cannot', 'do not', 'it is', 'they are'）という形態論的拡張に対して強い統計的バイアスを示します。人間の書き手は、比較的専門的な文脈であっても、リズミカルな流れと会話のような読みやすさを維持するために、自然に短縮形を文章に混ぜ合わせます。この手法は、テキスト内で「短縮されていない動詞/代名詞のペア」と「短縮された代替表現」の比率を計算します。特にカジュアル、説得力がある、または物語風であることを意図した文脈において短縮形が極度に不足している場合、合成された生成物（AI）と強く相関します。",
+    "useCase": "過度に堅苦しく短縮形のないトーンが、権威があるように見せかけようとするAI生成器の存在を裏切っているブログ、電子メール、マーケティング・コピー、およびカジュアルなエッセイの分析。",
+    "strengths": "• AIが特有のフォーマルなアライメント（調整）を捨てることに失敗する、「会話調」または「非公式な」プロンプトに対して非常に効果的です。\n• 単純な正規表現（Regex）と語彙マッピングに依存しており、高速で決定的であり、計算コストが低いです。\n• 短縮形を使用するように明示的かつ厳密に設計されたプロンプトを出さない限り、基本的なAIジェネレーターがこれを克服するのは困難です。",
+    "limitations": "• 短縮形が禁止されている学術論文、法的契約書、または企業の公式プレスリリースなど、極めてフォーマルな人間の文章に対する誤検知の影響を受けやすくなります。\n• 構文的な短縮形を持たない言語（中国語、日本語、韓国語など）には完全に適用できないため、この指標は主に英語および特定のヨーロッパ言語に限定されます。\n• 「短縮形をたくさん使うこと」や「カジュアルに書くこと」という指示をプロンプトに明示的に追加するプロンプト・エンジニアには簡単に回避されます。",
+    "parameters": "解析: 語彙的正規表現（Regex）マッチングおよび形態論的拡張比率\n評価基準: 完全拡張形式 vs 可能な短縮形の機会\n出力結果: 0-100 形式的硬直性（短縮形の欠如）スコア",
+    "accuracy": "中程度 — 65-75%。テキストに期待されるジャンルに大きく依存します。語彙の希少性や文長の分散と並行して、補助的な指標として非常に役立ちます。",
     "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
         }
     ]
 }

@@ -1,14 +1,13 @@
 {
-    "name": "共指链分析",
-    "description": "检查 共指 分辨率 chains 以识别 AI生成的 text through abnormal entity tracking and pronominal reference 模式.",
-    "useCase": "通过不一致或过于简化的实体引用链检测AI文本",
-    "mechanism": "Constructs 共指 chains linking mentions of the same entity throughout the text (代词s, noun phrases, proper names). AI生成的 text often shows shorter 共指 chains, less complex reference 分辨率s, and occasional entity confusion—where referents are ambiguously or incorrectly resolved. The method 测量 chain length 分布, referential distance, and chain branching complexity.",
-    "accuracy": "中-高 - 75-85% on long-form text",
-    "source": "Dugan, L. et al. (2024) - RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors, ACL",
-    "algorithm": "Coreference Resolution + Chain Statistics + Anomaly Scoring",
-    "parameters": "模型: neural 共指 resolver, Min chain length: 2 mentions, Metrics: chain density, avg distance, branching factor, Text min: 200 words",
-    "strengths": "• Captures deep discourse-level 连贯性\n• Effective on long-form narratives and essays\n• 检测 subtle entity tracking failures\n• Orthogonal to surface-level 特征",
-    "limitations": "• 计算成本高 for long texts\n• Coreference 分辨率 itself is imperfect\n• Short texts yield too few chains for 分析\n• Performance depends on 共指 model quality",
+    "name": "共指链拓扑解析 (Coreference Chain)",
+    "description": "通过测量实体追踪链（代词能够多频繁、多成功地回指上文远处的专有名词）的长度和复杂性，来无情揭露 AI 肤浅的认知建模和“短时记忆丧失”综合征。",
+    "algorithm": "神经网络共指图谱追踪与实体链断裂评分",
+    "mechanism": "人类作家在写作时，会在大脑后台维持一个庞大的、属于被描述对象的全息心理模型。我们可以在第一段无比自信地抛出一个实体（比如：“亚历山大大帝”），然后在隔了好几个自然段之后，仍旧舒坦而自然地用“他”、“这位征服者”或“他的”来指代他，从而在潜意识里织出一条极深的“共指链（Coreference chain）”。而那些被“上下文窗口机制”死死锁喉、且根本不具备真实叙事“记忆”的自回归 AI 模型，在这种操作面前会显得极度吃力且毫无安全感。为了绝对避免产生有歧义的代词指代（比如搞不清“他”到底指谁），那些被高度安全对齐（Alignment）的机器狗会极其保守地疯狂“重置”共指链——它们宁愿在第三段极其生硬地把“亚历山大大帝”六个字再完整复述一遍，也不敢自信地用一个“他”字带过。本重型探针会直接武装一个专用的神经网络级共指消解器（Resolver），在整个文本中对每一个实体名称和它对应的代词画出连线。被 AI 大批量制造出来的文章，其共指链条通常呈现出病态般的短平快和碎片化——这条稀烂的虚线，就像铁证一样，赤裸裸地暴露出这是一个缺乏深度客体永久性（Object permanence）、只能看着眼前几个字进行下一秒状态预测的肤浅流水线生成过程。",
+    "useCase": "专治各种又臭又长的学术小作文、短篇小说和冗长的历史分析报告——在这些文章中，机器人因为根本不敢信任读者能跟上复杂的代词跳跃，从而像个喋喋不休的老古董一样，疯狂而笨拙地重复角色的全名或抽象概念。",
+    "strengths": "• 这是一把直击灵魂的手术刀，能精准切断那种在表面的词汇和语法检查器面前伪装得天衣无缝，但在“语篇级宏观连贯性（discourse-level coherence）”上却漏洞百出的深度破绽。\n• 对那些已经完美掌握了一两句话的局部语法、但一到长篇大论就暴露出结构性失忆（智商锐减）的先进大模型，拥有核打击级别的克制效果。\n• 对所有低级的错别字伪装、洗稿软件或是同义词替换战术拥有绝对免疫，因为没人能洗掉文章底层的拓扑逻辑。",
+    "limitations": "• 算力开销处于深渊级别：在真正开始查重之前，必须先在显存里全功率强行跑一边巨型神经网络，仅仅是为了给文本画实体连线图谱。\n• 对短文直接缴械：如果塞进来的文本短于 200 字，根本凑不够形成统计学意义的链条数据，系统将无法做出裁决。\n• 存在高频误杀（False positives）风险：特别是针对极其硬核的法律合同文本或机械技术规格书——在这种非人道的反人类文档里，起草者本身在法律上就被明令禁止使用模糊代词，并且被要求强迫性地重复严谨的专有名词以防扯皮。",
+    "parameters": "雷达切片: 神经网络级共指消除与全景拓扑映射\n定罪量表: 实体链密网度、代词跨度平均引用距离、以及树状分支纠缠系数\n行刑判决: 0-100 宏观语篇失忆并发症 (肤浅指代追踪) 宣判指数",
+    "accuracy": "中高致命性 — 75-85%。特别是对于那些需要描绘错综复杂的名词互动关系的长篇叙事文和论证型长文，这把探针展现出了令人毛骨悚然的处决精度。",
     "references": [
         {
             "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors. ACL.",
@@ -17,10 +16,6 @@
         {
             "title": "Clark, K. & Manning, C. D. (2016). Deep Reinforcement Learning for Mention-Ranking Coreference Models. EMNLP.",
             "url": "https://doi.org/10.18653/v1/D16-1245"
-        },
-        {
-            "title": "Pu, J. et al. (2023). On the Zero-Shot Generalization of Machine-Generated Text Detectors. EMNLP Findings.",
-            "url": "https://arxiv.org/abs/2310.05165"
         }
     ]
 }

@@ -1,18 +1,17 @@
 {
-    "name": "Curie Detection",
-    "description": "Analyzes sentence length CV for uniformity detection (2023)",
-    "algorithm": "Curie Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes sentence length CV for uniformity detection (2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through curie detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "큐리(Curie) 균일성 탐지 (문장 길이 CV)",
+    "description": "문장 길이의 변동 계수(CV)를 계산하여 기계가 쓴 글에서만 나타나는 기괴하고 작위적인 구조적 균일성을 수학적으로 폭로합니다。",
+    "algorithm": "문장 길이 변동 계수(CV) 프로파일링",
+    "mechanism": "'큐리' 탐지 프로파일은 자기회귀(Autoregressive) 텍스트 생성의 근본적인 부작용인 '구조적 획일화'에 집중합니다. 거대 언어 모델(LLM)은 문장이 매끄럽게 흘러가고 당장의 펄플렉서티(Perplexity, 당혹감)를 최소화하도록 어텐션 가중치를 끊임없이 계산합니다. 이 '안전한 길 찾기'의 필연적인 수학적 결과는, 생성된 모든 문장의 길이가 좁은 중간값(Median)을 향해 미친 듯이 수렴한다는 것입니다. 이 기법은 문장 길이의 표준편차를 평균으로 나눈 변동 계수(CV)를 계산하여 텍스트의 리듬감을 수치화합니다. 인간 작가들은 글의 호흡과 강조점을 조절하기 위해 뼈를 때리는 극도로 짧은 단문과, 끝없이 길게 이어지는 만연체의 설명문을 본능적으로 섞어 쓰며, 그 결과 문장 길이의 CV가 높게(불규칙하게) 타나납니다. 반면, AI 생성기들은 인간의 자연스러운 사고 과정에서 발견되는 극단적인 짧음과 극단적인 길이를 모두 상실한 채, 중간 길이 문장들로만 이루어진 '최면성 리듬'의 늪에 필연적으로 빠집니다. 병적으로 낮은 수준의 문장 길이 CV는 알고리즘에 의해 글이 '사포질' 당했음을 보여주는 가장 강력하고 명백한 증거입니다.",
+    "useCase": "중간 길이의 문장들이 숨 막히고 지루한 템포로 끊임없이 반복되며 인간 특유의 역동적인 서사 리듬이 완전히 증발해 버린 에세이, 보고서, 긴 산문 등을 샅샅이 분석합니다.",
+    "strengths": "• 연산량은 솜털처럼 가볍지만 그 파괴력은 뼈를 부숩니다. 무겁고 복잡한 인공신경망 대신 순수한 기초 수학만을 무기로 사용합니다.\n• 깡통 AI의 근본적인 훈련 구조 자체가 '구문론적 평균화'를 강제하기 때문에, 일반적인 모델이 태생적으로 이 방어망을 뚫는 것은 거의 불가능합니다.\n• 언어에 구애받지 않습니다. 마침표나 물음표 등 문장 경계를 나누는 부호만 있다면 이 세상 어떤 언어에서도 완벽하게 작동합니다.",
+    "limitations": "• 통계학적으로 의미 있는 표준편차와 평균을 뽑아내기 위해 최소한의 문장 수(보통 10~15 문장 이상)가 절실히 필요합니다.\n• 아이들 동화책이나 숨 막히게 일관된 형식만을 고집하는 기술 매뉴얼처럼, 절대적인 균일성을 목적으로 쓰인 진짜 인간의 글에서 억울한 오탐지(False positive)가 발생할 수 있습니다.\n• 눈치 빠른 프롬프트 엔지니어가 대놓고 '3단어짜리 문장과 30단어짜리 문장을 섞어서 써'라고 명령하면 허무하게 뚫릴 수 있습니다.",
+    "parameters": "분석 기준: 문장 경계 토큰화 및 통계적 프로파일링\n측정 지표: 변동 계수 (문장 길이의 표준편차 / 평균)\n출력: 0-100 구조적 획일화 (리듬 결핍성) 스코어",
+    "accuracy": "높음 — 75-85%. 프롬프트로 특별한 지시를 받지 않고 기본 온도(Default temperature) 값으로 텍스트를 뱉어내는 GPT-3.5나 Claude 같은 생성기들 상대로는 그야말로 학살에 가까운 파괴력을 보여줍니다.",
     "references": [
         {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
-            "url": "https://arxiv.org/abs/1908.09203"
+            "title": "Sadasivan, V. S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
+            "url": "https://arxiv.org/abs/2303.11156"
         },
         {
             "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",

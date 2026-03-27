@@ -1,14 +1,13 @@
 {
-    "name": "Contraction Detection",
-    "description": "Detects contraction usage patterns",
-    "algorithm": "Contraction Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects contraction usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through contraction detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "문맥상 축약어 적합성(Contraction Appropriateness)",
+    "description": "축약어의 사회언어학적 배치와 리듬 타이밍을 분석하여 알고리즘에 의해 강제 주입된 어색한 비격식성(캐주얼함)을 적발합니다.",
+    "algorithm": "문체 공명(Stylistic Resonance) 및 문맥적 축약어 프로파일링",
+    "mechanism": "단순 빈도 분석이 축약어가 '몇 번' 등장하는지 센다면, 이 기법은 축약어가 '어디에', '어떻게' 사용되었는지를 평가합니다. 거대 언어 모델(LLM)들은 '사회언어학적 일관성'을 유지하는 데 심각한 어려움을 겪습니다. 사용자가 프롬프트로 '캐주얼하게 써줘'나 '친근하게 말해 방'라고 명령하면, AI는 딱딱하고 극도로 격식 있는 어휘와 복잡 학술적 통사 구조로 떡칠된 문장 한가운데에 느닷없이 축약어('don't', 'it's')를 우겨넣어 끔찍한 문체적 충돌(부조화)을 일으킵니다. 게다가 인간 작가들은 절의 끝이나 극적인 포인트를 강조하기 위해 리듬감 있게 본능적으로 단어를 풀어서('do not') 쓰는 반면, 알고리즘은 단지 강제된 파라미터에 눈이 멀어 의미 없이 단어를 축약해 버릴 수 있습니다. 이 기법은 축약어가 포함된 문장 주변의 '의미론적 격식도'를 매핑하여 축약어의 존재와 대조합니다. 불일치 점수가 높다면, 이는 인간의 감정적 리듬을 전혀 이해하지 못한 채 대화의 톤을 억지로 '흉내 내려고' 발악하는 알고리즘 작성자의 강력한 증거입니다.",
+    "useCase": "AI가 교과서적인 격식과 강제된 친근한 축약어를 끔찍하게 섞어 쓰는 블로그, 마케팅 문구, 인플루언서 사칭 소셜 미디어 게시물 등에서 '프롬프트로 강제 주입된 친근함'을 색출합니다.",
+    "strengths": "• AI는 보통 축약어를 적절한 문장 리듬이나 어휘 수준(Tier)과 일치시키는 데 실패하기 때문에, 고도화된 프롬프트(예: '사람처럼 보이게 축약형을 섞어 써라') 앞에서도 극강의 방어력을 자랑합니다.\n• 기업용 AI가 지나치게 친근해지려고 애쓸 때 느껴지는 특유의 '불쾌한 골짜기(Uncanny valley)' 감성을 정확하게 수치로 짚어냅니다.\n• 가독성 및 어휘 밀도 지표와 결합될 때 엄청난 의미론적 증폭기 역할을 합니다.",
+    "limitations": "• '전문적이면서도 친근한' 톤을 어색하게 따라 하려는 영문학 초보자나 비원어민(Non-native) 인간을 평가할 때 억울한 오탐지(False positive)를 낼 수 있습니다.\n• 구문론적 동사 축약어 개념이 아예 없는 동아시아 언어(한국어, 중국어, 일본어)에서는 이 잣대를 들이댈 수 없습니다.\n• 문장의 기본 문체 톤(Baseline)을 파악하고 비교할 수 있도록 축약어 앞뒤로 충분한 문맥(문장)이 필요합니다.",
+    "parameters": "분석 기준: 문체적 충돌 맵핑 및 문맥 리듬\n측정 지표: 사회언어학적 격식도 vs 축약어 배치 위치 지정\n출력: 0-100 문체적 부조화 (강제된 친근함) 스코어",
+    "accuracy": "중간 — 65-75%. 매우 특화된 무기입니다. 일관된 '페르소나'를 유지하느라 쩔쩔매는 깡통 기계를 식별하는 데는 마스터키지만, 분석을 위한 충분한 텍스트 길이가 담보되어야 합니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

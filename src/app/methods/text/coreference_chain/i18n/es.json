@@ -1,14 +1,13 @@
 {
-    "name": "Análisis de Cadena de Correferencia",
-    "description": "Examina correferencia resolución chains para identificar generado por IA text through abnormal entity tracking and pronominal reference patrones.",
-    "useCase": "Detección de texto IA mediante cadenas de referencia de entidades inconsistentes o simplificadas",
-    "mechanism": "Constructs correferencia chains linking mentions of the same entity throughout the text (pronombres, noun phrases, proper names). generado por IA text often shows shorter correferencia chains, less complex reference resolucións, and occasional entity confusion—where referents are ambiguously or incorrectly resolved. The method mide chain length distribución, referential distance, and chain branching complexity.",
-    "accuracy": "Moderada-Alta - 75-85% on long-form text",
-    "source": "Dugan, L. et al. (2024) - RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors, ACL",
-    "algorithm": "Coreference Resolution + Chain Statistics + Anomaly Scoring",
-    "parameters": "Modelo: neural correferencia resolver, Min chain length: 2 mentions, Metrics: chain density, avg distance, branching factor, Text min: 200 words",
-    "strengths": "• Captures deep discourse-level coherencia\n• Effective on long-form narratives and essays\n• Detecta subtle entity tracking failures\n• Orthogonal to surface-level características",
-    "limitations": "• Computacionalmente costoso for long texts\n• Coreference resolución itself is imperfect\n• Short texts yield too few chains for análisis\n• Performance depends on correferencia model quality",
+    "name": "Resolución de Cadena de Correferencia",
+    "description": "Analiza la longitud y complejidad de las cadenas de seguimiento de entidades (con qué frecuencia los pronombres remiten exitosamente a un sustantivo propio distante) para detectar un modelado cognitivo superficial.",
+    "algorithm": "Seguimiento Neural de Correferencia y Puntuación de Cadena de Entidad",
+    "mechanism": "Los escritores humanos mantienen modelos mentales complejos y a largo plazo de los sujetos sobre los que escriben. Confiadamente introducimos una entidad (ej., 'Alejandro Magno') en el primer párrafo, y cómodamente nos referimos a él como 'él', 'el conquistador' o 'su' varios párrafos más tarde, creando una 'cadena de correferencia' profunda. Los modelos de IA autorregresivos, atados por ventanas de contexto y careciendo de una 'memoria' real de la estructura narrativa, tienen grandes dificultades con esto. Para evitar resoluciones de pronombres ambiguas, una IA bien alineada 'restablecerá' de manera conservadora la cadena repitiendo continuamente el sustantivo propio (ej., mencionando 'Alejandro Magno' de nuevo en el tercer párrafo en lugar de usar un pronombre). Este método despliega un resolutor de correferencia neuronal para mapear cada mención de entidad y sus pronombres correspondientes a través del texto. Un documento generado por IA típicamente exhibe cadenas de correferencia patológicamente cortas o fracturadas, lo que indica un proceso de generación superficial y sin estado (stateless) que carece de permanencia de objeto profunda.",
+    "useCase": "Exponer orígenes sintéticos en ensayos largos, cuentos y análisis históricos donde la IA repite torpe y excesivamente nombres de personajes o entidades abstractas en lugar de confiar en que el lector siga cadenas de pronombres complejas.",
+    "strengths": "• Captura fallas profundas de coherencia a nivel del discurso que son invisibles para los correctores sintácticos o léxicos superficiales.\n• Altamente efectivo contra modelos avanzados que han dominado la gramática local de las oraciones pero que continúan fallando en la memoria estructural a nivel de documento.\n• Inmune a estrategias básicas de evasión como alteraciones de ortografía o reemplazo por sinónimos.",
+    "limitations": "• Excesivamente costoso de computar, requiriendo una red neuronal dedicada solo para mapear las cadenas de entidades antes de que pueda comenzar el análisis.\n• Los textos cortos (menos de 200 palabras) resultan en muy pocas cadenas para formar un perfil estadísticamente significativo.\n• Puede producir falsos positivos en documentos altamente técnicos o legales donde los autores humanos están legalmente obligados a evitar pronombres y repetir sustantivos propios para prevenir la ambigüedad.",
+    "parameters": "Análisis: Mapeo de Correferencia Neural\nMétrica: Densidad de Cadena, Distancia Referencial Promedio y Factor de Ramificación\nResultado: 0-100 Puntuación de Seguimiento Referencial Superficial",
+    "accuracy": "Moderada a Alta — 75-85%. Exhibe una precisión letal en textos narrativos de formato largo y ensayos donde interactúan múltiples sustantivos complejos.",
     "references": [
         {
             "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors. ACL.",
@@ -17,10 +16,6 @@
         {
             "title": "Clark, K. & Manning, C. D. (2016). Deep Reinforcement Learning for Mention-Ranking Coreference Models. EMNLP.",
             "url": "https://doi.org/10.18653/v1/D16-1245"
-        },
-        {
-            "title": "Pu, J. et al. (2023). On the Zero-Shot Generalization of Machine-Generated Text Detectors. EMNLP Findings.",
-            "url": "https://arxiv.org/abs/2310.05165"
         }
     ]
 }

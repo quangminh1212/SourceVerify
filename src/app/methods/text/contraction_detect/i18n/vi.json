@@ -1,12 +1,21 @@
 {
-    "name": "Phát hiện viết tắt",
-    "description": "Phát hiện mẫu sử dụng dạng viết tắt",
-    "algorithm": "Thuật toán phân tích Phát hiện viết tắt",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu sử dụng dạng viết tắt. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phát hiện viết tắt. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Độ Phù hợp Dạng Rút gọn Theo Ngữ cảnh (Contraction Detect)",
+    "description": "Phân tích vị trí và nhịp điệu ngôn ngữ xã hội của các từ viết tắt/rút gọn để lật tẩy sự suồng sã gượng gạo do thuật toán tiêm vào.",
+    "algorithm": "Phân tích Xung đột Văn phong & Hồ sơ Rút gọn Ngữ cảnh",
+    "mechanism": "Trong khi việc phân tích tần suất đơn thuần chỉ đếm xem từ rút gọn xuất hiện bao nhiêu lần, phương pháp này đánh giá *nơi nào* và *cách thức* chúng được sử dụng. Các Mô hình Ngôn ngữ Lớn thường vật lộn yếu ớt với tính nhất quán về ngôn ngữ học xã hội (sociolinguistic consistency). Khi bị ép buộc bằng lệnh 'hãy viết tự nhiên' hoặc 'giọng văn gần gũi', AI có thể đột ngột nhét các từ rút gọn ('don't', 'it's') vào ổ giữa những câu văn vốn đang xài từ vựng hàn lâm cứng ngắc và cú pháp phức tạp, tạo ra một sự pha trộn phong cách (stylistic clash) cực kỳ lố bịch. Hơn nữa, những người viết thật thường có bản năng viết đầy đủ ('do not') để tạo điểm nhấn nhịp điệu (emphasis) ở cuối mệnh đề hoặc trong những đoạn cao trào, trong khi thuật toán có thể mù quáng viết tắt sạch sành sanh chỉ vì bị kẹp bởi tham số lệnh. Phương pháp này đối chiếu độ trang trọng ngữ nghĩa của cả câu văn với sự xuất hiện của từ rút gọn. Điểm xung đột càng cao càng tố cáo một bộ máy đang cố gắng 'tổng hợp' ra giọng điệu trò chuyện mà không thực sự hiểu được nhịp điệu cảm xúc của con người.",
+    "useCase": "Bắt thóp 'sự tự nhiên bị ép buộc' trong các bài blog, email marketing và bài đăng mạng xã hội, nơi AI thể hiện sự lóng ngóng khi trộn lẫn ngữ pháp sách giáo khoa với các từ rút gọn suồng sã.",
+    "strengths": "• Chống cự cực tốt trước các lệnh prompt cao cấp (ví dụ: 'hãy dùng từ viết tắt để nghe cho giống người'), bởi vì AI thường thất bại trong việc khớp từ viết tắt với nhịp điệu câu từ hoặc tầng từ vựng phù hợp.\n• Nắm bắt trọn vẹn cái cảm giác 'giả trân' (uncanny valley) của các văn bản AI doanh nghiệp đang cố gắng phô diễn sự thân thiện một cách thái quá.\n• Là một bộ khuếch đại ngữ nghĩa mạnh mẽ khi đứng cạnh các chỉ số đo lường độ dễ đọc và mật độ từ vựng.",
+    "limitations": "• Dễ bắt nhầm người viết không phải người bản xứ, hoặc những người mới tập viết đang cố gồng mình tạo ra tông giọng 'chuyên nghiệp nhưng thân thiện'.\n• Tuyệt đối vô dụng với các ngôn ngữ không có khái niệm cấu trúc rút gọn từ (như Tiếng Trung, Nhât, Hàn, Việt).\n• Đòi hỏi một bối cảnh (context) đủ dài xung quanh từ viết tắt để hệ thống có thể thiết lập được mức nền (baseline) về văn phong của câu.",
+    "parameters": "Kiểm Định: Lập Bản đồ Xung đột Văn Phong & Nhịp điệu Ngữ Cảnh\nThước Đo: Độ Trang Trọng Xã Hội vs Vị Trí Đặt Từ Rút Gọn\nĐầu Ra: 0-100 Điểm Số Bất Hòa Văn Phong (Sự Suồng Sã Ép Buộc)",
+    "accuracy": "Trung bình — 65-75%. Mang tính chuyên biệt cao. Rất xuất sắc trong việc tóm gọn những AI đang loay hoay duy trì 'nhân cách' (persona) của mình.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

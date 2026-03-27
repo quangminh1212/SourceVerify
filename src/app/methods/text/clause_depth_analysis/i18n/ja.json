@@ -1,14 +1,13 @@
 {
-    "name": "節深度分析",
-    "description": "測定します the nesting depth of clauses 内の sentences を検出するために AI生成の text's tendency toward shallow embedding structures.",
-    "useCase": "Detecting AI text through uniform and shallow subordinate clause パターン",
-    "mechanism": "Parses sentences into clause hierarchies and 測定する embedding depth (main clause → subordinate clause → embedded clause). Computes maximum depth, mean depth, depth 分散, and depth 分布 per sentence. AI生成の text typically shows lower maximum clause depth and less variation in depth にわたる sentences, reflecting a flatter information packaging strategy compared to human writers who naturally vary 間の simple and deeply embedded constructions.",
-    "accuracy": "中 - 71-81% on essay-length texts",
-    "source": "Hunt, K. W. (1965) - Grammatical Structures Written at Three Grade Levels, NCTE Research Report",
-    "algorithm": "Clause Boundary Detection + Depth Calculation + Statistical Distribution Analysis",
-    "parameters": "Parser: dependency-based clause segmenter, Depth metrics: max/mean/分散/分布, Sentence min: 5 words, Text min: 10 sentences",
-    "strengths": "• Captures information packaging complexity\n• Linguistically well-motivated 特徴\n• Complementary to sentence-level metrics\n• Effective on formal and academic writing",
-    "limitations": "• Parser-dependent 精度\n• Some genres favor simple clause structures naturally\n• Modern LLMs can produce complex embeddings\n• Requires reliable clause boundary 検出",
+    "name": "統語的節深度（クローズ・デプス）プロファイリング",
+    "description": "文中の入れ子になった（ネストされた）従属節の、最大で垂直方向の再帰的な埋め込み深さを測定します。",
+    "algorithm": "再帰的依存関係深さ（デプス）評価器",
+    "mechanism": "ハント（Hunt, 1965）のT-unit分析とギブソン（Gibson）の依存関係局所性理論に根ざしたこの手法は、埋め込まれた文章（例：文の中に文を配置する）の最大の階層的な深さを評価します。人間は、複雑で深く入れ子になった節（例：「猫を追いかけた犬を見た男が倒れた」）を頭の中で追跡することはできますが、文脈を保持するために膨大な認知的負荷がかかるため、カジュアルな執筆では本能的にそれらを避けます。逆に、人間の学者はしばしばこの深さを極端で非常に難解な限界まで押し上げます。LLMは、文法を破ることなく深い構文的依存関係を追跡する数学的に完璧な能力を持っていますが、生成温度とRLHFの可読性調整により、幅広い一般的な可読性を確保するために、極端な再帰的な深さを強制的に大幅に切り捨てます。この手法は、ドキュメント全体の構造ツリーの深さの標準偏差をグラフ化することにより、AI生成によってのみ占められる、安全で予測可能な「浅い〜中程度」の埋め込みゾーンを特定します。",
+    "useCase": "極端に深い学術的な入れ子の限界と、非常に断片化された会話的な短さの間を通常は行き来する、本物の人間の文章から、安全で大衆受けするAIテキストを区別します。",
+    "strengths": "• 現代のLLMのアテンション・ヘッドに組み込まれている、核となる構造上の安全性と可読性のメカニズムを明らかにします。\n• 中和された機械のテキストと、専門的で密度の高い人間の学術的な文章を区別する上で非常に高い精度を誇ります。\n• 認知限界に関する何十年にもわたる確立された、査読済みの心理言語学的研究に基づいています。",
+    "limitations": "• AIの出力メトリクス（指標）は、明確で適度に簡潔であるように教えられている標準的な高校生レベルの人間の文章と著しく重複します。\n• 解析ツリーを徹底的に生成する必要があるため、句読点のない長いドキュメントでは計算量が非常に多くなります。\n• 非常にまとまりのない、または文法的に崩れた人間のテキストに対する深刻な解析エラーは、深さの計算を人為的に歪める可能性があります。",
+    "parameters": "解析: T-unit / 統語的埋め込み深さ\n評価基準: 最大解析ツリー深さの分散\n出力結果: 0-100 深さの同質性（ホモジネイティ）スコア",
+    "accuracy": "中〜高 — 長文コンテンツで72-82%。AIを支配する「中道（ミドル・オブ・ザ・ロード）」の複雑さの制約を暴くのに効果的。",
     "references": [
         {
             "title": "Hunt, K. W. (1965). Grammatical Structures Written at Three Grade Levels. NCTE Research Report No. 3.",

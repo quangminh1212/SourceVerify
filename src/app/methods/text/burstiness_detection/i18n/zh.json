@@ -1,14 +1,14 @@
 {
-    "name": "突发性检测",
-    "description": "分析 the 突发性 模式文本中的 to distinguish AI生成的 from 人类撰写的 content.",
-    "useCase": "Detecting AI text through 分析 of 句子长度 and complexity variation",
-    "mechanism": "测量 the variation (突发性) in sentence structures, lengths, and complexity throughout a text. Human writing naturally varies 之间 simple and complex sentences, short and long paragraphs. AI生成的 text tends to maintain a more uniform level of complexity, resulting in lower 突发性 scores.",
+    "name": "语义突现度 (Burstiness) 评估",
+    "description": "对整个篇章中语言特征的节奏和聚集度进行严密的统计对比。",
+    "useCase": "专门揭露那些缺乏人类思维中所固有的复杂概念交替汇聚能力、高度受安全对齐准则限缩而索然无味的 AI 八股文。",
+    "mechanism": "人类作者天生就会运用复杂的认知节奏结构，在信息密度极高、句子较长的“爆发”段落与较简短的过渡短句之间穿插进行。与此相反，现代自回归法大语言模型（LLM）由于其特殊的算法机制——通过受到基于 Temperature 温度平滑参数影响的 softmax 函数来优化 token 的选择概率，机械生成出来的文本严重偏向于极低突现度（即极端的结构同质性）。此方法精准打击词元概率均衡所造成的机械式平滑过滤效应，捕获模型引擎由于缺乏偶发性思维爆发而形成的、绝对中规中矩的人造平滑节奏。",
     "accuracy": "中等 - 72-82% as standalone method",
     "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection, arXiv",
-    "algorithm": "Sentence Length Variance + Structural Complexity Scoring + Moving Window Analysis",
-    "parameters": "窗口大小: 5 sentences, Metrics: length 方差, complexity index, transition 熵",
-    "strengths": "• 简单且可解释的指标\n• 在一定程度上与语言无关\n• 与其他文本方法结合效果良好\n• 对任意长度文本快速计算",
-    "limitations": "• Lower 准确度 as standalone detector\n• Academic and technical writing naturally has low 突发性\n• AI models are improving at mimicking human variability\n• Very short texts are unreliable",
+    "algorithm": "非均匀齐次概率与聚集性分析",
+    "parameters": "分析: 突现度核心评分\n微指标: 分布数据中的方差均值比核心刻画\n结果: 0-100 基于波动统计的反判定输出",
+    "strengths": "• 历经多项专门针对 GPT-3/GPT-4 生成指纹进行学术研究的海量数据系统性验证。\n• 在处理规模巨大、可绵延数百个段落的中长篇文本时有着极为出色的排查效能。\n• 高度精准刻画 Temperature 参数被调低时内在文体固化所带来的深度“枯燥感”。",
+    "limitations": "• 对于人类亲自起草的刻板工程技术报告或是极度标准化的官僚格式文档极易引发误报。\n• 如果采样片段太短（少于250字），将因无法累积足够的节拍频谱波峰而失效作废。\n• 可以轻易被“人为要求错落混排句子”类别的高级指令提示工程（Prompt）手法强制规避或绕过。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",

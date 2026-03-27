@@ -1,14 +1,13 @@
 {
-    "name": "Conjunction Pair",
-    "description": "Analyzes correlative conjunction pairs",
-    "algorithm": "Conjunction Pair — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes correlative conjunction pairs. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through conjunction pair analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "相関接続詞ペア（Conjunction Pair）",
+    "description": "ペアになった相関接続詞（例：「～だけでなく～も（not only... but also）」、「～か～のどちらか（either... or）」）の頻度と厳密な構文的対称性を分析します。",
+    "algorithm": "構文的対称性および相関ペア抽出",
+    "mechanism": "大規模言語モデルは、文法的に完璧なテキストを出力するように厳格にトレーニングされています。この完璧主義の特徴の1つは、「[X]だけでなく[Y]も（not only [X] but also [Y]）」、「[X]でも[Y]でもない（neither [X] nor [Y]）」、「[X]と[Y]の両方（both [X] and [Y]）」などのフォーマルな相関接続詞の積極的な使用です。決定的なことに、AIは数学的に完璧な構文的対称性を用いてこれらのペアを実行し、「not only」の直後の文法構造が「but also」の後の構造と完璧に一致することを保証します。対照的に、厳格な学術的または専門的な編集を受けていない人間の書き手は、これらのフォーマルなペアを使用する頻度が低く、使用した場合でも並列構造の誤りを犯すことがよくあります（例：「動詞だけでなく…名詞も」）。この手法は、これらの相関ペアを抽出し、その密度と内部の並列的な対称性を計算します。完璧な相関構造が頻発する場合、自然な揺らぎよりも教科書的な文法を優先するアルゴリズム生成器（AI）の存在を示しています。",
+    "useCase": "教科書のように完璧な相関文法に大きく依存して権威があるように響かせている、人工的に雄弁なエッセイ、マーケティング・コピー、およびフォーマルな記事の特定。",
+    "strengths": "• モデルが概念を正式に比較または集約しようとする、「説得力のある」または「分析的な」AIプロンプトに対して非常に効果的です。\n• 深い構文的対称性を評価するため、単純な単語スピナーやシノニム（類義語）の置き換えに対して完全に免疫があります。\n• 人間の不完全さを利用します。並列構造のエラーは人間にはよく見られますが、最新のLLMには事実上存在しません。",
+    "limitations": "• 出版されたジャーナリズム、法的文書、学術論文など、高度に編集された人間のテキストを評価する場合、誤検知の影響を受けやすくなります。\n• 作者に関係なく相関ペアが自然に存在しない、短文のテキストやカジュアルな会話では完全に効果がありません。\n• 非公式な乱れた文法や会話調のトーンを使用するようにAIに明示的に指示することで、簡単に回避できます。",
+    "parameters": "解析: 相関接続詞抽出および依存関係解析\n評価基準: ペア密度および構文的並列性\n出力結果: 0-100 相関形式主義（教科書的文法）スコア",
+    "accuracy": "中〜高 — 70-85%。生成されたB2Bマーケティング、説得力のあるエッセイ、または分析的な比較に対して特に致命的です。カジュアルなテキストや架空のテキストには役に立ちません。",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

@@ -1,14 +1,13 @@
 {
-    "name": "Conclusion Indicator",
-    "description": "Detects conclusion marker patterns",
-    "algorithm": "Conclusion Indicator — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects conclusion marker patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through conclusion indicator analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "結論インジケーター・プロファイリング",
+    "description": "総括的な結論段落の非常に予測可能で数学的に強制された存在と、その厳格な構造を検出します。",
+    "algorithm": "ディスコース・マーカー（談話標識）および総括的ヒューリスティック",
+    "mechanism": "RLHF（人間のフィードバックからの強化学習）に合わせたAIライティングの明白な行動的特徴は、「強制的な結論」です。プロンプトの長さ、トピックの非公式な性質、または物語上の必要性の欠如に関係なく、商用LLMはデフォルトで、それまでに述べたポイントをきちんと要約するように設計されています。彼らはこれを、「結論として」、「最終的に」、「要約すると」、「全体として」、「まとめると」などの、非常に予測可能な教科書的なレトリック・マーカーを使用して実行します。対照的に、本物の人間の文章、特にカジュアルなメール、フォーラムの投稿、または唐突に終わるクリエイティブな意見記事では、形式的な総括段落を完全に省略することがよくあります。この手法は、テキスト構造の最後の15%を厳格に分析し、明示的な総括ディスコース・マーカーをマッピングし、この結論部分と本文との意味的重複（セマンティック・オーバーラップ）を数学的に比較します。高い意味的冗長性（さっき言ったことを単に繰り返すこと）と、一般的な移行の結論マーカーが直接組み合わさっている場合、そのテキストはAIの自動化された、創造性のない「締めくくり行動」を示しているとして、強く警告されます。",
+    "useCase": "テキストの最後に、不必要で反復的な要約を人為的かつ執拗に付け加える、AI生成のエッセイ、電子メール、ブログ投稿、および記事の暴露。",
+    "strengths": "• ChatGPTやClaudeなどの主要なモデルに与えられた「ゼロショット」プロンプトに対して、極めて高い真陽性（True-Positive）検出率を示します。\n• 経験の浅い、あるいは急いでいるプロンプターが明示的に無効にすることをめったに思いつかない、根深くプログラミングされた高度な構造的行動パターンを捉えます。\n• 非常に軽量で計算コストが低く、大量のドキュメントを並行して実行する場合でも驚くほど高速です。",
+    "limitations": "• ユーザーが提出または公開する前に、単に最後の段落を削除しただけで完全に無効になります。\n• 正式な学術論文、科学論文、エグゼクティブ・サマリーは当然のことながら総括的な結論を必要とするため、これらの厳格な分野では誤検知のリスクが根本的に高まります。\n• AI内部の「エッセイ形式」生成テンプレートをトリガーするのに十分な長さ（通常は200語以上）のテキストにのみ適用可能です。",
+    "parameters": "解析: 修辞的終了構造（Rhetorical End-Structure）および意味的冗長性\n評価基準: 本文の意味的重複に対する総括的マーカーの頻度\n出力結果: 0-100 結論テンプレート（自動締めくくり）スコア",
+    "accuracy": "非常に高い — 一般的なプロンプトから生成された、生の未修飾AI出力に対して85-95%。最後の段落が手動で削除されると効果は崩壊します。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

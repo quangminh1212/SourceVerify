@@ -1,12 +1,21 @@
 {
-    "name": "Sử dụng điều kiện",
-    "description": "Phân tích mẫu câu điều kiện",
-    "algorithm": "Thuật toán phân tích Sử dụng điều kiện",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu câu điều kiện. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng điều kiện. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân tích Tần suất Câu Điều kiện (Conditional Usage)",
+    "description": "Phân tích tần suất và độ phức tạp của các mẫu câu điều kiện (ví dụ: 'Nếu X thì Y') và cấu trúc giả định để rào đón.",
+    "algorithm": "Lập Hồ Sơ Cú Pháp Giả Định & Trích Xuất Dấu Hiệu Điều Kiện",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn thương mại bị phạt rất nặng trong quá trình huấn luyện nếu đưa ra các tuyên bố tuyệt đối, mang tính khẳng định chắc nịch, đặc biệt là khi liên quan đến sự thật, lời khuyên hoặc dự đoán tương lai. Để giữ được sự 'an toàn' và thận trọng, chúng dựa dẫm một cách ám ảnh vào logic điều kiện và chiến thuật rào đón giả định ('Nếu', 'Trong trường hợp', 'Giả sử', 'Trừ khi'). Cấu trúc câu điều kiện của chúng cũng hoàn hảo về mặt hình học, luôn ghép một mệnh đề 'nếu' với một hệ quả 'thì/có thể sẽ' không một vết xước. Ngược lại, người viết thường bạo miệng hơn, hay đưa ra các lời khẳng định chắc nịch, và hay viết những câu điều kiện bị gãy hoặc không hoàn chỉnh. Phương pháp này trích xuất và đánh giá mật độ của các từ khóa điều kiện, đồng thời lập bản đồ cách chúng giải quyết cấu trúc cú pháp. Một tần suất dày đặc các câu điều kiện được giải quyết hoàn hảo, cầu toàn thái quá chính là lá cờ đỏ tố cáo bản chất 'hữu ích, vô hại và trung thực' đặc trưng của AI hiện đại.",
+    "useCase": "Phát hiện các bài viết tư vấn, tuyên bố miễn trừ trách nhiệm pháp lý/y tế, các bài xã luận và câu trả lời do AI viết, có xu hướng từ chối đưa ra lập trường rõ ràng bằng cách núp bóng các kịch bản giả định thái quá.",
+    "strengths": "• Cực kỳ hiệu quả trong việc soi ra bản chất 'ba phải', sợ trách nhiệm và không dám cam kết của các mô hình AI đã qua căn chỉnh RLHF.\n• Hoạt động mượt mà trên nhiều ngôn ngữ khác nhau, vì chức năng cú pháp của câu điều kiện tồn tại trên toàn cầu.\n• Tốc độ tính toán nhanh như chớp, vì chỉ chọc vào cây phụ thuộc ngữ pháp thay vì phải chạy các mô hình nhúng (embeddings) ngữ nghĩa khổng lồ.",
+    "limitations": "• Dễ bắt nhầm (false positives) vào các văn bản pháp lý xịn, giả thuyết khoa học hoặc tài liệu kỹ thuật chuyên sâu—nơi thực sự bắt buộc phải dùng nhiều logic điều kiện.\n• Có thể bị vượt mặt nếu người dùng chủ động ép AI bằng lệnh: 'hãy viết với sự chắc chắn tuyệt đối' và 'cấm dùng từ ngữ rào đón'.\n• Kém hiệu quả hơn đối với tiểu thuyết hoặc truyện kể, nơi các tình huống giả định theo kiểu rào đón ít xuất hiện tự nhiên hơn.",
+    "parameters": "Kiểm Định: Trích Xuất Mệnh Đề Điều Kiện\nThước Đo: Mật Độ Biểu Hiện Giả Định & Tính Đối Xứng Cấu Trúc\nĐầu Ra: 0-100 Điểm Số Rào Đón Bằng Điều Kiện (Chỉ Số Ba Phải)",
+    "accuracy": "Cao — 75-85% trên các văn bản dạng tư vấn, phân tích hoặc câu hỏi QA. Độ chính xác giảm nếu gặp văn bản sáng tạo mang tính khẳng định cao.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

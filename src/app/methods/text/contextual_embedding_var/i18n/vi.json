@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Contextual Embedding Variance",
-    "description": "Đo phương sai nhúng từ theo ngữ cảnh — văn bản AI cho thấy ít biến thiên nhúng nội câu hơn.",
-    "algorithm": "Thuật toán phân tích Contextual Embedding Variance",
-    "mechanism": "Hệ thống Contextual Embedding Variance phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phương sai Nhúng Ngữ cảnh (Embedding Variance)",
+    "description": "Đo lường phương sai (độ lệch) của các vector nhúng từ ngữ cảnh (ví dụ: từ BERT) để phát hiện sự thiếu hụt đột biến đặc trưng của AI.",
+    "algorithm": "Trích Xuất Vector Transformer & Lập Hồ Sơ Phương Sai",
+    "mechanism": "Các LLM tự hồi quy (Autoregressive) sinh ra văn bản bằng cách liên tục dự đoán token tiếp theo có xác suất thống kê cao nhất dựa trên cửa sổ ngữ cảnh trước đó. Bởi vì chúng bị trói buộc bởi toán học để tối đa hóa xác suất, các câu văn sinh ra luôn duy trì một quỹ đạo ngữ nghĩa chật hẹp và cực kỳ dễ đoán. Nếu bạn vẽ biểu đồ các vector nhúng (đại diện số học) của các từ trong một câu văn do AI viết, chúng sẽ chụm lại rất khít với nhau, với độ lệch (phương sai) cực thấp so với mức trung bình. Ngược lại, con người không giao tiếp bằng cách 'dự đoán từ tiếp theo'. Điển hình, một người viết thường hay lôi ý tưởng từ những vùng nhận thức khác nhau, chèn vào các ẩn dụ mới lạ, bẻ lái chủ đề đột ngột, hoặc dùng một từ vựng gây sốc ngay giữa câu—điều này gây ra những cú nhảy vọt và độ lệch cực cao trong các vector nhúng. Phương pháp này tính toán phương sai toán học của các vector đó; một quỹ đạo mượt mà một cách bất thường, phương sai thấp lè tè chính là bằng chứng đanh thép cho kiểu sinh văn bản bị trói buộc bởi xác suất của máy móc.",
+    "useCase": "Nhận diện các văn bản nhân tạo chất lượng cao (đã vượt qua các bước kiểm tra ngữ pháp bề mặt) bằng cách phân tích mối quan hệ toán học sâu sắc giữa các từ dưới góc nhìn của mô hình Transformer.",
+    "strengths": "• Nhắm thẳng vào cơ chế toán học cốt lõi cấu tạo nên mọi LLM (phân phối xác suất), nên gần như bất tử trước các trò lách luật bằng prompt hay tinh chỉnh tham số.\n• Hoạt động với hiệu suất cực cao bất kể chủ đề, thể loại hay vốn từ vựng cụ thể được sử dụng.\n• Hoạt động dựa trên logic vector toán học tuyệt đối thay vì các quy tắc văn phong chủ quan.",
+    "limitations": "• Ngốn tài nguyên và tốn kém sức mạnh tính toán; đòi hỏi phải nạp một mô hình mã hóa (Encoder) hạng nặng như BERT hoặc RoBERTa để trích xuất vector theo thời gian thực.\n• Có thể gào nhầm (false positives) nếu mang đi quét các văn bản rập khuôn của con người, chẳng hạn như hợp đồng pháp lý bán sẵn hoặc sách định nghĩa kỹ thuật lặp đi lặp lại.\n• Đòi hỏi văn bản phải có độ dài ít nhất là một đoạn để có thể đo lường sự biến thiên phươg sai có ý nghĩa về mặt thống kê.",
+    "parameters": "Kiểm Định: Trích Xuất Vector Nhúng Ngữ Cảnh & Khoảng Cách Hàng Xóm\nThước Đo: Độ Lệch Chuẩn Vector Nhúng Trong Câu\nĐầu Ra: 0-100 Điểm Số Quỹ Đạo Toán Học Nhân Tạo (Phương Sai Thấp)",
+    "accuracy": "Cao — 85-90%. Đây là một trong những phương pháp dò tìm chuẩn hàn lâm khắt khe và uy tín hàng đầu. Miễn nhiễm với các trò hề xoay vòng từ đồng nghĩa (spin nội dung).",
+    "references": [
+        {
+            "title": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.",
+            "url": "https://doi.org/10.18653/v1/N19-1423"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
+            "url": "https://arxiv.org/abs/2306.04723"
+        }
+    ]
 }

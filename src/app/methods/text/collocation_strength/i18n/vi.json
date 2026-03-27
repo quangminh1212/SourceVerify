@@ -1,25 +1,24 @@
 {
-    "name": "Phân tích sức mạnh phối hợp từ",
-    "description": "Đo sức mạnh và tính tự nhiên của phối hợp từ bằng điểm thông tin tương hỗ để nhận diện văn bản AI.",
-    "useCase": "Phát hiện văn bản AI qua mẫu đồng xuất hiện từ bất thường và ưu tiên phối hợp từ",
-    "mechanism": "Trích xuất cặp từ (bigram, trigram) và tính Pointwise Mutual Information (PMI) và tỷ lệ log-likelihood để đo sức mạnh liên kết. Văn bản AI thường ưu tiên phối hợp từ tần suất cao 'an toàn' (ví dụ: 'tác động đáng kể', 'vai trò quan trọng') trong khi ít dùng phối hợp từ sáng tạo, bất thường hoặc thành ngữ phổ biến ở con người.",
-    "accuracy": "Trung bình - 72-82% trên văn bản đa lĩnh vực",
-    "source": "Church & Hanks (1990) - Word Association Norms, Mutual Information, Computational Linguistics",
-    "algorithm": "PMI Computation + Log-Likelihood Ratio + Collocation Profile Comparison",
-    "parameters": "Cửa sổ: 2-5 từ, Chỉ số: PMI, t-score, log-likelihood, MI3, Tần suất tối thiểu: 2, Tham chiếu: BNC/COCA",
-    "strengths": "• Nắm bắt mẫu kết hợp từ vựng tinh vi\n• Đã thiết lập trong ngôn ngữ học khối liệu\n• Phát hiện lạm dụng biểu thức công thức\n• Áp dụng được trên nhiều loại văn bản",
-    "limitations": "• Cần kho ngữ liệu tham chiếu lớn cho PMI tin cậy\n• Phối hợp từ chuyên ngành gây nhiễu\n• Biểu thức đa từ cần xử lý đặc biệt\n• Cần chuẩn phối hợp từ theo ngôn ngữ",
+    "name": "Sức mạnh Kết hợp Từ vựng (Collocation Strength)",
+    "description": "Phân tích xác suất thống kê của các cặp từ đi chung với nhau (Pointwise Mutual Information) để lật tẩy các cụm từ an toàn, có xác suất toán học cao ngất ngưởng.",
+    "algorithm": "Máy Lập hồ sơ Thông tin Tương hỗ Từng điểm (PMI)",
+    "mechanism": "Bám rễ vào công trình ngôn ngữ học máy tính nền tảng của Church & Hanks, phương pháp này tính toán Thông tin Tương hỗ Từng điểm (PMI - Pointwise Mutual Information) của các cặp từ nằm cạnh hoặc gần nhau, đem so chiếu với các kho ngữ liệu (corpora) khổng lồ làm cơ sở. Các Mô hình Ngôn ngữ Lớn sinh ra văn bản bằng cách liên tục dự đoán token tiếp theo có xác suất thống kê cao nhất. Bản chất toán học này vô tình trói buộc chúng vào một sự phụ thuộc nặng nề, không thể trốn thoát vào các cụm từ kết hợp phổ biến, mạnh mẽ (ví dụ: những câu sáo rỗng, các mảng thành ngữ, những cặp tính từ - danh từ quá dễ đoán như 'bức tranh đa dạng' hay 'hòa quyện hoàn hảo'). Ngược lại, những người viết chân chính thường xuyên sáng tạo ra các cụm từ kết hợp mới lạ, có xác suất cực thấp, những liên tưởng chướng tai gai mắt, hoặc các ẩn dụ sáng tạo phá vỡ mọi quy chuẩn thống kê. Bằng cách tổng hợp điểm PMI toàn cục của các n-gram trong văn bản, phương pháp này sẽ tóm gọn được những cấu hình văn bản 'an toàn' và có xác suất cao nhất — dấu hiệu không thể chối cãi của việc sinh văn bản tự động (autoregressive).",
+    "useCase": "Nhận diện văn viết AI thông qua việc nó hoàn toàn vắng bóng những cụm từ ghép đôi mới mẻ, sáng tạo hoặc gây bất ngờ về mặt toán học, phơi bày những văn bản được xây dựng hoàn toàn từ các câu sáo rỗng và cụm từ 'an toàn'.",
+    "strengths": "• Điểm huyệt cực kỳ sâu vào bản chất cơ học cốt lõi của các thuật toán dự đoán token tiếp theo.\n• Hoạt động vô cùng bền bỉ và hiệu quả bất chấp mọi chủ đề, lĩnh vực hay nội dung đang được phân tích.\n• Cực kỳ nhẹ bén về mặt thuật toán, do các bảng cơ sở PMI khổng lồ đã được biên dịch sẵn từ trước.",
+    "limitations": "• Các bài viết học thuật dày đặc hoặc văn bản pháp lý chuyên ngành cũng phụ thuộc cực nặng vào các cụm từ chuẩn mực, có xác suất cao, dẫn đến rủi ro bóp cò nhầm rất lớn (false positives).\n• Đòi hỏi một khối lượng công việc khổng lồ để liên tục xây dựng và bảo trì các kho ngữ liệu tần suất cơ sở (baseline corpora) khổng lồ cho ĐÚNG MỌI ngôn ngữ được hỗ trợ.\n• Các kỹ sư prompt lành nghề có thể tung chiêu (ví dụ: 'hãy viết theo phong cách siêu thực') để ép điểm PMI hạ xuống và thi thoảng lách qua được lưới lọc.",
+    "parameters": "Kiểm Định: Lập Bản Đồ PMI Bigram/Trigram\nThước Đo: Xác Suất Kết Hợp Từ Vựng Trung Bình vs. Sự Mới Lạ Của Từ\nĐầu Ra: 0-100 Điểm Số Dễ Đoán Kết Hợp Từ (Predictability Score)",
+    "accuracy": "Cao — 78-86%. Một trong những điểm báo thống kê nền tảng và lỳ lợm nhất của văn bản do AI tuôn ra.",
     "references": [
         {
-            "title": "Church & Hanks (1990). Word Association Norms, MI, and Lexicography. Computational Linguistics.",
+            "title": "Church, K. W. & Hanks, P. (1990). Word Association Norms, Mutual Information, and Lexicography. Computational Linguistics.",
             "url": "https://aclanthology.org/J90-1003/"
         },
         {
-            "title": "Evert, S. (2008). Corpora and Collocations. Corpus Linguistics Handbook.",
+            "title": "Evert, S. (2008). Corpora and Collocations. Corpus Linguistics: An International Handbook.",
             "url": "https://doi.org/10.1515/9783110213881.2.1212"
         },
         {
-            "title": "Clark, E. et al. (2021). All That's 'Human' Is Not Gold. ACL.",
+            "title": "Clark, E. et al. (2021). All That's 'Human' Is Not Gold: Evaluating Human Evaluation of Generated Text. ACL.",
             "url": "https://doi.org/10.18653/v1/2021.acl-long.565"
         }
     ]

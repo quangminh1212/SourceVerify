@@ -1,12 +1,21 @@
 {
-    "name": "Cặp liên từ",
-    "description": "Phân tích cặp liên từ tương quan",
-    "algorithm": "Thuật toán phân tích Cặp liên từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích cặp liên từ tương quan. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích cặp liên từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Cặp Liên Từ Tương Quan (Conjunction Pair)",
+    "description": "Phân tích tần suất và độ đối xứng cú pháp hoàn hảo của các cặp liên từ tương quan (ví dụ: 'không những... mà còn', 'hoặc... hoặc').",
+    "algorithm": "Trích Xuất Cặp Tương Quan & Đối Xứng Cú Pháp",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn được huấn luyện cực kỳ khắt khe để nhả ra những văn bản không tì vết về mặt ngữ pháp. Một trong những dấu hiệu đặc trưng của căn bệnh 'cầu toàn' này là tần suất lạm dụng các cặp liên từ tương quan trang trọng, chẳng hạn như 'không những [X] mà còn [Y]', 'không [X] cũng không [Y]', hoặc 'cả [X] và [Y]'. Đáng chú ý, AI thực thi các cặp nối này với một sự đối xứng cú pháp hoàn hảo đến mức toán học—đảm bảo rào giậu cấu trúc ngữ pháp đứng ngay sau 'không những' trùng khớp 100% với cấu trúc đứng sau 'mà còn' (lỗi cấu trúc song song rất hay gặp ở người). Người viết bình thường, nằm ngoài các tòa soạn báo hay giới hàn lâm, rất ít khi xài các cặp từ trịnh trọng này, và nếu có xài thì cũng hay bị 'việt vị' lỗi song song ngữ pháp. Phương pháp này trích xuất các cặp tương quan và tính toán mật độ cũng như độ đối xứng song song bên trong của chúng. Một mật độ dày đặc các cấu trúc tương quan hoàn mỹ không một nếp nhăn chính là sản phẩm của một cỗ máy tạo chữ ưu tiên ngữ pháp sách giáo khoa hơn là sự biến thiên tự nhiên.",
+    "useCase": "Nhận diện các bài luận, bài viết PR marketing, hoặc bài báo trang trọng có vẻ ngoài trơn tru, đao to búa lớn một cách giả tạo do bám víu vào ngữ pháp tương quan chuẩn-sách-giáo-khoa.",
+    "strengths": "• Đặc biệt hiệu quả với các lệnh prompt mang tính 'thuyết phục' hoặc 'phân tích', nơi AI cố gắng so sánh hoặc gộp các khái niệm lại bằng giọng văn trang trọng.\n• Đánh giá tận sâu độ đối xứng cú pháp, miễn nhiễm hoàn toàn với các luồng thay thế từ đồng nghĩa (spin nội dung) rẻ tiền.\n• Tận dụng triệt để 'sự không hoàn hảo của con người': lỗi cấu trúc song song rất phổ biến ở người nhưng gần như tuyệt chủng ở các LLM hiện đại.",
+    "limitations": "• Rất dễ bắt nhầm (false positives) khi quét các văn bản của con người đã được biên tập kỹ lưỡng, chẳng hạn như báo chí xuất bản, tài liệu pháp lý hoặc luận văn học thuật.\n• Hoàn toàn vô dụng trên các đoạn văn bản ngắn hoặc hội thoại thông thường, nơi các cặp liên từ tương quan tự nhiên biến mất bất kể tác giả là ai.\n• Dễ bị qua mặt nếu ra lệnh thẳng cho AI viết bằng ngữ pháp lỏng lẻo, bình dân hoặc giọng điệu giao tiếp thường ngày.",
+    "parameters": "Kiểm Định: Trích Xuất Liên Từ Tương Quan & Phân Tích Cây Phụ Thuộc\nThước Đo: Mật Độ Cặp Tương Quan & Tính Hiện Diện Song Song Ngữ Pháp\nĐầu Ra: 0-100 Điểm Số Rập Khuôn Tương Quan (Chỉ Số Sách Giáo Khoa)",
+    "accuracy": "Khá Cao — 70-85%. Thể hiện sức sát thương cực mạnh trên các văn bản marketing B2B, bài luận thuyết phục hoặc bài so sánh phân tích. Vô dụng trên văn bản viết tay thông thường.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

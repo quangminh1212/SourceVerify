@@ -1,14 +1,13 @@
 {
-    "name": "共参照チェーン分析",
-    "description": "調査します 共参照 解像度 chains を識別するために AI生成の text through abnormal entity tracking and pronominal reference パターン.",
-    "useCase": "一貫性のない、または過度に単純化された実体参照チェーンによるAIテキストの検出",
-    "mechanism": "Constructs 共参照 chains linking mentions of the same entity throughout the text (代名詞s, noun phrases, proper names). AI生成の text often shows shorter 共参照 chains, less complex reference 解像度s, and occasional entity confusion—where referents are ambiguously or incorrectly resolved. The method 測定する chain length 分布, referential distance, and chain branching complexity.",
-    "accuracy": "中-高 - 75-85% on long-form text",
-    "source": "Dugan, L. et al. (2024) - RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors, ACL",
-    "algorithm": "Coreference Resolution + Chain Statistics + Anomaly Scoring",
-    "parameters": "モデル: neural 共参照 resolver, Min chain length: 2 mentions, Metrics: chain density, avg distance, branching factor, Text min: 200 words",
-    "strengths": "• Captures deep discourse-level 一貫性\n• Effective on long-form narratives and essays\n• 検出します subtle entity tracking failures\n• Orthogonal to surface-level 特徴",
-    "limitations": "• 計算コストが高い for long texts\n• Coreference 解像度 itself is imperfect\n• Short texts yield too few chains for 分析\n• Performance depends on 共参照 model quality",
+    "name": "共参照（共指示）チェーン解決",
+    "description": "人工的な浅い認知的モデリングを検出するために、エンティティ追跡チェーン（代名詞が離れた固有名詞をどれだけうまく参照しているか）の長さと複雑さを分析します。",
+    "algorithm": "ニューラル共参照トラッキングおよびエンティティ・チェーン・スコアリング",
+    "mechanism": "人間の書き手は、自分が書いている主題について、複雑で長期的なメンタルモデル（頭の中の設計図）を維持します。私たちは第1段落でエンティティ（例：「アレクサンドロス大王」）を自信を持って紹介し、その数段落後でも「彼」、「その征服者」、または「彼の」として快適に参照し、深い「共参照チェーン（coreference chain）」を作成します。一方、自己回帰AIモデルはコンテキスト・ウィンドウに縛られており、物語構造の実際の「記憶」を欠いているため、これに苦労します。あいまいな代名詞の解決（誰を指しているのか分からない状態）を避けるために、適切にアライメントされたAIは、代名詞を使用する代わりに固有名詞を継続的に再記述する（例：「彼」の代わりに第3段落で再び「アレクサンドロス大王」に言及する）ことで、保守的にチェーンを「リセット」する傾向があります。この手法は、ニューラル共参照リゾルバー（解決器）を展開して、テキスト全体のすべてのエンティティへの言及と、対応する代名詞をマッピングします。AIが作成した文書は通常、病的に短く断片化された共参照チェーンを示しており、これは深いオブジェクトの永続性を欠いた、表面レベルのステートレス（状態を持たない）な生成プロセスであることを示しています。",
+    "useCase": "AIが複雑な代名詞の連鎖を追跡する読者を信用できず、不器用にキャラクターや抽象的なエンティティの名前を過剰に繰り返している、長編のエッセイ、短編小説、歴史分析における合成の起源（AI生成）の暴露。",
+    "strengths": "• 表面的な構文チェッカーや文法チェッカーには見えない、深い談話レベル（discourse-level）の一貫性の不具合（破綻）を捉えます。\n• 局所的な文の文法は習得しているものの、文書レベルの構造的記憶にはまだ失敗している、高度なモデルに対して非常に効果的です。\n• 基本的なスペルミスや類義語の置き換えによる回避戦略に対して完全に免疫があります。",
+    "limitations": "• 計算コストが非常に高く、分析を開始する前のアライメントのためだけに、専用のニューラルネットワークを使用してエンティティの連鎖をマッピングする必要があります。\n• 200単語未満の短いテキストでは、統計的に有意なプロファイルを形成するためのチェーンが少なすぎます。\n• 曖昧さを防ぐために代名詞を避け、固有名詞を繰り返すことが法的に要求されている、高度に専門的または法的な文書（契約書など）では誤検知を引き起こす可能性があります。",
+    "parameters": "解析: ニューラル共参照マッピング\n評価基準: チェーン密度、平均参照距離、および分岐（ブランチング）係数\n出力結果: 0-100 浅い参照トラッキング・スコア",
+    "accuracy": "中〜高 — 75-85%。複雑な名詞の相互作用をマッピングする長編の物語テキストやエッセイに対して、致命的な（極めて高い）精度を示します。",
     "references": [
         {
             "title": "Dugan, L. et al. (2024). RAID: A Shared Benchmark for Robust Evaluation of Machine-Generated Text Detectors. ACL.",
@@ -17,10 +16,6 @@
         {
             "title": "Clark, K. & Manning, C. D. (2016). Deep Reinforcement Learning for Mention-Ranking Coreference Models. EMNLP.",
             "url": "https://doi.org/10.18653/v1/D16-1245"
-        },
-        {
-            "title": "Pu, J. et al. (2023). On the Zero-Shot Generalization of Machine-Generated Text Detectors. EMNLP Findings.",
-            "url": "https://arxiv.org/abs/2310.05165"
         }
     ]
 }

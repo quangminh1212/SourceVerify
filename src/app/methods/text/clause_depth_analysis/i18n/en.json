@@ -1,14 +1,13 @@
 {
-    "name": "Clause Depth Analysis",
-    "description": "Measures the nesting depth of clauses within sentences to detect AI-generated text's tendency toward shallow embedding structures.",
-    "useCase": "Detecting AI text through uniform and shallow subordinate clause patterns",
-    "mechanism": "Parses sentences into clause hierarchies and measures embedding depth (main clause → subordinate clause → embedded clause). Computes maximum depth, mean depth, depth variance, and depth distribution per sentence. AI-generated text typically shows lower maximum clause depth and less variation in depth across sentences, reflecting a flatter information packaging strategy compared to human writers who naturally vary between simple and deeply embedded constructions.",
-    "accuracy": "Moderate - 71-81% on essay-length texts",
-    "source": "Hunt, K. W. (1965) - Grammatical Structures Written at Three Grade Levels, NCTE Research Report",
-    "algorithm": "Clause Boundary Detection + Depth Calculation + Statistical Distribution Analysis",
-    "parameters": "Parser: dependency-based clause segmenter, Depth metrics: max/mean/variance/distribution, Sentence min: 5 words, Text min: 10 sentences",
-    "strengths": "• Captures information packaging complexity\n• Linguistically well-motivated feature\n• Complementary to sentence-level metrics\n• Effective on formal and academic writing",
-    "limitations": "• Parser-dependent accuracy\n• Some genres favor simple clause structures naturally\n• Modern LLMs can produce complex embeddings\n• Requires reliable clause boundary detection",
+    "name": "Syntactic Clause Depth Profiling",
+    "description": "Measures the maximum vertical recursive embedding depth of nested subordinate clauses within sentences.",
+    "algorithm": "Recursive Dependency Depth Evaluator",
+    "mechanism": "Rooted in Hunt's (1965) T-unit analysis and Gibson's dependency locality theory, this method evaluates the maximum hierarchical depth of embedded sentences (e.g., placing sentences inside other sentences). Humans can mentally track complex, deeply nested clauses (e.g., 'The man who saw the dog that chased the cat collapsed'), but frequently and instinctively avoid them in casual writing due to the massive cognitive load required to hold the context. Conversely, human academics often push this depth to extreme, convoluted limits. LLMs have a mathematically perfect ability to track deep syntactic dependencies without breaking grammar, yet their generation temperature and RLHF readability alignment force them to heavily truncate extreme recursive depth to ensure broad public readability. By charting the standard deviation of structural tree depth across a document, this method identifies the safe, predictable 'shallow-to-medium' embedding zone exclusively populated by AI generation.",
+    "useCase": "Distinguishing safe, mass-appeal AI text from authentic human writing, which typically swings between extremely deep academic nesting limits and highly fragmented conversational brevity.",
+    "strengths": "• Uncovers the core structural safety and readability mechanisms built into modern LLM attention heads.\n• Highly accurate for distinguishing neutralized machine-text from specialized, dense human academic writing.\n• Based on decades of established, peer-reviewed psycholinguistic research regarding cognitive limits.",
+    "limitations": "• The AI output metric significantly overlaps with standard high-school level human writing, which is also taught to be clear and moderately concise.\n• Extremely computationally intensive for long, unpunctuated documents due to exhaustive parsing tree generation.\n• Severe parsing errors on highly disorganized or grammatically broken human text can skew the depth calculations artificially.",
+    "parameters": "Analysis: T-unit / Syntactic Embedding Depth\nMetric: Maximum Parse Tree Depth Variance\nOutput: 0-100 Depth Homogeneity Score",
+    "accuracy": "Moderate to High — 72-82% on long-form content. Effective at exposing the 'middle-of-the-road' complexity constraint governing AI.",
     "references": [
         {
             "title": "Hunt, K. W. (1965). Grammatical Structures Written at Three Grade Levels. NCTE Research Report No. 3.",

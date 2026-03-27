@@ -1,12 +1,21 @@
 {
-    "name": "Chỉ báo kết luận",
-    "description": "Phát hiện mẫu dấu hiệu kết luận",
-    "algorithm": "Thuật toán phân tích Chỉ báo kết luận",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu dấu hiệu kết luận. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích chỉ báo kết luận. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân tích Dấu hiệu Kết luận (Conclusion Indicator)",
+    "description": "Phát hiện sự xuất hiện dễ đoán một cách thái quá và cấu trúc cứng nhắc bị ép buộc của các đoạn văn tóm tắt/kết luận.",
+    "algorithm": "Heuristic Đánh dấu Diễn ngôn & Tóm tắt",
+    "mechanism": "Một thói quen hành vi rành rành của các AI đã trải qua huấn luyện RLHF là 'hội chứng kết bài bắt buộc'. Bất chấp độ dài của câu lệnh, tính chất tào lao của chủ đề, hay việc bài viết hoàn toàn không cần chốt lại, các LLM thương mại vẫn luôn mặc định phải tóm tắt lại sạch sẽ những ý vừa nói. Chúng thực thi quy trình này bằng các cụm từ nối mang tính chất sách giáo khoa cực kỳ dễ đoán ('Tóm lại', 'Nói chung', 'Cuối cùng', 'Nhìn chung'). Ngược lại, văn phong chân thực của con người—đặc biệt là trong email tán gẫu, bài đăng diễn đàn, hoặc các bài viết nêu quan điểm kết thúc đột ngột—thường bỏ trắng luôn đoạn kết luận lằng nhằng. Hệ thống này phân tích khắt khe 15% cấu trúc cuối cùng của văn bản, lập bản đồ các dấu hiệu diễn ngôn tóm tắt rõ ràng, đồng thời so sánh độ trùng lặp ngữ nghĩa (semantic overlap) bằng toán học giữa phần kết luận này với phần thân bài. Một mức độ trùng lặp ngữ nghĩa cao (bản chất chỉ là nhai lại những gì vừa nói) đi kèm với các dấu hiệu kết luận chung chung sẽ cắm cờ đỏ cảnh báo ngay đây là hành vi 'gói gém tự động' vô hồn của AI.",
+    "useCase": "Lột mặt nạ các bài tiểu luận, email, bài đăng blog và sự xuất hiện giả tạo của các đoạn tóm tắt thừa thãi, lặp đi lặp lại bị nhét một cách ngoan cố vào cuối văn bản do AI viết.",
+    "strengths": "• Đạt tỷ lệ bắt quả tang (true-positive) cực cao đối với các lệnh mớm lời thô (zero-shot prompts) ném thẳng cho các mô hình lớn như ChatGPT và Claude.\n• Tóm gọn được một kiểu rập khuôn cấu trúc hành vi đã ăn sâu vào nhân AI, thứ mà những người dùng thiếu kinh nghiệm hoặc lười biếng hiếm khi chủ động ra lệnh tắt đi.\n• Rất nhẹ, rẻ tiền về mặt sức mạnh tính toán và thực thi cực nhanh khi quét trên hàng ngàn văn bản.",
+    "limitations": "• Sẽ phế võ công hoàn toàn nếu người dùng chỉ việc bôi đen và nhấn nút Delete phần kết luận trước khi đăng bài.\n• Các bài tiểu luận học thuật chính quy, báo cáo khoa học và tóm tắt dành cho lãnh đạo bản chất đã yêu cầu phải có kết bài, làm tăng rủi ro cắn nhầm đạn (false positives) trong các lãnh địa hà khắc này.\n• Chỉ có võ đối với các văn bản đủ dài (thường >200 từ) để có thể kích hoạt được form 'định dạng tiểu luận' chạy ngầm bên trong AI.",
+    "parameters": "Kiểm Định: Cấu Trúc Kết Đoạn Tu Từ & Sự Nhai Lại Ngữ Nghĩa\nThước Đo: Tần Suất Dấu Hiệu Tóm Tắt so với Độ Trùng Lặp Thân Bài\nĐầu Ra: 0-100 Điểm Số Rập Khuôn Kết Luận (Hội Chứng Chốt Hạ Tự Động)",
+    "accuracy": "Rất cao — 85-95% trên các văn bản thô, chưa qua chỉnh sửa do AI phôi thai từ các prompt sơ sài. Tỷ lệ thành công rớt thảm hại nếu đoạn cuối bị con người cắt xén thủ công.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

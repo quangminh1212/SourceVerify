@@ -1,22 +1,21 @@
 {
-    "name": "Contraction Usage",
-    "description": "Measures contraction frequency — AI tends to use fewer contractions",
-    "algorithm": "Contraction Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Measures contraction frequency — AI tends to use fewer contractions. Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through contraction usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "Contraction Avoidance Profiling",
+    "description": "Measures the frequency of spelled-out auxiliary verbs versus their contracted forms (e.g., 'do not' vs. 'don't') to detect artificial formality.",
+    "algorithm": "Lexical Formality & Morphological Expansion Ratio",
+    "mechanism": "Large Language Models inherently default to a polite, formal, and authoritative tone, an artifact of their alignment training (e.g., RLHF) designed to prevent them from sounding overly colloquial or unprofessional. As a direct consequence, they exhibit a strong statistical bias toward morphological expansion—spelling out words fully ('cannot', 'do not', 'it is', 'they are') rather than using natural human contractions ('can't', 'don't', 'it's', 'they're'). Human writers, even in relatively professional contexts, naturally blend contractions into their writing to maintain rhythmic flow and conversational readability. This method computes the ratio of uncontracted verb/pronoun pairings to their contracted alternatives within a text. A severe deficit in contractions, especially in contexts intended to be casual, persuasive, or narrative, strongly correlates with synthetic generation.",
+    "useCase": "Analyzing blogs, emails, marketing copy, and casual essays where an overly stiff, contraction-less tone betrays the presence of an AI generator attempting to sound authoritative.",
+    "strengths": "• Highly effective on 'conversational' or 'informal' prompts where the AI fails to drop its inherent formal alignment.\n• Fast, deterministic, and computationally lightweight, relying on simple regex and lexical mapping.\n• Difficult for basic AI generators to overcome without explicit, heavily engineered prompts instructing them to use contractions.",
+    "limitations": "• Susceptible to false positives on deeply formal human writing, such as academic dissertations, legal contracts, or official corporate press releases where contractions are forbidden.\n• Completely inapplicable to languages that do not feature syntactical contractions (e.g., Chinese, Japanese, Korean), limiting this metric primarily to English and specific European languages.\n• Easily bypassed by prompt engineers who explicitly add 'use plenty of contractions' or 'write casually' to their instructions.",
+    "parameters": "Analysis: Lexical Regex Matching & Morphological Ratio\nMetric: Fully Expanded Forms vs. Available Contraction Opportunities\nOutput: 0-100 Formality Rigidity (Contraction Deficit) Score",
+    "accuracy": "Moderate — 65-75%. Highly dependent on the expected genre of the text. Extremely useful as a secondary indicator alongside vocabulary rarity and sentence length variance.",
     "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
         }
     ]
 }

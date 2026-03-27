@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ liên từ",
-    "description": "Đo mẫu sử dụng liên từ",
-    "algorithm": "Thuật toán phân tích Mật độ liên từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mẫu sử dụng liên từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ liên từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật độ Liên từ & Lỗi Thiếu Cú pháp Đẳng lập",
+    "description": "Đo lường tần suất xuất hiện của các liên từ kết hợp và phụ thuộc so với tổng số từ, nhằm theo vết kiểu hành văn 'siêu kết nối' nhân tạo.",
+    "algorithm": "Lập Hồ sơ Liên kết Cú pháp & Đo lường Tỷ lệ Liên từ",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn được tối ưu hóa cực đoan cho sự liền mạch và tính dễ đọc. Để đảm bảo mọi thứ rõ ràng nhất có thể, chúng mắc chứng ám ảnh cưỡng chế với việc liên kết các mệnh đề bằng những liên từ lộ liễu ('và', 'nhưng', 'bởi vì', 'mặc dù', 'trong khi'). Chúng hiếm khi tin tưởng để người đọc tự suy luận ra mối quan hệ giữa các câu. Trong khi đó, con người lại rất hay dùng 'parataxis' (cú pháp đẳng lập) - kỹ thuật đặt các mệnh đề nằm cạnh nhau mà chẳng thèm dùng từ nối (ví dụ: 'Trời mưa. Chúng tôi ở nhà.') - dựa dẫm vào ngữ cảnh và bước nhảy logic ngầm. Phương pháp này phân tích từ loại (POS) của văn bản để tính toán tỷ lệ chính xác giữa liên từ và tổng số từ. Mật độ liên từ cao bất thường chính là dấu hiệu của một AI 'siêu kết nối', bị trói buộc bởi thuật toán nên không thể để hở bất kỳ khớp nối logic nào, dẫn đến một câu văn bóng bẩy, trơn tuột và sặc mùi máy móc.",
+    "useCase": "Nhận diện những bài báo, tiểu luận và câu chuyện trơn tru một cách giả tạo, nơi AI cố gắng giải thích thái quá mối quan hệ giữa các mệnh đề thay vì để cho mạch văn đứt gãy một cách tự nhiên.",
+    "strengths": "• Đặc biệt xuất sắc trong việc tóm gọn cái cảm giác 'trơn tuột giả tạo' của văn bản AI mà con người thường cảm nhận được nhưng rất khó giải thích bằng lời.\n• Miễn nhiễm với trò thay từ đồng nghĩa (spin nội dung), vì nó nhắm thẳng vào 'lớp keo dán' cú pháp cốt lõi của văn bản.\n• Tốc độ tính toán nhanh như chớp và siêu nhẹ do chỉ sử dụng công nghệ gắn thẻ từ loại (POS tagging) cơ bản.",
+    "limitations": "• Dễ bắt nhầm (false positives) các văn bản của con người mang tính kỹ thuật, pháp lý chuyên sâu hoặc sách hướng dẫn, nơi các kết nối logic rõ ràng là bắt buộc.\n• Mất tác dụng trên các văn bản quá ngắn, nơi phương sai của tần suất liên từ không mang ý nghĩa thống kê.\n• Một prompter lão làng có thể lách luật bằng cách ép AI viết 'những câu văn cộc lốc, vỡ vụn' hoặc sử dụng thủ pháp 'chêm xen không liên từ' (asyndeton).",
+    "parameters": "Kiểm Định: Đếm Thẻ Từ Loại (POS) & Liên Kết Cú Pháp\nThước Đo: Tỷ Lệ Liên Từ : Tổng Số Từ (Mật độ trên 100 từ)\nĐầu Ra: 0-100 Điểm Số Siêu Kết Nối (Lạm Dụng Liên Từ)",
+    "accuracy": "Khá Cao — 75-85%. Thể hiện sức mạnh tốt nhất khi đóng vai trò là một chỉ số hỗ trợ, kết hợp cùng phân tích phương sai độ dài câu và mật độ từ chuyển ý.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

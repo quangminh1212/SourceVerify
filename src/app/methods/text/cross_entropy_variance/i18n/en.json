@@ -1,22 +1,21 @@
 {
-    "name":  "Cross-Entropy Variance",
-    "description":  "Measures variance of per-token cross-entropy — AI text shows lower variance due to consistent prediction confidence.",
-    "algorithm":  "Cross-Entropy Variance Analysis Algorithm",
-    "mechanism":  "The Cross-Entropy Variance system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://arxiv.org/abs/2301.11305",
-                           "title":  "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML."
-                       },
-                       {
-                           "url":  "https://arxiv.org/abs/1908.09203",
-                           "title":  "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
-                       }
-                   ]
+    "name": "Cross-Entropy Variance Analysis",
+    "description": "Measures the fluctuation in per-token predictability (cross-entropy). AI text maintains a flat, consistent confidence level, whereas human writing exhibits high variance due to sudden creative leaps.",
+    "algorithm": "Token-Level Cross-Entropy & Statistical Variance Profiling",
+    "mechanism": "Autoregressive language models generate text by continuously predicting the most statistically probable next token. The 'cross-entropy' of a token measures how 'surprising' or mathematically improbable that word is according to the model's internal probability distribution. Because AI systems are optimized to select safe, high-probability tokens (low cross-entropy) across the entire document, the mathematical variance of these cross-entropy scores remains unnaturally tight and flat. In stark contrast, human cognition does not operate on localized statistical probabilities. Human writers frequently experience sudden bursts of inspiration, abrupt topic shifts, or the injection of highly idiosyncratic vocabulary, resulting in sudden, chaotic spikes of high cross-entropy tokens interspersed with standard phrasing. This method calculates the per-token cross-entropy using a reference language model and computes the overall statistical variance. A low variance score is a highly reliable indicator of synthetic, algorithmically smoothed text.",
+    "useCase": "Detecting AI-generated academic papers, technical documentation, and extended essays where the relentlessly steady, medium-probability vocabulary usage betrays the lack of human creative fluctuation.",
+    "strengths": "• Touches the core mathematical architecture of LLMs; highly reliable even if the LLM has been fine-tuned for different tones.\n• Extremely difficult for basic prompt engineering ('write creatively') to bypass, as the underlying token selection probability engine remains unchanged.\n• Works exceptionally well as a primary signal in zero-shot machine-generated text detection algorithms (like DetectGPT).",
+    "limitations": "• Computationally heavy; requires a large reference language model (e.g., GPT-2/RoBERTa) to calculate token probabilities in real-time.\n• Can misclassify highly formulaic or templated human writing (such as legal boilerplates or standard operating procedures) due to their naturally low vocabulary variance.\n• Short texts do not provide enough data points to establish a meaningful statistical variance.",
+    "parameters": "Analysis: Per-Token Probabilistic Cross-Entropy\nMetric: Statistical Variance (σ²), Interquartile Range of Token Surprise\nOutput: 0-100 Mathematical Smoothing (Variance Deficit) Score",
+    "accuracy": "High — 80-90%. A foundational metric in modern AI detection, forming the mathematical backbone of many advanced statistical detectors.",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ]
 }

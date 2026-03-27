@@ -1,22 +1,21 @@
 {
-    "name": "Cultural Reference",
-    "description": "Detects cultural references and con텍스트",
-    "algorithm": "Cultural Reference — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects cultural references and con텍스트. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through cultural reference analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "문화적 참조 지표(Cultural Reference) 프로파일링",
+    "description": "글에 등장하는 문화적 참조(인용, 밈, 역사)의 구체성, 깊이, 문맥적 정확성을 검사하여 AI 특유의 얕고 평면화된 '글로벌 무국적 문화' 패턴을 적발합니다.",
+    "algorithm": "문화적 개체명 인식(NER) & 지역적 구체성 스코어링",
+    "mechanism": "인간은 글을 쓸 때 자신의 실제 삶의 경험, 지리적 위치, 특정 하위문화에 깊숙이 뿌리내린 문화적 참조(관용구, 역사적 사건, 대중문화, 밈, 지역 현상 등)를 자연스럽게 엮어 넣습니다. 이러한 언급들은 종종 아주 지엽적이거나(Obscure), 문맥에 고도로 밀착되어 있거나, 장난스럽게 비틀어져 사용됩니다. 그러나 거대 언어 모델(LLM)들은 검열되고 둥글둥글하게 깎여 나간 '글로벌 통합 데이터셋'으로 훈련되었습니다. 이들의 최우선 목표는 '가장 많은 사람이 무난하게 이해하는 것'과 '논란을 피하는 삼'이므로, 필연적으로 '문화적 평탄화(Cultural flattening)'라는 고질병을 앓게 됩니다. 예시를 들어보라고 프롬프트를 주면, AI는 압도적인 확률로 전 세계 누구나 아는 뻔하디뻔한 클리셰(예: 문학은 무조건 셰익스피어, 천재는 아인슈타인, 축제는 전 세계적인 공휴일)만 앵무새처럼 반복하며, 특정 시대나 인터넷 하위문화의 뉘앙스 있는 '시대정신(Zeitgeist)'을 포착하는 데 철저히 실패합니다. 더 심각한 것은 AI가 종종 '문화적 환각'을 일으켜, 해당 문화권의 진짜 인간이라면 절대 섞어서 쓰지 않을 전혀 다른 시대와 맥락의 밈들을 어색하게 짬뽕해버린다는 점입니다. 이 NLP 기법은 텍스트에서 문화적 개체를 추출하고 해당 개체의 희소성, 지역적 구체성, 주제의 일관성을 평가합니다. 전 세계 어디서나 통하는 '안전하고 뻔한' 범용 문화 마커에 대한 과도한 의존은, 영혼 없이 작동하는 기계의 창작물임을 강력하게 시사합니다.",
+    "useCase": "친근한 척 글을 썼지만 막상 들여다보면 특정 문화권에 대한 얄팍하고 교과서적인 캐리커처만 남발하는 AI 작성 에세이, 오피니언 기사, 문화 평론 및 블로그 글 색출.",
+    "strengths": "• AI가 인간의 대화 방식을 그럴싸하게 흉내 내려고 시도하지만, 실제 살아온 경험의 처절한 부재를 폭로하는 '합성된 공감대(Synthetic relatability)'를 적발하는 데 극도로 탁월합니다.\n• 깊은 의미론적 지식층을 타격하기 때문에, 의도적인 오타나 단순 동의어 치환 같은 얄팍한 통계적 회피(우회) 기술에 완벽한 면역을 가집니다.\n• 매우 구체적인 지리적 위치나 나이대(예: Z세대, 특정 지역 거주자)를 대변하는 척하는 위장 텍스트를 검증하는 데 최고의 효율을 보여줍니다.",
+    "limitations": "• 전 세계의 광범위한 독자를 대상으로 의도적으로 지엽적인 표현을 쏙 빼고 '안전하게' 글을 쓴 진짜 인간 작가를 AI로 오인(False positives)할 위험이 큽니다.\n• 신조어와 인터넷 밈이 폭발적으로 생성되고 소멸하는 속도를 따라잡기 위해, 문화적 개체 데이터베이스(Entity database)를 피를 토하며 지속해서 업데이트해야 합니다.\n• 문화적 요소를 끼워 넣는 것이 자연스러울 만큼 충분히 길거나 다소 비격식적인 텍스트에서만 유효하게 작동합니다.",
+    "parameters": "분석 기준: 문화적 개체 추출 & 지역/하위문화 구체성 데이터베이스 매핑\n측정 지표: 참조(Reference)의 희소성 지수 vs 글로벌 클리셰 등장 빈도\n출력: 0-100 문화적 평탄화(무미건조한 공감대) 스코어",
+    "accuracy": "중간 — 65-75%. 대상 텍스트의 장르에 극심하게 의존합니다. 문서의 진정성(Authenticity)을 판별하는 보조(2차) 신호로는 훌륭하지만, 인간 작가마다 글을 쓰는 주관적 특성이 너무 달라 이 지표 단독으로는 유죄를 확정 짓기 어렵습니다.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
             "url": "https://arxiv.org/abs/2011.01314"
+        },
+        {
+            "title": "Bender, E. M. et al. (2021). On the Dangers of Stochastic Parrots: Can Language Models Be Too Big? ACM FAccT.",
+            "url": "https://dl.acm.org/doi/10.1145/3442188.3445922"
         }
     ]
 }
