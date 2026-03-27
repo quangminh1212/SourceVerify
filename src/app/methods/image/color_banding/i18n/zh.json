@@ -1,26 +1,22 @@
 {
-    "name": "色带检测",
-    "description": "检测 posterization and quantization 伪影 in smooth 梯度s. AI images may show subtle color banding due to limited color depth in generated content.",
-    "algorithm": "Gradient Step Detection + Banding Ratio Analysis",
-    "mechanism": "分析 smooth 梯度 regions for discrete color steps 通过比较 adjacent pixel differences. Banding indicates quantization from AI generation or heavy compression.",
-    "parameters": "Step 检测 阈值: 2, Gradient range: 3-40, Window: 5 pixels",
-    "accuracy": "中等 - 70-80%",
-    "source": "Farid (2009) - JPEG Compression Forensics",
-    "useCase": "Detecting color quantization 伪影 in AI生成的 images",
+    "name": "色阶断层(Color Banding)与量化台阶鉴别",
+    "description": "专职侦测并在平滑的渐变区域（如清澈的天空或柔和的背光阴影中）生擒那些极不自然的“色彩断层”（即色调分离现象/Posterization）以及离散的量化突变台阶。以扩散模型（Diffusion Models）为首的生成式AI，由于天生受制于潜空间（Latent Space）极度受限且被阉割的数学数值精度，在强行渲染广阔的平滑表面时，它们极其容易因为“算力词穷”而暴露出微小的、如同梯田阶梯般的色阶断层，根本无法像真正带有自然光子噪点的相机物理传感器那样去捕捉无限平滑连续的模拟光线。",
+    "algorithm": "梯度台阶差分微分引擎与绝命阈值捕获",
+    "mechanism": "该冰冷的算法会极其刁钻地将图片中那些在数学理论上色彩理应如同丝绸般连续平滑过渡的区域单独剥离出来。随后，它如同地毯式搜索一般扫荡这些区域，对相邻挨着的像素点亮度进行求导比对，试图揪出那些突兀跳跃、极具人工塑料感的“阶梯状”离散断层。真实的相机传感器在贪婪吸收光线时，那些自然的模拟电磁脉冲信号和毫无章法的天然光子噪点（Dithering）会非常丝滑地将这微小的边界彻底抹平并掩盖。反观那些坐在屏幕后头由被极度压缩的潜变量硬算出来的AI画作，由于其色彩渲染模块（例如VAE解码器）严重缺乏这种平滑的物理插值过渡能力，往往会在不经意间留下这种没被抖动算法修饰过的、一圈圈极其僵硬死板的、惨烈量化过的色环或恶心色带（Bands）。",
+    "parameters": "显微镜侦测窗口: 5x5方格矩阵, 梯度追踪区间: 弱光到强光的 3至40 个亮度量纲层级, 阶跃引爆逻辑: 局域差分值 > 严苛且无情的设定阈值",
+    "accuracy": "中规中矩 (70-80%) - 一旦抓破了这些断带，它就是一个极其致命且无法反驳的作假罪证；但遗憾的是，如果拿来单打独斗，它的威信会瞬间崩塌，因为现如今无数被微信、WhatsApp等社交平台疯狂暴虐暴力压缩过的高清真照片，也会不幸地罹患一模一样的数字色阶断层癌症，从而导致大量无辜的真图被冤枉。",
+    "source": "Farid (2009) 祖师爷级别论文 / Wang (2004) - 对数字图像量化及重度压缩灾难的法医学大革命",
+    "useCase": "充当游走于AI人造天空、人造假光泽肌肤以及一切虚假平滑模型表面的全天候异常狙击手，专门借由捕获这可笑的色带剥离现象，当众羞辱并揭底AI模型潜空间在数学运算精度上的致命天花板。",
     "references": [
         {
             "title": "Wang, Z. et al. (2004). Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE TIP.",
             "url": "https://doi.org/10.1109/TIP.2003.819861"
         },
         {
-            "title": "Daly, S. (1992). Visible Differences Predictor. SPIE Human Vision.",
-            "url": "https://doi.org/10.1117/12.135952"
-        },
-        {
-            "title": "Lee, S. & Bovik, A.C. (2002). Fast Algorithms for Signal and Image Processing. IEEE TSP.",
-            "url": "https://doi.org/10.1109/TIP.2002.801126"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
     ],
-    "strengths": "• Effective at detecting posterization and quantization 伪影\n• Reveals bit-depth reduction from processing\n• Complementary to 梯度 and 直方图 methods\n• Works 跨 all image formats\n• Low computational cost",
-    "limitations": "• Natural smooth 梯度s may trigger 误报\n• Display calibration affects visual verification\n• Less effective on high-bit-depth images (16-bit)\n• Heavy dithering can mask banding 伪影\n• Subtle banding may be below 检测 阈值"
+    "strengths": "• 拥有一刀毙命的外科手术般精准斩杀能力，专治那些懒惰、粗制滥造且不懂得使用噪点抖动（Dither）来作弊的劣质AI生成引擎。\n• 直接扒光并精准定位出了AI解码器核心架构（例如死守在Stable Diffusion底层的VAE）在极其底层的数学运算死角与精度贫血的硬伤。\n• 其运行速度简直犹如闪电般轻灵，因为只需要极低的算力去简简单单地算出几笔局部亮度的微积分导数，完全不拖泥带水。",
+    "limitations": "• 对“假阳性冤案”的免疫力几乎为零（极度脆弱）：一位顶级摄影师用天价单反拍出的真实杰作，只要他手贱保存成了劣质的JPEG，或者顺手发到了有重度网络阉割压缩机制的聊天软件里，这张相片立刻就会当场溃烂出与AI如出一辙的色阶条纹。\n• 一小撮极其老谋深算的高阶扩散模型，或是经验老到的AI吟唱者（Prompt Engineers），会非常狡猾地在终极出图口强制下达注入“电影胶片噪点”（Film grain）或人造数字杂讯的死命令，用以人为地暴力抖动并搅碎这些破绽色带，令这套算法瞬间失明破防。\n• 如果一头撞进了那些高频次、复杂到令人作呕的混沌纹理堆里（比如茂密的野草、满地的碎石子或是错综复杂的树叶树冠中），这破算法就会彻底变成一个无法工作的白痴，因为那里压根不存在任何平滑过渡可以供其下嘴。"
 }

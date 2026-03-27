@@ -1,26 +1,22 @@
 {
-    "name": "컬러 밴딩 탐지",
-    "description": "감지합니다 posterization and quantization 아티팩트 in smooth 기울기s. AI images may show subtle color banding due to limited color depth in generated content.",
-    "algorithm": "Gradient Step Detection + Banding Ratio Analysis",
-    "mechanism": "분석합니다 smooth 기울기 regions for discrete color steps 비교하여 adjacent pixel differences. Banding indicates quantization from AI generation or heavy compression.",
-    "parameters": "Step 감지 임계값: 2, Gradient range: 3-40, Window: 5 pixels",
-    "accuracy": "중간 - 70-80%",
-    "source": "Farid (2009) - JPEG Compression Forensics",
-    "useCase": "Detecting color quantization 아티팩트 in AI 생성 images",
+    "name": "컬러 밴딩(Color Banding) 및 양자화 단층 추적",
+    "description": "파란 하늘이나 부드러운 그림자 같은 매끄러운 그라데이션 구역에 비정상적으로 출몰하는 '컬러 밴딩'(포스터라이제이션, 색이 뚝뚝 끊겨 보이는 현상)과 불연속적인 양자화 계단을 철저히 색출해냅니다. 적대적 생성망이건 확산(Diffusion) 모델이건 간에 AI는 태생적으로 수학적 연산 정밀도의 한계와 비좁은 잠재 공간(Latent space)의 족쇄에 묶여 있습니다. 이 때문에 AI는 진짜 카메라 센서가 아날로그 빛을 머금으며 만들어내는 무한대 급의 부드러움을 구현하다가 종종 한계에 부딪혀 현미경으로나 보일 법한 층층이 끊어진 등고선 같은 색상 계단을 허공에 그려놓고 맙니다.",
+    "algorithm": "색상 기울기(Gradient) 미분 산출 및 임계치 편차 돌파 분석",
+    "mechanism": "분석 엔진은 이미지 내에서 원리상 완벽하게 매끄러워야만 하는 구역(예: 맑은 하늘)을 도려냅니다. 그런 다음 해당 지형을 기어 다니며 이웃한 픽셀들 간의 차이값을 미분하여, 밝기나 색상 단계에서 발생한 인위적이고 불쾌한 '계단식' 턱을 찾아냅니다. 진짜 리얼 카메라 센서는 빛을 아날로그로 받아들이며 렌즈 자체에 자연적인 광자 노이즈(Photon noise)가 끼어들어 이 계단을 알아서 디더링(Dithering, 부드럽게 뭉개기)해 숨겨줍니다. 그러나 저주받은 압축 잠재 공간에서 색을 짜내는 AI 포지 데이터는 이 매끄러움을 처리하다가 헉헉거리며, 아무런 디더링도 되지 않은 메마른 '양자화된 띠(Bands)'를 흉터처럼 남깁니다.",
+    "parameters": "색출용 창틀 규격: 5x5 픽셀 블록, 척살 그라데이션 목표 범위: 3-40 급 밝기 강도 레벨, 계단 턱 감별 Логик: 국소부 미분값이 깐깐한 허용 임계치를 뚫고 비집어 올라올 때",
+    "accuracy": "보통 수준 (70-80%) - 계단 흉터가 명확히 감지되었을 때는 상대방의 숨통을 끊는 절대적인 판별력을 보여주지만, 진짜 사진이 극악무도하게 카카오톡이나 SNS에서 압축되며 망가진 경우 동일한 디지털 밴딩 흉터가 남기 때문에 이 방법 혼자서 독재자로 군림하기엔 몹시 위태롭습니다.",
+    "source": "Farid (2009) / Wang (2004) - 디지털 양자화 및 이미지 압축 화질 손상 분석 포렌식의 제왕들",
+    "useCase": "AI가 허구로 자아낸 피부 표면이나 매끄러운 푸른 하늘 속에 자리 잡은 가증스러운 포스터라이제이션(색 번짐 단층)을 꿰뚫어 보는 저격수로 운용되어, AI 모델의 심장(잠재 공간)이 가진 소수점 연산의 한계를 대중 앞에 까발림.",
     "references": [
         {
             "title": "Wang, Z. et al. (2004). Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE TIP.",
             "url": "https://doi.org/10.1109/TIP.2003.819861"
         },
         {
-            "title": "Daly, S. (1992). Visible Differences Predictor. SPIE Human Vision.",
-            "url": "https://doi.org/10.1117/12.135952"
-        },
-        {
-            "title": "Lee, S. & Bovik, A.C. (2002). Fast Algorithms for Signal and Image Processing. IEEE TSP.",
-            "url": "https://doi.org/10.1109/TIP.2002.801126"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
     ],
-    "strengths": "• Effective at detecting posterization and quantization 아티팩트\n• Reveals bit-depth reduction from processing\n• Complementary to 기울기 and 히스토그램 methods\n• Works 에 걸친 all image formats\n• Low computational cost",
-    "limitations": "• Natural smooth 기울기s may trigger 오탐\n• Display calibration affects visual verification\n• Less effective on high-bit-depth images (16-bit)\n• Heavy dithering can mask banding 아티팩트\n• Subtle banding may be below 감지 임계값"
+    "strengths": "• 그라데이션을 디더링하여 부드럽게 수습하는 데 실패한 멍청하고 게으른 초기형 AI 혹은 최적화되지 않은 조잡한 VAE 엔진 모델들을 잡아내는 데 아주 외과 수술 뺨치는 정밀도를 발휘합니다.\n• 생성형 디코더(단적인 예로 Stable Diffusion의 VAE)가 지닌 치명적이고 끔찍한 수학적 정밀도 한계 지점을 역으로 추적해냅니다.\n• 단지 화면 픽셀의 국소 채도 미분값만 계산해 내면 그만이므로, 컴퓨터 연산 자원을 갉아먹지 않는 극도로 가볍고 재빠른 발놀림을 자랑합니다.",
+    "limitations": "• 거짓 경보(False positive)를 남발할 수 있는 가장 아찔한 맹점: 천만 원짜리 명품 카메라로 찍은 진짜 사진이어도 카카오톡, 왓츠앱 같은 메신저를 거치며 거지 같은 저화질 JPEG로 난도질당하면 AI가 싸질러놓은 것과 똑같은 컬러 밴딩 흉터가 찍혀버립니다.\n• 음흉할 정도로 똑똑한 프롬프트 엔지니어나 고급 확산 모델들은 사진 출력 막바지에 '아날로그 필름 그레인(Film grain)'을 끼얹어 일부러 노이즈를 일으키는데, 이러면 눈에 띄는 계단 흉터가 전부 바스라져 감리 망이 완전히 장님이 되어버립니다.\n• 애당초 부드러운 하늘 같은 게 존재하지 않는 미친 듯이 복잡고 거친 질감(억센 풀밭, 자갈밭, 난잡한 직물 무늬) 한가운데 떨궈지면 재볼 잣대가 없어 식물인간이 됩니다."
 }

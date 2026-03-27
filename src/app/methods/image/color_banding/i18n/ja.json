@@ -1,26 +1,22 @@
 {
-    "name": "カラーバンディング検出",
-    "description": "検出します posterization and quantization アーティファクト in smooth 勾配s. AI images may show subtle color banding due to limited color depth in generated content.",
-    "algorithm": "Gradient Step Detection + Banding Ratio Analysis",
-    "mechanism": "分析します smooth 勾配 regions for discrete color steps を比較することで adjacent pixel differences. Banding indicates quantization from AI generation or heavy compression.",
-    "parameters": "Step 検出 閾値: 2, Gradient range: 3-40, Window: 5 pixels",
-    "accuracy": "中 - 70-80%",
-    "source": "Farid (2009) - JPEG Compression Forensics",
-    "useCase": "Detecting color quantization アーティファクト in AI生成の images",
+    "name": "カラーバンディング（階調飛び）解析",
+    "description": "滑らかなグラデーション領域（空や影など）内に異常な「カラーバンディング（ポスタリゼーション）」および不連続な量子化ステップが存在するかどうかを検出します。生成AIモデル、特にノイズ除去拡散（Denoising Diffusion）モデルは、本来的に制約された数値精度と潜在空間内で動作するため、本物のカメラセンサーが生み出す連続的なアナログ光のキャプチャの代わりに、微視的で階段状のカラーバンド（縞模様）を持つ空や滑らかな表面を合成してしまうことがよくあります。",
+    "algorithm": "勾配ステップの微分および閾値解析",
+    "mechanism": "このアルゴリズムは、数学的に色が連続的に変化するはずの滑らかな領域を画像内から分離します。次に、これらの領域をトラバースし、隣接するピクセルの違いを比較して、ピクセルの明るさにおける不連続で人工的な「階段状」のステップを特定します。実際のカメラセンサーは光を連続的なアナログ信号として捉え、自然なフォトンノイズ（ディザリング）によってこれらのステップを自然にマスクします。しかし、AIジェネレーターは高度に圧縮された潜在表現からカラー値を合成するため、滑らかな遷移をシームレスにレンダリングできず、微妙でディザリングされていない量子化された「リング」や「バンド」を残すことが頻繁にあります。",
+    "parameters": "ウィンドウサイズ: 5x5ピクセル, グラフィエント遷移ターゲット: 3-40 強度レベル, ステップ検出論理: ローカル微分 > 厳格な閾値",
+    "accuracy": "中（70-80%） - バンディングが発見された場合は非常に信頼性の高いフラグとなりますが、まったく同じデジタルのバンディングに悩まされる、あきれるほど圧縮された本物の写真によって、その単独の能力は強く脅かされます。",
+    "source": "Farid (2009) / Wang (2004) - 画像の量子化と圧縮のフォレンジック",
+    "useCase": "AIモデルの潜在空間合成の数学的精度の限界を暴き、生成された空、肌、または滑らかな表面における不自然なポスタリゼーションをキャッチする異常スナイパーとして機能します。",
     "references": [
         {
             "title": "Wang, Z. et al. (2004). Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE TIP.",
             "url": "https://doi.org/10.1109/TIP.2003.819861"
         },
         {
-            "title": "Daly, S. (1992). Visible Differences Predictor. SPIE Human Vision.",
-            "url": "https://doi.org/10.1117/12.135952"
-        },
-        {
-            "title": "Lee, S. & Bovik, A.C. (2002). Fast Algorithms for Signal and Image Processing. IEEE TSP.",
-            "url": "https://doi.org/10.1109/TIP.2002.801126"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
     ],
-    "strengths": "• Effective at detecting posterization and quantization アーティファクト\n• Reveals bit-depth reduction from processing\n• Complementary to 勾配 and ヒストグラム methods\n• Works にわたる all image formats\n• Low computational cost",
-    "limitations": "• Natural smooth 勾配s may trigger 誤検出\n• Display calibration affects visual verification\n• Less effective on high-bit-depth images (16-bit)\n• Heavy dithering can mask banding アーティファクト\n• Subtle banding may be below 検出 閾値"
+    "strengths": "• 滑らかな遷移を適切にディザリングできない、手抜きのAIジェネレーターを捉える外科的な精度を持っています。\n• AIデコーダー（Stable Diffusionで使用されるVAEなど）のハードな数学的精度の限界を特定します。\n• 非常に高速かつ軽量であり、ローカルな輝度微分を計算するための最小限の計算能力しか必要としません。",
+    "limitations": "• 誤検知に対する極度の脆弱性：低品質のJPEGで急いで保存されたり、激しいネットワーク圧縮（WhatsAppやMessengerなど）にさらされたりした本物の写真は、自然にまったく同じバンディングを発生させます。\n• 一部の高度な拡散モデルやプロンプトエンジニアは、意図的に「フィルムグレイン」やデジタルノイズを注入して、これらのバンドを人工的にマスクしてディザリングし、アルゴリズムを盲目にします。\n• 滑らかなグラデーションが存在しない高周波で複雑なテクスチャ（草、砂利、群葉など）では、完全に盲目になり、役立ちません。"
 }

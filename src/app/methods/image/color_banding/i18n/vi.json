@@ -1,26 +1,22 @@
 {
-    "name": "Phát hiện Dải màu",
-    "description": "Phát hiện hiện vật posterization và lượng tử hóa trong vùng gradient mượt. Ảnh AI có thể hiển thị dải màu do độ sâu màu hạn chế.",
-    "algorithm": "Gradient Step Detection + Banding Ratio Analysis",
-    "mechanism": "Phân tích vùng gradient mượt để tìm bước nhảy màu rời rạc. Dải màu cho thấy lượng tử hóa từ quá trình tạo AI.",
-    "parameters": "Ngưỡng: 2, Phạm vi gradient: 3-40, Cửa sổ: 5 pixel",
-    "accuracy": "Trung bình - 70-80%",
-    "source": "Farid (2009) - JPEG Compression Forensics",
-    "useCase": "Phát hiện hiện vật lượng tử hóa màu trong ảnh AI",
-    "strengths": "• Phát hiện hiệu quả hiện tượng posterization và lượng tử hóa\n• Tiết lộ giảm bit-depth do xử lý ảnh\n• Bổ sung tốt cho phương pháp gradient và histogram\n• Hoạt động trên mọi định dạng ảnh\n• Chi phí tính toán thấp",
-    "limitations": "• Gradient mượt tự nhiên có thể gây dương tính giả\n• Hiệu chuẩn màn hình ảnh hưởng xác minh trực quan\n• Kém hiệu quả với ảnh bit-depth cao (16-bit)\n• Dithering nặng có thể che banding\n• Banding tinh tế có thể dưới ngưỡng phát hiện",
+    "name": "Phân Tích Đứt Gãy Dải Màu (Color Banding)",
+    "description": "Truy quét và tóm gọn sự xuất hiện dị thường của hiện tượng 'phân lớp dải màu' (posterization) và các bước nhảy lượng tử thô kệch bên trong những vùng chuyển màu mềm mại (như bầu trời hoặc bóng đổ). Các mô hình AI, đặc biệt là Diffusion, phải vận hành trong sự kìm kẹp khắc nghiệt của giới hạn độ chính xác con số (Latent space). Điều này khiến chúng khi vẽ bầu trời hoặc bề mặt nhẵn thường để lại những bậc thang màu sắc đứt đoạn nhỏ xíu, thay vì tạo ra một dải thu nhận ánh sáng analog mượt mà vô tận như cảm biến máy ảnh thật.",
+    "algorithm": "Đạo Hàm Phân Bậc Chiều Sâu Màu & Khớp Ngưỡng (Thresholding)",
+    "mechanism": "Thuật toán sẽ nhắm thẳng vào những vùng ảnh trơn láng, nơi mà theo lý thuyết toán học màu sắc phải trượt đi một cách mềm mại. Nó cày xới những vùng này, lấy đạo hàm để so sánh sự chênh lệch của các pixel kề nhau nhằm tìm ra những 'Bậc thang' đứt gãy nhân tạo, thô ráp trong giá trị độ sáng. Cảm biến máy ảnh thực tế thu nhận ánh sáng dưới dạng tín hiệu analog liên tục và luôn sinh ra nhiễu hạt photon tự nhiên (dithering) để vô tình lấp liếm đi những ranh giới này. Trái lại, AI phải rặn ra từng pixel từ dữ liệu không gian ẩn bị nén chặt, dẫn đến việc hụt hơi và đổ vỡ khi cố làm mượt, để lại những 'vòng sóng' màu lượng tử hóa khô khốc.",
+    "parameters": "Kích thước ô quét: 5x5 pixels, Biên độ dò tìm Gradient: 3-40 mức tín hiệu cường độ, Logic bóp cò: Đạo hàm cục bộ > Ngưỡng dị thường",
+    "accuracy": "Trung Bình (70-80%) - Là một chiếc roi điện cực kỳ uy lực khi chọc trúng huyệt, nhưng sức mạnh độc lập lại bị lép vế hoàn toàn trước sự phá hoại của những bức ảnh thật nhưng bị nén dung lượng quá nát (cũng sinh ra lỗi tương tự).",
+    "source": "Farid (2009) / Wang (2004) - Pháp Y Hình Ảnh Lượng Tử Hóa và Phân Tích Nén Hủy Hoại",
+    "useCase": "Hoạt động như một tay lính bắn tỉa khét tiếng chuyên săn lùng những đường rạn nứt màu phi tự nhiên trên bầu trời sinh tạo, trên da người AI, vạch trần giới hạn tận cùng về độ chia nhỏ toán học trong não bộ phân giải của AI.",
     "references": [
         {
             "title": "Wang, Z. et al. (2004). Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE TIP.",
             "url": "https://doi.org/10.1109/TIP.2003.819861"
         },
         {
-            "title": "Daly, S. (1992). Visible Differences Predictor. SPIE Human Vision.",
-            "url": "https://doi.org/10.1117/12.135952"
-        },
-        {
-            "title": "Lee, S. & Bovik, A.C. (2002). Fast Algorithms for Signal and Image Processing. IEEE TSP.",
-            "url": "https://doi.org/10.1109/TIP.2002.801126"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         }
-    ]
+    ],
+    "strengths": "• Chính xác như một lưỡi dao mổ đối với các mô hình AI lười biếng hoặc các dòng AI đời cũ không biết cách nhồi thêm nhiễu hạt (dither) để làm mượt dải màu.\n• Vạch mặt thẳng thừng những điểm yếu chí tử về giới hạn khả năng tính toán thập phân của các bộ giải mã AI (Ví dụ như bộ VAE mỏng manh của Stable Diffusion).\n• Nhẹ tựa lông hồng, chạy nhanh như một cơn gió do chỉ cần dùng các thuật toán tính vi phân độ phân giải ánh sáng đơn giản nhất.",
+    "limitations": "• Nguy cơ tử huyệt bắt nhầm người vô tội (False Positives) là vô cùng khủng khiếp: Một bức ảnh thật chụp bằng máy ảnh chục nghìn đô nhưng lỡ gửi qua Zalo, Messenger hoặc lưu JPEG chất lượng thấp sẽ sinh ra rác đứt gãy dải màu y hệt như AI vẽ.\n• Một số mô hình Diffusion hiện đại tinh ranh hoặc những gã chăn AI sành sỏi cố tình chèn thêm 'Nhiễu hạt phim' (Film grain) vào bước cuối prompt, thứ này xé gãy hoàn toàn bậc thang màu, chọc mù thuật toán.\n• Hoàn toàn vô phế và đứng như trời trồng khi bị thả vào những vùng ảnh chi tiết quá khủng khiếp, phức tạp và hỗn loạn (như bãi cỏ, rừng cây, vải vóc) nơi chẳng hề có dải màu mượt mà nào tồn tại để làm thước đo."
 }
