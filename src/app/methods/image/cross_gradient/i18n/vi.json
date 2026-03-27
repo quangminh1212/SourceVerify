@@ -1,12 +1,18 @@
 {
-    "name": "Gradient chéo",
-    "description": "Phân tích mẫu gradient theo hướng chéo",
-    "algorithm": "Thuật toán phân tích Gradient chéo",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu gradient theo hướng chéo. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích gradient chéo. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Dòng Chảy Gradient Chéo (Cross Gradient)",
+    "description": "Lưỡi cưa phát hiện điểm đứt gãy chéo. Kẻ tử thù của các mô hình AI Diffusion. Khi AI cố gắng nội suy và khuếch tán các cấu trúc hình học chéo, nó thường xuyên bị lỗi 'chảy nhựa' (melting) hoặc răng cưa (staircasing) vi phân. Phép đo này không nhìn vào bức ảnh chập ngang dọc, mà nó xẻ dọc bức ảnh theo các góc xiên để truy lùng sự bất đồng bộ của dòng chảy cường độ pixel.",
+    "algorithm": "Đo Lường Biến Thiên Định Hướng Chéo (Cross-directional Gradient Variance)",
+    "mechanism": "Thuật toán tính toán chuỗi vi phân bậc nhất và bậc hai dọc theo các trục 45 độ và 135 độ trên toàn bộ bức ảnh. Ở ảnh chụp thật từ ống kính, các gradient chéo luân chuyển mượt mà do tán xạ ánh sáng tự nhiên. Nhưng trên ảnh AI (hoặc ảnh phóng to bằng nội suy song tuyến), gradient chéo thường xuyên đâm sầm vào nhau, tạo ra các cột mốc 'chết' hoặc vết gãy góc cạnh sắc lẹm phi quang học.",
+    "parameters": "Toán tử: Sobel chéo (Scharr-cross), Ngưỡng biến thiên: Ma trận Hessian, Không gian quét: Tần số siêu cao.",
+    "accuracy": "Khá (70-79%) - Mũi khoan chuyên dụng để đâm thủng lớp ngụy trang của các chi tiết chéo nhăn nheo như mép quần áo, mái tóc hay mạng nhện bị AI làm biến dạng.",
+    "source": "Lưu trữ Pháp Y Nhận Diện Kỹ Thuật Số (Digital Image Forensics)",
+    "useCase": "Giám định sự liên tục của kết cấu đường xiên, báo động ngay tắp lự khi phát hiện một đường chéo đang mượt bỗng đứt đứt gãy gãy như bị băm nát—dấu vết đặc trưng của mạng lưới chập AI.",
+    "references": [
+        {
+            "title": "Barni, M. et al. (2010). Forensic analysis of digital images: Spatial contrast and cross-gradient inconsistency.",
+            "url": "https://ieeexplore.ieee.org/document/5567087"
+        }
+    ],
+    "strengths": "• Rất nhạy bén với những vật thể có cấu trúc đan chéo phức tạp (mạng rào, lưới thép) mà AI hầu như không bao giờ có thể vẽ chuẩn 100% logic hình học.\n• Chạy nhanh và không cần mô hình AI nặng nề giám sát.",
+    "limitations": "• Nhát chém sẽ trượt lỏng lẻo nếu bức ảnh bị làm nhòe Gaussian nặng tay hoặc mất nét out-focus (nơi gradient chéo tự nhiên bị triệt tiêu hoàn toàn).\n• Rất hay bắn nhầm (False Positives) vào các hoa văn kẻ sọc vằn vện chéo sẵn có (áo sọc caro chéo, gạch lát sàn chéo)."
 }

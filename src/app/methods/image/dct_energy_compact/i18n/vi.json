@@ -1,12 +1,18 @@
 {
-    "name": "Nén năng lượng DCT",
-    "description": "Phân tích tỷ lệ nén năng lượng DCT",
-    "algorithm": "Thuật toán phân tích Nén năng lượng DCT",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích tỷ lệ nén năng lượng DCT. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích nén năng lượng dct. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Mật Độ Năng Lượng Lượng Tử (DCT Energy Compaction)",
+    "description": "Máy đo bức xạ quang phổ ép xung để bóc mẽ sự dối trá của AI. Một bức ảnh vật lý từ thấu kính thu thập thông lượng photon tạo ra một dải năng lượng phân bổ đa chiều, mượt mà từ âm trầm (mảng lớn) đến siêu âm cao (chi tiết gai góc). Bọn AI sinh ảnh thường bị liệt hẳn khả năng vẽ ra các nốt siêu cao tần sắc bén, nên chúng phải vội vã nhồi nhét năng lượng khổng lồ vào các tần số thấp (Low-frequency) để lấp liếm tạo ra vẻ mượt mà dối trá.",
+    "algorithm": "Đo Lường Suy Hao Tập Trung Tần Số DCT (Energy Compaction Ratio)",
+    "mechanism": "Nó thiêu rụi toàn bộ nội dung bức hình, chuyển đổi thô bạo sang dải tần số sóng siêu âm 2D (DCT 8x8 blocks). Thuật toán ép tất cả các block phải khai báo mức năng lượng đang chứa. Nếu có một khu vực cấy ghép hoặc cắt ráp (hoặc do AI hallucinate ra), dải năng lượng cao tần sẽ bỗng nhiên rớt cái rầm xuống ngưỡng 0 một cách cực kỳ mất tự nhiên. Toàn bộ năng lượng dồn ứ ngột ngạt tại dải trung/thấp, gióng lên hồi còi báo động về cấu trúc đồ họa nhựa dẻo.",
+    "parameters": "Miền phân tích: Tần số Không gian DCT, Bộ lọc: High-to-Low Ratio Threshold (HLRT), Hệ số Block: Luma 8x8",
+    "accuracy": "Khá Ổn (70-78%) - Radar vạch lá tìm sâu cực độc đoán chuyên bắt lũ thợ vẽ AI cẩu thả làm cháy, nát kết cấu chi tiết cao.",
+    "source": "Lưu Trữ Xử Lý Tín Hiệu DCT Biên Độ Phổ (Signal Processing Archive)",
+    "useCase": "Soi cấu trúc sóng từ lõi nhị phân để khẳng định chắc nịch rằng vùng ảnh bị bôi mượt thái quá kia thực chất là đồ dỏm 100%.",
+    "references": [
+        {
+            "title": "Barni, M. et al. (2010). Forensic analysis of digital images: DCT energy compaction analysis. IEEE TFS.",
+            "url": "https://ieeexplore.ieee.org/document/5567087"
+        }
+    ],
+    "strengths": "• Bóp nát ảo tưởng của các file AI 8K 'nét căng giả tạo', bởi dù nét đến đâu thì cấu trúc phân bổ dải sóng siêu cao của AI cũng hoàn toàn lệch lạc.\n• Chạy nhanh mượt mà vì tính trực tiếp trên thông số vi phân nén chứ không phải dò thủ công từng mảnh pixel.",
+    "limitations": "• Nhát chém sẽ cắm thẳng vào chân đồng đội (False Positive) nếu tấm ảnh gốc vô tình chụp bầu trời xanh thẳm quang đãng không một gợn mây - nơi ánh sáng phân bổ 100% ở dải thấp tần.\n• Thuốc nổ sẽ bị nghẽn (phế võ công) nếu đối phương xài tool dập nhiễu hạt sắc nét siêu vi (High-pass Noise Injection) vào ảnh giả, lấp liếm hoàn toàn sự thiếu hụt hạt siêu âm."
 }

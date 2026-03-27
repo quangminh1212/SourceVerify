@@ -1,18 +1,18 @@
 {
-    "name": "Phân tích hiện vật khử mosaic",
-    "description": "Phân tích hiện vật khử mosaic CFA để xác minh nguồn gốc camera và phát hiện ảnh tổng hợp.",
-    "algorithm": "Kiểm tra tính nhất quán mẫu nội suy CFA",
-    "mechanism": "Ảnh camera thật có mẫu khử mosaic đặc trưng từ nội suy CFA Bayer.",
-    "parameters": "Mẫu CFA: RGGB, Nội suy: bilinear/AHD/VNG, Cửa sổ: 5×5",
-    "accuracy": "Cao — 83-93%",
-    "source": "Popescu & Farid (2005), ACM IHMMSec",
-    "useCase": "Xác minh nguồn gốc cảm biến camera qua dấu vết khử mosaic",
+    "name": "Vết Sẹo Nội Suy Cảm Biến (Demosaicing CFA)",
+    "description": "Máy quét ADN quang học vật lý cấp độ phần cứng. Tòa án tối cao chuyên thi hành án với đồ họa sinh bằng máy tính (CG) và mô hình Diffusion. Cần hiểu rõ: Mọi máy ảnh kỹ thuật số rực rỡ ngoài kia chỉ nhặt được pixel đơn sắc (Trắng/Đen), buộc chip của nó phải phủ lên một mặt nạ Bayer (CFA) lọc Xanh, Đỏ, Lục rồi tính toán nội suy màu (Demosaicing) cho các điểm ảnh trống kế cận. Một bức hình do AI nôn ra hoặc do người vẽ cọ kỹ thuật số hoàn toàn không bao giờ mọc ra cái rễ 'vết khâu Bayer' vật lý này.",
+    "algorithm": "Truy Vết Đứt Gãy Dấu Vân Tay Nội Suy Khảm Màng (CFA Pattern Extractor)",
+    "mechanism": "Cỗ xe tăng này nghiền nát lớp vỏ ảnh RGB hiện đang có để dò tìm lại mối liên kết 'nguyên thủy' dựa trên ma trận thuật toán Bayer (RGGB/BGGR). Nó quét toàn bộ lưới màu, kiểm tra xác suất tuyến tính xem màu Xanh của pixel này có thực sự bị lấy nội suy từ pixel Lục bên cạnh theo công thức toán phần cứng hay không. Khi một cái cây hay cái mặt được AI Midjourney hay Photoshop chèn vào, thuật toán sẽ lòi ra vết rách toạc hoác về mã vân CFA, réo còi hú báo cháy lập tức báo hiệu một kẻ mạo danh không có phần cứng vật lý.",
+    "parameters": "Ma Trận Phần Cứng: Lưới lọc Bayer RGGB, Nội suy ước tính: Bilinear / AHD / VNG, Bản đồ Cửa sổ: 5x5 Matrix",
+    "accuracy": "Siêu Tối Thượng (83-93%) - Là họng súng Shotgun gí thẳng đầu mọi sản phẩm Deepfake hay AI tạo sinh, đập tan mọi lý lẽ biện minh.",
+    "source": "Popescu & Farid (2005) - Nội Suy Quang Học & Gian Lận CFA Kỹ Thuật Số",
+    "useCase": "Soi chiếu toàn bộ hình ảnh để xác minh chéo xem các phần đang dính vào nhau có cùng sinh ra từ một mẹ (Cảm biển vật lý) hay bị kéo thả xen ngang một cách man rợ từ AI hoặc nguồn khác.",
     "references": [
         {
-            "title": "Popescu & Farid (2005), ACM IHMMSec",
-            "url": ""
+            "title": "Popescu, A.C., & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE TSP.",
+            "url": "https://ieeexplore.ieee.org/document/1495510"
         }
     ],
-    "strengths": "• Liên kết chặt với cảm biến vật lý\\n• Khó giả mạo thuyết phục\\n• Hoạt động qua nhiều hãng camera\\n• Phát hiện cả ảnh AI và ghép",
-    "limitations": "• Không áp dụng cho ảnh RAW\\n• Một số camera dùng mẫu không phải Bayer\\n• Hậu xử lý nặng có thể che dấu vết\\n• Cần độ phân giải không gian đủ"
+    "strengths": "• Bám chặt vào cơ sở vật lý gốc rễ của phần cứng máy ảnh. Giả lập được dấu vân tay Bayer siêu vi này gần như là rào cản quá lớn đối với 99% hacker.\n• Bức tử ngay lập tức cả AI và ảnh bị Copy-Paste xen kẽ vì mỗi con chip sẽ có sai số nội suy Bayer riêng, lắp ráp vào nhau sẽ cắn xé toán học lập tức.",
+    "limitations": "• Nhát phán quyết sẽ phế toàn bộ nếu tấm ảnh đã bị nén JPEG tả tơi, thu nhỏ thảm hại (downsampled/resized) hoặc chia sẻ qua Facebook; quá trình nén này phá nát 100% mạng lưới liên kết pixel nguyên thủy của Bayer.\n• Hoàn toàn vô hiệu đối với ảnh trắng đen nguyên bản (monochrome) và ảnh lấy từ cảm biến Foveon X3 (loại cảm biến hiếm không sử dụng lưới Bayer để nội suy)."
 }
