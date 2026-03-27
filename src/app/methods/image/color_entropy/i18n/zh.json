@@ -1,22 +1,22 @@
 {
-    "name": "Color Entropy",
-    "description": "Measures color entropy distribution",
-    "algorithm": "Color Entropy — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 统计 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 图像 data.\n\n2. **Distribution Analysis**: Measures color entropy distribution. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 图像 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 统计 deviation magnitude.",
-    "parameters": "分析类型: 统计\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： color entropy 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "色彩信息熵（信息密度）坍缩检测",
+    "description": "旨在勘测并评估图像色彩分布中的全局与局部热力学“混沌度”（信息熵）。一台拍摄真实物理世界的真正相机，不可避免地会捕获到一个由光线疯狂乱反射、大气粉尘散射以及感光元件微观缺陷所共同交织而成的、具有极端高熵值（High-entropy）且包含了海量微小色彩变异的宏大光谱。相反，生成式AI模型在解码并输出画面的过程中，为了节省算力往往会过度优化（压缩计算）它们的输出色彩调色板，这导致它们生成的图像会极其不自然地坍缩成一种低熵状态——即颜色在数学上聚类得过于干净、均匀，彻底丧失了真实生物学与物理学意义上的那种混沌变异与生机。",
+    "algorithm": "基于色彩直方图的香农熵 (Shannon Entropy) 核算",
+    "mechanism": "该冰冷的算法如同一个盖革计数器，它在整个色彩直方图表面扫过，以严格计算每一寸像素的香农熵（H = -Σ p(x) log p(x)），以此来残酷地衡量这些像素色彩究竟有多么“难以预测”。在一张哪怕是用肉眼看起来风平浪静、极其纯粹的蔚蓝天空真实照片里，由于光子散粒噪声（Photon shot noise）和空气微尘的干扰，其实际光谱中依然潜伏着成千上万种微小到肉眼不可见的蓝色变种（极度高熵）。然而，由AI生成的虚假天空，在受到潜伏空间（Latent space）解码器的算力限制下，往往会被数学公式粗暴地简化为区区几十种过渡极其丝滑平整的数学蓝色色阶（极度低熵）。该算法正是通过扫描整个RGB全频段，来精准捕猎这种因缺乏信息混沌度而暴露出的“数字无菌感”。",
+    "parameters": "审判域: RGB或HSV空间, 直方图收纳格(Bins): 每通道严苛细分256级, 定罪指标: 香农熵得分(Shannon Entropy bits/pixel), 切片维度: 全局扫描与局部斑块提取",
+    "accuracy": "中上水准 (65-75%) - 在单杀那些粗制滥造、算力低下的偷懒AI生成器时不费吹灰之力；但如果撞上那些心机深重、会在后期刻意注入大量人造噪点来疯狂推高算法系统熵值的高质量扩散模型，它的威信便会如断崖般暴跌。",
+    "source": "香农 Shannon (1948) 祖师爷的信息论 / Gonzalez & Woods - 在数字图像法医侦防领域的跨界大杀器",
+    "useCase": "这套算法的存在，就是为了用冷血的数学定理向世人证明，眼前这张散发着极度平滑、毫无生机的“数字塑料”质感的AI画作，是一个彻底欠缺真实物理世界那种狂野信息复杂度与混沌熵值的工业次品。",
     "references": [
         {
             "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
             "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
         },
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. Pearson.",
             "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
         }
-    ]
+    ],
+    "strengths": "• 能够极其暴虐地将人类肉眼能够直觉感知、却又无法用语言精确描述的那种AI独有的“空洞无菌感（Sterility）”量化成一行行冰冷的数字铁案。\n• 拥有坚不可摧的底层数学逻辑防御壁垒；它不是在看图，而是在直接称量这张图片文件在信息论范畴下还能容纳多少字节的绝对极限。\n• 因为仅仅只是征用了最基础、最原始的直方图数组机制，它的计算速度犹如全图闪电战一般快到令人毛骨悚然。",
+    "limitations": "• 存在一个致命的死穴：如果现代狡黠的AI绘画工具在出图的最后流程里，随手丢进一层“电影胶片噪点（Film grain）”或者是“高斯白噪声”作为后期滤镜，便能瞬间强行引爆熵值数据，将这台探测器玩弄于股掌之间。\n• 极容易出现不可原谅的“防卫过当”（False positive），尤其是在面对那些天生熵值就极低的纯净真实图景时（比如静谧深空星野摄影，或是背景压倒性惨白死寂的极简主义影棚静物照），它会胡乱狂吠。\n• 如果一张内容极其丰富的真实照片不幸被凶残的JPEG算法以极端手段强行压榨体积，导致其原本充满活力的高熵细节数学塌陷成了低熵的马赛克屎块，这算法也会瞎眼并将其定罪为AI画作。"
 }

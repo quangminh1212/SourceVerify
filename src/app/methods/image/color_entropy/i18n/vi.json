@@ -1,12 +1,22 @@
 {
-    "name": "Entropy màu",
-    "description": "Đo phân bổ entropy màu",
-    "algorithm": "Thuật toán phân tích Entropy màu",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Đo phân bổ entropy màu. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích entropy màu. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Mật Độ Thông Tin (Entropy) Màu Sắc",
+    "description": "Đo lường mức độ 'hỗn loạn' nhiệt động học (information entropy) trong phân bổ màu sắc của bức ảnh. Máy ảnh chân chính thu nhận ánh sáng từ cường độ phản xạ hỗn loạn, tán xạ khí quyển và nhiễu vi mô của cảm biến, tạo ra một ma trận màu sắc có entropy cực cao (nhiều màu sắc ngẫu nhiên li ti). Ngược lại, bộ giải mã của AI thường tối ưu hóa quá mức dải màu của chúng, dẫn đến việc thiếu hụt sự hỗn loạn tự nhiên, khiến màu sắc bị gom cụm quá sạch sẽ toán học (entropy thấp).",
+    "algorithm": "Đo Lường Entropy Shannon Trên Biểu Đồ Màu",
+    "mechanism": "Thuật toán tính toán chỉ số Shannon entropy trên toàn bộ biểu đồ màu. Nó đo lường xem màu sắc của các pixel 'khó đoán' đến mức nào. Trong một bức ảnh thật, ngay cả một dải bầu trời xanh trơn láng cũng chứa hàng nghìn vi sắc thái xanh khác nhau (entropy cao) do nhiễu hạt photon và bụi không khí. Thế nhưng, bầu trời do AI vẽ ra thường bị bộ giải mã tiềm ẩn ép xuống chỉ còn vài chục dải màu xanh mượt mà (entropy thấp). Thuật toán này giống như một máy đếm Geiger, rà quét sự thiếu hụt của 'sự sống hỗn loạn' này.",
+    "parameters": "Không gian màu: RGB/HSV, Số lượng rổ (Bins): 256 mỗi kênh, Thước đo: Điểm Shannon Entropy (bits/pixel), Phạm vi: Quét toàn cục và chia mảng cục bộ",
+    "accuracy": "Trung bình khá (65-75%) - Bắt bài những bức ảnh AI rẻ tiền rất dễ dàng, nhưng dễ dàng bị đánh lừa bởi những mô hình AI xịn xò biết cách chủ động phun thêm nhiễu hạt giả.",
+    "source": "Shannon (1948) / Gonzalez & Woods - Lý Thuyết Thông Tin Ứng Dụng Trong Pháp Y Kỹ Thuật Số",
+    "useCase": "Vạch trần cảm giác bóng bẩy, vô hồn của 'nhựa kỹ thuật số' do AI tạo ra bằng cách chứng minh theo các thông số toán học rằng bức ảnh đó hoàn toàn không đủ độ phức tạp và nhiễu loạn thông tin của thế giới thực.",
+    "references": [
+        {
+            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        }
+    ],
+    "strengths": "• Lượng hóa thành con số chính xác cái cảm giác 'giả trân, vô hồn' của AI mà mắt người có thể cảm nhận nhưng khó giải thích.\n• Nền tảng toán học tuyệt đối vững chắc: nó đo lường giới hạn dung lượng thông tin chứa trong các mảng màu.\n• Tốc độ tính toán nhanh như chớp nhờ việc dùng mảng dữ liệu biểu đồ (histogram) cơ bản.",
+    "limitations": "• Nhược điểm chí mạng: Bị mù hoàn toàn nếu AI được dội thêm một lớp 'nhiễu hạt phim' (film grain) ở bước cuối cùng; nhiễu hạt dỏm này làm tăng vọt chỉ số entropy và qua mặt máy quét dễ dàng.\n• Đổ oan cho người tốt (False positive) nếu phân tích những bức ảnh vốn dĩ đã có entropy tự nhiên cực thấp (ví dụ: ảnh xưởng chụp sản phẩm tối giản trên nền trắng tinh, hoặc ảnh chụp trời sao đen kịt).\n• Bị nhiễu loạn và đánh lừa nếu bức ảnh thật bị nén bằng JPEG quá mạnh, vì nén dữ liệu chính là hành vi bóp nát entropy cao thành các mảng block pixel có entropy thấp."
 }

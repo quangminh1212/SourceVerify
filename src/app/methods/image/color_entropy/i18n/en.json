@@ -1,22 +1,22 @@
 {
-    "name": "Color Entropy",
-    "description": "Measures color entropy distribution",
-    "algorithm": "Color Entropy — Statistical Pattern Analyzer",
-    "mechanism": "This method applies statistical analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the image data.\n\n2. **Distribution Analysis**: Measures color entropy distribution. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural image statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on statistical deviation magnitude.",
-    "parameters": "Analysis type: statistical\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through color entropy analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+    "name": "Color Entropy (Information Density) Analysis",
+    "description": "Measures the global and local thermodynamic 'randomness' (information entropy) within the image's color distribution. Authentic cameras capturing real-world environments inherently capture a massive spectrum of high-entropy color micro-variations caused by chaotic light bouncing, atmospheric scattering, and sensor imperfection. Generative AI models often heavily optimize their output color palettes during the decoding process, resulting in unnaturally collapsed states of low entropy where colors mathematically cluster too cleanly, lacking true chaotic biological variation.",
+    "algorithm": "Shannon Entropy Computation on Color Histograms",
+    "mechanism": "The algorithm calculates the Shannon entropy across the color histogram. It assesses how 'unpredictable' the pixel colors are. In a genuine photograph, even a seemingly flat blue sky contains thousands of micro-variations of blue (high entropy) due to photon shot noise and atmospheric dust. An AI-generated sky, however, may be mathematically simplified by the restricted latent decoder into just a few dozen smooth mathematical blue increments (low entropy). The algorithm acts like a Geiger counter, measuring this lack of informational chaos across the entire RGB spectrum.",
+    "parameters": "Color space: RGB/HSV, Histogram Bins: 256 per channel, Metric: Shannon Entropy Score (bits/pixel), Evaluation: Global vs. Local patches",
+    "accuracy": "Moderate (65-75%) - While it catches low-effort AI generators effortlessly, its reliability plummets against high-quality diffusion models that specifically inject artificial noise to aggressively elevate algorithmic entropy.",
+    "source": "Shannon (1948) / Gonzalez & Woods - Information Theory in Digital Forensics",
+    "useCase": "Detecting the hyper-smooth, sterile 'digital plastic' look of AI generation by proving mathematically that the image lacks the chaotic informational complexity of the physical world.",
     "references": [
         {
             "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
             "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
         },
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. Pearson.",
             "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
         }
-    ]
+    ],
+    "strengths": "• Quantifies the 'AI sterility' factor that humans can intuitively sense but struggle to prove.\n• Extremely mathematically robust; it directly measures the absolute informational capacity limits of the image file.\n• Operates globally and at lightning computational speed by exploiting basic histogram arrays.",
+    "limitations": "• Critically vulnerable to modern AI tools that explicitly add 'film grain' or 'Gaussian noise' as a post-processing step; this instantly spikes the entropy metric, completely fooling the detector.\n• Highly flawed when inspecting authentic photographs of genuinely low-entropy subjects (e.g., minimalist studio photography against a perfectly flat white paper backdrop, or deep space astrophotography).\n• Can be falsely triggered by extreme JPEG compression, which mathematically collapses authentic high entropy into blocky, low-entropy quantization states."
 }
