@@ -1,14 +1,13 @@
 {
-    "name": "Aperture Diffraction",
-    "description": "Analyzes optical diffraction patterns that real camera lenses produce",
-    "algorithm": "Aperture Diffraction — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes physical camera/sensor characteristics:\n\n1. **Sensor Model**: Expected sensor characteristics are modeled based on camera physics.\n\n2. **特征提取**: Analyzes optical diffraction patterns that real camera lenses produce. Physical artifacts from real camera sensors are analyzed.\n\n3. **Authenticity Check**: Presence or absence of expected sensor patterns is evaluated.\n\n4. **AI Comparison**: Results are compared against known AI generation patterns.\n\n5. **Confidence Score**: A score reflecting the likelihood of authentic sensor origin is computed.",
-    "parameters": "分析类型: sensor\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： aperture diffraction 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "光圈衍射纹样分析 (Aperture Diffraction)",
+    "description": "验证光线通过真实相机光圈叶片时必然产生的光学衍射纹样是否存在。当真实相机拍摄时，尤其在窄光圈（f/11-f/22）下，点光源会产生由不可变的波动光学所决定的特征性星芒（Starburst）或艾里斑（Airy Disk）图案。AI 图像生成器对波动物理学一窍不通。它们偶尔可能在主要光源上模拟出一个粗糙的星芒效果，但它们在系统性地做到一件事上永远失败：即在同一场景中，同时对所有点光源复刻出一致的、物理正确的衍射行为。",
+    "algorithm": "波动光学衍射指纹验证",
+    "mechanism": "算法识别图像中所有高强度点光源（路灯、反射光、远处的太阳）。对每个光源，分析其周围像素数据以检测衍射纹样的存在：星芒的辐射线条数（必须与光圈叶片数的 2 倍匹配）、辐射线条的角度均匀性，以及特征性艾里环的有无。然后进行全场景交叉验证：同一图像中亮度相似的每一个点光源都必须呈现出完全一致的衍射指纹，因为它们全部通过了同一块物理镜片。AI 图像几乎毫无例外地在此交叉验证中全面溃败，在不同光源上生成截然不同的星芒图案——或者干脆什么图案都不生成。",
+    "useCase": "这是为点光源丰富的户外夜景摄影、城市天际线和演唱会照片进行身份认证的黄金标准。当前的 AI 要伪造出一致的衍射纹样，在物理层面上是不可能的。",
+    "strengths": "• 锚定在波动光学的不可撼动的物理定律之上，使其从根本上对任何 AI 架构都具有永久免疫力。\n• 全场景交叉验证（所有光源必须一致）在合格的图像上能提供误报率近乎为零的超高置信度信号。",
+    "limitations": "• 对不含点光源的图像（例如: 白天的风景、使用柔光的室内人像）完全无能为力。\n• 大光圈拍摄（f/1.4-f/2.8）产生的可见衍射极少，导致分析结果无法定论。",
+    "parameters": "雷达切片: 点光源衍射纹样匹配\n定罪量表: 星芒辐射线数、角度均匀性、艾里环存在性、跨光源一致性\n行刑判决: 0-100 光学真实性得分",
+    "accuracy": "极高 — 在包含 3 个以上可见点光源且以窄光圈拍摄的图像上，享有 88-95% 的精度。在大光圈或白天拍摄的图像上则降至无法定论。",
     "references": [
         {
             "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",

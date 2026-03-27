@@ -1,18 +1,21 @@
 {
     "name": "Attention Map Consistency",
-    "description": "Analyzes spatial attention patterns to detect inconsistencies typical of AI-generated images.",
-    "algorithm": "Self-Attention Consistency Analysis for Synthetic Image Detection",
-    "mechanism": "AI-generated images often exhibit unnatural attention patterns where different regions show inconsistent levels of detail. This method analyzes local contrast, detail density, and sharpness distribution maps.",
-    "parameters": "Attention map: gradient-weighted, Scales: 3 (fine/medium/coarse), Consistency: cross-scale correlation",
-    "accuracy": "Medium-High — 78-90%",
-    "source": "Zhao, T. et al. (2023) — Multi-Attentional Deepfake Detection, CVPR",
-    "useCase": "Detecting AI-generated images by identifying unnatural spatial attention distributions",
+    "description": "Analyzes the spatial distribution of visual detail, sharpness, and local contrast across an image to detect the unnatural attention allocation patterns characteristic of AI generation. In authentic photographs, detail distribution follows predictable optical physics: areas in the focal plane are sharp while out-of-focus areas are uniformly blurred according to the depth-of-field. AI-generated images routinely violate this principle, producing images where certain regions receive disproportionately high detail (e.g., hyper-sharp eyes in a portrait) while adjacent areas at the same depth exhibit inexplicable softness or over-smoothing—a hallmark of the generator's uneven 'attention' during synthesis.",
+    "algorithm": "Multi-Scale Spatial Attention Distribution Analysis",
+    "mechanism": "The algorithm computes three separate maps: a local sharpness map (via Laplacian variance), a local contrast map (via standard deviation in sliding windows), and a detail density map (via high-frequency energy). These three maps are then analyzed at multiple scales (fine, medium, coarse) to construct a cross-scale correlation matrix. In authentic images, the three maps are tightly correlated—sharp areas are also high-contrast and detail-rich. AI images frequently show decorrelation: an area might be sharp but lack fine texture detail, or have high contrast but unnaturally smooth internal gradients. The system flags these cross-scale decorrelation anomalies.",
+    "useCase": "Detecting AI-generated portraits, product shots, and architectural photos where the unnatural distribution of visual attention creates subtle but perceptible 'uncanny valley' effects.",
+    "strengths": "• Captures high-level semantic artifacts that survive compression and resizing.\n• Works across all major generation methods (GAN, Diffusion, VAE).\n• Multi-scale analysis provides robustness against localized perturbations.\n• Produces interpretable attention maps that can be visually inspected.",
+    "limitations": "• Requires sufficient image complexity; may struggle with intentionally minimalist or simple-scene compositions.\n• Artistic post-processing (heavy vignetting, radial blur effects) can naturally decorrelate the attention maps.\n• Performance is somewhat dependent on the specific AI generation model's architecture.",
+    "parameters": "Analysis: Multi-Scale Sharpness/Contrast/Detail Density Maps\nMetrics: Cross-Scale Correlation Matrix, Decorrelation Anomaly Index\nOutput: 0-100 Attention Inconsistency Score",
+    "accuracy": "Medium-High — 78-90% across diverse image types. Strongest on portrait and product photography, weakest on abstract art or heavily stylized images.",
     "references": [
         {
             "title": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.",
             "url": "https://arxiv.org/abs/2103.02406"
+        },
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
         }
-    ],
-    "strengths": "• Captures high-level semantic artifacts\\n• Works across generation methods\\n• Multi-scale analysis\\n• Interpretable attention maps",
-    "limitations": "• Requires sufficient image complexity\\n• May struggle with simple scenes\\n• Attention patterns vary by content\\n• Training-dependent performance"
+    ]
 }

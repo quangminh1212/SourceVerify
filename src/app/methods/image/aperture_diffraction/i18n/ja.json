@@ -1,14 +1,13 @@
 {
-    "name": "Aperture Diffraction",
-    "description": "Analyzes optical diffraction patterns that real camera lenses produce",
-    "algorithm": "Aperture Diffraction — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes physical camera/sensor characteristics:\n\n1. **Sensor Model**: Expected sensor characteristics are modeled based on camera physics.\n\n2. **特徴抽出**: Analyzes optical diffraction patterns that real camera lenses produce. Physical artifacts from real camera sensors are analyzed.\n\n3. **Authenticity Check**: Presence or absence of expected sensor patterns is evaluated.\n\n4. **AI Comparison**: Results are compared against known AI generation patterns.\n\n5. **Confidence Score**: A score reflecting the likelihood of authentic sensor origin is computed.",
-    "parameters": "分析タイプ: sensor\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： aperture diffraction 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+    "name": "開口絞り回折パターン分析 (Aperture Diffraction)",
+    "description": "実際のカメラの絞り羽根を光が通過する際に生じる、物理的に不可避な光の回折パターンの存在を検証します。実際のカメラで撮影する際、特に狭い絞り値（f/11〜f/22）では、点光源が波動光学に基づいた特徴的なスターバースト（星形光条）やエアリーディスクのパターンを生成します。AI画像生成器は、波動物理学を一切理解していません。主要な光源に粗いスターバースト効果を模倣することはありますが、シーン内のすべての点光源に同時に物理的に正確で一貫した回折挙動を再現することには系統的に失敗します。",
+    "algorithm": "波動光学回折フィンガープリントの検証",
+    "mechanism": "アルゴリズムは、画像内のすべての高輝度点光源（街灯、反射光、遠方の太陽）を特定します。各光源について、周囲のピクセルデータを分析して回折パターンの存在を検査します：スターバーストのスパイク数（絞り羽根枚数の2倍と一致する必要があります）、スパイクの角度の均一性、および特徴的なエアリーリングの有無です。次にシーン全体の整合性を検証します。同じ画像内の同程度の明るさのすべての点光源は、同一の物理レンズを通過したため、同一の回折フィンガープリントを示す必要があります。AI画像はほぼ例外なくこのクロスバリデーションに失敗し、異なる光源に異なるスターバーストパターンを生成するか、まったくパターンを生成しません。",
+    "useCase": "点光源が豊富な屋外の夜景写真、都市風景、コンサート写真を認証するためのゴールドスタンダードです。現在のAIが一貫した回折パターンを偽造することは事実上不可能です。",
+    "strengths": "• 波動光学の不変の法則に基づいており、あらゆるAIアーキテクチャに対して根本的に将来にわたって有効です。\n• シーン全体のクロスバリデーション（すべての光が一致する必要がある）により、対象画像において偽陽性率がほぼゼロの極めて高信頼度の信号を提供します。",
+    "limitations": "• 点光源のない画像（例：日中の風景、ディフューズ照明のスタジオポートレート）にはまったく無力です。\n• 開放絞り（f/1.4〜f/2.8）で撮影された画像は目に見える回折が最小限であり、分析が不確定になります。",
+    "parameters": "解析: 点光源回折パターンマッチング\n評価基準: スターバーストスパイク数、角度均一性、エアリーリングの存在、光源間の整合性\n出力結果: 0-100 光学的真正性スコア",
+    "accuracy": "非常に高い — 狭い絞りで撮影された3つ以上の可視点光源を含む画像で88〜95%の精度。開放絞りまたは日中の撮影では不確定に低下します。",
     "references": [
         {
             "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",

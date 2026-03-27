@@ -1,18 +1,21 @@
 {
-    "name": "Consistencia del Mapa de Atención",
-    "description": "Analiza spatial attention patrones para detectar inconsistencias typical of generado por IA images.",
-    "algorithm": "Self-Attention Consistency Analysis for Synthetic Image Detection",
-    "mechanism": "generado por IA images often exhibit unnatural attention patrones where different regions show inconsistent levels of detail. This method analiza local contraste, detail density, and sharpness distribución maps.",
-    "parameters": "Attention map: gradiente-weighted, Scales: 3 (fine/medium/coarse), Consistency: cross-scale correlación",
-    "accuracy": "Media-Alta — 78-90%",
-    "source": "Zhao, T. et al. (2023) — Multi-Attentional Deepfake Detection, CVPR",
-    "useCase": "Detecting generado por IA images by identifying unnatural spatial attention distribucións",
+    "name": "Consistencia del Mapa de Atención (Attention Map)",
+    "description": "Analiza la distribución espacial del detalle visual, la nitidez y el contraste local a través de una imagen para detectar los patrones de asignación de atención antinaturales característicos de la generación por IA. En fotografías auténticas, la distribución de detalle sigue una física óptica predecible: las áreas en el plano focal son nítidas mientras que las áreas fuera de foco están uniformemente borrosas según la profundidad de campo. Las imágenes generadas por IA violan rutinariamente este principio, produciendo imágenes donde ciertas regiones reciben un detalle desproporcionadamente alto (ej: ojos hiper-nítidos en un retrato) mientras áreas adyacentes a la misma profundidad exhiben una suavidad o sobre-suavizado inexplicable—una marca del 'atención' desigual del generador durante la síntesis.",
+    "algorithm": "Análisis de Distribución de Atención Espacial Multi-Escala",
+    "mechanism": "El algoritmo computa tres mapas separados: un mapa de nitidez local (vía varianza Laplaciana), un mapa de contraste local (vía desviación estándar en ventanas deslizantes) y un mapa de densidad de detalle (vía energía de alta frecuencia). Estos tres mapas se analizan a múltiples escalas (fina, media, gruesa) para construir una matriz de correlación cruzada entre escalas. En imágenes auténticas, los tres mapas están fuertemente correlacionados. Las imágenes de IA frecuentemente muestran decorrelación: un área puede ser nítida pero carecer de detalle de textura fina, o tener alto contraste pero gradientes internos antinaturalmente suaves.",
+    "useCase": "Detección de retratos, fotos de producto y fotografía arquitectónica generados por IA donde la distribución antinatural de la atención visual crea efectos sutiles pero perceptibles del 'valle inquietante'.",
+    "strengths": "• Captura artefactos semánticos de alto nivel que sobreviven a la compresión y al redimensionamiento.\n• Funciona con todos los métodos de generación principales (GAN, Difusión, VAE).\n• El análisis multi-escala proporciona robustez contra perturbaciones localizadas.\n• Produce mapas de atención interpretables que se pueden inspeccionar visualmente.",
+    "limitations": "• Requiere suficiente complejidad de imagen; puede tener dificultades con composiciones intencionalmente minimalistas o de escena simple.\n• El post-procesado artístico (viñeteo intenso, efectos de desenfoque radial) puede decorrelacionar naturalmente los mapas de atención.\n• El rendimiento depende en cierta medida de la arquitectura específica del modelo de generación de IA.",
+    "parameters": "Análisis: Mapas Multi-Escala de Nitidez/Contraste/Densidad de Detalle\nMétricas: Matriz de Correlación Cruzada entre Escalas, Índice de Anomalía por Decorrelación\nResultado: 0-100 Puntuación de Inconsistencia de Atención",
+    "accuracy": "Media-Alta — 78-90% en diversos tipos de imagen. Más fuerte en retratos y fotografía de producto, más débil en arte abstracto o imágenes fuertemente estilizadas.",
     "references": [
         {
-            "title": "Zhao, T. et al. (2023) — Multi-Attentional Deepfake Detection, CVPR",
-            "url": ""
+            "title": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.",
+            "url": "https://arxiv.org/abs/2103.02406"
+        },
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
         }
-    ],
-    "strengths": "• Captures high-level semantic artefactos\\n• Works a través de generation methods\\n• Multi-scale análisis\\n• Interpretable attention maps",
-    "limitations": "• Requires sufficient image complexity\\n• May struggle with simple scenes\\n• Attention patrones vary by content\\n• Training-dependent performance"
+    ]
 }

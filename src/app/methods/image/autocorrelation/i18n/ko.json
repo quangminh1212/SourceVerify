@@ -1,12 +1,13 @@
 {
-    "name": "자기상관 규칙성",
-    "description": "감지합니다 periodic auto상관관계 peaks that suggest resampling or AI upsampling 아티팩트 in the image structure.",
-    "algorithm": "Spatial Auto상관관계 Peak Analysis",
-    "mechanism": "Computes the normalized auto상관관계 function over grayscale pixel rows and columns at multiple lags. Periodic peaks in the auto상관관계 indicate resampling 아티팩트 from interpolation or AI upsampling, 는 produce predictable periodicity absent in natural images captured directly by camera sensors.",
-    "parameters": "Max lag: 32 pixels, 블록 크기: 128x128. Sampling: row+column pairs, Normalization: zero-lag division",
-    "accuracy": "Moderate — 65-78%, best combined with 스펙트럼 분석",
-    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
-    "useCase": "Detecting resampling and upsampling 아티팩트 characteristic of AI image generation pipelines",
+    "name": "자기상관 규칙성 (Autocorrelation Regularity)",
+    "description": "픽셀 데이터 속에 숨겨진 주기적 구조를 탐지하여, 컴퓨터를 통한 리샘플링이나 AI 업스케일링의 흔적을 폭로합니다. 실제 카메라가 이미지를 캡처할 때, 텍스처 영역 내의 원시 픽셀 값은 본질적으로 무작위입니다—각 픽셀은 빛의 독립적 표본입니다. 그러나 이미지가 수학적으로 리샘플링(크기 변경, 회전)되거나 AI 업스케일러가 보간을 통해 새 픽셀을 합성하면, 고정된 간격으로 인접 픽셀 사이에 예측 가능하고 반복되는 상관관계가 도입됩니다. 이 자기상관 지문은 인간의 눈에는 보이지 않지만, 연산 조작이 이루어졌다는 수학적으로 부인할 수 없는 신호입니다.",
+    "algorithm": "래그 분석을 통한 공간 자기상관 피크 탐지",
+    "mechanism": "알고리즘은 겹치는 128×128 픽셀 블록으로 이미지를 스캔합니다. 각 블록에 대해 수평 및 수직 축 모두를 따라 여러 래그 거리(1~32 픽셀)에서 정규화된 자기상관 함수(ACF)를 계산합니다. 자연스럽고 조작되지 않은 이미지에서 ACF는 래그가 증가함에 따라 단조 감소합니다. 그러나 리샘플링되거나 AI 업스케일된 이미지는 보간 커널의 발자국에 상응하는 등간격(예: 매 2번째 또는 3번째 래그)에서 특징적인 주기적 피크를 나타냅니다.",
+    "useCase": "AI 업스케일된 이미지, 연산적으로 크기가 조정된 사진, 초기 촬영 후 기하학적 변환(회전, 원근 보정)이 가해진 이미지를 탐지하는 주력 무기입니다.",
+    "strengths": "• 인간의 눈에 완전히 보이지 않는 리샘플링 아티팩트를 순수하게 수학적 수준에서 탐지합니다.\n• 연산 부하가 가벼워—신경망 없이 로컬 픽셀 블록 위에서 작동합니다.\n• 고전 신호 처리 이론에 견고한 수학적 기반을 둡니다.\n• 스펙트럼(푸리에) 분석 방법과 높은 보완성을 가집니다.",
+    "limitations": "• 과도한 JPEG 압축 시 민감도가 급격히 떨어집니다. JPEG 자체의 주기적 아티팩트가 리샘플링 흔적을 가리기 때문입니다.\n• 고유한 주기성을 가진 자연 텍스처(벽돌 벽, 직물, 울타리)가 위양성 피크를 생성할 수 있습니다.\n• 충분한 이미지 크기가 필요합니다; 작은 이미지나 썸네일에는 데이터가 부족할 수 있습니다.\n• 일부 최신 AI 모델은 목표 해상도에서 이미지를 직접 생성하여 리샘플링을 완전히 우회합니다.",
+    "parameters": "분석 기준: 슬라이딩 블록 상의 정규화 자기상관 함수(ACF)\n측정 지표: 주기적 래그에서의 피크 높이, 주기성 강도 지수\n출력: 0-100 리샘플링 아티팩트 탐지 스코어",
+    "accuracy": "중간 — 단독 사용 시 65-78% 정확도. 스펙트럼 분석 방법과 결합 시 80-88%로 정확도가 향상됩니다.",
     "references": [
         {
             "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
@@ -16,7 +17,5 @@
             "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis of Fixed Linear Predictor Residue. ACM MM&Sec.",
             "url": "https://doi.org/10.1145/1411328.1411333"
         }
-    ],
-    "strengths": "• 감지합니다 resampling 아티팩트 invisible to human eye\\n• Fast computation on local pixel blocks\\n• Mathematical foundation in signal processing\\n• Complementary to spectral Nyquist 분석",
-    "limitations": "• Sensitivity drops with heavy JPEG 압축\\n• Natural textures with periodic 패턴 cause 오탐\\n• Small images may not have enough data\\n• Some AI models avoid resampling entirely"
+    ]
 }

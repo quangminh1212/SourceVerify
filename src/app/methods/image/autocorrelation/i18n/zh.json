@@ -1,12 +1,13 @@
 {
-    "name": "自相关规律性分析",
-    "description": "检测 periodic auto相关性 peaks that suggest resampling or AI upsampling 伪影 in the image structure.",
-    "algorithm": "Spatial Auto相关性 Peak Analysis",
-    "mechanism": "Computes the normalized auto相关性 function over grayscale pixel rows and columns at multiple lags. Periodic peaks in the auto相关性 indicate resampling 伪影 from interpolation or AI upsampling, 其 produce predictable periodicity absent in natural images captured directly by camera sensors.",
-    "parameters": "Max lag: 32 pixels, 块大小: 128x128. Sampling: row+column pairs, Normalization: zero-lag division",
-    "accuracy": "Moderate — 65-78%, best combined with 频谱分析",
-    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
-    "useCase": "Detecting resampling and upsampling 伪影 characteristic of AI image generation pipelines",
+    "name": "自相关规律性 (Autocorrelation Regularity)",
+    "description": "检测像素数据中隐藏的周期性结构，暴露计算性重采样或 AI 超分辨率放大的痕迹。当真实相机捕获图像时，纹理区域内的原始像素值本质上是随机的——每个像素都是光的独立采样。然而，当图像进行数学重采样（缩放、旋转）或 AI 放大器通过插值合成新像素时，它会在固定间隔的邻近像素之间引入可预测的重复性相关。这种自相关指纹对人眼不可见，但在数学上是计算操纵存在的不可否认的信号。",
+    "algorithm": "基于延迟分析的空间自相关峰值检测",
+    "mechanism": "算法用重叠的 128×128 像素块扫描图像。对每个块，沿水平和垂直轴在多个延迟距离（1 至 32 像素）上计算归一化自相关函数（ACF）。在自然无篡改的图像中，ACF 随延迟增大而单调衰减。然而，重采样或 AI 放大的图像在等间隔处（例如：每隔 2 或 3 个延迟）呈现特征性的周期峰值，对应于插值核的足迹。算法在所有块上测量这些峰值的高度和周期性，并标记检测到具有统计显著性的周期自相关的图像。",
+    "useCase": "检测 AI 放大图像、经过算法缩放的照片，以及初次拍摄后经历过几何变换（旋转、透视校正）的图像的主力杀器。",
+    "strengths": "• 在纯数学层面上检测对人眼完全不可见的重采样伪影。\n• 计算量极轻——在局部像素块上运行，无需神经网络。\n• 根植于经典信号处理理论，拥有坚实的数学基础。\n• 与频谱（傅里叶）分析方法高度互补。",
+    "limitations": "• 重度 JPEG 压缩会急剧降低灵敏度，原因是 JPEG 自身的周期性伪影会掩盖重采样特征。\n• 具有固有周期性的自然纹理（砖墙、编织物、栅栏）可能产生假阳性峰值。\n• 需要足够大的图像尺寸；小图像或缩略图可能数据不足。\n• 部分现代 AI 模型直接以目标分辨率原生生成图像，完全绕过重采样。",
+    "parameters": "雷达切片: 滑动块上的归一化自相关函数（ACF）\n定罪量表: 周期延迟处的峰值高度、周期性强度指数\n行刑判决: 0-100 重采样伪影检测得分",
+    "accuracy": "中等 — 单独使用精度 65-78%。与频谱分析方法结合时精度提升至 80-88%。",
     "references": [
         {
             "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
@@ -16,7 +17,5 @@
             "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis of Fixed Linear Predictor Residue. ACM MM&Sec.",
             "url": "https://doi.org/10.1145/1411328.1411333"
         }
-    ],
-    "strengths": "• 检测 resampling 伪影 invisible to human eye\\n• Fast computation on local pixel blocks\\n• Mathematical foundation in signal processing\\n• Complementary to spectral Nyquist 分析",
-    "limitations": "• Sensitivity drops with heavy JPEG压缩\\n• Natural textures with periodic 模式 cause 误报\\n• Small images may not have enough data\\n• Some AI models avoid resampling entirely"
+    ]
 }

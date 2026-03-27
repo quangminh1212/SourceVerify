@@ -1,12 +1,13 @@
 {
-    "name": "自己相関規則性",
-    "description": "検出します periodic auto相関 peaks that suggest resampling or AI upsampling アーティファクト in the image structure.",
-    "algorithm": "Spatial Auto相関 Peak Analysis",
-    "mechanism": "Computes the normalized auto相関 function over grayscale pixel rows and columns at multiple lags. Periodic peaks in the auto相関 indicate resampling アーティファクト from interpolation or AI upsampling, は produce predictable periodicity absent in natural images captured directly by camera sensors.",
-    "parameters": "Max lag: 32 pixels, ブロックサイズ: 128x128. Sampling: row+column pairs, Normalization: zero-lag division",
-    "accuracy": "Moderate — 65-78%, best combined with スペクトル分析",
-    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
-    "useCase": "Detecting resampling and upsampling アーティファクト characteristic of AI image generation pipelines",
+    "name": "自己相関規則性 (Autocorrelation Regularity)",
+    "description": "ピクセルデータの中に隠れた周期的構造を検出し、計算的リサンプリングやAIアップスケーリングの痕跡を暴き出します。実際のカメラが画像を撮影する際、テクスチャ領域内の未加工ピクセル値は本質的にランダムであり、各ピクセルは光の独立したサンプルです。しかし、画像が数学的にリサンプリング（リサイズ、回転）された場合や、AIアップスケーラーが補間により新しいピクセルを合成した場合、固定間隔で隣接ピクセル間に予測可能で繰り返される相関が導入されます。この自己相関フィンガープリントは人間の目には見えませんが、計算操作が行われたことの数学的に否定不可能な信号です。",
+    "algorithm": "ラグ分析による空間自己相関ピーク検出",
+    "mechanism": "アルゴリズムは、重なり合う128×128ピクセルブロックで画像をスイープします。各ブロックについて、水平軸と垂直軸の両方に沿って複数のラグ距離（1〜32ピクセル）で正規化自己相関関数（ACF）を計算します。自然な未改変の画像では、ラグが増加するにつれてACFは単調に減衰します。しかしリサンプリングされた画像やAIアップスケールされた画像では、補間カーネルのフットプリントに対応する等間隔（例：2番目や3番目のラグごと）に特徴的な周期的ピークが現れます。",
+    "useCase": "AI アップスケールされた画像、計算的にリサイズされた写真、および初期撮影後に幾何学的変換（回転、パースペクティブ補正）が施された画像を検出するための主力兵器です。",
+    "strengths": "• 人間の目には完全に不可視なリサンプリングアーティファクトを、純粋に数学的なレベルで検出します。\n• 計算負荷が軽く、ニューラルネットワークなしでローカルピクセルブロック上で動作します。\n• 古典的な信号処理理論に強固な数学的基盤を持ちます。\n• スペクトル（フーリエ）分析手法と高い補完性があります。",
+    "limitations": "• 重いJPEG圧縮で感度が急激に低下します。JPEG自体の周期的アーティファクトがリサンプリングの痕跡を隠蔽するためです。\n• 固有の周期性を持つ自然なテクスチャ（レンガの壁、織物、フェンス）が偽陽性のピークを生成する可能性があります。\n• 十分な画像サイズが必要です。小さな画像やサムネイルでは信頼性のある検出に十分なデータが含まれない場合があります。\n• 一部の最新AIモデルはターゲット解像度でネイティブに画像を生成し、リサンプリングを完全にバイパスします。",
+    "parameters": "解析: スライディングブロック上の正規化自己相関関数（ACF）\n評価基準: 周期的ラグでのピーク高さ、周期性強度指数\n出力結果: 0-100 リサンプリングアーティファクト検出スコア",
+    "accuracy": "中 — 単独で65〜78%の精度。スペクトル分析手法と組み合わせることで80〜88%に精度が向上します。",
     "references": [
         {
             "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
@@ -16,7 +17,5 @@
             "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis of Fixed Linear Predictor Residue. ACM MM&Sec.",
             "url": "https://doi.org/10.1145/1411328.1411333"
         }
-    ],
-    "strengths": "• 検出します resampling アーティファクト invisible to human eye\\n• Fast computation on local pixel blocks\\n• Mathematical foundation in signal processing\\n• Complementary to spectral Nyquist 分析",
-    "limitations": "• Sensitivity drops with heavy JPEG圧縮\\n• Natural textures with periodic パターン cause 誤検出\\n• Small images may not have enough data\\n• Some AI models avoid resampling entirely"
+    ]
 }

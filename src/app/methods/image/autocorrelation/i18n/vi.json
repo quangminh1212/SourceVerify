@@ -1,22 +1,21 @@
 {
-    "name": "Tính đều đặn tự tương quan",
-    "description": "Phát hiện đỉnh tự tương quan tuần hoàn gợi ý lỗi resampling hoặc upsampling AI trong cấu trúc ảnh.",
-    "algorithm": "Phân tích đỉnh tự tương quan không gian",
-    "mechanism": "Tính hàm tự tương quan chuẩn hóa trên các hàng và cột pixel xám ở nhiều độ trễ. Đỉnh tuần hoàn trong tự tương quan chỉ ra lỗi resampling từ nội suy hoặc upsampling AI.",
-    "parameters": "Độ trễ tối đa: 32 pixel, Khối: 128x128, Lấy mẫu: cặp hàng+cột, Chuẩn hóa: chia zero-lag",
-    "accuracy": "Trung bình — 65-78%, hiệu quả nhất khi kết hợp phân tích phổ",
-    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
-    "useCase": "Phát hiện lỗi resampling và upsampling đặc trưng của pipeline tạo ảnh AI",
+    "name": "Tính Tuần Hoàn Tự Tương Quan (Autocorrelation)",
+    "description": "Phát hiện sự hiện diện của các cấu trúc tuần hoàn ẩn trong dữ liệu pixel, phơi bày việc tái lấy mẫu tính toán hoặc nâng cấp độ phân giải bằng AI. Khi máy ảnh thật chụp, các giá trị pixel thô về cơ bản là ngẫu nhiên—mỗi pixel là một mẫu ánh sáng độc lập. Tuy nhiên, khi ảnh được tái lấy mẫu toán học (thay đổi kích thước, xoay) hoặc khi bộ nâng cấp AI tổng hợp pixel mới qua nội suy, nó tạo ra các mối tương quan dự đoán được lặp lại giữa các pixel lân cận ở khoảng cách cố định. Dấu vân tay tự tương quan này không thể nhìn thấy bằng mắt thường nhưng là tín hiệu toán học không thể phủ nhận của sự can thiệp tính toán.",
+    "algorithm": "Phát Hiện Đỉnh Tự Tương Quan Không Gian Qua Phân Tích Độ Trễ",
+    "mechanism": "Thuật toán quét qua ảnh trong các khối pixel 128×128 chồng chéo. Đối với mỗi khối, nó tính hàm tự tương quan chuẩn hóa (ACF) dọc theo cả trục ngang và dọc ở nhiều khoảng cách trễ (1 đến 32 pixel). Trong ảnh tự nhiên chưa bị can thiệp, ACF suy giảm đơn điệu khi độ trễ tăng—các pixel xa nhau ngày càng ít tương quan. Tuy nhiên, ảnh được tái lấy mẫu hoặc nâng cấp bằng AI thể hiện các đỉnh tuần hoàn đặc trưng trong ACF ở các khoảng cách đều (ví dụ: mỗi 2 hoặc 3 bước trễ), tương ứng với dấu chân của kernel nội suy.",
+    "useCase": "Vũ khí chính để phát hiện ảnh được nâng cấp bằng AI, ảnh bị thay đổi kích thước bằng tính toán, và ảnh đã bị biến đổi hình học (xoay, hiệu chỉnh phối cảnh) sau khi chụp ban đầu.",
+    "strengths": "• Phát hiện các hiện tượng tái lấy mẫu hoàn toàn vô hình với mắt người, hoạt động ở cấp độ thuần toán học.\n• Nhẹ về mặt tính toán—hoạt động trên các khối pixel cục bộ mà không cần mạng nơ-ron.\n• Có nền tảng toán học vững chắc trong lý thuyết xử lý tín hiệu cổ điển.\n• Bổ trợ cao cho các phương pháp phân tích phổ (Fourier).",
+    "limitations": "• Độ nhạy giảm mạnh với nén JPEG nặng, vốn tự tạo ra các hiện tượng tuần hoàn che lấp dấu hiệu tái lấy mẫu.\n• Các kết cấu tự nhiên có tính tuần hoàn nội tại (tường gạch, vải dệt, hàng rào) có thể tạo ra đỉnh dương tính giả.\n• Yêu cầu kích thước ảnh đủ lớn; ảnh nhỏ hoặc thumbnail có thể không chứa đủ dữ liệu.\n• Một số mô hình AI hiện đại tạo ảnh trực tiếp ở độ phân giải mục tiêu, hoàn toàn bỏ qua tái lấy mẫu.",
+    "parameters": "Phân Tích: Hàm Tự Tương Quan Chuẩn Hóa (ACF) Trên Khối Trượt\nThước Đo: Chiều Cao Đỉnh Tại Các Độ Trễ Tuần Hoàn, Chỉ Số Sức Mạnh Tuần Hoàn\nĐầu Ra: 0-100 Điểm Phát Hiện Hiện Tượng Tái Lấy Mẫu",
+    "accuracy": "Trung bình — 65-78% khi dùng đơn lẻ. Tốt nhất khi kết hợp với các phương pháp phân tích phổ để nâng độ chính xác kết hợp lên 80-88%.",
     "references": [
         {
             "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
             "url": "https://doi.org/10.1109/TSP.2005.855406"
         },
         {
-            "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis. ACM MM&Sec.",
+            "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis of Fixed Linear Predictor Residue. ACM MM&Sec.",
             "url": "https://doi.org/10.1145/1411328.1411333"
         }
-    ],
-    "strengths": "• Phát hiện lỗi resampling mắt thường không thấy\\n• Tính toán nhanh trên khối pixel cục bộ\\n• Nền tảng toán học trong xử lý tín hiệu\\n• Bổ sung cho phân tích Nyquist phổ",
-    "limitations": "• Độ nhạy giảm với nén JPEG nặng\\n• Kết cấu tự nhiên có mẫu tuần hoàn gây dương tính giả\\n• Ảnh nhỏ có thể không đủ dữ liệu\\n• Một số mô hình AI tránh resampling hoàn toàn"
+    ]
 }

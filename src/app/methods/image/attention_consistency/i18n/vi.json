@@ -1,18 +1,21 @@
 {
-    "name": "Nhất quán bản đồ chú ý",
-    "description": "Phân tích mẫu chú ý không gian để phát hiện không nhất quán đặc trưng ảnh AI.",
-    "algorithm": "Phân tích nhất quán tự chú ý cho phát hiện ảnh tổng hợp",
-    "mechanism": "Ảnh AI thường thể hiện mẫu chú ý không tự nhiên với mức chi tiết không nhất quán.",
-    "parameters": "Bản đồ: có trọng số gradient, Tỷ lệ: 3, Nhất quán: tương quan đa tỷ lệ",
-    "accuracy": "Trung bình-Cao — 78-90%",
-    "source": "Zhao et al. (2023), CVPR",
-    "useCase": "Phát hiện ảnh AI qua phân bố chú ý không gian bất thường",
+    "name": "Tính Nhất Quán Bản Đồ Chú Ý (Attention Map)",
+    "description": "Phân tích phân bố không gian của chi tiết hình ảnh, độ sắc nét và tương phản cục bộ trên toàn bộ ảnh để phát hiện các mẫu phân bổ chú ý bất thường đặc trưng của ảnh AI. Trong ảnh chụp chân thực, phân bố chi tiết tuân theo quang học vật lý: các vùng trong mặt phẳng tiêu cự thì sắc nét, các vùng ngoài tiêu cự thì mờ đều theo độ sâu trường. Ảnh AI thường xuyên vi phạm nguyên lý này, tạo ra ảnh có vùng nhận chi tiết cao bất cân xứng (ví dụ: mắt siêu sắc nét trong ảnh chân dung) trong khi các vùng lân cận ở cùng độ sâu lại mềm hoặc quá mịn không thể giải thích—dấu hiệu của sự 'chú ý' không đều của bộ tạo trong quá trình tổng hợp.",
+    "algorithm": "Phân Tích Phân Bố Chú Ý Không Gian Đa Tỷ Lệ",
+    "mechanism": "Thuật toán tính toán ba bản đồ riêng biệt: bản đồ độ sắc nét cục bộ (qua phương sai Laplacian), bản đồ tương phản cục bộ (qua độ lệch chuẩn trong cửa sổ trượt) và bản đồ mật độ chi tiết (qua năng lượng tần số cao). Ba bản đồ này sau đó được phân tích ở nhiều tỷ lệ (mịn, trung bình, thô) để xây dựng ma trận tương quan chéo tỷ lệ. Trong ảnh chân thực, ba bản đồ có tương quan chặt chẽ—vùng sắc nét cũng là vùng tương phản cao và giàu chi tiết. Ảnh AI thường thể hiện sự mất tương quan: một vùng có thể sắc nét nhưng thiếu chi tiết kết cấu mịn, hoặc có tương phản cao nhưng gradient nội bộ mịn đến mức phi tự nhiên.",
+    "useCase": "Phát hiện ảnh chân dung, ảnh sản phẩm và ảnh kiến trúc do AI tạo, nơi phân bố chú ý trực quan bất thường tạo ra hiệu ứng 'thung lũng kỳ lạ' tinh tế nhưng cảm nhận được.",
+    "strengths": "• Bắt được các hiện tượng ngữ nghĩa cấp cao tồn tại qua nén và thay đổi kích thước.\n• Hoạt động trên tất cả các phương pháp tạo ảnh chính (GAN, Khuếch tán, VAE).\n• Phân tích đa tỷ lệ cung cấp sự mạnh mẽ chống lại nhiễu loạn cục bộ.\n• Tạo ra bản đồ chú ý có thể diễn giải trực quan.",
+    "limitations": "• Yêu cầu ảnh có đủ độ phức tạp; có thể gặp khó khăn với bố cục tối giản hoặc cảnh đơn giản.\n• Hậu kỳ nghệ thuật (vignette nặng, hiệu ứng mờ xuyên tâm) có thể tự nhiên gây mất tương quan bản đồ chú ý.\n• Hiệu suất phụ thuộc phần nào vào kiến trúc cụ thể của mô hình AI tạo ảnh.",
+    "parameters": "Phân Tích: Bản Đồ Sắc Nét/Tương Phản/Mật Độ Chi Tiết Đa Tỷ Lệ\nThước Đo: Ma Trận Tương Quan Chéo Tỷ Lệ, Chỉ Số Bất Thường Mất Tương Quan\nĐầu Ra: 0-100 Điểm Không Nhất Quán Chú Ý",
+    "accuracy": "Trung bình-Cao — 78-90% trên các loại ảnh đa dạng. Mạnh nhất trên ảnh chân dung và sản phẩm, yếu nhất trên nghệ thuật trừu tượng hoặc ảnh cách điệu nặng.",
     "references": [
         {
-            "title": "Zhao et al. (2023), CVPR",
-            "url": ""
+            "title": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.",
+            "url": "https://arxiv.org/abs/2103.02406"
+        },
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
         }
-    ],
-    "strengths": "• Nắm bắt hiện vật ngữ nghĩa cao\\n• Hoạt động qua các phương pháp tạo\\n• Phân tích đa tỷ lệ\\n• Bản đồ chú ý có thể diễn giải",
-    "limitations": "• Cần độ phức tạp ảnh đủ\\n• Khó khăn với cảnh đơn giản\\n• Mẫu chú ý thay đổi theo nội dung\\n• Hiệu suất phụ thuộc huấn luyện"
+    ]
 }

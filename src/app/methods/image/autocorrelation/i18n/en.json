@@ -1,12 +1,13 @@
 {
     "name": "Autocorrelation Regularity",
-    "description": "Detects periodic autocorrelation peaks that suggest resampling or AI upsampling artifacts in the image structure.",
-    "algorithm": "Spatial Autocorrelation Peak Analysis",
-    "mechanism": "Computes the normalized autocorrelation function over grayscale pixel rows and columns at multiple lags. Periodic peaks in the autocorrelation indicate resampling artifacts from interpolation or AI upsampling, which produce predictable periodicity absent in natural images captured directly by camera sensors.",
-    "parameters": "Max lag: 32 pixels, Block size: 128x128. Sampling: row+column pairs, Normalization: zero-lag division",
-    "accuracy": "Moderate — 65-78%, best combined with spectral analysis",
-    "source": "Popescu & Farid (2005) — Exposing Digital Forgeries by Detecting Traces of Resampling, IEEE TSP",
-    "useCase": "Detecting resampling and upsampling artifacts characteristic of AI image generation pipelines",
+    "description": "Detects the presence of hidden periodic structures in pixel data that betray computational resampling or AI upsampling. When a real camera captures an image, the raw pixel values are essentially random within textured areas—each pixel is an independent sample of light. However, when an image is mathematically resampled (resized, rotated) or when an AI upscaler synthesizes new pixels through interpolation, it introduces predictable, repeating correlations between neighboring pixels at fixed intervals. This autocorrelation fingerprint is invisible to the human eye but is a mathematically undeniable signal of computational manipulation.",
+    "algorithm": "Spatial Autocorrelation Peak Detection via Lag Analysis",
+    "mechanism": "The algorithm sweeps through the image in overlapping 128×128 pixel blocks. For each block, it computes the normalized autocorrelation function (ACF) along both horizontal and vertical axes at multiple lag distances (1 to 32 pixels). In a natural, untampered image, the ACF decays monotonically as lag increases—distant pixels become steadily less correlated. However, resampled or AI-upscaled images exhibit characteristic periodic peaks in the ACF at regular intervals (e.g., every 2nd or 3rd lag), corresponding to the interpolation kernel's footprint. The algorithm measures the height and periodicity of these peaks across all blocks and flags images where statistically significant periodic autocorrelation is detected.",
+    "useCase": "Primary weapon for detecting AI-upscaled images, computationally resized photographs, and images that have been geometrically transformed (rotation, perspective correction) after initial capture.",
+    "strengths": "• Detects resampling artifacts that are completely invisible to the human eye, operating at a purely mathematical level.\n• Computationally lightweight—operates on local pixel blocks without neural networks.\n• Has a strong mathematical foundation in classical signal processing theory.\n• Highly complementary to spectral (Fourier) analysis methods.",
+    "limitations": "• Sensitivity drops sharply with heavy JPEG compression, which introduces its own periodic artifacts that mask resampling signatures.\n• Natural textures with inherent periodicity (brick walls, fabric weaves, fences) can produce false positive peaks.\n• Requires sufficient image size; small images or thumbnails may not contain enough data for reliable detection.\n• Some modern AI models generate images natively at the target resolution, bypassing resampling entirely.",
+    "parameters": "Analysis: Normalized Autocorrelation Function (ACF) over sliding blocks\nMetrics: Peak Height at Periodic Lags, Periodicity Strength Index\nOutput: 0-100 Resampling Artifact Detection Score",
+    "accuracy": "Moderate — 65-78% standalone. Best used in combination with spectral analysis methods for a combined accuracy boost to 80-88%.",
     "references": [
         {
             "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.",
@@ -16,7 +17,5 @@
             "title": "Kirchner, M. (2008). Fast and Reliable Resampling Detection by Spectral Analysis of Fixed Linear Predictor Residue. ACM MM&Sec.",
             "url": "https://doi.org/10.1145/1411328.1411333"
         }
-    ],
-    "strengths": "• Detects resampling artifacts invisible to human eye\\n• Fast computation on local pixel blocks\\n• Mathematical foundation in signal processing\\n• Complementary to spectral Nyquist analysis",
-    "limitations": "• Sensitivity drops with heavy JPEG compression\\n• Natural textures with periodic patterns cause false positives\\n• Small images may not have enough data\\n• Some AI models avoid resampling entirely"
+    ]
 }

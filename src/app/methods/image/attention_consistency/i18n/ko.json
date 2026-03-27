@@ -1,18 +1,21 @@
 {
-    "name": "어텐션 맵 일관성",
-    "description": "분석합니다 spatial attention 패턴 감지하기 위해 불일치 typical of AI 생성 images.",
-    "algorithm": "Self-Attention Consistency Analysis for Synthetic Image Detection",
-    "mechanism": "AI 생성 images often exhibit unnatural attention 패턴 where different regions show inconsistent levels of detail. This method 분석 local 대비, detail density, and sharpness 분포 maps.",
-    "parameters": "Attention map: 기울기-weighted, Scales: 3 (fine/medium/coarse), Consistency: cross-scale 상관관계",
-    "accuracy": "중-높음 — 78-90%",
-    "source": "Zhao, T. et al. (2023) — Multi-Attentional Deepfake Detection, CVPR",
-    "useCase": "Detecting AI 생성 images by identifying unnatural spatial attention 분포s",
+    "name": "어텐션 맵 일관성 (Attention Map Consistency)",
+    "description": "이미지 전체의 시각적 디테일, 선명도, 로컬 대비의 공간적 분포를 분석하여 AI 생성에 특징적인 부자연스러운 어텐션 배분 패턴을 탐지합니다. 실제 사진에서 디테일 분포는 예측 가능한 광학 물리 법칙을 따릅니다: 초점면의 영역은 선명하고, 초점을 벗어난 영역은 피사계 심도에 따라 균일하게 흐려집니다. AI 생성 이미지는 이 원칙을 일상적으로 위반하여, 특정 영역에 불균형적으로 높은 디테일(예: 인물 사진에서 초선명한 눈)을 부여하면서, 같은 깊이에 있는 인접 영역에는 설명할 수 없는 부드러움이나 과도한 스무딩을 보여줍니다—합성 과정에서 생성기의 불균등한 '어텐션'이 남긴 특징적 흔적입니다.",
+    "algorithm": "다중 스케일 공간 어텐션 분포 분석",
+    "mechanism": "알고리즘은 세 가지 별도의 맵을 계산합니다: 로컬 선명도 맵(라플라시안 분산 기반), 로컬 대비 맵(슬라이딩 윈도우 내 표준편차 기반), 디테일 밀도 맵(고주파 에너지 기반). 이 세 맵은 다중 스케일(미세/중간/거친)에서 분석되어 교차 스케일 상관 행렬을 구성합니다. 실제 이미지에서 세 맵은 매우 촘촘하게 상관됩니다—선명한 영역은 높은 대비와 풍부한 디테일을 함께 갖습니다. AI 이미지는 빈번하게 비상관성을 보여줍니다: 어떤 영역이 선명하지만 미세 텍스처가 결여되거나, 높은 대비를 갖지만 내부 그라디언트가 부자연스러울 정도로 매끈합니다.",
+    "useCase": "시각적 어텐션의 부자연스러운 분포가 미묘하지만 감지 가능한 '불쾌한 골짜기' 효과를 만들어내는 AI 생성 인물 사진, 제품 사진, 건축 사진 탐지에 사용됩니다.",
+    "strengths": "• 압축과 크기 조정에도 살아남는 고수준 의미론적 아티팩트를 포착합니다.\n• 모든 주요 생성 방법(GAN, 확산 모델, VAE)에 걸쳐 작동합니다.\n• 다중 스케일 분석이 국부적 교란에 대한 견고성을 제공합니다.\n• 육안으로 검사할 수 있는 해석 가능한 어텐션 맵을 생성합니다.",
+    "limitations": "• 충분한 이미지 복잡성이 필요합니다; 의도적으로 미니멀한 구도나 단순한 장면에서는 성능이 떨어질 수 있습니다.\n• 예술적 후처리(과도한 비네팅, 방사형 블러 효과)가 자연적으로 어텐션 맵의 비상관성을 유발할 수 있습니다.\n• 성능은 특정 AI 생성 모델의 아키텍처에 다소 의존합니다.",
+    "parameters": "분석 기준: 다중 스케일 선명도/대비/디테일 밀도 맵\n측정 지표: 교차 스케일 상관 행렬, 비상관 이상 지수\n출력: 0-100 어텐션 비일관성 스코어",
+    "accuracy": "중간~높음 — 다양한 이미지 유형에서 78-90% 정확도. 인물 사진과 제품 사진에서 가장 강하고, 추상 예술이나 과도하게 양식화된 이미지에서 가장 약합니다.",
     "references": [
         {
-            "title": "Zhao, T. et al. (2023) — Multi-Attentional Deepfake Detection, CVPR",
-            "url": ""
+            "title": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.",
+            "url": "https://arxiv.org/abs/2103.02406"
+        },
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
         }
-    ],
-    "strengths": "• Captures high-level semantic 아티팩트\\n• Works 에 걸친 generation methods\\n• Multi-scale 분석\\n• Interpretable attention maps",
-    "limitations": "• Requires sufficient image complexity\\n• May struggle with simple scenes\\n• Attention 패턴 vary by content\\n• Training-dependent performance"
+    ]
 }

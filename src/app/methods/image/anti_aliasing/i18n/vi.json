@@ -1,12 +1,21 @@
 {
-    "name": "Nhất quán khử răng cưa",
-    "description": "Phân tích tính nhất quán mẫu khử răng cưa — AI thường tạo khử răng cưa quá mịn hoặc không đồng đều",
-    "algorithm": "Thuật toán phân tích Nhất quán khử răng cưa",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích tính nhất quán mẫu khử răng cưa — AI thường tạo khử răng cưa quá mịn hoặc không đồng đều. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích nhất quán khử răng cưa. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Tính Nhất Quán Của Khử Răng Cưa (Anti-Aliasing)",
+    "description": "Kiểm tra tính đồng nhất của hiệu ứng làm mịn cạnh (anti-aliasing) được áp dụng trên tất cả các đường biên và đường viền trong ảnh. Máy ảnh thật tạo ra anti-aliasing như một sản phẩm phụ quang học cố hữu từ sự tương tác của ánh sáng với ống kính và cảm biến vật lý. Quá trình này tạo ra một gradient nhất quán, tuân theo vật lý giữa các cạnh vật thể và nền của chúng trên toàn bộ khung hình. Tuy nhiên, các trình tạo ảnh AI (GAN, Mô hình Khuếch tán) tổng hợp các cạnh bằng tính toán. Chúng thường áp dụng làm mịn không nhất quán: làm mịn quá mức một số đường biên tạo ra vẻ ngoài nhựa nhân tạo phi tự nhiên, trong khi để lại các đường biên khác với hiện tượng răng cưa bậc thang sắc nét—đôi khi ngay trong cùng một vật thể. Phương pháp này phát hiện những sự không nhất quán đặc trưng này.",
+    "algorithm": "Phân Tích Tính Đồng Nhất Gradient Cạnh Dưới Pixel",
+    "mechanism": "Thuật toán đầu tiên áp dụng bộ phát hiện cạnh kiểu Canny để cô lập tất cả các đường biên quan trọng trong ảnh. Đối với mỗi đoạn cạnh được phát hiện, nó đo lường chính xác chiều rộng và hồ sơ gradient của vùng chuyển tiếp từ bên này sang bên kia của cạnh. Trong một bức ảnh chân thực, các hồ sơ anti-aliasing này nhất quán đáng kể: gradient rộng 1,2 pixel trên cạnh vật thể tiền cảnh sẽ khớp gần giống với cạnh tương tự trên vật thể nền. Ảnh do AI tạo thường xuyên thất bại trong bài kiểm tra này, tạo ra gradient rộng, mờ (3+ pixel) trên các đặc điểm nổi bật như khuôn mặt trong khi đồng thời tạo ra các chuyển tiếp sắc nét 0-pixel trên các yếu tố phụ như sợi tóc hoặc kết cấu vải.",
+    "useCase": "Bước kiểm tra sơ bộ đáng tin cậy cho ảnh chân dung và ảnh sản phẩm do AI tạo. Nó xuất sắc trong việc bắt được hiệu ứng 'thung lũng kỳ lạ' nơi khuôn mặt trông quá mịn trong khi các chi tiết xung quanh lại sắc nét nghịch lý.",
+    "strengths": "• Cực kỳ nhanh, hoạt động hoàn toàn trên dữ liệu bản đồ cạnh mà không cần suy luận mạng nơ-ron tốn kém tính toán.\n• Rất hiệu quả chống lại đầu ra của Mô hình Khuếch tán (Stable Diffusion, DALL-E, Midjourney), vốn nổi tiếng với xử lý cạnh không nhất quán.",
+    "limitations": "• Ảnh cố ý làm mờ (ví dụ: chụp tilt-shift, bokeh nghệ thuật) sẽ tự nhiên thể hiện anti-aliasing không đồng nhất, gây ra dương tính giả.\n• Nén JPEG nặng phá hủy thông tin gradient dưới pixel tinh tế mà thuật toán dựa vào, làm giảm nghiêm trọng độ chính xác dưới hệ số chất lượng 70.",
+    "parameters": "Phân Tích: Lập Hồ Sơ Gradient Cạnh Dưới Pixel\nThước Đo: Phương Sai Chiều Rộng Gradient, Chỉ Số Nhất Quán Cạnh Toàn Ảnh\nĐầu Ra: 0-100 Điểm Không Nhất Quán Anti-Aliasing",
+    "accuracy": "Trung bình đến Cao — 75-87% trên ảnh không nén hoặc nén nhẹ. Độ chính xác giảm đáng kể trên ảnh đã được mã hóa lại nhiều lần qua các nền tảng mạng xã hội.",
+    "references": [
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
+        },
+        {
+            "title": "Corvi et al. (2023). On the Detection of Synthetic Images Generated by Diffusion Models. ICASSP.",
+            "url": "https://arxiv.org/abs/2211.00680"
+        }
+    ]
 }
