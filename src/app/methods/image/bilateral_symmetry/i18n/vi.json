@@ -1,18 +1,18 @@
 {
-    "name": "Phát hiện đối xứng hai bên",
-    "description": "Phát hiện đối xứng hai bên cao bất thường. Ảnh AI thường có đối xứng gương bất tự nhiên.",
-    "algorithm": "Phân tích tương quan gương Ngang/Dọc",
-    "mechanism": "Tính tương quan mức pixel giữa nửa trái/phải và trên/dưới ảnh.",
-    "parameters": "So sánh: tương quan lật trái-phải, Chỉ số: NCC, Ngưỡng: thích ứng",
-    "accuracy": "Thấp-Trung bình — 60-72%",
-    "source": "Loy & Eklundh (2006), ECCV",
-    "useCase": "Nhận dạng lỗi hoàn hảo từ tạo AI thiên lệch đối xứng",
+    "name": "Phân Tích Đối Xứng Hai Bên",
+    "description": "Phát hiện và định lượng sự đối xứng hai bên bất thường trong hình ảnh. Các mô hình tạo ảnh AI thường có xu hướng quy nạp tạo ra sự đối xứng gương hoàn hảo, dẫn đến sự hoàn mỹ về cấu trúc - điều rất hiếm gặp về mặt thống kê trong các bức ảnh chụp thực tế ngoài đời thực.",
+    "algorithm": "Phát Hiện Đối Xứng Toàn Cục bằng Tương Quan Chéo Chuẩn Hóa",
+    "mechanism": "Tính toán mức độ tương quan ở cấp độ điểm ảnh và đặc trưng cấu trúc giữa hai nửa ảnh được phản chiếu hình học (trái/phải, trên/dưới). Thuật toán này xác định các chòm sao đặc trưng đối xứng và tính toán điểm đối xứng toàn cục bằng cách sử dụng Tương Quan Chéo Chuẩn Hóa (NCC). Các điểm tương quan đạt đỉnh bất thường thường cho thấy thành kiến của quá trình tạo ảnh tổng hợp hoặc thao tác sao chép nhân bản.",
+    "parameters": "Thang đo so sánh: Tương quan Chéo Chuẩn Hóa (NCC), Trích xuất đặc trưng: SIFT/SURF Keypoints, Phép biến đổi: Phản chiếu ngang/dọc",
+    "accuracy": "Trung bình (65-75%) - Hiệu quả nhất khi phân tích các khung cảnh vốn thiếu sự đối xứng hình học hoàn hảo trong tự nhiên (ví dụ: khuôn mặt người, phong cảnh).",
+    "source": "Loy & Eklundh (2006) / Mader et al. (2017) về sự thiên lệch đối xứng tổng hợp",
+    "useCase": "Nhận dạng các tạo tác hoàn hảo về cấu trúc thường được tạo ra bởi các mô hình khuếch tán và đánh giá tính hợp lý vật lý của khung cảnh.",
     "references": [
         {
-            "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry. ECCV.",
+            "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry and Symmetric Constellations of Features. ECCV.",
             "url": "https://doi.org/10.1007/11744047_38"
         }
     ],
-    "strengths": "• Tính toán đơn giản và nhanh\\n• Nắm bắt loại lỗi AI độc đáo\\n• Không cần dữ liệu huấn luyện\\n• Bổ sung cho phương pháp cấu trúc",
-    "limitations": "• Nhiều ảnh thật có đối xứng tự nhiên\\n• Độ chính xác đơn lẻ thấp\\n• Dễ vượt qua bởi AI bất đối xứng\\n• Chỉ phát hiện một loại lỗi cụ thể"
+    "strengths": "• Tính toán đơn giản, tốc độ xử lý nhanh chóng.\n• Nắm bắt được một thiên kiến cấu trúc cốt lõi thường có trong nhiều mạng lưới AI sinh tạo.\n• Có thể hoạt động độc lập mà không cần phải huấn luyện dữ liệu lớn.\n• Đóng vai trò là phương pháp phân tích bổ sung hiệu quả cho các phân tích tần số và kết cấu.",
+    "limitations": "• Dễ bị dương tính giả trong các khung cảnh vốn có tính đối xứng tự nhiên (ví dụ: kiến trúc, sự phản chiếu của mặt nước).\n• Độ tin cậy trong chẩn đoán độc lập thấp nếu thiếu phân tích ngữ cảnh ảnh.\n• Có thể bị vượt qua dễ dàng nếu người dùng cố tình yêu cầu AI sinh ra ảnh không đối xứng.\n• Rất nhạy cảm với các biến dạng về phối cảnh hoặc xoay góc chụp của chủ thể trong ảnh thật."
 }

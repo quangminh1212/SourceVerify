@@ -1,14 +1,12 @@
 {
-    "name": "Xác thực C2PA Content Credentials",
-    "description": "Kiểm tra chứng chỉ nội dung C2PA (Liên minh về Tính xác thực và Xuất xứ Nội dung) và dữ liệu xuất xứ. Tiêu chuẩn C2PA cung cấp bằng chứng mật mã về nguồn gốc nội dung và lịch sử chỉnh sửa, cho phép xác minh chuỗi giám sát từ lúc chụp đến khi xuất bản.",
-    "algorithm": "Trình quét Manifest C2PA",
-    "mechanism": "Quy trình xác minh C2PA bao gồm nhiều giai đoạn:\n\n1. **Phát hiện container JUMBF**: Quét dữ liệu nhị phân ảnh tìm superbox JUMBF (JPEG Universal Metadata Box Format), là cơ chế vận chuyển cho manifest C2PA.\n\n2. **Phân tích tải CBOR**: Trích xuất và giải mã payload CBOR (Concise Binary Object Representation) chứa dữ liệu claim, assertion, và credential store.\n\n3. **Phát hiện hành động AI**: Tìm các khai báo hành động cho biết ảnh được tạo bởi AI, bao gồm `c2pa.created`, `ai_generated`, `trainedAlgorithmicMedia`, và `compositeWithTrainedAlgorithmicMedia`.\n\n4. **Xác thực chuỗi xuất xứ**: Truy vết chuỗi manifest để xác định nguồn gốc — ảnh được chụp bởi camera tuân thủ C2PA, chỉnh sửa trong phần mềm tương thích C2PA, hay được tạo bởi công cụ AI có khai báo đầu ra.",
-    "parameters": "Các marker C2PA: content credentials, manifest store, JUMBF superbox, CBOR containers\nLoại hành động AI: c2pa.created, ai_generated, trainedAlgorithmicMedia\nCamera hỗ trợ: Leica M11, Sony α7/α9 series, Nikon Z series\nPhần mềm hỗ trợ: Adobe Photoshop 2024+, Lightroom, Truepic",
-    "accuracy": "Rất cao - 95%+ khi có dữ liệu C2PA. Hiện tại tỉ lệ áp dụng còn thấp (~5% tổng số ảnh). Khi được áp dụng rộng rãi hơn (Adobe, Google, Microsoft, BBC), đây sẽ trở thành phương pháp xác minh chính.",
-    "source": "C2PA Technical Specification 2.0, Content Authenticity Initiative (CAI)",
-    "useCase": "Xác minh chính cho ảnh từ các nguồn tuân thủ C2PA như tổ chức tin tức, nhiếp ảnh chuyên nghiệp, và nền tảng AI triển khai content credentials. Cần thiết cho xác minh xuất xứ media trong quy trình báo chí và kiểm duyệt nội dung.",
-    "strengths": "• Bằng chứng mật mã về nguồn gốc — không thể giả mạo dễ dàng\n• Lịch sử chỉnh sửa hoàn chỉnh từ lúc chụp đến xuất bản\n• Tiêu chuẩn được ngành công nghiệp hỗ trợ (Adobe, Microsoft, Google, BBC, Intel)\n• Bao phủ cả nội dung AI tạo và ảnh chụp từ camera\n• Có thể đọc bằng máy và xác minh bởi con người",
-    "limitations": "• Tỉ lệ áp dụng hiện tại rất thấp (~5% ảnh)\n• Metadata có thể bị xóa khi chia sẻ trên mạng xã hội\n• Yêu cầu phần cứng hoặc phần mềm tuân thủ C2PA khi chụp/tạo\n• Không ngăn được việc chụp màn hình để vượt qua xác minh\n• Tiêu chuẩn vẫn đang phát triển — có vấn đề tương thích phiên bản",
+    "name": "Xác Thực Thông Tin Nguồn Gốc C2PA",
+    "description": "Xác thực bằng mật mã học đối với dữ liệu C2PA (Liên minh Nguồn gốc và Tính xác thực của Nội dung). Tiêu chuẩn này thiết lập một chuỗi hành trình có thể kiểm chứng bằng cách nhúng các lịch sử nguồn gốc chỉnh sửa được mã hóa cứng, chứng minh dứt khoát liệu phương tiện đó có nguồn gốc từ cảm biến máy ảnh thực tế hay từ trình tạo AI.",
+    "algorithm": "Trích Xuất Manifest C2PA và Xác Thực Chữ Ký Mật Mã",
+    "mechanism": "Phương pháp này trích xuất các hộp chứa JUMBF (Định dạng Siêu Dữ Liệu Toàn cầu JPEG) từ tệp nhị phân của hình ảnh, cô lập các payload mã hóa CBOR. Nó xác thực chuỗi chứng chỉ X.509 để đảm bảo các tệp thông tin không bị giả mạo. Sau đó, nó sẽ kiểm tra nghiêm ngặt các thẻ khẳng định do AI tạo ra (vd: `c2pa.created`, `ai_generated`, `trainedAlgorithmicMedia`). Nếu một chữ ký hợp lệ khớp với nền tảng AI (như OpenAI, Adobe Firefly) hoặc một nhà sản xuất máy ảnh (như Leica hoặc Sony) được tìm thấy, nguồn gốc sẽ được đảm bảo chắc chắn tuyệt đối.",
+    "parameters": "Giao thức truyền tải: Hộp superbox JUMBF, Định dạng dữ liệu: CBOR, Mật mã học: Xác thực chứng chỉ số X.509, Điểm đánh dấu: `c2pa.created`, `ai_generated`",
+    "accuracy": "Rất cao (95-100%) - Đem lại sự chắc chắn tuyệt đối khi các Manifest mã hóa được công bố hợp lệ, nhưng mức độ phổ cập toàn cầu hiện nay vẫn còn thấp.",
+    "source": "Đặc Tả Kỹ Thuật C2PA 2.0 (Sáng kiến Xác thực Nội dung CAI)",
+    "useCase": "Thiết lập nền tảng sự thật tuyệt đối cho nguồn gốc phương tiện truyền thông, xác minh hình ảnh máy ảnh gốc trong báo chí sự kiện, và nhận diện dứt khoát các thế hệ AI được khai báo một cách minh bạch.",
     "references": [
         {
             "title": "C2PA Technical Specification 2.0 — Coalition for Content Provenance and Authenticity",
@@ -21,10 +19,8 @@
         {
             "title": "Rosenthol, L. et al. (2023). Content Provenance and Authenticity: The C2PA Standard. IEEE Security & Privacy.",
             "url": "https://doi.org/10.1109/MSEC.2023.3265252"
-        },
-        {
-            "title": "JUMBF (ISO 19566-5) — JPEG Universal Metadata Box Format",
-            "url": "https://jpeg.org/jumbf/"
         }
-    ]
+    ],
+    "strengths": "• Dựa trên nền tảng chữ ký số mật mã học, thứ gần như không thể giả mạo hay thay đổi.\n• Cung cấp trọn vẹn sự minh bạch, rành mạch về lịch sử chỉnh sửa trực tiếp từ khoảnh khắc bấm máy.\n• Được hậu thuẫn mạnh mẽ bởi các gã khổng lồ trong ngành công nghiệp như Adobe, Microsoft, Google, Intel và Sony.\n• Mang lại sự chắc chắn dứt khoát bằng thuật toán thay vì chỉ dựa lưng vào rủi ro xác suất thống kê.",
+    "limitations": "• Các manifest mã hóa thường bị tước bỏ triệt để trong quá trình nén và mã hóa lại trên các nền tảng mạng xã hội.\n• Đòi hỏi thiết bị hỗ trợ gốc (máy ảnh tương thích C2PA) hoặc phần mềm chỉnh sửa chuyên dụng có khả năng ký số.\n• Trở nên vô dụng hoàn toàn khi đối mặt với thủ thuật chụp màn hình hay thu chụp bức ảnh thông qua thiết bị bên ngoài.\n• Đối diện với mức độ hạn hẹp trong việc sử dụng tiêu chuẩn toàn cầu, thiếu khả thi phổ biến rộng rãi cho người dùng smartphone."
 }

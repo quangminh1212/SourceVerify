@@ -1,22 +1,22 @@
 {
-    "name": "Brightness Gradient",
-    "description": "Analyzes brightness gradient patterns",
-    "algorithm": "Brightness Gradient — 像素级空间分析",
-    "mechanism": "该方法执行像素级空间分析以检测AI生成的伪影:\n\n1. **图像预处理**: 加载输入图像并转换为适当的色彩空间进行分析.\n\n2. **特征提取**: Analyzes brightness gradient patterns. 算法在图像网格上提取相关的像素级特征.\n\n3. **模式分析**: 从提取的特征中计算统计度量以识别不规则性.\n\n4. **异常检测**: 将结果与真实相机图像和AI生成图像的基线进行比较.\n\n5. **分数计算**: 根据检测到的异常程度计算置信度分数 (0-100).",
-    "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： brightness gradient 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "亮度梯度分析",
+    "description": "分析平滑过渡区域中亮度梯度的空间异常。AI 生成模型通常会造成局部的光照不一致，渲染出不可能实现的光线衰减或突然的梯度变化，这严重违反了正常的物理照明约束。",
+    "algorithm": "非线性梯度方差与照明一致性映射",
+    "mechanism": "该算法计算图像亮度通道的一阶和二阶空间导数以绘制亮度梯度图。在自然图像中，光滑表面（如墙壁或皮肤）上的亮度过渡遵循由光照平方反比定律决定的、可预测且连续的参数曲线。而 AI 合成的图像由于模型基于局部区块的生成方式以及缺乏整体的 3D 场景理解，常常展现出“梯度断裂”——即微小且突兀的变化、不规则的色带或物理上不可能产生的阴影。",
+    "parameters": "色彩空间：亮度（Y 通道），分析指标：二阶梯度方差，全局检查：光照方向性",
+    "accuracy": "中等 (65-75%) - 对肖像、室内场景或具有柔和影棚照明的主体最为有效。",
+    "source": "Johnson & Farid (2007) 关于通过照明约束揭示数字伪造的研究",
+    "useCase": "检测合成的照明衰减，识别 AI 生成物中违反物理常理的光照物理现象，并揭露复合拼贴的篡改。",
     "references": [
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+            "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         },
         {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
-            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+            "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.903848"
         }
-    ]
+    ],
+    "strengths": "• 建立在现实世界光传输和辐射度测量的基础物理学之上。\n• 在捕捉高级生成模型留下的漏洞方面非常有效，即使此时它所产生的语义内容在视觉上看起来在物理上无可挑剔。\n• 揭露出了采用简单的业余照片编辑工具极难手动修复的光照矛盾不一致性。\n• 即使面临着网络普遍的图像压缩，在渐变覆盖幅度足够宽泛时仍能维系中等的实效性。",
+    "limitations": "• 对于缺乏具备可供充当基准面分析的光滑平坦表面的过度纹理化场景（例如植物叶片丛、拥挤不堪的人群等）失去其效能和价值。\n• 在充斥着极其庞杂和拥有繁多局部单点光源交错叠加的真实场景环境（如演唱会舞台）中，该分析功能很容易触发误报操作。\n• 过度压缩、暴力修图抑或者常见的深度转换为 8-bit 色彩时引起的色阶断块现象，都极有可能激发错误的警报。\n• 该功能需依仗于极其精准而繁复的深度空间形态的解构，运算执行速度相较于普通的单遍单程频率检测方案要缓慢许多。"
 }

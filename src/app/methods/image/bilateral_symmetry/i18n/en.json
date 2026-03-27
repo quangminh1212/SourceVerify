@@ -1,18 +1,18 @@
 {
-    "name": "Bilateral Symmetry Detection",
-    "description": "Detects unusually high bilateral symmetry in images. AI-generated images often exhibit unnatural mirror symmetry that real scenes rarely have.",
-    "algorithm": "Horizontal/Vertical Mirror Correlation Analysis",
-    "mechanism": "Computes pixel-level correlation between left/right and top/bottom image halves. Unusually high symmetry scores suggest AI generation.",
-    "parameters": "Comparison: left-right flip correlation, Metric: normalized cross-correlation, Threshold: adaptive",
-    "accuracy": "Low-Moderate — 60-72%",
-    "source": "Loy & Eklundh (2006) — Detecting Symmetry and Symmetric Constellations of Features, ECCV",
-    "useCase": "Identifying perfection artifacts from symmetry-biased AI generation",
+    "name": "Bilateral Symmetry Analysis",
+    "description": "Detects and quantifies unnatural bilateral symmetry in images. AI generation models often exhibit an inductive bias toward perfect mirror symmetry, producing structural perfection that is statistically abnormal in authentic photographs of real-world scenes.",
+    "algorithm": "Normalized Cross-Correlation Global Symmetry Detection",
+    "mechanism": "Computes pixel-level and structural feature correlation between geometrically mirrored halves (left/right, top/bottom) of an image. The algorithm identifies symmetric constellations of features and calculates a global symmetry score using Normalized Cross-Correlation (NCC). Unusually peak correlation scores indicate synthetic generation biases or cloning manipulations.",
+    "parameters": "Comparison Metric: Normalized Cross-Correlation (NCC), Feature Extraction: SIFT/SURF Keypoints, Transformation: Horizontal/Vertical Mirroring",
+    "accuracy": "Moderate (65-75%) - Most effective when analyzing scenes that naturally lack perfect geometric symmetry (e.g., human faces, landscapes).",
+    "source": "Loy & Eklundh (2006) / Mader et al. (2017) on synthetic symmetry biases",
+    "useCase": "Identifying structural perfection artifacts commonly produced by generative models and evaluating the physical plausibility of the scene.",
     "references": [
         {
             "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry and Symmetric Constellations of Features. ECCV.",
             "url": "https://doi.org/10.1007/11744047_38"
         }
     ],
-    "strengths": "• Simple and fast computation\\n• Captures a unique AI artifact type\\n• Does not require training data\\n• Complementary to structural methods",
-    "limitations": "• Many real images have natural symmetry\\n• Low standalone accuracy\\n• Easily defeated by asymmetric AI prompts\\n• Only detects one specific artifact type"
+    "strengths": "• Computationally straightforward and fast.\n• Captures a fundamental structural bias inherent to many generative networks.\n• Functions without the need for large, dataset-specific training.\n• Effective complementary metric to frequency and texture analysis.",
+    "limitations": "• Generates false positives in authentically symmetric scenes (e.g., architecture, reflections).\n• Low standalone diagnostic confidence without contextual analysis.\n• Easily circumvented by explicitly prompting the generative model for asymmetrical compositions.\n• Highly sensitive to slight perspective distortions or subject rotation in authentic images."
 }

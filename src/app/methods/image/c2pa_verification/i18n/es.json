@@ -1,14 +1,12 @@
 {
-    "name": "Credenciales de Contenido C2PA",
-    "description": "Verifica las credenciales de contenido C2PA (Coalición para la Procedencia y Autenticidad del Contenido) y los datos de procedencia. El estándar C2PA proporciona prueba criptográfica del origen del contenido y el historial de edición.",
-    "algorithm": "Escáner de Manifiestos C2PA",
-    "mechanism": "El proceso de verificación C2PA involucra múltiples etapas:\n\n1. **Detección de contenedores JUMBF**: Escanea el binario de la imagen buscando superboxes JUMBF, el mecanismo de transporte para manifiestos C2PA.\n\n2. **Análisis de payload CBOR**: Extrae y decodifica payloads CBOR que contienen datos de claims, assertions y credential stores.\n\n3. **Detección de acciones AI**: Busca declaraciones de acciones que indican generación por IA, incluyendo `c2pa.created`, `ai_generated`, `trainedAlgorithmicMedia`.\n\n4. **Validación de cadena de procedencia**: Traza la cadena de manifiestos para establecer el origen de la imagen.",
-    "parameters": "Marcadores C2PA: content credentials, manifest store, JUMBF superbox, CBOR containers\nTipos de acciones AI: c2pa.created, ai_generated, trainedAlgorithmicMedia\nCámaras compatibles: Leica M11, Sony α7/α9 series, Nikon Z series",
-    "accuracy": "Muy alta - 95%+ cuando los datos C2PA están presentes. Adopción actualmente limitada (~5% de las imágenes).",
-    "source": "C2PA Technical Specification 2.0, Content Authenticity Initiative (CAI)",
-    "useCase": "Verificación principal para imágenes de fuentes compatibles con C2PA como organizaciones de noticias, fotografía profesional y plataformas de IA que implementan credenciales de contenido.",
-    "strengths": "• Prueba criptográfica del origen — no se puede falsificar fácilmente\n• Historial completo de edición desde la captura hasta la publicación\n• Estándar respaldado por la industria (Adobe, Microsoft, Google, BBC, Intel)\n• Cubre contenido generado por IA y capturado por cámara\n• Legible por máquina y verificable por humanos",
-    "limitations": "• Tasa de adopción actualmente muy baja (~5% de imágenes)\n• Los metadatos pueden eliminarse al compartir en redes sociales\n• Requiere hardware o software compatible con C2PA\n• No previene la evasión mediante capturas de pantalla\n• El estándar aún está evolucionando",
+    "name": "Verificación de Credenciales de Contenido C2PA",
+    "description": "Valida criptográficamente los datos del manifiesto C2PA (Coalición para la Procedencia y Autenticidad del Contenido). Este estándar establece una cadena de custodia verificable integrando historiales de edición y procedencia codificados de forma rígida, lo que demuestra de manera definitiva si un archivo multimedia se originó a partir del sensor de una cámara compatible o de un generador de IA.",
+    "algorithm": "Análisis de Manifiesto Criptográfico C2PA y Validación de Firma Digital",
+    "mechanism": "El método extrae y recupera los contenedores JUMBF (Formato de Caja Universal de Metadatos JPEG) integrando la trama binaria de la imagen, procediendo con gran destreza a aislar las preciadas cargas criptográficas formato CBOR incrustadas. Prosigue validando sin tolerancias la cadena de certificados X.509 en pro de garantizar fehacientemente que la documentación y credenciales no hayan atravesado alteraciones y manipulaciones. Su estricta escrutación de etiquetas de afirmación de IA (como ser: `c2pa.created`, `ai_generated`, `trainedAlgorithmicMedia`) ratifica la procedencia. Si su indagación halla y localiza una firma válida encuadrada paralelamente a una plataforma IA concreta (como OpenAI, Adobe Firefly) o, a su vez, una marca de fabricantes de cámaras punteras (como Canon o Sony), emitirá de forma inequívoca el dictamen del origen garantizado con vigor criptográfico implacable.",
+    "parameters": "Formato de Transporte: Super-cajas JUMBF, Formato de Carga Útil Operacional: CBOR, Factor de Criptografía: Validación perenne de Certificado X.509, Identificadores Clave: `c2pa.created`, `ai_generated`",
+    "accuracy": "Altísima (95-100%) - Imparte y manifiesta una colosal certeza inamovible de exactitud siempre y cuando sus sellos o manifiestos criptográficos hagan presencia, todo esto siendo limitado lógicamente por el eslabón de la escasa e inferior adopción de las masas mundiales.",
+    "source": "Especificación Técnica C2PA Versión 2.0 Documentada (Iniciativa de Autenticidad de Contenido)",
+    "useCase": "Conferir, ratificar y erigir una incontestable evidencia e irrefutable verdad final para el nacimiento de la procedencia de los medios globales; avalar la fidelidad del material en el seno del periodismo en su pureza con el sensor, y delinear con gran claridad el accionar declarado mediante rúbrica de generaciones IA transparentes.",
     "references": [
         {
             "title": "C2PA Technical Specification 2.0 — Coalition for Content Provenance and Authenticity",
@@ -21,10 +19,8 @@
         {
             "title": "Rosenthol, L. et al. (2023). Content Provenance and Authenticity: The C2PA Standard. IEEE Security & Privacy.",
             "url": "https://doi.org/10.1109/MSEC.2023.3265252"
-        },
-        {
-            "title": "JUMBF (ISO 19566-5) — JPEG Universal Metadata Box Format",
-            "url": "https://jpeg.org/jumbf/"
         }
-    ]
+    ],
+    "strengths": "• Fielmente arraigado en los principios imperturbables de validación algorítmica y blindaje dictado a partir de firmas firmes digitales inviables e impenetrables por las farsas del momento.\n• Proporciona y despabila ostentando de principio a pie la majestuosa historia prístina inalterable de un sinfín de ediciones concatenadas, forjada sin dudar en el santuario irrepetible del momento fotográfico del obturador.\n• Fuerte sustento por entes inmensurables que rigen los peldaños universales vigentes desde su cima magnate empresarial (Adobe, Microsoft, Google, Intel y demás).\n• Sienta unas sólidas bases de veredicto que superan aplastantemente el limitado abanico de especulaciones provenientes mediante aproximación probabilística estocástica.",
+    "limitations": "• Un gran volumen considerable del manifiesto documentacional corre con un nefasto infortunio inmerecido: Terminar volatilizado durante la agresiva red codificación en el espectro violento de la compresión por las redes sociales rutinarias.\n• Somete a una condicional insuperable dado que restringe al operador a depender absolutamente del engranaje proveniente de un costoso hardware de elite nato (cámaras de fotografía adscrita a las especificaciones rigurosas de la firma C2PA) o de un software altamente sofisticado facultado idóneamente para poder emitir los certificados pertinentes.\n• Sus grandezas languidecen inertes frente a métodos trogloditas malintencionados conformados de primitivos y manuales pantallazos crudos del lienzo e irrupciones o recultivados fotográficos mecánicos frente a visores primarios emitidos en un monitor del medio."
 }

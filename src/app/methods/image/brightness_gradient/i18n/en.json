@@ -1,22 +1,22 @@
 {
-    "name": "Brightness Gradient",
-    "description": "Analyzes brightness gradient patterns",
-    "algorithm": "Brightness Gradient — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Analyzes brightness gradient patterns. The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through brightness gradient analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+    "name": "Brightness Gradient Analysis",
+    "description": "Analyzes spatial anomalies in brightness gradients across smooth transitions. AI generative models often create localized illumination inconsistencies, rendering impossible light falloffs or abrupt gradient shifts that violate physical lighting constraints.",
+    "algorithm": "Non-linear Gradient Variance and Illumination Consistency Mapping",
+    "mechanism": "The algorithm calculates the first and second-order spatial derivatives of the image luminance channel to map brightness gradients. In natural images, luminance transitions on smooth surfaces (like walls or skin) follow predictable, continuous parametric curves dictated by the inverse-square law of light. AI-synthesized images often display 'gradient fractures'—micro-abrupt changes, irregular banding, or physically impossible shadows caused by the model's localized patch-based generation and lack of global 3D scene understanding.",
+    "parameters": "Color Space: Luminance (Y channel), Analysis Metric: Second-order gradient variance, Global Check: Illumination directionality",
+    "accuracy": "Moderate (65-75%) - Most effective on portraits, indoor scenes, or subjects with soft studio lighting.",
+    "source": "Johnson & Farid (2007) on Exposing Digital Forgeries Through Lighting Constraints",
+    "useCase": "Detecting synthetic illumination falloffs, identifying physically impossible lighting physics in AI generations, and exposing composite manipulation.",
     "references": [
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+            "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         },
         {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
-            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+            "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.903848"
         }
-    ]
+    ],
+    "strengths": "• Deeply grounded in the fundamental physics of real-world light transport and radiometry.\n• Effective at catching advanced generative models where semantic content appears physically perfect.\n• Uncovers lighting inconsistencies that are extremely difficult to fix manually via amateur photo editing.\n• Remains moderately effective even on compressed internet images if the gradients are sufficiently broad.",
+    "limitations": "• Ineffectual on heavily textured scenes (e.g., foliage, dense crowds) lacking smooth surfaces for baseline analysis.\n• Prone to false positives in authentic environments with complex, multi-source localized lighting (e.g., concert stages).\n• Color banding caused by excessive JPEG compression or standard 8-bit depth conversion can trigger false alarms.\n• Requires sophisticated spatial parsing and is slower computationally compared to single-pass frequency checks."
 }

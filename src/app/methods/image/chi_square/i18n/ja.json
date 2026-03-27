@@ -1,22 +1,22 @@
 {
-    "useCase": "Detecting hidden information, compression irregularities, and AI生成の JPEG 異常",
-    "mechanism": "分析します the 分布 of quantized DCT 係数 using chi-square statistics. Expected 分布s follow predictable パターン for natural images; deviations indicate 操作, AI generation, or hidden data embedding.",
-    "accuracy": "Medium - 72-83% for detecting compression 異常 and AI アーティファクト",
-    "name": "カイ二乗分析",
-    "source": "Westfeld (2000)",
-    "algorithm": "DCT係数カイ二乗検定",
-    "parameters": "ブロックサイズ: 8x8 DCT, Test: chi-square goodness-of-fit, Significance: p < 0.05, Coefficients: AC components",
-    "description": "適用します chi-square 統計的 test to DCT 係数 分布s を検出するために steganographic embedding and compression 異常 common in AI outputs.",
+    "name": "カイ二乗DCT係数解析",
+    "description": "ブロック離散コサイン変換（DCT）係数分布に適合度カイ二乗統計検定を適用します。自然な写真では、AC係数の統計分布は非常に予測可能で、滑らかに減衰するラプラス分布分布に従います。物理的なレンズと量子化行列を介して光を有機的に圧縮しない生成AIモデルは、標準的なカメラの量子化テーブルから大きく逸脱する周波数異常を合成または埋め込むことがよくあります。",
+    "algorithm": "DCT AC係数の統計的適合度検定",
+    "mechanism": "このアルゴリズムは、8x8ピクセルブロック全体でDCT AC係数のヒストグラムを計算し、カイ二乗検定を適用して、観察された分布を理論的に予想される自然対数減衰（ラプラス分布）と比較します。画像がカメラによってネイティブに生成され、JPEGとして保存されると、係数は事前に定義された量子化ビンにきちんと分類されます。しかし、潜在空間でピクセルを直接生成し、アルゴリズムによる平滑化を適用するAIは、カイ二乗の帰無仮説を棄却する、スキップされたビン、不自然なクラスタリング、または異常なステガノグラフィのような摂動など、「不可能な」係数分布を作成することが頻繁にあります。",
+    "parameters": "ブロックサイズ: 8x8 DCT, 検定のタイプ: カイ二乗適合度, 対象の係数: ACコンポーネント, 有意水準: p < 0.05",
+    "accuracy": "中程度（72-83%） - アルゴリズムの異常やステガノグラフィのペイロードの特定には優れていますが、画像がJPEGであることに大きく依存しており、二次再圧縮に騙される可能性があります。",
+    "source": "Westfeld & Pfitzmann (2000) / Fridrich et al. (2003) - ステガノグラフィシステムへの攻撃",
+    "useCase": "不自然な圧縮フットプリントとして現れるAI生成の異常の検出、隠されたステガノグラフィデータの発見、およびJPEGの構造が自然な写真の起源と一致しているかどうかの確認。",
     "references": [
         {
-            "url": "https://doi.org/10.1007/3-540-44499-8_5",
-            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
+            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding.",
+            "url": "https://doi.org/10.1007/3-540-44499-8_5"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-540-39929-3_7",
-            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
+            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding.",
+            "url": "https://doi.org/10.1007/978-3-540-39929-3_7"
         }
     ],
-    "strengths": "• Well-established 統計的 framework\n• 検出します both steganography and AI アーティファクト\n• Fast computation on DCT 係数\n• Quantifiable p-value for confidence",
-    "limitations": "• Only works on JPEG compressed images\n• Sensitive to image quality and size\n• High compression can mask 異常\n• Limited effectiveness on PNG/WebP formats"
+    "strengths": "• 厳密で数学的に証明された統計的枠組み（カイ二乗）に依存している。\n• 空間領域に完全に画像を解凍することなく、量子化された係数に対して非常に高速に計算を行う。\n• 異常の存在の数学的確実性を表す、明確で定量化可能なp値を提供する。\n• AIアップスケーラーまたは隠されたアルゴリズムの透かしによって引き起こされる構造的な偏差を見つけるのに非常に効果的。",
+    "limitations": "• ブロックDCTマッピングを利用する画像（JPEG）でのみ有効です。可逆圧縮フォーマット（PNG、RAW）や非DCT空間ではまったく無力になります。\n• 極端な圧縮に非常に敏感です。ソーシャルメディアの激しい再エンコードは、自然な異常も人工的な異常も無差別に平滑化してしまう可能性があります。\n• ソフトウェアがDCTグリッドを再調整するだけで、アグレッシブでありながら本物の手動でのPhotoshop編集をフラグ付けする可能性があります。"
 }

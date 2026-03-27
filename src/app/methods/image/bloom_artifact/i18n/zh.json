@@ -1,22 +1,22 @@
 {
-    "name": "Bloom Artifact",
-    "description": "Detects light bloom artifacts common in AI generation",
-    "algorithm": "Bloom Artifact — 像素级空间分析",
-    "mechanism": "该方法执行像素级空间分析以检测AI生成的伪影:\n\n1. **图像预处理**: 加载输入图像并转换为适当的色彩空间进行分析.\n\n2. **特征提取**: Detects light bloom artifacts common in AI generation. 算法在图像网格上提取相关的像素级特征.\n\n3. **模式分析**: 从提取的特征中计算统计度量以识别不规则性.\n\n4. **异常检测**: 将结果与真实相机图像和AI生成图像的基线进行比较.\n\n5. **分数计算**: 根据检测到的异常程度计算置信度分数 (0-100).",
-    "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： bloom artifact 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "光学泛光伪影分析",
+    "description": "检查高对比度光源周围的亮度溢出。生成式 AI 模型通常会合成缺乏物理上精确的点扩散函数 (PSF) 和真实相机镜头产生的指数衰减特征的人造“泛光 (bloom)”和漏光效果。",
+    "algorithm": "亮度阈值化与指数衰减建模",
+    "mechanism": "分离过度曝光区域（亮度 > 阈值），并分析周围的光扩散梯度（点扩散函数）。在物理摄影中，泛光遵循由玻璃散射和传感器溢出引起的、可预测的指数衰减模式。AI 模型通常只是将这些光晕“绘制”成简单的平面渐变，这不符合标准物理散射模型，从而产生异常的衰减率和不自然的色彩通道截断。",
+    "parameters": "亮度阈值：> 95%，空间度量：径向指数衰减率，特征：点扩散函数 (PSF) 异常",
+    "accuracy": "中等 (65-75%) - 对于夜景或高亮度合成图像非常有效。",
+    "source": "Farid (2009) 关于照明与光学物理取证的研究",
+    "useCase": "检测合成光源，识别虚假的高光反射，发现高对比度场景中数字叠加的视觉特效。",
     "references": [
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
             "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
             "url": "https://arxiv.org/abs/1912.11035"
         }
-    ]
+    ],
+    "strengths": "• 与光学传感器和玻璃镜头的物理极限紧密相连。\n• 提供关于照明和场景一致性的高度可解释的数据。\n• 不严重依赖深度学习分类器来进行光学异常检测。\n• 对合成数字艺术和过度业余的后期处理异常敏感。",
+    "limitations": "• 对缺乏明亮高光或可见光源的平光图像无效。\n• 具备光线追踪功能的高端 CGI 渲染引擎可以物理上准确地模拟泛光。\n• 极端的 HDR 色调映射可能会改变自然的衰减曲线，导致误报。\n• 如果图像是通过脏污、潮湿的镜头拍摄的，则极易出现判断错误。"
 }

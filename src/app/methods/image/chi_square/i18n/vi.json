@@ -1,22 +1,22 @@
 {
-    "useCase": "Phát hiện bất thường nén và hiện vật AI JPEG",
-    "mechanism": "Phân tích phân phối hệ số DCT lượng tử bằng thống kê Chi-Square.",
-    "accuracy": "Trung bình - 72-83%",
-    "name": "Phân tích Chi-Square",
-    "source": "Westfeld & Pfitzmann (2000); Fridrich et al. (2003)",
-    "algorithm": "Kiểm định Chi-Square trên hệ số DCT",
-    "parameters": "Kích thước khối: 8x8, Kiểm định: Chi-Square, Ý nghĩa: p < 0.05",
-    "description": "Áp dụng kiểm định Chi-Square lên phân phối hệ số DCT để phát hiện bất thường nén phổ biến trong đầu ra AI.",
+    "name": "Phân Tích Hệ Số DCT Bằng Chi-Bình Phương",
+    "description": "Áp dụng bài kiểm tra thống kê độ phù hợp Chi-Square (Chi-bình phương) lên sự phân bổ các hệ số Biến đổi Cosine Rời rạc (DCT) theo khối. Trong các bức ảnh tự nhiên, phân bố thống kê của các hệ số AC tuân theo mô hình phân phối Laplacian suy giảm mượt mà và cực kỳ dễ đoán. Tuy nhiên, các mô hình AI tạo sinh, do không thực sự nén ánh sáng hữu cơ qua lăng kính vật lý và ma trận lượng tử hóa, thường chế tác ra những điểm dị thường về tần số đi chệch hoàn toàn khỏi các bảng lượng tử chuẩn của máy ảnh.",
+    "algorithm": "Đánh Giá Độ Phù Hợp Thống Kê Trên Các Hệ Số AC Của DCT",
+    "mechanism": "Thuật toán tính toán biểu đồ tần suất (histogram) của các hệ số DCT AC trên những khối 8x8 pixel, sau đó nã đạn bài test Chi-bình phương (Chi-Square) để đối chiếu sự phân bố thực tế với đà suy giảm logarit tự nhiên theo lý thuyết (phân phối Laplacian). Khi một bức ảnh thực sự được máy ảnh nhào nặn rồi lưu dưới dạng JPEG, các hệ số sẽ rơi gọn gàng vào các khay lượng tử hóa đã định trước. Thay vào đó, AI (kẻ vốn sinh ra pixel trực tiếp trong không gian ẩn và đắp thêm thuật toán làm mượt ảo) sẽ liên tục nặn ra những biểu đồ phân bổ hệ số 'phi lý'—chẳng hạn như việc nhảy cóc bỏ trống khay (skipped bins), tụ tập mật độ bất thường, hoặc để lại những xáo trộn mang âm hưởng kỹ thuật giấu tin (steganographic)—vốn dĩ sẽ ngay lập tức trượt vỏ chuối trước sự dòm ngó khắt khe của bài kiểm định giả thuyết không (Null hypothesis) của Chi-Square.",
+    "parameters": "Kích cỡ khối: 8x8 DCT, Phép thử: Chi-bình phương (Goodness-of-Fit), Mục tiêu: Các hệ số AC, Mức ý nghĩa: p < 0.05",
+    "accuracy": "Mức Khá (72-83%) - Là tay súng bắn tỉa xuất sắc trong việc triệt hạ mầm mống bất thường của thuật toán hay payload giấu tin, nhưng lại phụ thuộc quá mức vào việc ảnh phải là định dạng JPEG và dễ bị phân tâm bởi thao tác nén lại (re-compression) nhiều lần.",
+    "source": "Westfeld & Pfitzmann (2000) / Fridrich et al. (2003) - Tấn Công Hệ Thống Giấu Tin",
+    "useCase": "Vạch mặt các bất thường do AI dàn dựng vốn lộ diện dưới dạng những vết tích nén phi thực tế, nhổ tận gốc dữ liệu giấu kín (steganography) và kiểm toán xem cấu trúc JPEG có thực sự xuất phát từ một máy ảnh quang học hay không.",
     "references": [
         {
-            "url": "https://doi.org/10.1007/3-540-44499-8_5",
-            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
+            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding.",
+            "url": "https://doi.org/10.1007/3-540-44499-8_5"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-540-39929-3_7",
-            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
+            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding.",
+            "url": "https://doi.org/10.1007/978-3-540-39929-3_7"
         }
     ],
-    "strengths": "• Khung thống kê được thiết lập vững chắc\n• Phát hiện cả ẩn mã và hiện vật AI\n• Tính toán nhanh trên hệ số DCT\n• Giá trị p định lượng cho độ tin cậy",
-    "limitations": "• Chỉ hoạt động trên ảnh nén JPEG\n• Nhạy cảm với chất lượng và kích thước ảnh\n• Nén cao có thể che giấu bất thường\n• Hiệu quả hạn chế trên định dạng PNG/WebP"
+    "strengths": "• Bám rễ kiên cố vào một bộ khung cấu trúc thống kê toán học đã được chứng minh chặt chẽ (Chi-Square).\n• Có tốc độ quét cực đoan và tàn khốc trực tiếp lên các hệ số đã bị lượng tử, hoàn toàn không thèm quan tâm đến việc giải nén hình ảnh ra bộ nhớ đồ họa.\n• Đưa ra bản án định lượng rành rọt thông qua chỉ số p-value, biểu thị mức độ tự tin mang tính sát thương toán học về sự tồn tại của điểm dị thường.\n• Cực kỳ nhạy bén với những sai lệch cấu trúc vi mô do các AI phóng to (Upscalers) hoặc thủy ấn thuật toán ẩn nấp (watermarks) gây ra.",
+    "limitations": "• Chỉ phô diễn uy lực trên những nạn nhân chịu áp dụng ánh xạ block-DCT (như JPEG). Hoàn toàn bó tay và trở nên phế vật trước các định dạng bảo toàn (PNG, RAW) hoặc các không gian không thuộc DCT.\n• Nhạy cảm thái quá với sự nén bạo lực; các chiêu trò nghiền ép tàn nhẫn của mạng xã hội (Facebook, WhatsApp) sẽ cào bằng không thương tiếc cả những điểm dị thường của AI lẫn tính phân phối tự nhiên.\n• Có thể lỡ tay báo động nhầm (false flag) trước những bức ảnh được chỉnh sửa Photoshop cật lực bởi con người, chỉ đơn giản vì phần mềm đó đã tái định tuyến lại biểu đồ DCT."
 }

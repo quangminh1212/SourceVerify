@@ -1,18 +1,18 @@
 {
     "name": "블록 아티팩트 그리드 분석",
-    "description": "분석합니다 JPEG block boundary 아티팩트 감지하기 위해 inconsistent compression grids 나타내는 변조.",
-    "algorithm": "Block Artifact Grid (BAG) Extraction and Consistency Analysis",
-    "mechanism": "JPEG 압축 creates an 8×8 block grid. When a region is spliced from a differently compressed source, the block grid alignment becomes inconsistent.",
-    "parameters": "블록 크기: 8×8, Grid 감지: cross-boundary 기울기, Alignment: phase 분석, Map: block visibility",
-    "accuracy": "높음 — 80-92%",
-    "source": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-    "useCase": "Detecting spliced regions by finding JPEG 압축 grid 불일치",
+    "description": "국부적인 JPEG 블록 경계 아티팩트를 분석하여 이미지 조작을 나타내는 일관성 없는 압축 그리드를 감지합니다. 서로 다른 압축 소스에서 영역이 결합되면 기본 8x8 매크로 블록 정렬의 동기화가 실패하게 됩니다.",
+    "algorithm": "블록 아티팩트 그리드(BAG) 추출 및 위상 일관성 분석",
+    "mechanism": "JPEG 압축은 본질적으로 이미지를 구조적인 8x8 픽셀 블록으로 분할하여 양자화로 인해 경계에 뚜렷한 위상 특징을 만듭니다. 알고리즘은 경계를 가로지르는 기울기를 측정하여 블록 가시성을 매핑합니다. 원본 이미지에서 이 그리드는 연속적이고 주기적입니다. 접합 또는 국부적인 생성적 인페인팅 AI는 이 주기적인 정렬을 깨뜨려 BAG 내에서 감지 가능한 위상 편이 또는 국소적 페이딩을 유발합니다.",
+    "parameters": "그리드 크기: 8x8 DCT 매크로블록, 그리드 감지: 경계 횡단 기울기 맵, 공간 측정: 위상 정렬 / 그리드 주기성",
+    "accuracy": "높음 (80-92%) - 심하게 압축된 소스 내에서 블록 수준의 스플라이싱 및 복사-이동 위조를 국소화하는 데 탁월한 정밀도를 보입니다.",
+    "source": "Fan & de Queiroz (2003) 비트맵 압축 기록 및 BAG 탐지",
+    "useCase": "JPEG 압축 그리드 불일치를 매핑하여 조작된 영역을 국소화하고, 복합 스플라이싱을 식별하며, 압축되지 않은 합성 오버레이를 감지합니다.",
     "references": [
         {
-            "title": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-            "url": ""
+            "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2003.812757"
         }
     ],
-    "strengths": "• Directly linked to JPEG 압축\\n• Can localize tampered regions\\n• Well-understood theoretical basis\\n• Effective on single-compressed images",
-    "limitations": "• JPEG 이미지에서만 작동\\n• Double compression can mask 아티팩트\\n• Requires sufficient image quality\\n• May miss small tampered regions"
+    "strengths": "• 전 세계적인 JPEG 압축 표준의 기본 구조에 깊이 뿌리를 두고 있습니다.\n• 조작된 영역에 대한 세분화된 공간적 국소화를 제공할 수 있습니다.\n• 복잡한 AI 모델 없이도 고도의 수학적 해석력을 제공합니다.\n• 다양한 압축 기록을 결합하는 복합 위조 감지에 매우 효과적입니다.",
+    "limitations": "• 기본 무손실 형식(예: PNG, RAW) 또는 순수 비압축 데이터에는 효과가 없습니다.\n• 강력한 2차 전역 JPEG 압축은 원래 그리드 위상 변화를 가릴 수 있습니다.\n• 8x8 매크로블록보다 작은 매우 작은 조작 영역은 감지하기 어려울 수 있습니다.\n• 경계 기울기를 방해하는 과도하게 노이즈가 많거나 질감이 무거운 영역에서는 성능이 저하됩니다."
 }

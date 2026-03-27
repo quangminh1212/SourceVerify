@@ -1,22 +1,22 @@
 {
-    "useCase": "Detecting hidden information, compression irregularities, and AI 생성 JPEG 이상",
-    "mechanism": "분석합니다 the 분포 of quantized DCT 계수 using chi-square statistics. Expected 분포s follow predictable 패턴 for natural images; deviations indicate 조작, AI generation, or hidden data embedding.",
-    "accuracy": "Medium - 72-83% for detecting compression 이상 and AI 아티팩트",
-    "name": "카이제곱 분석",
-    "source": "Westfeld (2000)",
-    "algorithm": "DCT 계수 카이제곱 검정",
-    "parameters": "블록 크기: 8x8 DCT, Test: chi-square goodness-of-fit, Significance: p < 0.05, Coefficients: AC components",
-    "description": "적용합니다 chi-square 통계적 test to DCT 계수 분포s 감지하기 위해 steganographic embedding and compression 이상 common in AI outputs.",
+    "name": "카이제곱 DCT 계수 분석",
+    "description": "블록 이산 코사인 변환(DCT) 계수 분포에 카이제곱 적합도(Goodness-of-Fit) 통계 검정을 적용합니다. 자연스러운 원본 사진에서 교류(AC) 계수의 통계적 분포는 매우 예측 가능하며 완만하게 감소하는 라플라스(Laplacian) 분포 패턴을 따릅니다. 반면, 물리적 렌즈와 양자화 행렬을 통해 빛을 유기적으로 압축하지 않는 이미지 생성 AI 모델은 표준 카메라의 양자화 테이블에서 크게 벗어나는 비정상적인 주파수 대역 이상 현상을 은연중에 합성하거나 삽입하는 경우가 빈번합니다.",
+    "algorithm": "DCT AC 계수에 대한 통계적 적합도 검정",
+    "mechanism": "이 알고리즘은 8x8 픽셀 블록 전체에 걸쳐 DCT AC 계수의 히스토그램을 계산한 다음, 관찰된 히스토그램의 분포 통계값과 이론적으로 예상되는 자연스러운 로그 역상 쇠퇴 선형(라플라스 분포)을 날카롭게 대조하기 위해 카이제곱 적합도 테스트를 발사하여 검열합니다. 이미지가 물리적 카메라에서 자연스럽게 잉태되어 JPEG 파일로 변모될 때 그 계수들은 사전 정의된 양자화 빈(Bin)이라는 상자에 가지런히 떨어져 담기게 됩니다. 그러나 잠재 공간(Latent Space)에서 임의대로 픽셀을 예측하여 찍어낸 후 내부 알고리즘으로 인공적인 피부결 평활화 작업을 거치는 AI 녀석들은 종종 빈 건너뛰기(Skipped bins), 부자연스러운 계수 군집, 또는 카이제곱 귀무가설(Null hypothesis)을 무참히 기각시켜버리는 스테가노그래피(Steganography)와 흡사한 비정상 형태의 '불가능한' 계수 배열 분포도를 양산해냅니다.",
+    "parameters": "블록 크기: 8x8 DCT, 검정 유형: 카이제곱 적합도(Chi-Square Goodness-of-Fit), 대상 계수: 교류(AC) 성분, 유의 수준: p < 0.05",
+    "accuracy": "보통 (72-83%) - 깊숙하게 숨어있는 알고리즘 이상 징후나 스테가노그래피 페이로드를 식별해내는 능력은 무시무시하지만, 이미지가 반드시 무손실이 아닌 JPEG 형식이어야 한다는 태생적 한계에 얽매여 있으며 거듭되는 재압축에 속아 넘어갈 위험이 존재합니다.",
+    "source": "Westfeld & Pfitzmann (2000) / Fridrich et al. (2003) - 스테가노그래피 시스템 체계에 대한 공격 방식",
+    "useCase": "이미지 내에 숨겨져 부자연스러운 압축 흔적으로 돌출되는 AI 생성 이상 패턴의 발현 적발, 심연에 은폐된 스테가노그래피 데이터 추출 및 적발, 그리고 주어진 JPEG의 블록 구조가 천연 카메라 광학 센서에서 기인했는지 여부를 교차 검증.",
     "references": [
         {
-            "url": "https://doi.org/10.1007/3-540-44499-8_5",
-            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
+            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding.",
+            "url": "https://doi.org/10.1007/3-540-44499-8_5"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-540-39929-3_7",
-            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
+            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding.",
+            "url": "https://doi.org/10.1007/978-3-540-39929-3_7"
         }
     ],
-    "strengths": "• Well-established 통계적 framework\n• 감지합니다 both steganography and AI 아티팩트\n• Fast computation on DCT 계수\n• Quantifiable p-value for confidence",
-    "limitations": "• Only works on JPEG compressed images\n• Sensitive to image quality and size\n• High compression can mask 이상\n• Limited effectiveness on PNG/WebP formats"
+    "strengths": "• 엄격하게 증명되고 수학적으로 빈틈없이 기초가 탄탄한 통계적 구조 프레임워크인 카이제곱 검정식 논리에 기반합니다.\n• 원본 이미지를 픽셀 공간 차원으로 일일이 무겁게 압축 해제할 필요조차 없이, 양자화된 계수 단위 위에서 빛의 속도와 같이 극도로 빠르게 계산을 휩쓸어버립니다.\n• 분석 결과는 이상 징후 여부의 수학적 신뢰성을 투명하게 발가벗기는 뚜렷하고 정량화된 지표인 p-value를 도출하여 제공합니다.\n• AI 기반 업스케일러(Upscalers)나 숨겨진 알고리즘 워터마크가 유발한 아주 미세한 구조적 편차 배열의 왜곡을 짚어내는 데 압도적이고 극강의 효과를 발휘합니다.",
+    "limitations": "• 오로지 블록-DCT 맵핑 형식 구조를 따르는 객체(주로 JPEG 파일 형식) 위에서만 정상적으로 숨을 쉬고 작동합니다. 따라서 공간적 압축을 배제하는 PNG나 RAW 같은 무손실 코어 포맷 형식의 환경이나, 비(Non)-DCT 계열의 진영 앞에서는 완전히 종이호랑이처럼 무력화됩니다.\n• 무식하고 극단적인 폭력적 이미지 찌그러뜨리기 압축 공격에 몹시 나약하고 취약합니다. 왓츠앱, 페이스북과 같은 소셜 미디어를 타고 무작위 재인코딩이 난도질되면 이 과정 속에서 인간적인 지문과 기계적인 불순물 흔적의 구분이 모두 뭉뚱그려져 지워집니다.\n• 순수 사진을 가혹하게 그러나 진정성 있게 인간이 수작업한 포토샵 보정 이미지일지라도, 소프트웨어 특성상 단순히 DCT 격자 무늬를 다시 재정렬했단 이유만으로 거짓을 고하며 맹렬히 짖어댈 수 있습니다."
 }

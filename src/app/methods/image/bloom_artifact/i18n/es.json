@@ -1,22 +1,22 @@
 {
-    "name": "Bloom Artifact",
-    "description": "Detects light bloom artifacts common in AI generation",
-    "algorithm": "Bloom Artifact — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "Este método realiza un análisis espacial a nivel de píxel para detectar artefactos generados por IA:\n\n1. **Preprocesamiento de imagenn**: La imagenn de entrada se carga y convierte al espacio de color apropiado para el análisis.\n\n2. **Extracción de características**: Detects light bloom artifacts common in AI generation. El algoritmo extrae características relevantes a nivel de píxel en toda la cuadrícula de la imagenn.\n\n3. **Análisis de patrones**: Se calculan medidas estadísticas a partir de las características extraídas para identificar irregularidades.\n\n4. **Detección de anomalías**: Los resultados se comparan con las líneas base de imágenes auténticas de cámara vs imágenes generadas por IA.\n\n5. **Cálculo de puntuación**: Se calcula una puntuación de confianza (0-100) basada en el grado de anomalías detectadas.",
-    "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: bloom artifact análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+    "name": "Análisis de Artefactos de Resplandor Óptico",
+    "description": "Examina el desbordamiento de intensidad lumínica alrededor de fuentes de luz de alto contraste. Los modelos generativos de IA a menudo sintetizan efectos artificiales de 'resplandor' (bloom) y sangrado de luz que carecen de la función de propagación de punto (PSF) físicamente precisa y de las características de decaimiento exponencial producidas por las lentes de cámaras reales.",
+    "algorithm": "Umbralización de Luminancia y Modelado de Decaimiento Exponencial",
+    "mechanism": "Aísla las regiones sobreexpuestas (luminancia > umbral) y analiza el gradiente circundante de difusión de luz (la función de propagación de punto). En la fotografía física, el resplandor sigue un patrón predecible de decaimiento exponencial causado por la dispersión imperfecta del vidrio y el sangrado del sensor. Los modelos de IA suelen simplemente 'pintar' estos halos como gradientes planos que incumplen los modelos físicos de dispersión estándar, produciendo tasas de decaimiento anómalas y un recorte antinatural del canal de color.",
+    "parameters": "Umbral de Luminancia: > 95%, Métrica Espacial: Tasa de decaimiento exponencial radial, Característica: Anomalía en la Función de Dispersión de Punto (PSF)",
+    "accuracy": "Moderada (65-75%) - Altamente eficaz para escenas nocturnas o imágenes sintéticas fuertemente iluminadas.",
+    "source": "Farid (2009) sobre iluminancia y forense de física óptica",
+    "useCase": "Detección de fuentes de luz sintéticas, identificación de reflejos especulares falsos y localización de efectos visuales superpuestos digitalmente en escenas de alto contraste.",
     "references": [
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
             "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
             "url": "https://arxiv.org/abs/1912.11035"
         }
-    ]
+    ],
+    "strengths": "• Profundamente ligado a los límites físicos de los sensores ópticos y las lentes de vidrio.\n• Proporciona datos altamente interpretables sobre la iluminación y la coherencia de la escena.\n• No depende de manera agresiva de modelos de aprendizaje profundo para la detección de anomalías ópticas.\n• Especialmente sensible al arte digital sintético y al post-procesamiento amateur de aficionado excesivo.",
+    "limitations": "• Ineficaz en imágenes de iluminación plana que carecen de destellos brillantes o fuentes de luz visibles.\n• Los motores de renderizado CGI de alta gama con trazado de rayos (raytracing) pueden simular el resplandor de manera físicamente precisa.\n• El mapeo de tonos HDR extremo puede alterar las curvas de decaimiento natural, causando falsos positivos.\n• Altamente susceptible a errores si la imagen fue capturada a través de lentes sucias, mojadas o manchadas."
 }

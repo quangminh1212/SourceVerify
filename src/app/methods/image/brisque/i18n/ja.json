@@ -1,18 +1,18 @@
 {
     "name": "ブラインド画像品質評価 (BRISQUE)",
-    "description": "使用します natural scene statistics to evaluate image quality and detect distortions を示す AI generation or 操作.",
-    "algorithm": "Blind/Referenceless Image Spatial Quality Evaluator",
-    "mechanism": "Computes locally normalized luminance 係数 and fits them to a generalized Gaussian 分布. The shape and 分散 parameters are used as 特徴 を検出するために deviations from natural image statistics.",
-    "parameters": "Patch size: 7×7, MSCN 係数, GGD fitting, Features: 36-dimensional, SVR model",
-    "accuracy": "中-高 — 78-90%",
-    "source": "Mittal, A. et al. (2012) — No-Reference Image Quality Assessment in the Spatial Domain, IEEE TIP",
-    "useCase": "Evaluating naturalness of images to flag AI生成の or heavily processed content",
+    "description": "空間領域の統計量を計算することにより、参照画像なしで画像の自然さを評価します。AIによって生成された画像や操作された領域は、通常、本物の自然なシーンと比較して、局所的に正規化された輝度係数に統計的な偏差を示します。",
+    "algorithm": "ブラインド/無参照画像空間品質評価 (BRISQUE)",
+    "mechanism": "このアルゴリズムは、局所的な輝度の変動を正規化するために、平均減算コントラスト正規化（MSCN）係数を計算します。本物の写真画像では、MSCN係数は確実に一般化ガウス分布（GGD）に従います。この手法では、36の統計的特徴（形状、分散、空間相関）を抽出し、事前学習済みのサポートベクター回帰（SVR）を使用して、AIのアップスケーリング、合成によるぼやけ、圧縮アーティファクトなどの不自然な歪みの深刻さをスコアリングします。",
+    "parameters": "特徴: 36次元のMSCNパラメータ, パッチサイズ: 7x7/9x9, 分布のフィッティング: 非対称一般化ガウス分布（AGGD）, 分類器: SVR",
+    "accuracy": "中（70-80%） - 不自然なノイズ、過度の平滑化、またはぼやけに対する一般的な異常検出器として効果的です。",
+    "source": "Mittal, A. et al. (2012) - 空間領域における無参照画像品質評価",
+    "useCase": "大域的な統計的非自然性に基づいて、大幅に処理されたコンテンツ、AIによってアップスケールされたコンテンツ、または合成的に生成されたコンテンツにフラグを立てます。",
     "references": [
         {
-            "title": "Mittal, A. et al. (2012) — No-Reference Image Quality Assessment in the Spatial Domain, IEEE TIP",
-            "url": ""
+            "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2012.2214050"
         }
     ],
-    "strengths": "• 参照画像不要\\n• Fast computation\\n• Correlates well with human perception\\n• 検出します multiple distortion types",
-    "limitations": "• May not detect high-quality AI images\\n• Sensitive to legitimate processing\\n• Requires calibration per domain\\n• Not specific to any 偽造 type"
+    "strengths": "• 手付かずの参照画像を必要とせず、空間領域で完全に動作する。\n• 計算効率が高く、人間の知覚的な品質指標と直接相関している。\n• 多種多様な不自然な歪みや生成ノイズを同時に検出できる。\n• 小さな画像パッチ上で堅牢に動作し、局所的な品質の低下やスプライス境界をマッピングする。",
+    "limitations": "• 最先端のモデルによる高品質なAI生成画像は、自然なMSCN統計を完全に模倣する可能性がある。\n• スクリーンショット、イラスト、またはデジタルネイティブのアートワークで偽陽性を引き起こすことが多い。\n• 一般化された空間的歪みの存在のみを示し、特定の種類の操作を特定するものではない。\n• 非写真の入力をテストする際のエラーを避けるために、厳密なドメイン固有のキャリブレーションが必要。"
 }

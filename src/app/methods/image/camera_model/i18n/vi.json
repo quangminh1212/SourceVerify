@@ -1,18 +1,22 @@
 {
-    "name": "Nhận dạng mẫu camera",
-    "description": "Nhận dạng mẫu camera nguồn qua mẫu nhiễu cảm biến và vân tay pipeline xử lý.",
-    "algorithm": "Nhận dạng nguồn camera dựa cảm biến qua phân tích pipeline xử lý",
-    "mechanism": "Mỗi mẫu camera có pipeline xử lý riêng biệt. Phương pháp này trích xuất đặc trưng để nhận dạng mẫu camera.",
-    "parameters": "Đặc trưng: xử lý màu, nội suy CFA, bảng JPEG, Phân loại: SVM/RF",
-    "accuracy": "Cao — 85-96%",
-    "source": "Lukas et al. (2006), IEEE TIFS",
-    "useCase": "Xác minh camera nguồn và phát hiện ảnh từ nguồn AI không xác định",
+    "name": "Nhận Diện Dấu Vân Tay Cảm Biến Máy Ảnh (PRNU)",
+    "description": "Xác định mẫu máy ảnh nguồn hoặc phát hiện ảnh tạo bằng AI bằng cách phân tích kiểu nhiễu do Độ không đồng đều của Phản hồi Quang học (PRNU) của cảm biến, kết hợp với các dấu vân tay từ quy trình xử lý phần cứng.",
+    "algorithm": "Trích Xuất PRNU Cảm Biến và Lập Dấu Vân Tay Mảng Bộ Lọc Màu (CFA)",
+    "mechanism": "Thuật toán trích xuất tín hiệu thặng dư tần số cao (nhiễu hạt), chứa loại nhiễu Đặc tính Phản hồi Quang học Không Đồng đều (PRNU) duy nhất của thiết bị cùng với dấu vết quy trình nội suy Mảng Phân rã Màu (CFA). Các bức ảnh chụp thật sẽ sở hữu một dấu vân tay PRNU nhất quán gắn chặt với nguyên liệu silicon phần cứng vật lý. Ngược lại, ảnh tạo bởi AI sẽ thiếu đi dấu ấn đặc trưng của vật lý thống nhất này, bộc lộ hồ sơ nhiễu tổng hợp sai lệch, hoặc kiểu nhiễu 'Frankenstein' chắp vá từ nhiều nguồn máy ảnh khác nhau trong tệp dữ liệu huấn luyện, hoặc các quy luật CFA bị vi phạm phi vật lý.",
+    "parameters": "Đặc trưng: Mức độ tương quan PRNU, Bản đồ tái tạo CFA, Bộ phân loại: Bộ lọc Tương quan chéo / SVM, Cửa sổ quét: 128x128",
+    "accuracy": "Cao (85-95%) - Cực kỳ mạnh mẽ trong việc nhận ra các tín hiệu nhiễu tạo sinh nói chung, mặc dù để chỉ ra đích danh mẫu máy ảnh cụ thể cần có bộ thư viện tham chiếu.",
+    "source": "Lukas, J. et al. (2006) - Nhận dạng Máy ảnh Kỹ thuật số từ Nhiễu Mẫu Cảm biến",
+    "useCase": "Xác minh liệu bức ảnh có được chụp từ phần cứng máy ảnh ngoài đời thực hay không, xác thực mẫu máy ảnh đi kèm với thông tin EXIF, và phanh phui những mảng nhiễu cảm biến phi cấu trúc trong ảnh tạo bởi AI.",
     "references": [
         {
-            "title": "Lukas et al. (2006), IEEE TIFS",
-            "url": ""
+            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        },
+        {
+            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.916285"
         }
     ],
-    "strengths": "• Nhận dạng camera độ chính xác cao\\n• Dựa trên thuộc tính cảm biến vật lý\\n• Khó giả mạo\\n• Hoạt động qua nhiều hãng camera",
-    "limitations": "• Cần ảnh tham chiếu từ camera đã biết\\n• Hiệu suất khác nhau theo mẫu camera\\n• Nén mạng xã hội giảm độ chính xác\\n• Không nhận dạng camera cụ thể"
+    "strengths": "• Bám chặt vào các thuộc tính vật lý bán dẫn sâu xa thay vì nội dung ngữ nghĩa hay thị giác bề nổi.\n• PRNU đóng vai trò như một tệp DNA mã hóa bẩm sinh mà mô hình AI gần như không thể làm giả một cách có ý thức.\n• Đủ uy tín để phân tách sòng phẳng giữa nhiễu phần cứng nguyên sinh với lớp nhiễu tiềm ẩn ngẫu nhiên được tiêm vào bởi các mô hình khuếch tán (Diffusion).\n• Hoạt động hoàn toàn độc lập, tách rời khỏi các điều kiện ánh sáng, đối tượng, bối cảnh hay môi trường xung quanh.",
+    "limitations": "• Việc buộc phải định danh chính xác đến một chủng loại thiết bị máy ảnh cụ thể yêu cầu hệ thống phải lưu trữ thư viện mẫu ảnh đồ sộ.\n• Hao hụt nghiêm trọng bản lĩnh trước các cuộc can thiệp thô bạo thông qua việc xử lý kỹ thuật số đánh tan nhiễu hạt, nâng cấp AI di động, hoặc nén JPEG ép xung.\n• Bất lực trong khâu truy xuất bóc tách ống kính đơn thuần trên một thân máy đi kèm duy nhất không chịu từ chức thay ống.\n• Tiến trình cắt cúp (crop), phóng to/thu nhỏ dĩ nhiên cũng vô tình bóp méo tọa độ liên kết PRNU, đình chỉ cơ hội so khớp căn chỉnh trực tiếp."
 }

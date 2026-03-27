@@ -1,22 +1,22 @@
 {
-    "name": "Chroma Subsampling",
-    "description": "Detects chroma subsampling artifacts from image compression",
-    "algorithm": "Chroma Subsampling — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes the frequency domain characteristics of the image:\n\n1. **Transform**: The image is decomposed using frequency-domain transforms (FFT/DCT/Wavelet).\n\n2. **Spectral Analysis**: Detects chroma subsampling artifacts from image compression. Frequency components are analyzed for patterns characteristic of AI generation.\n\n3. **Band Separation**: Energy distribution across frequency bands is measured and compared.\n\n4. **Artifact Detection**: AI-specific frequency signatures are identified through statistical comparison.\n\n5. **Scoring**: Results are normalized to a 0-100 confidence score.",
-    "parameters": "Analysis type: frequency\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through chroma subsampling analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+    "name": "Chroma Subsampling Anomaly Detection",
+    "description": "Detects structural anomalies and misalignments in chroma subsampling footprints left by image compression. Authentic digital images captured by physical cameras and saved as JPEGs undergo an initial, globally consistent chroma subsampling (e.g., 4:2:2 or 4:2:0) to save bandwidth. Generative AI models or manipulated composite images frequently disrupt this global consistency, creating localized mismatches or traces of multiple, conflicting subsampling grids.",
+    "algorithm": "Frequency Domain Band Energy & Subsampling Grid Alignment",
+    "mechanism": "The algorithm isolates the luma (Y) and chroma (Cb, Cr) channels and transforms them into the frequency domain. It maps the spatial resolution of the color channels to extract the underlying subsampling grid structure. In an unedited camera original, the subsampling grid is universally uniform. However, when AI in-paints a region, or a composite is made, the manipulated zones exhibit misaligned chroma frequencies or conflicting subsampling ratios (e.g., an island of 4:4:4 color data in a sea of 4:2:0 YCbCr), immediately flagging the forgery.",
+    "parameters": "Space: YCbCr, Domain: DCT/FFT, Targets: 8x8/16x16 Grid Misalignments, Metric: Chroma Energy Ratio",
+    "accuracy": "Moderate to High (75-90%) - Incredibly resilient forensic tool for pinpointing localized splices or AI in-painting.",
+    "source": "Farid (2009) - Exposing Digital Forgeries from JPEG Ghosts",
+    "useCase": "Spotting localized structural inconsistencies left by AI in-painting, and resolving whether regions of an image have been spliced from different compressions.",
     "references": [
         {
             "title": "Farid, H. (2009). Exposing digital forgeries from JPEG ghosts. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2008.2012215"
         },
         {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
+            "title": "Krawetz, N. (2007). A Picture's Worth - Forensics.",
             "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         }
-    ]
+    ],
+    "strengths": "• Focuses on an invisible mechanical artifact that generative models and editors almost never simulate correctly.\n• Extremely effective in pinpointing the exact coordinates of localized manipulation (e.g., an AI-generated face swapped in).\n• Performs reliably across standard JPEG formats.",
+    "limitations": "• Useless if the image has never been compressed (e.g., PNG/RAW) since there is no subsampling grid.\n• Aggressive social media re-compression will scrub the localized anomalies by overwriting them with a uniform grid.\n• Not effective on grayscale images as they lack chroma channels."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Chroma Subsampling",
-    "description": "Detects chroma subsampling artifacts from 图像 compression",
-    "algorithm": "Chroma Subsampling — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes the 频率 domain characteristics of the 图像:\n\n1. **Transform**: The 图像 is decomposed using 频率-domain transforms (FFT/DCT/Wavelet).\n\n2. **Spectral Analysis**: Detects chroma subsampling artifacts from 图像 compression. Frequency components are analyzed for patterns characteristic of AI generation.\n\n3. **Band Separation**: Energy distribution across 频率 bands is measured and compared.\n\n4. **Artifact Detection**: AI-specific 频率 signatures are identified through 统计 comparison.\n\n5. **Scoring**: Results are normalized to a 0-100 confidence score.",
-    "parameters": "分析类型: 频率\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： chroma subsampling 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "色度二次下采样(Chroma Subsampling)异常检测",
+    "description": "侦测图像压缩留下的色度二次下采样足迹中的结构性异常和不对齐现象。真实物理相机拍摄并保存为JPEG格式的数字图像，为了节省带宽，会在全局层面上统一进行一次标准的色度二次下采样（例如4:2:2或4:2:0）。然而，无论是生成式AI模型还是被人类强行拼接操纵的图像，都会打碎这种全局一致的“压缩基因”，从而暴露出局部网格错位或多重相互冲突的压缩晶格残存痕迹。",
+    "algorithm": "频域带宽能量与下采样网格重对齐系统",
+    "mechanism": "该算法会残忍地将被测图像的亮度通道(Luma, Y)与色度通道(Chroma, Cb, Cr)强行剥离并在频域内进行转化。它将其从明暗通道中提取出来的空间分辨率映射出来，以试图重新找回沉睡在底层的降采样网格骨架。在没有被纂改的原始相机底片中，这张下采样大网就像被刻在石头上一样，从头到脚覆盖整个画面，所有8x8分块都绝对无缝重叠一致。但当某个区域遭遇了AI的重绘(In-painting)蹂躏，或者某幅复合拼接图强行移植器官时，这些被污染操控过的死角就会像生锈齿轮般表现出色度高频信号对不齐，或干脆露出非常滑稽的互相冲突的下采样采样率比例（比如在一个满是大面积4:2:0 YCbCr色度荒漠里，却非常突兀地飘着一座生机勃勃拥有4:4:4高保真色彩数据的孤岛），监控系统会即刻锁定这个红牌动作并彻底揭发这起伪造案。",
+    "parameters": "色彩空间阵营: YCbCr, 分解领域: DCT/FFT, 搜捕目标猎物: 8x8或16x16 晶格级别的对齐误差偏移(Misalignments), 审判核心指标: 高频色度能量冲击率",
+    "accuracy": "中等偏高 (75-90%) - 一把极其结实耐造的法医级斩骨刀，无论是想要给图片来个局部外科手术拼接大换血，还是放任AI像油漆工一样在之前压缩过的旧照片上乱涂重画(in-painting)，它都能在一瞬间精确定位出作案现场的坐标点。",
+    "source": "Farid (2009) - 从JPEG的死亡幽灵中揭露数字伪造之谜",
+    "useCase": "抓捕由AI局部重绘所留下的不可磨灭的结构性自相矛盾罪证，同时担当起法官的角色，来判定这张图片里的某一块拼图是否是从另外一个有着完全不同压缩背景的孤儿院里拐卖过来强行拼凑的。",
     "references": [
         {
             "title": "Farid, H. (2009). Exposing digital forgeries from JPEG ghosts. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2008.2012215"
         },
         {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
+            "title": "Krawetz, N. (2007). A Picture's Worth - Forensics.",
             "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         }
-    ]
+    ],
+    "strengths": "• 它的狙击镜死死地盯着一种肉眼根本无法察觉、并且是被写死在图片底层基因里的机械伪像产物（压缩网格）。无论是目前嚣张的生成式AI大模型，还是狡猾资深的人类修图老手，几乎都毫无头绪该怎么去完美重新伪造并对齐这条看不见的网格线。\n• 它是个有着疯狂精准强迫症的定位狂魔。在应对局部操作（比如把一个由AI凭空捏造出来的虚假人脸换头并强行移植戴在一个无辜真人的身子上）时，它能指哪打哪，极其高效地标注出准确的作案地图坐标。\n• 在对比度鲜明、存在极其暴力跳跃性颜色修改的恶劣条件下，依然能保持针对标准JPEG家族成员进行高度可靠且非常稳定的出警行动能力。",
+    "limitations": "• 如果送来的目标受害人从出生起就过着锦衣玉食、从未受过“压缩”之苦的生活（比如那群极其庞大昂贵的纯透明无损PNG贵族数据或是纯原生单反相机的RAW原片），那么这把利刃会因为找不到下采样网格这个目标而彻底变成一块一无是处的无用废铁。\n• 那些在社交媒体上拥兵自重（不断通过尺寸调整然后极为专制霸道地下达指令实施深层4:2:0下死手强制压榨滤波）去拼命摧残和暴力重压缩图像的巨头平台们，会像推土机一样把图片碾平，无差别地覆写并摧毁掉所有这些极具价值的局部异常，这也等同于充当了洗除法庭审判核心物证的帮凶。\n• 遇到连色度色彩通道基因都被彻底铲除了的黑白灰度(Grayscale)极简主义幽灵图像时，该系统会因为被釜底抽薪而直接罢工并且彻底丧失战斗力。"
 }

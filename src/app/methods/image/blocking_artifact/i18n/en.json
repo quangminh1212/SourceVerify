@@ -1,18 +1,18 @@
 {
-    "name": "Blocking Artifact Grid Analysis",
-    "description": "Analyzes JPEG block boundary artifacts to detect inconsistent compression grids indicating tampering.",
-    "algorithm": "Block Artifact Grid (BAG) Extraction and Consistency Analysis",
-    "mechanism": "JPEG compression creates an 8×8 block grid. When a region is spliced from a differently compressed source, the block grid alignment becomes inconsistent.",
-    "parameters": "Block size: 8×8, Grid detection: cross-boundary gradient, Alignment: phase analysis, Map: block visibility",
-    "accuracy": "High — 80-92%",
-    "source": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-    "useCase": "Detecting spliced regions by finding JPEG compression grid inconsistencies",
+    "name": "Block Artifact Grid Analysis",
+    "description": "Analyzes localized JPEG block boundary artifacts to detect inconsistent compression grids indicative of image tampering. When regions are spliced from differently compressed sources, their underlying 8x8 macroblock alignment fails to synchronize.",
+    "algorithm": "Block Artifact Grid (BAG) Extraction and Phase Consistency Analysis",
+    "mechanism": "JPEG compression inherently segments an image into structural 8x8 pixel blocks, creating distinct phase signatures at their boundaries due to quantization. The algorithm measures cross-boundary gradients to map block visibility. In a pristine image, this grid is continuous and periodic. Splicing or localized generative inpainting breaks this periodic alignment, causing detectable phase shifts or localized fading in the BAG.",
+    "parameters": "Grid Size: 8x8 DCT Macroblocks, Grid Detection: Cross-boundary gradient map, Spatial Measure: Phase alignment / Grid periodicity",
+    "accuracy": "High (80-92%) - Exceptionally precise for localizing block-level splicing and copy-move forgery within aggressively compressed sources.",
+    "source": "Fan & de Queiroz (2003) on Bitmap Compression History and BAG detection",
+    "useCase": "Localizing manipulated regions by mapping JPEG compression grid inconsistencies, identifying composite splicing, and detecting uncompressed synthetic overlays.",
     "references": [
         {
             "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
             "url": "https://doi.org/10.1109/TIP.2003.812757"
         }
     ],
-    "strengths": "• Directly linked to JPEG compression\\n• Can localize tampered regions\\n• Well-understood theoretical basis\\n• Effective on single-compressed images",
-    "limitations": "• Only works on JPEG images\\n• Double compression can mask artifacts\\n• Requires sufficient image quality\\n• May miss small tampered regions"
+    "strengths": "• Deeply rooted in the fundamental structure of the JPEG compression standard.\n• Capable of providing fine-grained spatial localization of tampered regions.\n• Offers a high degree of mathematical interpretability without requiring AI models.\n• Highly effective against composite forgery combining different compression histories.",
+    "limitations": "• Ineffectual on natively lossless formats (e.g., PNG, RAW) or purely uncompressed data.\n• Aggressive secondary global JPEG compression can mask original grid phase shifts.\n• Very small manipulation fields (smaller than an 8x8 macroblock) may evade detection.\n• Struggles in excessively noisy or heavily textured regions that naturally disrupt boundary gradients."
 }

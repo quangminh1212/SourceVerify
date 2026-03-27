@@ -1,14 +1,12 @@
 {
-    "name": "Box Filter Residual",
-    "description": "Analyzes box filter residual for smoothing detection (2018)",
-    "algorithm": "Box Filter Residual — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes the 周波数 domain characteristics of the 画像:\n\n1. **Transform**: The 画像 is decomposed using 周波数-domain transforms (FFT/DCT/Wavelet).\n\n2. **Spectral Analysis**: Analyzes box filter residual for smoothing detection (2018). Frequency components are analyzed for patterns characteristic of AI generation.\n\n3. **Band Separation**: Energy distribution across 周波数 bands is measured and compared.\n\n4. **Artifact Detection**: AI-specific 周波数 signatures are identified through 統計 comparison.\n\n5. **Scoring**: Results are normalized to a 0-100 confidence score.",
-    "parameters": "分析タイプ: 周波数\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： box filter residual 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+    "name": "ボックスフィルター残留物解析",
+    "description": "線形ボックスフィルターによって抽出された残留ノイズを評価し、広範な画像の平滑化を検出します。AI生成モデルはしばしば積極的な内部ノイズ除去と補間ステップを適用し、自然なカメラセンサーのノイズと比較して統計的に異常な滑らかなテクスチャを残します。",
+    "algorithm": "空間領域残留抽出およびノイズ除去プロファイリング",
+    "mechanism": "このアルゴリズムは、単純な空間ボックスフィルター（移動平均）を画像に適用し、元の画像からそれを減算して高周波の残留信号（ノイズ）を分離します。本物の画像では、この残留物は特徴的な自然なセンサーノイズの特性を示します。AIによって合成された、または大幅にレタッチされた画像では、残留物にはモデルが過度の平滑化を適用した絶対ゼロ分散の「デッドゾーン」が含まれ、構造上の境界のアーティファクトが点在しています。",
+    "parameters": "フィルタータイプ: 3x3または5x5ボックスフィルター, 操作: 元画像 - フィルタリング後画像, 分析: 残留ノイズの分散",
+    "accuracy": "中〜高（75-85%） - 非圧縮またはクリーンに圧縮された画像に対して非常に堅牢です。",
+    "source": "Fridrich & Kodovsky (2012) ステガナリシスのためのリッチモデルについて",
+    "useCase": "AIによるデジタルアートの検出、積極的なノイズリダクションフィルターの特定、および全体的な画像の平滑化操作の認識。",
     "references": [
         {
             "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
@@ -18,5 +16,7 @@
             "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
             "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
         }
-    ]
+    ],
+    "strengths": "• 空間領域の操作計算が非常に高速で軽量。\n• ノイズ抽出のために構築された、確立されたステガナリシス技術（SRM）を活用。\n• 非写実的な合成の平滑化やぼかしの特定に非常に優れている。\n• 意味論的な内容の影響を受けにくく、局所的なテクスチャの変化に純粋に焦点を当てている。",
+    "limitations": "• 強力なJPEG圧縮や積極的なダウンサンプリングの後では、精度が著しく低下する。\n• 高ISO（粒子の粗い）AI画像や、後処理でフィルム粒子がネイティブに追加された画像は、簡単に検出を回避できる。\n• AI生成と、標準的な最新のスマートフォンにおけるノイズ除去フィルターの識別が困難。\n• 最高水準のフォレンジック信号を保持するには、非圧縮画像入力（PNG、TIFなど）が必要。"
 }

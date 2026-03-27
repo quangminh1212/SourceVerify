@@ -1,12 +1,22 @@
 {
-    "name": "Dấu vết tán sáng",
-    "description": "Phát hiện dấu vết tán sáng phổ biến trong ảnh AI",
-    "algorithm": "Thuật toán phân tích Dấu vết tán sáng",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phát hiện dấu vết tán sáng phổ biến trong ảnh AI. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích dấu vết tán sáng. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Phân Tích Lóe Sáng Quang Học",
+    "description": "Kiểm tra sự lan tỏa cường độ sáng xung quanh các nguồn sáng có độ tương phản cao. Các mô hình AI tạo sinh thường tổng hợp các hiệu ứng quầng sáng (bloom) nhân tạo thiếu Hàm rải điểm (Point Spread Function - PSF) chính xác về mặt vật lý và các đặc điểm phân rã hàm mũ do ống kính máy ảnh thực tế tạo ra.",
+    "algorithm": "Phân Tích Ngưỡng Độ Sáng và Mô Hình Phân Rã Hàm Mũ",
+    "mechanism": "Cô lập các vùng dư sáng (độ chói > ngưỡng) và phân tích độ dốc khuếch tán ánh sáng xung quanh đó (Hàm rải điểm). Trong nhiếp ảnh vật lý, hiện tượng lóe sáng tuân theo định luật phân rã hàm mũ có thể dự đoán được do sự tán xạ của thủy tinh cường lực và rò rỉ (bleeding) thông tin cảm biến. Các mô hình AI thường chỉ 'vẽ' các quầng sáng này dưới dạng gradient phẳng vị phạm các mô hình tán xạ vật lý tiêu chuẩn, mang lại tốc độ phân rã dị thường và sự cắt xén kênh màu không tự nhiên.",
+    "parameters": "Ngưỡng độ sáng cực đại: > 95%, Thang đo không gian: Tỷ lệ phân rã hàm mũ hướng tâm, Đặc tính phân tích: Sự bất thường của Hàm rải điểm (PSF)",
+    "accuracy": "Trung bình (65-75%) - Cực kỳ hiệu quả đối với các cảnh quay ban đêm hoặc các hình ảnh tổng hợp có độ chiếu sáng cao.",
+    "source": "Farid (2009) về kỹ thuật điều tra chiếu sáng và quang lý học",
+    "useCase": "Phát hiện các nguồn sáng tổng hợp nhân tạo, xác định các điểm nhấn quang học giả, và nhận diện các hiệu ứng hình ảnh (VFX) được phủ kỹ thuật số trong các cảnh có độ tương phản cao.",
+    "references": [
+        {
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
+        },
+        {
+            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+            "url": "https://arxiv.org/abs/1912.11035"
+        }
+    ],
+    "strengths": "• Bám sát chặt chẽ vào các giới hạn vật lý của cảm biến quang học và thấu kính thủy tinh.\n• Cung cấp dữ liệu có tính diễn giải cao về độ chiếu sáng và tính nhất quán của cảnh vật.\n• Hoàn toàn không phụ thuộc quá mức vào các bộ phân loại Deep Learning để dò tìm bất thường quang học.\n• Cực kỳ nhạy bén đối với các tác phẩm nghệ thuật kỹ thuật số và các thao tác hậu kỳ cường điệu.",
+    "limitations": "• Vô hiệu với các hình ảnh ánh sáng phẳng không có điểm nhấn sáng chói hoặc các nguồn sáng khả kiến.\n• Các công cụ kết xuất CGI cao cấp sử dụng dò tia (raytracing) có thể mô phỏng chính xác quang độ Bloom vật lý.\n• Việc ánh xạ dải tương phản động rực rỡ (HDR tonemapping) quá đà có thể làm sai lệch các đường cong phân rã tự nhiên, gây dương tính giả.\n• Rất dễ bị sai số nếu ảnh được chụp qua các ống kính bị mờ, dính nước hoặc bẩn."
 }

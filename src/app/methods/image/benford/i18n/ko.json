@@ -1,12 +1,12 @@
 {
-    "name": "벤포드 법칙",
-    "description": "Tests pixel 기울기 분포s against Benfords Law - a 통계적 principle that natural data follows a specific first-digit 분포. AI 생성 기울기s deviate from this 패턴.",
-    "algorithm": "Benfords Law First-Digit Distribution Test",
-    "mechanism": "분석합니다 first significant digits in DCT 계수 of 8x8 image blocks. Natural images follow Benfords Law, while AI 생성 images deviate from this 통계적 property.",
-    "parameters": "블록 크기: 8x8, DCT 계수: AC terms, Test: chi2 goodness-of-fit",
-    "accuracy": "중간 - 65-75%, best as complementary 통계적 test",
-    "source": "Fu et al. (2007) Generalized Benfords Law for JPEG Coefficients, IEEE TIFS",
-    "useCase": "Statistical validation of image naturalness through digit 분포",
+    "name": "벤포드의 법칙 분석",
+    "description": "이산 코사인 변환(DCT) 계수의 최상위 숫자 분포를 벤포드의 법칙과 비교하여 평가합니다. 자연 이미지는 일반적으로 이 대수적 확률 분포를 따르는 반면, AI 생성 이미지나 조작된 영역은 종종 통계적으로 유의미한 편차를 보입니다.",
+    "algorithm": "일반화된 벤포드의 법칙 적합도 검증",
+    "mechanism": "이미지 전체의 8x8 DCT 블록에서 AC 계수를 추출하고 첫 번째 유효 숫자(1-9)의 히스토그램을 계산합니다. 그런 다음 경험적 분포를 카이제곱(χ²) 적합도 검정 또는 쿨백-라이블러 발산을 사용하여 이론적인 벤포드의 법칙 분포(P(d) = log10(1 + 1/d))와 비교합니다. AI 합성 및 렌더링 과정은 종종 이러한 자연적인 통계적 규칙성을 본질적으로 깨뜨립니다.",
+    "parameters": "변환: 8x8 DCT, 대상 블록: AC 계수, 통계적 거리: 카이제곱(χ²) / 쿨백-라이블러 발산",
+    "accuracy": "보통 (70-80%) - 다른 주파수 영역 포렌식과 결합할 때 가장 효과적입니다.",
+    "source": "Perez-Gonzalez et al. (2007) JPEG 계수에 대한 일반화된 벤포드의 법칙",
+    "useCase": "이미지 출처의 통계적 검증, 이중 JPEG 압축 감지 및 합성 생성 흔적 식별.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TIFS.2007.903852",
@@ -17,6 +17,6 @@
             "title": "Perez-Gonzalez, F. et al. (2007). Benford's Law in Image Forensics. IEEE ICIP."
         }
     ],
-    "strengths": "• Based on well-established mathematical law\n• Fast computation with minimal overhead\n• Independent of image content type\n• Effective complementary 통계적 test",
-    "limitations": "• Lower standalone 정확도 (65-75%)\n• JPEG 압축 can mask deviations\n• Requires sufficient image complexity\n• Not effective for very small images"
+    "strengths": "• 자연적으로 발생하는 견고한 통계적 현상에 기반합니다.\n• 주로 DCT 영역에서 계산적으로 효율적인 작업입니다.\n• 재압축이나 블록 수준 접합과 같은 반복적인 작업에 매우 민감합니다.\n• 이미지의 의미론적 또는 개념적 내용과 독립적으로 작동합니다.",
+    "limitations": "• 극단적인 질감, 절대적인 평면성 또는 심한 노이즈가 있는 이미지에서는 오탐의 가능성이 있습니다.\n• 과도한 양자화 및 높은 JPEG 압축률은 합성 편차를 덮어쓰거나 모호하게 할 수 있습니다.\n• 최첨단 GAN 및 고급 확산 모델에 대한 독립적인 정확도가 낮습니다.\n• 통계적 신뢰성을 달성하려면 충분히 큰 이미지 크기가 필요합니다."
 }

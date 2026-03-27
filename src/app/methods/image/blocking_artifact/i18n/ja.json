@@ -1,18 +1,18 @@
 {
-    "name": "ブロックアーティファクトグリッド分析",
-    "description": "分析します JPEG block boundary アーティファクト を検出するために inconsistent compression grids を示す 改ざん.",
-    "algorithm": "Block Artifact Grid (BAG) Extraction and Consistency Analysis",
-    "mechanism": "JPEG圧縮 creates an 8×8 block grid. When a region is spliced from a differently compressed source, the block grid alignment becomes inconsistent.",
-    "parameters": "ブロックサイズ: 8×8, Grid 検出: cross-boundary 勾配, Alignment: phase 分析, Map: block visibility",
-    "accuracy": "高 — 80-92%",
-    "source": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-    "useCase": "Detecting spliced regions by finding JPEG圧縮 grid 不整合",
+    "name": "ブロックアーティファクトグリッド解析",
+    "description": "局所的なJPEGブロック境界のアーティファクトを分析し、画像の改ざんを示す一貫性のない圧縮グリッドを検出します。異なる圧縮ソースから領域がスプライスされると、その根本的な8x8マクロブロックの配置は同期しなくなります。",
+    "algorithm": "ブロックアーティファクトグリッド（BAG）抽出と位相一貫性解析",
+    "mechanism": "JPEG圧縮は本質的に画像を構造的な8x8ピクセルブロックに分割し、量子化のために境界に明確な位相シグネチャを作成します。アルゴリズムは境界を越える勾配を測定し、ブロックの可視性をマッピングします。元の画像では、このグリッドは連続的で周期的です。スプライシングや局所的な生成インペインティングは、この周期的な配置を壊し、BAG内で検出可能な位相シフトや局所的なフェージングを引き起こします。",
+    "parameters": "グリッドサイズ: 8x8 DCTマクロブロック, グリッド検出: クロスバウンダリー勾配マップ, 空間計測: 位相アライメント / グリッド周期性",
+    "accuracy": "高（80-92%） - 強力に圧縮されたソース内でのブロックレベルのスプライシングやコピー・ムーブ偽造を極めて正確に特定します。",
+    "source": "Fan & de Queiroz (2003) ビットマップ圧縮履歴とBAG検出",
+    "useCase": "JPEG圧縮グリッドの不一致をマッピングして改ざんされた領域を特定し、合成スプライシングを識別し、非圧縮の合成オーバーレイを検出する。",
     "references": [
         {
-            "title": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-            "url": ""
+            "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2003.812757"
         }
     ],
-    "strengths": "• Directly linked to JPEG圧縮\\n• Can localize tampered regions\\n• Well-understood theoretical basis\\n• Effective on single-compressed images",
-    "limitations": "• JPEG画像のみ対応\\n• Double compression can mask アーティファクト\\n• Requires sufficient image quality\\n• May miss small tampered regions"
+    "strengths": "• 世界的なJPEG圧縮標準の基本構造に深く根ざしている。\n• 改ざんされた領域の高解像度な空間的特定機能を提供する。\n• 複雑なAIモデルを必要とせず、高い数学的解釈可能性を備える。\n• 異なる圧縮履歴を組み合わせた複合偽造に対して極めて効果的。",
+    "limitations": "• ネイティブなロスレス形式（PNG、RAWなど）や、完全に非圧縮のデータには無効。\n• 強力な二次的な全体的JPEG圧縮は、元のグリッドの位相シフトを覆い隠す可能性がある。\n• （8x8マクロブロックより小さい）非常に小さな操作領域は、検出を逃れる可能性がある。\n• 境界の勾配を自然に乱す、過度にノイズの多い領域やテクスチャの強い領域では精度が落ちる。"
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Chroma Subsampling",
-    "description": "Detects chroma subsampling artifacts from 画像 compression",
-    "algorithm": "Chroma Subsampling — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes the 周波数 domain characteristics of the 画像:\n\n1. **Transform**: The 画像 is decomposed using 周波数-domain transforms (FFT/DCT/Wavelet).\n\n2. **Spectral Analysis**: Detects chroma subsampling artifacts from 画像 compression. Frequency components are analyzed for patterns characteristic of AI generation.\n\n3. **Band Separation**: Energy distribution across 周波数 bands is measured and compared.\n\n4. **Artifact Detection**: AI-specific 周波数 signatures are identified through 統計 comparison.\n\n5. **Scoring**: Results are normalized to a 0-100 confidence score.",
-    "parameters": "分析タイプ: 周波数\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： chroma subsampling 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+    "name": "クロマサブサンプリング異常検出",
+    "description": "画像圧縮によって残されたクロマサブサンプリングの痕跡にある構造的な異常やズレを検出します。物理カメラでキャプチャされJPEGとして保存された本物の画像は、帯域幅を節約するために全体的に一貫したクロマサブサンプリング（4:2:2や4:2:0など）を受けます。生成AIや合成画像は、この一貫性を破壊し、競合する複数のサブサンプリンググリッドの痕跡を作り出します。",
+    "algorithm": "周波数領域帯域エネルギーおよびサブサンプリンググリッドアライメント",
+    "mechanism": "ルマ（Y）とクロマ（Cb、Cr）チャネルを分離し、周波数領域に変換します。色チャネルの空間解像度をマッピングして、基礎となるサブサンプリンググリッド構造を抽出します。編集されていないカメラのオリジナル画像では、このグリッドは全体的に均一です。しかし、AIが領域をインペイント（描き込み）したり、合成されたりした場合、操作されたゾーンはクロマ周波数のズレや矛盾するサンプリング比率（4:2:0の海に浮かぶ4:4:4の島など）を示し、即座に偽造としてフラグが立てられます。",
+    "parameters": "色空間: YCbCr, 解析領域: DCT/FFT, ターゲット: 8x8/16x16 グリッドのズレ, 指標: クロマエネルギー比",
+    "accuracy": "中〜高（75-90%） - 局所的なスプライスやAIによるインペイントを正確に特定するための、非常に回復力のあるフォレンジックツールです。",
+    "source": "Farid (2009) - JPEGのゴーストからデジタル偽造を暴く",
+    "useCase": "AIインペイントによって残された局所的な構造の不一致を特定し、画像の特定の領域が異なる圧縮ソースから合成されたものかどうかを判断します。",
     "references": [
         {
             "title": "Farid, H. (2009). Exposing digital forgeries from JPEG ghosts. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2008.2012215"
         },
         {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
+            "title": "Krawetz, N. (2007). A Picture's Worth - Forensics.",
             "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         }
-    ]
+    ],
+    "strengths": "• 生成AIや人間の編集者が正確にシミュレートする方法をほとんど知らない、目に見えない機械的なアーティファクト（圧縮グリッド）に焦点を当てている。\n• 局所的な操作（本物の体にAI生成の顔をスワップするなど）の正確な座標を特定するのに非常に効果的。\n• 標準的なJPEGフォーマット全体で高い信頼性で実行できる。",
+    "limitations": "• 画像が一度も圧縮されていない場合（純粋なPNGやRAWなど）、分析するサブサンプリンググリッドが存在しないため、完全に無用になる。\n• ソーシャルメディアによる積極的な再圧縮は、均一なグリッドで上書きすることによって局所的な異常を消し去り、証拠を隠滅してしまう。\n• クロマチャネルが欠如しているグレースケール画像には効果がない。"
 }

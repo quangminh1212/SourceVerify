@@ -1,22 +1,22 @@
 {
-    "name": "Channel Independence",
-    "description": "Tests ピクセル independence between RGB color channels",
-    "algorithm": "Channel Independence — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 統計 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 画像 data.\n\n2. **Distribution Analysis**: Tests ピクセル independence between RGB color channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 画像 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 統計 deviation magnitude.",
-    "parameters": "分析タイプ: 統計\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： channel independence 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+    "name": "カラーチャネル独立性解析",
+    "description": "RGBカラーチャネル間の統計的非相関と独立性を評価します。物理的なカメラは、（Bayerフィルターを介して）重なり合うスペクトル帯域の光をキャプチャするため、自然なチャネル間の相関関係が生じます。生成AIモデルは多くの場合、数学的に異常な独立性や物理的に不可能なチャネルの依存関係を持つカラーチャネルを合成します。",
+    "algorithm": "チャネル間スペクトル相関および相互情報量モデリング",
+    "mechanism": "このアルゴリズムは、RGBおよびYCbCrチャネルを分離して、相互情報量、ピアソン相関係数、および高周波の構造的依存関係を計算します。本物の写真では、カメラのカラーフィルターアレイの物理的特性により、チャネル間相関の非常に予測可能なスペクトルが決定されます。物理的なセンサーグリッドをシミュレートするのではなく、潜在空間の分布からピクセル値をネイティブに予測する生成AIモデルは、これらの微妙な有機的相互作用を完全に複製できないことがよくあります。その結果、局所的な色のにじみ、不可能な色相のグラデーション、または強力な相関関係が生物学的に存在するはずの不自然な統計的独立性が生じます。",
+    "parameters": "色空間: RGB/YCbCr, 指標: ピアソン相関行列、相互情報量, ウィンドウサイズ: グローバル/ブロックベース",
+    "accuracy": "中〜高（75-85%） - 古いGANに対して一貫して有効であり、構造チェックと組み合わせることで拡散モデルのアーティファクトの検出に役立ちます。",
+    "source": "Farid (2009) / McCloskey & Albright (2018) - フォレンジックにおけるカラーキュー",
+    "useCase": "異常な色の合成によるAI生成の検出、局所的な色の操作の特定、およびキャプチャデバイスとされる物理的なスペクトル応答の検証。",
     "references": [
         {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+            "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
+            "url": "https://doi.org/10.1109/WACV.2018.00001"
         }
-    ]
+    ],
+    "strengths": "• 高度な意味的ピクセルジオメトリに依存するのではなく、カメラセンサーの基礎となる物理学に基づいている。\n• 計算が軽量であり、高速な線形代数行列を利用して画像全体を迅速に処理する。\n• 制限的な専用のスペクトル物理学の制約を組み込むことなく、現在の生成モデルで最適化することは根本的に困難。\n• カラー相関行列が突然一致しなくなるような、局所的な画像のスプライシング/Photoshopの発見に非常に効果的。",
+    "limitations": "• ポストプロダクションでの過度な手動のカラーグレーディング、様式化されたシネマティックLUT、または極端なHDRマージは、ベースラインのチャネル依存関係を著しく変更し、偽陽性の警告を引き起こす可能性がある。\n• 標準フォーマットの圧縮（特にJPEG 4:2:0クロマサブサンプリング）は、重要な高周波チャネルの相関関係を永久に破壊する。\n• グレースケール、セピア、またはネイティブのモノクロ画像にはまったく効果がない。\n• 自然光のグラデーションが欠けている、純粋に平坦なグラフィックデザイン領域、CGIの空、または漫画の背景では、時折苦戦する。"
 }

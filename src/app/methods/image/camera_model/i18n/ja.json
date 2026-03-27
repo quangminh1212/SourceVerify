@@ -1,18 +1,22 @@
 {
-    "name": "カメラモデル識別",
-    "description": "識別します the source camera model through sensor ノイズパターンs and processing pipeline fingerprints.",
-    "algorithm": "Sensor-Based Camera Source Identification via Processing Pipeline Analysis",
-    "mechanism": "Each camera model has a unique processing pipeline including CFA interpolation, white balancing, color correction, and JPEG圧縮. This method extracts 特徴 from these processing steps を識別するために the source camera.",
-    "parameters": "Features: color processing, CFA interpolation, JPEG tables, Classifier: SVM/RF, Training: per-model",
-    "accuracy": "高 — 85-96%",
-    "source": "Lukas, J. et al. (2006) — Digital Camera Identification from Sensor Pattern Noise, IEEE TIFS",
-    "useCase": "申告されたソースカメラの検証と未知またはAI出力の画像検出",
+    "name": "カメラセンサーPRNU識別",
+    "description": "光応答不均一性（PRNU）センサーノイズパターンとハードウェア処理パイプラインの指紋を解析することにより、ソースカメラモデルを特定するか、合成生成を検出します。",
+    "algorithm": "センサーPRNU抽出およびCFAパターンフィンガープリンティング",
+    "mechanism": "このアルゴリズムは、デバイス固有の光応答不均一性（PRNU）ノイズとカラーフィルターアレイ（CFA）補間パイプラインの痕跡を含む高周波残留信号を抽出します。本物の写真画像は、物理的なハードウェアシリコンに結びついた一貫したPRNUフィンガープリントを持っています。AIによって生成された画像には、この一貫した物理的署名がなく、完全に合成されたノイズプロファイル、トレーニングデータからのマルチカメラノイズの「フランケンシュタイン」のような融合、または物理的に不可能なCFAデモザイクパターンを示します。",
+    "parameters": "特徴: PRNU相関、CFAデモザイクマップ, 分類器: 相互相関フィルター / SVM, ウィンドウ: 128x128パッチ",
+    "accuracy": "高（85-95%） - 一般的な合成ノイズを識別するのに非常に堅牢ですが、正確なカメラモデルを特定するには参照データベースが必要です。",
+    "source": "Lukas, J. et al. (2006) - センサーパターンノイズからのデジタルカメラの識別",
+    "useCase": "画像が実際のカメラハードウェアから生成されたかどうかの検証、主張されているモデルの認証、およびAI生成における物理的に不可能なセンサーノイズの暴露。",
     "references": [
         {
-            "title": "Lukas, J. et al. (2006) — Digital Camera Identification from Sensor Pattern Noise, IEEE TIFS",
-            "url": ""
+            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        },
+        {
+            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.916285"
         }
     ],
-    "strengths": "• High 精度 camera identification\\n• Based on physical sensor properties\\n• Difficult to spoof\\n• Works にわたる camera brands",
-    "limitations": "• Requires reference images from known cameras\\n• Performance varies by camera model\\n• Social media compression reduces 精度\\n• Cannot identify specific camera instance"
+    "strengths": "• 意味的または視覚的なコンテンツではなく、物理的な半導体の特性に深く根ざしている。\n• 抽出されたPRNUは、AIが合成的に偽造することが事実上不可能な固有のデジタルフィンガープリントとして機能する。\n• 拡散モデルによって注入された疑似ランダムな潜在ノイズと、有機的なハードウェアセンサーノイズを確実に区別する。\n• 照明条件、被写体、または局所的なシーンのコンテキストから完全に独立して機能する。",
+    "limitations": "• 正確なカメラモデルを検証するには、真っ新なフラットフィールド画像の広範な参照ライブラリが必要。\n• 強力なデジタルノイズ除去フィルター、スマートフォンのAI強化、または粗いJPEG量子化によって大幅に劣化する。\n• 同じ物理カメラセンサーボディに取り付けられた異なる交換レンズを区別することはできない。\n• スケーリング、回転、またはデジタルクロッピングにより、PRNUマップの位置ずれが本質的に発生し、正確な相関が無効になる。"
 }

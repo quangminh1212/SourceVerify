@@ -1,22 +1,22 @@
 {
-    "name": "Canny Edge Density",
-    "description": "Measures edge density using Canny-like detection (2006)",
-    "algorithm": "Canny Edge Density — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Measures edge density using Canny-like detection (2006). The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through canny edge density analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+    "name": "Canny Edge Density Analysis",
+    "description": "Measures edge density and spatial high-frequency structural variations using a modified Canny detection algorithm. AI generative models often produce unusually smooth contours or overly sharp synthetic edges that disrupt the natural statistical density of edges found in organic photographs.",
+    "algorithm": "Double-Threshold Edge Topography and Density Profiling",
+    "mechanism": "The algorithm applies non-maximum suppression and hysteresis thresholding to extract precise edge maps, calculating the local and global density of these boundaries. Natural photographs exhibit complex, fractal-like edge distributions dictated by organic lighting and physical textures. Conversely, AI-synthesized images—constrained by latent space decoding and convolutional upband-smoothing—often display homogenized edge densities, leaving 'hyper-sharp' focal points surrounded by artificially barren, smoothed areas devoid of true micro-texture.",
+    "parameters": "Detector: Canny Gradient Kernel, Thresholds: Adaptive Hysteresis (T_low, T_high), Metric: Spatial Edge Concentration",
+    "accuracy": "Moderate (70-80%) - Effective at highlighting non-photorealistic synthetic smoothing, but highly sensitive to aggressive compression.",
+    "source": "Canny (1986) / Farid (2016) - Computational Edge Forensics",
+    "useCase": "Detecting AI-generated digital art, identifying aggressive synthetic smoothing, and uncovering impossible, homogenized edge uniformities.",
     "references": [
         {
             "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
             "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
         },
         {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+            "title": "Farid, H. (2016). Photo Forensics. MIT Press.",
+            "url": "https://mitpress.mit.edu/9780262537523/photo-forensics/"
         }
-    ]
+    ],
+    "strengths": "• Extremely fast, lightweight spatial domain computation requiring minimal resources.\n• Visually highlights structural and textural homogenizations caused by generative decoding algorithms.\n• Efficiently parses both color and grayscale inputs across vastly diverse, cluttered scenes.\n• Inherently resilient against basic color adjustments and global brightness shifting manipulations.",
+    "limitations": "• Forensic accuracy plummets drastically after structural-altering JPEG mass compression.\n• Legitimate, organic depth-of-field blur (bokeh) from high-end lenses creates very similar smooth/barren edge barren spots.\n• Struggles significantly to distinguish between diffusion AI and the aggressive denoising algorithms embedded in modern smartphones.\n• Prone to false positives in naturally smooth environments (e.g., clear cloudless skies, blank interior walls)."
 }

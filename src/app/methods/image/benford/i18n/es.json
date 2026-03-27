@@ -1,12 +1,12 @@
 {
-    "name": "Ley de Benford",
-    "description": "Prueba las distribuciones de gradiente de pixeles contra la Ley de Benford.",
-    "algorithm": "Benfords Law First-Digit Distribution Test",
-    "mechanism": "Analiza first significant digits in DCT coeficientes of 8x8 image blocks. Natural images follow Benfords Law, while generado por IA images deviate from this estadístico property.",
-    "parameters": "Tamaño de bloque: 8x8, DCT coeficientes: AC terms, Test: chi2 goodness-of-fit",
-    "accuracy": "Moderada - 65-75%, best as complementary estadístico test",
-    "source": "Fu et al. (2007) Generalized Benfords Law for JPEG Coefficients, IEEE TIFS",
-    "useCase": "Statistical validation of image naturalness through digit distribución",
+    "name": "Análisis de la Ley de Benford",
+    "description": "Evalúa la distribución de los dígitos más significativos de los coeficientes de la Transformada del Coseno Discreta (DCT) frente a la Ley de Benford. Las imágenes naturales suelen ajustarse a esta distribución de probabilidad logarítmica, mientras que las imágenes generadas por IA o las regiones manipuladas a menudo exhiben desviaciones estadísticamente significativas.",
+    "algorithm": "Verificación de Bondad de Ajuste de la Ley de Benford Generalizada",
+    "mechanism": "Extrae los coeficientes de CA de bloques DCT de 8x8 en toda la imagen y calcula un histograma de sus primeros dígitos significativos (1-9). La distribución empírica se compara luego con la distribución teórica de la Ley de Benford (P(d) = log10(1 + 1/d)) utilizando la prueba de bondad de ajuste Chi-Cuadrado (χ²) o la divergencia de Kullback-Leibler. Los procesos de síntesis y renderizado de la IA a menudo interrumpen inherentemente esta regularidad estadística natural.",
+    "parameters": "Transformada: DCT de 8x8, Bloque Objetivo: Coeficientes CA, Distancia Estadística: Chi-Cuadrado (χ²) / Divergencia Kullback-Leibler",
+    "accuracy": "Moderada (70-80%) - Más efectiva cuando se combina con otros análisis forenses de dominio de frecuencia.",
+    "source": "Perez-Gonzalez et al. (2007) Ley de Benford Generalizada para Coeficientes JPEG",
+    "useCase": "Validación estadística del origen de la imagen, detección de compresión JPEG doble e identificación de rastros de generación sintética.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TIFS.2007.903852",
@@ -17,6 +17,6 @@
             "title": "Perez-Gonzalez, F. et al. (2007). Benford's Law in Image Forensics. IEEE ICIP."
         }
     ],
-    "strengths": "• Based on well-established mathematical law\n• Fast computation with minimal overhead\n• Independent of image content type\n• Effective complementary estadístico test",
-    "limitations": "• Lower standalone precisión (65-75%)\n• compresión JPEG can mask deviations\n• Requires sufficient image complexity\n• Not effective for very small images"
+    "strengths": "• Basado en un fenómeno estadístico robusto y que ocurre naturalmente.\n• Operaciones computacionalmente eficientes principalmente en el dominio DCT.\n• Altamente sensible a operaciones repetitivas como la recompresión o el empalme a nivel de bloque.\n• Funciona independientemente del contenido semántico o conceptual de la imagen.",
+    "limitations": "• Susceptible a falsos positivos en imágenes con texturas extremas, llanura absoluta o ruido intenso.\n• La cuantificación agresiva y las altas tasas de compresión JPEG pueden sobrescribir u oscurecer las desviaciones sintéticas.\n• Menor precisión independiente para las GAN de última generación y los modelos de Difusión avanzados.\n• Requiere dimensiones de imagen suficientemente grandes para lograr confianza estadística."
 }

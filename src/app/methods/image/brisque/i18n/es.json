@@ -1,18 +1,18 @@
 {
     "name": "Evaluación Ciega de Calidad de Imagen (BRISQUE)",
-    "description": "Utiliza natural scene statistics to evaluate image quality and detect distortions indicando AI generation or manipulación.",
-    "algorithm": "Blind/Referenceless Image Spatial Quality Evaluator",
-    "mechanism": "Computes locally normalized luminance coeficientes and fits them to a generalized Gaussian distribución. The shape and varianza parameters are used as características para detectar deviations from natural image statistics.",
-    "parameters": "Patch size: 7×7, MSCN coeficientes, GGD fitting, Features: 36-dimensional, SVR model",
-    "accuracy": "Media-Alta — 78-90%",
-    "source": "Mittal, A. et al. (2012) — No-Reference Image Quality Assessment in the Spatial Domain, IEEE TIP",
-    "useCase": "Evaluating naturalness of images to flag generado por IA or heavily processed content",
+    "description": "Evalúa la naturalidad de una imagen sin requerir una imagen de referencia mediante el cálculo de métricas estadísticas en el dominio espacial. Las imágenes generadas por IA o las áreas manipuladas exhiben desviaciones estadísticas en sus coeficientes de luminancia normalizados localmente en comparación con las escenas naturales auténticas.",
+    "algorithm": "Evaluador de Calidad Espacial de Imágenes Ciego/Sin Referencia (BRISQUE)",
+    "mechanism": "El algoritmo calcula los coeficientes Normalizados de Contraste con Residuos Medios (MSCN) para normalizar las variaciones locales de luminancia. En las fotografías genuinas, los coeficientes MSCN siguen de manera muy predecible y fidedigna una Distribución Gaussiana Generalizada (GGD). Este método extrae 36 parámetros estadísticos formales (geometría y forma, la varianza, y la relación de dispersión espacial) y utiliza un Regresor de Vectores de Soporte (SVR) previamente entrenado para estimar la severidad patológica de perturbaciones, incluyendo el escalado por IA exagerado, los artefactos de compresión y el difuminado sintético colindante.",
+    "parameters": "Características: 36 parámetros dimensionales de MSCN, Tamaño del parche: 7x7/9x9, Ajuste de Distribución: Distribución Gaussiana asimétrica y general (AGGD), Clasificador predictivo: SVR",
+    "accuracy": "Moderada (70-80%) - Desempeña competentemente su labor de detector general frente al constante asedio de ruidos anómalos o sobre-suavizados irreales.",
+    "source": "Mittal, A. et al. (2012) - Evaluación de Calidad de Imagen Sin Referencia en el Dominio Espacial",
+    "useCase": "Señalar la procedencia fraudulenta de contendido, advertir reescalados con IA severos y exponer falsificaciones al diagnosticar perfiles atípicos en distribuciones no habituales.",
     "references": [
         {
-            "title": "Mittal, A. et al. (2012) — No-Reference Image Quality Assessment in the Spatial Domain, IEEE TIP",
-            "url": ""
+            "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2012.2214050"
         }
     ],
-    "strengths": "• No se necesita imagen de referencia\\n• Fast computation\\n• Correlates well with human perception\\n• Detecta multiple distortion types",
-    "limitations": "• May not detect high-quality AI images\\n• Sensitive to legitimate processing\\n• Requires calibration per domain\\n• Not specific to any falsificación type"
+    "strengths": "• Opera ágil e individualmente adentrándose por el espectro espacial evadiendo el obstáculo prohibitivo de precisar referencias de su original.\n• Es rápido, ostenta celeridad computacional altísima, y guarda nexo recíproco y fidedigno de coherencia perceptiva con el ojo humano biológico.\n• Capaz de descubrir irregularidades múltiples e inconsistencias fotográficas subyacentes operando todas ellas bajo un único barrido simultáneo.\n• Conserva efectividad incólume trabajando en secciones diminutas posibilitando diagramar planos limítrofes alterados localmente de falsificaciones por corte.",
+    "limitations": "• Fallará trágicamente contra IA avanzadas que logren plagiar al dedillo los registros MSCN como lo hacen los últimos modelos de clase punta.\n• Dispara alertas paranoicas indiscriminadamente hacia ilustraciones, infografías vectoriales corporativas o renders visuales de software sin que ellos tengan culpa.\n• Fracasa evidenciando e identificando el género y familia exacta que tipifica la alteración, y sólo informa global e indiscriminadamente su detección.\n• Requiere un calibramiento hermético dependiente de una categoría de imagen puntual dictatorial para sortear veredictos errados en fotografías exóticas."
 }

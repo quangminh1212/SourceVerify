@@ -1,12 +1,12 @@
 {
-    "name": "Luật Benford",
-    "description": "Kiểm tra phân bố gradient pixel theo Luật Benford — nguyên lý thống kê rằng dữ liệu tự nhiên tuân theo phân bố chữ số đầu cụ thể. Gradient AI lệch khỏi mẫu này.",
-    "algorithm": "Kiểm định phân bố chữ số đầu theo Luật Benford",
-    "mechanism": "Phân tích chữ số có ý nghĩa đầu tiên trong hệ số DCT của các khối ảnh 8x8. Ảnh tự nhiên tuân theo Luật Benford, trong khi ảnh AI lệch khỏi thuộc tính thống kê này.",
-    "parameters": "Kích thước khối: 8x8, Hệ số DCT: thành phần AC, Kiểm định: chi-bình phương goodness-of-fit",
-    "accuracy": "Trung bình - 65-75%, hiệu quả nhất khi kết hợp kiểm định thống kê",
-    "source": "Fu et al. (2007) - Generalized Benford's Law for JPEG Coefficients, IEEE TIFS",
-    "useCase": "Xác nhận thống kê tính tự nhiên của ảnh qua phân bố chữ số",
+    "name": "Phân Tích Định Luật Benford",
+    "description": "Đánh giá sự phân bố của các chữ số có nghĩa đầu tiên của các hệ số Biến đổi Cosine Rời rạc (DCT) so với Định luật Benford. Ảnh tự nhiên thường tuân theo phân bố xác suất logarit này, trong khi ảnh do AI tạo ra hoặc các vùng bị chỉnh sửa thường thể hiện những sai lệch đáng kể về mặt thống kê.",
+    "algorithm": "Kiểm Định Mức Độ Phù Hợp Định Luật Benford Tổng Quát",
+    "mechanism": "Trích xuất các hệ số AC từ các khối DCT 8x8 trên toàn bộ ảnh và tính toán biểu đồ tần suất của các chữ số có nghĩa đầu tiên (1-9). Phân bố thực nghiệm này được so sánh với phân bố lý thuyết của Định luật Benford (P(d) = log10(1 + 1/d)) bằng cách sử dụng kiểm định mức độ phù hợp Chi-Bình phương (χ²) hoặc phân kỳ Kullback-Leibler. Quá trình tổng hợp và kết xuất của AI thường phá vỡ tính quy luật thống kê tự nhiên này.",
+    "parameters": "Biến đổi: DCT 8x8, Dữ liệu mục tiêu: Hệ số AC, Thang đo thống kê: Phân kỳ Chi-Bình phương (χ²) / Kullback-Leibler",
+    "accuracy": "Trung bình (70-80%) - Hiệu quả nhất khi kết hợp với các phương pháp điều tra thống kê tín hiệu ảnh khác.",
+    "source": "Perez-Gonzalez et al. (2007) Định luật Benford Tổng quát cho Hệ số JPEG",
+    "useCase": "Xác thực tính tự nhiên của hình ảnh bằng thống kê, phát hiện nén JPEG kép và xác định dấu vết nội dung tổng hợp.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TIFS.2007.903852",
@@ -17,6 +17,6 @@
             "title": "Perez-Gonzalez, F. et al. (2007). Benford's Law in Image Forensics. IEEE ICIP."
         }
     ],
-    "strengths": "• Dựa trên định luật toán học được thiết lập vững chắc\n• Tính toán nhanh với chi phí tối thiểu\n• Độc lập với loại nội dung ảnh\n• Kiểm định thống kê bổ sung hiệu quả",
-    "limitations": "• Độ chính xác đơn lẻ thấp hơn (65-75%)\n• Nén JPEG có thể che giấu độ lệch\n• Cần độ phức tạp ảnh đủ lớn\n• Không hiệu quả cho ảnh rất nhỏ"
+    "strengths": "• Dựa trên một hiện tượng thống kê tự nhiên có tính chặt chẽ.\n• Tính toán cực kỳ hiệu quả do hoạt động chủ yếu trong miền DCT.\n• Độ nhạy cao trong việc phát hiện nén lại nhiều lần hoặc ghép mức khối ghép.\n• Hoạt động hoàn toàn độc lập với nội dung ngữ nghĩa hay khái niệm của hình ảnh.",
+    "limitations": "• Dễ mắc lỗi dương tính giả đối với các hình ảnh có bề mặt cực phẳng, nhiễu dày, hoặc kết cấu phức tạp.\n• Việc lượng tử hóa chủ động và tỷ lệ nén JPEG cao có thể xóa bỏ hoàn toàn các sai lệch tổng hợp.\n• Độ chính xác khi đo lường độc lập bị hạn chế đối với GAN hiện đại và mô hình Khuếch tán phức tạp.\n• Yêu cầu kích thước ảnh đủ lớn để đạt mức độ tin cậy và có ý nghĩa thống kê."
 }

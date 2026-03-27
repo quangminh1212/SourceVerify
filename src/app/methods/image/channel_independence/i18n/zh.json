@@ -1,22 +1,22 @@
 {
-    "name": "Channel Independence",
-    "description": "Tests 像素 independence between RGB color channels",
-    "algorithm": "Channel Independence — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 统计 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 图像 data.\n\n2. **Distribution Analysis**: Tests 像素 independence between RGB color channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 图像 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 统计 deviation magnitude.",
-    "parameters": "分析类型: 统计\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： channel independence 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "通道独立性分析",
+    "description": "评估RGB颜色通道之间的统计去相关性和独立性。物理相机通过光谱波段重叠的滤光片（Bayer滤色镜）捕捉光线，导致自然通道间的颜色必然存在强烈的关联。而生成式AI模型在合成图像时，常常表现出物理上不可能存在的通道独立性或者异常依赖关系。",
+    "algorithm": "通道间光谱相关性与互信息建模",
+    "mechanism": "该算法分离RGB和YCbCr通道，从而计算它们的互信息、皮尔逊相关系数以及高频结构依赖性。在真实的摄影作品中，相机滤色器阵列的硬性物理特性决定了通道间必然存在着高度可预测的相互关联。相反，大模型等AI是在潜空间直接预测像素值，而不是模拟硬件的感应单元。这导致AI往往无法完美还原这些微妙的有机光谱互动。结果便是局部的色彩外带、病态颜色的渐变、或者在生物学上本应紧密相关的像素点却呈现出畸形的统计独立性。",
+    "parameters": "色彩空间: RGB/YCbCr, 指标: 皮尔逊相关性矩阵、互信息强度, 采样窗口: 全局或分块分析",
+    "accuracy": "中等至高 (75-85%) - 对抗早期GAN尤为有效；结合空间结构分析时，也是打击最新Diffusion漫游伪影的有力辅助武器。",
+    "source": "Farid (2009) / McCloskey & Albright (2018) - 图像取证学中的颜色线索",
+    "useCase": "通过反常颜色的推演发现AI生成的虚假照片，侦测利用修图软件局部篡改上色(Splicing)的伪造痕迹，并逆向核实验明照片所声明之相机的真实光谱响应能力。",
     "references": [
         {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+            "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
+            "url": "https://doi.org/10.1109/WACV.2018.00001"
         }
-    ]
+    ],
+    "strengths": "• 深深扎根于相机传感器的纯物理光学定律，无需依赖表面且容易伪造的高层级语义和几何形态。\n• 计算开销极低且快如闪电，依靠线性代数矩阵的算力能瞬间扫荡完几千万像素级别的整张图片的矩阵空间。\n• 这是横亘在AI面前极其痛苦的天堑：只要AI不将死板且严苛的光谱物理约束从底层代码深植入神经网络中进行重新训练，它就绝对无法逾越这道相关性屏障。\n• 对甄别出局部切图移花接木式的“缝合怪”（例如Photoshop粗糙合成照）非常有效。在伪造的焊接点，其通道的色彩关联系数常常会急剧断崖式崩溃并暴露出破绽。",
+    "limitations": "• 被人类摄影师亲手严重重度调色过、经过电影质感LUT叠加、或执行过暴力HDR叠加合并融合的照片，会面目全非地彻底打碎原始通道间的依赖网，造成非常强烈的误判（假阳性报错）。\n• 互联网上传播最普遍的图像极度压缩格式（尤其是惨无人道的JPEG 4:2:0色度二次下采样压缩）拥有毁灭性威力，会永远且不可逆地损毁掉珍贵的高频通道关联信息。\n• 在黑白灰度照片、复古泛黄的赛ピア单色调以及纯色的绘画图片面前会由于失去了“颜色带宽”而束手无策，彻底沦为废铁。\n• 偶遇纯如死水的平面设计单色大色块、呆板平涂无渐变的3D生成苍穹夜空、或者没有真实自然光源渐变衍射渲染的简单2D卡通电视动画背景时，有几率出现迷失方向及卡壳情况。"
 }

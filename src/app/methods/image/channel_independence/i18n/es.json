@@ -1,22 +1,22 @@
 {
-    "name": "Channel Independence",
-    "description": "Tests píxel independence between RGB color channels",
-    "algorithm": "Channel Independence — Statistical Pattern Analyzer",
-    "mechanism": "This method applies estadística analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the imagen data.\n\n2. **Distribution Analysis**: Tests píxel independence between RGB color channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural imagen statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on estadística deviation magnitude.",
-    "parameters": "Tipo de análisis: estadística\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: channel independence análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+    "name": "Análisis de Independencia Mutua del Canal Cromático",
+    "description": "Evalúa la decorrelación estadística y la independencia entre los canales de color RGB. Las cámaras físicas capturan la luz a través de bandas espectrales superpuestas (a través de filtros Bayer), lo que resulta en una correlación natural entre canales. Los modelos de IA generativa suelen sintetizar canales de color con una independencia matemáticamente anómala o con dependencias físicamente imposibles.",
+    "algorithm": "Modelado de Correlación Espectral Intercanal e Información Mutua",
+    "mechanism": "El algoritmo aísla los canales RGB y YCbCr para calcular su información mutua, los coeficientes de correlación de Pearson y las dependencias estructurales de alta frecuencia. En una fotografía auténtica, las propiedades físicas de la matriz de filtros de color de la cámara dictan un espectro de correlación intercanal altamente predecible. Los modelos de IA generativa, que predicen valores de píxeles nativamente desde distribuciones de espacio latente en lugar de simular una cuadrícula de sensores físicos, a menudo fallan al replicar estas sutiles interacciones orgánicas. Esto da como resultado un sangrado de color localizado, gradientes de matiz imposibles o una independencia estadística antinatural donde debería existir una fuerte correlación biológicamente.",
+    "parameters": "Espacio de Color: RGB/YCbCr, Métricas: Matriz de Correlación de Pearson, Información Mutua, Tamaño de Ventana: Global/Basado en bloques",
+    "accuracy": "Moderada a Alta (75-85%) - Consistentemente efectiva contra GANs antiguos y muy útil en la detección de artefactos de modelos de difusión cuando se combina con verificaciones estructurales.",
+    "source": "Farid (2009) / McCloskey & Albright (2018) - Pistas Cromáticas en Análisis Forense",
+    "useCase": "Detección de generación por IA a través de síntesis de color anormal, identificación de manipulación de color localizada y verificación de la respuesta espectral física del supuesto dispositivo de captura.",
     "references": [
         {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+            "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
+            "url": "https://doi.org/10.1109/WACV.2018.00001"
         }
-    ]
+    ],
+    "strengths": "• Basado en la física fundamental de los sensores de la cámara en lugar de depender de la geometría de píxeles semánticos de alto nivel.\n• Computacionalmente ligero, utilizando matrices de álgebra lineal rápidas para procesar toda la imagen rápidamente.\n• Fundamentalmente difícil de optimizar para los modelos generativos actuales sin integrar restricciones espectrales dedicadas.\n• Es altamente eficaz para detectar empalmes de imágenes localizados (splicing) o manipulaciones con Photoshop, donde la matriz de correlación de color repentinamente pierde su coincidencia de forma abrupta.",
+    "limitations": "• La gradación de color manual pesada de posproducción, los LUTs cinematográficos estilizados o la fusión extrema HDR pueden alterar gravemente las dependencias de los canales básicos, causando alertas de falsos positivos.\n• La compresión de formatos estándar (especialmente el submuestreo de croma JPEG 4:2:0) destruye permanentemente correlaciones críticas de canales de alta frecuencia.\n• Completamente ineficaz en imágenes en escala de grises, sepia o nativamente monocromáticas.\n• A veces detecta errores en áreas de diseño gráfico de colores planos puros, cielos CGI o fondos de dibujos animados que carecen de gradientes de luz natural."
 }

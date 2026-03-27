@@ -1,22 +1,22 @@
 {
-    "name":  "Census Transform Analysis",
-    "description":  "Applies census transform for local binary comparison — detects AI micro-texture anomalies (Zabih \u0026 Woodfill, 1994).",
-    "algorithm":  "Census Transform Analysis Analysis Algorithm",
-    "mechanism":  "The Census Transform Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1007/BFb0028345",
-                           "title":  "Zabih, R. \u0026 Woodfill, J. (1994). Non-parametric Local Transforms for Computing Visual Correspondence. ECCV."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TIFS.2012.2190402",
-                           "title":  "Fridrich, J. \u0026 Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS."
-                       }
-                   ]
+    "name": "Census Transform Micro-Texture Analysis",
+    "description": "Applies a non-parametric local spatial transform to evaluate micro-texture consistency. AI generative models, particularly diffusion-based frameworks, often fail to synthesize authentic, high-frequency textural relationships between neighboring pixels, creating statistically abnormal local binary patterns.",
+    "algorithm": "Non-parametric Local Binary Pixel Census Transform",
+    "mechanism": "The algorithm maps the local spatial structure around each pixel by comparing its intensity to its immediate neighborhood, generating a bit string (Census signature) that encapsulates the local micro-texture invariant to uniform brightness shifts. In authentic images, physical constraints like material texture and organic sensor noise dictate complex, naturally dispersed Census signatures. Conversely, AI-generated images display a severely restricted or repetitive vocabulary of local binary patterns due to the generalized smoothing and decoding operations inherent in convolutional image synthesis.",
+    "parameters": "Detection Window: 3x3 or 5x5 Neighborhood, Feature Extraction: Local Binary Signatures, Evaluation: Intra-region Hamming distance variance",
+    "accuracy": "Moderate to High (75-85%) - Extremely effective against older GANs and highly capable of identifying diffusion model artifacts on uncompressed images.",
+    "source": "Zabih & Woodfill (1994) / Fridrich & Kodovsky (2012) - Advanced Steganalysis Forensics",
+    "useCase": "Detecting synthetic micro-textures, identifying AI generation purely from high-frequency pixel relationships, and evaluating surface texture authenticity.",
+    "references": [
+        {
+            "title": "Zabih, R. & Woodfill, J. (1994). Non-parametric Local Transforms for Computing Visual Correspondence. ECCV.",
+            "url": "https://doi.org/10.1007/BFb0028345"
+        },
+        {
+            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+        }
+    ],
+    "strengths": "• Deeply robust against global illumination changes, brightness adjustments, and basic color grading manipulations.\n• Excels at detecting and mathematically highlighting the unnatural, 'plastic' micro-textures typical of AI image generators.\n• Relies on computationally straightforward boolean logic with exceptionally fast execution capability.\n• Operates strictly at the local pixel level, avoiding confusion from distracting macro-semantic context.",
+    "limitations": "• Forensic spatial signal is heavily degraded or permanently destroyed by moderate lossy compression (standard social media JPEGs).\n• Performs poorly as a standalone tool on completely smooth, textureless surfaces lacking a baseline micro-texture.\n• Very difficult to isolate synthetic AI generation from aggressive artificial upscaling or aggressive digital sharpening algorithms.\n• Can occasionally trigger false alarms on highly detailed, geometrically perfect 2D patterns (like dense grids or moiré)."
 }

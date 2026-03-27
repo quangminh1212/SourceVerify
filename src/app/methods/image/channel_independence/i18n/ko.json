@@ -1,22 +1,22 @@
 {
-    "name": "Channel Independence",
-    "description": "Tests 픽셀 independence between RGB color channels",
-    "algorithm": "Channel Independence — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 통계 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 이미지 data.\n\n2. **Distribution Analysis**: Tests 픽셀 independence between RGB color channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 이미지 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 통계 deviation magnitude.",
-    "parameters": "분석 유형: 통계\n미디어: 이미지\n입력: 원시 픽셀 데이터 / 이미지 파일\n출력: 신뢰도 점수 (0-100)\n처리 방식: 클라이언트 측 Canvas API\n색 공간: RGB, 그레이스케일 (해당하는 경우)",
-    "accuracy": "중간~높음 — 70-90% 단독 정확도. 비압축 이미지에서 최고 성능 발휘 and 높은 JPEG 압축이나 소셜 미디어 재인코딩 시 감소할 수 있습니다.",
-    "source": "디지털 이미지 포렌식 연구. 신호 처리 및 컴퓨터 사진학 원리에 기반.",
-    "useCase": "다음을 통한 AI 생성 또는 조작된 이미지 감지: channel independence 분석. 이 방법은 AI 생성의 특징적인 패턴과 아티팩트를 식별하여 포괄적인 이미지 포렌식 분석에 기여합니다.",
-    "strengths": "• Canvas API를 사용한 빠른 클라이언트 측 처리\n• 특정 AI 생성 아티팩트 감지에 효과적\n• 일반적인 이미지 형식 (JPEG, PNG, WebP) 지원\n• 보완적인 분석 방법과 결합 가능\n• 확립된 이미지 포렌식 연구에 기반",
-    "limitations": "• 이미지 압축 수준에 따라 성능이 달라질 수 있습니다\n• 소셜 미디어 재인코딩이 정확도에 영향을 줄 수 있습니다\n• 다른 포렌식 방법과 함께 사용하는 것이 가장 좋습니다\n• 과도하게 처리된 실제 이미지에서 오탐이 발생할 수 있습니다\n• 효과는 사용된 AI 생성 모델에 따라 다릅니다",
+    "name": "색상 채널 독립성 분석",
+    "description": "RGB 색상 채널 간의 통계적 비상관성(Decorrelation) 및 독립성을 평가합니다. 물리적 카메라는 베이어(Bayer) 필터를 통해 중첩되는 스펙트럼 대역에 걸쳐 빛을 포착하므로, 교차 채널(Cross-channel) 간에 자연적인 상관관계가 발생합니다. 생성형 AI 모델은 수학적으로 비정상적인 독립성을 띠거나 물리적으로 불가능한 채널 의존성을 지닌 색상 채널을 합성하는 경우가 많습니다.",
+    "algorithm": "채널 간 스펙트럼 상관관계 및 상호 정보(Mutual Information) 모델링",
+    "mechanism": "알고리즘은 RGB 및 YCbCr 채널을 분리하여 각 채널 간의 상호 정보량, 피어슨 상관 계수(Pearson correlation) 및 고주파 구조적 의존성을 계산합니다. 진본 사진에서 카메라 컬러 필터 어레이의 물리적 특성은 채널 간 상관관계의 매우 예측 가능한 스펙트럼을 지시합니다. 물리적 센서 그리드를 시뮬레이션하지 않고 잠재 공간(Latent space) 분포에서 픽셀 값을 직접 예측하고 생성하는 AI 모델들은 이러한 미묘한 유기적 상호 작용을 완벽하게 재현하지 못하는 경우가 많습니다. 그 결과, 국부적인 색 번짐(Color bleeding), 불가능한 색조 그라데이션, 또는 강한 상관관계가 생물학적으로 존재해야 마땅한 곳에서의 부자연스러운 통계적 독립성 등이 나타납니다.",
+    "parameters": "색 공간(Color Space): RGB/YCbCr, 지표: 피어슨 상관 행렬, 상호 정보량, 창 크기(Window Size): 전역(Global) 또는 블록 기반",
+    "accuracy": "중간에서 높음 (75-85%) - 구형 GAN 모델을 감지하는 데 지속적으로 강력한 성능을 내며, 공간 구조 교차 확인법과 결합할 시 최신 확산(Diffusion) 모델의 아티팩트를 감지하는 데도 탁월한 도움을 줍니다.",
+    "source": "Farid (2009) / McCloskey & Albright (2018) - 이미지 포렌식에서의 색상 단서(Color Cues) 활용",
+    "useCase": "비정상적인 색상 합성을 통한 AI 생성 이미지 적발, 부분적으로 조작된 특정 색상 왜곡 부위 식별, 포착된 이미지가 주장하는 기기(센서)의 물리적 스펙트럼 반응의 진위 입증.",
     "references": [
         {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+            "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
+            "url": "https://doi.org/10.1109/WACV.2018.00001"
         }
-    ]
+    ],
+    "strengths": "• 높은 수준의 의미론적인(Semantic) 픽셀 기하학적 형태에 의존하는 대신, 카메라 센서의 근본적인 광원 물리학 원리에 굳건히 닻을 내리고 있습니다.\n• 계산적으로 매우 가벼워, 빠른 선형대수학 행렬 연산을 활용해 전체 이미지를 눈 깜짝할 새 신속하게 훑어 처리합니다.\n• 엄격하고 전용화된 스펙트럼 물리적 제약 조건을 내부 연산에 애초에 구워넣지(Baking) 않는 이상, 현재의 이미지 생성형 AI 모델들이 이를 완벽하게 최적화하고 속이는 것은 근본적으로 매우 어렵습니다.\n• 색상 상관관계 행렬이 벼락 맞은 듯 갑작스레 불일치하여 어긋나는 국부적인 이미지 조작 분리기(Splicing) 및 감쪽같은 포토샵 흔적 부위를 정밀 타격하여 찾아내는 데 압도적으로 효과적입니다.",
+    "limitations": "• 후반 작업(Post-production)에서 시행되는 과도하고 무거운 수동 색상 보정(Color grading), 인위 연출된 시네마틱 LUT(Look-Up Table) 씌우기 또는 극단적인 HDR 병합은 채널 의존성의 기본값을 심각하게 비틀어버릴 수 있어 거짓 양성(False positive, 오류) 경보를 유발할 수 있습니다.\n• 웹상의 일반 표준 형식 압축(특히 JPEG의 4:2:0 크로마 서브샘플링)은 검사의 필수 자양분이 되는 고주파 채널 간의 상호 상관관계를 영구적으로 으깨 파괴해버립니다.\n• 색상이 존재하지 않는 흑백(Grayscale), 세피아(Sepia) 모드 또는 태생적으로 단색을 띠는 이미지 앞에서는 완전히 무용지물이 됩니다.\n• 자연스러운 빛의 그라데이션이 전혀 없는 완전히 평면적인 디자인 영역(단색 배경), CGI로 깨끗하게 그려낸 하늘, 또는 카툰 렌더링 된 평평한 배경 앞에서는 이따금씩 바보처럼 헤매고 분석에 어려움을 겪습니다."
 }

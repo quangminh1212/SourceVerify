@@ -1,12 +1,12 @@
 {
-    "name": "CFA Pattern Detection",
-    "description": "Searches for Bayer Color Filter Array demosaicing artifacts left by real camera sensors. This fingerprint is a strong indicator of real photography and is absent in AI images.",
-    "algorithm": "Color Filter Array (Bayer CFA) Demosaicing Trace Detection",
-    "mechanism": "Detects periodic correlation patterns from Bayer CFA demosaicing in real cameras. These traces are absent in AI-generated images.",
-    "parameters": "Analysis: 2D autocorrelation of green channel, Expected pattern: 2x2 periodic",
-    "accuracy": "High - 80-92% for images from known camera sensors",
-    "source": "Popescu and Farid (2005), ACM Workshop on Multimedia and Security",
-    "useCase": "Verifying authentic camera origin through CFA demosaicing artifacts",
+    "name": "Color Filter Array (CFA) Pattern Detection",
+    "description": "Searches for structural Bayer Color Filter Array demosaicing artifacts intrinsically left by real camera sensors. This algorithmic fingerprint is a dominant indicator of real photography captured through physical optics and silicon, and is natively absent in images generated entirely by AI or heavily synthesized from scratch.",
+    "algorithm": "Bayer CFA Demosaicing Trace & Interpolation Matrix Verification",
+    "mechanism": "The algorithm calculates the 2D periodic autocorrelation of the image's color channels (primarily the green channel). In actual digital cameras, light passes through a physical Bayer filter array, meaning only one absolute color value is captured per sensor pixel. The missing colors are mathematically interpolated ('demosaiced'), leaving a distinct, measurable 2x2 periodic interpolation trace across the entire image. Because Generative AI models synthesize fully-formed RGB pixels directly from latent mathematical space without simulating a physical sensor grid, they completely lack this fundamental hardware fingerprint.",
+    "parameters": "Analysis: 2D spectral autocorrelation of RGB channels, Expected Target: 2x2 periodic variance matrix, Tolerance Matrix: Probability mapping",
+    "accuracy": "High (80-92%) - Exceptionally strong baseline for detecting authentic hardware origin, though subject to degradation through extreme social media compression.",
+    "source": "Popescu and Farid (2005) - Photometric CFA Forensics",
+    "useCase": "Verifying authentic camera hardware origin, exposing pure AI-generated scenes, and detecting local image splicing where the organic CFA pattern continuity is abruptly broken.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TSP.2005.855406",
@@ -17,6 +17,6 @@
             "title": "Dirik, A.E. & Memon, N. (2009). Image tamper detection based on demosaicing artifacts. IEEE ICIP."
         }
     ],
-    "strengths": "• Strong indicator of real camera origin\n• Based on physical sensor hardware\n• Difficult for AI to simulate CFA patterns\n• Very low false positive rate on camera images",
-    "limitations": "• Only detects presence/absence of CFA patterns\n• Some cameras apply heavy demosaicing that masks patterns\n• Resizing or heavy processing destroys CFA traces\n• Cannot identify specific camera model"
+    "strengths": "• Deeply anchored in immutable, foundational physical optics and sensor manufacturing physics.\n• Excessively computationally and fundamentally difficult for AI generators to purposefully simulate or accurately forge.\n• Produces an incredibly low false positive rate when analyzing genuine, raw or softly-processed camera images.\n• Can reliably identify exactly where a forgery occurred in locally spliced/photoshopped images by mapping CFA discontinuity.",
+    "limitations": "• Only confirms the binary presence or absence of generic CFA traces; it cannot identify the exact specific camera model.\n• Modern smartphone computational photography (Night mode, HDR) applies destructive multi-frame blending that inadvertently masks the pristine CFA pattern.\n• Massive geometric resizing, heavy downsampling, or brutal JPEG compression permanently obliterates these delicate micro-traces.\n• Produces invalid results on images captured with specialized sensors that lack traditional Bayer arrays (e.g., Foveon X3 or native Leica monochromes)."
 }

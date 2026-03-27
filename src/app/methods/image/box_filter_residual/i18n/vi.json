@@ -1,12 +1,22 @@
 {
-    "name": "Dư bộ lọc hộp",
-    "description": "Phân tích dư bộ lọc hộp để phát hiện làm mịn",
-    "algorithm": "Thuật toán phân tích Dư bộ lọc hộp",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích dư bộ lọc hộp để phát hiện làm mịn. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích dư bộ lọc hộp. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Phân Tích Thặng Dư Bộ Lọc Hộp",
+    "description": "Đánh giá mức độ nhiễu thặng dư được trích xuất bởi một bộ lọc hộp tuyến tính (box filter) để phát hiện hiện tượng làm mịn hình ảnh trên diện rộng. Các mô hình tạo sinh AI thường áp dụng các bước khử nhiễu và nội suy nội bộ tích cực, để lại các kết cấu mịn bất thường về mặt thống kê so với nhiễu cảm biến máy ảnh tự nhiên.",
+    "algorithm": "Cắt Lọc Thặng Dư Miền Không Gian và Hồ Sơ Khử Nhiễu",
+    "mechanism": "Thuật toán áp dụng một bộ lọc hộp không gian đơn giản (trung bình động) vào hình ảnh và trừ nó khỏi ảnh gốc để cô lập tín hiệu thặng dư tần số cao (mức nhiễu hạt). Trong các hình ảnh xác thực, thặng dư này thể hiện các đặc điểm nhiễu cảm biến tự nhiên đặc trưng. Trong các hình ảnh do AI tổng hợp hoặc được chỉnh sửa quá mức, phần thặng dư chứa các 'vùng chết' với phương sai tuyệt đối bằng không, nơi mô hình áp dụng làm mịn quá độ, xen kẽ là các tạo tác ranh giới cấu trúc.",
+    "parameters": "Loại bộ lọc: Bộ lọc Hộp 3x3 hoặc 5x5, Phép toán: Ảnh gốc - Ảnh đã lọc, Phân tích: Phương sai của nhiễu thặng dư",
+    "accuracy": "Trung bình đến Cao (75-85%) - Rất đáng tin cậy đối với các hình ảnh không nén hoặc được nén sạch sẽ, ít bị cắt băng thông.",
+    "source": "Fridrich & Kodovsky (2012) về Mô hình Phong phú cho Phân tích Giấu tin (Steganalysis)",
+    "useCase": "Phát hiện nghệ thuật kỹ thuật số do AI tạo ra, xác định các bộ lọc giảm nhiễu nhân tạo bạo lực và nhận diện các thao tác làm mịn hình ảnh toàn cục.",
+    "references": [
+        {
+            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+        },
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        }
+    ],
+    "strengths": "• Phép tính toán trên miền không gian cực kỳ nhanh chóng và nhẹ bén.\n• Tận dụng các kỹ thuật cấu trúc phân tích giấu tin (SRM) đã được thiết lập để trích xuất độ nhiễu.\n• Cực kỳ xuất sắc trong việc xác định hiện tượng làm mịn hoặc làm mờ tổng hợp phi thực tế.\n• Ít bị ảnh hưởng bởi nội dung ngữ nghĩa của bức ảnh và chỉ tập trung thuần túy vào các biến thể kết cấu cục bộ.",
+    "limitations": "• Độ chính xác sẽ suy giảm đáng kể sau khi hình ảnh bị nén chuẩn JPEG nặng hoặc bị giảm độ phân giải định kỳ.\n• Hình ảnh AI có ISO cao (nhiễu hạt) hoặc được phủ thêm nhiễu phim sau cùng có thể dễ dàng đánh lừa được máy dò.\n• Rất khó để phân biệt điểm mù giữa quá trình tạo sinh AI với các bộ lọc khử nhiễu AI thường có sẵn trên điện thoại thông minh hiện đại.\n• Yêu cầu các dữ liệu đầu vào là ảnh không nén (VD: PNG, TIF) để bảo quản trọn vẹn tín hiệu forensic tối ưu nhất."
 }

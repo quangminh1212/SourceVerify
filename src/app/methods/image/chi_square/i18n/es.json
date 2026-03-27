@@ -1,22 +1,22 @@
 {
-    "useCase": "Detecting hidden information, compression irregularities, and generado por IA JPEG anomalías",
-    "mechanism": "Analiza the distribución of quantized DCT coeficientes using chi-square statistics. Expected distribucións follow predictable patrones for natural images; deviations indicate manipulación, AI generation, or hidden data embedding.",
-    "accuracy": "Medium - 72-83% for detecting compression anomalías and AI artefactos",
-    "name": "Analisis Chi-cuadrado",
-    "source": "Westfeld (2000)",
-    "algorithm": "Prueba Chi-cuadrado de coeficientes DCT",
-    "parameters": "Tamaño de bloque: 8x8 DCT, Test: chi-square goodness-of-fit, Significance: p < 0.05, Coefficients: AC components",
-    "description": "Aplica chi-square estadístico test to DCT coeficiente distribucións para detectar steganographic embedding and compression anomalías common in AI outputs.",
+    "name": "Análisis Chi-Cuadrado de Coeficientes DCT",
+    "description": "Aplica la prueba estadística de bondad de ajuste Chi-Cuadrado a las distribuciones de coeficientes de la Transformada del Coseno Discreta (DCT). En fotografías naturales, la distribución de los coeficientes AC sigue un patrón laplaciano que decae suavemente. La IA generativa a menudo crea anomalías de frecuencia que se desvían de las tablas de cuantización estándar de las cámaras.",
+    "algorithm": "Prueba de Bondad de Ajuste en Coeficientes DCT AC",
+    "mechanism": "El algoritmo calcula el histograma de los coeficientes DCT AC en bloques de 8x8 píxeles y aplica una prueba de Chi-Cuadrado frente a la disminución logarítmica natural teórica (distribución Laplaciana). En un JPEG auténtico de cámara, los coeficientes caen en bins de cuantización predefinidos. La IA, sin embargo, genera distribuciones 'imposibles': bins saltados, agrupaciones antinaturales o perturbaciones esteganográficas que fallan la hipótesis nula del Chi-Cuadrado.",
+    "parameters": "Bloque: 8x8 DCT, Tipo de Prueba: Chi-Cuadrado de Bondad de Ajuste, Coeficientes: Componentes AC, Significancia: p < 0.05",
+    "accuracy": "Moderada (72-83%) - Excelente para identificar anomalías algorítmicas, pero limitada a imágenes JPEG y susceptible a la recompresión.",
+    "source": "Westfeld & Pfitzmann (2000) / Fridrich et al. (2003)",
+    "useCase": "Detectar huellas de compresión antinaturales causadas por IA generativa, identificar datos ocultos esteganográficos y verificar la autenticidad fotográfica en la estructura de un JPEG.",
     "references": [
         {
-            "url": "https://doi.org/10.1007/3-540-44499-8_5",
-            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
+            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems.",
+            "url": "https://doi.org/10.1007/3-540-44499-8_5"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-540-39929-3_7",
-            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
+            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images.",
+            "url": "https://doi.org/10.1007/978-3-540-39929-3_7"
         }
     ],
-    "strengths": "• Well-established estadístico framework\n• Detecta both steganography and AI artefactos\n• Fast computation on DCT coeficientes\n• Quantifiable p-value for confidence",
-    "limitations": "• Only works on JPEG compressed images\n• Sensitive to image quality and size\n• High compression can mask anomalías\n• Limited effectiveness on PNG/WebP formats"
+    "strengths": "• Marco estadístico riguroso y matemáticamente probado (Chi-cuadrado).\n• Procesamiento extremadamente rápido sobre coeficientes cuantizados sin necesidad de descomprimir.\n• Proporciona un p-value cuantificable que representa la confianza de la anomalía.\n• Especialmente efectivo para observar desviaciones de escaladores de IA y marcas de agua algorítmicas.",
+    "limitations": "• Inútil en formatos sin pérdida (PNG, RAW) o en aquellos que no usan bloque DCT.\n• Extremadamente sensible a la compresión severa (redes sociales) que alisa todas las discrepancias.\n• Puede emitir falsos positivos en ediciones manuales de Photoshop debido a un realineamiento estricto de la cuadrícula DCT."
 }

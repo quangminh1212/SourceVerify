@@ -1,18 +1,18 @@
 {
-    "name": "Análisis de Cuadrícula de Artefactos de Bloqueo",
-    "description": "Analiza JPEG block boundary artefactos para detectar inconsistent compression grids indicando alteración.",
-    "algorithm": "Block Artifact Grid (BAG) Extraction and Consistency Analysis",
-    "mechanism": "compresión JPEG creates an 8×8 block grid. When a region is spliced from a differently compressed source, the block grid alignment becomes inconsistent.",
-    "parameters": "Tamaño de bloque: 8×8, Grid detección: cross-boundary gradiente, Alignment: phase análisis, Map: block visibility",
-    "accuracy": "Alta — 80-92%",
-    "source": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-    "useCase": "Detecting spliced regions by finding compresión JPEG grid inconsistencias",
+    "name": "Análisis de Cuadrícula de Artefactos de Bloque",
+    "description": "Analiza los artefactos localizados en los límites de los bloques JPEG para detectar cuadrículas de compresión inconsistentes que indican manipulaciones en la imagen. Cuando se empalman regiones de fuentes con diferente compresión, la alineación de su macrobloque subyacente de 8x8 no logra sincronizarse.",
+    "algorithm": "Extracción de la Cuadrícula de Artefactos de Bloque (BAG) y Análisis de Consistencia de Fase",
+    "mechanism": "La compresión JPEG segmenta inherentemente una imagen en bloques estructurales de píxeles de 8x8, creando firmas de fase distintas en sus límites debido a la cuantificación. El algoritmo mide los gradientes a través del límite para mapear la visibilidad de los bloques. En una imagen prístina, esta cuadrícula es continua y periódica. El empalme o la reparación generativa localizada rompen esta alineación periódica, causando cambios de fase detectables o desvanecimiento localizado en la BAG.",
+    "parameters": "Tamaño de Cuadrícula: Macrobloques DCT 8x8, Detección de Cuadrícula: Mapa de gradiente cruzado, Medida Espacial: Alineación de fase / Periodicidad de cuadrícula",
+    "accuracy": "Alta (80-92%) - Excepcionalmente precisa para localizar empalmes a nivel de bloques y falsificaciones de copiar-y-mover (copy-move) dentro de fuentes muy comprimidas.",
+    "source": "Fan & de Queiroz (2003) sobre Historia de Compresión de Bitmap y detección de BAG",
+    "useCase": "Localización de zonas manipuladas mapeando las inconsistencias de la cuadrícula de compresión JPEG, identificando empalmes compuestos y detectando superposiciones sintéticas sin comprensión.",
     "references": [
         {
-            "title": "Fan, Z. & de Queiroz, R. (2003) — Identification of Bitmap Compression History, IEEE TIP",
-            "url": ""
+            "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2003.812757"
         }
     ],
-    "strengths": "• Directly linked to compresión JPEG\\n• Can localize tampered regions\\n• Well-understood theoretical basis\\n• Effective on single-compressed images",
-    "limitations": "• Solo funciona con imágenes JPEG\\n• Double compression can mask artefactos\\n• Requires sufficient image quality\\n• May miss small tampered regions"
+    "strengths": "• Profundamente arraigada en la estructura fundamental del estándar global de compresión JPEG.\n• Capaz de proporcionar una localización espacial fina de las regiones que han sido manipuladas o falsificadas.\n• Ofrece un gran grado de interpretabilidad matemática sin necesidad de los modelos IA complejos.\n• Resulta sumamente eficaz contra falsificaciones compuestas que combinan una pluralidad de historial de compresión JPEG.",
+    "limitations": "• Ineficaz en formatos analíticos puramente sin pérdidas tales como PNG o RAW, o en datos absolutamente no comprimidos.\n• La compresión JPEG total secundaria muy intensa puede ocultar los desplazamientos o cambios de fase en la rejilla original.\n• Campos e impactos de manipulación realmente minúsculos (aquellos considerablemente menores que el tamaño de macrobloque base de 8x8) podrían sortear y evitar la detección del sistema.\n• El algoritmo suele experimentar deficiencias en las zonas exageradamente cargadas de mucho ruido u otros parches de gran o pesada textura que interfieren en los gradientes."
 }

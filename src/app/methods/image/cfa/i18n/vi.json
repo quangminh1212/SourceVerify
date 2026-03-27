@@ -1,12 +1,12 @@
 {
-    "name": "Mẫu cảm biến CFA",
-    "description": "Tìm kiếm lỗi demosaicing của Bộ lọc Bayer từ cảm biến thật. Dấu vân tay này là chỉ báo mạnh của ảnh chụp thật và không có trong ảnh AI.",
-    "algorithm": "Phát hiện dấu vết Demosaicing bộ lọc màu CFA (Bayer)",
-    "mechanism": "Phát hiện mẫu tương quan chu kỳ từ demosaicing CFA Bayer trong camera thật. Các dấu vết này vắng mặt trong ảnh AI.",
-    "parameters": "Phân tích: tự tương quan 2D kênh xanh, Mẫu kỳ vọng: chu kỳ 2x2",
-    "accuracy": "Cao - 80-92% cho ảnh từ cảm biến camera đã biết",
-    "source": "Popescu & Farid (2005) - ACM Workshop on Multimedia and Security",
-    "useCase": "Xác minh nguồn gốc camera xác thực qua hiện vật demosaicing CFA",
+    "name": "Nhận Diện Dấu Vết Mảng Lọc Màu (CFA)",
+    "description": "Truy tìm các dị thường bộ lọc mảng màu Bayer phát sinh do thuật toán gỡ rối màu (demosaicing), vốn là đặc tính cốt lõi của mọi cảm biến máy ảnh vật lý thật. Dấu vân tay kỹ thuật số này là bằng chứng thép nhằm xác thực nhiếp ảnh phần cứng và tuyệt nhiên không hề tồn tại trong các bức ảnh cấy ghép hoặc được AI tổng hợp.",
+    "algorithm": "Xác Minh Vết Tích Nội Suy Demosaicing Dựa Trên Mảng Lọc Màu (Bayer CFA)",
+    "mechanism": "Thuật toán tính toán độ tự tương quan định kỳ 2D của các kênh màu hình ảnh (đặc biệt là kênh xanh lá). Ở máy ảnh kỹ thuật số phần cứng đời thực, ánh sáng buộc phải đi qua bầu lọc mảng Bayer vật lý, dẫn tới việc chỉ có 1 giá trị màu được đi qua mỗi pixel cảm quang. Các màu vắng mặt khác buộc phải được toán học nội suy ('demosaicing'), để lại sau lưng một vết nội suy ma trận tuần hoàn 2x2. Vì nguyên lý AI tạo sinh (Generative AI) là phun thẳng các điểm ảnh RGB toàn diện từ không gian ẩn toán học (latent space) mà không hề có định kiến ánh sáng qua màng lọc cảm biến ngoài đời, ảnh AI trơ trọi hoàn toàn không có loại dâu ấn phần cứng cơ bản này.",
+    "parameters": "Phương thức: Độ tự tương quan quang phổ 2D, Đích tìm kiếm: Ma trận phương sai tuần hoàn 2x2, Dung sai: Lập bản đồ xác suất",
+    "accuracy": "Cao (80-92%) - Là thước đo cực kỳ vững trãi để định đoạt nguồn gốc ảnh thật ngoài đời, mặc dù sẽ bị xói mòn nếu dính thuật toán nén từ mạng xã hội.",
+    "source": "Popescu and Farid (2005) - Hình Sự Quang Trắc Mảng Bộ Lọc Màu",
+    "useCase": "Bảo chứng nguồn gốc phần cứng đích thực sinh ra tấm ảnh chụp, vạch trần phân cảnh quang học dựng bằng AI, và tóm gọn các điểm ảnh cấy ghép (photoshop) rẽ nhánh đột ngột làm gãy đứt mạng lưới mẫu CFA vốn dĩ có quy luật.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TSP.2005.855406",
@@ -17,6 +17,6 @@
             "title": "Dirik, A.E. & Memon, N. (2009). Image tamper detection based on demosaicing artifacts. IEEE ICIP."
         }
     ],
-    "strengths": "• Chỉ báo mạnh về nguồn gốc camera thật\n• Dựa trên phần cứng cảm biến vật lý\n• AI khó mô phỏng mẫu CFA\n• Tỷ lệ dương tính giả rất thấp trên ảnh camera",
-    "limitations": "• Chỉ phát hiện sự có/vắng mặt của mẫu CFA\n• Một số camera áp dụng demosaicing nặng che mẫu\n• Thay đổi kích thước hoặc xử lý nặng phá hủy dấu vết CFA\n• Không nhận dạng được model camera cụ thể"
+    "strengths": "• Chập rễ bền chặt vào yếu tố bất di bất dịch của quy luật vật lý quang học và cơ chế sản xuất chất bán dẫn điện tử.\n• Phức tạp tới độ bất khả thi về mặt tài nguyên điện toán nếu các công cụ bot AI có nhã hứng chủ đích làm giả một kết cấu lưới vi điểm vô hình này khắp toàn ảnh.\n• Trả về tỷ lệ dương tính giả (False Positive) cực thấp và hoàn hảo mỗi khi soi rọi ảnh gốc máy thật không chỉnh sửa hoen ố.\n• Dư sức chẩn đoán vị trí bị đắp nối cắt ghép giả mạo (splicing) do thao tác Photoshop đã nhẫn tâm đánh đứt chuỗi liền mạch vốn kết dính chặt chẽ của dải ma trận CFA nguyên bản.",
+    "limitations": "• Nhược điểm chí tử là chỉ đáp ứng được bài toán tồn tại/hoặc vắng mặt CFA chung chung; bất lực trong việc chỉ mặt điểm tên chính danh thiết bị máy ảnh nào.\n• Khổ sai thay, cơn lốc nhiếp ảnh tính toán thuật toán từ Smartphone hiện đại (HDR trộn phơi sáng, Cảnh đêm Night Mode đa khung hình) lại vô tình chà đạp tan nát mẫu CFA siêu nhạy cảm và gột rửa mất sạch bằng chứng của chiếc camera sinh ra nó.\n• Việc cưỡng chế phóng to/thu nhỏ hình dáng thô bạo hoặc ép khô JPEG máu lạnh sẽ quét sạch khỏi mặt đất tung tích vốn đã vô cùng mong manh vi mô tinh vi này.\n• Cho ra thông số sai lệch nếu ảnh thật được tác nghiệp từ các loại thiết bị sở hữu sensor lập dị không chơi cùng hệ sinh thái màng lọc Array Bayer (Ví dụ Sensor khủng Foveon X3 hoặc các dòng Leica đơn sắc monochrome chân chính)."
 }

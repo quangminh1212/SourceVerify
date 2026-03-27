@@ -1,22 +1,22 @@
 {
-    "useCase": "Detecting hidden information, compression irregularities, and AI生成的 JPEG 异常",
-    "mechanism": "分析 the 分布 of quantized DCT 系数 using chi-square statistics. Expected 分布s follow predictable 模式 for natural images; deviations indicate 篡改, AI generation, or hidden data embedding.",
-    "accuracy": "Medium - 72-83% for detecting compression 异常 and AI 伪影",
-    "name": "卡方分析",
-    "source": "Westfeld & Pfitzmann (2000)",
-    "algorithm": "DCT系数卡方检验",
-    "parameters": "块大小: 8x8 DCT, Test: chi-square goodness-of-fit, Significance: p < 0.05, Coefficients: AC components",
-    "description": "应用 chi-square 统计 test to DCT 系数 分布s 以检测 steganographic embedding and compression 异常 common in AI outputs.",
+    "name": "卡方离散余弦变换(DCT)系数分析",
+    "description": "对块级离散余弦变换(DCT)系数分布进行卡方统计检验。在自然照片中，AC系数的统计分布遵循拉普拉斯衰减模式。而AI生成的图像往往会产生偏离标准相机量化表的频域异常。",
+    "algorithm": "基于DCT AC系数的统计拟合优度检验",
+    "mechanism": "计算8x8像素块的DCT AC系数直方图，然后应用卡方检验将观测分布与理论衰减曲线进行对比。相机生成的JPEG照片其系数会自然落入量化箱内；而AI生成的图像会在潜空间生成像素并施加平滑，从而产生“不可能的”系数分布（如跳箱、不自然的聚集或类似隐写术的扰动），这意味着它将通不过卡方的零假设检验。",
+    "parameters": "操作块: 8x8 DCT, 检验方法: 卡方拟合优度, 目标系数: AC分量, 显著性: p < 0.05",
+    "accuracy": "中等 (72-83%) - 在捕获纯算法生成的异常结构方面表现出色，但高度依赖JPEG格式。",
+    "source": "Westfeld & Pfitzmann (2000) / Fridrich 等 (2003)",
+    "useCase": "专治并揭露那些以不自然压缩足迹展现的AI生成异常，查证JPEG图像的网络结构是否符合光学镜头拍摄的自然起源。",
     "references": [
         {
-            "url": "https://doi.org/10.1007/3-540-44499-8_5",
-            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems. Information Hiding."
+            "title": "Westfeld, A. & Pfitzmann, A. (2000). Attacks on Steganographic Systems.",
+            "url": "https://doi.org/10.1007/3-540-44499-8_5"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-540-39929-3_7",
-            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images. Information Hiding."
+            "title": "Fridrich, J. et al. (2003). Detection of Double-Compression in JPEG Images.",
+            "url": "https://doi.org/10.1007/978-3-540-39929-3_7"
         }
     ],
-    "strengths": "• Well-established 统计 framework\n• 检测 both steganography and AI 伪影\n• Fast computation on DCT 系数\n• Quantifiable p-value for confidence",
-    "limitations": "• Only works on JPEG compressed images\n• Sensitive to image quality and size\n• High compression can mask 异常\n• Limited effectiveness on PNG/WebP formats"
+    "strengths": "• 建立在数学验证无懈可击的高级统计学框架上。\n• 直接在量子化系数层级进行计算，无需解压图像，速度极快。\n• 提供量化的p-value指标用于数学确权。\n• 对抗AI图像放大器或隐蔽算法水印造成的结构偏差时非常有效。",
+    "limitations": "• 仅对使用block-DCT映射的JPEG有效，对无损图片(PNG, RAW)完全无效。\n• 对极端画面压缩异常敏感；社交平台的严重重压缩会抹平天然和人工的异常。\n• 对于重新对齐了DCT网格的手工Photoshop编辑也会产生误报。"
 }

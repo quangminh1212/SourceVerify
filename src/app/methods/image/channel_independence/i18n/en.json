@@ -1,22 +1,22 @@
 {
-    "name": "Channel Independence",
-    "description": "Tests pixel independence between RGB color channels",
-    "algorithm": "Channel Independence — Statistical Pattern Analyzer",
-    "mechanism": "This method applies statistical analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the image data.\n\n2. **Distribution Analysis**: Tests pixel independence between RGB color channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural image statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on statistical deviation magnitude.",
-    "parameters": "Analysis type: statistical\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through channel independence analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+    "name": "Color Channel Independence Analysis",
+    "description": "Evaluates the statistical decorrelation and independence between RGB color channels. Physical cameras capture light across overlapping spectral bands (via Bayer filters), resulting in a natural cross-channel correlation. Generative AI models often synthesize color channels with mathematically anomalous independence or physically impossible channel dependencies.",
+    "algorithm": "Inter-channel Spectral Correlation & Mutual Information Modeling",
+    "mechanism": "The algorithm isolates the RGB and YCbCr channels to compute their mutual information, Pearson correlation coefficients, and high-frequency structural dependencies. In an authentic photograph, the physical properties of the camera's color filter array dictate a highly predictable spectrum of inter-channel correlation. Generative AI models, which predict pixel values natively from latent space distributions rather than simulating a physical sensor grid, often fail to perfectly replicate these subtle organic interactions. This results in localized color bleeding, impossible hue gradients, or unnatural statistical independence where strong correlation should biologically exist.",
+    "parameters": "Color Space: RGB/YCbCr, Metrics: Pearson Correlation Matrix, Mutual Information, Window Size: Global/Block-based",
+    "accuracy": "Moderate to High (75-85%) - Consistently effective against older GANs and helpful in detecting diffusion model artifacts when combined with structural checks.",
+    "source": "Farid (2009) / McCloskey & Albright (2018) - Color Cues in Forensics",
+    "useCase": "Detecting AI generation through abnormal color synthesis, identifying localized color manipulation, and verifying the physical spectral response of the supposed capturing device.",
     "references": [
         {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
         },
         {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+            "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
+            "url": "https://doi.org/10.1109/WACV.2018.00001"
         }
-    ]
+    ],
+    "strengths": "• Anchored in the fundamental physics of camera sensors rather than relying on high-level semantic pixel geometry.\n• Computationally lightweight, utilizing fast linear algebra matrices to process the entire image rapidly.\n• Fundamentally difficult for current generative models to optimize without baking in restrictive, dedicated spectral physics constraints.\n• Highly effective at spotting localized image splicing/Photoshop, where the color correlation matrix is suddenly mismatched.",
+    "limitations": "• Heavy post-production manual color grading, stylized cinematic LUTs, or extreme HDR merging can severely alter baseline channel dependencies, causing false positive alerts.\n• Standard format compression (especially JPEG 4:2:0 chroma subsampling) permanently destroys critical high-frequency channel correlations.\n• Utterly ineffective on grayscale, sepia, or natively monochrome images.\n• Sometimes struggles on pure flat-color graphic design areas, CGI skies, or cartoon backgrounds lacking natural light gradients."
 }

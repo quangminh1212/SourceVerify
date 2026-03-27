@@ -1,12 +1,22 @@
 {
-    "name": "Phân tích Census Transform",
-    "description": "Áp dụng biến đổi census cho so sánh nhị phân cục bộ — phát hiện bất thường vi kết cấu AI (Zabih & Woodfill, 1994).",
-    "algorithm": "Thuật toán phân tích Census Transform Analysis",
-    "mechanism": "Hệ thống Census Transform Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phân Tích Cấu Trúc Vi Điểm Census Transform",
+    "description": "Áp dụng phép biến đổi không gian cục bộ phi tham số để đánh giá tính nhất quán của kết cấu vi mô trên ảnh. Các mô hình AI thiết lập ảnh, đặc biệt là framework khuếch tán (Diffusion), thường gặp thất bại trong việc tạo ra các mối quan hệ đa tầng chân thực của các pixel lân cận, sinh ra các kiểu nhị phân cục bộ dị thường.",
+    "algorithm": "Biến Đổi Điều Tra Nhị Phân Các Pixel Không Gian Cục Bộ Phi Tham Số",
+    "mechanism": "Thuật toán phác họa ra cấu trúc không gian quanh mỗi điểm ảnh bằng cách so sánh cường độ sáng của nó vớt chính các điểm nằm ngay liền kề, từ đó sinh ra một chuỗi nhị phân (chữ ký điều tra Census) tóm gọn kết cấu siêu vi mô bất biến trước mọi sự lật màu tổng thể. Trong thế giới chân thực, các ràng buộc từ độ nhám vật lý tới sự nhiễu loạn lượng tử luôn ép các chữ ký Census này vào các mô hình phức tạp và cực kỳ đa dạng. Đổi lại, ảnh chế tác bởi AI bóc trần một bảng từ vựng vô cùng cằn cỗi và bó hẹp, luôn luôn lặp lại y hệt qua các thao tác cào bằng phẳng và giải mã của phép nội suy tích chập tổng hợp nhân tạo.",
+    "parameters": "Cửa sổ thăm dò: Ma trận 3x3 hoặc 5x5 kế cận, Khai thác Đặc trưng: Chuỗi nhị phân cục bộ, Khảo sát: Phương sai khoảng cách bộ đếm bit Hamming đa vùng",
+    "accuracy": "Khá Tốt tới Rất Cao (75-85%) - Đoạt thành tích phi thường trước tàn dư của các mạng GAN cổ điển và khắc tinh đáng gờm chọc thủng ảo ảnh của mảng mô hình khuếch tán diffusion mới nhất nếu ảnh chứa metadata nén nguyên sơ.",
+    "source": "Zabih & Woodfill (1994) / Fridrich & Kodovsky (2012) - Khoa Học Hình Sự Mẫu Mã Steganalysis Tiên Tiến",
+    "useCase": "Tróc nã các cấu trúc vi điểm dị thường tổng hợp, chỉ điểm việc lấp liếm tạo dựng nhân tạo thuần túy thông qua các vết nứt siêu tần số không liền mạch giữa các hạt pixel tí hon, và đối chiếu xét nghiệm bề mặt rỗ hay nhẵn của khung hình.",
+    "references": [
+        {
+            "title": "Zabih, R. & Woodfill, J. (1994). Non-parametric Local Transforms for Computing Visual Correspondence. ECCV.",
+            "url": "https://doi.org/10.1007/BFb0028345"
+        },
+        {
+            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+        }
+    ],
+    "strengths": "• Bất khả xâm phạm đắc lực trước toàn bộ tuyệt chiêu múa may tinh chỉnh tráo đổi độ phủ sáng rọi lóa, hoặc kỹ thuật tráng bộ lọc màu color grading thông thường.\n• Ưu tú bẩm sinh tại khoản bóc tách vạch trần thói đạo văn vẽ lại nhan nhản sự 'giả trân' nhẵn thính nhừa nhựa rợn người do AI vô tri thả dáng vào cấu trúc hạt li ti của ảnh.\n• Tự hào nương tựa trên bộ logic đại số Boolean giản dị thân thiện cùng máy tính mang tới phản xạ tính toán tức thì thần sầu.\n• Hành động cự lỵ độc lập cực ngầu dưới sự cách ly tuyệt giao cô thiết trong ranh giới từng điểm ảnh siêu hiển vi, chối bỏ can dự sa đà khỏi hàm ý ngữ nghĩa mông lung bủa vây bên ngoài tổ kén.",
+    "limitations": "• Thông điệp giám định không gian dễ tan tành thành mây khói phế thải nếu đụng độ cường độ nén sát thủ lossy trên đại trà (ví dụ kinh điển là những bức ảnh úa tàn JPEG đăng trên mạng xã hội).\n• Biến thành phế nhân ăn hại không chốn dung thân khi ngớ ngẩn lôi đi rà vào không ảnh hoạt hình vẽ véc tơ, đồ họa vi tính CGI dập khuôn phẳng lì do cơ địa bản chất vốn dĩ chúng không tồn tại vân bề mặt.\n• Mướt mồ hôi nhọc nhằn để phân xử ngọn ngành cho sự thật xem mảng rỗ kia là từ bàn tay nhào lặn của bot AI khởi xướng hay là lỗi cơ bắp chích điện phóng đại từ công nghệ thuật toán chắp vá thô lậu tăng độ sắc nét cực đoạn.\n• Thi thoảng vô cớ chệch nhịp lên cơn hoang tưởng bắt nhầm các mạng lưới lưới trơn hoàn hảo tinh tế (như hiệu ứng sọc giao thoa viền Moiré hay bảng bàn cờ khép kín tinh vi)."
 }

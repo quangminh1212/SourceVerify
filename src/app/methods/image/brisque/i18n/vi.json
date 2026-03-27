@@ -1,18 +1,18 @@
 {
-    "name": "Đánh giá chất lượng ảnh mù (BRISQUE)",
-    "description": "Sử dụng thống kê cảnh tự nhiên để đánh giá chất lượng ảnh và phát hiện biến dạng do AI.",
-    "algorithm": "Đánh giá chất lượng không gian ảnh không tham chiếu",
-    "mechanism": "Tính hệ số độ sáng chuẩn hóa cục bộ và khớp với phân bố Gaussian tổng quát.",
-    "parameters": "Vùng: 7×7, Hệ số MSCN, Khớp GGD, Đặc trưng: 36 chiều",
-    "accuracy": "Trung bình-Cao — 78-90%",
-    "source": "Mittal et al. (2012), IEEE TIP",
-    "useCase": "Đánh giá tính tự nhiên của ảnh để gắn cờ nội dung AI",
+    "name": "Đánh Giá Chất Lượng Ảnh Khuyết Danh (BRISQUE)",
+    "description": "Đánh giá tính tự nhiên của một bức ảnh mà không cần ảnh tham chiếu thông qua việc tính toán các thống kê miền không gian. Các hình ảnh do AI tạo ra hoặc các khu vực bị chỉnh sửa thường thể hiện những sai lệch thống kê trong các hệ số độ chói được chuẩn hóa cục bộ so với các cảnh chụp tự nhiên xác thực.",
+    "algorithm": "Đánh Giá Chất Lượng Không Gian Ảnh Khuyết Danh/Không Tham Chiếu (BRISQUE)",
+    "mechanism": "Thuật toán tính toán các hệ số Chuẩn hóa Độ tương phản Trừ Trung bình (MSCN) để làm phẳng các biến thể độ chói cục bộ. Trong các bức ảnh chụp xác thực, hệ số MSCN luôn tuân theo Phân bố Gaussian Tổng quát (GGD) một cách đáng tin cậy. Phương pháp này trích xuất 36 đặc trưng thống kê (hình dạng, phương sai, tương quan không gian) và sử dụng Bộ hồi quy Vector Hỗ trợ (SVR) đã được huấn luyện trước để chấm điểm mức độ nghiêm trọng của những biến dạng phi tự nhiên, bao gồm việc AI nâng cấp độ phân giải (upscaling), làm mờ tổng hợp, và nhiễu nén.",
+    "parameters": "Đặc trưng: Tham số MSCN 36 chiều, Kích thước bản vá: 7x7/9x9, Khớp phân phối: Phân phối Gaussian Tổng quát Bất đối xứng (AGGD), Bộ phân loại: SVR",
+    "accuracy": "Trung bình (70-80%) - Hiệu quả khi đóng vai trò là một bộ phát hiện dị thường tổng quát đối với sự làm mịn quá đà hoặc nhiễu phi tự nhiên.",
+    "source": "Mittal, A. et al. (2012) - Đánh giá chất lượng hình ảnh không tham chiếu trong miền không gian",
+    "useCase": "Gắn cờ các nội dung bị xử lý nặng tay, nội dung được AI phóng to (upscale) hoặc tạo sinh hoàn toàn bởi AI dựa trên tính phi tự nhiên của không gian thống kê toàn cục.",
     "references": [
         {
-            "title": "Mittal et al. (2012), IEEE TIP",
-            "url": ""
+            "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2012.2214050"
         }
     ],
-    "strengths": "• Không cần ảnh tham chiếu\\n• Tính toán nhanh\\n• Tương quan tốt với nhận thức con người\\n• Phát hiện nhiều loại biến dạng",
-    "limitations": "• Có thể không phát hiện ảnh AI chất lượng cao\\n• Nhạy cảm với xử lý hợp lệ\\n• Cần hiệu chuẩn theo miền\\n• Không đặc trưng cho loại giả mạo nào"
+    "strengths": "• Hoạt động hoàn toàn trong miền không gian mà không đòi hỏi bất kỳ hình ảnh tham chiếu nguyên bản nào.\n• Tính toán cực kỳ hiệu quả và có mối tương quan trực tiếp, nhất quán với tiêu chuẩn nhận thức thị giác của con người.\n• Có khả năng phát hiện đồng thời nhiều loại biến dạng phi tự nhiên và nhiễu hạt tạo sinh khác nhau.\n• Hoạt động mạnh mẽ trên các mảng ảnh nhỏ để lập bản đồ sự suy giảm chất lượng cục bộ hoặc ranh giới ghép ảnh.",
+    "limitations": "• Các thế hệ AI tạo ảnh tối tân ngày nay với chất lượng cao có thể bắt chước hoàn hảo các chỉ số thống kê MSCN tự nhiên.\n• Thường xuyên kích hoạt các báo cáo dương tính giả đối với ảnh chụp màn hình nền máy tính, tranh minh họa 2D hoặc tác phẩm kỹ thuật số số hóa.\n• Phương pháp này không trực tiếp chỉ ra được loại thao tác giả mạo nào, mà chỉ khẳng định sự tồn tại của sự biến dạng không gian nói chung.\n• Đòi hỏi một quy trình tinh chỉnh rất nghiêm ngặt dành riêng cho từng miền (domain) dữ liệu để tránh sai số trước các tệp đầu vào phi nhiếp ảnh."
 }

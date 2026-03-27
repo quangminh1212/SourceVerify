@@ -1,18 +1,22 @@
 {
-    "name": "Camera Model Identification",
-    "description": "Identifies the source camera model through sensor noise patterns and processing pipeline fingerprints.",
-    "algorithm": "Sensor-Based Camera Source Identification via Processing Pipeline Analysis",
-    "mechanism": "Each camera model has a unique processing pipeline including CFA interpolation, white balancing, color correction, and JPEG compression. This method extracts features from these processing steps to identify the source camera.",
-    "parameters": "Features: color processing, CFA interpolation, JPEG tables, Classifier: SVM/RF, Training: per-model",
-    "accuracy": "High — 85-96%",
-    "source": "Lukas, J. et al. (2006) — Digital Camera Identification from Sensor Pattern Noise, IEEE TIFS",
-    "useCase": "Verifying the claimed source camera and detecting images from unknown or AI sources",
+    "name": "Camera Sensor PRNU Identification",
+    "description": "Identifies the source camera model or detects synthetic generation by analyzing the Photo-Response Non-Uniformity (PRNU) sensor noise pattern and hardware processing pipeline fingerprints.",
+    "algorithm": "Sensor PRNU Extraction and CFA Pattern Fingerprinting",
+    "mechanism": "The algorithm extracts the high-frequency residual signal containing the device's unique Photo-Response Non-Uniformity (PRNU) noise and traces of its Color Filter Array (CFA) interpolation pipeline. Authentic photographic images possess a consistent PRNU fingerprint tied to physical hardware silicon. AI-generated images lack this coherent physical signature, exhibiting either completely synthetic noise profiles, 'Frankenstein' amalgamations of multi-camera noise from training data, or physically impossible CFA demosaicing patterns.",
+    "parameters": "Features: PRNU Correlation, CFA Demosaicing Map, Classifier: Cross-Correlation Filter / SVM, Window: 128x128 patches",
+    "accuracy": "High (85-95%) - Extremely robust for identifying generic synthetic noise, though identifying the exact camera model requires a reference database.",
+    "source": "Lukas, J. et al. (2006) - Digital Camera Identification from Sensor Pattern Noise",
+    "useCase": "Verifying whether an image originated from real camera hardware, authenticating its claimed model, and exposing physically impossible sensor noise in AI generations.",
     "references": [
         {
             "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        },
+        {
+            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.916285"
         }
     ],
-    "strengths": "• High accuracy camera identification\\n• Based on physical sensor properties\\n• Difficult to spoof\\n• Works across camera brands",
-    "limitations": "• Requires reference images from known cameras\\n• Performance varies by camera model\\n• Social media compression reduces accuracy\\n• Cannot identify specific camera instance"
+    "strengths": "• Deeply anchored in physical semiconductor properties rather than semantic or visual content.\n• Extracted PRNU acts as an intrinsic digital fingerprint that is practically impossible for AI to synthetically forge.\n• Reliably distinguishes organic hardware sensor noise from the pseudo-random latent noise injected by diffusion models.\n• Functions independently from lighting conditions, subject matter, or localized scene context.",
+    "limitations": "• Verifying an exact camera model demands an extensive reference library of pristine flat-field images.\n• Substantially degraded by aggressive digital denoising filters, smartphone AI enhancement, or heavy JPEG quantization.\n• Cannot distinguish between different interchangeable lenses mounted on the same physical camera sensor body.\n• Scaling, rotation, or digital cropping inherently misaligns the PRNU map, disabling precise correlation."
 }

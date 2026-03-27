@@ -1,18 +1,18 @@
 {
-    "name": "Phân tích lưới hiện vật khối",
-    "description": "Phân tích hiện vật ranh giới khối JPEG để phát hiện lưới nén không nhất quán.",
-    "algorithm": "Trích xuất và phân tích nhất quán lưới hiện vật khối (BAG)",
-    "mechanism": "Nén JPEG tạo lưới khối 8×8. Khi vùng ghép từ nguồn nén khác, căn chỉnh lưới trở nên không nhất quán.",
-    "parameters": "Khối: 8×8, Phát hiện lưới: gradient xuyên biên, Căn chỉnh: phân tích pha",
-    "accuracy": "Cao — 80-92%",
-    "source": "Fan & de Queiroz (2003), IEEE TIP",
-    "useCase": "Phát hiện vùng ghép qua không nhất quán lưới nén JPEG",
+    "name": "Phân Tích Lưới Tạo Tác Khối",
+    "description": "Phân tích các tạo tác ranh giới khối JPEG cục bộ để phát hiện các lưới nén không nhất quán nhằm chỉ ra sự chỉnh sửa hình ảnh. Khi các vùng được ghép nối từ các nguồn nén khác nhau, sự sắp xếp lưới vĩ mô 8x8 cơ sở của chúng sẽ bị lệch pha.",
+    "algorithm": "Trích Xuất Lưới Tạo Tác Khối (BAG) và Phân Tích Tính Nhất Quán Pha",
+    "mechanism": "Quá trình nén JPEG vốn dĩ phân chia một hình ảnh thành các khối pixel 8x8 có cấu trúc, tạo ra các dấu hiệu pha riêng biệt tại các đường viền của chúng do quá trình lượng tử hóa. Thuật toán đo lường độ dốc (gradient) xuyên viền để lập bản đồ khả năng hiển thị của khối. Trong một ảnh nguyên bản, lưới này liên tục và có tính chu kỳ. Việc ghép nối hoặc inpainting bằng AI sẽ phá vỡ sự sắp xếp chu kỳ này, gây ra sự lệch pha hoặc sự mờ đi cục bộ có thể phát hiện được trong BAG.",
+    "parameters": "Kích thước lưới: Macroblock DCT 8x8, Phát hiện lưới: Biểu đồ gradient xuyên viền, Phép đo không gian: Tương quan pha / Tính chu kỳ lưới",
+    "accuracy": "Cao (80-92%) - Cực kỳ chuẩn xác trong việc định vị vùng ghép nối cấp độ khối và các thay đổi sao chép trong hình ảnh bị nén mạnh.",
+    "source": "Fan & de Queiroz (2003) về Lịch sử Nén Bitmap và Phát hiện BAG",
+    "useCase": "Định vị các vùng bị can thiệp bằng cách lập bản đồ sự không nhất quán của lưới nén JPEG, xác định khu vực ghép ảnh thành phần, và phát hiện các lớp phủ ảnh tổng hợp không nén.",
     "references": [
         {
-            "title": "Fan & de Queiroz (2003), IEEE TIP",
-            "url": ""
+            "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2003.812757"
         }
     ],
-    "strengths": "• Liên kết trực tiếp với nén JPEG\\n• Có thể định vị vùng bị sửa\\n• Nền tảng lý thuyết rõ ràng\\n• Hiệu quả trên ảnh nén đơn",
-    "limitations": "• Chỉ hoạt động trên ảnh JPEG\\n• Nén kép có thể che hiện vật\\n• Cần chất lượng ảnh đủ\\n• Có thể bỏ sót vùng sửa nhỏ"
+    "strengths": "• Bám sát hoàn toàn vào cấu trúc cơ bản của tiêu chuẩn nén ảnh JPEG toàn cầu.\n• Có khả năng cung cấp vị trí không gian với độ phân giải cao của các vùng bị chỉnh sửa.\n• Cung cấp mức độ diễn giải toán học cao mà không cần đến các mô hình AI phức tạp.\n• Có tính hiệu quả cao khi phân tích hiện tượng giả mạo tổng hợp kết hợp từ nhiều lịch sử nén khác nhau.",
+    "limitations": "• Hoàn toàn vô hiệu đối với các định dạng không mất dữ liệu tự nhiên (như PNG, RAW) hoặc dữ liệu thô.\n• Việc nén thứ cấp toàn cục quá mạnh có thể che giấu và chèn lấp những sai lệch pha ban đầu.\n• Các vùng chỉnh sửa quá nhỏ (hiện diện ở phạm vi nhỏ hơn một khối 8x8) có thể lọt lưới phân tích.\n• Gặp khó khăn trong các khu vực ảnh bị nhiễu hạt quá mức hoặc có kết cấu phức tạp, làm gián đoạn độ dốc đường viền."
 }

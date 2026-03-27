@@ -1,12 +1,22 @@
 {
-    "name": "Gradient độ sáng",
-    "description": "Phân tích mẫu gradient độ sáng",
-    "algorithm": "Thuật toán phân tích Gradient độ sáng",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu gradient độ sáng. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích gradient độ sáng. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Phân Tích Dải Chuyển Sáng (Brightness Gradient)",
+    "description": "Phân tích các bất thường về không gian trong dải chuyển đổi độ sáng (gradient) qua các bề mặt mịn màng. Các mô hình tạo sinh AI thường tạo ra những sự không nhất quán về chiếu sáng cục bộ, dẫn đến sự suy giảm ánh sáng phi thực tế hoặc các điểm chuyển giao độ sáng đột ngột vi phạm các ràng buộc vật lý về chiếu sáng.",
+    "algorithm": "Ánh Xạ Tính Nhất Quán Chiếu Sáng và Phương Sai Gradient Phi Tuyến",
+    "mechanism": "Thuật toán tính toán đạo hàm không gian bậc một và bậc hai của kênh độ chói trên hình ảnh để lập bản đồ các dải chuyển dộ sáng. Trong hình ảnh tự nhiên, sự chuyển tiếp độ chói trên các bề mặt nhẵn (như bức tường hoặc da người) tuân theo các đường cong tham số liên tục, dễ đoán định theo định luật bình phương nghịch đảo của ánh sáng. Hình ảnh tổng hợp bằng AI thường hiển thị các 'đứt gãy gradient' - những thay đổi đột ngột ở mức vi mô, dải màu bất thường, hoặc các vùng tối vật lý bất khả thi do sự xé nhỏ khung hình khi AI tạo ảnh cục bộ và thiếu hiểu biết về cảnh 3D trên diện rộng.",
+    "parameters": "Không gian màu: Độ chói (Kênh Y), Thang đo phân tích: Phương sai gradient bậc hai, Kiểm tra toàn cục: Hướng chiếu sáng",
+    "accuracy": "Trung bình (65-75%) - Hiệu quả nhất đối với ảnh chân dung, cảnh trong nhà hoặc các đối tượng được đánh sáng mềm trong studio.",
+    "source": "Johnson & Farid (2007) về Phát Phân Hiện Ảnh Giả mạo Ràng Buộc Chiếu Sáng",
+    "useCase": "Phát hiện sự suy giảm chiếu sáng tổng hợp, xác định tính phi vật lý của ánh sáng trong các tác phẩm do AI tạo ra và vạch trần các thao tác cắt ghép ảnh.",
+    "references": [
+        {
+            "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+        },
+        {
+            "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.903848"
+        }
+    ],
+    "strengths": "• Bám rất sâu vào nền tảng vật lý cơ bản về sự truyền ánh sáng và bức xạ trong thế giới thực.\n• Hiệu quả trong việc qua mặt các mô hình sinh ảnh tiên tiến, nơi mà nội dung ngữ nghĩa thoạt nhìn có vẻ hoàn hảo.\n• Phát hiện những điểm không nhất quán về ánh sáng rất khó hoặc không thể sửa bằng tay qua chỉnh sửa ảnh nghiệp dư.\n• Vẫn duy trì được sự đánh giá hiệu quả ngay cả trên hình ảnh nén của internet nếu dải gradient đủ rộng rãi.",
+    "limitations": "• Vô hiệu đối với những khung cảnh có kết cấu quá phức tạp (ví dụ: tán lá, đám đông) bị thiếu bề mặt nhẵn để làm tiêu chuẩn.\n• Rất dễ bị báo cáo dương tính giả trong các môi trường thật có ánh sáng cục bộ đa nguồn phức tạp (như sân khấu ca nhạc).\n• Hiện tượng tạo dải màu (banding) do nén JPEG quá mức hoặc chuyển đổi độ sâu 8-bit chuẩn có thể kích hoạt cảnh báo giả.\n• Đòi hỏi khả năng phân tích phân tách không gian sành sỏi và tính toán tốn kém hơn so với các kiểm tra tần số 1 lần quét."
 }

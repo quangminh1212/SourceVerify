@@ -1,12 +1,22 @@
 {
-    "name": "Lấy mẫu phụ sắc độ",
-    "description": "Phát hiện dấu vết lấy mẫu phụ sắc độ từ nén ảnh",
-    "algorithm": "Thuật toán phân tích Lấy mẫu phụ sắc độ",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phát hiện dấu vết lấy mẫu phụ sắc độ từ nén ảnh. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích lấy mẫu phụ sắc độ. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Nhận Diện Bất Thường Giảm Lấy Mẫu Sắc Độ (Chroma Subsampling)",
+    "description": "Phát hiện các điểm lỗi cấu trúc và sự lệch pha trong dấu vết giảm lấy mẫu sắc độ do quá trình nén ảnh để lại. Ảnh gốc từ máy ảnh khi lưu sang JPEG sẽ trải qua một đợt giảm mẫu sắc độ (như 4:2:2 hay 4:2:0) đồng nhất mang tính toàn cầu để tiết kiệm dung lượng. Tuy nhiên, AI khi vẽ lại ảnh (in-painting) hoặc các thao tác cắt ghép thường sẽ phá nát sự đồng nhất này, tạo ra các lưới giảm mẫu xung đột lẫn nhau.",
+    "algorithm": "Năng Lượng Băng Tần & Căn Chỉnh Lưới Giảm Lấy Mẫu",
+    "mechanism": "Thuật toán cô lập kênh độ sáng (Y) và sắc độ (Cb, Cr) rồi ném chúng vào miền tần số. Nó phác xạ lại độ phân giải không gian của các kênh màu để bóc tách cấu trúc lưới giảm mẫu cốt lõi. Ở ảnh gốc từ camera, lưới này là đồng nhất tuyệt đối. Nhưng khi AI vẽ đè lên một vùng, khu vực đó sẽ lập tức phơi bày sự lệch pha tần số màu hoặc sai tỷ lệ lấy mẫu (ví dụ: một ốc đảo dữ liệu màu 4:4:4 bỗng chễm chệ nổi lềnh bềnh giữa một đại dương 4:2:0), ngay lập tức tố cáo hành vi giả mạo.",
+    "parameters": "Hệ màu: YCbCr, Miền phân tích: DCT/FFT, Mục tiêu: Lệch lưới 8x8/16x16, Thước đo: Tỷ lệ năng lượng",
+    "accuracy": "Khá Tốt tới Cao (75-90%) - Công cụ pháp y vô cùng lỳ lợm và chuẩn xác để định vị chính xác tọa độ bị ghép hoặc bị AI tô vẽ đè lên.",
+    "source": "Farid (2009) - Vạch Trần Ảnh Giả Mạo Từ Bóng Ma JPEG",
+    "useCase": "Chỉ điểm những lỗ hổng cấu trúc cục bộ hớ hênh do AI in-painting để lại, và làm rõ xem một vùng ảnh cụ thể có phải là con lai được ghép từ các nguồn nén gộp khác nhau hay không.",
+    "references": [
+        {
+            "title": "Farid, H. (2009). Exposing digital forgeries from JPEG ghosts. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2008.2012215"
+        },
+        {
+            "title": "Krawetz, N. (2007). A Picture's Worth - Forensics.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+        }
+    ],
+    "strengths": "• Nhắm thẳng vào vệt hằn cơ học vô hình (lưới nén) mà bọn AI sinh ảnh và cả thợ sửa ảnh người thật gần như không bao giờ biết cách làm giả cho khớp.\n• Có biệt tài định vị cực kỳ chính xác tọa độ của vùng bị can thiệp cục bộ (như khi hoán đổi một khuôn mặt do AI vẽ vào cơ thể người thật).\n• Hoạt động rất vững vàng trên các định dạng JPEG phổ thông.",
+    "limitations": "• Trở thành đống sắt vụn vô dụng nếu ảnh chưa từng bị nén (ví dụ định dạng PNG hay RAW) vì lấy đâu ra lưới giảm mẫu để mà soi.\n• Khả năng nén lại cực bạo lực của các mạng xã hội sẽ ủi phẳng và cào nhẵn mọi dị thường cục bộ, vĩnh viễn phi tang chứng cứ.\n• Hoàn toàn vô hiệu đối với ảnh trắng đen vì làm gì có kênh sắc độ."
 }

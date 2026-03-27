@@ -1,18 +1,18 @@
 {
-    "name": "Detección de Simetría Bilateral",
-    "description": "Detecta unusually high bilateral symmetry en imágenes. generado por IA images often exhibit unnatural mirror symmetry that real scenes rarely have.",
-    "algorithm": "Horizontal/Vertical Mirror Correlation Analysis",
-    "mechanism": "Computes a nivel de píxel correlación entre left/right and top/bottom image halves. Unusually high symmetry scores suggest AI generation.",
-    "parameters": "Comparison: left-right flip correlación, Metric: normalized cross-correlación, Umbral: adaptativo",
-    "accuracy": "Baja-Moderada — 60-72%",
-    "source": "Loy & Eklundh (2006) — Detecting Symmetry and Symmetric Constellations of Features, ECCV",
-    "useCase": "Identifying perfection artefactos from symmetry-biased AI generation",
+    "name": "Análisis de Simetría Bilateral",
+    "description": "Detecta y cuantifica la simetría bilateral antinatural en las imágenes. Los modelos de generación de IA a menudo exhiben un sesgo inductivo hacia la simetría especular perfecta, produciendo una perfección estructural que es estadísticamente anormal en fotografías auténticas del mundo real.",
+    "algorithm": "Detección de Simetría Global por Correlación Cruzada Normalizada",
+    "mechanism": "Calcula la correlación de características estructurales y a nivel de píxeles entre mitades reflejadas geométricamente (izquierda/derecha, arriba/abajo) de una imagen. El algoritmo identifica constelaciones simétricas de características y calcula una puntuación de simetría global utilizando la Correlación Cruzada Normalizada (NCC). Las puntuaciones de correlación inusualmente altas indican sesgos de generación sintética o manipulaciones de clonación.",
+    "parameters": "Métrica de Comparación: Correlación Cruzada Normalizada (NCC), Extracción de Características: Puntos clave SIFT/SURF, Transformación: Reflejo Horizontal/Vertical",
+    "accuracy": "Moderada (65-75%) - Más efectiva al analizar escenas que naturalmente carecen de simetría geométrica perfecta (por ejemplo, rostros humanos, paisajes).",
+    "source": "Loy & Eklundh (2006) / Mader et al. (2017) sobre los sesgos de simetría sintética",
+    "useCase": "Identificación de artefactos de perfección estructural producidos comúnmente por modelos generativos y evaluación de la plausibilidad física de la escena.",
     "references": [
         {
             "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry and Symmetric Constellations of Features. ECCV.",
             "url": "https://doi.org/10.1007/11744047_38"
         }
     ],
-    "strengths": "• Simple and fast computation\\n• Captures a unique AI artefacto type\\n• Does not require training data\\n• Complementary to structural methods",
-    "limitations": "• Many real images have natural symmetry\\n• Low standalone precisión\\n• Easily defeated by asymmetric AI prompts\\n• Only detecta one specific artefacto type"
+    "strengths": "• Computacionalmente sencillo y rápido.\n• Captura un sesgo estructural fundamental inherente a muchas redes generativas.\n• Funciona sin necesidad de un entrenamiento grande y específico para conjuntos de datos.\n• Métrica complementaria efectiva al análisis de textura y frecuencia.",
+    "limitations": "• Genera falsos positivos en escenas auténticamente simétricas (p. ej., arquitectura, reflejos).\n• Baja confianza diagnóstica independiente si no existe un análisis del contexto de la imagen.\n• Puede eludirse fácilmente solicitando explícitamente composiciones asimétricas al modelo.\n• Altamente sensible a ligeras distorsiones de perspectiva o rotación del sujeto en imágenes auténticas."
 }

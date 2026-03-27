@@ -1,18 +1,18 @@
 {
-    "name": "双边对称性检测",
-    "description": "检测 unusually high bilateral symmetry图像中的. AI生成的 images often exhibit unnatural mirror symmetry that real scenes rarely have.",
-    "algorithm": "Horizontal/Vertical Mirror Correlation Analysis",
-    "mechanism": "Computes 像素级 相关性 之间 left/right and top/bottom image halves. Unusually high symmetry scores suggest AI generation.",
-    "parameters": "Comparison: left-right flip 相关性, Metric: normalized cross-相关性, 阈值: 自适应",
-    "accuracy": "低-中 — 60-72%",
-    "source": "Loy & Eklundh (2006) — Detecting Symmetry and Symmetric Constellations of Features, ECCV",
-    "useCase": "Identifying perfection 伪影 from symmetry-biased AI generation",
+    "name": "双边对称性分析",
+    "description": "检测并量化图像中不自然的双边对称性。AI 生成模型通常对完美的镜像对称性表现出归纳偏置，从而产生在真实世界真实照片中在统计上属于异常的结构完美性。",
+    "algorithm": "基于归一化互相关的全局对称性检测",
+    "mechanism": "计算图像在几何镜像对称的两半（左/右，上/下）之间的像素级和结构特征相关性。该算法识别特征的对称星座团，并使用归一化互相关 (NCC) 计算全局对称性得分。异常达到峰值的相关性得分表明存在合成生成偏置或克隆操作。",
+    "parameters": "比较指标：归一化互相关 (NCC)，特征提取：SIFT/SURF 关键点，变换：水平/垂直镜像",
+    "accuracy": "中等 (65-75%) - 在分析自然界中缺乏完美几何对称性的场景（例如人脸、风景）时最为有效。",
+    "source": "Loy & Eklundh (2006) / Mader et al. (2017) 关于合成对称性偏置的研究",
+    "useCase": "识别生成模型通常产生的结构完美性伪影，并评估场景的物理合理性。",
     "references": [
         {
             "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry and Symmetric Constellations of Features. ECCV.",
             "url": "https://doi.org/10.1007/11744047_38"
         }
     ],
-    "strengths": "• Simple and fast computation\\n• Captures a unique AI 伪影 type\\n• Does not require training data\\n• Complementary to structural methods",
-    "limitations": "• Many real images have natural symmetry\\n• Low standalone 准确度\\n• Easily defeated by asymmetric AI prompts\\n• Only 检测 one specific 伪影 type"
+    "strengths": "• 计算简单且快速。\n• 捕捉了许多生成网络固有的基本结构偏置。\n• 无需大量特定于数据集的训练即可运作。\n• 作为频率和纹理分析的有效补充指标。",
+    "limitations": "• 在真实对称场景（如建筑、倒影）中会产生误报。\n• 如果没有上下文分析，其独立诊断置信度较低。\n• 可通过向生成模型明确发出不对称构图的提示来轻易规避。\n• 对真实图像中的轻微透视失真或主体旋转高度敏感。"
 }

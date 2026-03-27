@@ -1,12 +1,12 @@
 {
-    "name": "CFA 패턴 탐지",
-    "description": "Searches for Bayer 컬러 필터 배열 demosaicing 아티팩트 left by real camera sensors. This fingerprint is a strong indicator of real photography and is absent in AI images.",
-    "algorithm": "컬러 필터 배열 (Bayer CFA) Demosaicing Trace Detection",
-    "mechanism": "감지합니다 periodic 상관관계 패턴 from Bayer CFA demosaicing in real cameras. These traces are absent in AI 생성 images.",
-    "parameters": "Analysis: 2D auto상관관계 of green channel, Expected 패턴: 2x2 periodic",
-    "accuracy": "높음 - 80-92% for images from known camera sensors",
-    "source": "Popescu and Farid (2005), ACM Workshop on Multimedia and Security",
-    "useCase": "Verifying authentic camera origin through CFA demosaicing 아티팩트",
+    "name": "CFA (컬러 필터 어레이) 패턴 감지",
+    "description": "실제 카메라 센서에 의해 본질적으로 남겨지는 구조적인 Bayer 컬러 필터 어레이(CFA) 디모자이킹 아티팩트를 찾아냅니다. 이 알고리즘적 지문은 물리적 광학과 실리콘을 통해 포착된 실제 사진의 가장 결정적인 및 지배적인 지표이며, 전적으로 AI에 의해 생성되거나 처음부터 합성된 이미지에는 태생적으로 존재하지 않습니다.",
+    "algorithm": "Bayer CFA 디모자이킹 흔적 및 보간 행렬(Interpolation Matrix) 검증",
+    "mechanism": "알고리즘은 이미지의 색상 채널(주로 녹색 채널)의 2차원(2D) 주기적 자기상관(autocorrelation)을 계산합니다. 실제 디지털 카메라에서 빛은 물리적인 베이어(Bayer) 필터 배열을 통과하므로, 하나의 센서 픽셀당 오직 하나의 절대적인 색상 값만 포착됩니다. 누락된 나머지 색상들은 수학적으로 보간(디모자이킹, 'demosaiced')되며, 이 과정은 전체 이미지에 걸쳐 뚜렷하고 측정 가능한 2x2 형태의 주기적인 보간 연산 흔적을 남깁니다. 생성형 AI 모델은 하드웨어 센서 그리드의 물리적 한계를 겪지 않고 잠재 수학적 공간(Latent space)에서 직접 완전한 형태의 RGB 픽셀을 한 번에 합성하므로 이러한 근본적인 하드웨어 지문이 원천적으로 결여되어 있습니다.",
+    "parameters": "분석 방법: RGB 채널의 2D 스펙트럼 자기상관, 예상 목표치: 2x2 주기적 분산 행렬, 허용 오차 매트릭스: 확률 매핑 기반",
+    "accuracy": "높음 (80-92%) - 본래의 정품 하드웨어에서 기원했는지를 판가름하는 데 유례없이 강력한 잣대지만, 극심한 소셜 미디어 포맷 압축을 거치면 그 정확도가 심하게 마모됩니다.",
+    "source": "Popescu and Farid (2005) - 측광학적(Photometric) CFA 포렌식 연구",
+    "useCase": "진짜 카메라 하드웨어의 출처를 검증하고, 순수 100% 분해된 AI 합성 장면을 폭로해 내며, 유기적인 CFA 패턴의 연속성이 벼락 맞은 듯 뚝 끊어지는 국부적인 이미지 조작(Splicing, 잘라 붙이기) 범죄 현장을 적발해 냅니다.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TSP.2005.855406",
@@ -17,6 +17,6 @@
             "title": "Dirik, A.E. & Memon, N. (2009). Image tamper detection based on demosaicing artifacts. IEEE ICIP."
         }
     ],
-    "strengths": "• Strong indicator of real camera origin\n• Based on physical sensor hardware\n• Difficult for AI to simulate CFA 패턴\n• Very low 오탐 rate on camera images",
-    "limitations": "• Only 감지 presence/absence of CFA 패턴\n• Some cameras apply heavy demosaicing that masks 패턴\n• Resizing or heavy processing destroys CFA traces\n• Cannot identify specific camera model"
+    "strengths": "• 영원불멸의 성질을 띠는 기초적인 물리적 광학과 반도체 센서 공정의 대자연 원리에 뼛속 깊이 닻을 내리고 있습니다.\n• AI 생성기가 전체 판면을 아우르며 CFA 패턴 형성을 의도적으로 흉내 내거나 기계적으로 완벽히 위조하는 것은 컴퓨팅 자원이나 구조적 연산 면에서 어불성설에 가깝습니다.\n• 어떠한 손상도 가해지지 않거나 부드럽게 후보정된 순수(Raw) 원본 카메라 이미지를 분석할 시 오탐지율(False positive)이 소름 돋을 정도로 낮습니다.\n• 포토샵 등에서 잘라 붙인 교묘한 합성 부위의 이질적인 CFA 격자 균열(Discontinuity) 지도를 그림으로써 조작이 어느 부위에서 벌어졌는지 확실히 색출할 수 있습니다.",
+    "limitations": "• 오로지 포괄적 일반론의 CFA 패턴 흔적 존재 유무만을 구별해주며, 이 결괏값만으로는 정확히 어느 기업의 어떤 기종(Camera Model)인지 짚어내지 못합니다.\n• 스마트폰 특유의 자의적 연산인 최신 컴퓨테이셔널 포토그래피 기능(다중 노출 합성 야간 모드, 무자비한 HDR)은 오리지널 CFA 패턴을 처참히 짓이기고 왜곡하여 지워버리는 끔찍한 파괴 효과를 낳습니다.\n• 광범위하고 극단적인 기하학적 사진 크기 조절, 잔혹성에 가까운 화소 축소(Downsampling) 및 거친 JPEG 압축은 이토록 연약하고 미세한 흔적들을 영구히 불태워 잿더미로 만듭니다.\n• 시중의 흔한 베이어(Bayer) 배열 방식을 차용하지 않고 자기만의 독자적 구조를 둔 희귀 특수 센서(예: Foveon X3 모델 또는 근본주의적 단색 컬러 Leica 흑백 전용 바디)와 만나면 무효 또는 기이한 결과를 내놓습니다."
 }

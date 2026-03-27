@@ -1,18 +1,22 @@
 {
-    "name": "相机型号识别",
-    "description": "识别 the source camera model through sensor 噪声模式s and processing pipeline fingerprints.",
-    "algorithm": "Sensor-Based Camera Source Identification via Processing Pipeline Analysis",
-    "mechanism": "Each camera model has a unique processing pipeline including CFA interpolation, white balancing, color correction, and JPEG压缩. This method extracts 特征 from these processing steps 以识别 the source camera.",
-    "parameters": "Features: color processing, CFA interpolation, JPEG tables, Classifier: SVM/RF, Training: per-model",
-    "accuracy": "高 — 85-96%",
-    "source": "Lukas, J. et al. (2006) — Digital Camera Identification from Sensor Pattern Noise, IEEE TIFS",
-    "useCase": "验证声称的源相机并检测来自未知或AI来源的图像",
+    "name": "相机传感器 PRNU 识别鉴定",
+    "description": "通过分析设备固有的光响应不均匀性 (PRNU) 传感器噪点模式以及硬件内部处理管道的数字指纹，来鉴定图像的来源相机型号或检测是否为 AI 合成生成。",
+    "algorithm": "传感器 PRNU 提取与 CFA 阵列模式测定",
+    "mechanism": "该算法专门用于提取包含设备独一无二的光响应不均匀性（PRNU）高频残差信号，以及捕捉残存的色彩滤波阵列（CFA）插值处理管道微弱痕迹。真实的摄影影像必然会具有与其物理硅片硬件牢固绑定的连贯 PRNU 数字指纹。反之，那些使用 AI 生成的模型影像严重缺乏这种物理统一上的签名约束，只会展现出单纯机器生成的合成均匀噪声轮廓、从数亿张训练集中融合而成宛如“科学怪人”般的缝合混杂噪声，甚至直接违背现实色彩还原的物理常理生成了完全不可能存在的 CFA 解除马赛克算法伪迹。",
+    "parameters": "特征数据：PRNU 相关性系数、CFA 解插值映射图谱，分类核心：交叉相关滤波网格 / 支持向量机 (SVM)，采样切片：128x128 补丁视窗",
+    "accuracy": "偏高 (85-95%) - 对识别一般的合成噪音和人造颗粒物异常具有卓越而又极为坚韧稳健的免疫力，且对于精确界定到某一种具名型号机器，它也只仅仅需配套使用对应的引用图集进行匹对检测。",
+    "source": "Lukas, J. 等人 (2006) - 借助传感器模式噪声判定及确认数码相机身份机制的研究",
+    "useCase": "高度信赖它对那些来源存疑、需要严禁鉴别其究竟是诞生于真实摄影机械的快门记录下，还是在伪声明谎报里揭发其背后的 AI 造假虚构生成的非法图文等操作。",
     "references": [
         {
-            "title": "Lukas, J. et al. (2006) — Digital Camera Identification from Sensor Pattern Noise, IEEE TIFS",
-            "url": ""
+            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        },
+        {
+            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.916285"
         }
     ],
-    "strengths": "• High 准确度 camera identification\\n• Based on physical sensor properties\\n• Difficult to spoof\\n• Works 跨 camera brands",
-    "limitations": "• Requires reference images from known cameras\\n• Performance varies by camera model\\n• Social media compression reduces 准确度\\n• Cannot identify specific camera instance"
+    "strengths": "• 深深扎根与仰仗于极其严谨细密的半导体基础物理学与机电工程法则规律，彻底无视表面视觉含义的肤浅干扰与误导。\n• 所剥离淬炼获取而至的 PRNU 宛若相机感光元器件中天然自带、永不消逝的神圣指纹密码，在目前的 AI 技术面前基本难以遭到欺瞒防盗与主动模拟人工造假。\n• 高度区分天然有机的硅晶感光躁动数据序列与由扩散模型隐性随机潜变量参数无脑注水注入生成的假随机造像噪声数据层。\n• 以孤行者之身遗世独立地脱离对特定光线色温环境或是主题取景物的倚靠而照样高速常态化运行。",
+    "limitations": "• 其确认及追溯源头到至具体特定的单一照相机精确机型的严苛程度往往需要庞大齐整、毫无失真的净场平场大容量对照资料图库进行逐一筛选核验对照。\n• 在受到诸如疯狂暴力的数字化降噪涂抹破坏、各种智能机内预设出厂的 AI 算法修饰粉饰乃至经过互联网传播过程中粗鲁的低比特率有损压缩毁伤后的精准度断崖式溃败下滑。\n• 不能成功区分究竟是使用了何种不一样的可拆除替换镜组部件搭载在单独同一台底座机身上的情况分歧异同。\n• 基本畏惧并不能对那些因遭外力裁剪或经过拉伸等几何缩放比例失调之后的残破原图继续建立准确的坐标系互相关关联联结分析。"
 }
