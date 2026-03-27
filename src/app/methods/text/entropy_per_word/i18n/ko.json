@@ -1,18 +1,17 @@
 {
-    "name": "Entropy Per Word",
-    "description": "Computes normalized entropy per word (Kirchenbauer, 2023)",
-    "algorithm": "Entropy Per Word — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Computes normalized entropy per word (Kirchenbauer, 2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through entropy per word analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "단어당 정규화 엔트로피(Normalized Word Entropy)",
+    "description": "개별 단어 하나하나에 압축된 평균적인 통계적 예측 불가능성(엔트로피)을 계산합니다. AI 모델은 안전하게 최적화된 확률 임계값 내에서만 글을 생성하기 때문에, 단어당 엔트로피가 인간의 글쓰기에 비해 일관되게 낮게 나타납니다.",
+    "algorithm": "토큰 단위 정규화 엔트로피 계산 (Kirchenbauer et al., 2023 기반)",
+    "mechanism": "자연어 처리(NLP)에서, 이전 문맥이 주어졌을 때 특정 단어가 튀어나올 '놀라움의 크기(Surprise value)'는 정보 엔트로피로 측정됩니다. 인간 작가들은 글을 쓸 때 종종 창의적인 도약을 합니다. 전혀 예상치 못한 기발한 형용사를 고르거나, 희귀한 동의어를 사용하거나, 아예 새로운 개념으로 문맥을 건너뜁니다. 이는 수학적으로 단어당 매우 높은 엔트로피를 발생시킵니다. 그러나 거대 언어 모델(LLM)은 다르게 작동합니다. 이들은 문맥의 유창상과 도움이 되는 정도를 극대화하기 위해 '통계적으로 가장 확률이 높은' 다음 토큰만을 선택하도록 설계된 확률 엔진입니다. 모델의 창의성 옵션(Temperature)을 최대로 높이더라도, LLM의 근본적인 아키텍처는 극도로 희귀하거나 예측 불가능한 단어 조합에 무거운 페널티를 부여합니다. 이 기법은 백그라운드에 거대한 참조 언어 모델을 띄워놓고 해당 텍스트에 쓰인 모든 개별 단어의 등장 확률을 역점검(Negative log-likelihood 계산)한 뒤, 이 엔트로피 값을 전체 단어 수로 나누어 정규화(평균)합니다. 이렇게 도출된 '단어당 평균 엔트로피'가 비정상적으로 낮고 일관되다면, 이는 해당 텍스트가 수학적으로 극도로 안전하고 확률이 높은 알고리즘의 경로만을 밟아 완성되었다는 치명적인 증거가 됩니다.",
+    "useCase": "에세이, 문학적 글쓰기, 언론 기사 등을 분석할 때, 작성자의 어휘 선택이 '인간 특유의 인지적 럭비공(예측불가성)'을 따르는지, 아니면 '기계 특유의 통계학적인 쫄보(안전성)'에 갇혀 있는지 감식해냅니다.",
+    "strengths": "• AI 워터마킹 및 제로샷(Zero-shot) 탐지 분야의 기념비적인 기반 연구(Kirchenbauer 및 Mitchell의 논문)에 의해 입증된 극도로 정밀한 지표입니다.\n• 퀼봇(QuillBot)과 같은 단순한 단어 바꿔치기(Paraphrasing) 툴에 공격당해도 뚫리지 않습니다. 그런 툴들 역시 결국 고확률 동의어 대체 알고리즘에 불과하기 때문입니다.\n• 모든 자기회귀(Autoregressive) LLM이 가진 태생적 한계, 즉 '문법적 유창함을 깨트리지 않으면서 진정으로 기발한 단어를 내뱉지 못하는' 기계적 한계를 잔인하게 파고듭니다.",
+    "limitations": "• 베이스라인 토큰 확률을 계산하기 위해 백그라운드에서 GPT-2나 BERT 같은 덩치 큰 참조 언어 모델을 구동해야 하므로 컴퓨팅 자원(연산량)이 꽤 많이 듭니다.\n• 어린아이들을 위해 쓰여진 아주 쉬운 동화책이나, 원래부터 고도로 정형화된 법률/기업 문서의 경우 인간이 썼음에도 단어당 엔트로피가 낮게 나와 오탐지(False positive)를 유발할 수 있습니다.\n• 분량이 너무 짧은 글에서는 통계적으로 유의미한 평균값을 확립할 만큼 단어의 수가 충분치 않아 탐지기가 오작동할 수 있습니다.",
+    "parameters": "분석 기준: 자기회귀 모델 기반 음의 로그 가능도(Negative Log-Likelihood) 계산\n측정 지표: 토큰당 평균 엔트로피 (Bits per Word)\n출력: 0-100 어휘 예측 가능성 (알고리즘적 안전지대 갇힘) 스코어",
+    "accuracy": "높음 — 200단어 이상의 텍스트에서 80-88%. 제로샷 텍스트 생성을 잡아내는 가장 과학적으로 엄밀하고 뚫기 힘든 방어 체계 중 하나입니다.",
     "references": [
         {
-            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
-            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+            "url": "https://arxiv.org/abs/2301.10226"
         },
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",

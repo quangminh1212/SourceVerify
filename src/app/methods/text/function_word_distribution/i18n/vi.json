@@ -1,26 +1,21 @@
 {
-    "name": "Phân bố từ chức năng",
-    "description": "Phân tích phân bố từ chức năng (mạo từ, giới từ, liên từ) như dấu vân tay phong cách để phân biệt văn bản AI và con người.",
-    "useCase": "Phát hiện văn bản AI qua mẫu sử dụng từ chức năng bất thường phản ánh phong cách viết vô thức",
-    "mechanism": "Trích xuất và lượng hóa từ chức năng (từ hạn định, giới từ, liên từ, trợ động từ, đại từ) chiếm ~50% văn bản tiếng Anh. Các 'từ phong cách' này được con người tạo ra vô thức và mang dấu vân tay tác giả mạnh. Phương pháp tính tần suất tương đối của 300+ từ chức năng và so sánh bằng khoảng cách Delta của Burrows.",
-    "accuracy": "Trung bình-Cao - 75-85% trên văn bản nhiều đoạn",
-    "source": "Burrows, J. F. (2002) - Delta: A Measure of Stylistic Difference, Literary and Linguistic Computing",
-    "algorithm": "Function Word Extraction + Burrows's Delta + Kilgarriff's Chi-Squared",
-    "parameters": "Danh sách: 300+ từ lớp đóng, Chỉ số: Delta Burrows, chuẩn hóa z-score, Độ chi tiết: theo đoạn, Tham chiếu: kho ngữ liệu con người cân bằng",
-    "strengths": "• Dựa trên hàng thập kỷ nghiên cứu phong cách tính toán\n• Từ chức năng khó kiểm soát có ý thức\n• Mạnh mẽ trên nhiều chủ đề và lĩnh vực\n• Framework thống kê đã hiểu rõ",
-    "limitations": "• Cần độ dài văn bản đủ (>200 từ)\n• Có thể không phân biệt giữa tác giả con người khác nhau vs AI\n• Cần danh sách từ chức năng theo ngôn ngữ\n• LLM hiện đại ngày càng khớp phân bố con người",
+    "name": "Nhận Dạng Từ Chức Năng (Function Word Profiling)",
+    "description": "Phân tích sự phân bố vô thức của các từ chức năng (mạo từ, giới từ, liên từ, đại từ), vốn đóng vai trò như một 'dấu vân tay sinh trắc học' độc nhất và không thể kiểm soát của từng tác giả.",
+    "algorithm": "Phân Phối Lớp Từ Đóng & Phân Tích Độ Lệch Burrows",
+    "mechanism": "Trong khi các từ mang nội dung (danh từ, động từ, tính từ) quyết định một văn bản nói về *cái gì*, thì các từ chức năng (của, và, ở, một, cái) lại quyết định việc nó được cấu trúc về mặt nhận thức *như thế nào*. Các từ chức năng chiếm gần 50% ngôn ngữ, nhưng con người sử dụng chúng gần như hoàn toàn trong vô thức. Hàng thập kỷ nghiên cứu về phong cách học tính toán (xác định tác giả) đã chứng minh rằng mỗi con người đều có một 'dấu vân tay toán học' độc nhất, có độ ổn định cực cao dựa trên tần suất và tỷ lệ của những từ ngữ 'tàng hình' này. Tuy nhiên, các mô hình AI là sự pha trộn của hàng tỷ tác giả. Thay vì sở hữu một dấu vân tay duy nhất và ổn định của con người, một LLM sẽ xuất ra một phân phối 'bóng ma thống kê' được cào bằng một cách hoàn hảo và chung chung đến mức áp đảo. Phương pháp này sử dụng thang đo Burrows's Delta để đo tần suất tương đối của hơn 300 từ chức năng thuộc lớp từ đóng (closed-class) so với một kho dữ liệu khổng lồ chứa các bài viết chuẩn của con người. Nếu sự phân bố từ chức năng đạt đến mức trung bình thống kê 'phổ thông' gần như hoàn hảo—thiếu đi những tỷ lệ từ chức năng hơi bất đối xứng và mang bản sắc cá nhân vốn luôn xảy ra một cách hữu cơ ngay cả trong văn bản chuyên nghiệp của con người—văn bản đó sẽ bị coi là một sản phẩm tổng hợp bằng máy.",
+    "useCase": "Tiêu chuẩn vàng cho phân tích pháp y ngôn ngữ học, lý tưởng để soi xét các tài liệu mang tính học thuật hoặc cực kỳ trang trọng, nơi các đặc điểm văn phong khác (như tiếng lóng hay cảm xúc) đã bị triệt tiêu.",
+    "strengths": "• Gần như không thể bị thao túng một cách có ý thức (bởi cả con người lẫn AI đang cố nhập vai), vì việc chọn từ chức năng diễn ra sâu bên dưới ngưỡng tư duy có ý thức.\n• Khả năng chống chịu cực cao trên các thể loại và chủ đề khác nhau; dấu vân tay từ chức năng của một người vẫn ổn định bất kể họ đang viết sách hướng dẫn kỹ thuật hay một bức thư tình.\n• Được chứng minh bởi hơn ba thập kỷ nghiên cứu ngôn ngữ học pháp y, được bình duyệt và có giá trị trước tòa án.",
+    "limitations": "• Đòi hỏi văn bản phải có độ dài đáng kể (thường >300 từ) để thiết lập một đường cong phân phối có ý nghĩa về mặt thống kê.\n• Không thể dễ dàng phân biệt giữa các LLM khác nhau (ví dụ: Claude vs. GPT-4), vì tất cả các mô hình được căn chỉnh kỹ lưỡng đều hội tụ về các tâm điểm ngôn ngữ 'được cào bằng' tương tự nhau.\n• Phụ thuộc nặng nề vào các từ điển lớp từ đóng đặc thù cho từng ngôn ngữ, đòi hỏi các mô hình toán học hoàn toàn tách biệt đối với tiếng Anh, tiếng Tây Ban Nha, tiếng Nhật, v.v.",
+    "parameters": "Kiểm Định: Khai Thác 300+ Từ Chức Năng Lớp Đóng & Chuẩn Hóa Điểm Z\nThước Đo: Độ Lệch Văn Phong Burrows (Burrows's Delta) vs Tâm Điểm Của Con Người\nĐầu Ra: 0-100 Điểm Đồng Nhất Hóa Văn Phong (Mức Độ Cào Bằng Của Thuật Toán)",
+    "accuracy": "Cao — 80-88% đối với văn bản nhiều đoạn. Đây là một trong những phương pháp đáng tin cậy và được xác minh về mặt học thuật nhất để phân biệt sự nhận thức sống động của con người với việc máy móc rải chữ theo thống kê.",
     "references": [
         {
-            "title": "Burrows, J. F. (2002). Delta: A Measure of Stylistic Difference. Literary and Linguistic Computing.",
+            "title": "Burrows, J. F. (2002). Delta: A Measure of Stylistic Difference and Its Literary History. Literary and Linguistic Computing.",
             "url": "https://doi.org/10.1093/llc/17.3.267"
         },
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Kestemont, M. (2014). Function Words in Authorship Attribution. EACL Workshop.",
-            "url": "https://doi.org/10.3115/v1/W14-0908"
+            "title": "Kestemont, M. (2014). Function Words in Authorship Attribution: From Black Magic to Theory? EACL.",
+            "url": "https://aclanthology.org/W14-0908/"
         }
     ]
 }

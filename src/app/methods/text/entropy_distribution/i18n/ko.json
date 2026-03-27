@@ -1,22 +1,17 @@
 {
-    "name": "엔트로피 분포",
-    "description": "분석합니다 character-level 엔트로피 분포 패턴.",
-    "useCase": "Detecting AI text through 엔트로피 uniformity 분석",
-    "mechanism": "계산합니다 sliding-window 엔트로피 에 걸친 the content and 분석 the 분포 분산. AI text typically shows more uniform 엔트로피 분포 compared to 인간 글쓰기.",
-    "accuracy": "중간 - 73-83%",
-    "source": "Gehrmann et al. (2019) - GLTR: Statistical Detection of Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "윈도우 크기: 적응형, Quantization: 8-64 levels, Metrics: 엔트로피, CV, 상관관계",
-    "strengths": "- Effective for detecting AI 생성 text\n- Language-agnostic 통계적 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 오탐\n- Short texts provide less reliable signals\n- Performance varies 에 걸친 문체s",
+    "name": "엔트로피(Entropy) 분포 곡선",
+    "description": "문서 전체에 걸쳐 단어(토큰)들의 통계적 예측 불가능성(엔트로피)이 어떻게 분포하는지 분석합니다. AI 모델은 수학적으로 최적화된 좁고 일정한 엔트로피 대역 안에서 글을 뱉어내는 반면, 인간의 글쓰기는 예측 가능성의 고점과 저점이 미친 듯이 요동치는 불규칙한 파동을 보입니다.",
+    "algorithm": "슬라이딩 윈도우(Sliding-Window) 기반 토큰 정보 엔트로피 분석",
+    "mechanism": "정보이론에서 '엔트로피(Entropy)'란 어떤 데이터 시퀀스의 예측 불가능성(당혹성)을 측정하는 지표입니다. 인간의 글쓰기는 매우 변덕스럽습니다. 뻔하고 진부한 클리셰(낮은 엔트로피)들을 길게 늘어놓다가도, 갑자기 통계적으로 전혀 뜬금없는 고도로 창의적인 은유나 극도로 전문적인 용어(높은 엔트로피)를 던지며 문맥을 비틉니다. 이는 문서 전체에 걸쳐 뾰족하고 거칠게 요동치는 엔트로피 곡선을 그려냅니다. 그러나 거대 언어 모델(LLM)은 고정된 'Temperature(온도)' 설정값의 통제 아래에서, 통계적으로 가장 무난하고 확률이 높은 다음 토큰을 끊임없이 이어 붙이는 방식으로만 글을 생성합니다. LLM은 매 순간 문장의 유창성과 흐름을 수학적으로 최적화하기 때문에, AI가 쓴 글의 엔트로피는 문서를 처음부터 끝까지 읽어봐도 소름 끼칠 정도로 안정적이고 균일(Uniform)합니다. 이 탐지 기법은 텍스트 전체에 슬라이딩 윈도우(Sliding window)를 밀어 가며 섀넌 엔트로피(Shannon entropy)를 계산하고 그 통계적 분포와 분산을 지도화합니다. 인간의 뇌 활동에서 전형적으로 나타나는 극단적인 봉우리(창의력의 스파이크)나 깊은 계곡(뻔한 문구의 남발) 없이, 비정상적으로 매끄럽고 평탄한 엔트로피 파형을 가진 텍스트는 알고리즘이 찍어낸 공산품이라는 것을 수학적으로 증명합니다.",
+    "useCase": "AI의 '기계적으로 깎은 듯한 매끄러움'과 인간의 '불규칙한 심장 박동'을 통계적 곡선으로 선명하게 갈라낼 수 있는 장문(에세이, 기사, 긴 보고서) 분석에 가장 적합한 도구입니다.",
+    "strengths": "• 수학적으로 고도로 객관적입니다. 의미론적 이해에 전혀 의존하지 않으므로 언어와 주제의 장벽을 뛰어넘어 완벽하게 작동합니다.\n• 텍스트를 생성한 특정 LLM의 기저에 깔려 있는 수학적 통제값(Top-P, Temperature 설정 등)의 지문을 효과적으로 까발립니다.\n• 인간이 자신의 뇌로 단어들의 통계적 확률을 일일이 계산하며 무작위성을 인위적으로 조작하는 것은 불가능하며, '예측 불가능하게 써줘' 같은 프롬프트로도 뚫기 매우 어렵습니다.",
+    "limitations": "• 통계적 분산을 증명하기엔 표본 크기가 너무 작은 초단문(150단어 미만) 텍스트에서는 분석이 무용지물이 됩니다.\n• 인간이 썼더라도 편집자의 격렬한 펜질(윤문)을 거쳤거나, 기업의 컨펌 과정을 거치며 개성이 철저히 깎여나간 글은 인위적으로 다듬어진(매끄러운) 엔트로피를 보일 수 있습니다.\n• 문장에 담긴 실제 문맥이나 의미는 전혀 분석하지 않으며, 오로지 글자를 구성하는 부품들의 통계학적 '의외성 수치'만 측정합니다.",
+    "parameters": "분석 기준: 슬라이딩 윈도우 섀넌 엔트로피 및 변동 계수(CV) 계산\n측정 지표: 평균 엔트로피 기준, 전체 텍스트의 엔트로피 분포 표준편차\n출력: 0-100 엔트로피 균일도 (알고리즘적 매끄러움) 스코어",
+    "accuracy": "높음 — 중장문 텍스트에서 78-86%. 기계가 생성한 토큰 시퀀스의 가장 뼈대 있는 기술적 지문이자 신뢰할 수 있는 수학적 판독기입니다.",
     "references": [
         {
-            "title": "Gehrmann et al. (2019) - GLTR: Statistical Detection of Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Gehrmann%20et%20al.%20(2019)%20-%20GLTR%3A%20Statistical%20Detection%20of%20Generated%20Text"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
         },
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",

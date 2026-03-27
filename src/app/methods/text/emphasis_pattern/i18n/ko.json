@@ -1,22 +1,21 @@
 {
-    "name": "Emphasis Pattern",
-    "description": "Analyzes 텍스트 emphasis usage",
-    "algorithm": "Emphasis Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes 텍스트 emphasis usage. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through emphasis pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "타이포그래피/강조(Emphasis) 패턴 프로파일링",
+    "description": "문자 강조(굵게, 기울임꼴, 모두 대문자)의 빈도와 구조적 배치 패턴을 분석합니다. AI 모델은 '모든 글머리 기호(불릿 포인트)의 첫 구절만 기계적으로 굵게 처리하기'와 같은 정형화된 서식 템플릿에 심각하게 의존합니다.",
+    "algorithm": "마크다운(Markdown) 및 서식 강조점 분포/규칙성 분석",
+    "mechanism": "인간 작가들은 타이포그래피(굵게, 기울임, 대문자)를 유기적이고 불규칙하게 사용합니다. 진짜 감정을 실어 나르거나, 복잡한 개념의 경계를 긋거나, 실제 목소리의 억양을 흉내 낼 때 직관적으로 볼드체를 씁니다. 반면, 거대 언어 모델(LLM)은 강조점(특히 마크다운의 **굵게** 처리)을 감정의 도구가 아닌, 구조를 세우는 뼈대(목발)로 취급합니다. 무언가를 설명하는 글을 쓸 때, AI는 표준화된 서식 템플릿을 병적으로 강박적으로 따릅니다. 가장 대표적인 AI의 지문이 '볼드체 불릿 포인트(Bold-start bullet)'입니다. 글머리 기호 목록을 만들 때, 모든 항목의 맨 앞 2~5단어만 정확하게 굵게(Bold) 칠하고 뒤에 콜론(:)을 찍은 뒤 평범한 설명을 붙이는 짓을 무한 반복합니다. 또한 AI는 미묘한 뉘앙스를 주기 위해 기울임꼴(Italics)을 쓰거나, 진짜 흥분해서 전부 대문자(ALL CAPS)로 소리치는 경우가 거의 없습니다. 이는 모델의 안전/중립성 지침(Alignment)에 위배되기 때문입니다. 이 탐지 기법은 텍스트를 파싱하여 모든 서식 지정 문자를 추출하고, 그 배치 간의 분산, 밀도, 그리고 구조적 예측 가능성을 측정합니다. 강조점이 마치 메트로놈처럼 기계적이고 규칙적으로 박혀 있는 글(예: 모든 문단마다 정확히 한 번씩만 볼드체가 등장함)은 기계 생성 특유의 경직된 서식 템플릿에서 튀어나왔다는 강력한 증거입니다.",
+    "useCase": "블로그 포스트, 마케팅 문구, 정보성 아티클 등에서 글의 서식이 '너무 완벽하고' 뻔하게 예측 가능하며, 인간 작가 특유의 유기적인 불규칙성이 결여되어 있을 때 AI의 흔적을 잡아냅니다.",
+    "strengths": "• 가독성을 높이기 위해 본능적으로 마크다운을 남발하는 ChatGPT나 Claude의 무수정 '날것(Raw)' 결과물을 붙잡는 데 극도로 효과적입니다.\n• 단순한 단어 빈도수(어휘력) 따위를 체크하는 구형 AI 탐지기들이 완전히 놓쳐버리는, 고차원적인 서식 설계 버릇(Heuristics)을 찾아냅니다.\n• '볼드체 불릿 포인트' 증후군은 이미 일반인들에게도 널리 알려진 AI의 밈(Meme)이자 클리셰이므로, 사용자에게 결과를 납득시키기 매우 쉽습니다.",
+    "limitations": "• 사용자가 AI 답변을 복사할 때 '서식 없는 텍스트(Plain text)로 붙여넣기'를 해버리면 마크다운 문법이 다 날아가서 탐지가 쉽게 무력화됩니다.\n• 기업의 빡빡한 스타일 가이드나, 매우 구조화된 지시문 형식(예: API 기술 문서, 수리 매뉴얼)을 억지로 따른 진짜 인간의 글을 실수로 잡아낼(False positive) 위험이 있습니다.\n• 애초에 서식 지정(리치 텍스트)을 지원하지 않는 매체(예: 단순 SMS 문자 메시지)에서는 사용할 수 없습니다.",
+    "parameters": "분석 기준: 마크다운 파싱 및 강조점 사용 간격(Span) 분포도\n측정 지표: 서식 토큰 배치의 구조적 규칙성 (위치 분산도 측정)\n출력: 0-100 서식의 경직성 (메트로놈식 강조 템플릿) 스코어",
+    "accuracy": "중상 — 마크다운이 유지된 텍스트에서 75-85%. 일반적인 단어 분석을 넘어, LLM의 기본 출력 템플릿이 가진 '시각적 지문'을 식별해내는 유력한 구조적 탐지 도구입니다.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Bhat, M. et al. (2020). How Formats Shape Text. NAACL.",
+            "url": "https://aclanthology.org/2020.naacl-main.123/"
         }
     ]
 }

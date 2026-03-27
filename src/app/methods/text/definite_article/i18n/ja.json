@@ -1,22 +1,21 @@
 {
-    "name": "Definite Article",
-    "description": "Analyzes definite article usage patterns",
-    "algorithm": "Definite Article — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes definite article usage patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through definite article analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "定冠詞・指示詞の過剰特定",
+    "description": "定冠詞（英語の「the」など）や指示詞の頻度と構造的な配置を分析します。AIモデルは明瞭性を最大化するために名詞を常に過剰に特定しますが、人間は暗黙の共有文脈に基づいて自然にそれらを省略します。",
+    "algorithm": "限定詞密度および文脈上の必要性プロファイリング",
+    "mechanism": "大規模言語モデルは、曖昧さを最小限に抑え、出力を普遍的に理解できるようにするために根本的に最適化されています。文法的な結果として、それらは定冠詞（例えば、「the process」、「the data」、「the implementation」）で名詞を明示的にアンカーする（固定する）という強い統計的バイアスを示します。日本語など定冠詞を持たない言語でも、「その」「この」「当該」といった指示詞や形式名詞を不自然に多用する傾向があります。対照的に、人間のコミュニケーションは「語用論的省略（pragmatic omission）」に大きく依存しています。聞き手や読み手によって文脈が暗黙のうちに理解されている場合、私たちは日常的に定冠詞や指示詞を省略します（「The data shows...」の代わりに「Data shows...」と書くなど）。この手法は、テキスト内のすべての名詞句に対する定冠詞（または相当する限定詞）の密度を計算します。次に、この密度を各冠詞の文法的な必要性とクロスリファレンス（相互参照）します。文脈に関係なくほぼすべての名詞が明示的にアンカーされているような、定冠詞に病的に高く依存しているテキストは、起こり得るすべての誤解を排除するように設計されたアルゴリズムによる「安全経路（safe-path）」の執筆であることを強く示しています。",
+    "useCase": "AIが権威あるように聞こえようとする企業コミュニケーション、技術文書、および説明文におけるAIの著作者の検出。明瞭性の執拗な追求の結果、「the」（またはそれに相当する言葉）の不自然で過度に形式化された集中が生じます。",
+    "strengths": "• AIが客観的で権威あるように聞こえようとする「情報提供」または「説明」のプロンプトで非常に効果的です。\n• 人間は自分自身の限定詞の使用率を意識的に注意することはめったにないため、プロンプトエンジニアが回避するのは非常に困難です。\n• 低レベルの文法レベルで動作するため、単純な同義語の置き換えという回避戦術に対して堅牢です。",
+    "limitations": "• 法的契約、特許出願、または厳密な学術的フォーマットなど、特定の高度に形式化された人間の文章スタイルでは、自然と誤検知率が高くなります。\n• 有効性は、分析対象の特定の言語に大きく依存します（英語、フランス語、スペイン語などでは非常に効果的ですが、明示的な定冠詞を持たない日本語やロシア語のような言語では機能の仕方が異なり、代名詞や指示詞の分析に依存します）。\n• 限定詞を正しく識別するために、正確な品詞（POS）タグ付けが必要です。",
+    "parameters": "解析: POSタグ付けおよび限定詞対名詞の比率（Determiner-to-Noun Ratio）計算\n評価基準: 定冠詞の密度 vs 語用論的省略のしきい値\n出力結果: 0-100 過剰特定（明瞭性バイアス）スコア",
+    "accuracy": "中程度〜高 — 該当する言語で70-80%。他の構造的分析と組み合わせた場合、機械生成テキストの微妙だが非常に信頼性の高い心理的マーカーとなります。",
     "references": [
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.",
+            "url": "https://www.pearson.com/"
         },
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
         }
     ]
 }

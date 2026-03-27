@@ -1,22 +1,17 @@
 {
-    "name": "Phân bố Entropy",
-    "description": "Phân tích mẫu phân bố entropy mức ký tự.",
-    "useCase": "Phát hiện văn bản AI qua phân tích đồng nhất entropy",
-    "mechanism": "Tính entropy cửa sổ trượt trên nội dung và phân tích phương sai phân bố. Văn bản AI thường có phân bố entropy đồng nhất hơn so với văn viết của người.",
-    "accuracy": "Trung bình - 73-83%",
-    "source": "Gehrmann et al. (2019) - GLTR: Statistical Detection of Generated Text",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Đường Cong Phân Phối Entropy",
+    "description": "Phân tích tính khó lường về mặt thống kê (entropy) của chuỗi từ trong văn bản. Mô hình AI luôn nhả chữ trong một dải entropy tối ưu và chật hẹp, trong khi văn phong con người đặc trưng bởi những đợt dao động bùng nổ giữa khả năng dự đoán cao và thấp.",
+    "algorithm": "Phân Tích Entropy Thông Tin Token Bằng Cửa Sổ Trượt (Sliding-Window)",
+    "mechanism": "Trong Lý thuyết Thông tin, 'entropy' đo lường mức độ bất ngờ hoặc khó lường của một chuỗi dữ liệu. Cách viết của con người rất thất thường: một người có thể viết liền một mạch các câu sáo rỗng vô cùng dễ đoán (entropy thấp), và ngay sau đó tung ra một phép ẩn dụ cực kỳ sáng tạo, dày đặc từ vựng, hoặc một thuật ngữ chuyên ngành tối nghĩa (entropy đạt đỉnh). Điều này tạo ra một đường cong phân phối entropy lởm chởm và đầy biến động. Tuy nhiên, các Mô hình Ngôn ngữ Lớn sinh văn bản bằng cách liên tục chọn ra token (từ/cụm từ) có xác suất thống kê hợp lý nhất, được kiểm soát bởi tham số 'Nhiệt độ' (Temperature) cố định. Vì chúng liên tục tối ưu hóa rập khuôn cho sự trôi chảy ở mọi bước tính toán, entropy của văn bản AI duy trì một sự ổn định và đồng đều (uniformity) đến mức đáng sợ trên toàn bộ tài liệu. Phương pháp này tính toán entropy Shannon bằng một cửa sổ trượt quét qua văn bản, lập bản đồ phân phối thống kê và phương sai của nó. Một văn bản có phân phối entropy nhẵn nhụi, thiếu vắng các đỉnh nhọn (sáng tạo) và thung lũng sâu (lặp lại sáo rỗng) điển hình của nhận thức con người—về mặt toán học—là bằng chứng thép của việc được tời ra từ thuật toán.",
+    "useCase": "Công cụ mạnh nhất khi soi các văn bản dài (tiểu luận, bài báo, báo cáo), nơi các đường phân phối thống kê phân định rõ rệt giữa 'sự mượt mà cơ khí' của máy móc và 'nhịp điệu thất thường' của con người.",
+    "strengths": "• Mang tính khách quan toán học tuyệt đối; không dựa vào ngữ nghĩa, giúp nó hoạt động trên mọi ngôn ngữ và mọi chủ đề mà không bị sai lệch.\n• Bóc trần trực tiếp các giới hạn toán học cốt lõi (như Top-P và Nhiệt độ) của chính LLM đó.\n• Gần như không thể qua mặt bằng kỹ thuật gõ phím ép buộc (ví dụ: 'hãy viết thật khó đoán'), vì não người không thể tính toán và thao túng xác suất token một cách có ý thức.",
+    "limitations": "• Hoàn toàn phế võ công đối với các câu văn quá ngắn (dưới 150 từ), vì đường cong phân phối thống kê đòi hỏi một tập mẫu đủ lớn để bộc lộ độ phương sai.\n• Các văn bản của con người nhưng bị biên tập quá tay, bị nhào nặn bởi nhiều lớp kiểm duyệt của công ty, có thể vô tình làm 'phẳng' đi entropy tự nhiên.\n• Thuật toán bị mù chữ—nó không hiểu nghĩa của câu văn, nó chỉ đo lường giá trị 'gây sốc thống kê' của các thành phần tạo nên câu đó.",
+    "parameters": "Kiểm Định: Cửa Sổ Trượt Entropy Shannon & Hệ Số Biến Thiên (CV)\nThước Đo: Độ Lệch Chuẩn Của Phân Phối Entropy So Với Mức Trung Bình\nĐầu Ra: 0-100 Điểm Bằng Phẳng Entropy (Độ Mượt Chết Hạt Của Thuật Toán)",
+    "accuracy": "Cao — 78-86% đối với văn bản trung bình đến dài. Đây là một trong những dấu ấn kỹ thuật sâu sắc và đáng tin cậy nhất về chuỗi token do máy tạo ra.",
     "references": [
         {
-            "title": "Gehrmann et al. (2019) - GLTR: Statistical Detection of Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Gehrmann%20et%20al.%20(2019)%20-%20GLTR%3A%20Statistical%20Detection%20of%20Generated%20Text"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
         },
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",

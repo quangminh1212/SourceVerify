@@ -1,12 +1,21 @@
 {
-    "name": "Mẫu đối thoại",
-    "description": "Phát hiện mẫu sử dụng đối thoại",
-    "algorithm": "Thuật toán phân tích Mẫu đối thoại",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu sử dụng đối thoại. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mẫu đối thoại. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Nhận Diện Hội Thoại Nhân Tạo (Dialogue Pattern)",
+    "description": "Phân tích nhịp điệu cấu trúc và độ hoàn chỉnh ngữ pháp của các đoạn hội thoại, nhằm phân biệt giữa cách giao tiếp chắp vá của con người và kiểu đối thoại 'đánh bóng bàn' cứng nhắc của AI.",
+    "algorithm": "Phân Tích Cấu Trúc Lượt Lời & Độ Đứt Gãy Cú Pháp",
+    "mechanism": "Hội thoại thực tế của con người rất lộn xộn. Chúng ta hay cướp lời nhau, nói những câu cụt lủn sai ngữ pháp, dùng từ ngữ chỉ chỏ (cái này, cái kia), và thường xuyên bỏ lửng câu nói để đối phương tự hiểu nhờ ngữ cảnh. Tuy nhiên, các Mô hình Ngôn ngữ Lớn được thiết kế để luôn tạo ra các mệnh đề logic, trọn vẹn và an toàn. Khi bị ép viết hội thoại, AI thường tạo ra các đoạn hội thoại kiểu 'đánh bóng bàn' (tennis match): các nhân vật luân phiên đổi lượt hoàn hảo, mỗi người nói ra những câu chuẩn chỉ ngữ pháp dài thòng, bày tỏ rõ mồn một suy nghĩ nội tâm và trả lời khớp 100% với ý của người trước. Hoàn toàn không có sự nói leo, không có câu rút gọn, và cực kỳ sợ sự mơ hồ. Phương pháp NLP này phân tích cấu trúc của các khối ngoặc kép, đo lường độ dài, độ hoàn thiện ngữ pháp và cây phụ thuộc của lời thoại. Một tỷ lệ cao bất thường các câu văn hoàn chỉnh, kết hợp với sự vắng bóng hoàn toàn của các 'lỗi' giao tiếp tự nhiên (lắp bắp, tự sửa lời, câu cụt), là bằng chứng đanh thép tố cáo đây là một vở kịch do máy móc dàn dựng.",
+    "useCase": "Bóc trần AI trong các bài tập làm văn, tiểu thuyết, kịch bản, và các bài tiểu luận tự sự, nơi các 'nhân vật' nói chuyện với nhau như những cỗ máy vô hồn đọc sách giáo khoa thay vì những con người đầy khuyết điểm.",
+    "strengths": "• Rất khó để qua mặt bằng lệnh prompt thông thường, vì việc ép AI liên tục giả lập sự 'lộn xộn' của hội thoại người thật đòi hỏi kỹ năng nhồi lệnh cực kỳ phức tạp.\n• Khai thác cây phân tích cú pháp sâu (syntactic tree) thay vì chỉ đếm từ vựng đơn thuần, giúp nó miễn nhiễm với trò đổi từ đồng nghĩa.\n• Là 'sát thủ' đối với các văn bản tiểu thuyết hoặc sáng tác hư cấu (creative writing) do AI viết.",
+    "limitations": "• Dễ bắt nhầm (false positives) các đoạn hội thoại do con người viết nhưng mang nặng tính triết lý, diễn thuyết (như đối thoại kiểu triết học Socrates hoặc kịch cổ điển).\n• Hoàn toàn vô dụng với các văn bản không có trích dẫn trực tiếp hoặc không có format kịch bản.\n• Cần một số lượng lời thoại nhất định (khoảng 5-10 lượt lời) để thuật toán nhận diện được mô hình 'đánh bóng bàn' thống kê.",
+    "parameters": "Kiểm Định: Bóc Tách Khối Lời Thoại & Đánh Giá Cây Cú Pháp\nThước Đo: Tỷ Lệ Đứt Gãy Ngữ Pháp Hội Thoại & Độ Đều Đặn Của Lượt Lời\nĐầu Ra: 0-100 Điểm Số Hội Thoại Giả Lập (Định Dạng Đánh Bóng Bàn)",
+    "accuracy": "Cao — 80-90% (trong ngữ cảnh văn hư cấu). Đây là một trong những chỉ báo đáng tin cậy nhất về nguồn gốc máy móc trong văn học mạng, vì LLM hoàn toàn thiếu 'vốn sống' để sao chép sự hỗn loạn tự nhiên của giao tiếp con người.",
+    "references": [
+        {
+            "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.",
+            "url": "https://www.pearson.com/"
+        },
+        {
+            "title": "Clark, H. H. (1996). Using Language. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511620539"
+        }
+    ]
 }

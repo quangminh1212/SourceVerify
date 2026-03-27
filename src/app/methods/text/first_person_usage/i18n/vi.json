@@ -1,12 +1,21 @@
 {
-    "name": "Sử dụng ngôi thứ nhất",
-    "description": "Phân tích mẫu góc nhìn ngôi thứ nhất",
-    "algorithm": "Thuật toán phân tích Sử dụng ngôi thứ nhất",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu góc nhìn ngôi thứ nhất. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng ngôi thứ nhất. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Nhận Diện Ngôi Thứ Nhất (First-Person Perspective)",
+    "description": "Phân tích tần suất và cách lồng ghép theo ngữ cảnh của các đại từ ngôi thứ nhất (tôi, ta, chúng tôi, của tôi). Các mô hình AI vốn dĩ luôn chọn góc nhìn khách quan, ngôi thứ ba và rất chật vật để sử dụng ngôn ngữ ngôi thứ nhất một cách tự nhiên trừ khi bị ép buộc trắng trợn.",
+    "algorithm": "Mật Độ Đại Từ Suy Tôn & Phân Tích Khung Chủ Quan",
+    "mechanism": "Đại từ ngôi thứ nhất là mỏ neo ngôn ngữ của trải nghiệm con người. Khi con người viết bài nêu ý kiến, bài đánh giá hoặc kể những giai thoại cá nhân, họ tự nhiên đặt mình làm trung tâm ('Tôi nhận thấy rằng...', 'Theo kinh nghiệm của tôi...'). Ngược lại, các Mô hình Ngôn ngữ Lớn được căn chỉnh về mặt toán học (thông qua RLHF) để hoạt động như những trợ lý hữu ích, toàn tri và khách quan. Chúng không có trải nghiệm cá nhân, không có cơ thể hay quan điểm, và do đó, đầu ra cơ bản của chúng đàn áp nặng nề ngôn ngữ ngôi thứ nhất để tránh 'ảo giác ra một nhân cách'. Khi AI bị ra lệnh rõ ràng phải viết ở ngôi thứ nhất, nó thường sửa lỗi thái quá: học sinh tiểu học đặt chữ 'Tôi' đối xứng ở ngay đầu mỗi câu, hoặc nhốt chặt góc nhìn ngôi thứ nhất độc quyền vào các mệnh đề giới thiệu chung chung ('Tôi tin rằng [một sự thật siêu khách quan]'). Thuật toán này tính toán 'Mật độ Chủ quan' của văn bản. Nó không chỉ đo tần suất của đại từ ngôi thứ nhất mà còn đo chiều sâu cú pháp của chúng. Việc hoàn toàn vắng bóng đại từ ngôi thứ nhất trong một thể loại vốn mang tính chủ quan (như đánh giá sản phẩm hoặc bài đăng trên blog), hoặc cách đặt chữ 'Tôi' cực kỳ thiếu tự nhiên, như robot mà không có bất kỳ cái khung cảm xúc chủ quan nào, sẽ dán cờ đỏ báo hiệu mạnh mẽ rằng văn bản đó do máy tạo ra.",
+    "useCase": "Vô cùng quan trọng để xác minh tính chân thực của các bài luận cá nhân, thư xin việc, đánh giá sản phẩm và các bài viết nêu ý kiến, nơi mà 'trải nghiệm sống' của tác giả là giá trị cốt lõi.",
+    "strengths": "• Cực kỳ hiệu quả trong việc phát hiện các bài đánh giá (review) hoặc blog cá nhân do AI tạo ra, vì bản năng giữ thái độ khách quan của mô hình liên tục đánh nhau với lệnh 'hãy viết một câu chuyện cá nhân' của người dùng.\n• Bắt thóp được 'Hội chứng mỏi cơ nhân cách ảo' — nơi mô hình AI bắt đầu bài luận bằng chữ 'Tôi', nhưng khi viết được một nửa thì lại từ từ trôi về lại giọng văn ngôi thứ ba khách quan, thoải mái quen thuộc của nó.\n• Nhanh, nhẹ và hoàn toàn miễn dịch với các kỹ thuật dùng tool tráo đổi từ đồng nghĩa đơn giản.",
+    "limitations": "• Hoàn toàn vô tác dụng đối với các bài báo học thuật, tài liệu kỹ thuật hoặc báo chí truyền thống, nơi các quy tắc viết văn của con người cũng cấm tiệt việc sử dụng đại từ ngôi thứ nhất.\n• Những người viết văn với giọng điệu 'công sở' cực kỳ trang trọng, xa cách có thể chạm nhầm vào máy dò.\n• Rất dễ để con người 'vá' lỗi AI thủ công bằng cách chỉ cần chèn thêm 'Tôi nghĩ' hoặc 'Theo ý kiến của tôi' rải rác trong tài liệu.",
+    "parameters": "Kiểm Định: Khai Thác Tần Suất Đại Từ & Vị Trí Cú Pháp\nThước Đo: Tỷ Lệ Đóng Khung Ngôi Thứ Nhất Chủ Quan vs Tuyên Bố Khách Quan\nĐầu Ra: 0-100 Điểm Vô Hồn Đại Từ (Độ Bứt Rứt Chủ Quan)",
+    "accuracy": "Khá đến Cao — 75-85% trong các văn bản thông thường, tự sự và thuyết phục. Nó hoạt động như một máy phát hiện nói dối hành vi mạnh mẽ đối với 'sự xa lánh khách quan' do luật an toàn của AI bắt buộc.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

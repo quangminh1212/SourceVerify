@@ -1,14 +1,13 @@
 {
-    "name": "Exclamation Pattern",
-    "description": "Analyzes exclamation usage patterns",
-    "algorithm": "Exclamation Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes exclamation usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through exclamation pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "느낌표 지형도 (Exclamation Topography)",
+    "description": "느낌표(!)의 등장 빈도, 위치, 그리고 수사학적 의도를 분석합니다. 인간은 감정을 표현하기 위해 느낌표를 본능적으로 쓰지만, AI 모델은 '열정적으로 쓰라'는 강제 지시가 없는 한 느낌표 사용을 기피하며, 오직 꼬리말(인사말)에서만 기계적으로 느낌표를 붙이는 무미건조한 패턴을 보입니다.",
+    "algorithm": "문장 부호 감정 분산 및 수사학적 경계(Boundary) 분석",
+    "mechanism": "느낌표는 놀라움, 분노, 긴급성, 또는 수사학적 강조('이게 대체 무슨 재앙인가!')를 전달하는 데 쓰이는, 인간의 진짜 감정이 묻어나는 강력한 지표입니다. 그러나 거대 언어 모델(LLM)은 항상 완벽하게 중립적이고, 예의 바르며, 객관성을 유지하도록 혹독한 정렬 훈련(RLHF)을 받습니다. 이 때문에 AI의 기본 생성 상태에서는 본문 한가운데에 유기적인 느낌표를 쓰려는 충동이 강력하게 억제되어 있습니다. AI가 느낌표를 쓰는 유일한 순간은 글이 완전히 끝나는 절대적인 끄트머리 영역에 도달했을 때입니다 ('도움이 되셨기를 바랍니다!', '함께 떠나볼까요!'). 이 알고리즘은 텍스트의 '느낌표 지형도'를 그립니다. 단순히 '!'의 개수를 세는 것이 아니라, 구문론적으로 느낌표가 어느 위치에 박혀 있는지를 봅니다. 원래라면 격렬한 감정이 나와야 할 주제임에도 본문 내내 느낌표가 전멸해 있거나, 글의 도입부/맺음말 경계선에서만 극도로 예측 가능하고, 사무적으로 밝고, 완전히 살균된 방식(Mid-paragraph 느낌표 없음)으로만 등장한다면, 이는 텍스트가 기계의 기본 안전 파라미터(Safety parameters)에 지배당하고 있다는 증거입니다.",
+    "useCase": "인간 작성자라면 문장 부호를 통해 자연스럽게 감정이 튀어나올 수밖에 없는 리뷰, 오피니언 칼럼, 이메일, 온라인 커뮤니티 게시글을 분석하는 데 탁월한 효과를 발휘합니다.",
+    "strengths": "• 너무나도 기계적인 중립성을 보완하기 위해 글의 맨 마지막에만 열정적인 느낌표 하나를 덜렁 붙여놓는 '명랑한 AI 어시스턴트' 특유의 스팸 패턴을 잡아내는 데 귀신입니다.\n• 인간의 프롬프트('극대노한 편지를 써줘')와, 공격적인 문장 부호 사용을 어떻게든 거부하려는 AI의 안전(Safety) 필터 간의 눈물겨운 사투 흔적을 포착해냅니다.\n• 연산량이 매우 적고 캐주얼한 글에서 매우 신뢰할 수 있는 휴리스틱(Heuristic) 필터 역할을 톡톡히 합니다.",
+    "limitations": "• 인간에게조차 느낌표 사용이 엄격하게 금지된 정통 학술 논문, 법률 문서, 위키백과 스타일의 건조한 정보글에서는 분석하는 의미가 없습니다.\n• 원래부터 감정 없이 건조한 이메일을 쓰거나, 이른바 '친절한 영혼 없는 직장인' 톤을 즐겨 쓰는 인간의 글은 오탐지(False positive)를 유발할 수 있습니다.\n• 악의적인 사용자가 AI가 쓴 글에서 마지막 줄의 느낌표 문장만 통째로 지워버리거나, 본문 중간에 무작위로 '!'를 끼워 넣는 것만으로도 너무나 쉽게 탐지망을 피할 수 있습니다.",
+    "parameters": "분석 기준: '!'에 대한 구문론적 경계 탐지 및 감정 정렬도 체크\n측정 지표: 본문 중간의 느낌표 수 vs 글의 경계(도입/맺음말) 느낌표 수 비율\n출력: 0-100 문장 부호 살균도 (알고리즘적 감정 억제도) 스코어",
+    "accuracy": "보통 — 캐주얼 및 설득형 텍스트에서 70-80%. 심오한 언어학적 흔적이라기보다는, AI의 'CS(고객 응대) 모드 정렬'을 잡아내는 강력한 행동 패턴 탐지기입니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

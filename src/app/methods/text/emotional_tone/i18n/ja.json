@@ -1,22 +1,21 @@
 {
-    "name": "Emotional Tone Variance",
-    "description": "Measures emotional variation across テキスト",
-    "algorithm": "Emotional Tone Variance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures emotional variation across テキスト. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through emotional tone variance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "感情的トーンの分散（Variance）",
+    "description": "文ごとの感情やトーンの変動を測定します。人間の文章には、トーンの頻繁な微細な変化（例：客観性からフラストレーションへ）が見られますが、AIは厳格に一定で揺るぎない表現（レジスター）を維持します。",
+    "algorithm": "文レベルのセンチメント変動分析",
+    "mechanism": "「感情の弧」が物語のマクロな軌跡を追跡するのに対し、「感情的トーンの分散」は文レベルでのセンチメント（感情価）のミクロな変動を測定します。人間のコミュニケーションは本質的にダイナミックです。人間の書き手は、客観的な事実を述べた直後にストレスを表現し、皮肉（ジョーク）を交え、そして希望に満ちた解決策を提示するかもしれません。これにより、文から文への感情的トーンの分散が大きくなります。確率や「役立つ/中立的」なアライメント（調整）プロトコルに縛られたAI言語モデルは、深刻な「トーンの慣性（惰性）」に苦しんでいます。LLMが一定のトーン（通常は権威ある、情報に富む、または礼儀正しく熱心なトーン）を確立すると、それは単一の和音を保持し続けるシンセサイザーのように振る舞い、それに続くすべての文がまったく同じトーンの周波数に一致します。この手法は、個々の文のセンチメントスコアを計算し、テキスト全体にわたる統計的「分散」と「標準偏差」を算出します。数十の文にわたってトーンの分散がほぼゼロで「横ばい（flatlines）」になるテキストは、人間の心理から見て統計的に非常に考えにくく、人工生成であることを強く示しています。",
+    "useCase": "人間が通常コードスイッチング（話し方の切り替え）を行い、感情の表現（レジスター）を急激に変化させるオピニオン記事（論説）、レビュー、電子メール、およびフォーラムの投稿の分析。AIの「ロボットのような一貫性」を検出します。",
+    "strengths": "• 完全な「感情の弧」をプロットすることはできないが、ミクロな分散は測定できる短中編のテキストに最適です。\n• 特定のペルソナ（例：「怒っている海賊のように書いて」）を採用するようにプロンプトされたAIテキストの検出に非常に効果的です。なぜなら、AIはその「怒っている」トーンを、不自然で途切れることのない一貫性で維持し続けるためです。\n• 基礎となるセンチメントアナライザーが対象言語に対して堅牢であれば、言語に依存しません（不可知論的）。",
+    "limitations": "• 高度に専門的なドキュメント、法的契約、または標準作業手順書など、自然に単調な人間の文章では誤検知を生じやすいです。\n• 極端に短いテキスト（3文未満）では、統計的に有意な分散スコアを算出できません。\n• 感情の意味を分析するのではなく、その強度の数学的変動のみを分析します。",
+    "parameters": "解析: 文のトークン化およびVADERスタイルの感情（Sentiment）スコアリング\n評価基準: 文レベルの極性スコアの標準偏差と分散\n出力結果: 0-100 トーンの慣性（ロボットのような一貫性）スコア",
+    "accuracy": "高 — 75-85%。人間の心理的ダイナミズムと機械のアルゴリズム的な一貫性を区別する、非常に信頼性の高い指標です。",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Hutto, C.J. & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM.",
+            "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14550"
         }
     ]
 }

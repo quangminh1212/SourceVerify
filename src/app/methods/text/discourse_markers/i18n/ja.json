@@ -1,14 +1,13 @@
 {
-    "name": "談話マーカー分析",
-    "description": "分析します the usage パターン of 談話標識 (connectives, transitions) to differentiate AI生成の from 人間が書いた text.",
-    "useCase": "結束的な談話接続詞の過度の使用または不足によるAIテキストの検出",
-    "mechanism": "識別します and quantifies 談話標識 (e.g., 'however', 'therefore', 'furthermore', 'in addition') and their positional 分布 内の texts. AI生成の text typically exhibits a narrower set of 談話標識 with more formulaic placement パターン. The method constructs a discourse marker profile and compares it against human reference 分布s using Jensen-Shannon divergence.",
-    "accuracy": "中 - 73-83% 精度 にわたる domains",
-    "source": "Kumarage et al. (2023) - Stylometric Detection of AI-Generated Text in Twitter Timelines, arXiv",
-    "algorithm": "Discourse Marker Extraction + Positional Analysis + Distribution Comparison",
-    "parameters": "Marker lexicon: 150+ markers, Position tracking: sentence-initial/medial/final, Frequency normalization: per-sentence, Comparison: JSD metric",
-    "strengths": "• Captures high-level text organization パターン\n• Robust にわたる different text lengths\n• Linguistically interpretable 特徴\n• Complements token-level 検出 methods",
-    "limitations": "• Marker inventory varies にわたる languages\n• Genre-dependent baseline 分布s\n• Advanced LLMs can produce varied discourse パターン\n• Requires careful marker taxonomy definition",
+    "name": "結束性マーカー（つなぎ言葉）プロファイリング",
+    "description": "談話マーカー（例：「さらに」「それに加えて」「したがって」）の頻度、多様性、および構造的な配置を分析します。AIは段落（パラグラフ）を機械的につなぎ合わせるために、狭く定型的なフォーマルなつなぎ言葉のセットに大きく依存します。",
+    "algorithm": "談話接続詞の抽出およびジェンセン・シャノン情報量（Divergence）",
+    "mechanism": "大規模言語モデルは、構造的に健全で、論理的で、理解しやすいテキストを生成するように最適化されています。この最適化の大きな副作用として、明示的な結束装置（cohesive devices）、特にフォーマルな談話マーカーへの過度の依存があります。アイデアや段落の間を移行する際、AIモデルは「さらに（Additionally）」、「その上（Furthermore）」、「しかも（Moreover）」、「しかしながら（However）」、そして悪名高い「結論として（In conclusion）」といった、硬直したほぼ学術的な語彙を不釣り合いに好みます。また、これらのマーカーを文の冒頭（文頭位置）にのみ配置する傾向があります。対照的に、人間の書き手ははるかに多様な移行戦略を使用し、しばしばマーカーを文の途中に埋め込んだり（文中位置）、新しい考えのたびに道しるべとなる言葉（標識）を必要とせずに暗黙の論理フローに依存したりします。この手法は、150以上の談話マーカーの包括的なレキシコン（辞書）に対してテキストをスキャンし、文あたりの頻度と位置的分布の両方を追跡します。次に、ジェンセン・シャノン情報量を使用して、このプロファイルを人間の文章の既知のベースラインと比較します。「第一に」「第二に」「さらに」「最後に」という繰り返しの足場によって硬直的にまとめられているテキストは、強力なAIのシグネチャ（特徴）を示しています。",
+    "useCase": "段落間の移行が不自然に硬直している、不自然である、または過度に形式的であると感じられるエッセイ、記事、およびレポートにおけるAI生成の検出（しばしば「AIのつなぎ言葉」と呼ばれます）。",
+    "strengths": "• LLMが頻繁にデフォルトとする「5段落エッセイ（序論、本論3段落、結論）」の構造的公式を特定するのに非常に効果的です。\n• 単純な語彙チェックにとどまらない、高レベルのテキスト構成パターンを捉えます。\n• 「Furthermore（さらに）」などの言葉がAIライティングのミーム（定番の冗談）として広く認識されるようになっているため、ユーザーにとって非常にわかりやすく解釈しやすいです。",
+    "limitations": "• 分析される特定の言語やジャンルに大きく依存します（例えば、実際の学術論文はブログよりも自然にフォーマルな移行語を使用します）。\n• プロンプトエンジニアがAIに「furthermoreやmoreoverのような言葉を使用しないこと」と明確に指示した場合、簡単に回避できます。\n• 各言語に合わせて細心の注意を払ってキュレーションされた談話マーカーの分類体系（タクソノミー）が必要です。",
+    "parameters": "解析: 位置抽出（文頭/文中/文末）およびマーカー辞典マッピング\n評価基準: 正規化された頻度および人間のベースラインからのジェンセン・シャノン情報量\n出力結果: 0-100 移行の硬直性（定型的な結束性）スコア",
+    "accuracy": "中程度〜高 — 75-85%。LLMが論理フローをシミュレートするために使用するアルゴリズムの足場を暴く、優れた表面レベルのフォレンジック（鑑識）ツールです。",
     "references": [
         {
             "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
@@ -17,10 +16,6 @@
         {
             "title": "Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman.",
             "url": "https://doi.org/10.4324/9781315836010"
-        },
-        {
-            "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
-            "url": "https://arxiv.org/abs/1905.12616"
         }
     ]
 }

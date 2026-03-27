@@ -1,14 +1,13 @@
 {
-    "name": "Exclamation Pattern",
-    "description": "Analyzes exclamation usage patterns",
-    "algorithm": "Exclamation Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes exclamation usage patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through exclamation pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "感嘆符のトポグラフィー",
+    "description": "感嘆符（！）の頻度、配置、および修辞的意図を分析します。AIモデルは、「熱狂的に」振る舞うように明示的に指示されない限り、感嘆符を本質的に避けるため、丁寧な結びの言葉のみに限定された無機質な使用になります。",
+    "algorithm": "句読点の感情分散および修辞的境界分析",
+    "mechanism": "感嘆符は人間の純粋な感情を示す強力な指標であり、驚き、怒り、緊急性、または修辞的な強調（「なんて災害だ！」など）を伝えるために使用されます。大規模言語モデルは、完全に中立で、丁寧で、客観的であり続けるために大規模なアライメント・トレーニング（RLHF）を受けているため、デフォルトの生成状態では、本文中での有機的な感嘆符の使用が実質的に禁止されています。AIが感嘆符を使用する場合、それはほぼ例外なく、ドキュメントの最後にあるカスタマーサービス風の定型的な結びの言葉（「お役に立てば幸いです！」「さっそく始めましょう！」など）に追いやられます。このアルゴリズムは、テキストの「感嘆符のトポグラフィー（地形）」をマッピングします。「！」の単純な頻度だけでなく、その構文配置を測定します。本来なら強い感情を伴うトピックであるにもかかわらず感嘆符がまったく存在しない場合や、段落中間の修辞的な感嘆符が一切なく、非常に予測可能で、陽気で、無菌化された（サニタイズされた）方法で導入部/結語の境界にのみそれらが現れる場合、そのテキストは機械生成された応答のデフォルトの安全パラメータに強く一致します。",
+    "useCase": "人間の書き手が自然に句読点を通して感情を漏らす、レビュー、オピニオン記事、電子メール、フォーラムへの投稿などを分析するのに非常に効果的です。",
+    "strengths": "• ロボットのような中立性を補うために、テキストの最後に熱狂的な感嘆符を貼り付ける「陽気なAIアシスタント」スパムを捕まえるのに優れています。\n• 攻撃的な句読点の使用に自然に抵抗するAIの安全トレーニングと、ユーザーのプロンプト（例：「怒りの手紙を書いて」）との間の緊張関係を明らかにします。\n• 実行が簡単で計算コストが低く、非常に信頼性の高いヒューリスティック・フィルターとして機能します。",
+    "limitations": "• 人間の文体規則でも感嘆符の使用が厳しく禁じられている、正式な学術論文、法的文書、またはウィキペディア形式の記事ではまったく役に立ちません。\n• 非常に無味乾燥で感情のない電子メールを書く人間や、一般的な「企業特有の陽気な」トーンを使用する人間が、時折誤検知を引き起こす可能性があります。\n• 攻撃者がAIの最後の感嘆文を削除したり、テキスト全体にランダムに「！」を挿入したりするだけで、手動で簡単に回避できます。",
+    "parameters": "解析: 「！」の構文的境界の検出と感情の同期\n評価基準: 本文中の感嘆符と境界（導入/結語）の感嘆符の比率\n出力結果: 0-100 句読点の無菌性（アルゴリズムの抑圧）スコア",
+    "accuracy": "中 — カジュアルおよび説得力のあるテキストで70-80%。これは深い言語学的マーカーというよりは、AIのカスタマーサービス・アライメントの強力な行動的シグネチャとして機能します。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

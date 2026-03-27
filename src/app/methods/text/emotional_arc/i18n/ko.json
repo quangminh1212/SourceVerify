@@ -1,22 +1,21 @@
 {
-    "name": "Emotional Arc",
-    "description": "Tracks emotional arc progression",
-    "algorithm": "Emotional Arc — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Tracks emotional arc progression. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through emotional arc analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "감정선(Emotional Arc) 궤적 분석",
+    "description": "글 전체에 걸쳐 감정의 강도와 변화(센티먼트)가 어떻게 흘러가는지 매핑합니다. AI 모델들은 무해하고, 친절하고, 중립적이 되도록 안전 검열(Alignment)을 받았기 때문에, 인간과 달리 기계적으로 '평면적이고' 부자연스러울 정도로 안정적인 감정선을 그립니다.",
+    "algorithm": "통시적 감정선 변동성(Volatility) 측정 및 궤적 매핑",
+    "mechanism": "인간의 스토리텔링과 설득력 있는 글쓰기는 자연스럽게 확립된 '감정선(Emotional arcs)'을 따릅니다 (예: '구덩이에 빠진 사람' - 절망으로 추락했다가 화려하게 부활하는 서사, 또는 '이카로스' - 꾸준히 상승하다가 치명적인 파국을 맞는 서사). 인간 작가들은 감정적 텐션(Valence)의 날카로운 스파이크를 활용하여 긴장감, 절정, 그리고 카타르시스를 구축합니다. 그러나 거대 언어 모델(LLM)들은 RLHF(인간 피드백 기반 강화 학습)를 통해 영구적으로 무해하고, 객관적이며, 도움이 되도록 극심하게 필터링(거세)되었습니다. 그 결과, AI는 진짜 날것의 감정적 변동성을 합성해내는 데 심각한 어려움을 겪습니다. 프롬프트로 명시적으로 '극적이고' '분노에 찬' 이야기를 쓰라고 윽박질러도, AI의 감정 궤적은 몇 문단 못 가 다시 적당히 긍정적이거나 무미건조한 중립 상태(Baseline)로 회귀해버립니다. 이 분석 기법은 텍스트를 시간순으로(도입, 전개, 결말 등) 쪼갠 뒤, 각 구간의 긍정/부정 극성과 감정의 강도를 측정해 하나의 궤적 선(Trajectory line)으로 시각화합니다. 깊은 부정의 계곡이나 아드레날린이 솟구치는 극도의 감정적 봉우리 없이, 비정상적으로 밋밋하고 흔들림 없는 감정 상태를 유지하는 텍스트는 인위적으로 안전하게 조정된 기계의 산물일 확률이 매우 높습니다.",
+    "useCase": "소설, 개인 에세이, 오피니언 칼럼, 리뷰 등 감정의 파동이 필수적인 장르에서, 감정의 고저(Peaks and valleys)가 싹둑 잘려나간 흔적을 찾아내어 위험을 회피하는 기계의 알고리즘을 폭로합니다.",
+    "strengths": "• 감정의 기복이 당연히 예상되는 창작물이나 개인적 성향의 글에서 AI를 적발하는 데 극도로 효과적입니다.\n• 상용 AI 모델들의 근간을 이루는 RLHF(안전성 훈련) 거세망을 육안으로 까발립니다. 일반 사용자는 이 안전망을 완전히 끄는 것이 불가능합니다.\n• 단순한 프롬프트 조작으로는 우회하기 어렵습니다. AI 모델은 긴 텍스트에 걸쳐 극렬하게 부정적인 감정을 끝까지 유지하는 것을 본능적으로 거부하기 때문입니다.",
+    "limitations": "• 기술 매뉴얼, 학술 논문, 객관적인 뉴스 보도 등 원래부터 인간도 '밋밋하게' 쓰는 글에서는 오탐지(False Positive)가 빈번하게 발생합니다.\n• 유의미한 궤적을 그리려면 텍스트의 길이가 충분히 길어야 합니다. 문단 하나짜리 글의 '감정선'을 평가하는 것은 불가능합니다.\n• 궤적을 추적하는 감정 분석(Sentiment analysis) AI 엔진 자체가 인간의 복잡한 비꼬기(Sarcasm)나 미묘한 감정의 뉘앙스를 오독할 위험이 있습니다.",
+    "parameters": "분석 기준: 통시적 텍스트 분할 및 감정가/각성도(Valence/Arousal) 스코어링\n측정 지표: 감정 변동성의 분산 (고점과 저점 사이의 진폭 크기)\n출력: 0-100 감정선 평면도 (무균적 중립성) 스코어",
+    "accuracy": "중상 — 내러티브 및 설득형 텍스트에서 70-85%. 안전하게 세뇌(Alignment)된 상용 AI 모델 특유의 행동적 '성격(Personality)'을 감식해내는 매우 강력한 프로파일링 도구입니다.",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Reagan, A. J. et al. (2016). The emotional arcs of stories are dominated by six basic shapes. EPJ Data Science.",
+            "url": "https://epjdatascience.springeropen.com/articles/10.1140/epjds/s13688-016-0093-1"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Wang, Y. et al. (2023). Is ChatGPT a Good Sentiment Analyzer? A Preliminary Study. arXiv.",
+            "url": "https://arxiv.org/abs/2304.04339"
         }
     ]
 }

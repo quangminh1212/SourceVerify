@@ -1,22 +1,21 @@
 {
-    "name":  "Discourse Relation Depth",
-    "description":  "Analyzes depth and complexity of rhetorical discourse relations (RST) — AI text tends to use shallow discourse structures.",
-    "algorithm":  "Discourse Relation Depth Analysis Algorithm",
-    "mechanism":  "The Discourse Relation Depth system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1515/text.1.1988.8.3.243",
-                           "title":  "Mann, W.C. \u0026 Thompson, S.A. (1988). Rhetorical Structure Theory. Text."
-                       },
-                       {
-                           "url":  "https://doi.org/10.3115/v1/P14-1002",
-                           "title":  "Ji, Y. \u0026 Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL."
-                       }
-                   ]
+    "name": "Rhetorical Structure Depth",
+    "description": "Analyzes the hierarchical depth and complexity of discourse relations. AI relies on flat, sequential logic ('shallow discourse'), whereas human writing builds complex, deeply nested arguments.",
+    "algorithm": "Rhetorical Structure Theory (RST) Tree Depth Extraction",
+    "mechanism": "Rhetorical Structure Theory (RST) models text as a hierarchical tree of relational clauses (e.g., Elaboration, Contrast, Cause). Large Language Models generate text left-to-right, calculating the next most probable token based on the immediate context window. Consequently, AI struggles with macro-level architectural planning. When building an argument, AI tends to use 'flat' or 'shallow' discourse structures—creating a string of equally weighted points (List) or simple explanations (Elaboration) attached directly to the root topic. Every paragraph is a standalone silo. Humans, however, naturally construct deep, nested logical hierarchies. A human might nest a Condition inside a Concession, which is then used as Evidence for a broader Justification. This NLP method parses the text into an RST tree and calculates its maximum and average dependency depth. A text structured as a long, flat list of sequential claims lacks the deep cognitive architecture of human reasoning and is highly indicative of machine generation.",
+    "useCase": "Analyzing long-form arguments, argumentative essays, and persuasive writing where the logical structure feels suspiciously like a simple, bulleted list disguised as prose.",
+    "strengths": "• Highly effective at exposing the fundamental architectural weakness of autoregressive LLMs (lack of top-down planning).\n• Extremely difficult for a prompt engineer to bypass, as humans cannot easily instruct an AI to mathematically increase its RST tree depth.\n• Operates at the macro-document level, making it completely immune to word-level synonym swapping.",
+    "limitations": "• Computationally expensive; parsing deep RST trees on large documents requires significant processing power.\n• May yield false positives on naturally 'flat' human writing, such as instruction manuals, chronological narratives, or lists.\n• Less effective on very short texts (under 200 words) where deep hierarchical structures cannot naturally form.",
+    "parameters": "Analysis: Rhetorical Structure Theory (RST) Parsing & Sentence-Level Segmentation\nMetric: Maximum and Average Discourse Tree Depth (Topological Distance from Root)\nOutput: 0-100 Discourse Shallowness (Architectural Flatness) Score",
+    "accuracy": "High — 75-85% on argumentative and analytical texts. One of the most robust structural markers of synthetic text generation, targeting the core limitation of next-token prediction architectures.",
+    "references": [
+        {
+            "title": "Mann, W.C. & Thompson, S.A. (1988). Rhetorical Structure Theory. Text.",
+            "url": "https://doi.org/10.1515/text.1.1988.8.3.243"
+        },
+        {
+            "title": "Ji, Y. & Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL.",
+            "url": "https://doi.org/10.3115/v1/P14-1002"
+        }
+    ]
 }

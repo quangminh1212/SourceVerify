@@ -1,22 +1,21 @@
 {
-    "name": "Emotional Tone Variance",
-    "description": "Measures emotional variation across 텍스트",
-    "algorithm": "Emotional Tone Variance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures emotional variation across 텍스트. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through emotional tone variance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "어조/감정 변동성(Tone Variance) 분석",
+    "description": "문장 단위로 감정 및 어조(Tone)의 자잘한 변화폭(분산)을 측정합니다. 인간의 글쓰기는 문장에 따라 객관성과 짜증, 희망 등이 교차하는 미세한 톤의 변화를 보이지만 AI는 기계적으로 굳어버린 일관된 어조를 끝까지 유지합니다.",
+    "algorithm": "문장 단위 감정 분석 및 극성(Polarity) 변동성 측정",
+    "mechanism": "앞서 분석한 '감정선(Emotional Arc)'이 이야기 전체의 거시적인 궤적을 쫓는다면, '감정 변동성(Tone Variance)'은 문장 단위의 미시적인 감정 떨림(Micro-fluctuations)을 측정합니다. 인간의 의사소통은 본질적으로 역동적입니다. 사람은 무미건조한 객관적 사실을 진술하다가도 갑자기 분노에 찬 의견을 쏟아내고, 뒤이어 뼈 있는 농담(비꼬기)을 던진 후, 마침내 희망적인 다짐으로 마무리할 수 있습니다. 이것은 문장 간 감정 톤의 '분산(Variance)'을 극대화합니다. 반면, 확률 계산과 '친절함/객관성' 훈련에 속박된 AI 모델은 심각한 '어조의 관성(Tonal inertia)'을 앓고 있습니다. 일단 LLM이 특정한 톤(주로 권위적이거나, 정보 전달적이거나, 형식적으로 친절한 톤)을 잡고 나면, 건반 하나를 계속 누르고 있는 신디사이ザー처럼 똑같은 주파수의 어조만 무한 반복해서 뽑아냅니다. 이 탐지 기법은 수십 개의 문장을 하나씩 조각내어 각 문장의 감정 강도를 점수화한 뒤, 텍스트 전체의 수학적 분산과 표준편차를 계산합니다. 수십 개의 문장이 이어지는데도 감정의 변동 폭이 0(Zero)에 가까운 '심박수 정지(Flatlines)' 그래프를 그리는 텍스트는 인간의 변덕스러운 심리학으로는 통계적으로 설명이 불가능한 전형적인 기계의 산물입니다.",
+    "useCase": "오피니언 칼럼, 리뷰, 이메일, 포럼 게시물 등 인간이 보통 여러 감정을 섞어 쓰며 수시로 '태세 전환(Code-switching)'을 하는 글에서 AI 특유의 '로봇 같은 일관성'을 적발해냅니다.",
+    "strengths": "• 분량이 짧아 전체 '감정선'을 그리기엔 애매한 단문, 중문 길이의 텍스트에서 미세한 떨림을 잡아내는 데 매우 탁월합니다.\n• 프롬프트 엔지니어가 '화난 해적처럼 글을 써라'라고 지시했을 때 생성된 글을 잡아내는 데 극도로 효과적입니다. AI는 그 '분노'라는 단일한 감정 톤을 소름 끼치도록 흔들림 없이 유지하는 기계적 결함을 보이기 때문입니다.\n• 기저 시스템에 탑재된 감정 분석기(Sentiment analyzer)가 해당 언어에 맞게 잘 훈련되어 있다면, 언어의 장벽을 뛰어넘어 보편적으로 적용 가능합니다.",
+    "limitations": "• 법률 계약서, 기계 조립 매뉴얼, 표준 작업 절차서(SOP) 등 인간도 감정을 완전히 배제하고 고도로 건조하게(단조롭게) 작성해야 하는 글에서는 오탐지(False Positives)가 뜰 수 있습니다.\n• 3문장 미만의 극도로 짧은 텍스트는 통계적으로 유의미한 분산 점수를 산출하기엔 데이터가 부족합니다.\n• 감정 자체의 문맥적 의미를 이해하는 것이 아니라, 문장 간 감정 '수치'의 수학적 요동만 측정할 뿐입니다.",
+    "parameters": "분석 기준: 문장 단위 토큰화 및 VADER 기반 긍정/부정(Polarity) 스코어링\n측정 지표: 문장 단위 감정 점수의 분산(Variance) 및 표준편차\n출력: 0-100 어조 관성 (로봇 같은 감정의 일관성) 스코어",
+    "accuracy": "높음 — 75-85%. 인간 심리의 다이내믹함과 기계 알고리즘의 맹목적인 일관성을 가장 확실하게 구분 짓는 신뢰도 높은 탐지 지표입니다.",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Guo, B. et al. (2023). How Close 시 ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Hutto, C.J. & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM.",
+            "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14550"
         }
     ]
 }

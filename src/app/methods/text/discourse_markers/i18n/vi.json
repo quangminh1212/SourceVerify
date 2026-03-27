@@ -1,14 +1,13 @@
 {
-    "name": "Phân tích dấu hiệu diễn ngôn",
-    "description": "Phân tích mẫu sử dụng các từ nối diễn ngôn (liên kết, chuyển tiếp) để phân biệt văn bản AI và văn bản con người.",
-    "useCase": "Phát hiện văn bản AI thông qua lạm dụng hoặc thiếu sót từ nối liên kết",
-    "mechanism": "Nhận diện và lượng hóa các từ nối diễn ngôn (ví dụ: 'tuy nhiên', 'do đó', 'hơn nữa', 'ngoài ra') và phân bố vị trí của chúng. Văn bản AI thường sử dụng bộ từ nối hẹp hơn với vị trí đặt công thức hơn. Phương pháp xây dựng hồ sơ từ nối và so sánh với phân bố tham chiếu con người bằng Jensen-Shannon divergence.",
-    "accuracy": "Trung bình - 73-83% trên nhiều lĩnh vực",
-    "source": "Kumarage et al. (2023) - Stylometric Detection of AI-Generated Text in Twitter Timelines, arXiv",
-    "algorithm": "Discourse Marker Extraction + Positional Analysis + Distribution Comparison",
-    "parameters": "Bộ từ vựng: 150+ từ nối, Theo dõi vị trí: đầu/giữa/cuối câu, Chuẩn hóa: theo câu, So sánh: JSD",
-    "strengths": "• Nắm bắt mẫu tổ chức văn bản cấp cao\n• Mạnh mẽ trên nhiều độ dài văn bản\n• Đặc trưng dễ giải thích ngôn ngữ học\n• Bổ sung các phương pháp phát hiện cấp token",
-    "limitations": "• Bộ từ nối thay đổi theo ngôn ngữ\n• Phân bố cơ sở phụ thuộc thể loại\n• LLM tiên tiến có thể tạo mẫu diễn ngôn đa dạng\n• Cần định nghĩa phân loại từ nối cẩn thận",
+    "name": "Nhận Diện Khớp Nối Văn Bản (Discourse Markers)",
+    "description": "Phân tích tần suất và vị trí của các từ nối/từ chuyển ý (vd: 'Hơn nữa', 'Ngoài ra', 'Do đó'). AI thường lạm dụng một tập hợp từ nối rập khuôn, cứng nhắc để chắp vá các đoạn văn lại với nhau một cách máy móc.",
+    "algorithm": "Khai Thác Từ Chuyển Ý & Phân Kỳ Jensen-Shannon",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn được tối ưu hóa để tạo ra văn bản có cấu trúc chặt chẽ, logic và dễ theo dõi. Tác dụng phụ lớn nhất của việc này là sự phụ thuộc quá mức vào các công cụ liên kết rõ ràng—cụ thể là các từ chỉ dấu diễn ngôn (discourse markers) mang tính hình thức. Khi chuyển ý hoặc chuyển đoạn, AI đặc biệt ưu ái một bộ từ vựng cứng nhắc, rập khuôn kiểu văn nghị luận: 'Ngoài ra', 'Hơn thế nữa', 'Thêm vào đó', 'Tuy nhiên', và kinh điển nhất là 'Tóm lại' (In conclusion). Chúng còn có tật xấu là luôn đặt các từ nối này chễm chệ ở ngay đầu câu. Ngược lại, con người sử dụng các chiến lược chuyển ý đa dạng hơn rất nhiều; chúng ta thường nhúng từ nối vào giữa câu, hoặc dựa vào luồng logic ngầm hiểu mà không cần phải cắm biển báo ở mỗi đầu câu mới. Phương pháp này quét văn bản dựa trên một từ điển khổng lồ gồm hơn 150 từ chỉ dấu, theo dõi cả tần suất xuất hiện lẫn vị trí của chúng trong câu (đầu câu/giữa câu). Sau đó, nó dùng thuật toán phân kỳ Jensen-Shannon để so sánh hồ sơ này với dữ liệu nền của con người. Một bài viết được dựng lên bằng một giàn giáo lặp đi lặp lại những 'Thứ nhất', 'Thứ hai', 'Hơn nữa', 'Cuối cùng' là một chữ ký AI cực kỳ đậm nét.",
+    "useCase": "Phát hiện AI trong các bài tiểu luận, báo cáo và bài viết blog, nơi các đoạn chuyển ý mang lại cảm giác gượng gạo, rập khuôn hoặc quá trang trọng (thường bị dân mạng gọi vui là 'từ chêm của AI').",
+    "strengths": "• Cực kỳ hiệu quả trong việc vạch trần cấu trúc 'bài văn mẫu 5 đoạn' mà các LLM thường xuyên tự động áp dụng.\n• Nắm bắt được cấu trúc tổ chức văn bản ở tầng cao, vượt xa việc đếm từ vựng đơn thuần.\n• Rất trực quan và dễ giải thích cho người dùng, vì những từ như 'Hơn nữa' (Furthermore) đã trở thành meme nhận diện AI.",
+    "limitations": "• Bị ảnh hưởng mạnh bởi thể loại văn bản (ví dụ: các bài báo học thuật gốc của con người cũng dùng rất nhiều từ nối trang trọng).\n• Dễ bị lách qua nếu người viết prompt cẩn thận ra lệnh: 'Cấm dùng các từ như Hơn nữa, Tóm lại'.\n• Đòi hỏi phải xây dựng một từ điển các từ chỉ dấu diễn ngôn cực kỳ tỉ mỉ và đồng bộ cho từng ngôn ngữ.",
+    "parameters": "Kiểm Định: Bóc Tách Vị Trí (Đầu/Giữa/Cuối Câu) & Đối Chiếu Từ Điển Liên Kết\nThước Đo: Tần Suất Chuẩn Hóa & Bất Đồng Jensen-Shannon So Với Con Người\nĐầu Ra: 0-100 Điểm Số Rập Khuôn Liên Kết (Độ Khớp Nối Cứng Nhắc)",
+    "accuracy": "Trung bình khá đến Cao — 75-85%. Là một công cụ giám định bề mặt xuất sắc, bóc trần bộ khung giàn giáo thuật toán mà LLM dùng để giả lập luồng tư duy logic.",
     "references": [
         {
             "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
@@ -17,10 +16,6 @@
         {
             "title": "Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman.",
             "url": "https://doi.org/10.4324/9781315836010"
-        },
-        {
-            "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
-            "url": "https://arxiv.org/abs/1905.12616"
         }
     ]
 }

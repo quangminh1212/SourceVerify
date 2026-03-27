@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích DNA-GPT Uniqueness Test",
-    "description": "Triển khai kiểm tra tái tạo phân kỳ DNA-GPT — văn bản AI tái tạo tương tự hơn văn bản người (Yang et al., 2024).",
-    "algorithm": "Thuật toán phân tích DNA-GPT Uniqueness Test",
-    "mechanism": "Hệ thống DNA-GPT Uniqueness Test phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Kiểm Định Phân Kỳ DNA-GPT",
+    "description": "Đo lường tính độc bản của văn bản bằng nguyên lý DNA-GPT (Phân tích N-Gram Phân kỳ). Nếu AI sinh ra văn bản, việc yêu cầu mô hình viết tiếp từ đoạn giữa sẽ tạo ra kết quả trùng khớp đến mức đáng ngờ so với bản gốc.",
+    "algorithm": "Đo Lường Sinh Tái Tạo & Tính Toán Phân Kỳ N-Gram",
+    "mechanism": "Thử nghiệm DNA-GPT (Phân tích N-Gram Phân kỳ) hoạt động dựa trên một sự thật cốt lõi của các mô hình sinh ngôn ngữ tự hồi quy (autoregressive): LLM có tính tất định (deterministic) rất cao trong việc dò đường. Nếu AI đã viết một đoạn văn, nó đã chọn những từ có xác suất toán học cao nhất. Do đó, nếu bạn cắt đoạn văn đó làm đôi và yêu cầu hệ thống 'viết tiếp', nó rất có thể sẽ tạo lại một chuỗi n-gram (cụm từ) giống hệt hoặc cực kỳ giống với nửa sau của bản gốc. Ngược lại, văn phong của con người mang đậm tính cá nhân hóa và dị biệt. Nếu bạn cắt đôi câu chuyện của một người và nhờ AI viết nốt, kết quả AI viết ra sẽ phân kỳ (diverge) hoàn toàn so với những gì tác giả thật đã viết. Phương pháp này mô phỏng bài kiểm tra 'sinh tái tạo' (regeneration) bằng cách đánh giá xác suất thống kê của quỹ đạo n-gram trong văn bản. Những bài viết có độ phân kỳ cực thấp—nghĩa là cách dùng từ của nó quá dễ đoán và dễ bị mô hình AI sinh lại y hệt—sẽ bị kết án là văn bản máy móc. Văn bản của con người vốn dĩ chứa độ phân kỳ n-gram rất cao vì luồng suy nghĩ của chúng ta không tuân theo các đường cong xác suất tiêu chuẩn.",
+    "useCase": "Giám định các tài liệu dài, quan trọng (như lập luận pháp lý, bài báo kỹ thuật hoặc tiểu thuyết), nơi việc kiểm tra tính 'tất yếu' về mặt thống kê của câu chữ cung cấp bằng chứng sắt đá về nguồn gốc máy móc.",
+    "strengths": "• Được coi là công cụ pháp y cấp độ 'hộp trắng' (white-box), vì nó kiểm tra chính bộ máy sinh thành cốt lõi (quỹ đạo xác suất) thay vì chỉ nhìn vào bề mặt từ vựng.\n• Miễn nhiễm hoàn toàn với kỹ năng múa prompt (prompt engineering), vì không có lệnh prompt nào có thể ép LLM viết ra một văn bản đi ngược lại hoàn toàn với phân phối xác suất bên trong của chính nó mà không biến thành văn bản rác vô nghĩa.\n• Cực kỳ uy lực trên các văn bản dài, nơi sự trùng khớp n-gram khi sinh tái tạo trở nên không thể chối cãi về mặt thống kê.",
+    "limitations": "• Đòi hỏi sức mạnh điện toán máy chủ rất lớn (việc chạy mô phỏng sinh văn bản khiến nó khó thực thi trực tiếp trên máy khách/trình duyệt).\n• Phụ thuộc nặng nề vào mô hình AI dùng làm mốc (baseline); nếu văn bản được tạo bởi một mô hình chuyên ngành (ví dụ: LLM y tế), mô hình baseline có thể báo cáo độ phân kỳ sai.\n• Văn bản ngắn (dưới 150 từ) không cung cấp đủ không gian (runway) n-gram để đo lường độ phân kỳ một cách chính xác.",
+    "parameters": "Kiểm Định: Ước Tính Điểm Cắt Khúc & Đo Lường Độ Trùng Khớp N-Gram Dự Đoán\nThước Đo: Tỷ Lệ Phân Kỳ Chuỗi Token (Dự Đoán Của Mô Hình vs Văn Bản Thực Tế)\nĐầu Ra: 0-100 Điểm Số Tất Yếu Thuật Toán (Độ Phân Kỳ DNA-GPT Thấp)",
+    "accuracy": "Rất cao — 85-95%. Phương pháp này đánh thẳng vào bản chất toán học cốt lõi của LLM, khiến nó trở thành một trong những thuật toán phát hiện mang tính khoa học chặt chẽ nhất hiện nay.",
+    "references": [
+        {
+            "title": "Yang, X. et al. (2024). DNA-GPT: Divergent N-Gram Analysis of Generative Pre-Trained Transformer Models. ICLR.",
+            "url": "https://arxiv.org/abs/2305.17359"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

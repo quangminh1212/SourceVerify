@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Fast-DetectGPT",
-    "description": "Triển khai Fast-DetectGPT sử dụng ước lượng độ cong xác suất có điều kiện không cần lấy mẫu nhiễu (Bao et al., 2024).",
-    "algorithm": "Thuật toán phân tích Fast-DetectGPT",
-    "mechanism": "Hệ thống Fast-DetectGPT phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Độ Cong Xác Suất Fast-DetectGPT",
+    "description": "Thuật toán phát hiện zero-shot tốc độ cao, xác định văn bản do AI tạo ra bằng cách phân tích độ cong xác suất có điều kiện của các từ mà không cần phải xáo trộn văn bản gốc rườm rà.",
+    "algorithm": "Ước tính Độ cong Xác suất Có Điều kiện (Bao và cộng sự, 2024)",
+    "mechanism": "DetectGPT đã chứng minh rằng văn bản do AI tạo ra luôn nằm trên đỉnh chóp (cực đại cục bộ) của đường cong xác suất logarit của mô hình. Nếu bạn đổi vài từ (xáo trộn), xác suất sẽ rớt thê thảm. Ngược lại, văn bản của con người nằm ở những thung lũng ngẫu nhiên trên đường cong này, nên việc đổi từ không làm xác suất tụt quá đà. Nhược điểm chí mạng của DetectGPT bản gốc là nó quá chậm vì phải tạo ra hàng trăm bản sao của đoạn văn bản để vẽ ra đường cong đó. Fast-DetectGPT là một bước đột phá về toán học. Thay vì tạo ra hàng trăm bản sao giả mạo, nó tính toán phân tích chính xác xác suất có điều kiện của từng token và sử dụng một hàm chấm điểm thay thế (surrogate scoring) để ước tính độ cong xác suất chỉ trong một lần quét. Nó đo lường mức độ sai lệch giữa xác suất của từ hiện tại so với xác suất kỳ vọng của tất cả các từ khác có thể điền vào ngữ cảnh đó. Nếu bài viết liên tục chạm tay vào những đỉnh nhọn hoắt nhất của không gian xác suất có điều kiện—nghĩa là những từ được chọn luôn là những lựa chọn siêu tối ưu và an toàn nhất—nó sẽ kích hoạt ngưỡng phát hiện thuật toán ngay lập tức.",
+    "useCase": "Công cụ cày ải tối thượng để phát hiện văn bản AI thô, chưa qua chỉnh sửa trong thời gian thực. Lý tưởng để quét khối lượng lớn văn bản nơi yêu cầu độ chính xác zero-shot và tốc độ xử lý.",
+    "strengths": "• Tốc độ xé gió so với DetectGPT bản gốc (nhanh hơn tới 340 lần) trong khi vẫn duy trì hoặc thậm chí vượt trội về độ nhạy phát hiện.\n• Khả năng zero-shot: Không cần phải được huấn luyện trước trên chính mô hình AI đã tạo ra văn bản đó để có thể tóm cổ nó.\n• Chặt chẽ về mặt toán học; nó không thèm nhìn vào ngữ pháp hay văn phong, mà tra khảo trực tiếp bản chất tự hồi quy (autoregressive) cốt lõi của mọi LLM.",
+    "limitations": "• Dễ bị tổn thương trước các công cụ xào bài (paraphrasing) ác ý hạng nặng (như WordAI), chúng cố tình gọt dũa bề mặt văn bản để hạ thấp đỉnh xác suất, bắt chước thung lũng của con người.\n• Bị mù khi đọc các đoạn văn quá ngắn (dưới 100 từ) vì không có đủ số lượng từ (token) để tính toán ra một bản đồ độ cong đáng tin cậy.\n• Gặp khó khăn bẩm sinh với các văn bản do con người viết nhưng bị gò ép cực độ (ví dụ: cẩm nang kỹ thuật cực khô khan hoặc mã code), vốn dĩ cũng tự nhiên nằm ở mức xác suất rất cao.",
+    "parameters": "Kiểm Định: Quét Xác Suất Có Điều Kiện Một Chạm & Hàm Chấm Điểm Thay Thế\nThước Đo: Ước Tính Độ Lệch Của Đường Cong Xác Suất Logarit\nĐầu Ra: 0-100 Điểm Độ Cong Xác Suất (Đỉnh Chóp Thuật Toán)",
+    "accuracy": "Rất cao — 85-95% trên văn bản AI độ dài tiêu chuẩn chưa bị xào nấu. Nó hiện là một trong những công cụ chẩn đoán pháp y AI hiệu quả và hiện đại nhất thế giới.",
+    "references": [
+        {
+            "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
+            "url": "https://arxiv.org/abs/2310.05130"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

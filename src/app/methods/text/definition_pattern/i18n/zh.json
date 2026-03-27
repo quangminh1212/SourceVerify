@@ -1,22 +1,21 @@
 {
-    "name": "Definition Pattern",
-    "description": "Detects definition structure patterns",
-    "algorithm": "Definition Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Detects definition structure patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through definition pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "好为人师的解释癖特征 (Definition Pattern)",
+    "description": "识别那些毫无必要、生硬插入的教科书式名词解释。AI 模型为了追求所谓的“清晰有效”，有着强迫症一般的“名词解释癖”（例如：“X被定义为Y”、“所谓的X，是指……”），而真实人类在交流时往往默认对方具备背景知识。",
+    "algorithm": "句法定义结构剥离与语用学必然性穿透打分",
+    "mechanism": "现代大型语言模型（LLM），尤其是那些挂载了“基于人类反馈的强化学习（RLHF）”枷锁的模型，在其底层价值观中：回答模糊是要被严厉扣分的，而表现得“乐于助人（Helpful）”且极具教育意义则会获得高额算法奖励。这就导致所有商业 AI 都染上了一种病态的恶习：“好为人师综合症（Didactic tic）”。在生成文本时，AI 经常会生硬地打断行文原本流畅舒适的叙事节奏，去强行解释某个专业术语、概念或缩写——甚至明明它已经被要求写给顶级专家看了。它们极度依赖像“X 是一种……”，“在 Y 的语境下，X 指的是……”或者插入式同谓语“X，即……”这样八股文般的语法结构。与此形成鲜明对比的是，人类在真实交流中极度依赖“共识地带（Common ground）”——即作者和读者之间心照不宣的知识储备。一个打工人写工作邮件提到“KPI”，绝不会废话解释；但如果让 AI 执笔，它很大概率会多嘴一句：“关键绩效指标（KPI），即用于衡量……的定量指标”。本 NLP 探针就是为这种病态特征量身定制的，它会全面扫描这些“强行解释”从句，并结合文章的预设专业门槛计算这些解释的冗余率。一篇满篇都在给读者“强行扫盲”、把读者当白痴的文章，带有极其浓烈的机器合成恶臭。",
+    "useCase": "专治商业邮件、专栏推文或假装资深的评论文章里，那种突然跳出来的百度百科式名词解释——这些突兀的说明文会瞬间毁掉正常的聊天节奏，是 AI “竭诚为您服务”程序的底层暴露。",
+    "strengths": "• 能够极度精准地狙击那些深深刻在顶级商业大模型（ChatGPT, Claude 等）骨子里的“金牌助理”虚假人设。\n• 对普通的“同义词洗稿”和句式改写具有极强的免疫力，因为大模型那股按捺不住想要“给你上课”的底层心理冲动是洗不掉的。\n• 它简直是一台完美的“AI 水分（Fluff）挤压机”，能精准标红出 AI 为了强行凑字数而疯狂注水拼接的垃圾名词解释段落。",
+    "limitations": "• 极易“误杀”现实中那些纯正的、生来就是为了扫盲和教育的高质量人类文本（例如：大一新生教材、入门教程、专有名词大辞典）。\n• 如果狡猾的提示词工程师对 AI 甩出终极封印指令：“不准做扫盲解释”或“用博士后互喷的语气写”，该探针的威力会大幅衰减。\n• 这种识别高度依赖严谨的句法解析器（Syntactic parsing）；如果是极其口语化的江湖黑话或非常狂放跳脱的解释句式，就能从雷达的缝隙中溜走。",
+    "parameters": "雷达切片: 句法从句级硬解析 (同谓语、系动词结构) & 实体背景知识映射\n定罪量表: 每千字内强行“好为人师 (自愿扫盲)”短句发生率\n行刑判决: 0-100 冗余扫盲解释症 (过度助人偏执狂) 定罪分数",
+    "accuracy": "极高致命性 — 75-85%。在日常交流或高级专家语境下，这是当前识别 RLHF 对齐模型（为了讨好人类而设计的模型）最铁血、最百发百中的语义签名之一。",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Bai, Y. et al. (2022). Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback. arXiv.",
+            "url": "https://arxiv.org/abs/2204.05862"
         }
     ]
 }

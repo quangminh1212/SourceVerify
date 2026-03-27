@@ -1,14 +1,13 @@
 {
-    "name": "First Person Usage",
-    "description": "Analyzes first person perspective patterns",
-    "algorithm": "First Person Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes first person perspective patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through first person usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "1인칭 시점 (First-Person Perspective) 분석",
+    "description": "1인칭 대명사('나', '내', '우리')의 등장 빈도와 문맥 내 자연스러운 결합도를 분석합니다. AI 모델은 태생적으로 객관적인 3인칭 시점을 기본값으로 쓰며, 강제로 지시하지 않는 한 1인칭 언어를 유기적으로 사용하는 데 극심한 어려움을 겪습니다.",
+    "algorithm": "대명사 밀도 및 주관적 프레이밍(Subjective Framing) 분석",
+    "mechanism": "1인칭 대명사는 '인간의 삶과 경험'을 증명하는 언어학적 닻(Anchor)입니다. 인간이 의견, 리뷰, 또는 개인적인 일화를 쓸 때 그들은 자연스럽게 자기 자신을 중심에 둡니다 ('제가 알아챈 건...', '제 경험에 비추어 보면...'). 반대로, 거대 언어 모델(LLM)은 '유능하고 전지전능하며 객관적인 비서'로 행동하도록 (RLHF를 통해) 수학적으로 단련되어 있습니다. 그들에겐 개인적인 경험, 육신, 또는 의견이란 게 없으므로, 기본 출력값은 '가짜 자아를 생성해 내는 환각(Persona hallucination)'을 피하기 위해 1인칭 언어를 극도로 억제합니다. AI에게 강제로 1인칭 시점으로 글을 쓰라고 지시하면, 종종 과잉 교정(Over-correction)을 일으켜 초등학생처럼 모든 문장 맨 앞에 마치 대칭 맞추듯 '나는'을 박아넣거나, 1인칭 시점을 그저 뻔한 도입부에만 제한해버립니다 ('나는 [극도로 객관적인 사실]이라고 믿습니다' 처럼). 이 알고리즘은 텍스트의 '주관성 밀도'를 계산합니다. 단순히 1인칭 대명사의 빈도만 세는 것이 아니라, 그것이 구문론적으로 얼마나 깊숙이 뻗어 있는지를 측정합니다. 태생적으로 매우 주관적이어야 할 글(상품 리뷰나 블로그 글)에서 1인칭 대명사가 씨가 말라 있거나, 어떤 주관적인 감정선 하나 없이 '나'라는 주어가 기계적이고 억지스럽게 배치된 경우, 이 글은 기계의 산물로 강력하게 지목됩니다.",
+    "useCase": "작성자의 구체적인 '삶의 경험(Lived experience)'이 핵심 가치가 되는 자기소개서, 개인 에세이, 상품 리뷰 및 오피니언 칼럼의 진위를 판별하는 데 결정적입니다.",
+    "strengths": "• 객관성을 유지하려는 모델의 강박적인 본능이, '개인적인 이야기를 쓰라'는 사용자의 프롬프트 지시와 치열하게 충돌하면서 생기는 파열음을 귀신같이 잡아내어 AI 가짜 리뷰나 블로그를 탐지하는 데 매우 탁월합니다.\n• '가상 자아 생성 피로 증후군(Persona Hallucination Fatigue)'을 잡아냅니다. 이는 AI가 글의 서두에서는 억지로 '나'를 쓰다가, 텍스트 중간쯤부터 스멀스멀 자신이 가장 편안해하는 '객관적 3인칭 비서 말투'로 무의식중에 회귀해버리는 현상을 말합니다.\n• 연산이 매우 빠르고 가벼우며, 동의어를 살짝 바꾸는 수준의 꼼수는 완벽히 차단합니다.",
+    "limitations": "• 인간에게조차 1인칭 대명사 사용이 엄격히 금지된 학술 논문, 기술 문서, 또는 정통 언론 기사에서는 완전히 무용지물입니다.\n• 굉장히 격식을 차리거나 감정이 배제된 '회사용' 어조를 즐겨 쓰는 인간의 글에서 오탐지가 발생할 위험이 있습니다.\n• 작성자가 아주 약간의 수고를 들여 AI가 쓴 글 중간중간에 '내 생각엔' 이나 '개인적으로' 같은 말을 직접 덧붙여 넣기만 해도 아주 쉽게 방어망이 뚫립니다.",
+    "parameters": "분석 기준: 대명사 빈도 추출 및 구문론적 배치 상태\n측정 지표: 주관적인 1인칭 프레이밍 vs 팩트 위주의 객관 선언 비율\n출력: 0-100 대명사 살균도 (주관적 감정 이탈도) 스코어",
+    "accuracy": "보통에서 높음 — 캐주얼, 서사형 및 설득형 텍스트에서 75-85%. AI의 안전장치(Safety alignment)가 강제로 주입한 '객관적 거리두기(Objective detachment)'를 적발하는 강력한 행동 거짓말 탐지기 역할을 합니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

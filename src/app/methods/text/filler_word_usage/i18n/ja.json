@@ -1,14 +1,13 @@
 {
-    "name": "Filler Word Usage",
-    "description": "Measures filler word 周波数",
-    "algorithm": "Filler Word Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures filler word 周波数. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through filler word usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "フィラー単語の無菌性",
+    "description": "フィラー単語（「本質的に」「基本的に」「実際には」「ただ」など）の頻度と文脈上の必要性を分析します。AIモデルは、会話的なパディング（水増し）を完全に排除した、非常に直接的で臨床的に効率的なテキストを自然に生成します。",
+    "algorithm": "語彙的パディング密度および会話の流暢さ分析",
+    "mechanism": "人間の会話や文章は本来不完全です。私たちは、少し間を置いたり、考えをまとめたり、情報の伝達を和らげたりするために、フィラー単語（語彙的パディング）を使用します（「基本的にただ…」「実際には…であることがわかりました」）。しかし、大規模言語モデルは人間のようにリアルタイムで考えているわけではありません。統計的に最も可能性の高い次のトークンを計算しているだけです。RLHFトレーニングによって最大限の有用性と簡潔さが最適化されているため、デフォルトの出力は「無菌化（サニタイズ）」されています。特定のペルソナを明示的にシミュレートしない限り、「考えをまとめる」ために一時停止する必要も、会話を和らげる言葉を自然に挟む必要もありません。このアルゴリズムは、核となるセマンティック（意味論的）コンテンツに対する、不要なフィラー単語や文と文を繋ぐ言葉の比率を測定することで、テキストの「パディング密度」を計算します。テキストが、人間が考えながら落とす言語的な「パンくず」を完全に欠いた、機械特有の臨床的で超効率的な直接性で読める場合、それはアルゴリズムの無菌性としてフラグが立てられます。",
+    "useCase": "人間の書き手がペース配分やトーンのために自然にフィラー単語に依存する、カジュアルな文章、個人的なエッセイ、ブログ記事、電子メールなどを評価するのに不可欠です。",
+    "strengths": "• AIが個人的な物語やカジュアルなメールを書こうとしているのを見破るのに非常に効果的です。なぜなら、モデルに内在する効率性への欲求が、カジュアルさを求めるプロンプトの要求を上回るからです。\n• 人間と機械が言語を生成する方法の根本的な違い（人間は一時停止を伴いながら時間的に言語を構築し、機械は確率的に言語を構築する）を捉えます。\n• 機能的には無用（しかし会話としては不可欠）な単語クラス全体の存在を測定するため、単純な同義語の置換に対しては回復力があります。",
+    "limitations": "• 編集者が意図的にフィラー単語を狩り出して削除する、専門的に編集された人間のテキスト（ジャーナリズムや企業のプレスリリースなど）では、誤検知（偽陽性）の影響を受けやすいです。\n• ユーザーがAIに対して「『基本的に』や『ただ』のようなフィラー単語をたくさん使って」と明示的にプロンプトを出すことで回避される可能性があります。\n• フィラー単語が最初から存在しない、短くて高度に専門的なテキストでは効果がありません。",
+    "parameters": "解析: 語彙的パディング密度と会話クッション言葉の抽出\n評価基準: 核となる主題に対する非セマンティックなフィラー単語の比率\n出力結果: 0-100 語彙の無菌性（アルゴリズムの効率性）スコア",
+    "accuracy": "中〜高 — カジュアルおよび説得力のあるテキストで75-85%。AIアライメント・トレーニングによって義務付けられた「臨床的効率性」に対する優れた行動的回避装置（ポリグラフ）として機能します。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

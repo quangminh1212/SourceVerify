@@ -1,22 +1,21 @@
 {
-    "name":  "Fast-DetectGPT",
-    "description":  "Implements Fast-DetectGPT using conditional probability curvature estimation without perturbation sampling (Bao et al., 2024).",
-    "algorithm":  "Fast-DetectGPT Analysis Algorithm",
-    "mechanism":  "The Fast-DetectGPT system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://arxiv.org/abs/2310.05130",
-                           "title":  "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text. ICLR."
-                       },
-                       {
-                           "url":  "https://arxiv.org/abs/2301.11305",
-                           "title":  "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML."
-                       }
-                   ]
+    "name": "Fast-DetectGPT Probability Curvature",
+    "description": "A high-speed, zero-shot detection algorithm that identifies AI-generated text by analyzing the conditional probability curvature of words without needing expensive text perturbations.",
+    "algorithm": "Conditional Probability Curvature Estimation (Bao et al., 2024)",
+    "mechanism": "DetectGPT proved that AI-generated text sits at the absolute peak (local maxima) of a model's log-probability curve. If you change a few words (perturbation), the probability drops drastically. Human text, however, sits in the random valleys of this curve, so changing words doesn't drastically lower the probability. The original DetectGPT was painfully slow because it required generating hundreds of variations of the text to map this curve. Fast-DetectGPT is a mathematical breakthrough. Instead of generating hundreds of fake variations, it analytically computes the conditional probability of each token and uses a surrogate scoring function to estimate the probability curvature in a single pass. It measures how much the current word's probability diverges from the expected probability of all other possible words in that exact context. If the text consistently hits the sharpest mathematical peaks of conditional probability space—meaning the words chosen are always the hyper-optimal, safest choices—it triggers the algorithmic detection threshold instantly.",
+    "useCase": "The ultimate workhorse for detecting raw, unaltered AI text in real-time. Ideal for scanning massive volumes of text where computational efficiency and zero-shot accuracy are required.",
+    "strengths": "• Blisteringly fast compared to original DetectGPT (up to 340x faster) while maintaining or exceeding its detection accuracy.\n• Zero-shot capability: It does not need to be trained on the specific AI model that generated the text to catch it.\n• Mathematically rigorous; it doesn't look at grammar or style, but directly interrogates the fundamental autoregressive nature of LLMs.",
+    "limitations": "• Susceptible to heavy adversarial paraphrasing (like WordAI or aggressive QuillBot), which artificially lowers the probability peaks to mimic human valleys.\n• Accuracy degrades on extremely short texts (under 100 words) because there aren't enough tokens to calculate a reliable curvature map.\n• Inherently struggles with heavily constrained human writing (e.g., highly technical manuals or code) which naturally exists at higher probability peaks.",
+    "parameters": "Analysis: Single-Pass Conditional Probability & Surrogate Scoring\nMetric: Estimated Log-Probability Curvature Deviance\nOutput: 0-100 Probability Curvature (Algorithmic Maxima) Score",
+    "accuracy": "Very High — 85-95% on unmodified AI text of sufficient length. It is currently one of the most efficient stat-of-the-art diagnostic tools in AI forensics.",
+    "references": [
+        {
+            "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
+            "url": "https://arxiv.org/abs/2310.05130"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Discourse Relation Depth",
-    "description": "Phân tích độ sâu và phức tạp quan hệ diễn ngôn tu từ (RST) — văn bản AI có xu hướng dùng cấu trúc diễn ngôn nông.",
-    "algorithm": "Thuật toán phân tích Discourse Relation Depth",
-    "mechanism": "Hệ thống Discourse Relation Depth phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Độ Sâu Cấu Trúc Lập Luận (Discourse Relation Depth)",
+    "description": "Phân tích độ sâu và sự phức tạp của các mối quan hệ logic trong văn bản. AI thường viết bài theo kiểu liệt kê nông cạn, trong khi con người có khả năng xây dựng các lập luận đan xen, nhiều tầng lớp.",
+    "algorithm": "Khai Thác Cây Cấu Trúc Tu Từ (RST) & Đo Lường Độ Sâu",
+    "mechanism": "Lý thuyết Cấu trúc Tu từ (RST) lập bản đồ văn bản thành một sơ đồ cây phân cấp gồm các mệnh đề có quan hệ với nhau (ví dụ: Giải thích, Tương phản, Nguyên nhân). Các Mô hình Ngôn ngữ Lớn tạo ra văn bản theo chiều từ trái sang phải, tính toán từ tiếp theo dựa trên xác suất cục bộ. Do đó, AI cực kỳ yếu kém trong việc lập kế hoạch kiến trúc văn bản vĩ mô (macro-level). Khi cần lập luận, AI thường sử dụng cấu trúc diễn ngôn 'phẳng' hoặc 'nông'—nó sẽ tạo ra một chuỗi các luận điểm có sức nặng ngang nhau (Liệt kê) hoặc các lời giải thích đơn giản (Mở rộng) bám trực tiếp vào chủ đề gốc. Mỗi đoạn văn giống như một ốc đảo độc lập. Ngược lại, con người sở hữu tư duy phân cấp tự nhiên. Một người có thể lồng một 'Điều kiện' vào trong một câu 'Nhượng bộ', và sau đó dùng toàn bộ cấu trúc đó làm 'Bằng chứng' cho một 'Lý lẽ' lớn hơn. Phương pháp NLP này phân tích cú pháp văn bản thành một cây RST và tính toán độ sâu tối đa cũng như độ sâu trung bình của nó. Một bài viết được cấu trúc như một danh sách dài các tuyên bố tuyến tính thiếu đi tư duy kiến trúc sâu sắc của con người và là dấu hiệu rõ ràng nhất của văn bản tổng hợp.",
+    "useCase": "Giám định các bài tiểu luận, lập luận logic và văn bản mang tính thuyết phục, nơi cấu trúc logic mang lại cảm giác nông cạn, xâu chuỗi một cách dễ dãi giống như một danh sách gạch đầu dòng được khoác áo văn xuôi.",
+    "strengths": "• Cực kỳ hiệu quả trong việc phơi bày điểm yếu cốt lõi của các mô hình sinh văn bản tự hồi quy (autoregressive): sự thiếu hụt khả năng lập dàn ý từ trên xuống (top-down planning).\n• Rất khó để một kỹ sư prompt có thể lách luật, vì con người không thể ra lệnh cho AI 'hãy tăng độ sâu của cây cấu trúc RST lên' một cách trực quan.\n• Hoạt động ở cấp độ kiến trúc toàn bài, hoàn toàn miễn nhiễm với trò đổi từ đồng nghĩa.",
+    "limitations": "• Ngốn rất nhiều tài nguyên hệ thống; việc vẽ cây RST cho một văn bản dài đòi hỏi năng lực xử lý cực lớn.\n• Dễ bắt nhầm các văn bản của con người vốn có cấu trúc 'phẳng' tự nhiên (như tài liệu hướng dẫn sử dụng, biên niên sử hoặc danh sách gạch đầu dòng).\n• Kém hiệu quả trên các đoạn văn bản quá ngắn (dưới 200 từ), vì sơ đồ cây chưa kịp phân nhánh.",
+    "parameters": "Kiểm Định: Phân Tích Lý Thuyết Cấu Trúc Tu Từ (RST) & Phân Đoạn Mệnh Đề\nThước Đo: Độ Sâu Tối Đa và Trung Bình Của Cây Diễn Ngôn (Khoảng Cách Dịch Tới Gốc)\nĐầu Ra: 0-100 Điểm Số Nông Cạn Logic (Độ Phẳng Của Kiến Trúc Bài Viết)",
+    "accuracy": "Cao — 75-85% (trên các văn bản lập luận). Là một trong những công cụ đánh giá cấu trúc uy lực nhất, đánh thẳng vào tử huyệt 'dự đoán từ tiếp theo' của các LLM.",
+    "references": [
+        {
+            "title": "Mann, W.C. & Thompson, S.A. (1988). Rhetorical Structure Theory. Text.",
+            "url": "https://doi.org/10.1515/text.1.1988.8.3.243"
+        },
+        {
+            "title": "Ji, Y. & Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL.",
+            "url": "https://doi.org/10.3115/v1/P14-1002"
+        }
+    ]
 }

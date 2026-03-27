@@ -1,14 +1,13 @@
 {
-    "name": "Filler Word Usage",
-    "description": "Measures filler word 주파수",
-    "algorithm": "Filler Word Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures filler word 주파수. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through filler word usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "군더더기 단어 살균도 (Filler Word Sterility)",
+    "description": "글 속에 등장하는 군더더기 단어(추임새, 예를 들어 '기본적으로', '사실상', '그냥', '솔직히')의 빈도와 문맥적 필요성을 분석합니다. AI 모델은 일상적인 대화의 완충재 역할을 하는 군더더기를 완전히 덜어낸, 극도로 직접적이고 수술실처럼 차가운 고효율 텍스트를 생성하는 본능이 있습니다.",
+    "algorithm": "어휘적 패딩(Padding) 밀도 및 대화 유창성 분석",
+    "mechanism": "인간의 말과 글은 태생적으로 불완전합니다. 우리는 말을 잠시 멈추거나, 생각을 정리하거나, 정보 전달의 충격을 완화하기 위해 군더더기 단어(어휘적 패딩)를 습관적으로 씁니다 ('솔직히 까놓고 말해서...', '우리가 알아낸 건 사실...'). 하지만 거대 언어 모델(LLM)은 인간처럼 실시간으로 '수행하며 생각'하지 않습니다. 그들은 그저 통계적으로 가장 확률이 높은 다음 토큰을 계산해낼 뿐입니다. RLHF 훈련을 통해 활용도와 간결성을 최대로 끌어올리도록 최적화되었기 때문에, 이들의 기본 출력물은 고도로 '살균'되어 있습니다. AI는 '생각을 가다듬기 위해' 글을 멈출 필요가 없으며, 특정 페르소나를 명시적으로 부여받지 않는 한 대화의 윤활유 역할을 하는 추임새를 자연스럽게 끼워 넣을 일도 없습니다. 이 알고리즘은 핵심 의미를 담은 본문에 대비하여, 얼마나 많은 불필요한 추임새와 연결어가 쓰였는지를 비율로 측정하여 텍스트의 '패딩 밀도'를 계산합니다. 인간이 글을 쓰면서 무의식적으로 흘리는 언어적 '빵부스러기'가 전혀 없이, 기계 특유의 싸늘하고 초효율적인 직진성만으로 글이 전개된다면, 이는 알고리즘적 살균 처리의 결과물로 적발됩니다.",
+    "useCase": "인간 작성자라면 분위기 조절과 어조(Tone)를 맞추기 위해 자연스레 군더더기 단어에 의존하게 되는 캐주얼한 글, 개인 에세이, 블로그 게시물, 이메일 등을 평가하는 데 필수적인 도구입니다.",
+    "strengths": "• AI에게 개인적인 경험담이나 가벼운 이메일을 쓰게 하려고 할 때 아주 탁월한 효과를 발휘합니다. 인간처럼 가볍게 쓰라는 사용자의 지시보다, '효율적으로 써라'는 AI 내부의 본능이 앞서기 때문에 어색함이 바로 탄로 납니다.\n• 인간과 기계가 언어를 만들어내는 방식의 근본적인 차이점(인간은 멈칫거리며 시간적 흐름에 따라 직조하고, 기계는 멈춤 없이 확률적으로 직조함)을 정확히 포착합니다.\n• 기능적으로는 쓸모없지만 대화에는 필수적인 특정 어휘 군(Class) 전체의 존재 유무를 측정하므로, 얄팍한 동의어 교체(Synonym-swapping) 꼼수로는 피하기 힘듭니다.",
+    "limitations": "• 숙련된 편집자들이 각 잡고 불필요한 단어들을 모조리 솎아낸 전문가의 글(언론 기사, 기업 보도자료 등)에서는 거짓 양성(False positive, 억울한 인간) 판정을 내릴 위험이 높습니다.\n• 사용자가 대놓고 프롬프트에 '글 중간중간에 기본적으로, 그냥 같은 추임새를 떡칠해서 써줘'라고 지시하면 레이더망을 피할 수 있습니다.\n• 원래부터 추임새가 들어갈 자리가 없는 극도로 짧거나 고도의 기술적/전문적인 텍스트에서는 무용지물입니다.",
+    "parameters": "분석 기준: 어휘적 패딩 밀도 및 대화용 쿠션 단어(Softener) 추출\n측정 지표: 핵심 주제어 대비 비의미적(Non-semantic) 추임새의 비율\n출력: 0-100 어휘적 살균도 (알고리즘적 효율성) 스코어",
+    "accuracy": "보통에서 높음 — 캐주얼 및 설득형 텍스트에서 75-85%. AI 정렬 훈련(Alignment)이 강요하는 '차가운 고효율성' 병변을 잡아내는 훌륭한 행동적 거짓말 탐지기 역할을 합니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

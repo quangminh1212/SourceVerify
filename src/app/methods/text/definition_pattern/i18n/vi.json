@@ -1,12 +1,21 @@
 {
-    "name": "Mẫu định nghĩa",
-    "description": "Phát hiện mẫu cấu trúc định nghĩa",
-    "algorithm": "Thuật toán phân tích Mẫu định nghĩa",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu cấu trúc định nghĩa. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mẫu định nghĩa. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Nghiện Giải Thích Định Nghĩa (Definition Pattern)",
+    "description": "Phát hiện thói quen chèn các câu định nghĩa máy móc, không cần thiết. AI bị 'bệnh' nghiện định nghĩa các thuật ngữ (vd: 'X là Y') để tỏ ra hữu ích, trong khi con người thường mặc định người đọc đã có kiến thức nền.",
+    "algorithm": "Bóc Tách Cấu Trúc Định Nghĩa & Đánh Giá Nhu Cầu Thực Dụng",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn hiện đại, đặc biệt là những mô hình được tinh chỉnh bằng kỹ thuật RLHF (Học tăng cường từ phản hồi của con người), bị phạt rất nặng nếu trả lời mơ hồ và được thưởng điểm khi tỏ ra 'hữu ích', mang tính giáo dục. Điều này sinh ra một tật xấu khó bỏ: 'bệnh thích dạy đời' (didactic tic). Khi viết, AI thường ngắt quãng mạch văn để định nghĩa rành mạch các thuật ngữ, khái niệm hoặc từ viết tắt, ngay cả khi nó đang viết cho các chuyên gia đọc. Chúng lặp đi lặp lại những cấu trúc câu văn mẫu như: 'X là một...', 'Trong ngữ cảnh của Y, X đề cập đến...', hoặc các mệnh đề quan hệ kiểu 'X, cái mà...'. Con người thì ngược lại, chúng ta giao tiếp dựa trên 'tri thức nền tảng chung'. Một người viết email công việc nhắc đến 'KPI' sẽ tự động hiểu đầu dây bên kia biết nó là gì; nhưng AI thì rất dễ 'ngứa mồm' bồi thêm câu 'Chỉ số đo lường hiệu quả công việc (KPI), là...'. Phương pháp phân tích NLP này quét tìm các cấu trúc câu mang tính định nghĩa như vậy và tính toán tần suất của chúng. Nếu một bài viết liên tục 'cầm tay chỉ việc' giải thích những thứ ai cũng biết, đó là dấu hiệu chuẩn xác của một cỗ máy đang cố ghi điểm 'hữu ích'.",
+    "useCase": "Phát hiện AI trong các email công việc, bài blog, và bình luận trên mạng, nơi kiểu giải thích thuật ngữ giống sách giáo khoa làm gián đoạn nhịp điệu tự nhiên và tố cáo thân phận máy móc.",
+    "strengths": "• Đặc biệt xuất sắc trong việc tóm gáy cái 'giọng văn trợ lý ảo' đã được cấy sâu vào nhân (core) của các mô hình thương mại lớn (như ChatGPT, Claude).\n• Rất lỳ đòn trước các chiêu trò viết lại câu (paraphrasing), vì bản năng cốt lõi là 'muốn giải thích cho rõ' của AI không thể bị xóa bỏ dễ dàng.\n• Là một công cụ tuyệt vời để vạch trần thói quen câu chữ (viết lê thê cho đủ KPI từ vựng) của AI.",
+    "limitations": "• Dễ bắt nhầm oán các văn bản con người mang rặt tính giáo dục gốc (như sách giáo khoa, bài viết hướng dẫn cho người mới bắt đầu, hoặc từ điển bách khoa).\n• Sẽ bị vô hiệu hóa nếu prompter ra lệnh cực gắt kiểu: 'Tuyệt đối không giải thích các khái niệm cơ bản' hoặc 'Viết dưới góc độ của một chuyên gia gửi cho chuyên gia'.\n• Phụ thuộc vào phân tích cú pháp (syntactic parsing); các định nghĩa bằng tiếng lóng hoặc cấu trúc câu quá tự do có thể lách qua khe hở.",
+    "parameters": "Kiểm Định: Phân Tích Cú Pháp Nhận Diện Mệnh Đề Phụ Chú & Động Từ Liên Kết\nThước Đo: Tỷ Lệ Định Nghĩa Dư Thừa Trên 1000 Từ\nĐầu Ra: 0-100 Điểm Số Dạy Đời Ngụy Tạo (Thiên Kiến Hữu Ích)",
+    "accuracy": "Cao — 75-85%. Là một trong những chữ ký ngữ nghĩa (semantic signature) đáng tin cậy nhất để vạch mặt các mô hình được huấn luyện bằng RLHF.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Bai, Y. et al. (2022). Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback. arXiv.",
+            "url": "https://arxiv.org/abs/2204.05862"
+        }
+    ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Fast-DetectGPT",
-    "description": "Implements Fast-DetectGPT using conditional probability curvature estimation without perturbation sampling (Bao et al., 2024).",
-    "algorithm": "Algoritmo de análisis Fast-DetectGPT",
-    "mechanism": "El sistema Fast-DetectGPT analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Curvatura de Probabilidad Fast-DetectGPT",
+    "description": "Un algoritmo de detección zero-shot hiper-rápido que caza texto generado por IA analizando matemáticamente la curvatura de probabilidad condicional de las palabras sin la tortura computacional de perturbar el texto cientos de veces.",
+    "algorithm": "Estimación de Curvatura de Probabilidad Condicional (Bao et al., 2024)",
+    "mechanism": "DetectGPT demostró un hecho brutal: el texto generado por IA siempre se sienta en la cima absoluta (máximos locales) de la curva de probabilidad logarítmica de un modelo. Si cambias un par de palabras (perturbación), la probabilidad colapsa por un precipicio. El texto humano, sin embargo, vive revolcándose en los valles caóticos y aleatorios de esta curva, por lo que cambiar palabras no hunde drásticamente la probabilidad matemática. El DetectGPT original era dolorosamente lento porque requería generar cientos de variaciones falsas del texto solo para dibujar este mapa topográfico. Fast-DetectGPT es una genialidad y un milagro matemático. En lugar de vomitar cientos de variaciones, computa analíticamente la probabilidad condicional de cada token y usa una función de puntuación sustituta (surrogate scoring) para estimar la curvatura de la probabilidad en una sola pasada. Mide qué tanto diverge la probabilidad de la palabra actual frente a la probabilidad esperada de todas las otras malditas palabras posibles en ese contexto exacto. Si el texto pisotea continuamente los picos matemáticos más afilados del espacio de probabilidad condicional—significando que las palabras elegidas son siempre las elecciones más cobardes, seguras e híper-optimizadas—detona instantáneamente el umbral de estrangulamiento del algoritmo.",
+    "useCase": "El caballo de batalla definitivo y despiadado para detectar texto IA crudo en tiempo real. Ideal para masacrar volúmenes masivos de documentos donde la eficiencia de CPU y la precisión zero-shot son de vida o muerte.",
+    "strengths": "• Velocidad absurdamente violenta comparada con el DetectGPT original (hasta 340x más rápido) mientras mantiene o humilla la precisión de detección de su predecesor.\n• Letalidad Zero-shot: No necesita ser alimentado o entrenado con el modelo de IA específico (incluso uno desconocido o propietario) que generó el texto para interceptarlo.\n• Matemáticamente sádico y riguroso; le importa un comino la gramática, los estilos o tus trucos de prompt, simplemente interroga fríamente la naturaleza autorregresiva de la máquina.",
+    "limitations": "• Susceptible a ser evadido por herramientas de parafraseo adversario oscuras (como WordAI en su nivel más destructivo), que intencionalmente mutilan el texto para bajar los picos de probabilidad y simular la estupidez humana.\n• La precisión es masacrada en textos agudamente cortos (menos de 100 palabras) porque no hay suficientes tokens(balas) para calcular un mapa de curvatura que estadísticamente importe.\n• Congénitamente sufre de 'fuego amigo' con escritura humana extremadamente encorsetada (ej., manuales aeronáuticos súper técnicos o código de programación crudo) que por naturaleza habitan en los picos de probabilidad más aburridos.",
+    "parameters": "Análisis: Probabilidad Condicional de Una Pasada & Puntuación Sustituta (Surrogate)\nMétrica: Desviación Forense de la Curvatura de Probabilidad Logarítmica\nResultado: 0-100 Nivel de Curvatura de Probabilidad (Puntaje de Pico Algorítmico)",
+    "accuracy": "Aterradoramente Alta — 85-95% en textos de IA puros y de longitud suficiente. Actualmente es una de las herramientas de plomo y sangre más eficientes en la ciencia forense de IA del estado del arte.",
+    "references": [
+        {
+            "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
+            "url": "https://arxiv.org/abs/2310.05130"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

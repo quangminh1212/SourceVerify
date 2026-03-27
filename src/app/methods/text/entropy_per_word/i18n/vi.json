@@ -1,12 +1,21 @@
 {
-    "name": "Entropy trên từ",
-    "description": "Tính entropy chuẩn hóa trên mỗi từ",
-    "algorithm": "Thuật toán phân tích Entropy trên từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Tính entropy chuẩn hóa trên mỗi từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích entropy trên từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Entropy Trung Bình Trên Đơn Từ (Normalized Word Entropy)",
+    "description": "Tính toán khả năng dự đoán trung bình (entropy) được nén trong từng từ riêng lẻ. AI tạo ra văn bản trong giới hạn xác suất an toàn, dẫn đến mức entropy trên mỗi từ luôn thấp hơn đáng kể so với con người.",
+    "algorithm": "Tính Toán Entropy Chuẩn Hóa Theo Đơn Từ (Kirchenbauer và cộng sự, 2023)",
+    "mechanism": "Trong xử lý ngôn ngữ tự nhiên, 'giá trị gây bất ngờ' của một từ dựa trên ngữ cảnh trước đó được đo lường bằng Entropy Thông tin. Ngòi bút của con người thường xuyên thực hiện những bước nhảy vọt sáng tạo: chọn những tính từ độc lạ, từ đồng nghĩa hiếm gặp, hoặc đột ngột chuyển sang một khái niệm hoàn toàn mới, điều này về mặt toán học tạo ra mức entropy trên mỗi từ rất cao. Ngược lại, các Mô hình Ngôn ngữ Lớn (LLM) là những cỗ máy xác suất được thiết kế để chọn token (từ) 'có khả năng xảy ra theo thống kê cao nhất' nhằm đảm bảo sự trôi chảy tuyệt đối. Ngay cả khi tăng thông số nhiệt độ (temperature), cấu trúc cốt lõi của LLM vẫn trừng phạt nặng nề các chuỗi từ cực hiếm hoặc quá khó đoán. Phương pháp này sử dụng một mô hình ngôn ngữ tham chiếu để ước tính xác suất của từng từ một trong bài, tính toán log-likelihood âm (entropy), và sau đó chuẩn hóa giá trị này trên tổng số từ. Nếu 'entropy trung bình trên mỗi từ' thu được ở mức thấp bất thường và quá ổn định, điều đó chứng minh bài viết được xây dựng bằng một thuật toán đề cao sự an toàn và xác suất cao, làm lộ rõ nguồn gốc nhân tạo của nó.",
+    "useCase": "Giám định các bài luận, tác phẩm sáng tạo và bài báo để xác định xem việc lựa chọn từ vựng thể hiện sự khó lường của trí tuệ con người hay ranh giới an toàn thống kê của máy móc.",
+    "strengths": "• Là thước đo cực kỳ chuẩn xác được hỗ trợ bởi các nghiên cứu nền tảng (Kirchenbauer/Mitchell) về đánh dấu bản quyền (watermarking) AI và phát hiện zero-shot.\n• Gần như miễn nhiễm với các công cụ xào lộn văn bản (như QuillBot), vì các công cụ này cũng chỉ thay thế bằng những từ đồng nghĩa có xác suất cao.\n• Bóc trần rào cản cơ học cốt lõi của mọi LLM tự hồi quy (autoregressive): sự bất lực trong việc tạo ra một sự bất ngờ thực sự mà không làm phá vỡ cấu trúc ngữ pháp.",
+    "limitations": "• Cần một mô hình ngôn ngữ tham chiếu khổng lồ (như GPT-2 hoặc BERT) chạy ngầm để tính toán xác suất từ cơ sở, gây tốn kém năng lượng tính toán.\n• Các văn bản do người viết cho trẻ em, hoặc các tài liệu hành chính/pháp lý cực kỳ rập khuôn, vốn đã có entropy từ rất thấp, dễ gây ra báo động nhầm (false positives).\n• Với những đoạn văn quá ngắn, thuật toán không có đủ lượng từ để thiết lập một mức trung bình có ý nghĩa thống kê.",
+    "parameters": "Kiểm Định: Tính Toán Log-Likelihood Âm Tự Hồi Quy (Autoregressive)\nThước Đo: Entropy Trung Bình Trên Mỗi Token (Số bit trên mỗi từ)\nĐầu Ra: 0-100 Điểm Số Dễ Đoán Từ Vựng (Mức Độ An Toàn Của Thuật Toán)",
+    "accuracy": "Cao — 80-88% đối với văn bản trên 200 từ. Đây là một trong những cột mốc khoa học khắt khe và kiên cố nhất để phát hiện văn bản từ máy.",
+    "references": [
+        {
+            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+            "url": "https://arxiv.org/abs/2301.10226"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

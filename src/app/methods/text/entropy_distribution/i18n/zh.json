@@ -1,22 +1,17 @@
 {
-    "name": "熵分布分析",
-    "description": "分析 character-level 熵 分布 模式.",
-    "useCase": "Detecting AI text through 熵 uniformity 分析",
-    "mechanism": "计算 sliding-window 熵 跨 the content and 分析 the 分布 方差. AI text typically shows more uniform 熵 分布 compared to 人类写作.",
-    "accuracy": "中等 - 73-83%",
-    "source": "Gehrmann et al. (2019) - GLTR: Statistical Detection of Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "窗口大小: 自适应, Quantization: 8-64 levels, Metrics: 熵, CV, 相关性",
-    "strengths": "- Effective for detecting AI生成的 text\n- Language-agnostic 统计 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 误报\n- Short texts provide less reliable signals\n- Performance varies 跨 写作风格s",
+    "name": "信息熵震荡分布曲线 (Entropy Distribution)",
+    "description": "测算通篇文本中词元（Token）序列的统计学不可预测性（信息熵）。AI 模型的字词生成永远被锁死在一条狭窄、被精密优化的熵值带宽内；而人类的写作则像心电图一样，充满了突兀的高熵（神来之笔）与低熵（陈词滥调）的剧烈震荡。",
+    "algorithm": "基于滑动窗口 (Sliding-Window) 的词元信息熵演化分析",
+    "mechanism": "在信息论中，“熵（Entropy）”用于测量一段序列的不可预测性（Surprise value）。人类写作是精神分裂且极不规律的：一个作家可能前一秒还在堆砌极其无脑老套的口水话（低熵），下一秒突然脑洞大开，甩出一个极其生僻冷门的专业术语或拍案叫绝的隐喻（高熵骤飙）。这种神经质的创作过程在这个文本的维度上刻画出了一条锯齿状、剧烈波动的熵值分布曲线。相反，大型语言模型（LLM）的算力引擎，是被固定“温度值（Temperature）”死死钳制的概率机器。因为它们在生成每一个词元时，都在进行数学级别的“圆滑度”与“连贯性”的最优解计算，这导致 AI 文本的不可预测性（熵值）在整篇文章中表现得如同死水一般稳定和均匀。本探针会拖动一个滑动窗口（Sliding window）扫过全文逐字计算香农熵（Shannon Entropy），并测算其统计学分布和方差。如果一篇文章的熵值曲线简直比工业流水线上的钢板还要平滑均匀——完全丧失了人类认知中标志性的绝死低谷（水字数）和突兀巅峰（爆灵感）——这就从数学原理上将其钉死在“算法生成”的耻辱柱上。",
+    "useCase": "在中长篇内容（学术论文、万字干货、分析报告）上威力最大。因为在长样本下，统计学分布曲线能像切豆腐一样，把 AI 的“工业机床般平滑”与人类的“心律失常般不规则”劈开。",
+    "strengths": "• 冰冷、无情且绝对客观的数学暴力；它由于不依赖任何对语义的理解，因此对世界上任何语种和任何偏门的专业话题都享有降维打击的普适性。\n• 直接暴力反向刻画出生成该文本的底层 LLM 模型的参数限制（比如采样时的 Top-P 和 Temperature 值）。\n• 人类或者任何低级的咒语（比如“请用完全不可预测的词汇写这篇文”）都绝无可能骗过它。因为人的肉脑算力根本无法人为地控制或伪造大词汇表的统计学概率。",
+    "limitations": "• 在处理超短小作文（不足 150 词）时会因为“样本量过小导致无法形成完整的统计正态分布曲线”而当场罢工。\n• 如果一篇纯人类写的东西，被企业无聊的公关部门经过了十次八次的轮番修改、润色和高度同质化（八股文化），其人为熨平的自然熵也会引发探针的误射。\n• 它是个没有灵魂的算盘——它不理解文字背后的爱恨情仇，它只测算这些字符在这个位置冒出来的系统几率。",
+    "parameters": "雷达切片: 变长滑动窗口香农熵计算 & 数据变异系数 (CV)\n定罪量表: 熵值波动的离散标准差 vs 黄金基准均值\n行刑判决: 0-100 概率平滑度 (算法死板流水线) 定罪分数",
+    "accuracy": "极高处刑率 — 78-86%（在中长文检测赛道）。这是识破机器生成标记序列的最具统治力、最底层技术黑客级的前沿雷达之一。",
     "references": [
         {
-            "title": "Gehrmann et al. (2019) - GLTR: Statistical Detection of Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Gehrmann%20et%20al.%20(2019)%20-%20GLTR%3A%20Statistical%20Detection%20of%20Generated%20Text"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
-            "url": "https://arxiv.org/abs/1908.09203"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
         },
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",

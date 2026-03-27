@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Entity Grounding",
-    "description": "Kiểm tra liệu thực thể có tên có cơ sở thực tế — văn bản AI thường ảo giác thực thể và quan hệ.",
-    "algorithm": "Thuật toán phân tích Entity Grounding Analysis",
-    "mechanism": "Hệ thống Entity Grounding Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Giám Định Đối Tượng Thực Tế (Entity Grounding)",
+    "description": "Kiểm tra xem các Thực thể Định danh (người, địa điểm, tổ chức) có thật hay không. Các mô hình AI thường xuyên 'ảo giác' ra các thực thể không tồn tại hoặc bịa đặt mối quan hệ giữa các thực thể có thật để duy trì sự trôi chảy của văn bản.",
+    "algorithm": "Nhận Diện Thực Thể (NER) & Đối Chiếu Đồ Thị Tri Thức (Knowledge Graph)",
+    "mechanism": "Khi con người viết các văn bản thông tin, họ dựa vào kho kiến thức thực tế, đảm bảo rằng các thực thể họ nhắc đến (tác giả, ngày tháng, tổ chức, thư viện phần mềm) thực sự tồn tại và có liên kết logic với nhau. Tuy nhiên, các Mô hình Ngôn ngữ Lớn (LLM) không hề 'biết' sự thật; chúng chỉ tạo ra chuỗi từ chắp vá dựa trên xác suất thống kê. Khi được yêu cầu cung cấp thông tin chuyên sâu, trích dẫn học thuật hoặc chi tiết kỹ thuật hẹp, mô hình thường sẽ 'ảo giác' ra các thực thể nghe cực kỳ hợp lý nhưng hoàn toàn bịa đặt. Nó có thể bịa ra một nhà nghiên cứu tên là 'Tiến sĩ X' làm việc tại một trường đại học có thật, hoặc tự chế ra một thư viện Python không tồn tại để giải quyết hoàn hảo vấn đề của người dùng. Phương pháp này triển khai Nhận diện Thực thể Định danh (NER) nâng cao để trích xuất tất cả các danh từ riêng, ngày tháng và thuật ngữ chuyên ngành khỏi văn bản. Sau đó, nó đối chiếu các thực thể này với các Đồ thị Tri thức uy tín (như Wikidata hoặc Google Knowledge Graph). Một văn bản chứa mật độ cao các thực thể 'không có thực'—những cái tên nghe rất uyên bác nhưng không thể tìm thấy bất kỳ hồ sơ xác minh nào trên thế giới—là bằng chứng thép của việc văn bản đó do AI tự biên tự diễn.",
+    "useCase": "Ban giám định các bài báo học thuật, tin tức báo chí, tài liệu kỹ thuật và tiểu luận lịch sử nơi tính chính xác của sự kiện là tối quan trọng. Cực kỳ xuất sắc trong việc tóm gọn lỗi 'trích dẫn ma' (fake citations) do AI sinh ra.",
+    "strengths": "• Mang tính quyết định cao khi phát hiện ảo giác AI; một tựa sách bịa đặt hoặc một nhà nghiên cứu 'ma' là bằng chứng không thể chối cãi của văn bản sinh tự động.\n• Vô cùng hiệu quả khi đối phó với các mô hình đời cũ hoặc không có kết nối internet (như ChatGPT-3.5 hoặc Llama-2 tiêu chuẩn), vốn mắc bệnh 'tiều phu bốc phét' khi cạn kiệt dữ liệu.\n• Không phụ thuộc vào văn phong cú pháp, do đó miễn nhiễm hoàn toàn với các mánh khóe chỉnh sửa như 'hãy viết lại với giọng điệu tự nhiên hơn'.",
+    "limitations": "• Dễ báo động nhầm (false positives) trong các tác phẩm sáng tạo (ví dụ: tiểu thuyết khoa học viễn tưởng, kỳ ảo) nơi các thực thể cố tình được hư cấu.\n• Bó tay toàn tập nếu văn bản AI được mớm sẵn 100% dữ liệu thật (ví dụ: người dùng sử dụng RAG - Generation Tăng cường Truy xuất để cấp sẵn sự thật cho AI).\n• Cần kết nối với API Đồ thị Tri thức bên ngoài, nghĩa là nó sẽ gặp khó khăn với các kiến thức quá ngách, quá mới hoặc thông tin nội bộ của công ty.",
+    "parameters": "Kiểm Định: Trích Xuất Spacy NER & Xác Minh Nhéo Nhanh Bằng API Đồ Thị Tri Thức\nThước Đo: Tỷ Lệ Giữa Thực Thể Xác Minh Được Và Thực Thể Ảo Giác (Không Đối Chứng Được)\nĐầu Ra: 0-100 Điểm Số Ảo Giác Thực Thể (Thiếu Căn Cứ Thực Tế)",
+    "accuracy": "Cao — 80-90% trên các văn bản thông tin. Nó cung cấp bằng chứng thép có thể xác minh được, thay vì chỉ dựa vào phân tích xác suất thống kê mông lung.",
+    "references": [
+        {
+            "title": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.",
+            "url": "https://aclanthology.org/P11-1115/"
+        },
+        {
+            "title": "Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL.",
+            "url": "https://arxiv.org/abs/1803.05355"
+        }
+    ]
 }

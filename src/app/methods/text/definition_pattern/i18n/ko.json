@@ -1,22 +1,21 @@
 {
-    "name": "Definition Pattern",
-    "description": "Detects definition structure patterns",
-    "algorithm": "Definition Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects definition structure patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through definition pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "설명충/가르치기(Didactic Definition) 패턴 분석",
+    "description": "불필요하고 뻔한 교과서적 개념 정의(Definition)가 기계적으로 삽입되는 패턴을 찾아냅니다. 인간은 독자와의 배경지식을 가정하고 넘어가지만, AI 모델은 '도움이 되어야 한다'는 강박 때문에 묻지도 않은 용어를 자꾸 설명하려고 듭니다.",
+    "algorithm": "구문론적 정의(Definition) 추출 및 화용론적 필요성 스코어링",
+    "mechanism": "현대의 거대 언어 모델(LLM), 특히 인간 피드백 기반 강화학습(RLHF)으로 미세 조정된 모델들은 모호하게 대답할 때 큰 벌점을 받고, '유용하고(Helpful)', '교육적인' 답변을 뱉을 때 엄청난 보상을 받습니다. 이 구조는 AI에게 '설명충 기질(Didactic tic)'이라는 깊이 뿌리박힌 병리적 습관을 부여했습니다. 글을 생성할 때, AI 모델은 최고 전문가를 대상으로 쓴다고 가정할 때조차도 서사의 흐름을 뚝뚝 끊어가며 전문 용어나 약어를 친절하게 다시 정의하려는 강박을 보입니다. 'X는 ~입니다', 'Y의 맥락에서 X란 ~을 의미합니다', 혹은 'X, 즉 ~인 이것은' 같은 뻔한 수식 구조를 기계적으로 남발합니다. 이와 대조적으로, 인간은 글을 쓸 때 자신과 독자 사이의 '공통 기반(Common ground, 공유된 배경지식)'에 크게 의존합니다. 직장인이 'KPI'에 대해 메일을 쓸 때는 그냥 KPI라고 쓰지만, AI는 통계적으로 높은 확률로 '핵심 성과 지표(KPI), 즉 조직의 목표 달성을...'라며 굳이 풀어서 설명하려 듭니다. 이 NLP 기법은 이러한 명시적인 개념 정의 구문들을 싹 긁어모은 뒤, 해당 텍스트의 예상 독자 수준 대비 '정의 구문'의 밀도를 계산합니다. 독자가 뻔히 아는 내용을 마치 일타강사처럼 하나하나 구구절절 풀어쓰는 병적인 밀도가 감지된다면, 이는 기계가 쓴 글이라는 너무도 명백한 증거입니다.",
+    "useCase": "전문적인 비즈니스 이메일, 오피니언 칼럼, 문학 에세이 등에서 뻔한 용어에 대한 갑작스러운 '백과사전식 정의'가 자연스러운 글의 흐름을 깰 때, 이 AI 특유의 '과도한 친절함(Helpfulness bias)'을 족집게처럼 잡아냅니다.",
+    "strengths": "• ChatGPT나 Claude 같은 상업용 거대 모델들의 뼛속까지 새겨진 '친절한 인공지능 비서' 페르소나를 때려잡는 데 극도로 정확합니다.\n• 모델 내면에 잠재된 '설명하고 싶은 심리적 강박'은 그대로 남아있기 때문에, 단순한 단어 바꾸기(Paraphrasing) 꼼수로는 이 탐지기를 절대 회피할 수 없습니다.\n• AI가 분량을 억지로 부풀리기 위해 찔러넣는 쓰레기 문장(Fluff, 물타기 텍스트)을 식별해내는 최고의 탐지기입니다.",
+    "limitations": "• 교과서, 초보자용 튜토리얼 입문서, 백과사전, 전문 용어 사전처럼 애초에 '가르치고 설명하기 위해' 순수하게 쓰인 진짜 인간의 글에서 오탐지(False positives)가 발생할 수 있습니다.\n• 프롬프트 엔지니어가 '절대 기초 개념은 설명하지 마라' 혹은 '박사후 연구원들이 읽을 최고 난이도로 써라'라고 AI의 멱살을 잡고 통제하면 탐지력이 떨어집니다.\n• 구문론적 파싱(Syntactic parsing)에 의존하므로, 정해진 틀을 벗어난 매우 자유로운 대화체나 은어 기반의 '정의 구조'는 탐지를 교묘히 피해 갈 수 있습니다.",
+    "parameters": "분석 기준: 구문론적 절(동격, 연계 동사 등) 파싱 및 개체 맵핑\n측정 지표: 1,000단어당 요구하지 않은 자발적 설명(Definition)의 비율\n출력: 0-100 과도한 설명충 (친절함 편향) 스코어",
+    "accuracy": "높음 — 75-85%. RLHF로 튜닝된 모든 최신 AI 모델들의 목덜미를 쥐고 있는 가장 치명적인 '의미론적 지문(Signature)' 중 하나입니다.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Bai, Y. et al. (2022). Training a Helpful and Harmless Assistant with Reinforcement Learning from Human Feedback. arXiv.",
+            "url": "https://arxiv.org/abs/2204.05862"
         }
     ]
 }

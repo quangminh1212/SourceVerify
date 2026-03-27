@@ -1,14 +1,13 @@
 {
-    "name": "First Person Usage",
-    "description": "Analyzes first person perspective patterns",
-    "algorithm": "First Person Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes first person perspective patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through first person usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "一人称視点（一人称代名詞）分析",
+    "description": "一人称代名詞（私、僕、俺、私たちなど）の頻度と文脈への統合を分析します。AIモデルは本質的に客観的で三人称での視点をデフォルトとしており、明示的に強制されない限り、一人称の言語を有機的に使用することに苦戦します。",
+    "algorithm": "代名詞の密度および主観的フレーミング分析",
+    "mechanism": "一人称代名詞は、人間の経験の言語的なアンカー（拠り所）です。人間が意見、レビュー、または個人的な逸話を書くとき、彼らは自然に自分自身を中心に置きます（「私は…であることに気づいた」「私の経験では…」）。逆に、大規模言語モデルは、有用で、全知全能で、客観的なアシスタントとして機能するように（RLHFを介して）数学的に調整されています。彼らには個人的な経験、肉体、または意見がないため、ベースラインの出力では「架空の人格のハルシネーション（幻覚）」を避けるために一人称の言語が大幅に抑圧されます。AIが一人称で書くように明示的にプロンプトされると、多くの場合過剰修正（オーバー・コレクション）を行い、すべての文の正確な先頭に「私」を対称的に配置するか、一人称視点を一般的な導入節にのみ限定します（「私は［超客観的な事実］であると信じています」）。このアルゴリズムは、テキストの「主観的密度」を計算します。一人称代名詞の頻度だけでなく、その構文の深さも測定します。本来主観的であるべきジャンル（製品レビューやブログの投稿など）で一人称代名詞が完全に欠如している場合や、主観的な感情の枠組み（フレーミング）をまったく伴わずに「私」が極めて不自然でロボットのように配置されている場合は、そのテキストが機械で生成されたものであると強力にフラグが立てられます。",
+    "useCase": "著者の「生きた経験」がコアバリューとなる、個人的なエッセイ、カバーレター、製品レビュー、オピニオン記事などの真実性を検証するために不可欠です。",
+    "strengths": "• モデルが客観性を保とうとする本能と、ユーザーの「個人的なストーリーを書いて」というプロンプトの間で常に葛藤が生じるため、AIが生成したレビューや個人のブログを検出するのに非常に効果的です。\n• AIモデルが「私」を使ってエッセイを書き始めたにもかかわらず、テキストの途中で徐々に出力しやすい客観的な三人称視点へとドリフトしていく「ペルソナ幻覚疲労」を捉えます。\n• 高速で動作が軽く、単純な同義語の置換（スピニング）による手法を完全に無効化します。",
+    "limitations": "• 人間の文体規則でも一人称代名詞の使用が厳しく禁じられている、正式な学術論文、技術文書、またはジャーナリズムではまったく効果がありません。\n• 極めてフォーマルで、どこか他人事のような「企業的な」トーンで書く人間が誤検知（偽陽性）を引き起こす可能性があります。\n• ドキュメント全体に「私は思う」や「私の意見では」を挿入するだけで、人間がAIテキストに手動で簡単に「パッチ（修正）」を当てることができてしまいます。",
+    "parameters": "解析: 代名詞の頻度抽出および構文配置\n評価基準: 主観的な一人称のフレーミング vs 客観的な宣言の比率\n出力結果: 0-100 代名詞の無菌性（主観的な分離）スコア",
+    "accuracy": "中〜高 — カジュアル、物語風、および説得力のあるテキストで75-85%。AIの安全性アライメントによって義務付けられた「客観的分離」に対する、強力な行動的回避装置（ポリグラフ）として機能します。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

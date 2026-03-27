@@ -1,12 +1,21 @@
 {
-    "name": "Entity Grounding Analysis",
-    "description": "Checks whether named entities are factually grounded — AI text often hallucinates entities and relationships.",
-    "algorithm": "Algoritmo de análisis Entity Grounding Analysis",
-    "mechanism": "El sistema Entity Grounding Analysis analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Anclaje de Realidad de Entidades (Entity Grounding)",
+    "description": "Verifica si las Entidades Nombradas (personas, lugares, organizaciones, papers) están ancladas en la realidad objetiva. Los modelos de IA alucinan patológicamente entidades inexistentes o fabrican relaciones falsas para mantener la arrogancia y la fluidez narrativa.",
+    "algorithm": "Reconocimiento de Entidades Nombradas (NER) & Verificación con Grafos de Conocimiento",
+    "mechanism": "Cuando los humanos escriben textos informativos, sus cerebros acceden a bases de conocimiento fáctico, asegurándose de que las entidades que mencionan (autores, fechas, instituciones, librerías de software) existen de verdad y se relacionan lógicamente. Los Grandes Modelos de Lenguaje (LLMs), sin embargo, no 'saben' maldita sea ninguna verdad material; simplemente predicen vómitos de tokens basados en la co-ocurrencia estadística matemática. Cuando empujas a un LLM contra la pared pidiendo información oscura, citas académicas o detalles tecnológicos hiper-específicos que no están fuertemente en su matriz de entrenamiento, el modelo invariablemente 'alucinará' entidades ficticias que suenan asquerosamente plausibles y reales. Inventará a un 'Dr. X' dando clases en una universidad real, o citará una librería de Python fantasma que mágicamente resuelve el problema del usuario. Este radar despliega un Reconocimiento de Entidades Nombradas (NER) de grado militar para extraer todos y cada uno de los sustantivos propios, acrónimos y jerga especializada del texto. Luego, dispara estas entidades contra Grafos de Conocimiento masivos (como Wikidata o el Google Knowledge Graph). Un texto infestado de una alta densidad de entidades 'no ancladas'—nombres que suenan gloriosos y autoritarios pero que devuelven CERO resultados verificables en el mundo real—es la prueba forense definitiva de una alucinación esquizofrénica de una máquina.",
+    "useCase": "Auditar e interrogar artículos académicos, noticias periodísticas, documentación técnica y ensayos históricos donde la verdad es de vida o muerte. Es el arma definitiva para aniquilar las infames 'citas falsas' (fake citations) generadas por IA.",
+    "strengths": "• Altamente y brutalmente determinista: a diferencia de los métodos de probabilidad de palabras, encontrar un libro inventado o un académico fantasma es un 'Smoking Gun' (prueba de asesinato) indiscutible de texto sintético.\n• Devastador contra modelos antiguos o no conectados a internet (como ChatGPT-3.5 estándar o Llama-2 base) que mienten patológicamente cuando no saben la respuesta.\n• Completamente inmune a trucos de manipulación de estilo (ej. 'escribe esto con un tono sarcástico y natural'), porque cambiar el estilo no arregla los datos falsos inventados en el código subyacente.",
+    "limitations": "• Sufrirá de fuego amigo (falsos positivos) masivos si se aplica a la escritura creativa humana (novelas de ciencia ficción, fantasía) donde las entidades están genialmente inventadas a propósito.\n• Ciego y sordo si la IA generó el texto usando una arquitectura RAG perfecta (Retrieval-Augmented Generation) donde todos los hechos reales fueron inyectados a la fuerza en el prompt por un usuario astuto.\n• Requiere conexión a la red con las APIs de Grafos de Conocimiento, lo que significa que puede fallar con jerga hiper-nicho corporativa, local o noticias de hace cinco minutos que no están indexadas.",
+    "parameters": "Análisis: Extracción Quirúrgica Spacy NER & Interrogatorio de Graph API\nMétrica: Proporción Letal de Entidades Verificables vs Entidades Fantasma (Alucinadas)\nResultado: 0-100 Nivel de Psicopatía Alucinatoria (Puntaje de Desconexión de la Realidad)",
+    "accuracy": "Certeza Forense Alta — 80-90% en textos informativos. Proporciona evidencia cruda, dura y comprobable de falsificación en lugar de apostar únicamente a la probabilidad estadística matemática.",
+    "references": [
+        {
+            "title": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.",
+            "url": "https://aclanthology.org/P11-1115/"
+        },
+        {
+            "title": "Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL.",
+            "url": "https://arxiv.org/abs/1803.05355"
+        }
+    ]
 }

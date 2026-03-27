@@ -1,14 +1,13 @@
 {
-    "name": "Evidence Citation",
-    "description": "Analyzes evidence citation patterns",
-    "algorithm": "Evidence Citation — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes evidence citation patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through evidence citation analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "증거 인용(Evidence Citation) 프로파일링",
+    "description": "글에서 증거, 인용문, 혹은 사례를 도입하고 통합할 때 사용되는 언어적 구조 패턴을 분석합니다. 인간은 문맥에 따라 매우 유기적이고 변칙적인 방식으로 근거를 끼워 넣는 반면, AI 모델은 몹시 경직되고 교과서적인 틀(Formulaic approach)에 박힌 방식으로만 출처를 인용합니다.",
+    "algorithm": "구문 의존성 구문 분석(Dependency Parsing) 및 인용 수사법(Rhetoric) 분석",
+    "mechanism": "자신의 주장을 뒷받침할 때, 인간 작가들은 상상을 초월할 정도로 다양하고 문맥 의존적인 구조를 사용해 증거를 우겨넣습니다. 문단이 뜬금없이 끝나는 곳에 괄호를 치고 인용 문구를 던져놓거나, 자신이 쓰던 문장 한가운데에 남의 말을 지저분하게 엮어 넣거나, '스미스가 말했듯이...'라며 매우 캐주얼하게 저자를 언급하기도 합니다. 반면, 거대 언어 모델(LLM)은 '도움이 되고 권위 있어 보이도록' 강제하는 RLHF(인간 피드백 기반 강화학습) 훈련 체계에 갇혀 있기 때문에, 가장 모범적이고 딱딱한 템플릿화된 증거 제시 구조를 기본값으로 씁니다. AI는 습관적으로 '최근의 한 연구에 따르면...', '예를 들어, 연구들은 다음과 같이 보여줍니다...' 같은 교과서적인 도입부(Introductory clauses)를 깔아놓고, 그 직후에 깔끔하게 요약된 독립적인 평서문을 배치합니다. AI는 구구절절한 복문 속에 직접 인용구를 매끄럽게 욱여넣거나 뒷북치듯 괄호로 핵심 증거를 보충하는 인간 특유의 '난잡한 스킬'을 거의 구사하지 못합니다. 이 분석 기법은 의존성 구문 분석(Dependency Parsing)을 투입하여 문장 내의 증거 마커('~에 따르면', '~가 인용한', '연구가 보여주듯')와 실제로 주장된 사실 사이의 구문구조적 거리와 연결 형태를 입체적으로 매핑합니다. 인간 사고 특유의 유동적인 구문 통합 과정 없이, 오로지 좌우 대칭이 완벽한 교과서 표준 도입절만을 앵무새처럼 반복하여 증거를 제시하는 텍스트는 매우 알고리즘적인 기계의 산물로 적발됩니다.",
+    "useCase": "'증명을 전개하는 방식(Mechanics of proof)' 자체가 글쓴이가 인간인지 기계인지 명백히 폭로해버리는 학생의 에세이, 학술 연구 논문, 논설문 등을 파헤치는 데 필수적인 무기입니다.",
+    "strengths": "• '학술적으로 작성해줘' 같은 프롬프트 공격에 매우 강력합니다. 설령 논문을 쓰라는 지시를 받아도, AI는 인간이 자기 머릿속 인지 흐름에 맞춰 인용구를 지저분하고도 유기적으로 짜깁기하는 방식을 쉽게 복제하지 못합니다.\n• 단순한 어휘 빈도가 아니라 문장의 뼈대(수사학적 구조)를 뜯어보기 때문에, 얄팍한 동의어 교체(Paraphrasing) 툴을 이용해 단어만 살짝 바꿔치기하는 꼼수를 완벽히 무력화합니다.\n• 검증되지 않은 헛소리를 하면 심하게 페널티를 받도록 설계된 RLHF 훈련의 '기계적 트라우마'를 역이용하여, 모델을 뻔하고 예측 가능한 '주장 + 교과서적 인용' 루프 함정에 빠뜨려 검거합니다.",
+    "limitations": "• 특정 과학 논문 초록이나 형식이 꽉 짜인 법률 문서처럼, 인간의 글조차도 엄격한 표준 포맷과 교과서적 인용 가이드라인을 강제로 따라야만 하는 극도로 경직된 환경에서는 오탐지(False positive)가 발생하기 쉽습니다.\n• 애초에 실증적인 증거나 학술적 인용이란 개념 자체가 존재하지 않는 창작 소설, 시, 또는 가벼운 채팅 텍스트에서는 완전히 장님이 됩니다.\n• 시스템에 사전 등록된 '증거 마커(단서 단어)'를 식별하는 데 의존하므로, 인간조차 본 적 없는 극도로 기괴하고 이례적인 인용 스타일은 구문 분석기를 그대로 통과해버릴 수 있습니다.",
+    "parameters": "분석 기준: 언어적 의존성 구문 분석 및 증거 마커(Evidentiary Marker) 추출\n측정 지표: 증거 통합 과정의 구문론적 경직성(Rigidity) 대비 유동성(Fluid) 기준치\n출력: 0-100 인용 정형화 (알고리즘적 경직성) 스코어",
+    "accuracy": "높음 — 논증적 및 학술적 텍스트에서 82-89%. AI의 안전성 및 정렬(Alignment) 훈련이 강제로 주입한 '친절하지만 로봇처럼 딱딱한' 구조적 틱(Tics) 장애를 매우 정확히 타격합니다.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

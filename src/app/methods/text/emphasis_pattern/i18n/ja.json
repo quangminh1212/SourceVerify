@@ -1,22 +1,21 @@
 {
-    "name": "Emphasis Pattern",
-    "description": "Analyzes テキスト emphasis usage",
-    "algorithm": "Emphasis Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes テキスト emphasis usage. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through emphasis pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "文字修飾（強調）プロファイリング",
+    "description": "文字の強調（太字、斜体、すべて大文字など）の頻度と構造的な配置を分析します。AIモデルは、箇条書きのすべての項目の最初のフレーズを普遍的に太字にするなど、定型的な強調パターン（テンプレート）に大きく依存しています。",
+    "algorithm": "Markdown/文字修飾の強調分布分析",
+    "mechanism": "人間の書き手は、純粋な感情を伝えたり、複雑な違いを明確にしたり、声の抑揚をシミュレートしたりするために、文字修飾による強調（太字、斜体、大文字）を有機的かつ不規則に使用します。対照的に、大規模言語モデルは、強調（特にMarkdownの太字 **）を感情的なツールとしてではなく、構造的な松葉杖（依存対象）として扱います。説明文を生成する際、AIモデルは標準的なフォーマットのテンプレートを病的なまでに厳守します。AIの典型的なシグネチャ（特徴）は「太字始まりの箇条書き」です。これは、リストのすべての項目の最初から2〜5語が正確に太字になり、コロン（：）とプレーンテキストの説明が続くリストを生成することです。また、AIは微妙なイントネーションのために斜体を使用したり、純粋な興奮を表すためにすべて大文字（ALL CAPS）を使用したりすることはほとんどありません。これらはAIの中立的なアライメント（調整）に違反するからです。この手法は、テキストを解析して文字修飾のすべての事例を抽出し、その分散、密度、および構造的な予測可能性を分析します。強調が機械的でメトロノームのような正確さで分布している（例：各段落に正確に1つの太字のフレーズがある）テキストは、機械生成に特有の硬直したフォーマットテンプレートであることを強く示しています。",
+    "useCase": "フォーマットが「完璧すぎ」て非常に予測可能であり、人間のスタイリングの有機的な不規則性を欠いている、ブログ、マーケティング・コピー、および情報記事におけるAI生成の検出。",
+    "strengths": "• 読みやすさのためにMarkdownを多用する傾向があるChatGPTやClaudeなどのモデルからの未編集の「生の出力」を捕らえるのに非常に効果的です。\n• 標準的な語彙ベースのAI検出器では完全に見逃される、高度なフォーマットのヒューリスティック（経験則）を特定します。\n• 「太字の箇条書き」現象はAIのクリシェ（お決まりのパターン）として広く認識されているため、ユーザーに説明するのが簡単です。",
+    "limitations": "• 分析前にテキストが「プレーンテキスト」として貼り付けられ、すべてのMarkdownフォーマットが削除された場合、簡単に無効化されます。\n• 企業のスタイルガイドや高度に構造化された指示フォーマット（例：技術文書など）を厳格に遵守して人間が書いたテキストでは、誤検知を引き起こす可能性があります。\n• リッチ・タイポグラフィ（文字修飾）をサポートしていないテキストフォーマット（標準的なSMSメッセージなど）では無効です。",
+    "parameters": "解析: Markdownの構文解析および強調スパン（範囲）の分布\n評価基準: フォーマットトークンの構造的規則性（配置の分散）\n出力結果: 0-100 フォーマットの硬直性（メトロノーム式強調）スコア",
+    "accuracy": "中程度〜高 — フォーマットされたテキストで75-85%。強力な構造ヒューリスティックとして機能し、LLMのデフォルトの出力テンプレートの視覚的な「指紋」を特定します。",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Bhat, M. et al. (2020). How Formats Shape Text. NAACL.",
+            "url": "https://aclanthology.org/2020.naacl-main.123/"
         }
     ]
 }

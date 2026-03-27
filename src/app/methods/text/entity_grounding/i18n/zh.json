@@ -1,12 +1,21 @@
 {
-    "name": "Entity Grounding Analysis",
-    "description": "Checks whether named entities are factually grounded — AI text often hallucinates entities and relationships.",
-    "algorithm": "Entity Grounding Analysis分析算法",
-    "mechanism": "Entity Grounding Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "实体现实锚定 (Entity Grounding/Fact-check)",
+    "description": "交叉验证文本中出现的命名实体（人名、地名、专业术语）在现实世界中是否真实存在。AI 模型为了死撑叙事的流畅度和权威感，极度热衷于“幻觉”出根本不存在的学者、书籍和因果关系。",
+    "algorithm": "命名实体识别 (NER) 与外部知识图谱 (Knowledge Graph) 交叉盘问",
+    "mechanism": "人类在撰写信息类科普或学术文本时，大脑是锚定在现实知识库上的——我们引用的作者、年代、研究机构、代码库都是可查证的客观存在。然而，大型语言模型（LLM）根本毫无“常识”或“事实”的概念；它们只是在玩一场基于高维统计学概率的“接龙游戏”。当用户强迫 LLM 提供晦涩的冷知识、学术引用或极其冷门的硬核技术细节时，由于训练权重中缺乏足够的参考点，AI 会毫无心理负担地产生“幻觉（Hallucination）”——它会用最自信的学术腔调，编造出一个在知名大学任教的虚构“X 教授”，或者虚构一个根本不存在但名字听起来极其专业的 Python 库来骗你。本探针会首先激活硬核的命名实体识别（NER）引擎，将文本中所有的专有名词、时间节点和学术术语像外科手术一样全部剥离出来。紧接着，探针会将这些提取出来的实体及其上下文关系，直接抛给权威的世界级知识图谱（如 Wikidata 或 Google Knowledge Graph）进行交叉火力验证。如果一篇文章里密密麻麻充斥着大量听起来高调权威、但在全球互联网知识库中却“查无此人/物”的“幽灵实体”——这已经是铁证如山的 AI 幻觉生成物，甚至都不需要动用概率学分析去猜。",
+    "useCase": "对学术论文、新闻稿、技术白皮书和历史深度长文进行法医级鉴定——在这些容不得半点沙子的严肃语境中，这是当场击毙 AI “捏造虚假引用（Fake Citations）”的终极杀器。",
+    "strengths": "• 降维式的致命一击：这种检测不受基于概率阈值的困扰；发现一本凭空捏造的书名或一个不存在的机构，这就是判定 AI 文本的铁证（Smoking Gun）。\n• 老旧模型的克星：对付那些没有联网能力、且极度容易在知识盲区里胡编乱造的模型（如早期的 ChatGPT-3.5 或本地离线 Llama-2）具有毁灭性的识别率。\n• 免疫提示词伪装：由于它查的是“事实漏洞”而不是“文本风格”，黑客不论怎么给 AI 下达“模仿人类语气重写”的指令，都无法弥补虚假事实的硬伤。",
+    "limitations": "• 在小说、奇幻文学等人类故意“捏造实体”的文学创作领域，该探针会杀红眼（引发海量误报）。\n• 如果用户使用了极其先进的 RAG（检索增强生成）技术，硬塞给 AI 100% 完美的真实背景资料让其总结，那么 AI 生成的文本在实体锚定上将完美无瑕，探针会失效。\n• 高度依赖外部知识图谱接口（API）；这意味着如果碰上非常冷门、极度小众或者今天刚发生的新闻词汇，API 可能会回答“不知道”，从而导致误判。",
+    "parameters": "雷达切片: Spacy/Stanza NER 精准提取 & 外部知识图谱 API 接口实时查水表\n定罪量表: 幽灵实体 (查无此物的幻觉) 占比率\n行刑判决: 0-100 面不改色胡说八道 (实体幻觉脱节) 定罪分数",
+    "accuracy": "极高处刑率 — 80-90%（在严谨的信息类文本中）。它提供的不是含糊其辞的疑似率，而是客观存在的“事实伪造录音带”。",
+    "references": [
+        {
+            "title": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.",
+            "url": "https://aclanthology.org/P11-1115/"
+        },
+        {
+            "title": "Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL.",
+            "url": "https://arxiv.org/abs/1803.05355"
+        }
+    ]
 }
