@@ -1,14 +1,14 @@
 {
-    "name": "Hồ sơ Trừu tượng Từ vựng",
-    "description": "Đánh giá độ sâu của sự trừu tượng khái niệm thông qua vector nhúng từ",
-    "algorithm": "Bộ phân tích độ trừu tượng dựa trên vector nhúng",
-    "mechanism": "Thay vì tính tỷ lệ đơn giản, phương pháp này ánh xạ toàn bộ văn bản vào không gian vector nhúng từ chiều cao đã được huấn luyện với các gradient trừu tượng ngôn ngữ. Các mô hình ngôn ngữ lớn thường duy trì mức độ trừu tượng đồng đều (từ trung bình đến cao) trong suốt tài liệu để áp dụng rộng rãi. Ngược lại, con người có các 'thung lũng trừu tượng' - những phần tường thuật hoặc bằng chứng cực kỳ cụ thể, đối lập mạnh mẽ với phần mở bài trừu tượng. Bằng cách đo phương sai và độ sâu của điểm trừu tượng không gian vector, phương pháp này xác định được sự 'bằng phẳng' đáng ngờ đặc trưng của LLM.",
-    "parameters": "Loại phân tích: Không gian vector nhúng\nPhương tiện: Văn bản\nĐầu vào: Văn bản có định dạng\nĐộ dài tối thiểu: 100 từ\nĐầu ra: Điểm đồng nhất độ trừu tượng (0-100)\nXử lý: Ánh xạ vector",
-    "accuracy": "Cao — 75-85%. Đặc biệt hiệu quả với văn bản dài, nơi nhịp điệu cấu trúc của con người khác biệt rõ rệt so với kết quả tạo từ AI.",
+    "name": "Tỷ lệ Tư duy Trừu tượng (Abstractness Ratio)",
+    "description": "Đo lường sự lạm dụng các danh từ mang tính ý niệm trừu tượng so với thực thể cụ thể để lật tẩy hiện tượng AI 'chêm lời' sáo rỗng.",
+    "algorithm": "Phép Chiếu Bộ từ điển Danh từ Trừu tượng & Bản đồ Ngữ nghĩa",
+    "mechanism": "Khi nhận được lệnh phải 'viết dài ra' hoặc bàn luận sâu xa, các cỗ máy AI tạo sinh thường xuyên sử dụng một mánh khóe bẩn: 'độn văn'. Chúng pha loãng văn bản bằng cách nhồi nhét một lượng khổng lồ các khái niệm vô hình, đao to búa lớn (ví dụ: 'sự đồng lực', 'mô thức', 'sự kiến tạo khái niệm', 'cấu trúc vĩ mô') thay vì đưa ra những hình ảnh hiện thực, cụ thể. Một bộ não con người khi tranh luận thường tự nhiên ghim chặt lập luận của mình vào những sự vật có tính vật lý, sự kiên cụ thể hoặc giác quan thực tế. Phương pháp này rà soát chéo mọi danh từ và động từ với các kho dữ liệu Tâm lý học ngôn ngữ (Psycholinguistic) khổng lồ. Bằng cách tính toán mật độ địa hình quằn quại của các token ngôn ngữ trừu tượng, hệ thống sẽ cắm cờ đỏ lên những bài viết thực chất 'chẳng nói lên điều gì cả' nhưng lại lạm dụng hàng tá từ vựng hàn lâm bọc đường nghe có vẻ cực kỳ uyên bác.",
+    "parameters": "Cơ quan Thẩm tra: Phép vạch chỉ Tâm lý ngôn ngữ Đa từ điển\nĐơn Vị Đo Lường: Tỷ lệ Chìm đắm Trừu tượng (Danh từ Trừu tượng đấu với Tổng số Danh từ)\nĐiểm Số Định Đoạt: 0-100 Độ Giáo Điều Sáo Rỗng (Semantic Vapidity Score)",
+    "accuracy": "Trung Bình - Khá Cao — 75-80% khi càn quét trên nội dung web tầm trung và các bài tiểu luận sinh viên đại trà.",
     "source": "Lý thuyết ngôn ngữ máy tính và phân tích vector ngữ nghĩa.",
-    "useCase": "Phát hiện văn bản trừu tượng một cách đồng đều từ AI - do mô hình không thể chuyển đổi linh hoạt giữa lý thuyết và các ví dụ thực tế cụ thể.",
-    "strengths": "• Phát hiện các khác biệt cấu trúc vi mô vượt xa phạm vi từ vựng\n• Cực kỳ hiệu quả trong việc bắt các luồng hành văn 'bằng phẳng', chung chung\n• Lọc được các văn bản cố tình dùng prompt để lách luật",
-    "limitations": "• Đòi hỏi năng lực xử lý mạnh cho vector nhúng\n• Ít hiệu quả với văn bản quá ngắn (dưới 100 từ)\n• Phụ thuộc nhiều vào chất lượng mô hình nhúng gốc",
+    "useCase": "Bóc mẽ các loại 'cháo từ vựng doanh nghiệp' (corporate word salad), các bài luận tiểu thuyết do AI viết vội, và các nội dung PR giả vờ sâu sắc một cách lố bịch.",
+    "strengths": "• Lột mặt nạ hoàn hảo căn bệnh 'ảo giác chiều sâu' của AI (tức là nghe thì có vẻ cực kỳ thông minh nhưng ruột thì rỗng tuếch không có dữ kiện).\n• Nhanh như chớp vì tận dụng triệt để sức mạnh của các bộ từ điển Tâm lý ngôn ngữ học cổ điển đã được kiểm chứng.\n• Không thèm bú liếm tới nguồn tài nguyên GPU khổng lồ đám mây để chạy Embeddings.",
+    "limitations": "• Mắc kẹt thảm hại và gây dính đạn oan (False positives) nếu bản chất văn bản vốn dĩ là triết học hạng nặng (như đọc phải Kant hay Hegel) hoặc cẩm nang vật lý lý thuyết.\n• Điếc toàn tập nếu gặp phải kẻ nhắc lệnh (Prompter) xảo quyệt quát AI rằng: 'Chỉ được dùng ví dụ hình ảnh vật lý, có thể chạm vào để mô tả'.\n• Lệ thuộc sinh tử vào từng hệ ngôn ngữ, bắt buộc phải có kho từ điển Tâm lý ngôn ngữ cực kỳ đồ sộ cho riêng từng thứ tiếng.",
     "references": [
         {
             "title": "Turney, P. D., et al. (2011). Lexical entailment and abstractness. Natural Language Engineering.",

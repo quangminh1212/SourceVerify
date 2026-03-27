@@ -1,12 +1,12 @@
 {
-    "name": "Độ dài từ trung bình",
-    "description": "Đo phân bổ độ dài từ trung bình",
-    "algorithm": "Thuật toán phân tích Độ dài từ trung bình",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo phân bổ độ dài từ trung bình. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
+    "name": "Phân tích Biến thiên Từ vựng",
+    "description": "Đo lường sự sai lệch thống kê trong chiều dài từ để phát hiện luồng đọc đồng nhất bất thường.",
+    "algorithm": "Phân tích Phương sai Chiều dài Token",
+    "mechanism": "Văn bản do con người viết thể hiện sự biến thiên lớn về phân bố chiều dài từ do các lựa chọn nhận thức ngôn ngữ và vốn từ vựng ngẫu nhiên. Ngược lại, LLM có xu hướng hội tụ ở một chiều dài từ trung bình đồng nhất, ảnh hưởng bởi bias tập dữ liệu và thuật toán mã hóa (như BPE). Phương pháp này tính toán độ lệch chuẩn của chiều dài từ trong từng cụm văn bản nhỏ để tìm ra nhịp điệu từ vựng quá ổn định - dấu vết điển hình của hệ thống sinh văn bản tự động.",
+    "parameters": "Phân tích: Thống kê từ vựng\nĐo lường: Độ lệch chuẩn Token\nĐầu ra: Điểm đồng nhất 0-100",
     "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
     "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích độ dài từ trung bình. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "useCase": "Phát hiện văn bản AI duy trì luồng giao tiếp mượt mà nhân tạo bằng cách trốn tránh các biến động từ vựng tự nhiên.",
+    "strengths": "• Khả năng chống chịu cao với các trò lừa prompt đơn giản.\n• Tính toán siêu tốc, ít tốn tài nguyên máy tính.\n• Thuần túy đánh giá hình thái bề mặt, bỏ qua các chiêu trò che đậy ngữ nghĩa.",
+    "limitations": "• Bị nhiễu mạnh bởi các bài báo học thuật chứa nhiều từ ghép dài.\n• Không có tác dụng trên các đoạn văn quá ngắn (<100 từ).\n• Người học ngôn ngữ đôi khi cũng viết với cấu trúc từ khóa khuôn mẫu tương tự."
 }

@@ -1,14 +1,13 @@
 {
     "name": "Argument Density Score",
-    "description": "Measures the ratio of distinct claims and premises against total word count",
+    "description": "Measures the ratio of distinct, non-redundant claims and premises extracted from a text against its total physical word count.",
     "algorithm": "Argumentative Proposition Extractor",
-    "mechanism": "This method evaluates the informational efficiency of a text. When instructed to generate long texts, LLMs frequently engage in 'argumentative padding'—producing verbose paragraphs that circle around a single main point without introducing novel claims, evidence, or nuance. By extracting the total number of distinct argumentative propositions (claims, premises, backing) and computing their ratio to the physical length of the text, this method yields an 'argument density score.' High word counts with an unsustainably low number of distinct propositions strongly indicate the syntactic fluff typical of an AI attempting to meet length constraints, whereas human experts tend to write with much higher, denser informational efficiency.",
-    "parameters": "Analysis type: Proposition extraction\nMedia: Text\nInput: Formatted/Raw text\nMinimum length: 150 words\nOutput: Argument density score (0-100)\nProcessing: Semantic claim extraction",
-    "accuracy": "Moderate to High — 70-85%. Highly accurate on essays, op-eds, and academic papers.",
-    "source": "Argumentation mining and computational linguistics.",
-    "useCase": "Detecting overly verbose AI-generated text that sounds persuasive but lacks the dense layering of actual substantive claims typical of human experts.",
-    "strengths": "• Targets the fundamental 'hallucination avoidance' padding behavior of LLMs\n• Very effective at analyzing long-form content\n• Independent of specific vocabulary choices",
-    "limitations": "• Susceptible to human writers practicing 'word count padding' (e.g., students)\n• Ineffective on naturally sparse genres like poetry or minimalist fiction\n• Requires accurate propositional parsing logic",
+    "mechanism": "This method evaluates the informational efficiency of a text. When instructed to generate long texts, LLMs frequently engage in 'argumentative padding'—producing verbose paragraphs that eloquently circle around a single main point without introducing any novel claims, evidence, or nuance. They do this to meet length constraints without risking hallucination or breaking safety guardrails. By extracting the absolute number of distinct argumentative propositions (claims, premises, backing) and computing their ratio to the physical length of the text, this method yields an 'argument density score.' Exceptionally high word counts paired with a mathematically low number of distinct propositions strongly indicate the syntactic fluff typical of an AI attempting to hit a word count, whereas human experts instinctively write with much denser informational efficiency.",
+    "useCase": "Detecting overly verbose AI-generated essays, op-eds, and reports that sound highly persuasive but lack the dense layering of actual substantive claims typical of human experts.",
+    "strengths": "• Directly targets the fundamental 'hallucination avoidance' padding behavior of LLMs.\n• Exceptionally effective at analyzing long-form content, such as collegiate essays or automated journalism.\n• Operates independently of specific vocabulary choices, meaning traditional 'rewrite' prompts cannot easily bypass it.",
+    "limitations": "• Susceptible to false positives when evaluating human writers notoriously practicing 'word count padding' (e.g., struggling students).\n• Completely ineffective on naturally sparse genres like poetry, minimalist fiction, or marketing slogans.\n• Requires highly accurate propositional parsing logic to avoid counting rephrased identical claims as distinct.",
+    "parameters": "Analysis: Linguistic Proposition Extraction\nMetric: Distinct Semantic Claims per 1000 Tokens\nOutput: 0-100 Informational Padding Score",
+    "accuracy": "Moderate to High — 75-84%. Highly accurate on essays, op-eds, and analytical pieces.",
     "references": [
         {
             "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",

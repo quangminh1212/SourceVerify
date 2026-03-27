@@ -1,18 +1,17 @@
 {
-    "name": "Hồ sơ Cấu trúc Lập luận",
-    "description": "Phân tích độ cứng nhắc và sự báo hiệu lộ liễu của các từ nối và khung diễn ngôn",
-    "algorithm": "Bộ Ánh xạ Luồng Diễn ngôn & Chuyển ý",
-    "mechanism": "Phương pháp này đánh giá sự cứng nhắc trong kiến trúc của một lập luận. Các LLM (như ChatGPT) được tinh chỉnh để trở nên cực kỳ có cấu trúc và dễ đọc, điều này thường dẫn đến các bản mẫu 'bài luận năm đoạn' hoàn hảo như sách giáo khoa. Chúng báo hiệu các đoạn chuyển ý một cách nặng nề bằng những từ nối diễn ngôn cực kỳ dễ đoán ('Đầu tiên', 'Hơn thế nữa', 'Thêm vào đó', 'Tóm lại'). Ngược lại, diễn ngôn thực sự của con người, đặc biệt là từ các chuyên gia, lại tự nhiên (organic) hơn rất nhiều—con người đan xen các luận điểm, xếp chồng bằng chứng, trì hoãn kết luận hoặc sử dụng các liên kết logic ngầm thay vì liên tục cắm biển báo. Bằng cách ánh xạ trình tự cấu trúc của các luận điểm và từ nối, hệ thống sẽ xác định được bộ khung cơ học, dễ đoán đặc trưng của văn bản do AI tạo ra.",
-    "parameters": "Loại phân tích: Ánh xạ cấu trúc diễn ngôn (Topology)\nPhương tiện: Văn bản\nĐầu vào: Văn bản thô/Có định dạng\nĐộ dài tối thiểu: 200 từ\nĐầu ra: Điểm độ cứng nhắc cấu trúc (0-100)\nXử lý: Nhận diện từ nối & Ánh xạ luồng logic",
-    "accuracy": "Cao — 78-86%. Đặc biệt mạnh trong việc phát hiện các đầu ra prompt tiêu chuẩn của LLM ('Hãy viết một bài luận về...').",
-    "source": "Nghiên cứu phân tích diễn ngôn và ánh xạ khung cú pháp văn bản.",
-    "useCase": "Phát hiện cấu trúc bài luận cứng nhắc, hoàn hảo theo khuôn mẫu sách giáo khoa, chủ yếu dựa vào việc lặp đi lặp lại các 'biển báo' chuyển ý để xâu chuỗi lập luận.",
-    "strengths": "• Nhắm vào tính an toàn cấu trúc RLHF và sự sắp xếp luồng văn bản\n• Bóc trần được cách viết rập khuôn 'điền vào chỗ trống'\n• Kháng lại cực tốt các kỹ thuật qua mặt kiểu 'đổi từ đồng nghĩa'",
-    "limitations": "• Dễ đánh dấu nhầm nếu cấu trúc bài viết của học sinh cố tình ép theo định dạng học thuật (ví dụ: học viên thi luyện TOEFL/IELTS)\n• Hoàn toàn vô dụng với truyện hư cấu hoặc văn bản thơ ca nhẹ nhàng\n• Không đáng tin cậy trên các mẫu văn bản siêu ngắn chưa đủ hình thành cấu trúc",
+    "name": "Hồ sơ Cấu trúc Lập luận (Argument Structure)",
+    "description": "Phân tích mức độ cứng nhắc thiếu tự nhiên, sự dễ đoán cực độ và thói quen 'reo rắc tín hiệu' chuyển ý lạm dụng bên trong một bộ khung lập luận.",
+    "algorithm": "Máy Lập Bản đồ Luồng Diễn ngôn & Chuyển ý",
+    "mechanism": "Phương pháp này mổ xẻ sự cứng nhắc trong kiến trúc lập luận. Các hệ thống LLM bị nhồi sọ thông qua quá trình học tăng cường (RLHF) để trở nên cực kỳ có cấu trúc, an toàn và dễ đọc cho mọi tầng lớp từ thấp đến cao. Quá trình huấn luyện này vô tình ép chúng vào cái khuôn mẫu 'bài văn 5 đoạn' hoàn hảo chuẩn sách giáo khoa. Chúng có một thói quen rất dễ đoán: báo trước mọi động thái của mình bằng cách rãi rác hàng tá từ nối chuyển ý một cách lộ liễu rành rành ('Đầu tiên', 'Hơn thế nữa', 'Thêm vào đó', 'Tóm lại'). Lập luận bẩm sinh của con người, đặc biệt là từ các chuyên gia, lại mang tính hữu cơ và hỗn loạn hơn nhiều — con người đan xen luận điểm vào nhau, chồng chéo bằng chứng, dời kết luận hoặc xài những pha chuyển ý ngầm bằng logic thay vì cứ liên tục cắm biển báo hiệu trên mỗi bước đi như một tay cảnh sát giao thông. Bằng cách vẽ bản đồ cấu trúc liên kết không gian của các cụm luận điểm và mấu nối chuyển ý, hệ thống sẽ bắt gọn cái hệ thống giàn giáo được lắp ghép bằng máy móc, rập khuôn như kiểu 'tô màu theo số' (paint-by-numbers) đặc trưng của văn bản AI.",
+    "useCase": "Phát hiện những bài văn nghị luận có cấu trúc cứng ngắc, hoàn mỹ như sách giáo khoa, bị phụ thuộc nặng nề vào các tấm biển báo chuyển ý lặp đi lặp lại ('Thứ nhất... Thứ hai... Cuối cùng...') để xâu chuỗi các luận điểm.",
+    "strengths": "• Đánh trúng đòn hiển nhiên vào thiên kiến an toàn RLHF và sự rập khuôn luồng thông tin — thứ mà LLM gần như không thể tự thoát ra được.\n• Rất điên cuồng và hiệu quả khi bắt chẹt mấy bài luận văn hay bài viết được cày thuê tự động bằng kiểu 'mì ăn liền'.\n• Trơ lỳ, chống chịu tuyệt đối trước các chiêu trò lừa đảo đảo từ đồng nghĩa (ví dụ: việc đổi từ 'Đầu tiên' thành 'Trước hết' chả làm suy suyển gì đến cốt lõi cấu trúc).",
+    "limitations": "• Cực kỳ dễ bóp cò nhầm (False positives) nếu đem đi chấm bài của những học sinh bị dạy nhồi sọ rằng phải viết theo khuôn khổ cứng nhắc (ví dụ: học sinh trung học, thí sinh đi thi IELTS/TOEFL).\n• Hoàn toàn vô dụng nếu chĩa vào tiểu thuyết hư cấu hay thơ ca (cái nơi chả có tí luật lệ logic nào).\n• Phân loại kém tin cậy đối với các văn bản lùn tịt (dưới 100 từ) không có đủ dải băng để phơi bày cấu trúc ngữ pháp.",
+    "parameters": "Kiểm Định: Vẽ Bản Đồ Hình Học Diễn Ngôn\nThước Đo: Sự Cứng Nhắc Của Các Từ Nối Chuyển Đoạn vs. Sự Dịch Chuyển Ngầm Hữu Cơ\nĐầu Ra: 0-100 Điểm Số Rập Khuôn Cấu Trúc Bê Tông (Structural Rigidity Score)",
+    "accuracy": "Rất Cao — 78-86%. Áp đảo sát thủ trước những lệnh prompt thông minh hời hợt kiểu LLM ('Hãy viết một bài luận về...').",
     "references": [
         {
             "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson.",
-            "url": "https://www.pearson.com/"
+            "url": "https://www.routledge.com/Longman-Grammar-of-Spoken-and-Written-English/Biber-Johansson-Leech-Conrad-Finegan/p/book/9780582237254"
         }
     ]
 }
