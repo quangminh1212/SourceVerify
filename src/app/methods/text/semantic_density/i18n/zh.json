@@ -1,25 +1,20 @@
 {
-    "name": "语义密度分析",
-    "description": "测量 information density uniformity 跨 content.",
-    "useCase": "通过均匀的信息密度检测AI文本",
-    "mechanism": "Segments content into columns and 测量 熵 in each. AI text distributes information too evenly, while 人类写作 has natural density variations.",
-    "accuracy": "中等 - 71-81%",
-    "source": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "窗口大小: 自适应, Quantization: 8-64 levels, Metrics: 熵, CV, 相关性",
-    "strengths": "- Effective for detecting AI生成的 text\n- Language-agnostic 统计 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 误报\n- Short texts provide less reliable signals\n- Performance varies 跨 写作风格s",
+    "name": "语义信息密度分布雷达 (Semantic Density)",
+    "description": "度量整篇文章中“信息量”分布的均匀程度。AI 模型被底层算法（追求预测损失最小化和控制文本困惑度）所绑架，它们在抛出干货（如专有名词、新奇概念、复杂形容词）时，倾向于像在切片面包上均匀涂抹花生酱一样，把信息点极其呆板、均匀地分摊在每一段里。而真正的人类在写作时，其信息密度会呈现出剧烈的“呼吸感”：在抛出核心观点时会有极高的“语义爆发（高密度）”，紧接着便会进入低密度的“贤者模式”（长篇大论地解释、举例、感慨或过渡）。",
+    "algorithm": "滑动窗口信息熵与密度方差探针",
+    "mechanism": "雷达会将文本切分成一个个“滑动窗口”（例如每 50 个词为一个探测块），并分别计算每个窗口的语义密度。密度的计算公式基于“实词（名词、罕见动词、形容词）”与“虚词（介词、连词）”的比例，以及全新词汇的出场频率。随后，系统会计算这些密度值在全文范围内的变异系数（CV）。AI 生成的文本通常会交出一份极低 CV 值的答卷（暴露出一种令人毛骨悚然的人造匀称感）；而人类的文本则因为大脑认知和思维节奏的起伏，呈现出高 CV 值的剧烈波动。",
+    "useCase": "在剖析长篇大论的小论文、深度调研报告和商业文章时拥有统治级的表现，因为只有在足够长的文本里，信息流的宏观潮汐起伏才能被完美地统计学建模。",
+    "strengths": "• 它是撕破深度伪装的照妖镜——即使 AI 接收到了“请模仿人类极其自然的口吻”的指令，它依然无法在宏观的段落节奏上摆脱均匀排泄信息的机器本能。\n• 对那种试图通过“同义词替换（洗稿）”来逃避审查的手段拥有极高的免疫力，因为它丈量的是“概念”的骨架分布，而不是浮于表面的字眼。",
+    "limitations": "• 在面对极短文本（如一条推文或孤立的自然段）时彻底哑火，因为样本太少，根本建不出方差模型。\n• 会对那些人类刻意写出来的、从头到尾都干硬无比的技术说明书或维基百科硬核词条产生误杀（假阳性）。",
+    "parameters": "雷达切片: 自适应滑动窗口词汇阵列画像\n定罪量表: 语义信息熵 与 概念密度变异系数 (CV)\n行刑判决: 0-100 信息排布僵化均匀度 (机器涂抹感) 得分",
+    "accuracy": "中高防线 — 单体准确率 71-81%。当它（负责侦测思想概念的方差）与“突发性波动 Burstiness”（负责侦测句子长短的物理方差）双剑合璧时，将形成一道让 AI 绝望的天堑。",
     "references": [
         {
-            "title": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-            "url": "https://scholar.google.com/scholar?q=Dugan%20et%20al.%20(2023)%20-%20Real%20or%20Fake%20Text%3F%20Investigating%20Human%20Ability%20to%20Detect%20Boundaries"
+            "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
+            "url": "https://arxiv.org/abs/2212.12672"
         },
         {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

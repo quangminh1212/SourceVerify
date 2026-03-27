@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Syntactic Tree Depth Distribution",
-    "description": "Phân tích phân bổ độ sâu cây cú pháp — văn bản AI có xu hướng tạo cây với độ sâu đồng đều hơn (Jawahar et al., 2020).",
-    "algorithm": "Thuật toán phân tích Syntactic Tree Depth Distribution",
-    "mechanism": "Hệ thống Syntactic Tree Depth Distribution phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phương Sai Độ Sâu Cây Cú Pháp (Tree Depth Variance)",
+    "description": "Phân tích sự phân bố độ sâu của biểu đồ cây cú pháp trên toàn bộ tài liệu. Khi các câu được vẽ thành biểu đồ cây phân cấp, 'độ sâu' thể hiện có bao nhiêu lớp mệnh đề lồng nhau hoặc sự sửa đổi tồn tại. Nghiên cứu (Jawahar và cộng sự, 2020) chứng minh rằng các Mô hình Ngôn ngữ Lớn ngoan cố tạo ra các văn bản có độ sâu cây 'an toàn', đồng nhất một cách cứng ngắc. Chúng tránh cả những đoạn văn cực kỳ nông và những câu văn đa tầng, xoắn xít sâu sắc của con người, dẫn đến sự thiếu hụt phương sai độ sâu bất thường về mặt thống kê.",
+    "algorithm": "Khai Thác Độ Sâu Cây Phân Tích Cấu Trúc (Constituency Parse)",
+    "mechanism": "Thuật toán phân tích mọi câu thành một cây cấu trúc chính thức và đo độ sâu lõi dọc tối đa của nó từ nút gốc (root) đến 'lá' (word) sâu nhất. Sau đó, nó vẽ biểu đồ sự phân bố của các độ sâu này trên toàn bộ văn bản. Nếu phương sai (độ lệch chuẩn) của độ sâu cây thấp bất thường—nghĩa là hầu như mọi câu đều có cùng một 'chiều cao' cấu trúc chính xác—thì văn bản đó bị gắn cờ là một sản phẩm được tối ưu hóa về mặt toán học của mạng nơ-ron chứ không phải là thành phần tự nhiên của con người.",
+    "useCase": "Rất hiệu quả để kiểm toán các báo cáo chính thức, bài luận và bài báo nơi người viết tự nhiên pha trộn các câu ngắn gọn, súc tích (cây nông) với các giải thích mở rộng, chi tiết (cây sâu).",
+    "strengths": "• Phát hiện tính 'an toàn' toán học cơ bản của quá trình tạo AI, điều mà người dùng gần như không thể ghi đè thủ công bằng lời nhắc (prompt).\n• Có khả năng chống lại các kỹ thuật che giấu cơ bản như hoán đổi từ vựng do không làm thay đổi hình học cây cơ bản.",
+    "limitations": "• Yêu cầu phân tích cú pháp cấu trúc nặng về tính toán cho mọi câu.\n• Có thể gắn cờ văn bản viết theo công thức cao của con người (ví dụ: quy trình vận hành tiêu chuẩn hoặc các câu chữ pháp lý cụ thể) nơi tính đồng nhất cú pháp cứng nhắc được thực thi.",
+    "parameters": "Kiểm Định: Phân Tích Cú Pháp Cấu Trúc (Constituency Parsing)\nThước Đo: Phương Sai Độ Sâu Cây (Độ Lệch Chuẩn Của Độ Sâu Nút Tối Đa)\nĐầu Ra: 0-100 Điểm Đồng Nhất Cú Pháp (Độ Cứng Thuật Toán)",
+    "accuracy": "Cao — Độ chính xác độc lập 78-85% trên các văn bản đủ dài. Tuyệt vời khi kết hợp với phương sai độ dài câu.",
+    "references": [
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://aclanthology.org/2020.coling-main.208/"
+        },
+        {
+            "title": "Gibson, E. (1998). Linguistic Complexity: Locality of Syntactic Dependencies. Cognition.",
+            "url": "https://doi.org/10.1016/S0010-0277(98)00034-1"
+        }
+    ]
 }

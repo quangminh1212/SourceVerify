@@ -1,25 +1,20 @@
 {
-    "name": "Mật độ Ngữ nghĩa",
-    "description": "Đo tính đồng nhất mật độ thông tin qua nội dung.",
-    "useCase": "Phát hiện văn bản AI qua mật độ thông tin đồng nhất",
-    "mechanism": "Chia nội dung thành cột và đo entropy trong mỗi cột. Văn bản AI phân bố thông tin quá đều, trong khi văn viết người có biến đổi mật độ tự nhiên.",
-    "accuracy": "Trung bình - 71-81%",
-    "source": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Mật Độ Thông Tin Ngữ Nghĩa (Semantic Density)",
+    "description": "Đo lường tính đồng nhất của việc phân bố thông tin trên toàn bộ tài liệu. Các mô hình AI, bị thúc đẩy bởi mong muốn giảm thiểu perplexity (độ bối rối) và duy trì tổn thất dự đoán ổn định, có xu hướng phân phối thông tin (như các thực thể có tên, khái niệm mới và tính từ phức tạp) một cách đồng đều cao, 'như trét bơ đậu phộng'. Chữ viết của con người tự nhiên dao động giữa các 'đợt bùng phát' mật độ ngữ nghĩa cao (giới thiệu các ý tưởng mới phức tạp) theo sau là các khoảng thời gian mật độ thấp hơn (giải thích, phản ánh hoặc cung cấp ví dụ).",
+    "algorithm": "Cửa Sổ Trượt Entropy Thông Tin & Phương Sai Mật Độ",
+    "mechanism": "Thuật toán phân đoạn văn bản thành các cửa sổ trượt (ví dụ: các khối 50 từ) và tính toán mật độ ngữ nghĩa của từng cửa sổ. Mật độ được định lượng bằng tỷ lệ giữa 'từ nội dung' (danh từ, động từ duy nhất, tính từ) so với 'từ chức năng' (giới từ, liên từ) và tỷ lệ giới thiệu từ vựng mới. Sau đó, nó đo Hệ số Biến thiên (CV) của các điểm mật độ này trên toàn bộ văn bản. Văn bản do AI tạo ra thường mang lại giá trị CV rất thấp (chỉ ra sự đồng nhất không tự nhiên), trong khi văn bản của con người mang lại CV cao hơn do nhịp độ nhận thức hữu cơ.",
+    "useCase": "Rất hiệu quả trong việc phân tích nội dung dạng dài, chẳng hạn như bài luận, báo cáo và bài viết, nơi cấu trúc vĩ mô của luồng thông tin có thể được lập bản đồ thống kê.",
+    "strengths": "• Xuất sắc trong việc bắt văn bản AI đã được prompt để 'hành động như con người' nhưng vẫn không thể bắt chước nhịp độ cấu trúc vĩ mô của con người.\n• Có khả năng phục hồi cao trước việc thay thế từ đồng nghĩa cấp độ từ đơn giản vì nó đo lường phân bố cấu trúc của các khái niệm, không chỉ bản thân các từ.",
+    "limitations": "• Không hiệu quả trên các văn bản rất ngắn (như tweet hoặc một đoạn văn đơn lẻ) nơi không có đủ dữ liệu để thiết lập mẫu phương sai cấu trúc.\n• Có thể gắn cờ các sổ tay kỹ thuật cao hoặc các mục từ điển bách khoa (như Wikipedia) cố tình duy trì giọng điệu thông tin mật độ cao, liên tục.",
+    "parameters": "Kiểm Định: Lập Hồ Sơ Từ Vựng Cửa Sổ Trượt Thích Ứng\nThước Đo: Entropy Ngữ Nghĩa và Hệ Số Biến Thiên Mật Độ\nĐầu Ra: 0-100 Điểm Đồng Nhất Thông Tin (Khoảng Cách AI)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác độc lập 71-81%. Trở thành một bộ phân biệt mạnh mẽ khi kết hợp với Burstiness (đo phương sai độ dài câu cấu trúc, trong khi phương pháp này đo phương sai khái niệm).",
     "references": [
         {
-            "title": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-            "url": "https://scholar.google.com/scholar?q=Dugan%20et%20al.%20(2023)%20-%20Real%20or%20Fake%20Text%3F%20Investigating%20Human%20Ability%20to%20Detect%20Boundaries"
+            "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
+            "url": "https://arxiv.org/abs/2212.12672"
         },
         {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

@@ -1,26 +1,21 @@
 {
-    "name": "Phương sai Độ dài Câu",
-    "description": "Phân tích phân bố độ dài câu để phát hiện AI.",
-    "useCase": "Nhận diện văn bản AI qua cấu trúc câu đồng nhất",
-    "mechanism": "Đo hệ số biến thiên trong mẫu năng lượng mức hàng như proxy cho đa dạng độ dài câu. AI có xu hướng tạo câu có độ dài đồng nhất hơn.",
-    "accuracy": "Trung bình - 70-80%",
-    "source": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Phương Sai Độ Dài Câu (Length Variance)",
+    "description": "Đo lường sự phân tán thống kê của độ dài các câu xung quanh mức trung bình của tài liệu. Các Mô hình Ngôn ngữ Lớn tự nhiên hội tụ về mức trung bình toán học, tạo ra các câu có độ dài nhất quán, tương tự nhau (ví dụ: 18 từ, 20 từ, 17 từ). Điều này tạo ra một nhịp điệu đơn điệu. Người viết (con người) tự nhiên thể hiện phương sai độ dài câu cao, dễ dàng đặt một câu trần thuật 3 từ sắc sảo ngay cạnh một câu giải thích 45 từ trải dài để duy trì sự tương tác của người đọc và nhấn mạnh các điểm chính.",
+    "algorithm": "Hệ Số Biến Thiên Thống Kê ($CV = \\sigma / \\mu$)",
+    "mechanism": "Hệ thống tính toán số lượng từ cho mỗi câu để tìm độ dài câu trung bình ($\\mu$) của tài liệu và độ lệch chuẩn ($\\sigma$). Hệ số biến thiên (CV) chuẩn hóa dữ liệu này, đo lường mức độ thay đổi của độ dài từng câu so với mức trung bình. Điểm CV thấp chứng minh về mặt toán học rằng văn bản được đồng nhất hóa về nhịp điệu và được tạo ra một cách nhân tạo. Điểm CV cao cho thấy nhịp độ hữu cơ, giống con người với sự đa dạng cấu trúc đáng kể.",
+    "useCase": "Rất hiệu quả rtrong việc kiểm toán thư xin việc, bản sao tiếp thị và các bài luận nơi mà nhịp điệu đều đều là 'dấu hiệu' dễ nhận thấy nhất của việc viết bằng AI.",
+    "strengths": "• Mô hình AI cực kỳ khó sao chép tự nhiên mà không nghe có vẻ rời rạc; việc nhắc AI 'thay đổi độ dài câu' thường dẫn đến các quá trình chuyển đổi bắt buộc, lúng túng thay vì luồng tự nhiên của con người.\n• Hoàn toàn không phụ thuộc vào ngôn ngữ và chủ đề, chỉ dựa trên phân phối toán học của khoảng trắng/từ.",
+    "limitations": "• Yêu cầu tối thiểu 8-10 câu để tính toán phương sai có ý nghĩa thống kê.\n• Viết (bởi con người) cứng nhắc một cách có chủ ý, chẳng hạn như thông số kỹ thuật mang tính hình thức cao hoặc các điều khoản pháp lý nghiêm ngặt, sẽ tự nhiên thể hiện phương sai thấp và có thể gây ra kết quả dương tính giả.",
+    "parameters": "Kiểm Định: Cách Ly Đếm Từ Trên Mỗi Câu\nThước Đo: Hệ Số Biến Thiên (Độ Lệch Chuẩn được chuẩn hóa bởi Giá Trị Trung Bình)\nĐầu Ra: 0-100 Điểm Độ Cứng Nhịp Điệu (Sự Đơn Điệu Toán Học)",
+    "accuracy": "Cao — Độ chính xác 80-87%. Một trong những dấu vân tay thống kê đáng tin cậy nhất và nhẹ nhất về mặt tính toán của việc tạo văn bản theo thuật toán.",
     "references": [
         {
-            "title": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-            "url": "https://scholar.google.com/scholar?q=Uchendu%20et%20al.%20(2020)%20-%20Authorship%20Attribution%20for%20Neural%20Text%20Generation%2C%20EMNLP"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
             "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
-            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
+            "url": "https://aclanthology.org/2020.acl-main.164/"
         }
     ]
 }

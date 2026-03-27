@@ -1,12 +1,21 @@
 {
-    "name": "Sử dụng bậc nhất",
-    "description": "Phân tích tần suất tính từ bậc nhất",
-    "algorithm": "Thuật toán phân tích Sử dụng bậc nhất",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích tần suất tính từ bậc nhất. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng bậc nhất. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Cấp So Sánh Nhất (Superlative Density)",
+    "description": "Phân tích tần suất và cách sử dụng theo ngữ cảnh của các tính từ và trạng từ ở cấp so sánh nhất (ví dụ: 'tuyệt vời nhất', 'quan trọng nhất', 'tốt nhất', 'cao nhất'). Các Mô hình Ngôn ngữ Lớn, đặc biệt là khi được hướng dẫn để trở nên thuyết phục, có thẩm quyền hoặc toàn diện, có xu hướng lạm dụng các từ so sánh nhất một cách quá mức. 'Mặc định cường điệu' này là một sản phẩm phụ của quá trình đào tạo RLHF của chúng nhằm cung cấp câu trả lời 'hữu ích nhất' có thể, thường dẫn đến ngôn ngữ phóng đại, mang tính kết luận phổ quát. Người viết là con người sử dụng các từ so sánh nhất một cách tiết kiệm, dành chúng cho những thái cực thực sự, và thay vào đó dựa vào các so sánh có sắc thái hoặc bằng chứng mô tả cụ thể.",
+    "algorithm": "Gắn Thẻ POS / Phân Tích Tần Suất Từ Vựng",
+    "mechanism": "Thuật toán sử dụng Gắn thẻ Từ loại (POS) để xác định tất cả các hình thức so sánh nhất (thẻ JJS, RBS) trong văn bản. Nó tính toán mật độ của các mã thông báo này so với tổng số từ và tổng số tính từ/trạng từ. Nếu văn bản thể hiện nồng độ các từ so sánh nhất cao bất thường—đặc biệt là trong bối cảnh được cho là khách quan, chẳng hạn như các bài báo cung cấp thông tin hoặc phân tích trung lập—nó sẽ bị gắn cờ mạnh mẽ là văn xuôi tiếp thị hoặc tóm tắt dòng thuật toán do AI tạo ra.",
+    "useCase": "Rất hiệu quả để kiểm toán các bài đánh giá sản phẩm, bản sao tiếp thị, bài luận và thư xin việc, nơi các mô hình AI theo bản năng mặc định một giọng điệu quá nhiệt tình, cường điệu.",
+    "strengths": "• Xuất sắc trong việc phát hiện văn bản AI 'chào hàng' (sales pitch) và các tóm tắt thuật toán mang tính trợ giúp tích cực.\n• Rất khó để vượt qua bằng cách sử dụng các công cụ diễn giải đơn giản, vì ý định cơ bản để tối đa hóa tác động thường duy trì cấu trúc so sánh nhất.",
+    "limitations": "• Có thể tạo ra kết quả dương tính giả đối với bản sao tiếp thị chân thực của con người, các bài phát biểu chính trị hoặc các bài đánh giá cá nhân thực sự nhiệt tình nơi dự kiến có sự cường điệu.\n• Kém hiệu quả hơn trên các văn bản mang tính kỹ thuật cao hoặc khoa học, nơi AI được nhắc nhở rõ ràng phải nghiêm ngặt dựa trên thực tế và trung lập.",
+    "parameters": "Kiểm Định: Gắn Thẻ POS (Nhận Dạng Hình Thức So Sánh Nhất)\nThước Đo: Tỷ Lệ Từ So Sánh Nhất So Với Tổng Số Tính Từ/Từ\nĐầu Ra: 0-100 Điểm Ngôn Ngữ Cường Điệu (Sự Nhiệt Tình Của Thuật Toán)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 72-80%. Một chỉ báo từ vựng mạnh mẽ hoạt động tốt nhất khi được hiểu cùng với các số liệu về giọng điệu cảm xúc và phương sai từ vựng.",
+    "references": [
+        {
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

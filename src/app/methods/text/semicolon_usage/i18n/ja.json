@@ -1,14 +1,13 @@
 {
-    "name": "Semicolon Usage",
-    "description": "Measures semicolon 周波数",
-    "algorithm": "Semicolon Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures semicolon 周波数. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through semicolon usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "セミコロン使用頻度分析 (Semicolon Usage)",
+    "description": "セミコロン（;）の使用頻度と文法的な文脈を分析します。人間の自然な文章において、セミコロンは悪名高いほど物議を醸す、比較的まれな句読点です。多くのライターは完全に避けますが、文体的な理由で使用する人もいます。公式な学術テキスト、高品質の文学、プログラミングコードで広範に訓練されたAIモデルは、セミコロンの正確な文法規則を理解しており、数学的に予測可能で硬直した完璧さで、人間の平均的なベースラインから外れた頻度で使用する傾向があります。",
+    "algorithm": "句読点の分布頻度と文脈的構文マッチング",
+    "mechanism": "アルゴリズムは、1,000語あたりのセミコロンの絶対数をカウントし、両側の節を接続する構文構造を評価します。特定のテキストジャンル（例：カジュアルなブログ vs 学術論文）に合わせて調整されたベースラインに対して「セミコロン密度」を測定します。AIが生成したテキストはしばしば「超・正確性（hyper-correctness）」を示します。つまり、人間なら習慣や文体的なテンポのために自然にピリオドや接続詞を使うであろう場所で、独立した節を接続するためにセミコロンを非の打ち所がないほど完璧に使用します。システムは、セミコロンの使用が異常に多い、完全に不自然である、またはテキストの全体的なカジュアルなレジスター（使用域）と一致していないテキストにフラグを立てます。",
+    "useCase": "学生のエッセイ、ブログ記事、電子メールなど、人間が書くことが期待されるトーンにおいて、フォーマルな句読点が場違いに感じられる場合を超具体的（ピンポイント）にヒューリスティックに分析する場合に役立ちます。",
+    "strengths": "• 非常に効果的な二次指標。人間が長文のドキュメント全体で、専門的な編集なしにセミコロンを完全に一貫して使用することはめったにありません。\n• 高速かつ軽量で、言語に依存しません（セミコロンを使用する言語の場合）。",
+    "limitations": "• AIがセミコロンを使用しないように特にプロンプトで指示されている場合は、簡単に回避（バイパス）されます。\n• 複雑な句読点を意図的かつ正確に使用するプロの編集者、学者、小説家のテキストでは、偽陽性（誤検知）の確率が高くなります。",
+    "parameters": "解析: 句読点の頻度と構文的な節の境界\n評価基準: 1,000語あたりのセミコロン数とレジスター（使用域）の整合性\n出力結果: 0-100 句読点の不自然さ（超・正確性）スコア",
+    "accuracy": "低〜中 — 50-65%の精度。より広範な句読点パターン（Punctuation Pattern）分析のパイプライン内で、厳密に補助的なマイクロレベルの機能としてのみ機能します。",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

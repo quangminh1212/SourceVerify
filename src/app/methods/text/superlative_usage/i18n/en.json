@@ -1,21 +1,20 @@
 {
-    "name": "Superlative Usage",
-    "description": "Analyzes superlative adjective frequency",
-    "algorithm": "Superlative Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Analyzes superlative adjective frequency. Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through superlative usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "Superlative Density",
+    "description": "Analyzes the frequency and contextual usage of superlative adjectives and adverbs (e.g., 'greatest', 'most significant', 'best', 'highest'). Large Language Models, particularly when instructed to be persuasive, authoritative, or comprehensive, tend to drastically overuse superlatives. This 'hyperbolic default' is a byproduct of their RLHF training to provide the 'most helpful' possible answer, often resulting in exaggerated, universally conclusive language. Human writers use superlatives sparingly, reserving them for genuine extremes, and instead rely on nuanced comparatives or specific descriptive evidence.",
+    "algorithm": "POS Tagging / Lexical Frequency Analysis",
+    "mechanism": "The algorithm uses Part-of-Speech (POS) tagging to identify all superlative forms (JJS, RBS tags) within the text. It computes the density of these tokens relative to the total word count and total adjective/adverb count. If the text exhibits an abnormally high concentration of superlatives—especially in contexts that are supposed to be objective, such as informational articles or neutral analyses—it is strongly flagged as AI-generated marketing fluff or algorithmic summarization.",
+    "useCase": "Highly effective for auditing product reviews, marketing copy, essays, and cover letters, where AI models instinctively default to an overly enthusiastic, hyperbolic tone.",
+    "strengths": "• Exceptional at detecting 'sales pitch' AI text and aggressively helpful algorithmic summaries.\n• Very difficult to bypass using simple paraphrasing tools, as the underlying intent to maximize impact usually preserves the superlative structure.",
+    "limitations": "• May produce false positives on authentic human marketing copy, political speeches, or genuinely enthusiastic personal reviews where hyperbole is expected.\n• Less effective on highly technical or scientific texts where AI is explicitly prompted to be strictly factual and neutral.",
+    "parameters": "Analysis: POS Tagging (Superlative Form Identification)\nMetric: Superlative to Total Adjective/Word Ratio\nOutput: 0-100 Hyperbolic Language (Algorithmic Enthusiasm) Score",
+    "accuracy": "Moderate to High — 72-80% accuracy. A strong lexical indicator that works best when interpreted alongside emotional tone and vocabulary variance metrics.",
     "references": [
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

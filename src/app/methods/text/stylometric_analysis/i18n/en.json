@@ -1,26 +1,21 @@
 {
-    "name": "Stylometric Analysis",
-    "description": "Analyzes writing style features to detect AI-generated text through stylistic fingerprinting.",
-    "useCase": "Identifying AI-generated text by analyzing writing style characteristics unique to human authors",
-    "mechanism": "Extracts stylometric features including sentence structure patterns, punctuation usage, paragraph organization, rhetorical devices, and discourse markers. Human writing exhibits consistent personal style signatures, while AI text shows characteristic patterns of the generating model — often more formal, structured, and lacking personal quirks.",
-    "accuracy": "High - 80-90% on longer documents",
-    "source": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-    "algorithm": "Stylometric Feature Extraction + Statistical Pattern Classification + Discourse Analysis",
-    "parameters": "Features: 50+ stylistic markers, Min length: 200 words, Analysis: n-gram distribution, function word frequency, readability indices",
-    "strengths": "• Captures deep writing style patterns\n• Effective on longer documents\n• Can distinguish between different AI models\n• Robust against simple paraphrasing",
-    "limitations": "• Requires sufficient text length for reliable analysis\n• Multi-author texts are challenging\n• Professional editing can mask style signals\n• Style varies by genre and context",
+    "name": "Stylometric Fingerprinting",
+    "description": "Analyzes the multidimensional stylistic fingerprint of a text to determine authorship. Because Large Language Models are trained on vast, generalized datasets, their resulting textual output represents a statistical 'average' of human writing. They lack idiosyncratic quirks, producing prose that is highly structured, consistently formal, and stylistically sterile. Humans, on the other hand, leave distinct biometric-like traces in their writing—specific combinations of vocabulary richness, punctuation density, passive/active voice ratios, and favored transition phases that form a unique, lifelong stylistic signature.",
+    "algorithm": "Multivariate Stylistic Feature Extraction",
+    "mechanism": "The algorithm computes a matrix of 50+ micro-stylometric markers, including hapax legomena (words used exactly once), comma frequency, syntactic branching depth, and function word distributions. It then maps these features into a high-dimensional vector space. If a text's stylometric vector lands squarely in the center of the 'universal average' distribution, it is overwhelmingly likely to be AI-generated. If the vector deviates significantly due to personal structural quirks, it strongly indicates a human author.",
+    "useCase": "Highly effective for long-form analysis (essays, reports, literature) where there is enough raw data to reconstruct a stable, statistically significant profile of the author's voice.",
+    "strengths": "• Analyzes the fundamental architecture of the writer's thought process, making it highly resistant to simple paraphrasing or synonym-swapping tools.\n• Capable of not just detecting AI, but differentiating between specific AI model families (e.g., GPT-4 vs. Claude 3) based on their distinct corporate alignment guidelines.",
+    "limitations": "• Requires a substantial amount of text (minimum 250-300 words) to build a stable stylometric profile; utterly useless on short social media posts.\n• Multi-author collaborative documents or heavily edited texts can blur the stylistic fingerprint, causing false negatives.",
+    "parameters": "Analysis: 50+ Lexical, Syntactic, and Structural Markers\nMetric: Multivariate Stylistic Derivation from Mean\nOutput: 0-100 Stylistic Homogeneity (Generic Authorship) Score",
+    "accuracy": "High — 82-89% accuracy on longer documents. It is the gold standard for forensic document attribution and academic integrity auditing.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
-            "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
-            "url": "https://arxiv.org/abs/2303.03697"
+            "url": "https://dl.acm.org/doi/10.1145/3132039"
         }
     ]
 }

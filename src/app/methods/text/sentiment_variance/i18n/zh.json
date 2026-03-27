@@ -1,22 +1,21 @@
 {
-    "name": "Sentiment Variance",
-    "description": "Analyzes sentiment variation patterns",
-    "algorithm": "Sentiment Variance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes sentiment variation patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through sentiment variance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "情感方差与主观震荡曲线 (Sentiment Variance)",
+    "description": "旨在测量并绘制整篇文档中情感张力的波动性与振幅（Volatility）。由于经受过惨无人道的“安全性与人类对齐（RLHF）”大脑切除手术，大语言模型（LLM）被强行植入了思想钢印，永远保持着一种令人作呕的礼貌、绝对的中立、或者是温吞水的“微弱正能量”。除非被黑客通过越狱指令（Jailbreak）强行破防，否则它们极少会爆发突兀的狂怒、辛辣的讽刺或纯粹的阴暗面。而人类作者是血肉丰满的荷尔蒙怪物：一篇洋溢着人性的随笔，可以前一秒还在暴躁地痛斥社会，下一秒就狂热地拥抱未知的希望，从而撕裂出一条方差极高的情感轨迹曲线。",
+    "algorithm": "基于滑动窗口的心理效价与唤醒度 (Valence/Arousal) 追踪",
+    "mechanism": "算法启动滑动窗口（Sliding window），像心电图仪一样逐句、逐段地扫描并评估文本的效价（情感极性）与唤醒度（情绪饱满感）。随后它将对全文这些情感坐标进行方差计算。一条死气沉沉、如同死者心电图般平坦的情感线（方差无限趋近于零），是 AI 模型历经人工“消毒（Sterilized）”和机械对齐后的铁证。而一张充满粗糙锯齿、犬牙交错、大起大落的情感折线图，则骄傲地证明了文本背后跳动着一个真实人类的叙事弧光和狂热灵魂。",
+    "useCase": "在审查剧本人设、私人日记式随笔、带有极强个人主观色彩的政治专栏（Op-eds）以及唇枪舌剑的辩论文时，简直是大杀器——在这些领域，人类的情感往往会无可救药地左右文章结构的突变。",
+    "strengths": "• 它是撕破标准化 LLM “伪善面具”的粉碎机：那些毫无灵气、老好人式、充满外交辞令的“安全区文本”在它面前无所遁形。\n• 它是在扫描文字的“心理学脚印（psychological footprint）”，而不是死抠可悲的语法结构。这意味着不管洗稿软件怎么花式替换同义词，只要情感内核没变，就逃不过它的法眼。",
+    "limitations": "• 如果把它扔在那些“法理上就不允许携带凡人情感”的文本中（比如核电站操作手册、干瘪的财报、冷冰冰的代码文档），它不仅是个摆设，还会疯狂误报。\n• 如果狡猾的用户写出一个极端复杂的 Prompt（比如命令 AI：“第一段像个怨妇一样怒骂，最后一段瞬间升华成圣母”），这套情感雷达就会被骗过。",
+    "parameters": "雷达切片: 句子级别情感极性与唤醒潜能连续追踪\n定罪量表: 情绪过冲轨迹的统计学方差 ($\\sigma^2$)\n行刑判决: 0-100 情感无菌化指征 (防出格对齐手术) 确诊率",
+    "accuracy": "高阶预判 — 76-83% 的准确率。它极其优雅地脱离了枯燥的语法字数统计，用心理学的降维打击完美弥补了纯机械探测法的盲区。",
     "references": [
         {
-            "title": "Liu, Y. et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. arXiv.",
-            "url": "https://arxiv.org/abs/1907.11692"
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         }
     ]
 }

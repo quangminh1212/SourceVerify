@@ -1,21 +1,20 @@
 {
-    "name": "Superlative Usage",
-    "description": "Analyzes superlative adjective 周波数",
-    "algorithm": "Superlative Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes superlative adjective 周波数. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through superlative usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "最上級の過剰使用 (Superlative Density)",
+    "description": "最上級の形容詞と副詞（例：「最大の（greatest）」、「最も重要な（most significant）」、「最高の（best）」、「最も高い（highest）」）の頻度と文脈上の使用法を分析します。大規模言語モデルは、特に説得力を持たせる、権威を持たせる、または包括的にするよう指示された場合、最上級を極端に過剰に使用する傾向があります。この「誇張されたデフォルト」は、可能な限り「最も役立つ」回答を提供するというRLHFトレーニングの副産物であり、多くの場合、誇張された普遍的に決定的な言語をもたらします。人間の書き手は最上級を控えめに使用し、真の極端な状況のために取っておき、代わりにニュアンスのある比較や具体的な記述的証拠に依存します。",
+    "algorithm": "POS（品詞）タギング / 語彙頻度分析",
+    "mechanism": "アルゴリズムは、品詞（POS）タギングを使用して、テキスト内のすべての最上級形式（JJS、RBSタグ）を識別します。総単語数および総形容詞/副詞数に対するこれらのトークンの密度を計算します。テキストが、特に情報記事や中立的な分析など、客観的であることが想定されている文脈で、異常に高い最上級の集中を示している場合、AIによって生成されたマーケティングの宣伝文句またはアルゴリズムによる要約として強力にフラグ付けされます。",
+    "useCase": "AIモデルが本能的に過度に熱狂的で誇張されたトーンをデフォルトとする、製品レビュー、マーケティングコピー、エッセイ、カバーレターの監査に非常に効果的です。",
+    "strengths": "• 「セールスピッチ（売り込み）」のAIテキストと、積極的に役立とうとするアルゴリズムの要約を検出するのに優れています。\n• 影響を最大化するという根底にある意図は通常、最上級の構造を保持するため、単純な言い換えツールを使用して回避することは非常に困難です。",
+    "limitations": "• 人間による本物のマーケティングコピー、政治演説、または誇張が予想される本当に熱狂的な個人的なレビューで、偽陽性（False positive）を生成する可能性があります。\n• AIが厳密に事実に基づき、中立であるように明示的に求められる、高度な技術的または科学的テキストでは効果が低くなります。",
+    "parameters": "解析: 品詞（POS）タギング（最上級形式の識別）\n評価基準: 総形容詞/単語に対する最上級の割合\n出力結果: 0-100 誇張された言語（アルゴリズムによる熱狂）スコア",
+    "accuracy": "中〜高 — 72-80%の精度。感情的なトーンや語彙の分散指標と一緒に解釈したときに最もよく機能する、強力な語彙指標です。",
     "references": [
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

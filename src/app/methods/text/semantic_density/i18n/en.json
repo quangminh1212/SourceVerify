@@ -1,25 +1,20 @@
 {
-    "name": "Semantic Density",
-    "description": "Measures information density uniformity across content.",
-    "useCase": "Detecting AI text through uniform information density",
-    "mechanism": "Segments content into columns and measures entropy in each. AI text distributes information too evenly, while human writing has natural density variations.",
-    "accuracy": "Moderate - 71-81%",
-    "source": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Window size: adaptive, Quantization: 8-64 levels, Metrics: entropy, CV, correlation",
-    "strengths": "- Effective for detecting AI-generated text\n- Language-agnostic statistical approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger false positives\n- Short texts provide less reliable signals\n- Performance varies across writing styles",
+    "name": "Semantic Information Density",
+    "description": "Measures the uniformity of information distribution across a document. AI models, driven by the desire to minimize perplexity and maintain steady predictive loss, tend to distribute information (like named entities, novel concepts, and complex adjectives) in a highly uniform, 'peanut butter spread' manner. Human writing naturally oscillates between 'bursts' of high semantic density (introducing complex new ideas) followed by periods of lower density (explaining, reflecting, or providing examples).",
+    "algorithm": "Sliding Window Information Entropy & Density Variance",
+    "mechanism": "The algorithm segments the text into sliding windows (e.g., 50-word chunks) and calculates the semantic density of each window. Density is quantified by the ratio of 'content words' (nouns, unique verbs, adjectives) to 'function words' (prepositions, conjunctions) and by the introduction rate of new vocabulary. It then measures the Coefficient of Variation (CV) of these density scores across the entire text. AI-generated text typically yields a very low CV (indicating unnatural uniformity), whereas human text yields a higher CV due to organic cognitive pacing.",
+    "useCase": "Highly effective for analyzing long-form content, such as essays, reports, and articles, where the macro-structure of information flow can be statistically mapped.",
+    "strengths": "• Exceptional at catching AI text that has been prompted to 'act human' but still fails to mimic human macro-structural pacing.\n• Highly resilient against simple word-level synonym replacement because it measures the structural distribution of concepts, not just the words themselves.",
+    "limitations": "• Ineffective on very short texts (like tweets or single paragraphs) where there is not enough data to establish a structural variance pattern.\n• May flag highly technical manuals or encyclopedia entries (like Wikipedia) that intentionally maintain a constant, high-density informational tone.",
+    "parameters": "Analysis: Adaptive Sliding Window Lexical Profiling\nMetric: Semantic Entropy and Density Coefficient of Variation\nOutput: 0-100 Information Uniformity (AI Spacing) Score",
+    "accuracy": "Moderate to High — 71-81% standalone accuracy. Becomes a powerful discriminator when combined with Burstiness (which measures structural sentence-length variance, whereas this measures conceptual variance).",
     "references": [
         {
-            "title": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-            "url": "https://scholar.google.com/scholar?q=Dugan%20et%20al.%20(2023)%20-%20Real%20or%20Fake%20Text%3F%20Investigating%20Human%20Ability%20to%20Detect%20Boundaries"
+            "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
+            "url": "https://arxiv.org/abs/2212.12672"
         },
         {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

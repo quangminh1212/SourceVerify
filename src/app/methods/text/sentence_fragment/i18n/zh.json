@@ -1,22 +1,21 @@
 {
-    "name": "Sentence Fragment Usage",
-    "description": "Detects sentence fragment patterns",
-    "algorithm": "Sentence Fragment Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Detects sentence fragment patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through sentence fragment usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "语句碎片与残缺句侦测 (Sentence Fragment)",
+    "description": "旨在扫描并榨取文本中“刻意使用的句子碎片”——即那些嚣张地缺失了主句、主语或限定动词的残缺句子（Sentence fragments）。大语言模型（LLM）在被人类用强化学习（RLHF）毒打训练时，只要生成文法不完整的句子就会被扣掉成吨的分数。这种心理创伤导致它们现在几乎只敢排泄出完美契合教科书、标准到令人作呕的“主-谓-宾”完整结构。而带血带肉的人类写作者，尤其在进行创意写作、煽动性演讲或日常对话时，会像使用匕首一样，频繁而精准地投掷“句子碎片”，以此来撕裂节奏、重音强调或制造情绪落差（比如：“不完全是这样。”、“一场彻头彻尾的灾难。”、“有何不可？”）。",
+    "algorithm": "无头句法树的绞肉机式依赖解析",
+    "mechanism": "算法会启动依赖句法解析器（Dependency parser），穷凶极恶地拆解每一个句子的骨架。它专门猎杀那些无法追溯到“根（ROOT）”动词，或者直接胎死腹中、缺失核心“主-谓”地基的句子（即无头句法树，Headless syntax trees）。如果在尸检报告中，发现一篇浩瀚的文字里竟然连一个“句子碎片”都没有（或者接近于零），这就构成了 AI 模型那种“强迫症晚期般死守语法”的铁证。反之，如果文本中出现了几处浑然天成、恰到好处的“刻意残缺句”，那么天平将以泰山压顶之势向“人类作者”倾斜。",
+    "useCase": "在审查博客文章、专栏评论、杀手级营销文案以及各类创意写作时，这是一把极其锋利的手术刀——在这些残酷的文字角斗场里，人类作者天生就会运用各种非标点符号和碎片化句法来操控读者的情绪。",
+    "strengths": "• 它是识破“活人体征”的超级雷达（极大降低了诬陷人类的假阳性率），因为除非你用极其变态且具体的 prompt 去逼迫它，否则 AI 的底层代码根本就不允许它“自然地”写出这种破碎的句子。\n• 在充斥着缩写、断句和碎片的现代赛博朋克交流环境（如暴躁的电子邮件、社交媒体狂欢）中，如鱼得水。",
+    "limitations": "• 如果把它扔进极其严肃刻板的学术论文或冷酷无情的法律合同堆里，它基本就是个摆设——因为人类在写这类东西时，也同样被剥夺了写“碎片句”的权利。\n• 文本如果太短，人类完全有可能碰巧一句话碎片都没用，此时这项指标就会因为样本塌缩而失去一切法理意义。",
+    "parameters": "雷达切片: 句法依赖拓扑与根动词 (Root Verb) 强制检索\n定罪量表: 语法残废句 (刻意碎片) 的散落频率\n行刑判决: 0-100 语法强迫症指数 (硅基合规僵硬度) 得分",
+    "accuracy": "中阶防线 — 68-75% 的准确率。它的灵魂价值在于作为一个“人类活体鉴定器（human-indicator）”；碎片的出现是人类作者的狂欢宣言，但没有碎片，也不能直接拉出去当 AI 枪毙。",
     "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
             "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
         }
     ]
 }

@@ -1,26 +1,21 @@
 {
-    "name": "文体計量分析",
-    "description": "分析します 文体 特徴 を検出するために AI生成の text through stylistic fingerprinting.",
-    "useCase": "Identifying AI生成の text を分析することで 文体 characteristics unique to human authors",
-    "mechanism": "抽出します 文体計量 特徴 including sentence structure パターン, 句読点 usage, paragraph organization, rhetorical devices, and 談話標識. Human writing exhibits consistent personal style signatures, while AI text shows characteristic パターン of the generating model — often more formal, structured, and lacking personal quirks.",
-    "accuracy": "高 - 80-90% on longer documents",
-    "source": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-    "algorithm": "Stylometric Feature Extraction + Statistical Pattern Classification + Discourse Analysis",
-    "parameters": "Features: 50+ stylistic markers, Min length: 200 words, Analysis: n-gram 分布, function 単語頻度, 可読性 indices",
-    "strengths": "• Captures deep 文体 パターン\n• Effective on longer documents\n• Can distinguish 間の different AI models\n• Robust against simple paraphrasing",
-    "limitations": "• Requires sufficient text length for reliable 分析\n• Multi-author texts are challenging\n• Professional editing can mask style signals\n• Style varies by genre and context",
+    "name": "文体分析（スタイロメトリー）指紋抽出 (Stylometric Analysis)",
+    "description": "テキストの多次元的な文体の「指紋（フィンガープリント）」を分析して、著者を特定します。大規模言語モデルは膨大で一般化されたデータセットでトレーニングされているため、結果として得られるテキスト出力は、人間の文章の統計的な「平均値」を表します。特有の癖に欠け、高度に構造化され、一貫してフォーマルで、文体的に無味乾燥な（無菌化された）散文を生成します。一方、人間は文章中に生体認証のような明確な痕跡を残します。語彙の豊かさ、句読点の密度、受動態/能動態の比率、好まれる移行（つなぎ）フレーズの特定の組み合わせが、生涯にわたるユニークな文体の署名（シグネチャ）を形成します。",
+    "algorithm": "多変量文体特徴抽出",
+    "mechanism": "アルゴリズムは、ハパックス・レゴメナ（一度だけ使用される単語）、カンマの頻度、構文の分岐の深さ、機能語の分布など、50以上のミクロな文体マーカーの行列を計算します。次に、これらの特徴を高次元ベクトル空間にマッピングします。テキストの文体ベクトルが「普遍的な平均」分布の中心にきっちりと収まる場合、AIが生成したものである可能性が圧倒的に高くなります。個人的な構造上の癖によりベクトルが大きく逸脱する場合、それは人間の著者であることを強く示しています。",
+    "useCase": "著者の「声」の安定した統計的に有意なプロファイル（プロファイル）を再構築するのに十分な生データがある、長文の分析（エッセイ、レポート、文学）に非常に効果的です。",
+    "strengths": "• 著者の思考プロセスの基本的なアーキテクチャを分析するため、単純な言い換えや類義語の交換ツールに対して強い耐性があります。\n• AIを検出するだけでなく、企業ごとの異なるアライメント（価値観の調整）ガイドラインに基づき、特定のAIモデルファミリー（例：GPT-4 vs. Claude 3）を区別する能力があります。",
+    "limitations": "• 安定した文体プロファイルを構築するには、かなりの量のテキスト（最低250〜300語）が必要です。短いソーシャルメディアの投稿ではまったく役に立ちません。\n• 複数の著者が協力して作成したドキュメントや大規模に編集されたテキストは、文体の指紋を曖昧にし、偽陰性（False negative）を引き起こす可能性があります。",
+    "parameters": "解析: 50以上の語彙、構文、構造上のマーカー\n評価基準: 平均値からの多変量文体の逸脱度\n出力結果: 0-100 文体の同質性（一般的な著者らしさ）スコア",
+    "accuracy": "高 — 長いドキュメントで82-89%の精度。法医学的なドキュメントの著者特定や、学術的誠実性（アカデミック・インテグリティ）の監査におけるゴールドスタンダードです。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
-            "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
-            "url": "https://arxiv.org/abs/2303.03697"
+            "url": "https://dl.acm.org/doi/10.1145/3132039"
         }
     ]
 }

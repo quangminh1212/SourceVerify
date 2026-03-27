@@ -1,12 +1,21 @@
 {
-    "name": "Câu không hoàn chỉnh",
-    "description": "Phát hiện mẫu câu không hoàn chỉnh",
-    "algorithm": "Thuật toán phân tích Câu không hoàn chỉnh",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu câu không hoàn chỉnh. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích câu không hoàn chỉnh. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phát Hiện Câu Rút Gọn (Sentence Fragment)",
+    "description": "Phân tích văn bản để tìm sự hiện diện của các câu giả/câu rút gọn có chủ ý—những câu thiếu mệnh đề chính, chủ ngữ hoặc động từ chia theo thì. Các Mô hình Ngôn ngữ Lớn bị phạt nặng trong quá trình đào tạo nếu tạo ra các câu không hoàn chỉnh về mặt ngữ pháp. Do đó, chúng gần như chỉ tạo ra các cấu trúc chủ-vị-khách tuân thủ sách giáo khoa, được hình thành hoàn hảo. Người viết (con người), đặc biệt là trong các ngữ cảnh sáng tạo, thuyết phục hoặc đàm thoại, thường xuyên triển khai các câu chưa hoàn chỉnh một cách có chủ ý để nhấn mạnh văn phong, nhịp độ sắc nét hoặc tác động cảm xúc (ví dụ: 'Không hẳn.', 'Một thảm họa hoàn toàn.', 'Tại sao không?').",
+    "algorithm": "Phân Tích Cú Pháp Phụ Thuộc Cho Cây Cú Pháp Không Đầu",
+    "mechanism": "Thuật toán phân tích cấu trúc cú pháp của mọi câu bằng công cụ phân tích phụ thuộc. Nó đặc biệt săn lùng các câu không phân giải được thành động từ 'ROOT' hoặc thiếu mối quan hệ chủ-vị cơ bản (cây cú pháp không đầu). Nếu một tài liệu chứa không có hoặc gần như không có câu rút gọn trên một khối lượng văn bản lớn, điều đó cho thấy mạnh mẽ sự tuân thủ ngữ pháp cứng nhắc điển hình của mô hình AI. Ngược lại, sự hiện diện của các câu giả được đặt đúng chỗ, có chủ ý sẽ tạo trọng số lớn cho văn bản thuộc về tác giả là con người.",
+    "useCase": "Rất hiệu quả để kiểm toán các blog, bài xã luận, bản sao tiếp thị và văn bản sáng tạo, nơi các tác giả con người sử dụng tự nhiên các dấu câu đa dạng, không chuẩn và cú pháp rời rạc để tạo hiệu ứng tu từ.",
+    "strengths": "• Xuất sắc trong việc xác định chữ viết của con người (giảm dương tính giả), vì các mô hình AI đơn giản là không tự nhiên tạo ra các đoạn văn phong cách mà không có lời nhắc (prompt) rất cụ thể, không tự nhiên.\n• Hoạt động tốt trên các phong cách giao tiếp kỹ thuật số hiện đại (email, phương tiện truyền thông xã hội) nơi việc viết ngắn gọn/rút gọn đoạn là tiêu chuẩn.",
+    "limitations": "• Cung cấp ít tín hiệu trên các văn bản học thuật hoặc pháp lý mang tính trang trọng cao, vì con người cũng tránh tuyệt đối các câu rút gọn trong các lĩnh vực đó.\n• Các văn bản rất ngắn ngẫu nhiên có thể không chứa câu rút gọn nào, khiến thước đo trở nên vô nghĩa về mặt thống kê.",
+    "parameters": "Kiểm Định: Phân Tích Cú Pháp Phụ Thuộc Tương Đối và Trích Xuất Động Từ Gốc\nThước Đo: Tần Suất Các Câu Không Hoàn Chỉnh Về Mặt Ngữ Pháp\nĐầu Ra: 0-100 Điểm Tuân Thủ Ngữ Pháp Nghiêm Ngặt (Sự Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 68-75%. Giá trị chính của nó là 'chỉ báo con người'; sự hiện diện của các đoạn mã ám chỉ mạnh mẽ tác giả là con người, mặc dù sự vắng mặt không đảm bảo đó là AI.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ]
 }

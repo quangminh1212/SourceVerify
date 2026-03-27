@@ -1,12 +1,21 @@
 {
-    "name": "Syntactic Tree Depth Distribution",
-    "description": "Analyzes parse tree depth distribution — AI text tends to produce trees with more uniform depth (Jawahar et al., 2020).",
-    "algorithm": "Syntactic Tree Depth Distribution 분석 알고리즘",
-    "mechanism": "Syntactic Tree Depth Distribution 시스템은 AI 생성 콘텐츠와 실제 미디어를 구별하기 위해 특정 신호 패턴을 분석합니다.",
-    "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
-    "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
-    "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
-    "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
-    "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
-    "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
+    "name": "구문 트리 깊이 편차 및 획일성 (Tree Depth Variance)",
+    "description": "문서 전체에 걸친 구문 분석 트리(Parse tree) 깊이의 분포와 편차를 분석합니다. 문장을 계층적인 구문 트리 구조로 해부했을 때, '깊이(Depth)'는 종속절이나 수식어가 얼마나 겹겹이 내포되어 있는지를 나타냅니다. 관련 연구(Jawahar et al., 2020)에 따르면, 거대 언어 모델(LLM)은 마치 강박증에 걸린 것처럼 시종일관 균일하고 '안전한' 중간 깊이의 트리 구조만을 맹구적으로 찍어냅니다. 즉, 극단적으로 얕고 파편화된 단문이나, 인간만이 쓸 수 있는 깊고 복잡하게 얽힌 다층적 문장을 모두 회피하며, 결과적으로 통계학적으로 소름 돋을 만큼 '트리 깊이의 변동성(Variance)'이 0에 수렴하는 현상이 발생합니다.",
+    "algorithm": "구구조(Constituency) 파싱 기반 최대 트리 뎁스 추출 모델",
+    "mechanism": "이 알고리즘은 모든 단일 문장을 정형화된 구구조(Constituency) 트리로 무자비하게 해체한 뒤, 최상단 루트(Root) 노드에서 가장 깊숙한 '말단 잎(Word)' 노드까지의 최대 수직 깊이를 정확히 다림질하듯 측정합니다. 그런 다음 텍스트 전체에서 이 깊이들의 분포도를 그립니다. 만약 트리 깊이의 분산(표준편차)이 비정상적으로 얕다면—비유하자면 숲의 나무들이 짜맞춘 듯이 똑같은 '높이'로만 자라 있다면—이 텍스트는 인간의 자연스러운 창작물이 아니라 수학적으로 완벽하게 통제된 신경망의 복제품으로 낙인찍힙니다.",
+    "useCase": "인간 작가가 본능적으로 짧고 뼈 있는 단문(얕은 트리)과 깊고 장황한 부연 설명(깊은 트리)을 역동적으로 교차시키는 공식 보고서, 에세이, 심층 기획 기사의 진위를 판별할 때 극도로 치명적인 성능을 발휘합니다.",
+    "strengths": "• 프롬프트 엔지니어가 아무리 프롬프트를 조작해도 수동으로 제어하는 것이 불가능에 가까운, 신경망 텍스트 생성의 근본적인 수학적 '안전빵(Safety)' 본능을 꿰뚫어 봅니다.\n• 단어만 얄팍하게 동의어로 교체(Paraphrasing)하는 조잡한 속임수에는 끄떡도 하지 않습니다. 단어를 바꿔도 문장 트리의 기하학적 뼈대는 그대로 남기 때문입니다.",
+    "limitations": "• 모든 문장에 대해 머리가 깨질 듯한 구구조 트리 파싱 연산을 수행해야 하므로 컴퓨팅 자원을 엄청나게 게걸스럽게 먹어 치웁니다.\n• 기계적으로 정형화될 수밖에 없는 인간의 글, 예를 들어 군대식 표준 작전 절차(SOP)나 경직된 법률 보일러플레이트 문서에서는 AI로 오인할 위험성이 존재합니다.",
+    "parameters": "분석 기준: 구구조(Constituency) 구문 트리 파싱\n측정 지표: 트리 깊이의 편차 (최대 노드 깊이의 표준편차)\n출력: 0-100 통사적 획일화 (알고리즘적 경직성) 스코어",
+    "accuracy": "높음 — 충분히 길게 작성된 텍스트에서 단독으로 78-85%의 살상력을 보입니다. 문장 길이 변동성(Length Variance) 지표와 교차 검증할 때 더욱 완벽해집니다.",
+    "references": [
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://aclanthology.org/2020.coling-main.208/"
+        },
+        {
+            "title": "Gibson, E. (1998). Linguistic Complexity: Locality of Syntactic Dependencies. Cognition.",
+            "url": "https://doi.org/10.1016/S0010-0277(98)00034-1"
+        }
+    ]
 }

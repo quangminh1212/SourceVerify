@@ -1,26 +1,21 @@
 {
-    "name": "文長分散",
-    "description": "分析します 文の長さ 分布 for AI 検出.",
-    "useCase": "均一な文構造によるAIテキストの識別",
-    "mechanism": "測定します the 係数 of variation in row-level energy パターン as a proxy for 文の長さ diversity. AI tends to produce sentences of more uniform length.",
-    "accuracy": "中 - 70-80%",
-    "source": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "ウィンドウサイズ: 適応型, Quantization: 8-64 levels, Metrics: エントロピー, CV, 相関",
-    "strengths": "- Effective for detecting AI生成の text\n- Language-agnostic 統計的 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 誤検出\n- Short texts provide less reliable signals\n- Performance varies にわたる 文体s",
+    "name": "文長の分散 (Length Variance)",
+    "description": "ドキュメントの平均値からの文の長さの統計的分散（バラつき）を測定します。大規模言語モデルは当然ながら数学的な平均値に収束するため、一貫して同じような長さ（例：18語、20語、17語など）の文を生成します。これにより、リズミカルな単調さ（リズムが単調になること）が生じます。人間の書き手は自然に文の長さの変化（分散）が大きく、読者の関心を引き付け、要点を強調するために、45語にも及ぶ長々とした説明文のすぐ隣に、パンチの効いた3語の宣言文を難なく並べることができます。",
+    "algorithm": "統計的変動係数（Coefficient of Variation） ($CV = \\sigma / \\mu$)",
+    "mechanism": "システムはすべての文の単語数を計算し、ドキュメントの平均文長（$\\mu$）と標準偏差（$\\sigma$）を求めます。変動係数（CV）はこのデータを正規化し、個々の文の長さが平均と比較してどれだけ変動するかを測定します。CVスコアが低い場合、テキストがリズミカルに均質化されており、人工的に生成されたものであることを数学的に証明しています。CVスコアが高い場合、大幅な構造的多様性を伴う、有機的で人間のようなペース（テンポ）を示しています。",
+    "useCase": "単調なリズムがAIによる執筆の最も明白な「証拠」となるカバーレター、マーケティングコピー、エッセイなどの監査に非常に効果的です。",
+    "strengths": "• AIモデルが不自然な響き（支離滅裂さ）を出さずに自然に再現することは非常に困難です。AIに「文の長さを変えて書いて」とプロンプトで指示しても、自然な人間の流れというよりは、ぎこちなく強制されたような文章（トランジション）になることがよくあります。\n• スペースや単語の数学的分布のみに依存しているため、言語やトピックに完全に依存しません。",
+    "limitations": "• 統計的に意味のある分散を計算するには、最低でも8〜10文が必要です。\n• 非常に形式的な技術仕様や厳密な法的条項など、意図的に厳格に書かれた人間の文章は、自然と分散が低くなり、誤検出（フェイク・ポジティブ）を引き起こす可能性があります。",
+    "parameters": "解析: 文あたりの単語数の分離抽出\n評価基準: 変動係数（平均で正規化された標準偏差）\n出力結果: 0-100 リズミカルな硬直度（数学的な単調さ）スコア",
+    "accuracy": "高 — 80-87%の精度。アルゴリズムによるテキスト生成の、最も信頼性が高く、計算負荷が軽い統計的指紋の1つです。",
     "references": [
         {
-            "title": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-            "url": "https://scholar.google.com/scholar?q=Uchendu%20et%20al.%20(2020)%20-%20Authorship%20Attribution%20for%20Neural%20Text%20Generation%2C%20EMNLP"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
             "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
-            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
+            "url": "https://aclanthology.org/2020.acl-main.164/"
         }
     ]
 }

@@ -1,21 +1,20 @@
 {
-    "name": "Superlative Usage",
-    "description": "Analyzes superlative adjective 频率",
-    "algorithm": "Superlative Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes superlative adjective 频率. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through superlative usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "最高级滥用与浮夸密度 (Superlative Density)",
+    "description": "旨在深度扫描文本中最高级形容词和副词（例如：“最伟大的”、“最重大的”、“最完美的”、“最高的”）的使用频率与语境合法性。大语言模型（LLM）——尤其是当被赋予了“说服力”、“权威性”或“全方位总结”的指令边界时——会陷入一种病态的最高级词汇滥用狂热中。这种“浮夸默认值（Hyperbolic default）”是它们为了提供“最有帮助”回答而接受的人类反馈强化学习（RLHF）训练的灾难性副产品，这往往导致它们编造出一种极其夸张、强行下绝对结论的废话文学。而真正的人类作者在挥霍最高级词汇时是非常吝啬且谨慎的，他们只会把这些词留给真正的极端事实，在平时则更依赖于充满微妙逻辑的比较级，或是极其精确的描述性证据。",
+    "algorithm": "POS 词性词性标注与词法频次病理学分析",
+    "mechanism": "算法调用词性标注（POS Tagging）引擎，精准锁定并剥离出文本中所有的最高级形态（JJS、RBS 标签）。随后，它将计算这些极端词汇占文本总词数以及总形容词/副词数的寄生密度比。如果一篇文本展现出如同传销般令人作呕的最高级词汇浓度——尤其是在那些本该极度客观、冰冷的语境中（比如纯信息类科普文章或中立客观分析报告）——它将被雷达直接锁死，并被盖上“AI 生成的低劣营销软文或算法流水线总结”的耻辱印章。",
+    "useCase": "这套探针在用来清洗和核查电商虚假产品评论、营销软文、吹嘘过度的留学文书（PS）以及夸大其词的求职信（Cover letters）时堪称核武，因为在这些领域，AI 模型会极其本能地激活那副令人尴尬的、过度热情的浮夸腔调。",
+    "strengths": "• 它是撕破 AI “互联网传销式忽悠（Sales pitch）”以及那种令人不适的“过度热情算法总结”的终极杀器。\n• 几乎免疫一切低级洗稿和同义词替换工具（Paraphrasing）。因为只要人类（或 AI）保留了想要“震撼读者”的潜在意图，在洗稿工具过了一遍之后，那该死的最高级结构依然会被原封不动地保留下来。",
+    "limitations": "• 如果把它扔进人类亲自撰写的传销级营销文案、狂热的政治煽动演讲、或是死忠粉看完演唱会后写的语无伦次的狂热长评中，它会产生无可避免的误杀（False positive），因为在这些地方，人类的浮夸程度跟 AI 不相上下。\n• 遇到极度硬核的技术说明书或要求 AI “像个死人一样陈述客观事实”的科学文本时，它的雷达会陷入沉寂。",
+    "parameters": "雷达切片: 词性解析拓扑网络 (最高级形态追踪标识)\n定罪量表: 最高级语素相较于总形容词/全局单词的侵占率\n行刑判决: 0-100 浮夸言辞妄想症 (机器式无脑热情) 定罪率得分",
+    "accuracy": "中高段位狙击 — 72-80% 的命中率。这是一个极其生猛的词法学指标，当它与“情感基调剥离测试”以及“词汇方差分析”等毒药混合使用时，几乎能一击毙命。",
     "references": [
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

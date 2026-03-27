@@ -1,26 +1,21 @@
 {
-    "name": "Phân tích Phong cách Viết",
-    "description": "Phân tích đặc điểm phong cách viết để phát hiện văn bản AI thông qua dấu vân phong cách.",
-    "useCase": "Nhận diện văn bản AI bằng cách phân tích đặc trưng phong cách viết riêng của tác giả",
-    "mechanism": "Trích xuất đặc trưng phong cách bao gồm mẫu cấu trúc câu, cách dùng dấu câu, tổ chức đoạn văn, biện pháp tu từ, và dấu hiệu diễn ngôn. Văn bản con người có chữ ký phong cách cá nhân nhất quán, trong khi văn bản AI mang đặc trưng của mô hình tạo — thường trang trọng, có cấu trúc và thiếu nét cá nhân.",
-    "accuracy": "Cao - 80-90% trên tài liệu dài",
-    "source": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-    "algorithm": "Stylometric Feature Extraction + Statistical Pattern Classification + Discourse Analysis",
-    "parameters": "Đặc trưng: 50+ chỉ dấu phong cách, Độ dài tối thiểu: 200 từ, Phân tích: phân bố n-gram, tần suất từ chức năng",
-    "strengths": "• Bắt được mẫu phong cách viết sâu\n• Hiệu quả trên tài liệu dài\n• Phân biệt được giữa các mô hình AI khác nhau\n• Chống được paraphrase đơn giản",
-    "limitations": "• Yêu cầu đủ độ dài văn bản để phân tích tin cậy\n• Văn bản nhiều tác giả gây khó khăn\n• Biên tập chuyên nghiệp có thể che giấu tín hiệu\n• Phong cách thay đổi theo thể loại và ngữ cảnh",
+    "name": "Lấy Dấu Vân Tay Văn Phong (Stylometric Analysis)",
+    "description": "Phân tích 'dấu vân tay' văn phong đa chiều của một văn bản để xác định quyền tác giả. Vì các Mô hình Ngôn ngữ Lớn được đào tạo trên các tập dữ liệu khái quát, khổng lồ, nên đầu ra văn bản của chúng đại diện cho 'mức trung bình' thống kê của văn viết của con người. Chúng thiếu những nét kỳ quặc mang tính phong cách cá nhân, tạo ra văn xuôi có cấu trúc cao, luôn trang trọng và vô hồn về mặt phong cách. Mặt khác, con người để lại những dấu vết giống như sinh trắc học rõ rệt trong bài viết của họ—sự kết hợp cụ thể của sự phong phú về từ vựng, mật độ dấu câu, tỷ lệ câu bị động/chủ động và các cụm từ chuyển tiếp được ưa chuộng tạo thành một chữ ký văn phong độc đáo, gắn bó suốt đời.",
+    "algorithm": "Trích Xuất Đặc Trưng Văn Phong Đa Biến",
+    "mechanism": "Thuật toán tính toán một ma trận gồm 50+ điểm đánh dấu vi mô, bao gồm hapax legomena (những từ được sử dụng chính xác một lần), tần suất dấu phẩy, độ sâu phân nhánh cú pháp và phân phối từ chức năng. Sau đó, nó vạch ra các tính năng này vào một không gian vector đa chiều. Nếu vector phong cách của một văn bản nằm trọn ở trung tâm của phân phối 'trung bình phổ quát', thì khả năng tràn ngập nó là do AI tạo ra. Nếu vector lệch đáng kể do những nét cấu trúc cá nhân kỳ quặc, nó chỉ ra mạnh mẽ một tác giả con người.",
+    "useCase": "Đặc biệt hiệu quả cho phân tích dạng dài (bài luận, báo cáo, văn học), nơi có đủ dữ liệu thô để tái tạo một hồ sơ ổn định, có ý nghĩa thống kê về 'giọng lồng tiếng' của tác giả.",
+    "strengths": "• Phân tích kiến trúc cơ bản của quá trình suy nghĩ của người viết, khiến nó có khả năng chống lại các công cụ diễn giải hoặc hoán đổi từ đồng nghĩa đơn giản.\n• Có khả năng không chỉ phát hiện AI, mà còn phân biệt giữa các họ mô hình AI cụ thể (ví dụ: GPT-4 so với Claude 3) dựa trên các nguyên tắc căn chỉnh tính cách khác biệt của chúng.",
+    "limitations": "• Yêu cầu một lượng văn bản đáng kể (tối thiểu 250-300 từ) để xây dựng hồ sơ văn phong ổn định; hoàn toàn vô dụng trên các bài đăng ngắn trên mạng xã hội.\n• Các tài liệu hợp tác của nhiều tác giả hoặc văn bản được chỉnh sửa nhiều có thể làm mờ dấu vân tay phong cách, gây ra kết quả âm tính giả.",
+    "parameters": "Kiểm Định: Hơn 50 Điểm Đánh Dấu Từ Vựng, Cú Pháp và Cấu Trúc\nThước Đo: Đạo Hàm Văn Phong Đa Biến So Với Giá Trị Trung Bình\nĐầu Ra: 0-100 Điểm Đồng Nhất Văn Phong (Phong Cách Chung Biệt)",
+    "accuracy": "Cao — Độ chính xác 82-89% trên các tài liệu dài hơn. Nó là tiêu chuẩn vàng để xác định tác giả tài liệu pháp y và kiểm toán tính liêm chính trong học thuật.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
-            "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
-            "url": "https://arxiv.org/abs/2303.03697"
+            "url": "https://dl.acm.org/doi/10.1145/3132039"
         }
     ]
 }

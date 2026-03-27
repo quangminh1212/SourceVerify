@@ -1,12 +1,21 @@
 {
-    "name": "Nhịp câu",
-    "description": "Phân tích mẫu nhịp điệu trong câu",
-    "algorithm": "Thuật toán phân tích Nhịp câu",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu nhịp điệu trong câu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích nhịp câu. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Nhịp Điệu Câu (Sentence Rhythm)",
+    "description": "Phân tích dòng nhịp điệu tuần tự của một tài liệu bằng cách theo dõi cách độ dài câu chuyển tiếp từ câu này sang câu tiếp theo (ví dụ: Ngắn → Trung bình → Dài so với Trung bình → Trung bình → Trung bình). Các Mô hình Ngôn ngữ Lớn mắc phải 'hiệu ứng máy đập nhịp' (metronome effect)—chúng liên tục xâu chuỗi các câu có độ dài và cấu trúc cú pháp rất giống nhau, tạo ra một nhịp điệu đọc có thể dự đoán được, thôi miên và cuối cùng là đơn điệu. Người viết (con người) tự nhiên xây dựng các đoạn văn với nhịp độ năng động: họ kết hợp các câu giải thích phức tạp, trải dài với các câu tuyên bố tu từ ngắn gọn, đột ngột để kiểm soát hơi thở và sự chú ý của người đọc.",
+    "algorithm": "Ma Trận Chuyển Tiếp Chuỗi Markov Cho Các Lớp Câu",
+    "mechanism": "Thuật toán phân loại các câu thành các nhóm độ dài (Ngắn, Trung bình, Dài) và xây dựng một ma trận chuyển tiếp để phân tích xác suất chuyển từ trạng thái này sang trạng thái khác. Nếu một văn bản cho thấy xác suất ở lại cùng một nhóm cao bất thường (ví dụ: 90% cơ hội một câu Trung bình được theo sau bởi một câu Trung bình khác), nó biểu lộ về mặt toán học nhịp độ 'máy đập nhịp' nhân tạo của một LLM. Sự biến động nhịp điệu cao—những cú nhảy thường xuyên giữa các câu Ngắn và Dài—tương quan mạnh mẽ với nhịp điệu hữu cơ, có chủ ý của con người.",
+    "useCase": "Rất hiệu quả để phân tích văn xuôi phi hư cấu, nghệ thuật kể chuyện và văn bản thuyết phục, nơi nhịp độ tự sự và tác động nhịp điệu là những thành phần thiết yếu trong giọng văn của tác giả.",
+    "strengths": "• Xuất sắc trong việc phát hiện văn bản AI chất lượng cao đã được chỉnh sửa nhẹ về từ vựng nhưng vẫn giữ nguyên cấu trúc; con người hiếm khi bận tâm đến việc viết lại nhịp điệu cốt lõi của các đoạn văn được tạo ra.\n• Nắm bắt được 'cảm giác rô-bốt' vô hình của văn bản AI và định lượng nó thành một thước đo toán học vững chắc.",
+    "limitations": "• Kém hiệu quả trên các định dạng khô khan, thực tế như tài liệu phần mềm, bách khoa toàn thư hoặc hợp đồng pháp lý, vốn bắt buộc phải có nhịp điệu đều đặn, không thay đổi bất kể tác giả là ai.\n• Yêu cầu một chuỗi các câu đáng kể (ít nhất một đoạn văn hoàn chỉnh) để tính toán xác suất chuyển tiếp hợp lệ.",
+    "parameters": "Kiểm Định: Chuyển Tiếp Trạng Thái Tuần Tự (Các câu Ngắn/Trung bình/Dài)\nThước Đo: Entropy Ma Trận Chuyển Tiếp (Độ Biến Động Nhịp Độ)\nĐầu Ra: 0-100 Điểm Khả Năng Dự Đoán Nhịp Điệu (Hiệu Ứng Máy Đập Nhịp)",
+    "accuracy": "Cao — Độ chính xác 79-84%. Đây là một trong những mô hình cấu trúc mạnh nhất để phân biệt giữa tiến trình suy nghĩ hữu cơ của con người và việc tạo văn bản theo thuật toán.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

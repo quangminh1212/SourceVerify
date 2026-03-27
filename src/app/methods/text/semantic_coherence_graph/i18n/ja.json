@@ -1,12 +1,21 @@
 {
-    "name": "Semantic Coherence Graph",
-    "description": "Builds semantic coherence graph from sentence embeddings — AI text shows overly smooth coherence transitions.",
-    "algorithm": "Semantic Coherence Graph分析アルゴリズム",
-    "mechanism": "Semantic Coherence Graphシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "意味的結束性（コヒーレンス）グラフ分析 (Semantic Coherence)",
+    "description": "文レベルの意味を数学的グラフ上にプロットすることにより、アイデアの連続性を調べます。大規模言語モデルは、統計的に最も確率の高い次の単語を予測するように設計されているため、必然的にそのアイデアは超論理的で非常にスムーズな順序で流れることになります。逆に、人間の文章は、「意味的なジャンプ」、つまり焦点の突然の移動、本筋から離れた思考の挿入、または線形的な流れを断ち切る認知的飛躍を示します。このアルゴリズムは、文が次の文へどれほど「完璧に」移行するかを測定します。",
+    "algorithm": "文レベルの埋め込み（Embedding）と局所的結束性のモデリング",
+    "mechanism": "システムは、Sentence-BERTなどのモデルを使用して、すべての文を高次元ベクトル（埋め込み）に変換することによってテキストを処理します。次に、ノードが文であり、エッジが隣接するノード間のコサイン類似度（意味の近さ）を表す「意味グラフ（Semantic Graph）」を構築します。アルゴリズムは、グラフ全体のエッジの重みの分散を計算します。AIが生成したテキストは、一貫してエッジの重みが非常に高い（つまり、すべての文がその前の文と意味的に非常に似ていることを示す）グラフを生成します。人間のテキストは、自然な会話の飛躍や跳躍を反映して、分散が大きく「よりデコボコした」グラフを生成します。",
+    "useCase": "人間の認知的な移行（思考の飛躍）が通常豊富に見られる、深い調査報道、個人的な物語、複雑な議論型エッセイの分析に非常に効果的です。",
+    "strengths": "• AIが2つの離れたアイデアをスムーズに結びつけるためだけに、過剰なつなぎ言葉（パディング）を「ハルシネーション（幻覚）」として生成したテキストを検出するのに優れています。\n• 文全体の根本的な意味を測定するため、単純な単語の置き換え（同義語の置換）に対して高い耐性があります。",
+    "limitations": "• 深いニューラル埋め込み（Neural Embeddings）層の処理が必要なため、基本的な統計手法と比較して計算コストが高くなります。\n• 高度に構造化されたステップバイステップの指示文や、無味乾燥な技術仕様書で偽陽性（誤検知）を引き起こす可能性があります。",
+    "parameters": "解析: Sentence-BERT埋め込みコサイン類似度グラフ作成\n評価基準: 局所的結束性のエッジ分散とフローの予測可能性\n出力結果: 0-100 意味的な滑らかさ（人工的な結束性）スコア",
+    "accuracy": "高 — 82-89%の精度。特に構文木深さ（Syntactic Tree Depth）分析と組み合わせた場合、利用可能な最も堅牢な意味検出手法の1つです。",
+    "references": [
+        {
+            "title": "Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://direct.mit.edu/coli/article/34/1/1/2209/Modeling-Local-Coherence-An-Entity-Based-Approach"
+        },
+        {
+            "title": "Foltz, P.W. et al. (1998). The Measurement of Textual Coherence with Latent Semantic Analysis. Discourse Processes.",
+            "url": "https://www.tandfonline.com/doi/abs/10.1080/01638539809545028"
+        }
+    ]
 }

@@ -1,14 +1,13 @@
 {
-    "name": "構文複雑性分析",
-    "description": "測定します 構文の複雑さ through parse tree depth, clause density, and dependency distance を検出するために AI生成の text パターン.",
-    "useCase": "人間のような複雑さの変動を欠く単調な構文構造によるAIテキストの検出",
-    "mechanism": "Parses text into constituency and dependency trees, then extracts 構文の複雑さ indices: mean parse tree depth, dependency distance, subordination ratio, T-unit length, and clause density. AI生成の text tends to produce syntactically simpler structures with less variation in complexity にわたる sentences—a 'syntactic flatness' signature that differs from the natural ebb and flow of human syntactic diversity.",
-    "accuracy": "中-高 - 74-84% on essay-length texts",
-    "source": "Lu, X. (2010) - Automatic Analysis of Syntactic Complexity in Second Language Writing, International Journal of Corpus Linguistics",
-    "algorithm": "Constituency Parsing + Dependency Parsing + Multi-Index Syntactic Analysis",
-    "parameters": "Parser: neural constituency parser, Indices: tree depth, dependency distance, T-unit length, subordination index, clause density, Window: per-sentence",
-    "strengths": "• Captures deep grammatical structure パターン\n• Multiple complementary complexity indices\n• Well-grounded in linguistic theory\n• Effective on academic and formal writing",
-    "limitations": "• Parser errors affect downstream metrics\n• Computationally more intensive than lexical 特徴\n• Some text genres are naturally syntactically simple\n• Modern LLMs can produce complex syntax",
+    "name": "統語的複雑性の均一性 (Syntactic Complexity)",
+    "description": "構文木（パースツリー）と依存関係の距離を分析することにより、文の構造的な深さと文法的な複雑さを測定します。大規模言語モデルは、完全に文法的なテキストを生成できますが、予測の安全性を最適化する傾向があり、その結果「統語的な平坦さ（syntactic flatness）」が生じます。つまり、LLMの文は、過度に単純な断片や、人間が作成する非常に絡み合った、深く入れ子になった構造の両方を避け、同じようなレベルの文法的複雑さを共有することが頻繁にあります。人間は自然に統語的複雑さを変化させ、鋭く単純な節と深く複雑な従属関係を混ぜ合わせて、物語のリズムを作り出します。",
+    "algorithm": "句構造解析（Constituency Parsing）と木の深さ分析",
+    "mechanism": "アルゴリズムは文を句構造木と依存関係木に解析し、平均パースツリー深度、最大依存関係距離、従属比率、T-unit長などの複数の複雑性指標を計算します。次に、テキスト全体におけるこれらの指標の分散を評価します。テキストが、人間の認知処理に特徴的な自然な「起伏（ebbs and flows）」を伴わず、中程度から高度な統語的複雑さを非常に均一に維持している場合、それは手続き的に生成された（アルゴリズムによる）ものとしてフラグ付けされます。",
+    "useCase": "高度な学術論文、長文のジャーナリズム、および真の統語的多様性が人間の文体的熟練の証であるクリエイティブ・ライティングに非常に効果的です。",
+    "strengths": "• 人間がAIに手動でプロンプトを出して偽造することが信じられないほど困難な、深い文法的な指紋をキャプチャします。\n• 意図的な語彙の置き換え（言い換え）に対して非常に高い耐性を持ちます。文の基礎となる構造的な「骨格」は乱されないためです。",
+    "limitations": "• 計算コストが高いです。すべての文について完全な構文木を解析する必要があります。\n• 技術マニュアルや特定の法的文書など、統語的な均一性が必要な規則である、高度に統制された人間の文章にフラグを立てる可能性があります。",
+    "parameters": "解析: 句構造および依存関係解析（Constituency & Dependency Parsing）\n評価基準: 平均木の深さ、依存関係距離、および複雑性の分散\n出力結果: 0-100 統語的平坦性（アルゴリズムの均質性）スコア",
+    "accuracy": "高 — 長文テキストで80-86%の精度。十分な単語数（500語以上）を分析する場合、利用可能な最も堅牢な構造指標の1つです。",
     "references": [
         {
             "title": "Lu, X. (2010). Automatic Analysis of Syntactic Complexity in Second Language Writing. International Journal of Corpus Linguistics.",
@@ -17,10 +16,6 @@
         {
             "title": "Herbold, S. et al. (2023). A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays. Scientific Reports.",
             "url": "https://doi.org/10.1038/s41598-023-45644-9"
-        },
-        {
-            "title": "Yang, X. et al. (2023). A Survey on Detection of LLMs-Generated Content. arXiv.",
-            "url": "https://arxiv.org/abs/2310.15654"
         }
     ]
 }

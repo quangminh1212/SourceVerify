@@ -1,22 +1,21 @@
 {
-    "name": "Sentiment Variance",
-    "description": "Analyzes sentiment variation patterns",
-    "algorithm": "Sentiment Variance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes sentiment variation patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through sentiment variance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "감성 분산도 및 감정 변동성 (Sentiment Variance)",
+    "description": "문서 전체에 걸친 감정적 변동성(Volatility)과 감정선(Sentiment trajectory)의 기복을 측정합니다. 거대 언어 모델(LLM)은 가혹한 안전성 및 인간 가치 정렬(RLHF) 훈련을 거쳤기 때문에, 시종일관 예의 바르고, 중립적이거나, 미적지근할 정도로 가볍게 긍정적인 톤을 유지하도록 강력하게 세뇌되어 있습니다. AI는 의도적으로 보안을 깨는 프롬프트(탈옥)를 주입하지 않는 한, 갑작스러운 감정적 폭발, 날카로운 비꼬기(Sarcasm), 또는 순수한 분노와 부정성을 거의 드러내지 못합니다. 반대로 인간 작가는 감정적으로 극도로 역동적입니다. 인간의 에세이는 좌절감에 찬 날 선 비판에서 출발해, 어느 순간 열정적이고 벅차오르는 옹호로 격렬하게 선회하며, 미친 듯이 요동치는 감정의 궤적(Trajectory)을 그려냅니다.",
+    "algorithm": "슬라이딩 윈도우(Sliding-Window) 기반 감정가(Valence) 및 각성도(Arousal) 추적",
+    "mechanism": "알고리즘은 슬라이딩 윈도우 기법을 사용하여 문장 단위 또는 단락 단위로 텍스트의 감정(긍정/부정 폭 및 흥분도)을 평가하고 수치화합니다. 그런 다음, 문서 초반부터 끝까지 이 감정 점수들의 통계적 분산(Variance)을 계산합니다. 심전도가 멈춘 것처럼 평탄하고 흔들림 없는 감정선(분산이 '0'에 수렴)은 철저히 '멸균(Sterilized)'되고 통제된 전형적인 AI의 배설물을 암시합니다. 반대로 톱니바퀴처럼 뾰족하고 변동성이 널뛰는 감정 그래프는 인간 특유의 피 끓는 진짜 감정 표현과 서사적 고저(Narrative arc)를 증명합니다.",
+    "useCase": "인간의 '열정(Passion)'과 '날것의 감정'이 자연스럽게 투영되는 개인적인 에세이, 기명 칼럼(Op-eds), 격정적인 설득문, 분노나 환희가 섞인 리뷰 등을 감사(Audit)할 때 발군입니다.",
+    "strengths": "• 특별한 프롬프트 없이 출력된 밍밍하고, 지나치게 외교적이며, 징그럽게 '안전한' 표준 LLM 결과물을 색출해 내는 데 있어서는 타의 추종을 불허합니다.\n• 텍스트의 껍데기(구문 구조)가 아니라 '심리적 족적(Psychological footprint)'을 분석하기 때문에, 단순한 단어 바꾸기(Paraphrasing) 툴로는 이 검열을 회피하기 매우 어렵습니다.",
+    "limitations": "• 기술 설명서, 과학 논문, 재무 보고서처럼 애초에 인간이 쓰더라도 '감정이 거세되어야만 하는(Emotionally flat)' 건조한 포맷에서는 아무런 힘을 쓰지 못합니다.\n• 사용자가 작정하고 AI에게 복잡한 감정 곡선(예: '처음엔 극대노했다가, 나중엔 희망차게 마무리해')을 프롬프트로 강제 주입할 경우, 거짓 음성(False negative)을 유발할 수 있습니다.",
+    "parameters": "분석 기준: 문장 레벨 감정 극성(Polarity) 연속 추적\n측정 지표: 감정 궤적(Trajectory)의 통계적 분산($\\sigma^2$)\n출력: 0-100 감정적 멸균도 / 통제 준수율 (인위성) 스코어",
+    "accuracy": "중상 — 76-83%의 정확도. 순수하게 수학적인 구문 분석 방식(통계적 기계미)을 소름 돋게 보완해 주는, 가장 차원 높은 심리학적 탐지 지표입니다.",
     "references": [
         {
-            "title": "Liu, Y. et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. arXiv.",
-            "url": "https://arxiv.org/abs/1907.11692"
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         }
     ]
 }

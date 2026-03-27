@@ -1,22 +1,21 @@
 {
-    "name": "Sentence Fragment Usage",
-    "description": "Detects sentence fragment patterns",
-    "algorithm": "Sentence Fragment Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects sentence fragment patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through sentence fragment usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "文の断片化（不完全な文）の検出 (Sentence Fragment)",
+    "description": "テキストを分析して、意図的な文の断片（Sentence Fragment：主節、主語、または定形動詞を欠く文）の存在がないかを調べます。大規模言語モデルは、文法的に不完全な文を生成するとトレーニング中に重いペナルティを受けるため、教科書に準拠した完璧な「主語-動詞-目的語」の構造の文をほぼ独占的に出力します。人間の書き手は、特に創造的、説得的、または会話的な文脈において、文体的な強調、鋭いペース配分、または感情的なインパクトを与えるために、意図的な文の断片を頻繁に展開します（例：「Not exactly.（正確には違う。）」、「A complete disaster.（完全な大惨事だ。）」、「Because why not?（なぜって、いいじゃないか。）」）。",
+    "algorithm": "ヘッドレス構文ツリーの依存関係解析",
+    "mechanism": "アルゴリズムは、依存関係パーサーを使用してすべての文の構文構造を解析します。具体的には、「ROOT（根）」となる動詞に解決できない文、または基本的な「主語-述語」関係を欠く文（ヘッドレス構文ツリー）をハンティング（検索）します。大量のテキスト内で、ドキュメントに断片化された文（フラグメント）がゼロまたはほぼゼロの場合、それはAIモデルに典型的な「厳格な文法遵守」を強く示しています。逆に、配置の良い意図的なフラグメントの存在は、テキストが人間の著述によるものである可能性を大きく高めます（重み付けします）。",
+    "useCase": "ブログ、論説記事（op-eds）、マーケティングコピー、および人間の著者が修辞的な効果（レトリック）のために多様で非標準的な句読点や断片化された構文を自然に使用するクリエイティブ・ライティングの監査に非常に効果的です。",
+    "strengths": "• AIモデルは、非常に具体的で不自然なプロンプトがない限り、意図的に断片的な文を生成することはないため、人間の文章を特定する（誤検出を減らす）のに優れています。\n• 断片的な文章が標準となっている最新のデジタルコミュニケーションスタイル（電子メール、ソーシャルメディア）でうまく機能します。",
+    "limitations": "• 人間もこれらの領域では文の断片化を厳格に避けるため、非常に形式的な学術テキストや法律テキストではほとんどシグナルを提供しません。\n• 非常に短いテキストでは、偶然にフラグメントが含まれない場合があり、その場合、この指標は統計的に無意味になります。",
+    "parameters": "解析: 構文の依存関係解析とルート（根）動詞の抽出\n評価基準: 文法的に不完全な文の頻度\n出力結果: 0-100 厳格な文法遵守（人工的・不自然さ）スコア",
+    "accuracy": "中 — 68-75%の精度。その主な価値は「人間の指標（human-indicator）」としてのものです。フラグメントの存在は強く人間を暗示しますが、存在しないからといってAIとは限りません。",
     "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
             "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
         }
     ]
 }

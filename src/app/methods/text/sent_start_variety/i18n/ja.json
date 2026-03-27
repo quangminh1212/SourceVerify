@@ -1,22 +1,21 @@
 {
-    "name": "Sentence Start Variety",
-    "description": "Analyzes sentence opening word variety",
-    "algorithm": "Sentence Start Variety — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes sentence opening word variety. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through sentence start variety analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "文頭の多様性分析 (Opener Diversity)",
+    "description": "文の先頭で使用される単語や文法構造の分類学的な多様性を調べます。AIモデルは安全で標準的な「主語＋動詞」の構文を過度に好む傾向があり、連続する文を定冠詞（「The」など）、基本的な代名詞（「It」、「We」、「They」など）、または定型的なつなぎの副詞（「Additionally（さらに）」、「Furthermore（さらに）」、「Moreover（その上）」など）で始める傾向があります。人間の書き手は自然と、はるかに豊富な種類の「文頭の言葉（オープナー）」を使用し、ダイナミックなペース配分と物語の流れを生み出すために、前置詞句、従属節、動名詞、または等位接続詞で始めることが頻繁にあります。",
+    "algorithm": "構文ツリー・オープナー分類とN-Gram分布",
+    "mechanism": "このアルゴリズムは、すべての文の最初の1〜3単語を抽出し、その品詞（POS）をタグ付けします。様々な種類の開始構造がどれだけ均等に分布しているかを測定することで、「オープナー・エントロピー」を計算します。あるテキストに20個の文があり、そのうち15個が「The」や代名詞で始まっている場合、エントロピースコアは著しく低くなり、人工的な生成物であることを示します。システムはまた、段落の先頭で使用されるAI特有のつなぎの定型文（「In conclusion,（結論として）」、「Ultimately,（最終的に）」、「First and foremost,（何よりもまず）」）の存在にもフラグを立てます。",
+    "useCase": "AIの文生成の単調で繰り返しの多いリズム（テンポ）が統計的に明白になる、エッセイ、記事、長文の電子メールなどの監査に非常に効果的です。",
+    "strengths": "• ディープニューラル分析と比較して、計算負荷が非常に軽く、極めて高速です。\n• 文の途中は軽く編集（リライト）されているものの、文の境界（先頭）は手つかずのままになっているAIテキストを捕らえるのに優れています。",
+    "limitations": "• 短いテキスト（10文未満）では、意味のあるオープナー（文頭）の分散を計算するための十分なサンプルサイズが得られません。\n• 意図的に単純化された人間の文章（子供向けの本や基本的な操作マニュアルなど）は、文頭の多様性が自然に低くなるため、AIとしてフラグが立てられる可能性があります。",
+    "parameters": "解析: 文頭トークンの品詞（POS）タグ付け\n評価基準: オープナーPOSエントロピーとつなぎの定型文の頻度\n出力結果: 0-100 オープナーの硬直度（人工的なリズム）スコア",
+    "accuracy": "中 — 68-76%の精度。より広範な構文の複雑性（Syntactic Complexity）分析スイート内の補完的な機能として最もよく機能します。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
         }
     ]
 }

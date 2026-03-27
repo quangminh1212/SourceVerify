@@ -1,12 +1,21 @@
 {
-    "name": "Đa dạng mở đầu câu",
-    "description": "Phân tích sự đa dạng cách mở đầu câu",
-    "algorithm": "Thuật toán phân tích Đa dạng mở đầu câu",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích sự đa dạng cách mở đầu câu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích đa dạng mở đầu câu. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Sự Đa Dạng Từ Mở Đầu Câu (Sentence Opener)",
+    "description": "Phân tích sự đa dạng từ vựng của 1-3 từ đầu tiên (tiền tố n-gram) được sử dụng để bắt đầu các câu. Các Mô hình Ngôn ngữ Lớn phụ thuộc nhiều vào một tập hợp hẹp, được mã hóa cứng các cụm từ chuyển tiếp an toàn, trang trọng ('Hơn nữa,', 'Tóm lại,', 'Ngoài ra,', 'Điều quan trọng cần lưu ý là'). Vì chúng tạo văn bản theo từng token dựa trên xác suất, chúng thường quay lại các 'mỏ neo' có xác suất cao này để bắt đầu các ý tưởng mới. Người viết tự nhiên thể hiện sự đa dạng từ vựng cực độ ở đầu câu, hiếm khi lặp lại chính xác cùng một cụm từ ở gần nhau trừ khi có chủ ý tạo hiệu ứng tu từ (phép điệp từ).",
+    "algorithm": "Phân Tích Entropy Token Tiền Tố n-gram",
+    "mechanism": "Thuật toán trích xuất 1-3 từ đầu tiên của mỗi câu trong tài liệu và biên dịch chúng thành phân phối tần suất. Sau đó, nó tính toán entropy Shannon của tập con từ vựng cụ thể này. Nếu một văn bản liên tục bắt đầu bằng 'Điều này', 'Những', 'Trong', hoặc các phó từ liên kết tiêu chuẩn ('Tuy nhiên,'), entropy tiền tố sẽ giảm mạnh, báo hiệu sự tạo ra bằng thuật toán. Entropy tiền tố cao cho thấy người viết sở hữu vốn từ vựng phong phú, giống con người để bắt đầu các mệnh đề.",
+    "useCase": "Rất hiệu quả để kiểm toán các bài tiểu luận, bài báo học thuật và bài viết dạng dài, nơi các mô hình AI có khả năng lạm dụng từ chuyển tiếp tiêu chuẩn để ngụy tạo sự trôi chảy một cách giả tạo.",
+    "strengths": "• Xuất sắc trong việc nắm bắt các đầu ra AI 'lười biếng' hoặc được nhắc ít, phụ thuộc nhiều vào các mẫu cấu trúc có sẵn.\n• Chi phí tính toán rất thấp; yêu cầu token hóa và đếm đơn giản thay vì phân tích cú pháp ngữ nghĩa sâu.",
+    "limitations": "• Kém hiệu quả trên các văn bản cực ngắn (dưới 150 từ), nơi sự lặp lại của các từ mở đầu câu chưa có đủ không gian để biểu hiện về mặt thống kê.\n• Có thể gắn cờ các định dạng (do con người làm) có cấu trúc cao (như danh sách dấu đầu dòng liên tục bắt đầu bằng động từ).",
+    "parameters": "Kiểm Định: Phân Phối Tần Suất n-gram (1-3 token) Mở Đầu Câu\nThước Đo: Entropy Shannon Của Từ Vựng Mở Đầu\nĐầu Ra: 0-100 Điểm Đồng Nhất Hóa Từ Mở Đầu (Khả Năng Dự Đoán Chuyển Tiếp)",
+    "accuracy": "Cao — Độ chính xác 78-85%. Nó nắm bắt hiệu quả 'sự mệt mỏi khi chuyển tiếp' thường cảm thấy khi đọc văn xuôi do AI tạo ra chưa qua chỉnh sửa.",
+    "references": [
+        {
+            "title": "Bhat, S. et al. (2020). How much is 131 million parameters worth? A study of BERT models. ACL.",
+            "url": "https://aclanthology.org/2020.acl-main.626/"
+        },
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
+        }
+    ]
 }

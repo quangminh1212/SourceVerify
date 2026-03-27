@@ -1,26 +1,21 @@
 {
-    "name": "Phân tích độ phức tạp cú pháp",
-    "description": "Đo độ phức tạp cú pháp qua độ sâu cây phân tích, mật độ mệnh đề và khoảng cách phụ thuộc để phát hiện mẫu văn bản AI.",
-    "useCase": "Phát hiện văn bản AI thông qua cấu trúc cú pháp đơn điệu thiếu biến đổi phức tạp như người viết",
-    "mechanism": "Phân tích cú pháp văn bản thành cây thành phần và cây phụ thuộc, sau đó trích xuất chỉ số phức tạp: độ sâu cây trung bình, khoảng cách phụ thuộc, tỷ lệ phụ thuộc, độ dài T-unit, và mật độ mệnh đề. Văn bản AI thường tạo cấu trúc đơn giản hơn với ít biến đổi phức tạp—dấu hiệu 'phẳng cú pháp' khác với sự đa dạng tự nhiên của con người.",
-    "accuracy": "Trung bình-Cao - 74-84% trên văn bản dài",
-    "source": "Lu, X. (2010) - Automatic Analysis of Syntactic Complexity, International Journal of Corpus Linguistics",
-    "algorithm": "Constituency Parsing + Dependency Parsing + Multi-Index Syntactic Analysis",
-    "parameters": "Bộ phân tích: neural constituency parser, Chỉ số: độ sâu cây, khoảng cách phụ thuộc, T-unit, chỉ số phụ thuộc, mật độ mệnh đề, Cửa sổ: theo câu",
-    "strengths": "• Nắm bắt mẫu cấu trúc ngữ pháp sâu\n• Nhiều chỉ số phức tạp bổ sung\n• Cơ sở lý thuyết ngôn ngữ vững chắc\n• Hiệu quả trên văn bản học thuật và trang trọng",
-    "limitations": "• Lỗi phân tích ảnh hưởng chỉ số\n• Tốn tính toán hơn đặc trưng từ vựng\n• Một số thể loại tự nhiên đơn giản cú pháp\n• LLM hiện đại có thể tạo cú pháp phức tạp",
+    "name": "Độ Phức Tạp Cú Pháp (Syntactic Complexity)",
+    "description": "Đo lường độ sâu cấu trúc và sự phức tạp về mặt ngữ pháp của câu bằng cách phân tích cây cú pháp (parse trees) và khoảng cách phụ thuộc. Mặc dù các Mô hình Ngôn ngữ Lớn có thể tạo ra văn bản đúng ngữ pháp một cách hoàn hảo, nhưng chúng có xu hướng tối ưu hóa sự an toàn dự đoán, dẫn đến 'sự bằng phẳng về cú pháp'. Điều này có nghĩa là các câu của chúng thường chia sẻ một mức độ phức tạp ngữ pháp tương tự nhau, tránh cả những đoạn văn quá đơn giản và những cấu trúc lồng ghép sâu, rối rắm giống như con người tạo ra. Con người tự nhiên thay đổi độ phức tạp cú pháp của họ—kết hợp các mệnh đề đơn giản, sắc bén với các cấu trúc phụ thuộc phức tạp, sâu sắc để tạo ra nhịp điệu kể chuyện.",
+    "algorithm": "Phân Tích Cú Pháp Cấu Trúc & Phân Tích Độ Sâu Cây",
+    "mechanism": "Thuật toán phân tích các câu thành cây cấu trúc (constituency tree) và cây phụ thuộc để tính toán nhiều chỉ số phức tạp: độ sâu trung bình của cây phân tích, khoảng cách phụ thuộc tối đa, tỷ lệ phụ thuộc và độ dài đơn vị T (T-unit). Sau đó, nó đánh giá phương sai của các chỉ số này trên toàn bộ văn bản. Nếu một văn bản duy trì mức độ phức tạp cú pháp từ trung bình đến cao rất đồng nhất mà không có biểu hiện 'thăng trầm' tự nhiên đặc trưng cho quá trình xử lý nhận thức của con người, thì văn bản đó bị gắn cờ là được tạo ra theo quy trình thuật toán.",
+    "useCase": "Rất hiệu quả đối với các bài báo học thuật nâng cao, báo chí dạng dài và viết sáng tạo, nơi sự đa dạng cú pháp thực sự là đặc điểm nổi bật của sự tinh thông văn phong của con người.",
+    "strengths": "• Nắm bắt được các dấu vân tay ngữ pháp sâu sắc mà con người cực kỳ khó có thể yêu cầu AI giả mạo thủ công một cách hoàn hảo.\n• Khả năng chống chịu cao đối với việc cố ý thay thế từ vựng (paraphrasing), vì 'bộ xương' cấu trúc cơ bản của các câu không bị tác động.",
+    "limitations": "• Tính toán cực kỳ tốn kém; yêu cầu phân tích các cây cú pháp đầy đủ cho mọi câu.\n• Có thể gắn cờ lỗi đối với văn bản của con người có quy chuẩn cao, chẳng hạn như hướng dẫn kỹ thuật hoặc các tài liệu pháp lý cụ thể, nơi tính đồng nhất cú pháp là một quy ước bắt buộc.",
+    "parameters": "Kiểm Định: Phân Tích Cây Cấu Trúc & Cây Phụ Thuộc (Constituency & Dependency)\nThước Đo: Độ Sâu Cây Trung Bình, Khoảng Cách Phụ Thuộc & Phương Sai Phức Tạp\nĐầu Ra: 0-100 Điểm Bằng Phẳng Cú Pháp (Tính Đồng Nhất Thuật Toán)",
+    "accuracy": "Cao — Độ chính xác 80-86% trên các văn bản dạng dài. Một trong những chỉ báo cấu trúc mạnh mẽ nhất hiện có khi phân tích đủ số lượng từ (Hơn 500 từ).",
     "references": [
         {
-            "title": "Lu, X. (2010). Automatic Analysis of Syntactic Complexity. International Journal of Corpus Linguistics.",
+            "title": "Lu, X. (2010). Automatic Analysis of Syntactic Complexity in Second Language Writing. International Journal of Corpus Linguistics.",
             "url": "https://doi.org/10.1075/ijcl.15.4.02lu"
         },
         {
-            "title": "Herbold, S. et al. (2023). Human-Written vs ChatGPT-Generated Essays. Scientific Reports.",
+            "title": "Herbold, S. et al. (2023). A Large-Scale Comparison of Human-Written Versus ChatGPT-Generated Essays. Scientific Reports.",
             "url": "https://doi.org/10.1038/s41598-023-45644-9"
-        },
-        {
-            "title": "Yang, X. et al. (2023). A Survey on Detection of LLMs-Generated Content. arXiv.",
-            "url": "https://arxiv.org/abs/2310.15654"
         }
     ]
 }

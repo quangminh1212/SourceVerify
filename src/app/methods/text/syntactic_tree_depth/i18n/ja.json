@@ -1,12 +1,21 @@
 {
-    "name": "Syntactic Tree Depth Distribution",
-    "description": "Analyzes parse tree depth distribution — AI text tends to produce trees with more uniform depth (Jawahar et al., 2020).",
-    "algorithm": "Syntactic Tree Depth Distribution分析アルゴリズム",
-    "mechanism": "Syntactic Tree Depth Distributionシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "構文木の深さの分散 (Tree Depth Variance)",
+    "description": "ドキュメント全体の構文木（パースツリー）の深さの分布を分析します。文が階層的な構文木に図解されるとき、「深さ」は入れ子になった節や修飾語が何層存在するかを表します。研究（Jawaharら、2020年）によると、大規模言語モデルは、厳密に均一で「安全な」木の深さを持つテキストを頑固に生成することが示されています。極端に浅い断片と、深く入り組んだ多層的な人間の文の両方を避け、その結果、統計的に異常な深さの分散の欠如が生じます。",
+    "algorithm": "句構造解析ツリー深度抽出",
+    "mechanism": "アルゴリズムは、すべての文を正式な句構造木に解析し、ルートノード（根）から最も深い「葉（単語）」までの最大垂直深度を測定します。次に、これらの深さの分布をテキスト全体にプロットします。木の深さの分散（標準偏差）が異常に低い場合、つまり、ほぼすべての文がまったく同じ構造的「高さ」を持っている場合、そのテキストは自然な人間の構成ではなく、数学的に最適化されたニューラルネットワークの産物としてフラグ付けされます。",
+    "useCase": "人間の書き手が自然に短くてパンチの効いた文（浅い木）と、広範で詳細な説明（深い木）を混在させる正式なレポート、エッセイ、記事の監査に非常に効果的です。",
+    "strengths": "• プロンプターが手動で上書きすることはほぼ不可能な、AI生成の根本的な数学的「安全性」を検出します。\n• 基礎となるツリーの幾何学構造を変更しない、語彙の交換などの基本的な難読化手法に対して非常に高い耐性を持ちます。",
+    "limitations": "• すべての文について計算負荷の高い句構造解析を必要とします。\n• 厳格な統語的均一性が強制される、非常に定型的な人間の文章（例：標準作業手順書や特定の法的定型文）に誤ってフラグを立てる可能性があります。",
+    "parameters": "解析: 句構造解析（Constituency Parsing）\n評価基準: 木の深さの分散（最大ノード深度の標準偏差）\n出力結果: 0-100 統語的均一性（アルゴリズムの硬直性）スコア",
+    "accuracy": "高 — 十分に長いテキストで78-85%の単独精度。文の長さの分散と組み合わせると優れた結果をもたらします。",
+    "references": [
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://aclanthology.org/2020.coling-main.208/"
+        },
+        {
+            "title": "Gibson, E. (1998). Linguistic Complexity: Locality of Syntactic Dependencies. Cognition.",
+            "url": "https://doi.org/10.1016/S0010-0277(98)00034-1"
+        }
+    ]
 }

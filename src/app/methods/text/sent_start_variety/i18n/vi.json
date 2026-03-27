@@ -1,12 +1,21 @@
 {
-    "name": "Đa dạng mở đầu câu",
-    "description": "Phân tích sự đa dạng từ mở đầu câu",
-    "algorithm": "Thuật toán phân tích Đa dạng mở đầu câu",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích sự đa dạng từ mở đầu câu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích đa dạng mở đầu câu. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Đa Dạng Từ Bắt Đầu Câu (Opener Diversity)",
+    "description": "Kiểm tra sự đa dạng về phân loại của các từ và cấu trúc ngữ pháp được sử dụng ở đầu câu. Các mô hình AI rất ưa chuộng các cú pháp chủ-vị an toàn, tiêu chuẩn, thường bắt đầu các câu liên tiếp bằng mạo từ xác định ('The'), đại từ cơ bản ('It', 'We', 'They') hoặc các trạng từ chuyển tiếp theo khuôn mẫu ('Additionally', 'Furthermore', 'Moreover'). Người viết thường sử dụng một loạt các từ mở đầu câu phong phú hơn nhiều, thường bắt đầu bằng các cụm giới từ, mệnh đề phụ thuộc, danh động từ hoặc liên từ kết hợp để tạo ra nhịp độ động và mạch tường thuật.",
+    "algorithm": "Phân Loại Từ Mở Đầu Cây Cú Pháp và Phân Phối N-Gram",
+    "mechanism": "Thuật toán trích xuất 1-3 từ đầu tiên của mỗi câu và gắn thẻ Từ loại (POS) của chúng. Nó tính toán 'Entropy Từ Mở Đầu' bằng cách đo lường mức độ phân phối đồng đều của các loại cấu trúc bắt đầu khác nhau. Nếu một văn bản có 20 câu và 15 câu trong số đó bắt đầu bằng 'The' hoặc số ít đại từ, điểm entropy sẽ cực kỳ thấp, cho thấy sự tạo ra nhân tạo. Hệ thống cũng gắn cờ sự hiện diện của các đoạn văn bản chuyển tiếp đặc thù của AI ('In conclusion,', 'Ultimately,', 'First and foremost,') được sử dụng ở đầu các đoạn văn.",
+    "useCase": "Rất hiệu quả để kiểm toán các bài luận, bài báo và email dạng dài, nơi mà nhịp điệu đều đều, lặp đi lặp lại của việc tạo câu AI trở nên rõ ràng về mặt thống kê.",
+    "strengths": "• Rất nhanh và nhẹ về mặt tính toán so với phân tích thần kinh sâu.\n• Rất xuất sắc trong việc nắm bắt văn bản AI đã được chỉnh sửa nhẹ ở giữa câu nhưng vẫn giữ nguyên ở các ranh giới.",
+    "limitations": "• Các văn bản ngắn (dưới 10 câu) không cung cấp kích thước mẫu đủ lớn để tính toán phương sai từ mở đầu có ý nghĩa.\n• Viết của con người cố tình đơn giản (như sách thiếu nhi hoặc hướng dẫn dẫn hướng cơ bản) có thể bị gắn cờ là AI do sự đa dạng bắt đầu câu thấp một cách tự nhiên.",
+    "parameters": "Kiểm Định: Gắn Thẻ POS Của Các Mã Thông Báo Bắt Đầu Câu\nThước Đo: Entropy POS Từ Mở Đầu và Tần Suất Đoạn Văn Bản Chuyển Tiếp\nĐầu Ra: 0-100 Điểm Độ Cứng Mở Đầu (Nhịp Độ Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 68-76%. Hoạt động tốt nhất như một tính năng bổ sung trong bộ phân tích Độ Phức Tạp Cú Pháp rộng hơn.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
+        }
+    ]
 }

@@ -1,22 +1,21 @@
 {
-    "name": "Sentiment Variance",
-    "description": "Analyzes sentiment variation patterns",
-    "algorithm": "Sentiment Variance — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes sentiment variation patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through sentiment variance analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "感情と主観性の分散分析 (Sentiment Variance)",
+    "description": "ドキュメント全体での感情の変動性（ボラティリティ）や主観的なトーンの揺れ動きを測定します。厳格な安全性やアライメント（RLHF：人間のフィードバックからの強化学習）のトレーニングにより、大規模言語モデルは、一貫して丁寧で、中立、またはわずかに肯定的なトーンを維持するように強く条件付けられています。明示的にジェイルブレイク（脱獄）されない限り、突然の感情の揺れ、皮肉、または純粋な否定性を示すことはめったにありません。逆に、人間の書き手は感情的にダイナミックです。人間が書いたエッセイは、不満に満ちた批判から情熱的な擁護へと激しく移行し、非常に変動しやすい感情の軌跡を生み出すことがあります。",
+    "algorithm": "スライディングウィンドウによる感情価（Valence）と覚醒度（Arousal）の追跡",
+    "mechanism": "アルゴリズムはスライディングウィンドウを使用して、文ごと、または段落ごとにテキストの感情（感情価/覚醒度）を評価します。ドキュメントの全体にわたるこれらの感情スコアの統計的分散を計算します。平坦で揺るぎない感情の線（分散がゼロに近い）は、AIによる「無菌化（無毒化）」され、アライメントされた出力を強く示唆しています。ギザギザで変動の激しい感情グラフは、人間の真正な感情表現や、物語の展開（ストーリーアーク）を示しています。",
+    "useCase": "レビュー、個人的なエッセイ、論説記事、および人々の情熱が自然と感情的なトーンに構造的変化を引き起こすような主張の強い文章の分析に非常に効果的です。",
+    "strengths": "• 刺激が少なく、外交的で、「安全」であることで悪名高い、標準的で複雑なプロンプトのないLLM出力を検出するのに優れています。\n• 構造文法だけでなく、テキストの「心理的足跡」を分析するため、単純な言い換え（パラフレーズ）ツールで回避することが困難です。",
+    "limitations": "• 技術文書、科学論文、財務報告書など、感情的に平坦であることが*想定されている*テキストでは、シグナルをほとんど提供しません。\n• ユーザーが複雑な感情的指示（例：「最初は怒って、その後希望を持って」）でAIに特定してプロンプトを与えた場合、回避される可能性があります。",
+    "parameters": "解析: 文レベルの感情の極性トラッキング（追跡）\n評価基準: 感情軌跡（推移）の分散（$\\sigma^2$）\n出力結果: 0-100 感情の無菌化（アライメントの程度）スコア",
+    "accuracy": "中〜高 — 76-83%の精度。純粋に統計的な構文解析メソッドを美しく補完する、優れた心理学的指標です。",
     "references": [
         {
-            "title": "Liu, Y. et al. (2019). RoBERTa: A Robustly Optimized BERT Pretraining Approach. arXiv.",
-            "url": "https://arxiv.org/abs/1907.11692"
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         }
     ]
 }

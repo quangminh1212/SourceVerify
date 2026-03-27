@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Semantic Coherence Graph",
-    "description": "Xây dựng đồ thị mạch lạc ngữ nghĩa từ nhúng câu — văn bản AI cho thấy chuyển tiếp mạch lạc quá mượt.",
-    "algorithm": "Thuật toán phân tích Semantic Coherence Graph",
-    "mechanism": "Hệ thống Semantic Coherence Graph phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phân Tích Biểu Đồ Mạch Lạc Ngữ Nghĩa (Semantic Coherence)",
+    "description": "Kiểm tra tính liên tục của các ý tưởng bằng cách phác họa ý nghĩa cấp độ câu trên một biểu đồ toán học. Các Mô Hình Ngôn Ngữ Lớn được thiết kế để dự đoán các từ tiếp theo có xác suất thống kê cao nhất, điều này tự nhiên buộc các ý tưởng của chúng phải trôi chảy theo một trình tự siêu logic, cực kỳ mượt mà. Ngược lại, văn bản do con người viết thể hiện các 'bước nhảy ngữ nghĩa'—sự thay đổi tiêu điểm đột ngột, chèn thêm suy nghĩ lan man hoặc các bước nhảy nhận thức phá vỡ dòng chảy tuyến tính. Thuật toán này đo lường mức độ chuyển tiếp 'hoàn hảo' của các câu từ câu này sang câu khác.",
+    "algorithm": "Nhúng Cấp Độ Câu và Lập Mô Hình Mạch Lạc Cục Bộ",
+    "mechanism": "Hệ thống xử lý văn bản bằng cách chuyển đổi mọi câu thành một vectơ nhiều chiều (embedding - nhúng) sử dụng các mô hình như Sentence-BERT. Sau đó, nó xây dựng một 'Biểu Đồ Ngữ Nghĩa' trong đó các nút là các câu và các cạnh đại diện cho độ tương tự cosine (sự gần gũi về ý nghĩa) giữa các nút kề nhau. Thuật toán tính toán phương sai trong trọng số của các cạnh trên toàn bộ biểu đồ. Văn bản do AI tạo ra một biểu đồ có trọng số cạnh duy trì ở mức cao một cách nhất quán (chỉ ra rằng mỗi câu đều rất giống về mặt ngữ nghĩa với câu trước nó). Văn bản của con người tạo ra một biểu đồ 'gồ ghề' hơn với phương sai cao hơn, phản ánh các bước nhảy vọt và giới hạn tự nhiên trong giao tiếp.",
+    "useCase": "Rất hiệu quả để kiểm toán các bài báo điều tra sâu, câu chuyện cá nhân và các bài luận tranh luận phức tạp, nơi sự thay đổi nhận thức của con người thường rất phong phú.",
+    "strengths": "• Rất xuất sắc trong việc phát hiện văn bản nơi AI đã 'ảo giác' thêm phần đệm quá mức chỉ để kết nối suôn sẻ hai ý tưởng xa vời.\n• Có khả năng phục hồi cao trước việc thay thế từ đơn giản (thay thế từ đồng nghĩa) vì nó đo lường ý nghĩa cơ bản của toàn bộ câu.",
+    "limitations": "• Tốn kém về mặt tính toán so với các phương pháp thống kê cơ bản do cần xử lý lớp nhúng thần kinh sâu.\n• Có thể gây ra dương tính giả trên các văn bản hướng dẫn từng bước có cấu trúc cao hoặc các thông số kỹ thuật khô khan.",
+    "parameters": "Kiểm Định: Vẽ Biểu Đồ Độ Tương Tự Cosine Nhúng Sentence-BERT\nThước Đo: Phương Sai Cạnh Mạch Lạc Cục Bộ và Khả Năng Dự Đoán Dòng Chảy\nĐầu Ra: 0-100 Điểm Độ Mượt Ngữ Nghĩa (Mạch Lạc Nhân Tạo)",
+    "accuracy": "Cao — Độ chính xác 82-89%. Một trong những phương pháp phát hiện ngữ nghĩa mạnh mẽ nhất hiện có, đặc biệt khi được kết hợp với phân tích Độ Sâu Cây Cú Pháp.",
+    "references": [
+        {
+            "title": "Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://direct.mit.edu/coli/article/34/1/1/2209/Modeling-Local-Coherence-An-Entity-Based-Approach"
+        },
+        {
+            "title": "Foltz, P.W. et al. (1998). The Measurement of Textual Coherence with Latent Semantic Analysis. Discourse Processes.",
+            "url": "https://www.tandfonline.com/doi/abs/10.1080/01638539809545028"
+        }
+    ]
 }

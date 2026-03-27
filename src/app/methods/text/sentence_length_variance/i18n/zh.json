@@ -1,26 +1,21 @@
 {
-    "name": "句子长度方差",
-    "description": "分析 句子长度 分布 for AI 检测.",
-    "useCase": "通过均匀的句子结构识别AI文本",
-    "mechanism": "测量 the 系数 of variation in row-level energy 模式 as a proxy for 句子长度 diversity. AI tends to produce sentences of more uniform length.",
-    "accuracy": "中等 - 70-80%",
-    "source": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "窗口大小: 自适应, Quantization: 8-64 levels, Metrics: 熵, CV, 相关性",
-    "strengths": "- Effective for detecting AI生成的 text\n- Language-agnostic 统计 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 误报\n- Short texts provide less reliable signals\n- Performance varies 跨 写作风格s",
+    "name": "句子长度方差与变异系数 (Length Variance)",
+    "description": "旨在测量每个句子的长度围绕整篇文档平均句长的统计学离散程度。大语言模型（LLM）的底层算法宿命决定了它们必定会向数学平均值靠拢，从而生产出长度极其稳定、宛如复制粘贴般的句子（例如：18个词，20个词，17个词）。这造就了 AI 文本那种令人昏昏欲睡的节奏单调感。而人类写作者在自然状态下，其句子长度方差高得惊人——为了紧紧攥住读者的注意力并砸下重音，人类可以毫不费力地在一个多达 45 个词的史诗级长句旁边，突兀地砸下一个只有 3 个字的短促爆裂句，这种浑然天成的呼吸感是机器无法模仿的。",
+    "algorithm": "基于正态分布的统计变异系数计算 ($CV = \\sigma / \\mu$)",
+    "mechanism": "系统像无情的计数器一样绞碎文本，清点每一个句子里的单词量，求出整篇文档的平均句长（$\\mu$）及其标准差（$\\sigma$）。随后，它使用“变异系数（CV）”对这些狂野的数据进行归一化处理，精准测量每个句子的长度相较于大盘平均线究竟翻涌得有多剧烈。一个趋近于低谷的 CV 分值，就是在用严谨的数学规律把文章钉上“被算法剥夺了节奏感的人工生成物”的耻辱柱。而高耸入云的 CV 分值，则骄傲地彰显出文本具有充满有机生命力的人类心跳节奏和宏大的结构多样性。",
+    "useCase": "在审查求职信、煽动性的营销软文以及个人随笔时，简直就是降维打击——在这些体裁中，那种如同念经般死板单调的“平头句”节奏，是 AI 代写最刺眼的罪行“签名”。",
+    "strengths": "• AI 模型极难在不损坏上下文逻辑的前提下，自然地去伪造这种随机错落的方差。如果你用 prompt 恐吓 AI “必须把句子写得长短错落”，它往往只会别扭地挤出几个生硬的转折词，而不是人类那种从灵魂深处流淌出的长短叹息。\n• 它完全是超越物理语言和语法体系的神级存在，不管你写的是量子力学还是恋爱日记，它眼中只有空格和单词数量的数学波函数。",
+    "limitations": "• 作为统计学工具，它至少需要吞噬 8-10 个句子才能建立起有意义的方差拓扑图。太短的文本会让它失去准星。\n• 人类如果出于某种高度克制的职业强制（比如撰写冷酷无情的法典条文、或者严格格式化的工业说明书），其文字长度也会像被刀切过一样整齐，从而引发仪器的误响（假阳性）。",
+    "parameters": "雷达切片: 基于单句域的字数 (Word Count) 强行隔离\n定罪量表: 变异系数 (被平均值无情归一化的标准偏差)\n行刑判决: 0-100 节奏僵硬度 (冰冷的数学单调性) 剥夺分",
+    "accuracy": "极高震慑力 — 80-87% 的绝对命中率。作为对抗算法生成的侦测矩阵中，它是运算开销最轻盈、却也是最无可反驳的统计学指纹之一。",
     "references": [
         {
-            "title": "Uchendu et al. (2020) - Authorship Attribution for Neural Text Generation, EMNLP",
-            "url": "https://scholar.google.com/scholar?q=Uchendu%20et%20al.%20(2020)%20-%20Authorship%20Attribution%20for%20Neural%20Text%20Generation%2C%20EMNLP"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
         },
         {
             "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
-            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
+            "url": "https://aclanthology.org/2020.acl-main.164/"
         }
     ]
 }

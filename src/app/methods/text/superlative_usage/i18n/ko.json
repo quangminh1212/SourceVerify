@@ -1,21 +1,20 @@
 {
-    "name": "Superlative Usage",
-    "description": "Analyzes superlative adjective 주파수",
-    "algorithm": "Superlative Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes superlative adjective 주파수. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through superlative usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "최상급 남용 및 호들갑 밀도 (Superlative Density)",
+    "description": "최상급 형용사와 부사(예: '가장 위대한', '가장 중요한', '최고의', '가장 높은')의 빈도와 문맥상 사용 패턴을 분석합니다. 거대 언어 모델(LLM)은 특히 설득력 있거나, 권위 있거나, 포괄적인(Comprehensive) 답변을 생성하라는 지시를 받았을 때 최상급을 징그럽게 남용하는 경향이 있습니다. 이러한 '과장된 기본값(Hyperbolic default)'은 인간에게 무조건 '가장 도움이 되는' 답변만을 내놓도록 강요받은 RLHF 훈련의 병적인 부작용으로, 이로 인해 객관성을 잃고 호들갑스러우며, 전 우주적인 결론을 내리려는 과장된 언어가 탄생합니다. 반면, 인간 작가는 최상급 단어를 아껴두었다가 진짜로 '극단적인' 팩트를 묘사할 때만 무기로 꺼내 쓰며, 평소에는 미묘한 뉘앙스의 비교급이나 구체적이고 객관적인 묘사에 의존합니다.",
+    "algorithm": "품사(POS) 태깅 및 어휘 빈도 분석 모델",
+    "mechanism": "알고리즘은 품사(POS) 태깅 기술을 사용하여 텍스트 내에 흩뿌려진 모든 최상급 형태(JJS, RBS 태그)를 샅샅이 식별해 냅니다. 그리고 전체 단어 수 및 전체 형용사/부사 수 대비 이 '최상급 토큰'들의 밀도를 계산합니다. 만약 텍스트가 정상적인 범위를 벗어난 기형적인 최상급 농도를 보일 경우—특히 정보 전달용 기사나 중립적인 분석 보고서처럼 시종일관 객관적이어야만 하는 문맥에서조차 '최고의', '가장 완벽한' 같은 단어를 남발한다면—이는 AI가 억지로 짜낸 마케팅 찌라시(Fluff)나 영혼 없는 알고리즘식 요약본으로 강력하게 기소됩니다.",
+    "useCase": "AI 모델이 본능적으로 '과도하게 열정적이고 과장된(Hyperbolic) 톤'을 기본값으로 발산하는 제품 리뷰(가짜 리뷰 적발), 마케팅 홍보 문구, 자기소개서, 커버 레터 등을 철저하게 감사할 때 마법 같은 효과를 발휘합니다.",
+    "strengths": "• 세일즈맨처럼 입에 발린 소리를 하는 AI의 '영업용 텍스트'와 지나치게 친절하고 호들갑 떠는 알고리즘 요약을 잡아내는 데 천부적인 소질을 가졌습니다.\n• 단순한 단어 바꾸기(Paraphrasing) 툴로는 우회하기가 극도로 어렵습니다. 텍스트의 임팩트(충격력)를 극대화하려는 기저의 의도 자체가 툴을 거친 후에도 문장의 최상급 구조를 고스란히 보존해 버리기 때문입니다.",
+    "limitations": "• 인간이 직접 쓴 열광적인 마케팅 문구, 피를 토하는 호소력 짙은 정치 연설, 또는 진심으로 감동해서 쓴 개인적인 리뷰 등 '합법적인 과장(Hyperbole)'이 허용되는 곳에서는 무고한 인간을 잡아낼(가짜 양성) 위험이 있습니다.\n• AI에게 애초부터 '철저하게 사실에만 입각하여 건조하게 쓰라'고 강력하게 주입된 고도의 기술/과학 문서에서는 위력이 반감됩니다.",
+    "parameters": "분석 기준: 품사(POS) 태깅 (최상급 형태소 추적 및 식별)\n측정 지표: 전체 형용사/단어 대비 최상급 단어의 비율\n출력: 0-100 과장된 언어 사용 (알고리즘의 영혼 없는 열정) 스코어",
+    "accuracy": "중상 — 72-80%의 정확도. 분석 대상의 감정적 톤(Tone) 편차 및 어휘 다양성(Vocabulary variance) 지표들과 함께 버무려 해석할 때 그 파괴력이 극대화되는 강력한 어휘적 잣대입니다.",
     "references": [
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]

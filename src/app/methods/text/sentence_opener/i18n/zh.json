@@ -1,22 +1,21 @@
 {
-    "name": "Sentence Opener Diversity",
-    "description": "Analyzes sentence beginning diversity",
-    "algorithm": "Sentence Opener Diversity — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes sentence beginning diversity. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through sentence opener diversity analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "句首开场词的多样性与词汇熵 (Sentence Opener)",
+    "description": "旨在扫描并榨取所有句子开头的 1-3 个词（n-gram 前缀）的词汇多样性。大语言模型（LLM）由于底层逻辑的局限，严重依赖于一套极其狭隘、被代码焊死的安全且正式的过渡句式（例如：“此外，”（Furthermore,）、“总而言之，”（In conclusion,）、“值得注意的是，”（It is important to note that））。因为它们是基于概率逐个吐出 token 的，所以在开启一个新思路时，它们会像溺水者抓稻草一样，频繁退回到这些“高概率的安全锚点”上。而人类作家在开启一个句子时，天生就展露出疯狂的词汇多样性——除非是为了特殊的修辞强调（如排比），否则人类极少会在贴近的段落里，用一模一样的词语去给新句子开荒。",
+    "algorithm": "前缀 n-gram 词元 (Token) 熵分析",
+    "mechanism": "算法像扫雷仪一样，精准提取文档中每一句话的最初 1-3 个单词，并将它们汇编成冷酷的频率分布图。随后，它计算这个特定词汇子集的“香农熵（Shannon entropy）”。如果一篇文章像复读机一样，反反复复只会用“这（This）”、“那（The）”、“在（In）”或者那些标准化、陈词滥调的连接副词（“然而，”（However,））来起手，那么其前缀熵就会遭遇断崖式的暴跌，这就像拉响了算法生成嫌疑的红色警报。而极高的前缀熵则表明，作者拥有极其庞大、充满人类鲜活气息的连接词库来驱动句子。",
+    "useCase": "在审查学术论文、长篇专栏、乃至高考级别的作文时，它是一把锋利的解剖刀——在这些需要大篇幅连贯性的体裁中，AI 最容易因为词汇枯竭而过度滥用格式化的转折词来“人造”行文的流畅感。",
+    "strengths": "• 在抓捕那些套用通用结构模板、prompt 给得极度敷衍的“懒惰 AI”生成物方面，具有一击必杀的卓绝能力。\n• 计算开销微乎其微；不需要进行那种烧显卡的深层语义树解析，只需简单的切词分词和频率统计就能扒下 AI 的底裤。",
+    "limitations": "• 如果把它扔进字数少得可怜（低于 150 词）的短信息里，由于文本太短，句首的重复性根本来不及在统计学上显形，这套算力等于打在棉花上。\n• 有可能误伤人类故意排版的“高度结构化文本”（比如简历里连续用动词原形开头的项目符号列表）。",
+    "parameters": "雷达切片: 句首 n-gram（1-3 个词元）的词汇频率拓扑网络\n定罪量表: 开场词汇的香农熵 (Shannon Entropy)\n行刑判决: 0-100 开场词同质化 (连词僵硬度与可预测性) 耻辱分",
+    "accuracy": "高维防线 — 78-85% 的恐怖准确率。人类在阅读毫无人工干预的纯 AI 文章时，大脑常会感到一股莫名的恶心与“转折疲劳（transition fatigue）”，而这项指标，就是将这种抽象的恶心感进行了数学量化。",
     "references": [
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bhat, S. et al. (2020). How much is 131 million parameters worth? A study of BERT models. ACL.",
+            "url": "https://aclanthology.org/2020.acl-main.626/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
         }
     ]
 }

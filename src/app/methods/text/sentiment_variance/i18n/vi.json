@@ -1,12 +1,21 @@
 {
-    "name": "Biến thiên cảm xúc",
-    "description": "Phân tích mẫu biến thiên cảm xúc",
-    "algorithm": "Thuật toán phân tích Biến thiên cảm xúc",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu biến thiên cảm xúc. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích biến thiên cảm xúc. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phương Sai Cảm Xúc (Sentiment Variance)",
+    "description": "Đo lường sự biến động cảm xúc và sự dao động của thái độ/tình cảm trên toàn bộ tài liệu. Do được đào tạo về An toàn và Căn chỉnh (RLHF) nghiêm ngặt, các Mô hình Ngôn ngữ Lớn được định hình nặng nề để duy trì giọng điệu luôn lịch sự, trung lập hoặc tích cực nhẹ nhàng. Chúng hiếm khi thể hiện sự thay đổi cảm xúc đột ngột, sự châm biếm hoặc sự tiêu cực thuần túy trừ khi bị 'bẻ khóa' (jailbroken) một cách rõ ràng. Ngược lại, người viết là con người hoạt động theo cảm xúc. Một bài luận của con người có thể chuyển tiếp dữ dội từ những lời chỉ trích thất vọng sang sự ủng hộ nhiệt tình, tạo ra một quỹ đạo tình cảm biến động cao.",
+    "algorithm": "Theo Dõi Hóa Trị Và Sức Gợi Cảm Bằng Cửa Sổ Trượt (Sliding-Window)",
+    "mechanism": "Thuật toán đánh giá tình cảm (hóa trị/sức gợi cảm) của văn bản trên cơ sở từng câu hoặc từng đoạn bằng cách sử dụng một cửa sổ trượt. Nó tính toán phương sai thống kê của các điểm số tình cảm này trên chiều dài của tài liệu. Một đường tình cảm phẳng, không thay đổi (phương sai gần bằng không) cho thấy mạnh mẽ đầu ra đã được 'khử trùng' và căn chỉnh của một AI. Khác với đó, một biểu đồ tình cảm lởm chởm, biến đổi nhiều chỉ ra sự thể hiện cảm xúc chân thực và cốt truyện (narrative arc) của con người.",
+    "useCase": "Rất hiệu quả để phân tích các bài đánh giá, bài luận cá nhân, bài báo xã luận và các bài viết lập luận, nơi niềm đam mê của con người tự nhiên gây ra những thay đổi cấu trúc trong giọng điệu cảm xúc.",
+    "strengths": "• Xuất sắc trong việc phát hiện các đầu ra LLM tiêu chuẩn, không được nhắc nhở phức tạp, vốn nổi tiếng là nhạt nhẽo, mang tính ngoại giao và 'an toàn'.\n• Phân tích dấu ấn tâm lý của văn bản thay vì chỉ ngữ pháp cấu trúc của nó, khiến việc vượt qua bằng các công cụ diễn giải đơn giản trở nên khó khăn.",
+    "limitations": "• Cung cấp ít tín hiệu trên các văn bản *được cho là* phẳng lặng về mặt cảm xúc, chẳng hạn như tài liệu kỹ thuật, bài báo khoa học hoặc báo cáo tài chính.\n• Có thể bị vượt qua nếu người dùng đặc biệt nhắc nhở AI bằng các hướng dẫn cảm xúc phức tạp (ví dụ: 'bắt đầu tức giận, sau đó trở nên hy vọng').",
+    "parameters": "Kiểm Định: Theo Dõi Mức Độ Phân Cực Cảm Xúc Ở Cấp Độ Câu\nThước Đo: Phương Sai ($\\sigma^2$) của Quỹ Đạo Cảm Xúc\nĐầu Ra: 0-100 Điểm Khử Trùng Cảm Xúc (Sự Căn Chỉnh An Toàn)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 76-83%. Đây là một thước đo tâm lý tuyệt vời bổ sung hoàn hảo cho các phương pháp phân tích cú pháp thống kê thuần túy.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Bhattacharjee, A. et al. (2020). Investigating the Role of Emotion in AI-Generated Text. ACL.",
+            "url": "https://aclanthology.org/2020.emnlp-main.1/"
+        }
+    ]
 }

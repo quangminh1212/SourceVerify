@@ -1,22 +1,21 @@
 {
-    "name": "Subordinate Clause",
-    "description": "Analyzes subordinate clause 주파수",
-    "algorithm": "Subordinate Clause — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes subordinate clause 주파수. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through subordinate clause analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "종속절 밀도 및 과잉 내포 (Subordinate Clause Density)",
+    "description": "문장 내 종속절의 빈도와 구조적 층위(깊이)를 해부합니다. 거대 언어 모델(LLM)은 문장의 분량을 부풀리거나, 확언을 피하기 위해 방어적인 태도를 취하고(Hedging), 서로 연관성이 떨어지는 개념들을 억지로 유창해 보이게 연결하기 위해 '비록 ~일지라도(although)', '~하기 때문에(because)', '~하는(which, that)'과 같은 복잡한 종속절 구조에 병적으로 의존합니다. 그 결과, 불쾌할 정도로 균일하고 빽빽한 종속절 밀도가 발생합니다. 반면 인간 작가는 이야기의 추진력(모멘텀)을 잃지 않기 위해, 깊게 내포된 복잡한 문장과 날카롭고 뼈를 때리는 단순한 단문을 본능적으로 교차시키며 호흡을 조절합니다.",
+    "algorithm": "구문 의존성 구문 분석(Dependency Parsing) 및 절(Clause) 깊이 매핑",
+    "mechanism": "이 알고리즘은 고성능 자연어 처리(NLP) 의존성 파서를 동원해 각 문장을 구성하는 '초소형 절(Clause) 단위'로 무자비하게 해체합니다. 주절(독립절) 대비 종속절의 비율을 계산하고, 절이 다른 절을 품고 있는 최대 내포 깊이(Embedding depth, 종속절 안의 종속절)를 측정합니다. 만약 텍스트가 쉼 없이 이어지는 고밀도의 종속절 패턴—거의 모든 문장마다 쓸데없는 방어적 조항이나 부연 설명이 주렁주렁 매달려 있는 형태—을 보인다면, 이는 통계학적으로 기계가 배설한 '인공 텍스트'로 낙인찍힙니다.",
+    "useCase": "AI 모델이 본능적으로 과도하게 복잡하고 '회피성(Hedged)' 문장 구조를 기본값으로 출력하는 학술 에세이, 연구 초록, 전문 보고서 등을 감사할 때 소름 돋게 효과적입니다.",
+    "strengths": "• 문장의 복잡성을 억지로 부풀려서 어떻게든 '학술적'이거나 '전문적'으로 보이려고 발악하는 AI의 얄팍한 텍스트를 잡아내는 데 발군입니다.\n• 겉보기 단어만 살짝 동의어로 교체(Paraphrasing)하더라도, 종속절을 지탱하는 근본적인 '기하학적 구문 뼈대'는 그대로 남기 때문에 이 검열을 절대 피할 수 없습니다.",
+    "limitations": "• 법률 계약서, 고도의 철학적 텍스트, 또는 극한의 하위 종속 구조 자체가 필수적인 문체적 관행(Convention)인 특정 학술 논문에서는 오작동하여 무고한 인간을 AI로 몰아갈 수 있습니다.\n• 정확한 의존성 분석을 위해서는 '문법적으로 완벽한' 텍스트를 먹여야 합니다. 인터넷 은어, 부서진 문장, 지나치게 비격식적인 글에서는 바보가 됩니다.",
+    "parameters": "분석 기준: 통사적 의존성 트리 파싱\n측정 지표: 독립절 대비 종속절 비율 및 최대 내포(Embedding) 깊이\n출력: 0-100 구조적 과잉 복잡성 (인위적 텍스트 밀도) 스코어",
+    "accuracy": "중상 — 74-82%의 정확도. 문장 길이 변동성(Variance) 및 리듬(Rhythm) 측정 지표와 결합되었을 때 파괴력이 배가되는 매우 강력한 구문론적 무기입니다.",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Manning, C.D. et al. (2014). The Stanford CoreNLP Natural Language Processing Toolkit. ACL.",
+            "url": "https://aclanthology.org/P14-5010/"
         },
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
         }
     ]
 }

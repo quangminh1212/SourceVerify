@@ -1,14 +1,13 @@
 {
-    "name": "Semicolon Usage",
-    "description": "Measures semicolon 주파수",
-    "algorithm": "Semicolon Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures semicolon 주파수. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through semicolon usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "세미콜론 사용 빈도 분석 (Semicolon Usage)",
+    "description": "세미콜론(;) 사용의 빈도와 문법적인 맥락을 날카롭게 통계적으로 분석합니다. 인간의 자연스러운 글쓰기에서 세미콜론은 사용법을 두고 논란이 많으며 눈에 띄게 드물게 쓰이는 까다로운 문장 부호입니다. 수많은 인간 작가들이 세미콜론을 아예 피하는 반면, 소수는 아주 멋을 부리기 위해 제한적으로 사용합니다. 그러나 정형화된 학술 논문, 고급 문학, 프로그래밍 코드 등 완벽하고 정제된 데이터로 집중 훈련된 AI 모델들은 세미콜론의 가장 정확한 문법적 규칙을 소름 돋게 완벽히 이해하고 있으며, 인간의 평균적인 사용 기준선(Baseline)을 완전히 벗어나 수학적으로 오차 없이 극도로 기계적인 완벽함으로 세미콜론을 남발하는 경향이 있습니다.",
+    "algorithm": "문장 부호 분포 빈도 및 문맥적 구문(Syntax) 매칭",
+    "mechanism": "이 알고리즘은 1,000단어당 세미콜론의 절대적인 출현 빈도를 계산하고, 세미콜론 양쪽에 결합된 절(Clause)의 구문 구조를 평가합니다. 해당 텍스트의 장르(예: 가벼운 일상 블로그 vs 엄격한 학술 논문)에 맞게 보정된 기준선과 대비하여 '세미콜론 밀도'를 측정합니다. AI가 생성한 텍스트는 종종 '과잉 교정(Hyper-correctness)' 현상을 보입니다. 즉 인간이라면 습관적으로, 혹은 글의 호흡을 위해 마침표나 접속사를 자연스럽게 썼을 법한 두 개의 독립된 절 사이에, AI는 한 치의 오차도 없이 기계처럼 정확하게 세미콜론을 박아 넣습니다. 시스템은 세미콜론 사용량이 비정상적으로 높거나, 수학 공식처럼 지나치게 완벽히 딱딱하거나, 글 전체의 비격식체 톤(캐주얼한 어조)과 전혀 어울리지 않게 겉도는 텍스트를 잡아냅니다.",
+    "useCase": "학생의 에세이나 캐주얼한 블로그 포스트, 일상적인 이메일 등에서 갑자기 너무나도 격식 있고 완벽한 문장 부호가 툭 튀어나와 묘한 기시감(불쾌한 골짜기)을 주는 경우를 잡아내는 초정밀 보조 탐지기로서 매우 유용합니다.",
+    "strengths": "• 매우 강력하고 치명적인 보조 지표입니다. 진짜 인간이 긴 분량의 문서에서 단 1명의 전문 편집자의 교정 없이 세미콜론을 완벽히 일관되게 쓰는 경우는 거의 기적에 가깝기 때문입니다.\n• 별도의 무거운 연산 없이 대단히 빠르고 가벼우며, 세미콜론을 사용하는 어떤 언어에서든 작동합니다.",
+    "limitations": "• AI에게 프롬프트로 '세미콜론을 절대 쓰지 마'라고 직접적으로 지시하는 얄팍한 속임수 하나만으로도 쉽게 회피(Bypass)될 수 있습니다.\n• 복잡한 문장 부호를 예술적, 학술적 의도로 정확하게 다루는 전문 편수(에디터), 대학교수 및 소설가의 텍스트에서는 높은 오작동(위양성, False-Positive) 확률을 보일 수 있습니다.",
+    "parameters": "분석 기준: 문장 부호 빈도 및 구문론적 절(Clause) 경계 조건\n측정 지표: 1,000단어당 세미콜론 분포율 및 글의 톤(Register) 정렬도\n출력: 0-100 문장 부호의 인위성 (과도한 문법적 완벽함) 스코어",
+    "accuracy": "낮음~보통 — 50-65% 수준의 보조적인 정확도. 이 도구는 더 포괄적이고 거대한 '문장 부호 패턴(Punctuation Pattern)' 분석 파이프라인 내부에서 미시적인 지원 부품(Micro-level feature)으로만 엄격하게 제한적으로 기능합니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

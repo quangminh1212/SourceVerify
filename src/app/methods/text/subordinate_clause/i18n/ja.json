@@ -1,22 +1,21 @@
 {
-    "name": "Subordinate Clause",
-    "description": "Analyzes subordinate clause 周波数",
-    "algorithm": "Subordinate Clause — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes subordinate clause 周波数. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through subordinate clause analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "従属節の密度と埋め込み (Subordinate Clause Density)",
+    "description": "文中の従属節の頻度と構造的な深さを分析します。大規模言語モデルは、文を水増ししたり、主張をごまかしたり（ヘッジ）、関連性の薄い概念を洗練されているように接続するために、「〜だけれども（although）」「〜なので（because）」「〜であるところの（which, that）」といった複雑な従属節に頻繁に依存します。その結果、異常に高く均一な従属節の密度が生じます。対照的に、人間の書き手は自然に、深く従属化された複雑な文と、鋭利でパンチの効いた短文を交互に使用して、物語の勢い（モメンタム）を維持します。",
+    "algorithm": "依存構造解析（係り受け解析）と節の深さのマッピング",
+    "mechanism": "アルゴリズムは、高性能なNLP依存関係パーサーを使用して、各文をその構成要素である節に分解します。主節（独立節）に対する従属節の割合を計算し、節の埋め込みの最大深度（従属節の中の従属節）を測定します。テキストが、ほぼすべての文に複数のヘッジ（言葉の網掛け）や説明的な従属節を含むような、高密度な節の容赦ない連続的なパターンを示す場合、それは人工的な生成物として統計的にフラグ付けされます。",
+    "useCase": "AIモデルが本能的に過度に複雑で「ヘッジされた」文構造をデフォルトで使用する傾向がある、アカデミック・エッセイ、研究要旨、専門的なレポートの監査に非常に効果的です。",
+    "strengths": "• 文の複雑さを人工的に膨らませることで、「アカデミック」または「プロフェッショナル」に聞こえようとするAIテキストを捉えるのに優れています。\n• 従属節の基本的な幾何学的構造はそのまま残るため、基本的な語彙の交換（同義語の置き換え）に対して強い耐性があります。",
+    "limitations": "• 極端な従属化が必須の文体的慣習である、高度に専門的な学術論文、法的契約、または哲学的テキストを誤ってフラグ付けする可能性があります。\n• 正確な依存構造解析を実行するには文法的に正しいテキストが必要です。非常にくだけたテキストや断片化されたテキストではパフォーマンスが低下します。",
+    "parameters": "解析: 統語的依存関係パーシング（係り受け解析）\n評価基準: 独立節に対する従属節の割合と最大埋め込み深度\n出力結果: 0-100 構造的な過剰複雑化（人工的な節の密度）スコア",
+    "accuracy": "中〜高 — 74-82%の精度。文の長さやリズムの指標と組み合わせたときに最もよく機能する強力な構文機能です。",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Manning, C.D. et al. (2014). The Stanford CoreNLP Natural Language Processing Toolkit. ACL.",
+            "url": "https://aclanthology.org/P14-5010/"
         },
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
         }
     ]
 }

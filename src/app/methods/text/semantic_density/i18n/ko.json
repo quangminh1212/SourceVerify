@@ -1,25 +1,20 @@
 {
-    "name": "의미 밀도",
-    "description": "측정합니다 information density uniformity 에 걸친 content.",
-    "useCase": "균일한 정보 밀도를 통한 AI 텍스트 감지",
-    "mechanism": "Segments content into columns and 측정 엔트로피 in each. AI text distributes information too evenly, while 인간 글쓰기 has natural density variations.",
-    "accuracy": "중간 - 71-81%",
-    "source": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "윈도우 크기: 적응형, Quantization: 8-64 levels, Metrics: 엔트로피, CV, 상관관계",
-    "strengths": "- Effective for detecting AI 생성 text\n- Language-agnostic 통계적 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 오탐\n- Short texts provide less reliable signals\n- Performance varies 에 걸친 문체s",
+    "name": "의미론적 정보 밀도 분석 (Semantic Density)",
+    "description": "문서 전체에 걸쳐 정보가 얼마나 '균일하게' 분포되어 있는지 측정합니다. 당혹도(Perplexity)를 최소화하고 예측의 안정성을 유지하도록 프로그래밍된 AI 모델들은 새로운 정보(고유 명사, 낯선 개념, 복잡한 형용사 등)를 마치 식빵에 땅콩버터를 펴 바르듯 텍스트 전체에 극도로 균일하게 분배하는 경향이 있습니다. 반면, 진짜 인간의 글쓰기는 밀도가 폭발적으로 높은 구간(복잡하고 새로운 아이디어를 처음 던질 때)과 밀도가 낮은 구간(그 아이디어를 길게 설명하거나, 예시를 들거나, 회고할 때) 사이를 자연스럽게 널뛰기하듯 오가는(Oscillate) 패턴을 보입니다.",
+    "algorithm": "슬라이딩 윈도우(Sliding Window) 정보 엔트로피 및 밀도 변동성 분석",
+    "mechanism": "알고리즘은 전체 텍스트를 일정한 크기의 슬라이딩 윈도우(예: 50단어 단위 블록)로 쪼갠 후, 각 창(Window) 내부의 의미론적 밀도를 계산합니다. 밀도는 '내용어(명사, 고유한 동사, 형용사)'와 '기능어(전치사, 접속사)'의 비율, 그리고 '새로운 어휘가 도입되는 속도'를 통해 정량화됩니다. 그런 다음 시스템은 텍스트 전체에 걸쳐 이 밀도 점수들의 변동 계수(CV)를 측정합니다. AI가 생성한 텍스트는 보통 매우 낮은 CV값(소름 돋을 정도로 기계적인 균일함)을 나타내는 반면, 인간이 쓴 글은 유기적이고 자연스러운 인간의 인지적 호흡(Pacing)으로 인해 훨씬 높은 CV값을 보여줍니다.",
+    "useCase": "정보의 흐름이 거시적(Macro-structure)으로 어떻게 변하는지 통계학적으로 매핑할 수 있는 에세이, 심층 보고서, 장문의 기사 등 긴 호흡의 텍스트를 감사(Audit)하는 데 대단히 효과적입니다.",
+    "strengths": "• '인간처럼 자연스럽게 써라'라는 프롬프트 지시를 받고 속임수를 쓰려 하지만, 정작 거시적인 글의 흐름(Pacing) 조절에는 실패한 AI 텍스트를 적발하는 데 탁월합니다.\n• 눈가림용으로 단어 몇 개를 유의어로 바꾸는 수준의 잔머리에는 절대 속지 않습니다. 표면적인 단어가 아니라 '개념'이 배치된 구조적 분포 그 자체를 측정하기 때문입니다.",
+    "limitations": "• 트윗이나 짧은 단일 문단처럼, 구조적인 변동 패턴을 통계적으로 계산할 만큼의 데이터(글자 수)가 충분하지 않은 매우 짧은 텍스트에서는 힘을 쓰지 못합니다.\n• 의도적으로 처음부터 끝까지 숨 막히게 빽빽한 정보 밀도를 유지하도록 쓰인 고급 기술 매뉴얼이나 백과사전 항목(예: 위키백과)을 AI로 오인하여 불이익을 줄 수 있습니다.",
+    "parameters": "분석 기준: 적응형 슬라이딩 윈도우(Sliding Window) 기반 어휘 프로파일링\n측정 지표: 의미론적 엔트로피(Entropy) 및 밀도의 변동 계수(CV)\n출력: 0-100 정보 분포의 균일도 (AI 특유의 기계적인 간격) 스코어",
+    "accuracy": "중상 — 71-81%의 단독 정확도를 보입니다. 폭발성(Burstiness: 문장 길이의 '구조적' 변동성을 측정함) 스캐너와 결합될 때, 이 스캐너(아이디어의 '개념적' 변동성을 측정함)는 무결점에 가까운 강력한 판별기로 각성합니다.",
     "references": [
         {
-            "title": "Dugan et al. (2023) - Real or Fake Text? Investigating Human Ability to Detect Boundaries",
-            "url": "https://scholar.google.com/scholar?q=Dugan%20et%20al.%20(2023)%20-%20Real%20or%20Fake%20Text%3F%20Investigating%20Human%20Ability%20to%20Detect%20Boundaries"
+            "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
+            "url": "https://arxiv.org/abs/2212.12672"
         },
         {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
