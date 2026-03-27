@@ -1,0 +1,18 @@
+{
+    "name": "Truy Vết Nhân Bản (Copydays / Copy-Move)",
+    "description": "Vũ khí hủy diệt hàng loạt chống lại trò ma giáo 'nhân bản vô tính' (người nhân bản, đám đông nhân bản, nhân bản mây trời). Những tay thợ sửa ảnh thường xài trò cắt một vùng ảnh (ví dụ: tán lá chẻ) và dán lặp lại nhiều lần để che giấu một vật thể khác. Thuật toán này sinh ra để đánh hơi sự trùng lặp cấu trúc pixel tuyệt đối - điều hoàn toàn bất khả thi trong tự nhiên.",
+    "algorithm": "Trích Xuất Đặc Trưng Khối Mạnh SIFT/SURF & Khớp Đồ Thị Nhanh",
+    "mechanism": "Cỗ máy quét tàn bạo này phân rã toàn bộ bức ảnh thành hàng trăm ngàn điểm đặc trưng (keypoints) siêu nhỏ có khả năng xoay chiều. Sau đó, nó điên cuồng so sánh chéo từng điểm một với tất cả các điểm còn lại để tìm 'anh em sinh đôi'. Bất chấp việc kẻ gian đã cố gắng lấp liếm bằng cách phóng to, thu nhỏ, làm mờ, lật ngược, hay xoay nghiêng cái cây vừa copy sang chỗ khác, thuật toán vẫn sẽ đóng đinh các điểm neo và vẽ ra những đường nối toán học tố cáo tội ác nhân bản không thể chối cãi.",
+    "parameters": "Mô hình cốt lõi: Dense SIFT / Khớp khối Zernike, Đo lường khoảng cách: L2-Norm chéo, Bộ lọc nhiễu: RANSAC, Hệ số nhận diện: Scale-Invariant",
+    "accuracy": "Cực Cao (88-95%) - Đối với các thao tác Copy-Move trên cùng một bức ảnh, đây là án tử hình không thể tránh khỏi.",
+    "source": "Fridrich (2003) / Mạng Lưới Nhận Diện Bản Sao Đồ Thị",
+    "useCase": "Lột mặt nạ các thủ đoạn nhân bản tinh vi nhất, vẽ ra mạng lưới các nốt ruồi sinh đôi để chứng minh rằng một đám đông biểu tình rầm rộ thực chất chỉ là 10 người được bôi thả (Copy-Paste) thành 1000 người.",
+    "references": [
+        {
+            "title": "Fridrich, J., Soukal, D., & Lukáš, J. (2003). Detection of copy-move forgery in digital images. DFRWS.",
+            "url": "https://www.ws.binghamton.edu/fridrich/Research/copymove.pdf"
+        }
+    ],
+    "strengths": "• Trâu bò và bất tử trước mọi nỗ lực che giấu hình học: Nén JPEG te tua, làm nhòe ảnh, thêm nhiễu hạt, lật ngược hình, hay kéo méo hình đều vô dụng trước sự soi xét của bộ giải mã SIFT/SURF.\n• Bằng chứng trực quan đập thẳng vào mắt, xuất ra rành rành lưới kết nối giữa vùng 'gốc' và vùng 'nhái', khiến kẻ giả mạo chỉ còn biết câm nín.",
+    "limitations": "• Tốc độ rùa bò và tốn RAM khủng khiếp do phải tính toán không gian đa chiều (O(N^2)) trên hàng triệu vector đặc trưng, khiến thiết bị yếu có thể thở oxy.\n• Dễ bị đánh lừa (False Positives) bởi những bức ảnh bản chất có kết cấu lặp lại giống hệt nhau một cách tự nhiên (như một tòa nhà có 1000 ô cửa sổ kính giống hệt nhau từ nhà máy, hay tấm thảm lót gạch men thẳng tắp)."
+}
