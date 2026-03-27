@@ -1,22 +1,22 @@
 {
-    "name": "Color Moments",
-    "description": "Computes 统计 color moments (mean, std, skewness) for forensic analysis",
-    "algorithm": "Color Moments — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 统计 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 图像 data.\n\n2. **Distribution Analysis**: Computes 统计 color moments (mean, std, skewness) for forensic analysis. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 图像 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 统计 deviation magnitude.",
-    "parameters": "分析类型: 统计\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： color moments 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "色彩统计矩形貌 (Color Moments) 畸变核查",
+    "description": "如同法医解剖台上的三把利刃，精准切割并提炼出色彩分布的三大核心骨架特征（均值Mean、标准差Standard Deviation与偏度Skewness）——这就是‘色彩矩（Color Moments）’。真实世界里的复杂光线会在物理表面上投射出轮廓分明、由于各种自然遮蔽效应而受制于物理法则的色彩分布规律。然而，生成式AI模型在潜伏空间中编织色彩时，往往受到其固有算法架构极其隐蔽的系统性数学偏见（Biases）的影响，从而疯狂地捏造出那些严重脱离甚至严重违背真实自然生物学、统计学常理的色彩分布畸形数据（例如：在自然光学下绝不可能见到的病态般绝对对称的色彩差异曲线，或是完全扭曲的饱和度变异走向）。",
+    "algorithm": "一阶、二阶及三阶 RGB/HSV 统计矩方程",
+    "mechanism": "该算法矩阵会对一张图像内的每一个色彩通道进行三场残酷的数学拷问：一阶矩（均值）掐住了光线的基础咽喉，评估着画面的均分亮度基础；二阶矩（标准差）粗暴地撕开对比度的上下限，看清色彩发散的程度；三阶矩（偏度）则负责测量色彩分布曲线极其危险的“不对称性（Skewness）”。在真实光源下诞生的摄影作品，天生就带有一种顺应天理、受制于阴影与实体结构遮挡的混杂与不对齐特性。但被冰冷参数锁死在这个训练池内的AI假象，则常常因为算法太渴望“完美和谐”而凭空合成了偏度极低的完美对称色彩数据；或者走向另一个荒谬的极端——出现一条如同癫痫发作般完全找不到任何统一物理光源支持的剧烈方差曲线，将其机器血统直接出卖。",
+    "parameters": "待审通道: 强烈首选HSV色彩空间, 极刑三指标: 一阶均值(测评基础偏差亮度), 二阶标准差(测评色彩跨度或对比度), 三阶偏度(测评光度不对称性与异常倾斜)",
+    "accuracy": "勉强度日 (60-70%) - 在现代高阶鉴定局里，它根本不够格独立充当将造假者钉死在耻辱柱上的终极判决法槌，而只是充当一张庞大情报罗网的基层奠基指标和打辅兵（特征提取器）。",
+    "source": "由 Stricker 与 Orengo 奠基于 (1995) / 结合 Reinhard (2001) - 统计色彩同源性与转移物理学",
+    "useCase": "作为部署在数字安检第一线的一把极其轻巧锋利的统计学探针过滤网，专为嗅探那些缺乏全局真实物理自然光照支持、完全违背了自然造物常理的机器生成色彩异端点。",
     "references": [
+        {
+            "title": "Stricker, M.A., & Orengo, M. (1995). Similarity of Color Images. SPIE.",
+            "url": "https://doi.org/10.1117/12.205308"
+        },
         {
             "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
             "url": "https://doi.org/10.1109/38.946629"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
         }
-    ]
+    ],
+    "strengths": "• 极其变态的运算神速与夸张的轻量无感：即便是几千万像素的超高清晰海拉摄影级大图，它几乎不需深吸一口算力，只需几行简单的运算矩阵就能在眨眼间将其嚼碎并吐出全部核查数据。\n• 在与其他更深层的空间纹理侦查探子珠联璧合、联手配合成为机器学习“狩猎套件（Ensemble classifiers）”坚如磐石的数据输入底座时，其表现简直所向披靡。\n• 无论是造假者企图如何狡猾地旋转（Rotation）、缩放亦或是做些劣质的几何拼贴障眼法，它犹如一块磐石般丝毫不受那些低级伎俩的撼动（高度不变量特征）。",
+    "limitations": "• 极度匮乏一招毙命的致死裁决权威度，如果你天真地只靠这一个单薄的数据便妄言断言这是一张“AI假图”（极低独立判定率），那必是一场可笑的笑话。\n• 患有严重的癫痫与被害妄想症（天量的误判/False Positives）：当撞上了精心布置的大片级别的“电影感双色调调色（Cinematic grading）”、明亮死白的影棚高光布置（High-key），或是那些充满艺术色彩操控的纯正大师摄影集时，它会立刻无脑报警、群魔乱舞。\n• 若一张再纯良不过的天工自然照碰巧抓拍到了某种如“深渊中的一缕残酷镜头极光炫光（Lens flares）”亦或者是纯粹而极端的暗影背光（Silhouettes）时，其统计学方程会被这些强烈的光学奇迹摧枯拉朽般彻底击碎报废、当众出丑。"
 }

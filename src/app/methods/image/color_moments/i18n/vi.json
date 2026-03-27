@@ -1,12 +1,22 @@
 {
-    "name": "Thống kê moment màu",
-    "description": "Tính toán moment màu thống kê (trung bình, độ lệch, độ xiên) cho phân tích pháp y",
-    "algorithm": "Thuật toán phân tích Thống kê moment màu",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Tính toán moment màu thống kê (trung bình, độ lệch, độ xiên) cho phân tích pháp y. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích thống kê moment màu. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Bộ Số Lưu Trữ Thống Kê Màu (Color Moments)",
+    "description": "Tính toán ba đặc trưng thống kê cốt lõi của bức ảnh: Giá trị trung bình (Mean), Độ lệch chuẩn (Standard Deviation) và Độ xiên (Skewness) - hay còn gọi tắt là 'Color Moments'. Ánh sáng trong thế giới thực tạo ra sự phân bổ màu sắc bị trói buộc bởi các rào cản vật lý tự nhiên. Các mô hình sinh ảnh AI lại thường ẩn chứa những thiên kiến (bias) có hệ thống bên trong không gian toán học tiềm ẩn, tạo ra những phân bố màu sắc đi ngược lại quy luật thống kê tự nhiên (ví dụ: phương sai màu sắc tự nhiên bị bẻ thành đối xứng một cách kỳ dị).",
+    "algorithm": "Khai Khảo Bậc 1, 2, 3 Thống Kê Moment Không Gian RGB/HSV",
+    "mechanism": "Thuật toán tính toán ba thông số toán học tàn khốc cho mỗi kênh màu: Moment thứ 1 (Trung bình) tóm lấy cường độ ánh sáng/màu sắc tổng thể; Moment thứ 2 (Độ lệch chuẩn) đo đạc độ tương phản và sự phát tán màu; Moment thứ 3 (Độ xiên) đánh giá sự bất đối xứng của màu sắc. Một bức ảnh thật có độ xiên tự nhiên rất hỗn loạn do bị chi phối bởi hướng ánh sáng mặt trời, bóng đổ và vật cản ánh sáng. Trái lại, AI phải 'nặn' ảnh từ trong hệ thống dữ liệu, thường dẫn đến việc hòa trộn màu 'hoàn hảo' thái quá (độ xiên thấp phi tự nhiên), hoặc ngược lại là phương sai giật cục bộc lộ sự thật rằng: chẳng hề có nguồn sáng vật lý duy nhất nào chiếu vào bức ảnh cả.",
+    "parameters": "Không gian ưa thích: HSV, Thước đo: Giá trị trung bình (Thiên kiến sáng), Độ lệch chuẩn (Phân tán tương phản), Độ xiên (Bất đối xứng quang hợp)",
+    "accuracy": "Trung Bình Yếu (60-70%) - Thuật toán này đóng vai trò là một radar hỗ trợ rà soát diện rộng (feature extraction) thay vì là một công cụ kết liễu độc lập.",
+    "source": "Stricker & Orengo (1995) / Reinhard (2001) - Tính Tương Đồng Màu Thống Kê Cơ Bản và Sự Luân Chuyển Màu",
+    "useCase": "Giống như một lớp màng lọc thống kê mỏng nhẹ ở tuyến đầu, dùng để dò ra các dị thường trong việc rải rác màu sắc toàn cầu, lột trần việc AI thiếu hụt kiến thức chiếu sáng vật lý.",
+    "references": [
+        {
+            "title": "Stricker, M.A., & Orengo, M. (1995). Similarity of Color Images. SPIE.",
+            "url": "https://doi.org/10.1117/12.205308"
+        },
+        {
+            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+            "url": "https://doi.org/10.1109/38.946629"
+        }
+    ],
+    "strengths": "• Rất nhanh nhẹn và tốn cực ít RAM, hầu như không cần tí tài nguyên điện toán nào để nuốt trọn một tấm ảnh độ phân giải khổng lồ.\n• Là tảng đá tảng vững chắc để làm dữ liệu nền tảng cho các bộ AI săn AI (machine learning classifiers) khi dùng kết hợp với các kỹ thuật Pháp y phân tích cấu trúc khác.\n• Cực kỳ bá đạo trong việc kháng lại các thủ thuật xoay, lật, hay phóng to/thu nhỏ ảnh của tội phạm.",
+    "limitations": "• Thiếu sức nặng và độ bén để tự mình đứng ra làm bằng chứng kết luận ảnh AI (Độ tin cậy độc lập rất lẹt đẹt).\n• Tử huyệt Bắt Nhầm (False positives): Sẽ tru tréo báo động AI rầm rĩ nếu phân tích ảnh phim điện ảnh đã được color-grade kỹ lưỡng, ảnh chụp trong studio dội đèn flash trắng lóa (high-key), hoặc bất kỳ bức ảnh nào bị con người cố tình kéo màu nghệ thuật.\n• Mất hoàn toàn tác dụng pháp y trên những tấm ảnh vô tình chụp được hoặc cố ý có các hiện tượng dội sáng ánh mặt trời (Lens flares) hay lỗi rọi ngược bóng đen (Silhouettes) tự nhiên."
 }
