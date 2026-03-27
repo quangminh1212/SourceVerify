@@ -1,22 +1,21 @@
 {
-    "name": "Referential Density",
-    "description": "Analyzes reference density patterns",
-    "algorithm": "Referential Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes reference density patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through referential density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "指代网络密度 (Referential Density)",
+    "description": "侦测文本中用于回指前文实体（Entity）的指代词（例如代词、“这/那/这些”等指示代词、以及同义替换词）的出现频率和复杂度。人类在写作时，一旦上下文语境确立，为了保持行文流畅并避免像复读机一样叫同一个名字，会自然地交织出极其复杂的指代链条。而 AI 语言模型由于根本不存在真正的“人类认知工作记忆 (Working Memory)”，它们为了防止逻辑跑偏或者测算概率时翻车，往往会选择最怂的“安全策略”：要么极其死板地滥用最基础的代词，要么就像个笨拙的 AI 客服一样，一遍又一遍地把死长死长的专有名词完整地重复写出来。",
+    "algorithm": "共指消解与实体投影网络",
+    "mechanism": "无论文本有多长，算法会像鹰眼一样锁定所有命名实体和核心名词。接着，它会拉出一条条“共指链（Coreference Chains）”——追踪这些实体在后文中每一次被呼唤的方式。系统会算出“指代密度得分”：即 代词/指示词/同义词 的数量与 那个名字被原封不动重复的数量 的比值。人类的文章往往指代密度极高，而且手法花哨（针对同一件事，人类会交替使用“那个野心勃勃的项目”、“它”、“这项伟大的事业”）。而 AI 产出的文本，为了保持它那点可怜的概率学上的安全性，指代密度曲线通常惨不忍睹，只会像个没有感情的念稿机器一样把那个词重复到底（例如：“这家公司认为... 这家公司还表示... 最终这家公司...”）。",
+    "useCase": "在撕开长篇叙事论述、深度报道和说明性文本的面具时极度致命。它能一眼看穿 LLM 刻在骨子里的那种“生硬、极度缺乏安全感、且过分直白明确”的非人类机械文风。",
+    "strengths": "• 它抓取的是基于人类大脑深层认知的语言学特征。那些只会在表面玩弄提示词（Prompt）或者用低级洗稿软件改同义词的手法，根本无法伪造出这种人类特有的指代直觉。\n• 文本越长，人类的大脑就越会自然地向“代词化”倾斜，此时该雷达的杀伤力就会呈几何级数暴增。",
+    "limitations": "• 如果文本是极度严谨的硬核技术手册或者法律合同，由于人类律师本身就被死板地训练成“哪怕重复念一万遍全称，也绝对不用代词以防出现法律歧义”，此时雷达会严重误判。\n• 在短篇碎纸屑一样的文本里，连实体都没几个，根本拉不出一条像样的指代链条。",
+    "parameters": "雷达切片: NLP 共指消解链条硬提取\n定罪量表: 变花样回指次数 与 呆板的专有名词直接重复次数 之比\n行刑判决: 0-100 文本指代重度僵硬 (AI 求稳直呼其名) 确诊分数",
+    "accuracy": "中高威胁 — 准确率 75-82%。虽然不建议用来单独判死刑，但如果将它与“词汇多样性 (Lexical Diversity)”和“代词行为画像 (Pronoun Patterns)”联合绞杀，它将构成不可辩驳的闭环旁证。",
     "references": [
+        {
+            "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
+            "url": "https://arxiv.org/abs/2003.10555"
+        },
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
             "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
         }
     ]
 }

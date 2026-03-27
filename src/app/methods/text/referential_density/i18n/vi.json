@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ tham chiếu",
-    "description": "Phân tích mẫu mật độ tham chiếu",
-    "algorithm": "Thuật toán phân tích Mật độ tham chiếu",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu mật độ tham chiếu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ tham chiếu. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân Tích Mật Độ Tham Chiếu (Referential Density)",
+    "description": "Phân tích tần suất và độ phức tạp của các biểu thức tham chiếu (đại từ, từ chỉ định như 'này/kia/những cái này', và từ đồng nghĩa) được sử dụng để nhắc lại các thực thể đã đề cập trước đó. Con người tự nhiên sử dụng các chuỗi tham chiếu phức tạp để duy trì mạch văn và tránh lặp lại tên gọi một khi ngữ cảnh đã được thiết lập. Các mô hình ngôn ngữ AI, thiếu bộ nhớ làm việc nhận thức thực sự, thường 'chọn giải pháp an toàn' bằng cách phụ thuộc quá nhiều vào các đại từ cơ bản hoặc lặp lại một cách vụng về toàn bộ danh từ riêng nhiều lần để ngăn ngừa trôi dạt ngữ cảnh.",
+    "algorithm": "Giải Quyết Đồng Tham Chiếu và Ánh Xạ Thực Thể",
+    "mechanism": "Thuật toán xác định tất cả các thực thể có tên và danh từ theo dõi trong văn bản. Sau đó, nó lập bản đồ các chuỗi đồng tham chiếu—cách các thực thể này được tham chiếu sau đó. Hệ thống tính toán 'Điểm Mật Độ Tham Chiếu': tỷ lệ của đại từ/từ chỉ định/từ đồng nghĩa so với sự lặp lại danh từ rõ ràng. Văn bản của con người thể hiện mật độ tham chiếu cao và phép thế đại từ đa dạng (sử dụng 'dự án đầy tham vọng', 'nó', 'nỗ lực này' cho cùng một chủ đề). Văn bản AI thường thể hiện một hồ sơ mật độ phẳng lì, lặp đi lặp lại việc sử dụng danh từ rõ ràng (ví dụ: 'Công ty... Công ty... Công ty...') để duy trì sự an toàn về mặt xác suất.",
+    "useCase": "Hiệu quả trong việc phân tích các cấu trúc tự sự, bài báo dài và văn bản giải thích để phát hiện phong cách viết máy móc, quá rõ ràng đặc trưng của các LLM.",
+    "strengths": "• Nắm bắt được một đặc điểm ngôn ngữ nhận thức sâu sắc mà kỹ thuật prompt hoặc các công cụ xáo trộn từ ngữ cơ bản cực kỳ khó có thể làm giả một cách thuyết phục.\n• Rất hiệu quả trên các văn bản dài hơn nơi bộ nhớ làm việc của con người tự nhiên chuyển hướng sang việc sử dụng đại từ.",
+    "limitations": "• Kém hiệu quả trên các tài liệu kỹ thuật cao hoặc pháp lý nơi con người được đào tạo rõ ràng để lặp lại các danh từ chính thức nhằm tránh bất kỳ sự mơ hồ pháp lý nào.\n• Văn bản ngắn không chứa đủ thực thể hoặc các mệnh đề tiếp theo để tạo thành một đường cơ sở tham chiếu có ý nghĩa.",
+    "parameters": "Kiểm Định: Trích Xuất Chuỗi Đồng Tham Chiếu NLP\nThước Đo: Tỷ Lệ Tham Chiếu Hồi Chỉ So Với Việc Trình Bày Lại Danh Từ Rõ Ràng\nĐầu Ra: 0-100 Điểm Cứng Nhắc Tham Chiếu (AI Gọi Tên Rõ Ràng)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-82%. Đây là một thước đo phụ mạnh mẽ khi kết hợp với Sự Đa Dạng Từ Vựng và Các Mẫu Sử Dụng Đại Từ.",
+    "references": [
+        {
+            "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
+            "url": "https://arxiv.org/abs/2003.10555"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ]
 }

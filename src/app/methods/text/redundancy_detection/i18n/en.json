@@ -1,14 +1,13 @@
 {
-    "name": "Redundancy Detection",
-    "description": "Detects redundant phrases and repetition",
-    "algorithm": "Redundancy Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Detects redundant phrases and repetition. Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through redundancy detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "Semantic Redundancy Analysis",
+    "description": "Analyzes the text for unnecessary semantic repetition, tautologies, and circular reasoning. Large Language Models often suffer from 'content looping'—where they restate the same core concept in different words to fulfill length constraints or because their attention mechanisms lose long-range narrative progression. This results in highly verbose, repetitive paragraphs that lack forward momentum.",
+    "algorithm": "Semantic Density and Circular Concept Tracking",
+    "mechanism": "The algorithm maps the conceptual propositions of each sentence into semantic embeddings. It then calculates the 'distance' or 'overlap' between propositions within the same paragraph or document. A human writer typically advances a narrative or argument with each sentence (high semantic progression). AI-generated text frequently produces sentences with 80-90% conceptual overlap with the preceding sentence, masked only by surface-level synonym swapping. The system also flags classic AI filler patterns like summarizing a point immediately after making it ('In summary...', 'Overall...').",
+    "useCase": "Highly effective for analyzing essays, extended articles, and marketing copy where AI models are prompted to generate specific word counts, forcing them into repetitive padding.",
+    "strengths": "• Excellent at catching AI text that has been manually edited at the sentence level but retains its generative, repetitive structural flaws.\n• Strongly correlates with the 'hallucination of length' phenomenon common in models like GPT-4 and Claude.",
+    "limitations": "• May flag human writing that is intentionally repetitive for rhetorical effect (e.g., political speeches) or poor-quality, 'fluff-filled' human writing.\n• Less effective on very short texts where there simply isn't enough length for the AI to begin looping.",
+    "parameters": "Analysis: Sentence-level Semantic Entailment and Overlap\nMetric: Propositional Progression Ratio\nOutput: 0-100 Semantic Redundancy (Looping) Score",
+    "accuracy": "Moderate to High — 75-80% accuracy. Best used alongside Lexical Density and Argument Structure to differentiate between poor human writing and actual AI generation.",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

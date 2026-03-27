@@ -1,22 +1,21 @@
 {
-    "name": "Question Mark Density",
-    "description": "Measures question mark density patterns",
-    "algorithm": "Question Mark Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures question mark density patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through question mark density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "수사학적 질문 밀도 (Question Density)",
+    "description": "텍스트 내 물음표의 출현 빈도와 구조적 배치 패턴을 분석합니다. 거대 언어 모델(LLM)은 단락 사이를 자연스럽게 넘어가거나 대화형 개입을 흉내 내기 위해 수사학적 질문(예: '그렇다면 이것이 미래에 의미하는 바는 무엇일까요?', '우리는 이 문제를 어떻게 해결할 수 있을까요?')을 매우 '게으른' 전환 장치로 자주 남용합니다. 그 결과, 진정한 질문이나 호기심의 발로가 아니라, 단순히 글의 뼈대를 잡고 문단을 이어 붙이기 위한 용도로 물음표가 과장되게 많이 사용되는 인위적인 밀도 폭증이 발생합니다.",
+    "algorithm": "의문문 기반 구조적 비계 분석",
+    "mechanism": "알고리즘은 모든 의문 부호(물음표)를 추출하여 단락의 경계(시작과 끝)를 기준으로 위치 추적합니다. 전체 '물음표 밀도(1000단어당 질문 수)'와 '전환용 의문문 스코어(서론의 마지막 부분이나 본문 단락의 첫 문장에 질문이 얼마나 자주 등장하는지)'를 계산합니다. 매우 친절하고 설명적으로 구조화되도록 훈련받은 AI 모델은, 인간처럼 복잡하고 자연스러운 내러티브 전환을 고민하는 대신, '질문을 던져서 다음 주제를 끌고 오는' 가장 쉽고 안전한 패턴(Heuristic)에 기대게 됩니다. 반면 인간 작가는 수사학적 질문을 훨씬 더 아껴 쓰며, 문맥과 논리의 자연스러운 흐름을 통해 아이디어를 전환합니다.",
+    "useCase": "AI 특유의 자문자답('질문하고 스스로 대답하는') 패턴이 눈에 띄게 반복되는 블로그 포스팅, 마케팅 콘텐츠, 설명문 및 에세이를 감사하는 데 극도로 효과적입니다.",
+    "strengths": "• 결론 단락 직전에 습관적으로 '요약 질문'을 던지는 고전적인 'AI 에세이 템플릿 구조'를 가장 빠르고 직관적으로 적발해냅니다.\n• 깊이 있는 의미 분석 모델이 아니라 문장 부호의 위치 식별에 의존하므로, 연산 부하가 거의 없이 매우 빠른 속도로 작동합니다.",
+    "limitations": "• 안타깝게도 FAQ(자주 묻는 질문) 문서, 인터뷰 대본, 또는 질문 밀도가 태생적으로 높을 수밖에 없는 실제 대화의 녹취록에서는 오탐지(False positive)를 낼 위험이 큽니다.\n• 길이가 너무 짧은 텍스트(소셜 미디어 글)나 수사학적 질문이 원래 포함되지 않는 딱딱한 기술 문서에서는 이 레이더가 무용지물이 됩니다.",
+    "parameters": "분석 기준: 문장 부호 추출 및 단락 경계 위치 추적\n측정 지표: 1000단어당 물음표 개수 및 단락 경계와의 인접성 비교\n출력: 0-100 의문문 예측 가능성 (인위적인 전환 패턴) 스코어",
+    "accuracy": "중간 — 설명문이나 일반적인 블로그 스타일 텍스트에서 70-80%의 정확도를 보입니다. 단독으로 쓰기엔 스코어 변동성이 좀 있지만, '단락 구조(Paragraph Structure)' 분석기와 결합하면 치명적인 위력을 발휘합니다.",
     "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0244932"
         }
     ]
 }

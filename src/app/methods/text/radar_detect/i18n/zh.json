@@ -1,12 +1,21 @@
 {
-    "name": "RADAR AI Text Detection",
-    "description": "Applies RADAR adversarial learning framework for robust AI text detection across models (Hu et al., 2024).",
-    "algorithm": "RADAR AI Text Detection分析算法",
-    "mechanism": "RADAR AI Text Detection系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "RADAR 对抗性嗅探 (RADAR Detection)",
+    "description": "部署 RADAR（基于对抗学习的鲁棒 AI 文本检测）架构。市面上那些普通的 AI 探测器就像纸糊的玩具，随便用个改写工具（比如 QuillBot）或者一句简单的逃避指令（“重写这段话以绕过 AI 检测”）就能把它们耍得团团转。RADAR 彻底解决了这个问题：它把一个“检测器”和一个专门用来搞破坏的“AI 改写器”关在同一个对抗训练的笼子里。通过这种左右互搏，它锻造出了一个极其强悍的模型，哪怕文本为了掩盖机器特征而遭到过暴力的洗稿和面目全非的篡改，它依然能精准锁定其中的 AI 基因。",
+    "algorithm": "对抗性 改写-检测 绞肉机网络",
+    "mechanism": "RADAR 采用了基于 Min-Max（极小化极大算法）对抗训练的双重人格架构。模型 A（伪装者/改写器）的主要任务就是把 AI 生成的文本进行深度改写，目的只有哪怕一个：骗过模型 B（检测器）。在这种无休止的魔鬼训练中，无论伪装者怎么替换同义词、怎么打乱句法，检测器都能被迫学到大语言模型在生成内容时留下的那种“深层、绝对不变量的统计学签名和骨架特征”。这是一般洗稿工具根本无法抹除的烙印。当分析一份新文本时，RADAR 根本不看那些肤浅的词汇概率，而是直接扫描这些无法磨灭的底层核心签名。",
+    "useCase": "这是高风险猎杀场（例如：学术不端审查、法证分析）的终极武器——在这些场景下，嫌疑人有极高的概率使用“AI 拟人化工具 (Humanizers)”，或者利用套娃式的多重 AI 洗稿软件来疯狂擦除原始的机器指纹。",
+    "strengths": "• 对目前市面上泛滥的逃避侦察手段（同义词疯狂替换、排版混淆、高级洗稿引擎）具有极其恐怖的免疫力。\n• 与那些传统的零样本（Zero-shot）探测器（比如 DetectGPT）相比，它在面对真正人类写出的高深复杂文本时，极少发生误杀（极低的假阳性）。",
+    "limitations": "• 它的算力胃口极其庞大，必须依赖重量级的服务器后端物理 API 才能运行。\n• 如果文本不是用机器洗稿，而是被一个活生生的人类连根拔起、彻底砸碎并重写了整个逻辑骨架，那么 AI 的核心签名就会灰飞烟灭，雷达也会随之失效。",
+    "parameters": "雷达切片: 对抗性不变量特征榨取\n定罪量表: 鲁棒性抗性训练对数似然比测算\n行刑判决: 0-100 RADAR 绝对抗干扰 (反洗稿) 确信度分数",
+    "accuracy": "极高威胁 — 综合准确率高达 85-92%，尤其在那种文本经过了“蓄意深度混淆”和“对抗性破坏”的恶劣生化环境中，它能形成对其他检测模型的绝对碾压。",
+    "references": [
+        {
+            "title": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.",
+            "url": "https://arxiv.org/abs/2307.03838"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

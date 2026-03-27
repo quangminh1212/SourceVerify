@@ -1,22 +1,21 @@
 {
-    "name": "Repetitive Phrase",
-    "description": "Detects repetitive phrase patterns",
-    "algorithm": "Repetitive Phrase — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects repetitive phrase patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through repetitive phrase analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "상투적 구문 및 기계적 연결어 감지 (Repetitive Phrase)",
+    "description": "특정 다단어(Multi-word) 연결 구문, 도입절, 그리고 습관적으로 기대어 쓰는 '의미적 목발(Semantic crutches, 상투구)'에 텍스트가 얼마나 과도하게 의존하는지 분석합니다. 표준화된 에세이 형식과 윤리적 안전 가이드라인에 깊게 세뇌되어 훈련된 AI 모델들은 자신의 주장을 완충하거나, 문단 사이를 넘어가거나, 중립적인 어조를 유지하기 위해 특정 구문에 구조적으로 의존하는 경향이 있습니다(예: '...라는 점을 유의하는 것이 중요합니다', '궁극적으로...', '게다가...', '결과적으로...'). 반면 인간은 훨씬 더 폭넓고, 유기적이며 다채로운 연결 방식과 표현을 자연스럽게 사용합니다.",
+    "algorithm": "전환 구문 프로파일링 및 어휘적 상투구 매칭 (Transitional Phrase Profiling and Lexical Crutch Matching)",
+    "mechanism": "알고리즘은 AI가 상습적으로 뱉어내는 '의존성(Crutch)' 구문과 연결어 마커들로 구성된 동적 데이터베이스를 바탕으로 문서 전체를 스캔합니다. 전체 단어 수 대비 이러한 다단어 표현들이 얼마나 자주 등장하는지 빈도를 계산합니다. 이 시스템은 특히 '문단의 경계(도입부와 결론부)'를 집중적으로 감시합니다. AI 모델들은 바로 이곳에서 극도로 경직된 연결 구문('결론적으로', '반면에')을 남발하는 악명 높은 버릇이 있기 때문입니다. '구문 반복 스코어(Phrase Repetition Score)'는 이러한 특정 클리셰(Cliché)들의 절대적인 등장 횟수와, 여러 아이디어를 전환할 때 나타나는 기계적인 단조로움(예: 하나의 에세이에서 '더욱이(Moreover)'를 세 번 씩이나 똑같이 반복해서 쓰는 것)을 동시에 측정하여 산출됩니다.",
+    "useCase": "프롬프트의 제약 조건 때문에 AI가 어쩔 수 없이 알고리즘적이고 경직된 문단 구조를 짜낼 수밖에 없는 학생들의 과제물(에세이), 양산형 마케팅 홍보 문구, 그리고 웹상의 정보성 기사를 검수하는 데 매우 효과적입니다.",
+    "strengths": "• AI가 가장 편하게 생각하는(가중치가 높은) 뻔한 연결 구조에 그대로 기대어버리는 '게으른' 제로샷(Zero-shot) 생성을 잡아내는 데 특효약입니다.\n• 결과에 대한 해석(설명)이 매우 직관적입니다. 이 시스템이 잡아낸 특정 반복 구문들은 인간 감사자가 눈으로 보고 즉각 확인하고 검증하기 쉽습니다.",
+    "limitations": "• '결론적으로 같은 단어는 쓰지 마' 와 같은 안티 프롬프트 엔지니어링(Prompt engineering) 기법에 쉽게 속아 넘어갈 수 있습니다.\n• 원래부터 템플릿에 박힌 기업식 비즈니스 용어를 달고 사는 직장인이나, 학교에서 배운 딱딱한 학술 에세이 작법 공식을 맹목적으로 따르는 초보 인간의 글을 AI로 오인하여 불이익을 줄 수 있습니다.",
+    "parameters": "분석 기준: 다단어 표현(MWE) 및 전환/연결어 마커 매칭\n측정 지표: 상투적 의존 구문(Crutch phrase) 밀도 및 전환어의 다양성 부족도\n출력: 0-100 특정 구문 반복 (템플릿 의존도) 스코어",
+    "accuracy": "중간 — 65-75%의 정확도를 보입니다. 1차적인 '위험 신호(Red-flag)' 즉시 판별기로서 가장 훌륭하게 작동하지만, 훈련된 인간의 글쓰기와 겹치는 영역이 존재하므로 로그 가능도 순위(Log-Likelihood Rank)와 같은 더 깊은 확률론적 분석 방법의 교차 검증이 반드시 필요합니다.",
     "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

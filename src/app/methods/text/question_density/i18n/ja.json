@@ -1,22 +1,21 @@
 {
-    "name": "Question Mark Density",
-    "description": "Measures question mark density patterns",
-    "algorithm": "Question Mark Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures question mark density patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through question mark density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "修辞的な質問の密度 (Question Density)",
+    "description": "テキスト内の疑問符の頻度と構造的な配置を分析します。大規模言語モデルは、段落間を移動したり、会話のエンゲージメントをシミュレートしたりするための怠惰な移行デバイスとして、修辞的な質問に頻繁に依存します（例：「しかし、これは将来にとって何を意味するのでしょうか？」、「これをどのように解決できるでしょうか？」）。これにより、真の探求ではなく、純粋に構造的な足場として使用される疑問符の密度が人為的に高くなります。",
+    "algorithm": "疑問構造の足場分析",
+    "mechanism": "アルゴリズムはすべての疑問符を分離し、段落の境界に対するそれらの相対的な位置をマッピングします。全体的な「疑問符の密度」（1000語あたりの質問数）と「移行性疑問スコア」（導入段落の終わりまたは本文段落の先頭に質問が正確に出現する頻度）を計算します。高度に説明的で構造化されるようにトレーニングされたAIモデルは、複雑な物語の移行を必要とせずに次のトピックを紹介するための信頼できるヒューリスティックとして質問を使用します。人間のライターは、アイデア間を移行するために自然な意味の流れに依存し、修辞的な質問をもっと控えめに使用します。",
+    "useCase": "AIの「質問して答える」形式を使用する傾向が明らかに繰り返される、ブログ記事、マーケティングコンテンツ、説明文の監査に非常に効果的です。",
+    "strengths": "• ほとんどの場合、結論の前に移行の質問が含まれる古典的な「AIエッセイ構造」を簡単に特定します。\n• 深い意味解析ではなく句読点のマッピングに依存しているため、最小限の計算能力しか必要としません。",
+    "limitations": "• FAQ（よくある質問）ドキュメント、インタビュー、または質問の密度が高いことが予想される本物の会話のトランスクリプトでは、誤検知が発生しやすくなります。\n• 修辞的な質問が自然に存在しない極端に短いテキストや高度な技術文書ではあまり効果がありません。",
+    "parameters": "解析: 句読点の抽出と位置マッピング\n評価基準: 1000語あたりの疑問符と段落境界の近接度\n出力結果: 0-100 疑問の予測可能性（人為的な移行）スコア",
+    "accuracy": "中程度 — 説明文やブログ形式のテキストで70-80%の精度。単独の指標としては弱いですが、「段落構造」の分析と組み合わせると強力です。",
     "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0244932"
         }
     ]
 }

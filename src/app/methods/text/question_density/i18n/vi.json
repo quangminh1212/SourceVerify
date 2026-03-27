@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ dấu hỏi",
-    "description": "Đo mẫu mật độ dấu hỏi",
-    "algorithm": "Thuật toán phân tích Mật độ dấu hỏi",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mẫu mật độ dấu hỏi. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ dấu hỏi. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Câu Hỏi Tu Từ (Question Density)",
+    "description": "Phân tích tần suất và vị trí cấu trúc của dấu chấm hỏi trong văn bản. Các Mô Hình Ngôn Ngữ Lớn thường xuyên dựa vào các câu hỏi tu từ như một công cụ chuyển tiếp lười biếng để chuyển giữa các đoạn văn hoặc để mô phỏng sự tương tác đàm thoại (ví dụ: 'Nhưng điều này có ý nghĩa gì đối với tương lai?', 'Làm thế nào chúng ta có thể làm điều này?'). Điều này dẫn đến một mật độ dấu chấm hỏi cao một cách giả tạo được sử dụng hoàn toàn cho bộ khung cấu trúc thay vì câu hỏi thực sự.",
+    "algorithm": "Phân Tích Bộ Khung Cấu Trúc Nghi Vấn",
+    "mechanism": "Thuật toán cô lập tất cả các dấu câu nghi vấn (dấu chấm hỏi) và ánh xạ vị trí của chúng tương đối với ranh giới của các đoạn văn. Nó tính toán 'Mật độ Dấu chấm hỏi' tổng thể (số câu hỏi trên 1000 từ) và 'Điểm Nghi vấn Chuyển tiếp' (tần suất câu hỏi xuất hiện chính xác ở cuối đoạn mở đầu hoặc đầu đoạn thân bài). Các mô hình AI, được đào tạo để mang tính giải thích và có cấu trúc cao, sử dụng các câu hỏi như một công cụ hiệu quả đáng tin cậy để giới thiệu chủ đề tiếp theo mà không cần các chuyển tiếp tường thuật phức tạp. Những người viết là con người sử dụng các câu hỏi tu từ tiết kiệm hơn rất nhiều, dựa vào luồng ngữ nghĩa tự nhiên để chuyển tiếp giữa các ý tưởng.",
+    "useCase": "Rất hiệu quả để kiểm tra các bài đăng trên blog, nội dung tiếp thị và các bài luận giải thích nơi xu hướng sử dụng định dạng 'Hỏi-Sau Đó-Trả Lời' của AI trở nên lặp đi lặp lại một cách rõ ràng.",
+    "strengths": "• Dễ dàng xác định 'cấu trúc bài luận AI' kinh điển, hầu như luôn có một câu hỏi chuyển tiếp trước phần kết luận.\n• Yêu cầu rất ít khả năng tính toán, vì nó dựa trên việc ánh xạ dấu câu thay vì phân tích ngữ nghĩa sâu.",
+    "limitations": "• Dễ bị dương tính giả trong các tài liệu Hỏi đáp (Những câu hỏi thường gặp), các bài phỏng vấn hoặc bản ghi chép cuộc hội thoại thực sự, nơi mật độ câu hỏi cao là điều tất yếu.\n• Ít hiệu quả hơn đối với các văn bản cực ngắn hoặc tài liệu kỹ thuật cao nơi các câu hỏi tu từ hoàn toàn không có.",
+    "parameters": "Kiểm Định: Trích Xuất Dấu Câu và Ánh Xạ Vị Trí\nThước Đo: Dấu Chấm Hỏi Trên 1000 Từ & Phân Bố Gần Ranh Giới Đoạn\nĐầu Ra: 0-100 Điểm Tính Dễ Đoán Nghi Vấn (Chuyển Tiếp Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 70-80% trong các văn bản giải thích và dạng blog. Thước đo độc lập yếu nhưng mạnh mẽ khi kết hợp với phân tích 'Cấu Trúc Đoạn Văn'.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0244932"
+        }
+    ]
 }

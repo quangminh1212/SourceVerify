@@ -1,19 +1,14 @@
 {
-    "name": "Detección de Patrones de Repetición",
-    "description": "Detecta excessive patrón repetition characteristic of generado por IA text.",
-    "useCase": "Identifying AI text through repetition análisis",
-    "mechanism": "Analiza micro-patrón frequency para detectar excessive repetition. AI text generators tend to reuse sentence structures and phrases more than human writers.",
-    "accuracy": "Moderada - 74-84%",
-    "source": "Krishna et al. (2024) - Paraphrasing Evades Detectors of AI-Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Tamaño de ventana: adaptativo, Quantization: 8-64 levels, Metrics: entropía, CV, correlación",
-    "strengths": "- Effective for detecting generado por IA text\n- Language-agnostic estadístico approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger falsos positivos\n- Short texts provide less reliable signals\n- Performance varies a través de estilo de escrituras",
+    "name": "Detección de Patrones de Repetición (Repetition Pattern)",
+    "description": "Detecta frases cíclicas anómalas, la reutilización enfermiza de secuencias de palabras (n-gramas) y bucles estructurales que son la marca de la bestia del texto generado por IA. Los Grandes Modelos de Lenguaje, especialmente cuando usan estrategias de decodificación estrictas como la búsqueda en haz (beam search) sin imponer castigos severos por repetición, sufren con frecuencia de 'degeneración de texto neuronal'—una tendencia patológica a quedarse atascados en micro-patrones locales, repitiendo cíclicamente lo mismo. Incluso cuando disfrazan esto cambiando un par de palabras superficiales, la estructura sintáctica subyacente y los n-gramas específicos se reciclan a un ritmo horriblemente superior al de un escritor humano genuino.",
+    "algorithm": "Autocorrelación de N-gramas y Perfilado de Degeneración Neuronal",
+    "mechanism": "El sistema computa sin piedad la frecuencia y la distribución de ráfagas de palabras específicas (n-gramas) y estructuras sintácticas a lo largo y ancho del texto. Despliega una función matemática de autocorrelación para detectar patrones cíclicos (por ejemplo, reciclar un 3-grama específico con precisión milimétrica cada 50 palabras). Los modelos de IA son esclavos absolutos de su ventana de contexto inmediato, lo que los lleva a 'cebarse' constantemente con sus propios y recientes excrementos textuales, obligándolos a retroceder de forma trágica y predecible hacia las mismas estructuras de fraseado. El algoritmo mide la entropía y el coeficiente de variación en estos patrones, marcando automáticamente cualquier texto donde la repetición matemática o estructural sea estadísticamente demasiado perfecta o artificialmente frecuente.",
+    "useCase": "Atrozmente efectivo para desmantelar respuestas conversacionales kilométricas de chatbots, escritura 'creativa' vomiada por modelos desactualizados, y cualquier texto donde a la IA se le obligó, bajo tortura del prompt, a generar mucho más allá de su miserable zona de confort contextual.",
+    "strengths": "• Capacidad destructiva excepcional contra el 'relleno alucinado', donde la IA, al no tener nada más que decir, simplemente entra en un bucle neurótico para mantener la longitud del texto.\n• Línea base cien por ciento agnóstica al lenguaje; la huella digital matemática de la estupidez repetitiva de las redes neuronales es universal y consistente en cualquier maldito idioma.",
+    "limitations": "• Pierde agarre e impacto contra textos inyectados con altos niveles de 'temperatura' (caos) o con penalizaciones castigadoras por repetición, las cuales fuerzan a la máquina a golpes a romper sus propios bucles.\n• Fuego amigo posible: puede detonar falsos positivos sobre manuales técnicos extremadamente rígidos o poesía humana que se apoya intencionalmente en estribillos pesados.",
+    "parameters": "Análisis: Autocorrelación Sintáctica Adaptativa y Escaneo de N-gramas\nMétrica: Varianza de la Frecuencia de Repetición y Colapso de Entropía\nResultado: 0-100 Puntuación de Degeneración Neuronal (Bucle Infinito Patológico)",
+    "accuracy": "Moderada a Fuerte — 74-84% de precisión balística. Opera como un pilar estadístico de titanio absoluto dentro del pipeline de ejecución cuando opera en equipo estricto junto a los escáneres de Perplejidad y Ráfaga (Burstiness).",
     "references": [
-        {
-            "title": "Krishna et al. (2024) - Paraphrasing Evades Detectors of AI-Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Krishna%20et%20al.%20(2024)%20-%20Paraphrasing%20Evades%20Detectors%20of%20AI-Generated%20Text"
-        },
         {
             "title": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.",
             "url": "https://arxiv.org/abs/1904.09751"

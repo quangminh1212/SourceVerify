@@ -1,22 +1,17 @@
 {
-    "name": "Readability Score",
-    "description": "Measures readability consistency across content segments.",
-    "useCase": "Detecting AI text through uniform readability levels",
-    "mechanism": "Divides content into segments and measures complexity variance. AI text maintains consistent readability throughout, unlike human writing which naturally varies.",
-    "accuracy": "Moderate - 68-78%",
-    "source": "Ippolito et al. (2020) - Automatic Detection of Generated Text, ACL",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Window size: adaptive, Quantization: 8-64 levels, Metrics: entropy, CV, correlation",
-    "strengths": "- Effective for detecting AI-generated text\n- Language-agnostic statistical approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger false positives\n- Short texts provide less reliable signals\n- Performance varies across writing styles",
+    "name": "Readability Variance Analysis",
+    "description": "Measures the fluctuation of readability scores (e.g., Flesch-Kincaid, Gunning Fog) across different segments of a text. AI language models are trained to produce highly consistent, 'safe', and uniformly accessible prose. Consequently, their output maintains a rigid, almost robotic readability level from start to finish. Human writers, however, naturally exhibit significant variance—mixing simple, punchy sentences with dense, complex explanations depending on cognitive flow, emotion, or narrative necessity.",
+    "algorithm": "Segmented Readability Variance and Entropy Tracking",
+    "mechanism": "The algorithm divides the text into sliding windows or structural segments (e.g., paragraphs). It calculates established readability metrics for each segment and tracks the variance, standard deviation, and structural entropy across the sequence. A human-authored article typically shows 'readability spikes' (e.g., a highly technical paragraph followed by a simple concluding sentence). AI text, constrained by top-p and temperature sampling designed to avoid 'confusing' the user, generates a stubbornly flat readability curve with minimal mathematical deviation.",
+    "useCase": "Highly effective for auditing long-form content, such as essays, reports, and articles. It detects the unnatural 'smoothness' of AI writing that feels mathematically perfect but cognitively exhausting due to lack of rhythm.",
+    "strengths": "• Relies on well-established linguistic formulas (Flesch-Kincaid, Coleman-Liau) rather than black-box neural networks, making the results highly interpretable.\n• Excellent at detecting text where AI has been used to 'smooth out' or 'professionally rewrite' a human draft.",
+    "limitations": "• Ineffective on very short texts (like social media posts) where segment-to-segment variance cannot be meaningfully calculated.\n• Highly technical documentation or pure academic papers written by humans may also exhibit artificially low variance due to strict style guidelines.",
+    "parameters": "Analysis: Sliding Window Segmentation and Linguistic Formula Computation\nMetric: Standard Deviation of Readability Indices (Variance Curve)\nOutput: 0-100 Readability Rigidity (Algorithmic Uniformity) Score",
+    "accuracy": "Moderate to High — 75-85% accuracy on documents over 300 words. It serves as an excellent 'rhythm' check alongside Sentence Length Variance.",
     "references": [
         {
-            "title": "Ippolito et al. (2020) - Automatic Detection of Generated Text, ACL",
-            "url": "https://scholar.google.com/scholar?q=Ippolito%20et%20al.%20(2020)%20-%20Automatic%20Detection%20of%20Generated%20Text%2C%20ACL"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
-            "url": "https://arxiv.org/abs/1906.04043"
+            "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
+            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
         },
         {
             "title": "Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI.",

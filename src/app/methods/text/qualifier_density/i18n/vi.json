@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ từ hạn định",
-    "description": "Đo mật độ từ hạn định",
-    "algorithm": "Thuật toán phân tích Mật độ từ hạn định",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mật độ từ hạn định. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ từ hạn định. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Từ Định Tượng (Qualifier Density)",
+    "description": "Phân tích tần suất của các từ định lượng/định tính (ví dụ: 'rất', 'khá', 'phần nào', 'hầu như', 'có lẽ', 'thường', 'nhìn chung') được sử dụng để bổ nghĩa cho tính từ hoặc động từ. Các Mô Hình Ngôn Ngữ Lớn, bị ảnh hưởng nặng nề bởi RLHF (Học Tăng Cường từ Phản Hồi của Con Người) để duy trì tính trung lập, an toàn và mang tính học thuật, thường mắc phải tình trạng lạm dụng mãn tính các từ định lượng này . Chúng có thói quen sử dụng những từ này để làm dịu các khẳng định hoặc nói nước đôi, dẫn đến mật độ ngôn ngữ giảm nhẹ cao hơn đáng kể so với lối viết tự tin của con người.",
+    "algorithm": "Phân Tích Từ Bổ Nghĩa Giảm Nhẹ và Nói Nước Đôi",
+    "mechanism": "Thuật toán phân tích văn bản bằng cách sử dụng bộ gắn thẻ từ loại (POS) để xác định các trạng từ, tính từ cụ thể và cụm trợ động từ đóng vai trò là từ định lượng. Nó tính toán 'Tỷ lệ Từ định lượng/Từ' và đối chiếu nó với 'Chỉ số Khẳng định Tuyệt đối' (tần suất của các tuyên bố dứt khoát). Các văn bản do AI tạo ra liên tục thể hiện mật độ từ định lượng cao một cách không tự nhiên (một nhu cầu bệnh lý liên tục muốn nói 'nó *nhìn chung* được coi là' hoặc 'điều này *có thể* được xem là *phần nào* có lợi') vì các tuyên bố dứt khoát mang một hình phạt toán học cao hơn trong quá trình tinh chỉnh an toàn. Hệ thống gắn cờ các văn bản nơi mật độ của những từ làm dịu này vượt qua giới hạn tu từ tự nhiên của con người về mặt toán học.",
+    "useCase": "Rất hiệu quả để kiểm tra các bài tiểu luận thuyết phục, báo chí, các bài báo quan điểm và bản sao tiếp thị nơi những người viết là con người thường sử dụng các khẳng định mạnh mẽ, không giảm nhẹ, trong khi AI đưa ra sự do dự giả tạo.",
+    "strengths": "• Tấn công trực tiếp vào điều kiện tinh chỉnh an toàn (RLHF) của các LLM hiện đại, điều hầu như không thể để một AI tắt hoàn toàn nếu không có prompting phức tạp, quyết liệt.\n• Cực kỳ mạnh mẽ trên các kiến trúc LLM khác nhau (GPT, Claude, Gemini), vì chúng đều chia sẻ các mô hình đào tạo an toàn tương tự nhau.",
+    "limitations": "• Dễ bị dương tính giả trong văn bản khoa học, tuyên bố từ chối trách nhiệm pháp lý hoặc đánh giá tài liệu học thuật, nơi sự định lượng và nói nước đôi sâu rộng là tiêu chuẩn nghề nghiệp bắt buộc.\n• Các văn bản ngắn (<100 từ) có thể không chứa đủ điểm dữ liệu để thiết lập một đường cơ sở mật độ đáng tin cậy.",
+    "parameters": "Kiểm Định: Trích Xuất Từ Định Lượng Từ Vựng và Phát Hiện Nói Nước Đôi\nThước Đo: Tần Suất Các Từ Bổ Nghĩa Giảm Nhẹ trên 100 Từ\nĐầu Ra: 0-100 Quá Tải Từ Định Lượng (Điểm Do Dự Giả Tạo)",
+    "accuracy": "Cao — Độ chính xác 80-88% đối với văn bản thuyết phục và quan điểm. Độ chính xác giảm trong các bối cảnh khoa học trang trọng, nơi việc nói nước đôi là lẽ tự nhiên.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

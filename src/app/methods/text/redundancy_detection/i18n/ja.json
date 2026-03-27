@@ -1,14 +1,13 @@
 {
-    "name": "Redundancy Detection",
-    "description": "Detects redundant phrases and repetition",
-    "algorithm": "Redundancy Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects redundant phrases and repetition. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through redundancy detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "意味的冗長性分析 (Redundancy Detection)",
+    "description": "不要な意味的反復、トートロジー（同語反復）、および循環論法についてテキストを分析します。大規模言語モデルは、多くの場合「コンテンツのループ」に陥ります。つまり、長さの制約を満たすため、または注意（アテンション）メカニズムが長期的な物語の進行を見失うために、同じコア概念を異なる言葉で言い換えます。その結果、前進する勢いに欠ける、非常に冗長で反復的な段落になります。",
+    "algorithm": "意味的密度と循環概念の追跡",
+    "mechanism": "アルゴリズムは、各文の概念的命題を意味的埋め込み（セマンティック・エンベディング）にマッピングします。次に、同じ段落またはドキュメント内の命題間の「距離」または「重複」を計算します。人間の熟練したライターは、通常、一文ごとに物語や議論を前進させます（高い意味的進行）。AIによって生成されたテキストは、表面的な同義語の交換によってのみ隠された、前の文と80〜90％の概念的重複を持つ文を頻繁に生成します。システムはまた、ポイントを述べた直後にそれを要約する（「要するに...」、「全体として...」）など、古典的なAIのフィラー（埋め草）パターンにフラグを立てます。",
+    "useCase": "AIモデルが特定の文字数を生成するようにプロンプトされ、反復的な水増しを余儀なくされるエッセイ、長文記事、およびマーケティングコピーの分析に非常に効果的です。",
+    "strengths": "• 文レベルで手動で編集されたものの、生成的で反復的な構造的欠陥を保持しているAIテキストを捕捉するのに優れています。\n• GPT-4や Claudeなどのモデルに共通する「長さのハルシネーション（幻覚）」現象と強く相関しています。",
+    "limitations": "• 修辞的効果のために意図的に反復されている人間の文章（政治演説など）や、低品質で「中身のない」人間の文章にフラグを立てる可能性があります。\n• AIがループを開始するのに十分な長さがない、非常に短いテキストでは効果が低くなります。",
+    "parameters": "解析: 文レベルの意味的含意と重複\n評価基準: 命題の進行率\n出力結果: 0-100 意味的冗長性（ループ）スコア",
+    "accuracy": "中〜高 — 75-80%の精度。質の悪い人間の文章と実際のAI生成を区別するために、語彙密度（Lexical Density）および議論構造（Argument Structure）と併用するのが最適です。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

@@ -1,12 +1,21 @@
 {
-    "name": "Phát hiện dư thừa",
-    "description": "Phát hiện cụm từ dư thừa và lặp lại",
-    "algorithm": "Thuật toán phân tích Phát hiện dư thừa",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện cụm từ dư thừa và lặp lại. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phát hiện dư thừa. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân Tích Dư Thừa Ngữ Nghĩa (Redundancy Detection)",
+    "description": "Phân tích văn bản để tìm sự lặp lại ngữ nghĩa không cần thiết, lặp từ và lập luận tự chứng (circular reasoning). Các Mô Hình Ngôn Ngữ Lớn thường mắc phải hội chứng 'lặp lại nội dung'—nơi chúng trình bày lại cùng một khái niệm cốt lõi bằng các từ ngữ khác nhau để đáp ứng yêu cầu về độ dài hoặc do cơ chế chú ý của chúng mất đi sự tiến triển của câu chuyện tầm xa. Điều này dẫn đến các đoạn văn rất dài dòng, lặp đi lặp lại mà không có động lực tiến lên.",
+    "algorithm": "Mật Độ Ngữ Nghĩa và Theo Dõi Khái Niệm Vòng Tròn",
+    "mechanism": "Thuật toán ánh xạ các mệnh đề khái niệm của mỗi câu thành các nhúng ngữ nghĩa (semantic embeddings). Sau đó, nó tính toán 'khoảng cách' hoặc 'sự chồng chéo' giữa các mệnh đề trong cùng một đoạn văn hoặc tài liệu. Một người viết thường thúc đẩy một câu chuyện hoặc lập luận với mỗi câu (tiến trình ngữ nghĩa cao). Văn bản do AI tạo ra thường xuyên tạo ra các câu có sự chồng chéo khái niệm 80-90% với câu trước đó, chỉ được che giấu bằng việc hoán đổi từ đồng nghĩa ở cấp độ bề mặt. Hệ thống cũng gắn cờ các mẫu từ độn (filler) kinh điển của AI giống như tóm tắt một điểm ngay sau khi đưa ra ('Tóm lại...', 'Nhìn chung...').",
+    "useCase": "Rất hiệu quả để phân tích các bài tiểu luận, bài báo mở rộng và bản thảo tiếp thị nơi các mô hình AI được yêu cầu tạo ra số lượng từ cụ thể, buộc chúng phải dùng các từ đệm lặp đi lặp lại.",
+    "strengths": "• Xuất sắc trong việc bắt văn bản AI đã được chỉnh sửa thủ công ở cấp độ câu nhưng vẫn giữ lại các lỗi cấu trúc lặp đi lặp lại, đặc trưng của sinh tạo.\n• Tương quan chặt chẽ với hiện tượng 'độn thêm độ dài' (hallucination of length) phổ biến ở các mô hình như GPT-4 và Claude.",
+    "limitations": "• Có thể gắn cờ văn bản của con người lặp đi lặp lại một cách có chủ ý vì mục đích tu từ (ví dụ: các bài phát biểu chính trị) hoặc văn bản của con người có chất lượng kém, 'đầy sáo rỗng'.\n• Kém hiệu quả đối với các văn bản rất ngắn nơi không có đủ độ dài để AI bắt đầu lặp lại.",
+    "parameters": "Kiểm Định: Sự Đòi Hỏi và Chồng Chéo Ngữ Nghĩa Cấp Cấu\nThước Đo: Tỷ Lệ Tiến Triển Mệnh Đề\nĐầu Ra: 0-100 Điểm Dư Thừa Ngữ Nghĩa (Lặp Vòng)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-80%. Tốt nhất nên sử dụng cùng với Mật Độ Từ Vựng và Cấu Trúc Lập Luận để phân biệt giữa văn bản con người viết kém và AI tạo ra thực sự.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://arxiv.org/abs/2011.01314"
+        }
+    ]
 }

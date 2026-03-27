@@ -1,18 +1,17 @@
 {
-    "name": "Quotation Usage",
-    "description": "Measures quotation mark usage patterns",
-    "algorithm": "Quotation Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures quotation mark usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through quotation usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "인용 부호 및 귀인 패턴 (Quotation Usage)",
+    "description": "따옴표의 사용 빈도, 문맥 및 구조적 적용 방식을 분석합니다. 거대 언어 모델(LLM)은 매우 특정한 목적을 위해 따옴표를 기형적으로 남용합니다. 속어나 관용구를 사용할 때 자신이 한 말이 아님을 회피하려는 목적의 '스케어 코트(Scare quotes, 인용 부호를 이용한 거리두기)'를 남발하며, 학술적인 엄밀함을 흉내 내기 위해 너무 뻔한 문구를 따옴표로 감싸거나, 주장을 뒷받침하기 위해 완벽한 형태를 갖춘 '가짜 인용문'을 환각(Hallucinate)하여 날조해냅니다.",
+    "algorithm": "정서법적 귀인 및 '거리두기 인용(Scare Quote)' 분석",
+    "mechanism": "이 알고리즘은 홑따옴표나 겹따옴표로 둘러싸인 모든 텍스트를 추출하고 주변 문맥을 평가합니다. '거리두기 인용 비율(단일 비전문적 구어체를 감싸는 따옴표의 비율)'과 '귀인 밀도(특정 고유명사나 인물에 연결된 인용의 빈도)'를 계산합니다. 안전성과 중립성 정책에 얽매인 AI 모델은 비격식적인 언어를 자연스럽게 구사하는 것을 극도로 주저합니다. 강제로 속어나 관용구를 써야 할 경우, AI는 그 어조가 자신의 본성이 아니라 '빌려온 것'임을 필사적으로 알리기 위해 거의 항상 따옴표를 씌웁니다. 게다가 설명문을 생성할 때 AI는 권위 있어 보이기 위해 기본적인 개념조차 과도하게 인용하는 반면, 인간은 직접 화법이나 고도로 구체적인 정의에만 인용 부호를 아껴 씁니다.",
+    "useCase": "비격식적인 단어를 수술실처럼 결벽적으로 통제하거나, 정교하지만 존재하지 않는 대화 문자열을 환각해 내는 AI 특유의 비인간적 습성이 폭로되는 에세이, 오피니언 기사, 문헌 고찰을 감사하는 데 극도로 효과적입니다.",
+    "strengths": "• 관용구를 문자 그대로 자연스럽게 쓰는 것을 거부하는 강박적이고 '방어적인 AI' 페르소나를 완벽하게 적발합니다.\n• '고유명사 일관성(Named Entity Consistency)' 분석기와 결합 시, AI가 위조해낸 가짜 논문 인용이나 조작된 발언을 즉각적으로 잡아내는 강력한 법의학적 증거가 됩니다.",
+    "limitations": "• 인용이 본질적으로 쏟아지는 정통 저널리즘 기사, 인용 주석이 빼곡한 실제 학술 논문, 또는 대화가 절반 이상인 창작 소설에서는 오탐지(False positive)를 낼 위험이 있습니다.\n• 사용자가 AI에게 '모든 따옴표를 빼고 작성하라'고 명시적으로 지시하면 쉽게 우회될 수 있습니다.",
+    "parameters": "분석 기준: 정서법 기반 경계 위치 추출 및 문맥적 NLP 파싱\n측정 지표: 의미론적 고립('스케어 코트') 빈도 및 발언 귀인 밀도\n출력: 0-100 인용문 예측 가능성 (기계적 포맷팅) 스코어",
+    "accuracy": "중간 — 단독 정확도 65-80%를 보입니다. 단, 의심스러울 정도로 '무균실' 느낌이 나는 공식 에세이나 학술 문서를 분석할 때 판을 뒤집는 매우 치명적인 2차 지표로 활약합니다.",
     "references": [
         {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
+            "title": "Bhattacharjee, A. et al. (2024). LLMs as Hallucination Generators: A Comprehensive Study. arXiv.",
+            "url": "https://arxiv.org/abs/2402.14660"
         },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

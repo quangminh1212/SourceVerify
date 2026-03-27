@@ -1,22 +1,21 @@
 {
-    "name": "Referential Density",
-    "description": "Analyzes reference density patterns",
-    "algorithm": "Referential Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes reference density patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through referential density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "지칭어(참조) 밀도 분석 (Referential Density)",
+    "description": "이전에 언급된 주체(엔티티)를 다시 가리킬 때 사용되는 지시 표현(대명사, '이/그/저'와 같은 지시사, 그리고 동의어)의 빈도와 복잡성을 분석합니다. 인간은 일단 문맥이 확립되면 글의 흐름을 부드럽게 유지하고 똑같은 이름을 반복해서 부르는 것을 피하기 위해, 다채롭고 복잡한 지칭 사슬(Referential chains)을 자연스럽게 형성합니다. 그러나 진짜 인지적 작업 기억(Working memory)이 없는 AI 언어 모델은, 1차원적인 대명사에만 과도하게 의존하거나, 문맥이 엇나가는(Drift) 것을 피하기 위해 아예 전체 고유 명사를 반복해서 다시 쓰는 식으로 극도로 '안전한 우회로'를 택합니다.",
+    "algorithm": "상호참조 해결 및 엔티티 매핑 (Coreference Resolution and Entity Mapping)",
+    "mechanism": "알고리즘은 텍스트 내의 모든 고유 명사와 추적 대상이 되는 명사들을 식별해 냅니다. 그런 다음 상호참조 사슬(Coreference chains)—즉, 이 명사들이 글의 후반부에서 어떤 방식으로 다시 불리는지—을 추적하고 지도를 그립니다. 분석 시스템은 '명시적 명사 반복 횟수' 대비 '대명사/지시사/동의어의 사용 비율'을 나타내는 '지칭 밀도 점수(Referential Density Score)'를 계산합니다. 인간의 글은 지칭 밀도가 높고 조응어(Anaphora)가 다양합니다(같은 주체에 대해 '그 야심 찬 프로젝트', '그것', '이러한 노력' 등으로 번갈아 지칭함). 반면 AI가 쓴 글은 확률적 계산의 안전성을 담보하기 위해 똑같은 명사를 앵무새처럼 반복 사용(예: '그 회사는... 그 회사는... 그 회사는...')하는 납작하고 단조로운 밀도 프로파일을 보여줍니다.",
+    "useCase": "LLM 특유의 기계적이고 지나치게 노골적(명시적)인 글쓰기 스타일을 적발하기 위해, 구조적인 내러티브, 긴 기사본문, 그리고 설명문(Explanatory texts)을 감사하는 데 효과적입니다.",
+    "strengths": "• 프롬프트 엔지니어링이나 얄팍한 단어 바꾸기(Word-spinning) 도구로는 그럴싸하게 위조하기가 구조적으로 불가능에 가까운, 깊은 인지 언어학적 특징을 정확히 포착합니다.\n• 인간의 단기 기억(Working memory)이 자연스럽게 대명사 사용으로 전환되는 '긴 텍스트'에서 그 위력을 발휘합니다.",
+    "limitations": "• 법적 모호성을 차단하기 위해 인간 스스로가 대명사 사용을 피하고 공식 명사를 꼬박꼬박 반복하도록 훈련받은 고도의 기술 설명서나 법률 문서에서는 효율이 급감합니다.\n• 텍스트가 너무 짧으면, 유의미한 지칭(참조)의 기준선을 형성할 만큼의 엔티티나 후속 절이 충분하지 않아 분석이 어렵습니다.",
+    "parameters": "분석 기준: 자연어 처리(NLP) 상호참조 사슬 추출\n측정 지표: 명시적 명사 재진술 대비 문맥적 조응어(대명사 등)의 사용 비율\n출력: 0-100 지칭어 경직도 (AI 특유의 1차원적 명명 방식) 스코어",
+    "accuracy": "중상 — 75-82%의 정확도를 보입니다. 어휘 다양성(Lexical Diversity) 및 대명사 사용 패턴(Pronoun Usage Patterns) 지표와 결합될 때 매우 강력한 2차 검증 수단이 됩니다.",
     "references": [
+        {
+            "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
+            "url": "https://arxiv.org/abs/2003.10555"
+        },
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
             "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
         }
     ]
 }

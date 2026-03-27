@@ -1,22 +1,21 @@
 {
-    "name": "Repetitive Phrase",
-    "description": "Detects repetitive phrase patterns",
-    "algorithm": "Repetitive Phrase — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Detects repetitive phrase patterns. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through repetitive phrase analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "机械短语与模板套话侦测 (Repetitive Phrase)",
+    "description": "侦测文本是否重度依赖某些特定的、由多个词组成的过渡套话、开场白以及“语意拐杖（Semantic Crutches）”。AI 模型在被喂了海量的标准论文格式和枯燥的安全准则后，落下了一个病根：它们在陈述观点、段落过渡或者试图端着“客观中立”的架子时，存在严重的结构性依赖（例如张口就是“值得注意的是…”、“归根结底…”、“此外…”、“总而言之…”）。而真实人类在过渡和衔接时，手法要丰富、自然和随性得多。",
+    "algorithm": "过渡短语指纹库与词汇拐杖硬匹配",
+    "mechanism": "算法会将文档与一个动态更新的、专门收录 AI “保留曲目”和各种套话的指纹黑词库进行比对。它会精确计算这些“多词套话”在全文词数中的占比。该系统会像幽灵一样重点盯防“段落边界（开头和结尾）”——这正是 AI 最容易原形毕露、不可抑制地使用生硬过渡短语（“综上所述”、“另一方面”）的重灾区。“套话重复得分”不仅看它用了多少次这种陈词滥调，更要看在切换不同观点时，它是不是只会那几招（比如在一篇短文里能用三次“Moreover (此外/而且)”）。",
+    "useCase": "在严打学生论文作弊、批量生产的 SEO 水军软文和标准科普文章时极其好用。因为在这些场景里，提示词的设定往往会把 AI 逼进一种极其僵硬的、八股文式的段落生成算法里。",
+    "strengths": "• 抓捕那种不加任何特殊提示词的“懒惰”裸生成（Zero-shot）极其精准，AI 在这种状态下100%会依赖它权重最高的那些平庸过渡句式。\n• 结果极具说服力，直接把高亮的重复套话摔在脸上，连人类审查员也能一眼看穿这是 AI 写的废话。",
+    "limitations": "• 很容易被针对性的提示词工程（Prompt Engineering）黑掉（例如只要在咒语里加上“不要使用‘总而言之’这类词”，雷达就会瞎掉一半）。\n• 可能会误伤那些整天只会写企业公文套话的职场老油条，或者刚刚学会死板的“八股文”雅思作文公式的初学者。",
+    "parameters": "雷达切片: 多词套话表达式与僵硬过渡标记硬匹配\n定罪量表: 词汇拐杖依赖密度与过渡句式方差\n行刑判决: 0-100 机械短语复读 (八股模板依赖) 得分",
+    "accuracy": "中等防线 — 准确率 65-75%。它最适合担当第一道防线的“拉响红色警报”角色，由于它确实可能和被毒打过的人类应试作文产生重叠，强烈建议配合更底层的概率武器（如对数似然排名 Log-Likelihood Rank）进行交叉定罪。",
     "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

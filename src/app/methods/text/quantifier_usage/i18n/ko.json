@@ -1,14 +1,13 @@
 {
-    "name": "Quantifier Usage",
-    "description": "Measures quantifier 주파수",
-    "algorithm": "Quantifier Usage — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures quantifier 주파수. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through quantifier usage analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "수량사 세분성 및 구체성 프로필 (Quantifier Granularity)",
+    "description": "수량을 나타내는 단어(예: '많은', '어떤', '적은', '모든', '몇몇', '대부분의')의 통계적 분포와 구체성을 분석합니다. 거대 언어 모델(LLM)은 정밀한 수치 데이터나 위험을 감수하는 절대적인 주장('모든 전문가들은', '아무도 ~않다')보다는, 모호하고 책임을 회피하는 수량사('많은 전문가들이 동의합니다', '일부 연구에 따르면')를 알고리즘적으로 훨씬 더 선호하는 경향을 보 양식은 모델이 환각(Hallucination)으로 가짜 세부 정보를 생성하거나 쉽게 반박당할 수 있는 절대적 진술을 내뱉는 것을 방지하도록 설계된 당혹감(Perplexity) 최적화 및 안전 가드레일에서 비롯됩니다.",
+    "algorithm": "모호한 수량사 대 절대적 수량사 비율 추출기",
+    "mechanism": "분석기는 수량을 나타내는 모든 용어를 추출하여 두 개의 바구니로 분류합니다: '모호한 수량사'(일부, 많은, 다양한)와 '절대적/정밀한 수량사'(모든, 0, 정확한 숫자). 그런 다음 이 두 집합 간의 비율을 계산합니다. AI 모델은 근본적으로 거짓된 절대값을 생성하는 것을 피하도록 (RLHF를 통해) 튜닝된 확률 엔진이기 때문에, 수학적으로 안전하고 모호한 수량사 주위에 출력을 밀집시킵니다. 인간 작가는 일반적으로 정확한 데이터로 주장을 뒷받침하거나 수사학적 효과를 위해 절대적인 표현을 사용합니다. 시스템은 특정 값이나 데이터를 구체적으로 제시하지 않은 채, 모호한 수량사의 밀도를 의심스럽게 높고 일정하게 유지하는 텍스트를 적발합니다.",
+    "useCase": "해당 분야의 인간 전문가처럼 구체적인 수치를 인용하기보다는 기계가 '다양한 요인' 또는 '많은 경우'와 같은 두루뭉술한 표현에 크게 의존하는 연구 요약, 시장 분석 및 학술 논문 번역본을 감사하는 데 극도로 효과적입니다.",
+    "strengths": "• 구체적인 검색 데이터의 부족을 광범위한 수량사 뒤에 숨기는 AI의 눈물겨운 '환각(Hallucination) 회피' 전술을 폭로하는 데 탁월합니다.\n• 일반적이고 두루뭉술한 수량화는 기본 확률 생성의 핵심 특징이므로, 서로 다른 언어 모델 간에도 매우 끈질기게 나타나는 식별표입니다.",
+    "limitations": "• 광범위한 일반화가 문맥상 적절하게 용인되는 사회학적 글쓰기나 추측성 기사에서 오탐지(False positive)를 낼 수 있습니다.\n• 인간 사용자가 AI에게 본문에 가짜의 구체적인 수치(숫자)를 강제로 주입하도록 강력하게 프롬프팅(지시)하면 쉽게 무력화될 수 있습니다.",
+    "parameters": "분석 기준: 어휘 추출 및 구체성 타게팅 분류\n측정 지표: 모호한 수량사 대 절대적/구체적 수량사의 비율\n출력: 0-100 모호한 수량화 (기계적/인위적 일반성) 스코어",
+    "accuracy": "중간 — 단독 사용 시 70-80%의 정확도. 문맥에 대한 의존도가 매우 높으므로 '어휘 구체성(Lexical Specificity)' 및 '근거 인용(Evidence Citation)' 분석과 반드시 결합해서 사용해야 합니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

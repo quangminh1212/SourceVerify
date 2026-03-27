@@ -1,19 +1,14 @@
 {
-    "name": "重复模式检测",
-    "description": "检测 excessive 模式 repetition characteristic of AI生成的 text.",
-    "useCase": "Identifying AI text through repetition 分析",
-    "mechanism": "分析 micro-模式 frequency 以检测 excessive repetition. AI text generators tend to reuse sentence structures and phrases more than human writers.",
-    "accuracy": "中等 - 74-84%",
-    "source": "Krishna et al. (2024) - Paraphrasing Evades Detectors of AI-Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "窗口大小: 自适应, Quantization: 8-64 levels, Metrics: 熵, CV, 相关性",
-    "strengths": "- Effective for detecting AI生成的 text\n- Language-agnostic 统计 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 误报\n- Short texts provide less reliable signals\n- Performance varies 跨 写作风格s",
+    "name": "微观模式循环侦测 (Repetition Pattern)",
+    "description": "专杀 AI 生成文本中那种如同卡带一般的周期性短语重播、N-gram（连续词组）滥用以及更深层的结构性死循环。大语言模型，特别是在使用集束搜索（Beam Search）等解码策略且没有施加致命的“重复惩罚（Repetition Penalty）”时，极易患上一种叫“神经文本退化 (Neural Text Degeneration)”的绝症——它们会不可自拔地陷入某种局部的、车轱辘话般的微观句型模式中。哪怕表面上的词汇换了皮，其底层的句法骨架或者特定的 N-gram 词组被重复调用的概率，依然会以一种非人类的恐怖频率飙升。",
+    "algorithm": "N-gram 自相关列阵与神经退化画像",
+    "mechanism": "雷达系统会切碎文本，精准计算特定字词序列（N-grams）和句法结构在全文中的出现频率与分布。它甚至会动用“自相关函数 (Autocorrelation)”，像探测脉冲星一样探测那些周期性发作的规律（比如：雷打不动地每隔 50 个词就用一次某种倒装句或特定三字词组）。这种症状的病因在于，AI 模型极度依赖它眼前的那点上下文窗口，导致它在生成时不断被自己刚写出的垃圾文本“心理暗示 (Priming)”，最终像被引力捕获一样，机械地滑回刚才用过的行文结构里。该算法通过测量这些重复模式的信息熵和变异系数，直接给那些结构重复得“过于完美、过于规律”的文本下达病危通知书。",
+    "useCase": "在追捕长篇累牍的 AI 对话回复、旧版或未优化模型生成的廉价小说，以及那些 AI 被逼着瞎编滥造超出其知识盲区、被迫通过疯狂循环来凑字数的文本时，拥有核弹级的杀伤力。",
+    "strengths": "• 它是撕破 AI “为了凑字数而原地转圈 (Hallucinated Padding)”伪装的最强利器。\n• 真正的跨语言打击能力——神经网络这种退化循环所残留下来的纯数学指纹参数，不管是用中文还是英文写，都如出一辙地暴露无遗。",
+    "limitations": "• 如果生成文本被调高了“温度值 (Temperature, 即随机性)”或者被施加了极其严厉的重复惩罚（强行打断循环），雷达的敏锐度会下降。\n• 容易误伤那些极其死板、格式化的人类文档（比如产品说明书或法律条文），或者故意使用大量排比和副歌的人类诗歌及演讲稿。",
+    "parameters": "雷达切片: 动态句法与 N-gram 自相关矩阵扫描\n定罪量表: 循环发作频率方差与系统信息熵衰减斜率\n行刑判决: 0-100 神经网络词穷退化 (卡带循环) 得分",
+    "accuracy": "中高威胁 — 准确率 74-84%。它是整个反 AI 侦测体系中的定海神针，尤其在与“文本困惑度 (Perplexity)”和“突发性波动 (Burstiness)”打配合时，能形成绞杀局。",
     "references": [
-        {
-            "title": "Krishna et al. (2024) - Paraphrasing Evades Detectors of AI-Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Krishna%20et%20al.%20(2024)%20-%20Paraphrasing%20Evades%20Detectors%20of%20AI-Generated%20Text"
-        },
         {
             "title": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.",
             "url": "https://arxiv.org/abs/1904.09751"

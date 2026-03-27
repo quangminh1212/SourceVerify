@@ -1,22 +1,17 @@
 {
-    "name": "Điểm Khả năng Đọc",
-    "description": "Đo tính nhất quán khả năng đọc qua các đoạn nội dung.",
-    "useCase": "Phát hiện văn bản AI qua mức khả năng đọc đồng nhất",
-    "mechanism": "Chia nội dung thành các đoạn và đo phương sai độ phức tạp. Văn bản AI duy trì khả năng đọc nhất quán, khác với văn viết người thay đổi tự nhiên.",
-    "accuracy": "Trung bình - 68-78%",
-    "source": "Ippolito et al. (2020) - Automatic Detection of Generated Text, ACL",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Phân Tích Phương Sai Độ Dễ Đọc (Readability Variance)",
+    "description": "Đo lường sự biến động của điểm số độ dễ đọc (ví dụ: Flesch-Kincaid, Gunning Fog) trên các phân đoạn khác nhau của văn bản. Các mô hình ngôn ngữ AI được đào tạo để tạo ra văn xuôi có tính nhất quán cao, 'an toàn' và dễ tiếp cận một cách đồng đều. Do đó, đầu ra của chúng duy trì một mức độ dễ đọc cứng nhắc, gần như rô bốt từ đầu đến cuối. Tuy nhiên, người viết là con người tự nhiên thể hiện sự biến động đáng kể—kết hợp các câu đơn giản, đanh thép với các giải thích dày đặc, phức tạp tùy thuộc vào luồng nhận thức, cảm xúc hoặc sự cần thiết của câu chuyện.",
+    "algorithm": "Theo Dõi Phương Sai Độ Dễ Đọc Phân Đoạn và Entropy",
+    "mechanism": "Thuật toán chia văn bản thành các cửa sổ trượt hoặc các phân đoạn cấu trúc (ví dụ: đoạn văn). Nó tính toán các thước đo độ dễ đọc đã được thiết lập cho từng phân đoạn và theo dõi phương sai, độ lệch chuẩn và entropy cấu trúc trên toàn bộ chuỗi. Một bài báo do con người viết thường cho thấy 'các đợt tăng vọt về độ dễ đọc' (ví dụ: một đoạn văn mang tính kỹ thuật cao theo sau là một câu kết luận đơn giản). Văn bản AI, bị giới hạn bởi việc lấy mẫu top-p và nhiệt độ được thiết kế để tránh làm 'bối rối' người dùng, tạo ra một đường cong độ dễ đọc phẳng lì một cách ngoan cố với độ lệch toán học tối thiểu.",
+    "useCase": "Rất hiệu quả để kiểm tra nội dung dài, chẳng hạn như bài tiểu luận, báo cáo và bài báo. Nó phát hiện sự 'trơn tru' không tự nhiên của văn bản AI mang lại cảm giác hoàn hảo về mặt toán học nhưng lại gây kiệt sức về mặt nhận thức do thiếu nhịp điệu.",
+    "strengths": "• Dựa trên các công thức ngôn ngữ học đã được thiết lập tốt (Flesch-Kincaid, Coleman-Liau) thay vì các mạng nơ-ron hộp đen, làm cho kết quả có tính diễn giải cao.\n• Xuất sắc trong việc phát hiện văn bản nơi AI đã được sử dụng để 'làm trơn' hoặc 'viết lại một cách chuyên nghiệp' một bản nháp của con người.",
+    "limitations": "• Không hiệu quả đối với các văn bản rất ngắn (như bài đăng trên mạng xã hội) nơi phương sai giữa các phân đoạn không thể được tính toán một cách có ý nghĩa.\n• Tài liệu kỹ thuật cao hoặc các bài báo học thuật thuần túy do con người viết cũng có thể thể hiện phương sai thấp một cách giả tạo do các nguyên tắc văn phong nghiêm ngặt.",
+    "parameters": "Kiểm Định: Phân Đoạn Cửa Sổ Trượt và Tính Toán Công Thức Ngôn Ngữ\nThước Đo: Độ Lệch Chuẩn Của Các Chỉ Số Độ Dễ Đọc (Đường Cong Phương Sai)\nĐầu Ra: 0-100 Điểm Độ Cứng Nhắc Dễ Đọc (Tính Đồng Nhất Thuật Toán)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-85% trên các tài liệu trên 300 từ. Nó đóng vai trò như một bài kiểm tra 'nhịp điệu' tuyệt vời cùng với Phương Sai Độ Dài Câu.",
     "references": [
         {
-            "title": "Ippolito et al. (2020) - Automatic Detection of Generated Text, ACL",
-            "url": "https://scholar.google.com/scholar?q=Ippolito%20et%20al.%20(2020)%20-%20Automatic%20Detection%20of%20Generated%20Text%2C%20ACL"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
-            "url": "https://arxiv.org/abs/1906.04043"
+            "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
+            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
         },
         {
             "title": "Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI.",

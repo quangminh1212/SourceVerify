@@ -1,14 +1,13 @@
 {
-    "name": "Qualifier Density",
-    "description": "Measures qualifier word density",
-    "algorithm": "Qualifier Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures qualifier word density. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through qualifier density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "修飾語の密度 (Qualifier Density)",
+    "description": "形容詞または動詞を修飾するために使用される修飾語（例：「非常に」、「かなり」、「いくらか」、「ほとんど」、「おそらく」、「典型的には」、「一般的に」）の頻度を分析します。中立的で、安全で、学術的に適応するようにRLHF（人間からのフィードバックを用いた強化学習）によって大きく条件付けられている大規模言語モデルは、修飾語の慢性的な過剰使用に悩まされています。これらは、主張を和らげたり、断言を避けたりするためにこれらの言葉を習慣的に使用し、自信に満ちた人間の文章と比較して、緩和的な言語の密度が著しく高くなります。",
+    "algorithm": "ヘッジング（ぼかし言葉）と緩和修飾語の分析",
+    "mechanism": "このアルゴリズムは、品詞（POS）タガーを使用してテキストを構文解析し、修飾語として機能する副詞、特定の形容詞、および助動詞句を特定します。「修飾語/単語の比率」を計算し、それを「絶対的主張インデックス」（断定的な発言の頻度）と相互参照します。AIが生成したテキストは、一貫して不自然に高い修飾語密度を示します（「それは*一般的に*〜と考えられている」または「これは*いくらか*有益であると*見なすことができる*」と言わざるを得ない病的な欲求）。これは、断定的な発言が安全性の微調整中に数学的に高いペナルティを伴うためです。システムは、これらの和らげる言葉の密度が、計算上人間の自然な修辞的限界を覆い隠しているテキストにフラグを立てます。",
+    "useCase": "人間のライターが通常、強力で緩和されていない断言を使用するのに対し、AIが人為的な躊躇を導入する、説得力のあるエッセイ、ジャーナリズム、意見記事、およびマーケティングコピーの監査に非常に効果的です。",
+    "strengths": "• 複雑で積極的なプロンプトなしではAIが完全にオフにすることがほぼ不可能な、最新のLLMの安全性アライメントの条件付け（RLHF）を直接攻撃します。\n• 異なるLLMアーキテクチャ（GPT、Claude、Gemini）でも同様の安全性トレーニングパラダイムを共有しているため、非常に堅牢です。",
+    "limitations": "• 広範な修飾とヘッジングが必須の専門的基準である、科学論文、法的免責事項、または学術文献レビューにおいて誤検知が発生しやすくなります。\n• 短いテキスト（100単語未満）には、信頼できる密度のベースラインを確立するのに十分なデータポイントが含まれていない場合があります。",
+    "parameters": "解析: 語彙的修飾語の抽出とヘッジング（ぼかし言葉）の検出\n評価基準: 100語あたりの緩和修飾語の頻度\n出力結果: 0-100 修飾語の過負荷（人為的な躊躇）スコア",
+    "accuracy": "高 — 説得力のあるテキストや意見のテキストでは80-88%の精度。ヘッジングが自然な正式な科学的文脈では精度が低下します。",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

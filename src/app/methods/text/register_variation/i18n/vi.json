@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Register Variation",
-    "description": "Phân tích biến thiên ngữ vực — văn bản AI thường duy trì ngữ vực nhất quán bất tự nhiên xuyên suốt.",
-    "algorithm": "Thuật toán phân tích Register Variation Analysis",
-    "mechanism": "Hệ thống Register Variation Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phân Tích Biến Biển Ngôn Từ (Register Variation)",
+    "description": "Phân tích văn bản để tìm những dao động tự nhiên trong biến thể ngôn từ (độ trang trọng, giọng điệu và sự phù hợp về phong cách). Người viết tự nhiên điều chỉnh ngôn từ của họ tùy thuộc vào ngữ cảnh—chuyển từ trình bày học thuật sang những giai thoại đàm thoại, hoặc từ báo cáo khách quan sang lời kêu gọi cảm xúc. Các mô hình AI, chịu ảnh hưởng nặng nề bởi sự tinh chỉnh an toàn và RLHF (Học Tăng Cường từ Phản Hồi của Con Người), thể hiện một ngôn từ 'trợ lý hữu ích' đồng nhất một cách ngoan cố. Chúng duy trì một giọng điệu nhất quán một cách không tự nhiên từ đầu đến cuối, hiếm khi thể hiện những thay đổi phong cách năng động đặc trưng của giao tiếp chân thực của con người.",
+    "algorithm": "Lập Hồ Sơ Ngôn Từ Đa Chiều",
+    "mechanism": "Thuật toán đánh giá văn bản qua nhiều chiều ngôn ngữ (ví dụ: thông tin so với tham gia, tự sự so với phi tự sự) dựa trên khung đa chiều của Biber. Nó tính toán 'Điểm Biến Động Ngôn Từ' bằng cách theo dõi xem mức độ trang trọng, việc sử dụng đại từ nhân xưng và hóa trị cảm xúc thay đổi như thế nào qua các đoạn văn. Một câu chuyện do con người viết sẽ cho thấy những đỉnh và đáy tự nhiên trong các chiều này (ví dụ: bắt đầu một cách trang trọng, trở nên trò chuyện, kết thúc bằng một lời cầu xin đầy cảm xúc). Nội dung do AI tạo ra thường có điểm số biến động ngôn từ cực kỳ thấp, tạo ra một hồ sơ phong cách bằng phẳng, đồng nhất bất kể cường độ vốn có của chủ đề.",
+    "useCase": "Rất hiệu quả để kiểm toán các bài báo thể hiện quan điểm cá nhân, văn bản sáng tạo và bài tiểu luận dài nơi sự thay đổi ngôn từ tự nhiên được mong đợi khi tác giả xây dựng mối quan hệ với người đọc.",
+    "strengths": "• Chống lại những hậu quả cấu trúc của việc tinh chỉnh RLHF, làm cho nó mạnh mẽ trước các sửa đổi prompt đơn giản hướng dẫn AI 'viết một cách bình thường'.\n• Xuất sắc trong việc phân biệt giữa một blogger nhiệt huyết là con người và một AI đang bắt chước một bài đăng trên blog.",
+    "limitations": "• Kém hiệu quả trên các tài liệu cực kỳ trang trọng, bị hạn chế cao (như hợp đồng pháp lý hoặc tóm tắt học thuật) nơi ngay cả con người cũng buộc phải sử dụng một ngôn từ đồng nhất, cứng nhắc.\n• Yêu cầu văn bản ít nhất 300-500 từ để thiết lập đường cơ sở và đo lường sự thay đổi một cách có ý nghĩa.",
+    "parameters": "Kiểm Định: Lập Lồ Sơ Đa Chiều Biber\nThước Đo: Phương Sai Biến Động Ngôn Từ\nĐầu Ra: 0-100 Điểm Đồng Nhất Phong Cách (Tính Nhất Quán của AI)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 76-84%. Đặc biệt mạnh mẽ khi kết hợp với phân tích Giọng Điệu Cảm Xúc và Sự Phù Hợp Thực Dụng.",
+    "references": [
+        {
+            "title": "Biber, D. (1995). Dimensions of Register Variation: A Cross-Linguistic Comparison. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511519871"
+        },
+        {
+            "title": "Biber, D. & Conrad, S. (2009). Register, Genre, and Style. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511814358"
+        }
+    ]
 }

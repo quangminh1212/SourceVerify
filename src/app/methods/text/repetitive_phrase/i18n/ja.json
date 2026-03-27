@@ -1,22 +1,21 @@
 {
-    "name": "Repetitive Phrase",
-    "description": "Detects repetitive phrase patterns",
-    "algorithm": "Repetitive Phrase — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects repetitive phrase patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through repetitive phrase analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "反復的・定型的なフレーズ検出 (Repetitive Phrase)",
+    "description": "特定の複数単語のつなぎのフレーズ（移行句）、導入節、および意味的な「松葉杖（crutches：口癖や頼りになる決まり文句）」への過度の依存についてテキストを分析します。標準的なエッセイの形式や安全性のガイドラインを大量に学習したAIモデルは、自分の発言を和らげたり、段落間を移行したり、中立的なトーンを維持したりするために、特定のフレーズ（例：「...に注意することが重要です（It is important to note that...）」、「最終的に（Ultimately...）」、「さらに（Furthermore...）」、「結果として（As a result...）」）に対して構造的な依存関係を築きます。人間は自然に、はるかに幅広く、より有機的な多様性のある移行と表現を使用します。",
+    "algorithm": "移行フレーズのプロファイリングと語彙的「松葉杖」のマッチング",
+    "mechanism": "アルゴリズムは、既知のAIの「松葉杖」フレーズと移行マーカーの動的データベースと照らし合わせてドキュメントをスキャンします。総単語数に対するこれらの複数単語表現の頻度を計算します。システムは特に段落の境界を調べます。AIモデルは、段落の境界で厳格な移行フレーズ（「結論として（In conclusion）」、「一方で（On the other hand）」）を使用する傾向があることで悪名高いからです。「フレーズ反復スコア」は、これらの特定の決まり文句の生のカウントと、アイデア間を移行する際のバリエーションの欠如（例：1つのエッセイで「さらに（Moreover）」を3回使用する）の両方を測定することによって生成されます。",
+    "useCase": "プロンプトの制約によってAIが厳密でアルゴリズム的な段落構造を余儀なくされることが多い、学生のエッセイ、標準的なマーケティングコピー、参考記事のレビューに非常に効果的です。",
+    "strengths": "• AIが最も重み付けされた一般的な移行構造に頼る「怠惰な」ゼロショット生成を捉えるのに優れています。\n• 非常に解釈しやすい結果を提供します。特定の繰り返されるフレーズにフラグを立てることは、人間の監査人が簡単に検証できます。",
+    "limitations": "• プロンプトエンジニアリングの影響を受けやすい（例：「『結論として』のようなフレーズは使用しないでください」）。\n• テンプレート化された企業用語で連絡を取り合う人間のライターや、厳密な学術エッセイの公式に厳密に従う初心者のライターをペナルティの対象にする可能性があります。",
+    "parameters": "解析: 複数単語表現と移行マーカーのマッチング\n評価基準: 「松葉杖」フレーズの密度と移行の分散\n出力結果: 0-100 フレーズ反復（テンプレート依存）スコア",
+    "accuracy": "中程度 — 65-75%の精度。即時の警告指標（レッドフラグ）として最適に機能しますが、人間の書く文章と重複する可能性があるため、より深い確率論的方法（対数尤度ランクなど）からの確認が必要です。",
     "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

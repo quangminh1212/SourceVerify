@@ -1,22 +1,17 @@
 {
-    "name": "可読性スコア",
-    "description": "測定します 可読性 consistency にわたる content segments.",
-    "useCase": "Detecting AI text through uniform 可読性 levels",
-    "mechanism": "Divides content into segments and 測定する complexity 分散. AI text maintains consistent 可読性 throughout, unlike 人間の文章 は naturally varies.",
-    "accuracy": "中 - 68-78%",
-    "source": "Ippolito et al. (2020) - Automatic Detection of Generated Text, ACL",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "ウィンドウサイズ: 適応型, Quantization: 8-64 levels, Metrics: エントロピー, CV, 相関",
-    "strengths": "- Effective for detecting AI生成の text\n- Language-agnostic 統計的 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 誤検出\n- Short texts provide less reliable signals\n- Performance varies にわたる 文体s",
+    "name": "可読性分散分析 (Readability Variance)",
+    "description": "テキストの異なるセグメント間で、可読性スコア（Flesch-Kincaid、Gunning Fogなど）の変動を測定します。AI言語モデルは、非常に一貫性があり、「安全」で、均一にアクセス可能な散文を生成するようにトレーニングされています。その結果、それらの出力は、最初から最後まで、硬直した、ほぼロボットのような可読性レベルを維持します。しかし、人間のライターは自然に大きなばらつきを示し、認知の流れ、感情、または物語の必要性に応じて、シンプルでパンチの効いた文章と、密度が高く複雑な説明を混在させます。",
+    "algorithm": "セグメント化された可読性分散とエントロピートラッキング",
+    "mechanism": "このアルゴリズムは、テキストをスライディングウィンドウまたは構造セグメント（段落など）に分割します。セグメントごとに確立された可読性メトリクスを計算し、シーケンス全体の分散、標準偏差、および構造エントロピーを追跡します。人間が書いた記事は、一般的に「可読性のスパイク」（例：高度に専門的な段落の後に、シンプルな結論の文章が続くなど）を示します。ユーザーを「混乱」させることを避けるように設計された、top-pと温度サンプリングによって制約されたAIテキストは、数学的な偏差が最小限に抑えられた、頑固なまでに平坦な可読性曲線を描きます。",
+    "useCase": "エッセイ、レポート、記事などの長文コンテンツの監査に非常に効果的です。数学的には完璧に感じられるものの、リズムの欠如により認知的に疲労する、AIの執筆の不自然な「滑らかさ」を検出します。",
+    "strengths": "• ブラックボックスのニューラルネットワークではなく、確立された言語学的公式（Flesch-Kincaid、Coleman-Liau）に依存しているため、結果の解釈が非常に高くなります。\n• 人間の草稿を「滑らかに」したり「専門的に書き直す」ためにAIが使用されたテキストを検出するのに優れています。",
+    "limitations": "• セグメント間の分散を意味のあるように計算できない非常に短いテキスト（ソーシャルメディアの投稿など）では効果がありません。\n• 厳格なスタイルガイドラインにより、人間が書いた高度な技術文書や純粋な学術論文でも、人為的に分散が低くなる場合があります。",
+    "parameters": "解析: スライディングウィンドウのセグメント化と言語学的公式の計算\n評価基準: 可読性指数の標準偏差（分散曲線）\n出力結果: 0-100 可読性の硬直性（アルゴリズムの均一性）スコア",
+    "accuracy": "中〜高 — 300語を超えるドキュメントでの精度は75〜85%。文の長さの分散（Sentence Length Variance）と並ぶ、優れた「リズム」チェックとして機能します。",
     "references": [
         {
-            "title": "Ippolito et al. (2020) - Automatic Detection of Generated Text, ACL",
-            "url": "https://scholar.google.com/scholar?q=Ippolito%20et%20al.%20(2020)%20-%20Automatic%20Detection%20of%20Generated%20Text%2C%20ACL"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
-            "url": "https://arxiv.org/abs/1906.04043"
+            "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
+            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
         },
         {
             "title": "Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI.",

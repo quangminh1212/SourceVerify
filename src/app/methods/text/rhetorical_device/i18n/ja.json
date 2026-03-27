@@ -1,22 +1,21 @@
 {
-    "name": "Rhetorical Device",
-    "description": "Detects rhetorical devices usage",
-    "algorithm": "Rhetorical Device — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects rhetorical devices usage. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through rhetorical device analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "修辞技法（レトリック）分析 (Rhetorical Device)",
+    "description": "対句（パラレリズム）、交錯配列法（キアズマス）、修辞疑問文、意図的な誇張法などの修辞技法が有機的に統合されているかテキストを分析します。人間のライターは、説得したり、強調したり、明確な「声（特徴）」を生み出したりするために、直感的にこれらの技法を使用します。大規模言語モデルは一般的に、字義通りで、平坦で、客観性の高い散文を生成します。AIが修辞技法を使用しようとする場合（通常は「説得力のあるように書く」などの特定のプロンプトによる）、その実行は定型的であったり、ひどく陳腐であったり、構造的に過剰に指標化されていたり（例えば、毎回必ず3つの並列ポイントを使用するなど）することがよくあります。",
+    "algorithm": "文体的な転義法と図式的パターンの認識",
+    "mechanism": "アルゴリズムは、修辞的な構造を示す標準的な字義通りの構文からの逸脱を検出します。具体的には、「スキーム（対句/首句反復などの語のパターン）」と「トロープ（転義法：隠喩/皮肉などの比喩的な言葉）」を探します。システムは、これらの技法の密度、分布、および構造的予測可能性を調べることによって「修辞的真正性スコア」を計算します。人間のスピーチライターは、複雑な交錯配列法を有機的に使用するかもしれません。AIモデルは通常、基本的で予測可能な修辞疑問文（「しかし、これは将来にとって何を意味するのでしょうか？」）や厳格な三連語句（トリコロン）構造（「安全、安心、そして信頼できる」）に依存します。",
+    "useCase": "「本物の人間の情熱」と「AIの強いられた『説得力』」を区別することが重要な、オピニオン記事、政治演説、マーケティングコピー、説得力のあるエッセイの分析に非常に効果的です。",
+    "strengths": "• 「人間のブロガーのように書く」または「ワクワクするように聞こえるようにする」ように明示的に指示（プロンプト）されたAIを検出するのに優れています。\n• 単純な語彙や文法のチェックを超えた、高次の文体的意図を捉えます。",
+    "limitations": "• 陳腐な表現や基本的な修辞的転義法に依存している、非常に拙い人間の文章で偽陽性（誤検知）が発生しやすくなります。\n• 修辞技法が自然に存在しない、純粋に情報提供を目的とするテキスト（例：実験レポート、技術文書）の分析には役立ちません。",
+    "parameters": "解析: 構文論的スキームとトロープ（転義法）の検出\n評価基準: 修辞的予測可能性と陳腐さの密度\n出力結果: 0-100 文体的人工性（不自然な修辞）スコア",
+    "accuracy": "中〜高 — 72-80%の精度。感情的トーン（Emotional Tone）や使用域の変動（Register Variation）と組み合わせることで、最適なフォレンジック結果を得ることができます。",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
         }
     ]
 }

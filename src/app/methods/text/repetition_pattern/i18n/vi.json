@@ -1,19 +1,14 @@
 {
-    "name": "Phát hiện Mẫu Lặp lại",
-    "description": "Phát hiện sự lặp lại mẫu quá mức đặc trưng của văn bản AI.",
-    "useCase": "Nhận diện văn bản AI qua phân tích lặp lại",
-    "mechanism": "Phân tích tần số vi mẫu để phát hiện lặp lại quá mức. Trình tạo văn bản AI có xu hướng tái sử dụng cấu trúc câu và cụm từ nhiều hơn người viết.",
-    "accuracy": "Trung binh - 74-84%",
-    "source": "Krishna et al. (2024) - Paraphrasing Evades Detectors of AI-Generated Text",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Phát Hiện Mẫu Lặp Lại (Repetition Pattern)",
+    "description": "Phát hiện các cụm từ có tính chu kỳ bất thường, việc tái sử dụng n-gram và các vòng lặp cấu trúc đặc trưng của văn bản do AI tạo ra. Các Mô Hình Ngôn Ngữ Lớn, đặc biệt là khi sử dụng các chiến lược giải mã cụ thể như tìm kiếm chùm (beam search) mà không có hình phạt lặp lại đủ mạnh, thường mắc phải hội chứng 'thoái hóa văn bản thần kinh'—có xu hướng bị kẹt trong các vi mẫu lặp đi lặp lại cục bộ. Ngay cả khi các từ bề mặt thay đổi một chút, các cấu trúc cú pháp cơ bản hoặc các n-gram cụ thể vẫn được sử dụng lại với tỷ lệ cao hơn nhiều so với văn bản của con người.",
+    "algorithm": "Tự Tương Quan N-gram và Lập Hồ Sơ Thoái Hóa Thần Kinh",
+    "mechanism": "Hệ thống tính toán tần suất và sự phân bố của các chuỗi từ cụ thể (n-gram) và cấu trúc cú pháp trên toàn bộ văn bản. Nó áp dụng một hàm tự tương quan để phát hiện các mẫu có tính chu kỳ (ví dụ: sử dụng một 3-gram cụ thể sau mỗi 50 từ). Các mô hình AI phụ thuộc rất nhiều vào cửa sổ ngữ cảnh ngay lập tức của chúng, dẫn đến việc chúng liên tục 'mồi' chính mình bằng các đầu ra gần đây của chính chúng, khiến chúng có thể đoán trước được việc lặp lại các cấu trúc cụm từ giống nhau. Thuật toán đo lường entropy và hệ số biến thiên của các mẫu này, gắn cờ các văn bản nơi sự lặp lại cấu trúc về mặt thống kê là quá hoàn hảo hoặc quá thường xuyên.",
+    "useCase": "Rất hiệu quả để kiểm toán các phản hồi hội thoại dài, văn bản sáng tạo do các mô hình cũ hoặc chưa được tối ưu hóa tạo ra và các văn bản nơi AI bị buộc phải tạo vượt quá vùng thoải mái về ngữ cảnh của nó.",
+    "strengths": "• Xuất sắc trong việc phát hiện 'phần đệm ảo giác' nơi AI cố gắng duy trì độ dài bằng cách lặp lại.\n• Đường cơ sở không phụ thuộc vào ngôn ngữ; dấu vân tay toán học của sự lặp lại thần kinh vẫn nhất quán trên các ngôn ngữ khác nhau.",
+    "limitations": "• Kém hiệu quả đối với văn bản được tạo bằng cài đặt 'nhiệt độ' (temperature) cao hoặc hình phạt lặp lại nặng, những thứ buộc mô hình phải phá vỡ các vòng lặp này một cách rõ ràng.\n• Có thể gắn cờ văn bản có cấu trúc cao của con người, chẳng hạn như hướng dẫn kỹ thuật hoặc thơ cố ý sử dụng điệp khúc.",
+    "parameters": "Kiểm Định: Tự Tương Quan N-gram và Cú Pháp Thích Ứng\nThước Đo: Phương Sai Tần Suất Lặp Lại và Entropy\nĐầu Ra: 0-100 Điểm Thoái Hóa Thần Kinh (Lặp Vòng)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 74-84%. Đóng vai trò như một trụ cột thống kê cốt lõi trong các đường ống phát hiện khi được kết hợp với Perplexity và Burstiness.",
     "references": [
-        {
-            "title": "Krishna et al. (2024) - Paraphrasing Evades Detectors of AI-Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Krishna%20et%20al.%20(2024)%20-%20Paraphrasing%20Evades%20Detectors%20of%20AI-Generated%20Text"
-        },
         {
             "title": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.",
             "url": "https://arxiv.org/abs/1904.09751"

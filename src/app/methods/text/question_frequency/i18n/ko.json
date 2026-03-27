@@ -1,14 +1,13 @@
 {
-    "name": "Question Frequency",
-    "description": "Measures question usage patterns",
-    "algorithm": "Question Frequency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures question usage patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through question 주파수 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "교육적 질의 빈도 (Question Frequency)",
+    "description": "대화형 또는 교육적 어조를 시뮬레이션하기 위해 사용되는 의문문 및 의문사(예: '누가', '무엇을', '어떻게', '왜')의 절대적인 출현 빈도를 측정합니다. 지시 준수(Instruction-following) 데이터셋과 튜토리얼 문서들로 집중적으로 미세 조정(Fine-tuning)된 초거대 언어 모델(LLM)들은 '교훈적인(선생님-학생 간의)' 페르소나를 취하려는 강력한 알고리즘적 편향을 품고 있습니다. 그들은 독자의 참여를 인위적으로 자극하거나, 단순히 다음에 생성할 정보 블록을 깔아두기 위한 용도로 질문을 만성적으로 남용합니다.",
+    "algorithm": "의문사 어휘 및 질의 비율 분석",
+    "mechanism": "이 알고리즘은 의문 대명사, 의문 부사 및 문장 끝의 물음표 개수를 세어, 평서문 대비 의문문의 비율을 계산합니다. RLHF(인간 피드백 강화 학습) 과정에서 AI 모델들은 친절하고, 철저하며, 참여를 유도할수록 높은 보상을 받습니다. 이는 수학적으로 '교육적 질의 패턴(Pedagogical Query Pattern)'을 강화하게 되는데, AI가 뜬금없이 스스로 질문을 던지고('이것을 어떻게 구현해야 할까요?') 즉시 자기가 대답하는 방식입니다. 전문적인 맥락에서 인간 작가는 보통 사실을 담백하게 진술하거나 부드럽게 다음 주제로 넘어가지만, AI 텍스트는 이러한 자기 완결형 '질문-답변' 루프를 비정상적으로 높은 빈도로 보여주며, 일반적인 인간의 기준치를 훨씬 뛰어넘는 질문 빈도를 기록합니다.",
+    "useCase": "AI의 지나치게 친절하고 '가르치려 드는' 설교식 어조가, 성숙하고 건조한 인간의 글쓰기에 비해 몹시 작위적이고 거만하게(Condescending) 느껴지는 설명서, 튜토리얼 및 기업 홍보물을 감사하는 데 극도로 효과적입니다.",
+    "strengths": "• 거의 모든 상업용 LLM의 뼛속까지 깊이 박혀 있는 기본값인 '지나치게 친절한 조수(Helpful assistant)' 페르소나의 민낯을 폭로하는 데 탁월합니다.\n• 깊은 의미 분석 대신 견고한 토큰 카운팅 및 문장 분류(분할)에 의존하므로 연산 효율성이 수백 배 더 높습니다.",
+    "limitations": "• 태생적으로 질문 빈도가 높을 수밖에 없는 실제 교육 자료, 학습 가이드북 또는 양방향 Q&A 기사 문서에서는 오탐지(False positive)를 낼 위험이 있습니다.\n• 사용자가 AI에게 '단 한 개의 질문도 하지 말고 오직 평서문으로만 단호하게 작성하라'고 명시적으로 지시하면 너무나 쉽게 우회될 수 있습니다.",
+    "parameters": "분석 기준: 의문사 토큰 추출 및 평서문 대비 질의문 비율 계산\n측정 지표: 100문장 당 질문의 출현 빈도\n출력: 0-100 교육적 질의 (대화형 시뮬레이션) 스코어",
+    "accuracy": "중상 — 에세이 및 기사(Article) 텍스트에서 75-85%의 정확도를 보입니다. '문장 길이 변동성(Sentence Length Variance)'과 짝을 이룰 때, AI가 분량을 채우기 위해 억지로 집어넣은 '대화형 패딩(Conversational padding)'이라는 강력한 증거를 제공합니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

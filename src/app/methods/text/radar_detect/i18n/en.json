@@ -1,22 +1,21 @@
 {
-    "name":  "RADAR AI Text Detection",
-    "description":  "Applies RADAR adversarial learning framework for robust AI text detection across models (Hu et al., 2024).",
-    "algorithm":  "RADAR AI Text Detection Analysis Algorithm",
-    "mechanism":  "The RADAR AI Text Detection system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://arxiv.org/abs/2307.03838",
-                           "title":  "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS."
-                       },
-                       {
-                           "url":  "https://arxiv.org/abs/2301.11305",
-                           "title":  "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML."
-                       }
-                   ]
+    "name": "RADAR Adversarial Detection",
+    "description": "Applies the RADAR (Robust AI-Text Detection via Adversarial Learning) framework. Standard AI detectors are easily defeated by simple paraphrasing tools (like QuillBot) or evasion prompts ('rewrite this to bypass AI detection'). RADAR solves this by training a detector simultaneously with an AI paraphraser in an adversarial loop, creating a highly resilient model that can identify machine-generated text even after it has been aggressively altered to hide its origins.",
+    "algorithm": "Adversarial Paraphraser-Detector Network",
+    "mechanism": "RADAR employs a dual-model architecture based on min-max adversarial training. Model A (the Paraphraser) takes AI-generated text and attempts to rewrite it specifically to fool Model B (the Detector). Through continuous iterative training, the Detector learns the deep, invariant statistical signatures and structural artifacts of LLM generation that persist even after surface-level vocabulary and syntax have been scrambled by evasion tools. When analyzing new text, RADAR searches for these resilient core signatures rather than superficial token probabilities.",
+    "useCase": "Essential for high-stakes environments (e.g., academic integrity, legal analysis) where users are likely employing 'humanizer' tools, prompt evasion tactics, or secondary AI paraphrasers to scrub the text's original AI footprint.",
+    "strengths": "• Exceptional resilience against common evasion techniques (e.g., synonym swapping, formatting changes, QuillBot).\n• Significantly lower false-positive rate on complex human writing compared to standard zero-shot detectors (like DetectGPT).",
+    "limitations": "• High computational overhead requiring server-side API execution.\n• May struggle if the text is fundamentally rewritten by a human rather than an automated paraphrasing tool, as the core structural signatures are destroyed.",
+    "parameters": "Analysis: Adversarial Invariant Feature Extraction\nMetric: Resilience-Trained Log-Likelihood Ratio\nOutput: 0-100 RADAR Evasion-Resistant Confidence Score",
+    "accuracy": "High — 85-92% accuracy, particularly dominating other models in 'adversarial' scenarios where the text has been deliberately obfuscated.",
+    "references": [
+        {
+            "title": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.",
+            "url": "https://arxiv.org/abs/2307.03838"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

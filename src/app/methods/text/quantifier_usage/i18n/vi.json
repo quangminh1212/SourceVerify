@@ -1,12 +1,21 @@
 {
-    "name": "Sử dụng lượng từ",
-    "description": "Đo tần suất lượng từ",
-    "algorithm": "Thuật toán phân tích Sử dụng lượng từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo tần suất lượng từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích sử dụng lượng từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Hồ Sơ Mức Độ Chi Tiết Của Lượng Từ (Quantifier Granularity)",
+    "description": "Phân tích phân phối thống kê và tính cụ thể của các lượng từ (ví dụ: 'nhiều', 'một số', 'ít', 'tất cả', 'vài', 'hầu hết'). Các Mô Hình Ngôn Ngữ Lớn thể hiện sự ưu tiên thuật toán mạnh mẽ đối với các lượng từ mơ hồ, không cam kết ('nhiều chuyên gia đồng ý', 'một số nghiên cứu chỉ ra') hơn là dữ liệu số liệu chính xác hoặc các khẳng định tuyệt đối đầy rủi ro ('tất cả các chuyên gia', 'không ai'). Hành vi này bắt nguồn từ việc tối ưu hóa perplexity và các rào chắn an toàn được thiết kế để ngăn mô hình tạo ra các chi tiết ảo giác hoặc các tuyên bố tuyệt đối dễ bị bác bỏ.",
+    "algorithm": "Trích Xuất Tỷ Lệ Lượng Từ Mơ Hồ so với Lượng Từ Tuyệt Đối",
+    "mechanism": "Trình phân tích trích xuất tất cả các thuật ngữ chỉ số lượng và phân loại chúng vào hai nhóm: 'Lượng Từ Mơ Hồ' (một số, nhiều, nhiều loại) và 'Lượng Từ Tuyệt Đối/Chính Xác' (tất cả, không có, con số chính xác). Nó tính toán tỷ lệ giữa hai nhóm này. Bởi vì các mô hình AI về cơ bản là các cỗ máy xác suất được tinh chỉnh (thông qua RLHF) để tránh tạo ra các dữ liệu tuyệt đối sai lệch, về mặt toán học, chúng tập trung đầu ra của mình xung quanh các lượng từ an toàn, mơ hồ. Một người viết thường neo giữ các lập luận bằng dữ liệu chính xác hoặc sử dụng các từ tuyệt đối để tạo hiệu ứng tu từ. Hệ thống gắn cờ các văn bản duy trì mật độ cao đáng ngờ, không thay đổi của các lượng từ mơ hồ mà không cam kết với các giá trị cụ thể.",
+    "useCase": "Rất hiệu quả để kiểm tra các bản tóm tắt nghiên cứu, phân tích thị trường và tiểu luận học thuật nơi máy móc sẽ dựa nhiều vào các cụm từ như 'nhiều yếu tố khác nhau' hoặc 'nhiều trường hợp' thay vì trích dẫn số liệu cụ thể như các chuyên gia con người trong ngành.",
+    "strengths": "• Đặc biệt xuất sắc trong việc phơi bày các chiến thuật 'tránh ảo giác' của AI, nơi mô hình che giấu việc thiếu dữ liệu truy xuất cụ thể đằng sau các lượng từ vĩ mô.\n• Độ bền vững cao trên các mô hình ngôn ngữ khác nhau, vì định lượng chung chung là một tính năng cốt lõi của việc tạo xác suất cơ sở.",
+    "limitations": "• Dễ bị dương tính giả trong các bài viết xã hội học hoặc suy đoán nơi những khái quát hóa rộng là phù hợp với ngữ cảnh.\n• Dễ bị phá vỡ nếu người dùng con người liên tục prompt AI chèn các giá trị số liệu cụ thể, giả mạo vào văn bản.",
+    "parameters": "Kiểm Định: Trích Xuất Từ Vựng và Phân Loại Tính Cụ Thể\nThước Đo: Tỷ Lệ Lượng Từ Mơ Hồ Trên Lượng Từ Tuyệt Đối\nĐầu Ra: 0-100 Điểm Lượng Từ Mơ Hồ (Tính Khái Quát Giả Tạo)",
+    "accuracy": "Trung bình — Độ chính xác 70-80%. Độ chính xác của nó phụ thuộc nhiều vào ngữ cảnh và nên được kết hợp với phân tích Tính Cụ Thể Của Từ Vựng và Trích Dẫn Bằng Chứng.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

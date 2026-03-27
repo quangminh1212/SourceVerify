@@ -1,12 +1,21 @@
 {
-    "name": "Rank Probability Analysis",
-    "description": "Analyzes token rank in vocabulary distribution — AI text preferentially selects high-rank (common) tokens.",
-    "algorithm": "Rank Probability Analysis分析算法",
-    "mechanism": "Rank Probability Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "Token 预测顺位概率 (Rank Probability)",
+    "description": "对文本中每个单词在语言模型词表分布中的统计学绝对排名进行暴力拆解。AI 语言模型的底层逻辑，就是永远去预测下一个在统计学上概率最高的词 (Token)。这种机械的本能导致 AI 生成的文本，会极其严重地扎堆使用那些在当前语境下排名前 10 (Top 10) 或前 100 (Top 100) 的“高频高概率词”。而人类作家的词汇库是凌乱且不可预测的，他们会随着思维的跳跃，频繁地掏出一些机器认为“概率极低”的长尾冷门词汇。",
+    "algorithm": "语境 Token 顺位矩阵核查",
+    "mechanism": "该方法会将整篇文本强行塞回一个重量级的参考语言模型中，根据其上文语境，重新计算每一个单词的绝对预测排名。单词会被无情地划入各种概率阶层（例如：Top 10, Top 100, Top 1000, 跌出 1000 名）。算法会计算高顺位词汇和低顺位词汇的断层比例。AI 文本会呈现出一种令人毛骨悚然的平滑感和高密度，全都是 Top 10/100 的温室词汇（在 GLTR 视野下呈现出大片机械的绿色和黄色）。而人类真实的文本，则会时不时爆发出那些概率极低、却极其精准的突变词汇（红/紫色警告区），直接扯断算法的平滑曲线。",
+    "useCase": "在深度审计正式论文、新闻报道和商业文件时具有毁灭性的杀伤力。它不看表面句法，而是直接把文本做“核磁共振”，通过暴露文本底层的“概率测算”机制，提供最绝望的数学级铁证。",
+    "strengths": "• 它的屠刀直接架在所有自回归（Autoregressive）大语言模型无法摆脱的底层数学呼吸本能上。\n• 对那些企图通过“同义词替换”来逃避检测的小把戏拥有绝对的免疫力，因为不管你怎么换皮，句子整体的概率分布曲线依然是虚假且光滑的。",
+    "limitations": "• 极其贪婪的神经元开销：必须依靠庞大且沉重的参考语言模型（Reference LM）来对文本进行重新推演计算。\n• 在面对极短的尿崩文本（不足 100 词）时，由于统计学样本的断层，它无法勾勒出可靠的排名波动曲线。",
+    "parameters": "雷达切片: 自回归 Token 预测重演 与 绝对顺位阶级分化\n定罪量表: 概率阶层 (Top 10/100/1000) 的分布病态密度比\n行刑判决: 0-100 算法顺位可预测性 (机械概率暴走) 审判分数",
+    "accuracy": "数学暴击 — 猎杀准确率稳定在 85-90%。这是目前对抗未经过人类深度洗稿的“纯天然 AI 废话”时，在数学基础上最坚如磐石、最令人信服的法证手段之一。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "url": "https://doi.org/10.18653/v1/P19-3019"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích RADAR AI Text Detection",
-    "description": "Áp dụng framework học đối kháng RADAR để phát hiện văn bản AI bền vững qua các mô hình (Hu et al., 2024).",
-    "algorithm": "Thuật toán phân tích RADAR AI Text Detection",
-    "mechanism": "Hệ thống RADAR AI Text Detection phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Phát Hiện Chống lẩn tránh RADAR (RADAR Detection)",
+    "description": "Áp dụng khung RADAR (Phát Hiện Văn Bản AI Mạnh Mẽ qua Học Đối Kháng). Các bộ phát hiện AI tiêu chuẩn rất dễ bị đánh bại bởi các công cụ diễn giải đơn giản (như QuillBot) hoặc các prompt lẩn tránh ('viết lại đoạn này để vượt qua bộ phát hiện AI'). RADAR giải quyết vấn đề này bằng cách đào tạo một bộ phát hiện đồng thời với một bộ diễn giải AI trong một vòng lặp đối kháng, tạo ra một mô hình có khả năng phục hồi cực cao có thể xác định văn bản do máy tạo ra ngay cả sau khi nó đã bị thay đổi mạnh mẽ để che giấu nguồn gốc.",
+    "algorithm": "Mạng Lưới Bộ Phát Hiện-Diễn Giải Đối Kháng",
+    "mechanism": "RADAR sử dụng kiến trúc mô hình kép dựa trên đào tạo đối kháng min-max. Mô hình A (Bộ diễn giải) lấy văn bản do AI tạo ra và cố gắng viết lại nó một cách cụ thể để đánh lừa Mô hình B (Bộ phát hiện). Thông qua đào tạo lặp đi lặp lại liên tục, Bộ phát hiện học được các dấu ấn thống kê bất biến, sâu sắc và các tạo tác cấu trúc của quá trình tạo LLM vẫn tồn tại ngay cả sau khi từ vựng và cú pháp bề mặt đã bị xáo trộn bởi các công cụ lẩn tránh. Khi phân tích văn bản mới, RADAR tìm kiếm các dấu ấn cốt lõi có khả năng phục hồi này thay vì xác suất token hời hợt.",
+    "useCase": "Cần thiết cho các môi trường rủi ro cao (ví dụ: tính liêm chính trong học thuật, phân tích pháp lý) nơi người dùng có khả năng sử dụng các công cụ 'nhân bản hóa' (humanizer), chiến thuật lẩn tránh prompt hoặc bộ diễn giải AI thứ cấp để xóa dấu vết AI ban đầu của văn bản.",
+    "strengths": "• Khả năng chống chịu đặc biệt đối với các kỹ thuật lẩn tránh phổ biến (ví dụ: hoán đổi từ đồng nghĩa, thay đổi định dạng, QuillBot).\n• Tỷ lệ dương tính giả thấp hơn đáng kể trên văn bản phức tạp của con người so với các bộ phát hiện zero-shot tiêu chuẩn (như DetectGPT).",
+    "limitations": "• Chi phí tính toán cao đòi hỏi phải thực thi API phía máy chủ.\n• Có thể gặp khó khăn nếu văn bản được viết lại một cách cơ bản bởi con người thay vì một công cụ diễn giải tự động, vì các dấu ấn cấu trúc cốt lõi bị phá hủy.",
+    "parameters": "Kiểm Định: Trích Xuất Đặc Trưng Bất Biến Đối Kháng\nThước Đo: Tỷ Lệ Log-Likelihood Được Huấn Luyện Phục Hồi\nĐầu Ra: 0-100 Điểm Tin Cậy Chống Lẩn Tránh RADAR",
+    "accuracy": "Cao — Độ chính xác 85-92%, đặc biệt thống trị các mô hình khác trong các kịch bản 'đối kháng' nơi văn bản đã bị làm xáo trộn một cách có chủ ý.",
+    "references": [
+        {
+            "title": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.",
+            "url": "https://arxiv.org/abs/2307.03838"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

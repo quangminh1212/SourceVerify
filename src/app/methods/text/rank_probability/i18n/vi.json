@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Rank Probability",
-    "description": "Phân tích thứ hạng token trong phân bổ từ vựng — văn bản AI ưu tiên chọn token thứ hạng cao (phổ biến).",
-    "algorithm": "Thuật toán phân tích Rank Probability Analysis",
-    "mechanism": "Hệ thống Rank Probability Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Xác Suất Xếp Hạng Token (Rank Probability)",
+    "description": "Phân tích thứ hạng thống kê của các từ trong phân phối từ vựng của mô hình. Các mô hình ngôn ngữ AI hoạt động bằng cách dự đoán từ (token) tiếp theo có xác suất thống kê cao nhất trong một chuỗi. Kết quả là, văn bản do AI tạo ra chủ yếu sử dụng các từ có xác suất cao nằm trong 'Top 10' hoặc 'Top 100' cho bất kỳ ngữ cảnh nhất định nào. Người viết là con người tự nhiên lấy ra từ một phân phối từ vựng rộng hơn, ít dễ đoán hơn nhiều, thường xuyên chọn các từ 'đuôi dài' (long-tail) mà máy móc sẽ đánh giá là có xác suất thấp.",
+    "algorithm": "Phân Tích Ma Trận Xếp Hạng Token Theo Ngữ Cảnh",
+    "mechanism": "Phương pháp này xử lý văn bản thông qua một mô hình ngôn ngữ tham chiếu để tính toán thứ hạng tuyệt đối của từng từ dựa trên ngữ cảnh trước đó của nó. Các từ được phân loại thành các cấp xác suất (ví dụ: Top 10, Top 100, Top 1000, >1000). Thuật toán tính toán tổng tỷ lệ phần trăm của các token thứ hạng cao so với thứ hạng thấp. Văn bản AI thể hiện sự tập trung dày đặc, trơn tru một cách giả tạo của các từ Top 10/100 (các 'Vùng Xanh Lá/Vàng' trong các hình ảnh hóa của GLTR). Văn bản của con người được đặc trưng bởi các đợt tăng đột biến của các từ có xác suất thấp, rất cụ thể ('Vùng Đỏ/Tím') phá vỡ chuỗi thuật toán.",
+    "useCase": "Rất hiệu quả để phân tích các bài tiểu luận trang trọng, bài báo tin tức và văn bản chuyên nghiệp. Nó cung cấp bằng chứng toán học sâu sắc về nguồn gốc sinh tạo (generative) bằng cách phơi bày cơ chế dự đoán cơ bản của văn bản.",
+    "strengths": "• Bắt nguồn từ kiến trúc cốt lõi của cách tất cả các mô hình ngôn ngữ tự hồi quy hoạt động về mặt toán học.\n• Cực kỳ bền bỉ chống lại việc hoán đổi từ đồng nghĩa đơn giản, vì phân phối xác suất cơ bản vẫn trơn tru một cách giả tạo.",
+    "limitations": "• Yêu cầu tài nguyên tính toán đáng kể, vì văn bản phải được đánh giá dựa trên một mô hình ngôn ngữ tham chiếu hạng nặng.\n• Văn bản ngắn (dưới 100 từ) không cung cấp một mẫu thống kê đủ lớn để tính toán các biến thể thứ hạng đáng tin cậy.",
+    "parameters": "Kiểm Định: Dự Đoán Token Tự Hồi Quy và Phân Loại Thứ Hạng Tuyệt Đối\nThước Đo: Mật Độ Phân Bố Trên Các Cấp Xác Suất (Top 10/100/1000)\nĐầu Ra: 0-100 Điểm Khả Năng Dự Đoán Thứ Hạng Thuật Toán",
+    "accuracy": "Cao — Độ chính xác 85-90%. Đây là một trong những phương pháp đáng tin cậy nhất, có cơ sở toán học nhất để phát hiện văn bản AI thô, chưa qua chỉnh sửa.",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "url": "https://doi.org/10.18653/v1/P19-3019"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ]
 }

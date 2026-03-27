@@ -1,12 +1,21 @@
 {
-    "name": "Cụm từ lặp lại",
-    "description": "Phát hiện mẫu cụm từ lặp lại",
-    "algorithm": "Thuật toán phân tích Cụm từ lặp lại",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện mẫu cụm từ lặp lại. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích cụm từ lặp lại. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phát Hiện Cụm Từ Lặp Lại & Rập Khuôn (Repetitive Phrase)",
+    "description": "Phân tích văn bản để tìm sự phụ thuộc quá mức vào các cụm từ chuyển tiếp nhiều từ, mệnh đề giới thiệu và các điểm tựa ngữ nghĩa cụ thể. Các mô hình AI, được huấn luyện nhiều trên các định dạng bài tiểu luận tiêu chuẩn và các nguyên tắc an toàn, phát triển sự phụ thuộc cấu trúc vào các cụm từ nhất định để đệm cho các tuyên bố của chúng, chuyển tiếp giữa các đoạn văn hoặc duy trì giọng điệu trung lập (ví dụ: 'Điều quan trọng cần lưu ý là...', 'Cuối cùng...', 'Hơn nữa...', 'Kết quả là...'). Con người tự nhiên sử dụng sự đa dạng chuyển tiếp và cách diễn đạt tự nhiên, rộng hơn nhiều.",
+    "algorithm": "Lập Hồ Sơ Cụm Từ Chuyển Tiếp và Khớp Điểm Tựa Từ Vựng",
+    "mechanism": "Thuật toán quét tài liệu đối chiếu với một cơ sở dữ liệu động chứa các cụm từ 'rập khuôn' và các dấu hiệu chuyển tiếp đã biết của AI. Nó tính toán tần suất của các biểu thức nhiều từ này so với tổng số từ. Hệ thống đặc biệt xem xét ranh giới các đoạn văn—nơi các mô hình AI khét tiếng thường dễ sử dụng các cụm từ chuyển tiếp cứng nhắc ('Tóm lại', 'Mặt khác'). 'Điểm Nhắc Lại Cụm Từ' được tạo ra bằng cách đo lường cả số đếm thô của những từ ngữ sáo rỗng cụ thể này và sự thiếu biến thể khi chuyển đổi giữa các ý tưởng (ví dụ: sử dụng 'Hơn nữa' ba lần trong một bài tiểu luận).",
+    "useCase": "Rất hiệu quả để xem xét các bài luận của học sinh, bản sao tiếp thị tiêu chuẩn và các bài báo thông tin nơi các ràng buộc prompt thường buộc AI vào các cấu trúc đoạn văn thuật toán, cứng nhắc.",
+    "strengths": "• Xuất sắc trong việc bắt các thế hệ zero-shot 'lười biếng' nơi AI nương tựa vào các cấu trúc chuyển tiếp chung chung, có trọng số cao nhất của nó.\n• Cung cấp kết quả có khả năng diễn giải cao; việc gắn cờ các cụm từ lặp lại cụ thể rất dễ để người kiểm toán xác minh.",
+    "limitations": "• Dễ bị kỹ thuật prompt qua mặt (ví dụ: 'Không sử dụng các cụm từ như \"Tóm lại\"').\n• Có thể phạt những người viết thư từ bằng ngôn ngữ doanh nghiệp mang tính khuôn mẫu cao hoặc những người mới tập viết tuân theo nghiêm ngặt các công thức viết luận học thuật cứng nhắc.",
+    "parameters": "Kiểm Định: Khớp Biểu Thức Nhiều Từ và Dấu Hiệu Chuyển Tiếp\nThước Đo: Mật Độ Cụm Từ Rập Khuôn và Phương Sai Chuyển Tiếp\nĐầu Ra: 0-100 Điểm Lặp Lại Cụm Từ (Phụ Thuộc Template)",
+    "accuracy": "Trung bình — Độ chính xác 65-75%. Hoạt động tốt nhất như một chỉ báo cờ đỏ ngay lập tức, nhưng yêu cầu xác nhận từ các phương pháp xác suất sâu hơn (như Xếp Hạng Log-Likelihood) do khả năng trùng lặp với cách viết của con người.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

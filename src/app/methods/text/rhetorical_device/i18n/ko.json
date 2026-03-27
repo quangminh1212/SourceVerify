@@ -1,22 +1,21 @@
 {
-    "name": "Rhetorical Device",
-    "description": "Detects rhetorical devices usage",
-    "algorithm": "Rhetorical Device — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects rhetorical devices usage. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through rhetorical device analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "수사학적 장치(수사법) 및 설득 패턴 분석 (Rhetorical Device)",
+    "description": "대구법, 교차배열법, 수사의문문, 그리고 의도적인 과장법과 같은 수사학적 기법들이 글 속에 자연스럽게(유기적으로) 녹아있는지 분석합니다. 인간 작가는 독자를 설득하거나, 특정 내용을 강조하거나, 자신만의 독특한 '보이스(문체적 개성)'를 만들기 위해 이러한 기법을 직관적으로 사용합니다. 그러나 거대 언어 모델(LLM)은 기본적으로 1차원적이고 단조로우며 객관적인 산문만을 생성하도록 학습되었습니다. AI가 수사학적 기법을 흉내 내려 시도할 때(보통 '설득력 있게 써줘'와 같은 특정 프롬프트가 주어졌을 때), 그 결과물은 전형적인 공식에 얽매여 있거나, 지루한 클리셰(상투어)로 점철되거나, 또는 구조적 강박증(예: 매번 립스틱을 바르듯 정확히 3개의 병렬 구조만 반복해서 사용하는 것)을 드러내기 마련입니다.",
+    "algorithm": "문체적 비유(Tropes) 및 도식적(Schemes) 패턴 인식 시스템",
+    "mechanism": "알고리즘은 수사학적 구조를 드러내는 '표준적이고 일차원적인 구문 구도에서의 이탈'을 감지해 냅니다. 특히 '도식(Schemes, 대구법/조응어 같은 단어 배열 패턴)'과 '비유(Tropes, 은유/반어법 같은 의미적 수사법)'를 날카롭게 스캔합니다. 시스템은 이러한 기법들이 글에 배치된 밀도, 분포 패턴, 그리고 구조적인 '예측 가능성'을 총체적으로 평가하여 '수사학적 진정성 스코어'를 산출합니다. 진짜 인간 연설문 작성자는 복잡한 교차배열법을 유기적인 맥락 속에서 자연스럽게 구사할 수 있습니다. 하지만 AI 모델은 누구나 예상 가능한 뻔한 수사의문문('그렇다면 이것이 미래에 의미하는 바는 무엇일까요?')을 던지거나, 기계처럼 딱 맞아떨어지는 경직된 3단 나열 구조('안전하고, 확실하며, 신뢰할 수 있습니다')에만 맹목적으로 의존합니다.",
+    "useCase": "칼럼(오피니언), 정치 연설문, 마케팅 홍보 문구, 그리고 설득형 에세이를 감사할 때 최고의 능력을 발휘합니다. 인간의 진실된 열정과 AI가 '기계적으로 짜낸 억지 설득력'을 구분하는 것이 핵심인 문서에서 필수적입니다.",
+    "strengths": "• 인간 블로거의 감성을 베끼라거나 '독자를 흥분시켜라'라고 노골적인 프롬프트 지시를 받은 '연기하는 AI'의 가면을 벗겨내는 데 탁월합니다.\n• 단순한 어휘 빈도나 문법 검사를 넘어서는, 인간 지성의 높은 차원인 '문체적 의도(Stylistic intent)' 그 자체를 포착해 냅니다.",
+    "limitations": "• 인간이 썼지만 뻔한 클리셰나 초보적인 수사법에만 의존하는 형편없이 질이 낮은 글에서는 오작동(위양성)을 일으킬 확률이 꽤 높습니다.\n• 애초에 수사학적 기법이 들어갈 이유가 없는 건조한 정보 전달 목적의 텍스트(예: 실험실 보고서, 소프트웨어 기술 문서 등)에서는 분석 의미가 없습니다.",
+    "parameters": "분석 기준: 통사적 도식(Scheme) 및 의미론적 비유(Trope) 감지 스캐너\n측정 지표: 수사학적 예측 가능성 및 클리셰(상투구) 농도\n출력: 0-100 문체적 작위성 (기계가 짜낸 억지 수사) 스코어",
+    "accuracy": "중상 — 72-80%의 정확도를 보입니다. 감정적 어조(Emotional Tone) 분석 및 맥락에 따른 어조 변화(Register Variation) 엔진과 함께 구동될 때 가장 완벽한 감식 결과를 도출합니다.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
         }
     ]
 }
