@@ -1,14 +1,12 @@
 {
-    "name": "Color Channel Noise",
-    "description": "Analyzes noise distribution across R, G, B channels",
-    "algorithm": "Color Channel Noise — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 統計 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 画像 data.\n\n2. **Distribution Analysis**: Analyzes noise distribution across R, G, B channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 画像 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 統計 deviation magnitude.",
-    "parameters": "分析タイプ: 統計\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： color channel noise 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+    "name": "カラーチャネルノイズ（Bayer配列）の不一致",
+    "description": "分離された赤、緑、青のカラーチャネル全体にわたる高周波ノイズの分布を分析および比較します。本物のカメラセンサーは厳格なハードウェアレベルのBayerフィルターの物理的特性を持っており、自然と青と赤のチャネルが緑のチャネル（センサーピクセルの数が2倍ある）よりも著しくノイズが多くなります。物理的な光センサーを持たないAI生成画像は、通常、3つのカラーチャネルすべてに不自然に均一な、または不規則にバランスの取れた合成ノイズスペクトルを出力します。",
+    "algorithm": "高周波スペクトル抽出およびチャネル分散比較",
+    "mechanism": "このアルゴリズムは、R、G、Bチャネルを分離し、ハイパスフィルター（または空間ウェーブレット変換）を適用して画像コンテンツを剥ぎ取り、生の「ベースノイズ（ノイズフロア）」のみを残します。次に、各チャネルのノイズの統計的分散を計算します。純正のデジタル写真では、センサーのBayer配列により、ピクセルの50％が緑に、赤と青にはそれぞれ25％しか割り当てられません。このフォトン収集の格差により、赤と青のチャネルは本来ノイズが多くなります。AIモデルはノイズをデジタルアーティファクトとして直接合成するため、すべてのRGBチャネルを平等に扱うか、標準的な「緑色優位のSNR」という生物学的/センサーサイエンスの制約と一致しないノイズプロファイルを生成します。",
+    "parameters": "フィルター: ハイパス / ウェーブレットノイズ除去, 指標: 分散の格差（Var(R) vs Var(G), Var(B) vs Var(G)）, 期待される比率: B & R > G",
+    "accuracy": "高（80-90%） - プロのポストプロセッシング（ノイズ除去ツール）や積極的なクロスプラットフォーム圧縮（SNS圧縮）によって大幅に変更された画像を除けば、非常に信頼性の高い精度です。",
+    "source": "Chen et al. (2008) / Lukas et al. (2006) - カメラセンサーのパターンノイズによる識別",
+    "useCase": "ハードウェアに起因するBayer配列のノイズの不均衡の欠如を検出することにより、仮想的なハードウェア検査として機能し、本物の写真とAI生成画像を明確に区別します。",
     "references": [
         {
             "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
@@ -18,5 +16,7 @@
             "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2006.873602"
         }
-    ]
+    ],
+    "strengths": "• AIモデルが概念的に理解したり数学的にシミュレートしたりしない、物理的な指紋（Bayer配列の物理学）に依存しています。\n• 非常に物理的な基盤に基づいているため、（新しいMidjourneyやDALL-Eなどの）まったく新しいアーキテクチャに対するゼロショット検出（未知モデルの検出）に対して高い回復力を持っています。\n• 局所的なチャネルノイズの分散が画像の残りの部分から突然乖離する、「コピー＆ムーブ」やスプライスされた（合成）画像操作の検出に効果的です。",
+    "limitations": "• アグレッシブなノイズリダクションソフトウェア（Topaz Denoise、Lightroom AI Denoiseなど）によって完全に無効化されます。これにより本物のセンサーノイズが人工的に取り除かれ、AIの偽陽性フラグがトリガーされます。\n• カラーチャネルが崩壊または破壊されたネイティブのグレースケールまたはモノクロ画像では、必然的に役に立ちません。\n• 著しく圧縮されたソーシャルメディア画像（WhatsApp、Facebookなど）は高周波データを粉砕し、この分析に必要な繊細なノイズシグネチャを消滅させます。"
 }

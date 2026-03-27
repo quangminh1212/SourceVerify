@@ -1,14 +1,12 @@
 {
-    "name": "Color Channel Noise",
-    "description": "Analyzes noise distribution across R, G, B channels",
-    "algorithm": "Color Channel Noise — Statistical Pattern Analyzer",
-    "mechanism": "This method applies 统计 analysis to detect AI generation patterns:\n\n1. **Data Collection**: Statistical features are extracted from the 图像 data.\n\n2. **Distribution Analysis**: Analyzes noise distribution across R, G, B channels. Statistical distributions are computed and analyzed.\n\n3. **Model Comparison**: Observed distributions are compared against expected natural 图像 statistics.\n\n4. **Deviation Measurement**: Deviations from natural patterns are quantified.\n\n5. **Score Generation**: A confidence score is produced based on 统计 deviation magnitude.",
-    "parameters": "分析类型: 统计\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-    "useCase": "通过以下方式检测AI生成或篡改的图像： color channel noise 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "name": "色彩通道高频底噪(Bayer阵列)失衡校验",
+    "description": "旨在抽丝剥茧地分析并比对红、绿、蓝三个色彩通道在被完全剥离后，其内部高频噪点(High-frequency noise)的分布规律。真正的物理相机传感器被硬件层面的“拜耳滤镜阵列(Bayer Filter Array)”死死焊死了光学法则：为了契合人眼机制，传感器将高达50%的肉身像素点都豪赌留给了绿光，而红光与蓝光则只能各自可怜地瓜分剩下的25%。这种极度不公平的光子吸纳量差异（以及随之而来的电子放大补偿），导致真实相机的红色与蓝色通道天生就注定比绿色通道要嘈杂、粗糙和多噪点得多。而那些连物理镜头都没有摸过的AI生成图像，只会像个撒胡椒面的外行一样，直接用算法合成出虚假且僵硬的数字噪点，这些噪点要么荒谬地在一视同仁的在RGB三个通道里均匀分布，要么呈现出完全违逆拜耳感光不对称原则的失控乱象。",
+    "algorithm": "高频频域萃取与通道方差背离分析 (Bayer Array Variance)",
+    "mechanism": "这套算法活像个冷面法医，它首先将R、G、B三大通道强行肢解，然后动用高通滤波器（High-pass Filter）或空间小波变换（Wavelet Transform）将画面里所有乱七八糟的具体图案内容（低频信息）通通扒光，只榨取出藏在最底层的原始“噪点底噪（Noise Floor）”。接着，它开始冷酷地盘算每个通道内噪点的统计学方差（Variance）。在那些正宗原汁原味的数码照片里，由于光子收集率的硬件级别残疾，红（R）蓝（B）通道的底噪方差必然且永远大于绿（G）通道。当诸如GAN或Diffusion这类AI模型试图给自己画的图蒙上一层“胶片质感”或人工杂讯来伪装逼真时，因为它们缺乏真正的底层感光学识，它们捏造出来的噪点档案会非常愚蠢地对所有色彩通道搞“平均主义”，从而瞬间在拜耳生物传感器定律面前露出了它是个人造怪物的马脚。",
+    "parameters": "剔骨刀: 高通(High-pass) / 小波去噪(Wavelet denoise)提取器, 呈堂证供: 通道方差悬殊比 (Var(R) 对比 Var(G), Var(B) 对比 Var(G)), 铁律判决线: B 与 R 的噪点烈度 > G",
+    "accuracy": "极高 (80-90%) - 只要这照片没被人为用极其暴力的后期降噪软件蹂躏过，或者没被微信狗皮膏药般的跨平台劣化压缩摧残过，它就是铁证如山的真伪试金石。",
+    "source": "Chen et al. (2008) 携手 Lukas et al. (2006) - 基于感光元件图案底噪的相机血统与造假指纹鉴定",
+    "useCase": "通过核查硬件级别的拜耳阵列噪点失衡定律是否存在，如同进行了一次虚拟的硬件X光拆解，以极其硬核的降维打击手段，将那些装神弄鬼的AI画作从真正的光学摄影作品中无情地甄别剔除。",
     "references": [
         {
             "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
@@ -18,5 +16,7 @@
             "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2006.873602"
         }
-    ]
+    ],
+    "strengths": "• 它的根基深扎在一个目前任何贪婪的生成式AI模型都无法在概念上理解、在系统资源上也懒得去进行底层数学模拟的纯粹“物理防伪法则”（拜耳阵列物理学）之上。\n• 拥有近乎恐怖的“零样本（Zero-shot）”通杀能力，极其抗打；哪怕明天突然横空出世了一个全新的比如Midjourney或是DALL-E的逆天新版本，在这个纯粹的底噪物理试金石面前，依然会因为底子太干净而被瞬间看破。\n• 在揭发“移花接木”（Copy-Move拼接）的脏活时表现得如同开了天眼；如果一张脸被强行P到另一具身体上，算法会敏锐地察觉到被拼接局部的通道噪点方差与整张大图出现了山崩级别的撕裂断层。",
+    "limitations": "• 会被市面上那些丧心病狂的AI降噪神器（例如Topaz Denoise，或是Lightroom里的AI Denoise）彻底拔掉毒牙。这些外挂软件会如同强酸一般把真实相机的原生传感器噪点洗劫一空，这反倒会触发算法的警报，冤枉这些过度美颜的真照片是“AI生成的”。\n• 如果撞上了原生灰度（Grayscale）或先天黑白（Monochrome）摄影的幽灵，由于色彩通道早已被捏碎并坍缩融为一体，该算法会当场陷入死机和瞎眼状态。\n• 那些在社交媒体（如微信、WhatsApp、Facebook）上被疯狂折磨并被重度压缩的劣质图片，其高频噪点数据早已被作为数字垃圾无情碾碎抛弃，导致这场法医学检验根本找不到需要的DNA证物。"
 }

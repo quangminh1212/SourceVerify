@@ -1,12 +1,22 @@
 {
-    "name": "Nhiễu kênh màu",
-    "description": "Phân tích phân bổ nhiễu trên các kênh R, G, B",
-    "algorithm": "Thuật toán phân tích Nhiễu kênh màu",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ nhiễu trên các kênh R, G, B. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích nhiễu kênh màu. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Sự Khống Chế Nhiễu Kênh Màu (Bayer Array Noise)",
+    "description": "Phân tích và đối chiếu sự phân mảnh nhiễu tần số cao trên ba vùng màu biệt lập: Đỏ (Red), Xanh lá (Green) và Xanh dương (Blue). Cảm biến máy ảnh thật bị trói buộc bởi cấu tạo vật lý phần cứng của ma trận bộ lọc Bayer, khiến nó luôn thu được tín hiệu Đỏ và Xanh Dương nhiễu hơn rất nhiều so với Xanh Lá (kênh chiếm gấp đôi số lượng điểm ảnh). Các bức ảnh từ AI không hề có cảm biến ánh sáng vật lý nào, suy ra lượng nhiễu (noise) mà nó 'phun ra' thường hoặc là chia đều giả tạo cho cả ba kênh, hoặc hỗn loạn không tuân thủ định luật quang học.",
+    "algorithm": "Chiết Xuất Cao Tần & Cân Đo Phương Sai Kênh Màu",
+    "mechanism": "Thuật toán này thẳng tay chia cắt ba kênh R, G, B, rồi dùng bộ lọc tần số cao (High-pass filter hoặc Wavelet) để lột sạch hình ảnh, chỉ trơ lại một lớp 'sàn nhiễu' (noise floor) nguyên thủy. Nó bắt đầu đo phương sai và độ phân tán của hạt nhiễu ở từng kênh. Ở ảnh kỹ thuật số 'zin', ma trận Bayer của cảm biến chia tới 50% cảm biến cho màu Xanh Lá, và chỉ chừa 25% cho Đỏ và Xanh Dương. Vì sự nghèo đói hạt thu sáng này, R và B luôn ồn ào và nhiễu hạt nặng nề hơn G. Khi AI (như Diffusion/GAN) cố vẽ hạt nhiễu, nó vẽ theo kiểu thêm gia vị (overlay), khiến nhiễu phân bổ cào bằng trên mọi kênh, tự vạch mặt mình là đồ giả mạo do thiếu sự phân hóa của vật lý quang học.",
+    "parameters": "Bộ lọc: High-pass / Wavelet denoise, Thước đo: Phương sai lệch kênh (Var(R) vs Var(G), Var(B) vs Var(G)), Tỷ lệ tử huyệt vật lý: B & R > G",
+    "accuracy": "Mức Cao (80-90%) - Độ tin cậy như một tòa thành thép, ngoại trừ việc nó bị vô hiệu hóa nếu tấm ảnh bị dội qua các phần mềm khử nhiễu tự động làm láng o bề mặt, hoặc bị nén ép bạo lực khi gửi qua mạng xã hội.",
+    "source": "Chen et al. (2008) / Lukas et al. (2006) - Nhận Rõ Quê Quán Máy Ảnh Bằng Mẫu Nhiễu Cảm Biến",
+    "useCase": "Phân định ranh giới rạch ròi giữa ma thuật tạo ảnh AI và nhiếp ảnh chân chính nhờ việc 'khám nghiệm phần cứng' tìm kiếm dấu vân tay bất đối xứng của bộ lọc Bayer.",
+    "references": [
+        {
+            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+        },
+        {
+            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        }
+    ],
+    "strengths": "• Bám rễ trên một thứ không thể nào ngụy tạo nổi: Vật lý cảm biến Bayer. Các thế hệ AI họa sĩ hoàn toàn không có khái niệm hay lý do toán học gì để sinh ra lỗi vật lý kiểu này.\n• Thích ứng điên cuồng (Zero-shot) kể cả nếu phải đối đầu với một con AI thế hệ mới hoàn toàn xa lạ (như Midjourney V6 V7) vì bài test được xây trên luật lệ của vũ trụ (vật lý) chứ không phải luật của phần mềm.\n• Là một khắc tinh đáng sợ của trò cắt ghép (Copy-Move) - Tưởng tượng tội phạm lấy một khuôn mặt từ ảnh bị nhiễu dán đè lên một cơ thể láng mịn, thuật toán sẽ đo được sự đứt gãy phương sai kinh khủng ngay đường viền cắt dán.",
+    "limitations": "• Nhược điểm chí mạng: Sẽ tru tréo báo động AI giả (False positive) đối với ảnh thật nếu nhiếp ảnh gia xài trò khử nhiễu siêu cấp (như Topaz Denoise, Lightroom AI) chà xát bức ảnh đến mức trơn bóng, cạo sạch lớp nhiễu Bayer.\n• Hoàn toàn phế võ công, trở nên mù lòa trước các thể loại ảnh trắng đen, đơn sắc, vì khi đó khái niệm 3 kênh màu đã bị ép chết dính vào nhau làm một.\n• Kẻ thù của thuật toán là thuật nén ảnh tàn sát của Zalo, Facebook, Messenger. Chúng băm nát và dọn rác dọn luôn cả dữ liệu tần số cao (nhiễu) quý giá, tước đoạt toàn bộ chứng cứ."
 }
