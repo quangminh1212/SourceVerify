@@ -1,22 +1,22 @@
 {
-    "name": "색상 채널 상관관계",
-    "description": "조사합니다 how RGB 색상 채널 correlate with each other. Natural light produces predictable inter-channel 상관관계s that AI generators fail to reproduce accurately.",
-    "algorithm": "Inter-Channel Color Correlation Analysis",
-    "mechanism": "분석합니다 통계적 상관관계s 사이의 R, G, B channels. Real photographs exhibit natural inter-channel 상관관계s from scene 조명. AI images produce subtly different 패턴.",
-    "parameters": "블록 크기: 32x32, Metrics: Pearson 상관관계 R-G/R-B/G-B, global 히스토그램 상관관계",
-    "accuracy": "낮음-중간 - 60-70%, best as complementary signal",
-    "source": "Adapted from Gijsenij et al. (2011), color constancy forensics",
-    "useCase": "Supplementary 감지 of AI 생성 color 분포 이상",
+    "name": "컬러 채널 상관관계(Color Correlation) 붕괴 이탈 추적",
+    "description": "적색(R), 녹색(G), 청색(B) 이 세 가지 생명줄 같은 컬러 채널들 간의 끈끈한 통계적 연대감과 동기화(Entanglement)를 집요하게 분석합니다. 대자연의 태양광이나 세트장의 인공 조명 아래서 태어난 '진짜 사진'은 빛의 절대적인 광학 법칙 (예: 회색 세계 가설 - Gray World Assumption)에 복종하므로, 세 채널이 마치 하나의 유기체처럼 예측 가능하게 요동칩니다. 그러나 생성 AI 모델들은 근본적으로 빛을 조명하는 게 아니라 '색이 칠해진 수학적 가죽'을 덧입힐 뿐이므로, RGB 값들 사이에 기묘하고 불쾌한 엇박자의 소외와 단절 현상이 초래됩니다.",
+    "mechanism": "알고리즘은 화면을 잘게 무썰듯(예: 32x32 픽셀 블록) 토막 낸 다음, R, G, B 채널을 각각 처참히 격리하여 그들 서로 간의 피어슨(Pearson) 의존도 상관계수(R-G, R-B, G-B)를 잣대로 냉혹하게 측정합니다. 현실 세계에서 텍스처와 그림자가 드리울 때, 빛의 증감은 RGB 3원색 모두에게 연계된 일관된 그라데이션 변화를 부여합니다. 허나, AI (특히 구형 GAN 등)는 여기저기서 긁어모은 이미지 데이터셋의 조각을 프랑켄슈타인처럼 기워붙이기 때문에, 하나의 그림자 영역이 납득할 수 있는 조명 모델 없이 어느 채널만 갑자기 툭 튀며 초록빛으로 발광해버리는 기이한 '독립적 발색 변이' 오류를 뱉어내고 맙니다.",
+    "algorithm": "채널 간 피어슨 연관성(Pearson Correlation) 및 광학 조명 행렬 분석법",
+    "parameters": "수술 블록 해상도: 32x32 ~ 64x64, 핵심 심문 척도: R-G/R-B/G-B 채널 계수 간 엇박자 평가, 매칭 이론: Gray World (회색 세계 조명 가설)",
+    "accuracy": "낮음에서 보통 (60-70%) - 혼자 나대기보다는 다른 고등 포렌식 요원들과 협동할 때 조력자로서의 진가를 발휘하는 서브 패스입니다. 현실 속 진짜 전문 사진작가들이 미친 듯이 뒤틀어대는 과장된 '컬러 후보정(Color Grading)' 기법 앞에선 오답률이 널뛰기 때문입니다.",
+    "source": "Gijsenij et al. (2011) - 컴퓨터 광학 조명 불변성 논문에서 기초 / Riess & Angelopoulou",
+    "useCase": "미래지향적이지 못한 투박한 구세대 AI들이 무작위로 싸질러놓은 비물리적 색채 분리 현상을 저격하거나, 소스가 다른 두 장의 사진을 대충 잘라 붙인(Copy-move) 엉성한 위조범의 덜미를 보조 수단으로서 낚아채는 함정 역할.",
     "references": [
         {
-            "url": "https://doi.org/10.1109/TIP.2010.2072681",
-            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP."
+            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2010.2072681"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-642-16435-4_5",
-            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation. Information Hiding."
+            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation.",
+            "url": "https://doi.org/10.1007/978-3-642-16435-4_5"
         }
     ],
-    "strengths": "• Fast and computationally lightweight\n• Captures natural 조명 properties\n• Works 에 걸친 different image formats\n• Good complementary signal with other methods",
-    "limitations": "• Lower standalone 정확도 (60-70%)\n• Color-corrected images may produce false results\n• Monochrome or limited-palette images are difficult\n• AI models improving at reproducing natural color 상관관계s"
+    "strengths": "• 분석 속도가 그야말로 빛의 속도처럼 민첩하고 가벼워, 다중 포렌식 방어 체계에서 가장 먼저 가동해 볼 수 있는 훌륭한 선봉장 역할을 해냅니다.\n• 오로지 자연계의 통합 환경 조명 시스템만을 모의 평가하도록 뼈대가 굳건히 짜여 있어, 광원을 제대로 통일시키지도 못한 어설픈 하급 딥페이크들을 즉석에서 박살 냅니다.\n• JPEG 같은 특정 손실 압축의 복잡다단한 격자 시스템(Grid)이나 인코딩 방식에 목매달지 않기에, 어떠한 잡다한 이미지 포맷에서도 무리 없이 굴러갑니다.",
+    "limitations": "• 본질적으로 형태학이나 주파수 픽셀에 집착하는 노이즈 기반 포렌식 수사관들에 비해 신뢰성과 적중률(60~70%)이 슬프게도 뒤떨어집니다.\n• 유능한 인간 컬러 전문가(Colorist)가 스플릿 톤(Split-tone)이나 교차 현상 기법을 마구 끼얹어 심각하게 감성적으로 오염시켜놓은 '진짜 예술 사진'을 마주하면 거의 무조건 AI로 오진하는 극심한 오판율(False Positive)을 내놓습니다.\n• 채널 개념 자체가 아예 거세된 흑백(Monochrome) 흑백사진이나, 물리학이 아예 없는 평면적인 순수 일러스트/벡터 그림 앞에서는 장님이 되어 완전히 무력해집니다."
 }

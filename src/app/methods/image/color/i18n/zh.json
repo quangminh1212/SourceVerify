@@ -1,22 +1,22 @@
 {
-    "name": "颜色通道相关性",
-    "description": "检查 how RGB 颜色通道 correlate with each other. Natural light produces predictable inter-channel 相关性s that AI generators fail to reproduce accurately.",
-    "algorithm": "Inter-Channel Color Correlation Analysis",
-    "mechanism": "分析 统计 相关性s 之间 R, G, B channels. Real photographs exhibit natural inter-channel 相关性s from scene 光照. AI images produce subtly different 模式.",
-    "parameters": "块大小: 32x32, Metrics: Pearson 相关性 R-G/R-B/G-B, global 直方图 相关性",
-    "accuracy": "低-中 - 60-70%, best as complementary signal",
-    "source": "Adapted from Gijsenij et al. (2011), color constancy forensics",
-    "useCase": "Supplementary 检测 of AI生成的 color 分布 异常",
+    "name": "色彩通道矩阵关联性（灰度世界病变）检测",
+    "description": "旨在抽丝剥茧地分析红（R）、绿（G）、蓝（B）三大色彩通道之间统计学上的锁死关联与量子纠缠。现实世界中在自然光或人造物理光源沐浴下诞生的真实摄影作品，必定会乖乖向严苛的物理光照法则低头（例如：灰度世界假设/Gray World Assumption），从而使得单像素内的各通道数值产生高度纠缠且极其可预测的同向呼吸。然而，生成式AI模型在调色时根本没有统一的模拟光源，它们通常将通道视为孤立的数学特征各自进行粗暴演算，或为了局部渲染强行堆叠色彩，从而导致RGB值之间出现了肉眼难以察觉但极度反常且不自然的脱钩现象。",
+    "algorithm": "跨通道皮尔逊(Pearson)关联度与光源变异分析矩阵",
+    "mechanism": "该冰冷算法会残忍地将红绿蓝三根色彩大动脉强行分离切断，然后在一个特定的狭小空间内（比如将靶图切碎成32x32区块），死死盯住它们彼此之间在统计学上是否“同生共死”（如计算R-G, R-B, G-B这三对的皮尔逊相关系数）。在真实图景里，如果受单一光源支配，那么阴影的蔓延和高光的褪去，必然牵动着三色通道整齐划一的渐变关联。相反，当一个落后的AI生成器（尤其是早期GAN或者粗糙拼装的扩散网络）去拼凑各种杂乱无章的大数据训练碎片时，这会导致极具毁灭性的色彩生成孤立割裂。例如，AI画出的阴影可能会莫名其妙地冒出一股阴森的幽绿色，仅仅是因为算法根本计算不出一个能够涵盖全场、能从数学物理统筹全局的虚拟统一光源来维系这可怜的色相平衡。",
+    "parameters": "手术区块精度: 32x32 升格至 64x64, 审判量度: R-G/R-B/G-B跨通道Pearson协同系数, 全局色彩直方图契合率, 基础铁律制裁: 灰度世界假象(Gray World Assumption)",
+    "accuracy": "勉强及格至中等偏下 (60-70%) - 是个天生只能跟在别人屁股后面当小弟的绿叶型辅助验证指标。它最大的克星，就是那些活生生合法存在、被职业人类调色大师们疯狂炫技、肆意挥洒极端的电影级艺术渲染（Color Grading）而大幅扭曲色彩的真实修图照片。",
+    "source": "Gijsenij et al. (2011) - 从计算机色彩恒常性论述借光 / Riess & Angelopoulou 启示录",
+    "useCase": "充当在多维法医核验矩阵里的第一道哨兵辅助测试仪，极度敏锐地洞察那些由于粗制滥造AI作图、或是盗贼用多个不同光照素材东拼西凑（Copy-Move）导致的令人作呕的非物理发光色彩脱轨分裂症。",
     "references": [
         {
-            "url": "https://doi.org/10.1109/TIP.2010.2072681",
-            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP."
+            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2010.2072681"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-642-16435-4_5",
-            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation. Information Hiding."
+            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation.",
+            "url": "https://doi.org/10.1007/978-3-642-16435-4_5"
         }
     ],
-    "strengths": "• Fast and computationally lightweight\n• Captures natural 光照 properties\n• Works 跨 different image formats\n• Good complementary signal with other methods",
-    "limitations": "• Lower standalone 准确度 (60-70%)\n• Color-corrected images may produce false results\n• Monochrome or limited-palette images are difficult\n• AI models improving at reproducing natural color 相关性s"
+    "strengths": "• 它的演算开销堪称轻如鸿毛、快如闪电，绝对是塞叠在繁冗沉重的多层嵌套法医排查天罗地网系统中最称职、最隐秘的首发巡逻兵。\n• 被底层写死了要去硬碰硬地评估大自然的光照恒定特征，能极其敏捷地捕杀那些压根儿不知道该如何统筹模拟环境全局光照的廉价Deepfake次品。\n• 是个完全不挑食的莽汉：无论输入任何千奇百怪的图像格式都能立刻发威，它根本不需要低三下四去必须依赖某种特定的压缩死板网格（比如老态龙钟的JPEG协议）。",
+    "limitations": "• 如果让这套体系单打独斗出去抗线，它那令人寒碜（60-70%）的破败验证准确率会被那些主修深层结构抓捕或硬核噪点频率猎杀的重装大咖侦防算法秒成一地渣滓。\n• 非常极其容易出现“假借刀杀人”的致命冤假错案（False Positives）；如果你胆敢将任何一张经过专业调色师疯狂炫技、玩弄交叉冲洗（Cross-processed）或者分离色调（Split-toned）的震撼大片塞给它，这条算法警犬会毫不犹豫将其咬死定罪为AI人造物。\n• 一旦不幸撞上了纯粹的黑白灰（Monochrome）摄影幽灵，或者是本身就压根没有复杂色彩纠缠因果关系的极简矢量插图（Minimalist Vectors），它就会当场两腿发软，沦为一个脑死昏迷的废物摆设。"
 }

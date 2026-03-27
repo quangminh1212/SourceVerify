@@ -1,22 +1,22 @@
 {
-    "name": "Color Channel Correlation",
-    "description": "Examines how RGB color channels correlate with each other. Natural light produces predictable inter-channel correlations that AI generators fail to reproduce accurately.",
-    "algorithm": "Inter-Channel Color Correlation Analysis",
-    "mechanism": "Analyzes statistical correlations between R, G, B channels. Real photographs exhibit natural inter-channel correlations from scene illumination. AI images produce subtly different patterns.",
-    "parameters": "Block size: 32x32, Metrics: Pearson correlation R-G/R-B/G-B, global histogram correlation",
-    "accuracy": "Low-Moderate - 60-70%, best as complementary signal",
-    "source": "Adapted from Gijsenij et al. (2011), color constancy forensics",
-    "useCase": "Supplementary detection of AI-generated color distribution anomalies",
+    "name": "Color Channel Correlation (Gray World Variance)",
+    "description": "Analyzes the statistical correlation and entanglement between the Red, Green, and Blue color channels. Authentic photography captured under natural or artificial lighting adheres to strict physical illumination laws (e.g., the Gray World assumption), creating highly entangled and predictable intra-channel relationships. Generative AI models often synthesize color by treating channels as distinct mathematical features or by applying localized stylized rendering, leading to subtle but unnatural decoupling between RGB values.",
+    "algorithm": "Inter-Channel Pearson Correlation & Illumination Matrix Analysis",
+    "mechanism": "The algorithm isolates the R, G, and B channels and measures their global and local statistical reliance on one another (such as R-G, R-B, and G-B Pearson correlation coefficients) within small (e.g., 32x32) blocks. Real-world scenes lit by a single dominant light source exhibit highly correlated color gradients as shadows and highlights roll off. In contrast, AI generators piece together textures from disparate training sets. This results in independent color generation where, for example, a shadow might unnaturally shift green simply because the AI lacks a unified, mathematically consistent simulated light source.",
+    "parameters": "Block Resolution: 32x32 to 64x64, Metrics: Pearson correlation R-G/R-B/G-B, Global Histogram Alignment, Underlying Theory: Gray World Assumption",
+    "accuracy": "Low to Moderate (60-70%) - Most effective when combined with other indicators. Its standalone accuracy is hindered by the vast variety of extreme artistic color grading techniques used by legitimate human editors.",
+    "source": "Gijsenij et al. (2011) - Computational Color Constancy / Riess & Angelopoulou",
+    "useCase": "Acting as an auxiliary or supplementary verification method to detect unnatural color decoupling caused by primitive AI generation or sloppy, multi-source localized photo manipulation (copy-move).",
     "references": [
         {
-            "url": "https://doi.org/10.1109/TIP.2010.2072681",
-            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP."
+            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
+            "url": "https://doi.org/10.1109/TIP.2010.2072681"
         },
         {
-            "url": "https://doi.org/10.1007/978-3-642-16435-4_5",
-            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation. Information Hiding."
+            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation.",
+            "url": "https://doi.org/10.1007/978-3-642-16435-4_5"
         }
     ],
-    "strengths": "• Fast and computationally lightweight\n• Captures natural illumination properties\n• Works across different image formats\n• Good complementary signal with other methods",
-    "limitations": "• Lower standalone accuracy (60-70%)\n• Color-corrected images may produce false results\n• Monochrome or limited-palette images are difficult\n• AI models improving at reproducing natural color correlations"
+    "strengths": "• Extremely fast to compute, making it an excellent lightweight pass in a multi-layered forensic suite.\n• Hard-coded to evaluate natural illumination properties, catching crude deepfakes that fail to simulate unified environmental lighting.\n• Universally applicable across diverse image formats without needing to rely on specific compression grids (like JPEG).",
+    "limitations": "• Generally suffers from lower standalone reliability (60-70% accuracy) compared to structural or noise-based forensics.\n• False positives are practically guaranteed if analyzing authentically captured photos that have been heavily stylized, cross-processed, or split-toned by professional human colorists.\n• Completely useless against monochrome (black and white) imagery or minimalist vectors/illustrations."
 }
