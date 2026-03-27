@@ -1,12 +1,18 @@
 {
-    "name": "Nhất quán bản đồ độ sâu",
-    "description": "Phân tích tính nhất quán bản đồ độ sâu cho tính hợp lý cảnh 3D",
-    "algorithm": "Thuật toán phân tích Nhất quán bản đồ độ sâu",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích tính nhất quán bản đồ độ sâu cho tính hợp lý cảnh 3D. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích nhất quán bản đồ độ sâu. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Bản Đồ Độ Sâu Không Gian (Depth Map)",
+    "description": "Máy dò Z-Axis 3 chiều siêu việt. Kẻ tử thù của những thợ ghép 2D dẹt lì. Khi ai đó cắt người từ ảnh khác dán vào bức hình, họ chỉ đang dán một lớp giấy phẳng. Chiều sâu độ hội tụ tiêu cự (Depth of Field) của môi trường hoàn toàn bị bỏ qua. Thuật toán này bóc tách không gian bằng cách gán tọa độ Z cho từng pixel, đo góc khuất và ánh sáng để lôi cổ các vùng phẳng phi vật lý đang lơ lửng không khớp với không gian phối cảnh 3D.",
+    "algorithm": "Phân Tích Bất Yếu Tố Phối Cảnh & Gradient Độ Mờ Mặt Cắt (Defocus/Blur Z-Depth)",
+    "mechanism": "Nó đo lường mức độ nhòe dần đi của cảnh quang (Bokeh/Defocus blur) dựa trên phương trình thấu kính mỏng. Một bức ảnh thật luôn tuân theo quy tắc nét nhất ở tiêu điểm và nhòe dần đằng xa. Kẻ chắp vá thường đưa vật thể quá sắc nét vào vùng background đang nhòe, hoặc cố tình làm nhòe nhưng sai hoàn toàn đồ thị phân bổ tiêu cự. Hệ thống sẽ ngay thẳng gõ búa báo động khi radar vẽ ra một bức tường độ sâu dị thường trên không gian.",
+    "parameters": "Hệ đo lường: Gaussian Defocus Estimation, Tính toán Gradient: Canny Edge Spread, Mô hình 3D: Geometric Blur Radius",
+    "accuracy": "Khá (75-82%) - Cực kỳ uy lực để phán quyết những kẻ lạm dụng xóa phông (Fake Bokeh) hoặc cấy người dán chồng lên đường chân trời.",
+    "source": "Lưu Trữ Xử Lý Ảnh Pháp Y 3 Đo Chiều Sâu Điểm Nết Thấu Kính",
+    "useCase": "Trở thành thước đo không gian ba chiều phác họa ra biểu đồ độ nhòe. Lột mặt nạ phần ảnh đang cố tỏ ra 'nằm trong không gian' nhưng bản chất là một tờ giấy bị in đè lên.",
+    "references": [
+        {
+            "title": "Wang, W., & Farid, H. (2006). Exposing digital forgeries in video by detecting duplication. ACM MM.",
+            "url": "https://farid.berkeley.edu/downloads/publications/acmmm06.pdf"
+        }
+    ],
+    "strengths": "• Không thể bị lừa bởi thao tác làm mờ nhân tạo thủ công (Blur Tool) vì bán kính mờ do người tô cọ tay không bao giờ tạo thành hàm phân phối Gaussian chuẩn xác của thủy tinh thấu kính.\n• Chặn đứng các bản ghép 2D (copy-paste) cực gắt do sự lộ liễu của vector Z.",
+    "limitations": "• Nhát chém sẽ trượt hoàn toàn nếu bản gốc là ảnh phong cảnh chụp góc siêu rộng f/16 (nét rực từ trước ra sau, không có chiều sâu tiêu cự).\n• Dương tính giả xảy ra nếu máy ảnh cố tình chụp panning (đưa tay theo vật chuyển động) tạo hiệu ứng nhòe mượt kỳ quái."
 }

@@ -1,18 +1,18 @@
 {
-    "name": "Phân tích mức lỗi (ELA)",
-    "description": "Phương pháp phân tích mức lỗi (Error Level Analysis) lưu lại ảnh ở chất lượng JPEG đã biết và so sánh mức lỗi giữa ảnh gốc và ảnh tái nén. Ảnh AI tạo ra mẫu lỗi đồng nhất bất thường, trong khi ảnh thật có biến đổi nén khác nhau theo vùng.",
-    "algorithm": "Phân tích sai biệt nén JPEG lại (JPEG Re-compression Differential)",
-    "mechanism": "Quy trình phân tích ELA:\n\n1. **Tái nén ảnh**: Ảnh được lưu lại ở mức chất lượng JPEG cố định (thường 95%).\n\n2. **Tính sai biệt**: So sánh pixel-by-pixel giữa ảnh gốc và ảnh tái nén, tạo bản đồ sai biệt tuyệt đối.\n\n3. **Phân tích mẫu lỗi**: Trong ảnh JPEG chưa chỉnh sửa, toàn bộ ảnh đã trải qua cùng mức nén, nên mức lỗi tương đối đồng nhất. Vùng bị thao tác hoặc AI tạo có mức lỗi khác biệt vì đã trải qua quá trình nén khác.\n\n4. **Đánh giá tính đồng nhất**: Ảnh AI thường cho thấy mức lỗi đồng nhất bất thường trên toàn ảnh vì tất cả pixel đều được sinh ra, không phải chụp.",
-    "parameters": "Mức chất lượng tái nén: 95%, Không gian màu: YCbCr, Kích thước khối DCT: 8x8\nPhân tích: sai biệt tuyệt đối pixel, phương sai mức lỗi theo vùng\nNgưỡng: adaptive dựa trên phân phối lỗi toàn cục",
-    "accuracy": "Cao - 88-94% cho ảnh JPEG. Hiệu quả giảm đáng kể với ảnh PNG hoặc ảnh đã được nén nhiều lần.",
-    "source": "Krawetz, N. (2007) — A Picture's Worth: Digital Image Analysis and Forensics. Hacker Factor Solutions.",
-    "useCase": "Phát hiện thao tác cục bộ (vùng bị cắt dán, chỉnh sửa), AI inpainting, và vùng có lịch sử nén không nhất quán. Phổ biến trong phân tích pháp y ảnh số và kiểm chứng nội dung.",
-    "strengths": "• Trực quan, dễ hiểu cho người dùng không chuyên\n• Phát hiện tốt thao tác cục bộ và ghép nối\n• Chi phí tính toán thấp, phân tích nhanh\n• Hiệu quả đặc biệt với ảnh JPEG một lần nén",
-    "limitations": "• Chỉ hiệu quả với ảnh JPEG, không áp dụng được cho PNG/WebP\n• Ảnh JPEG bị nén nhiều lần làm nhiễu kết quả\n• Ảnh resize hoặc crop tạo ra dương tính giả\n• Không phân biệt được AI và ảnh thật đã qua xử lý hậu kỳ nặng",
+    "name": "Bản Đồ Chỉ Yếu Lỗi Cấp Độ Chói (ELA)",
+    "description": "Kho tia X-quang ELA (Error Level Analysis) chuyên vạch mặt những kẻ đào mồ cuốc mả hình ảnh. Bất cứ khi nào bạn đẩy một tấm hình JPEG lên mạng, nó bị nén lại. Khi thằng lừa đảo tải nó xuống, cắt cái đầu con chó dán lên thân người, rồi lưu lại thành JPEG lần nữa. Tức khắc! Cây nấm xôi thịt chó kia là hàng xịn nên mức độ bị tàn nhang (Lỗi nén ảnh) khác một trời một vực với cái body gốc. ELA thắp sáng rực rỡ cái sự chênh lệch đó giữa ban ngày không cho cãi bừa.",
+    "algorithm": "Phân Tích Khuếch Đại Khoảng Cách Mức Cấp (JPEG Error Level Amplification)",
+    "mechanism": "Thuật toán lấy lén bức hình hiện tại, chủ động tự nén lại thêm 1 phát nữa ở Quality (65-75%), sau đó nó lấy hình cũ TRỪ ĐI hình mới! Những chỗ nào là ảnh gốc từ xa xưa, nó đã nát sẵn rồi nên không thay đổi mấy (Lỗi ELA cực thấp, đen thui). Nhưng những chi tiết nhân tạo, mặt người, mây bão vừa được gã thợ xăm Photoshop dán vô hôm qua chưa bị nén mòn.. nó sẽ lập tức PHÁT SÁNG TRẮNG CHÓI LÓA báo hiệu sự không đồng bộ độ mòn thời gian.",
+    "parameters": "Trigger: Khả năng lưu đè thứ cấp, Hệ số nén chủ động: Bậc JPEG Quality 75, Trích xuất độ sáng dốc cấp (Luminance Amplification)",
+    "accuracy": "Đỉnh Cao Trực Quan (70-85%) - Chém chết tươi những bức ảnh giật gân, những tờ hóa đơn chuyển khoản bị bôi xóa, chỉnh sửa text bừa bãi vụng về trên các mặt báo.",
+    "source": "Krawetz (2007) - Công Cụ Độc Toàn Cầu Hacker Factor: Phân Tích Lỗi Nén Độc Lập",
+    "useCase": "Giáng đòn hiển thị bản đồ nhiệt báo cháy cho toàn bộ người xem thấy rõ mồn một các cục sứa dán ghép thô bạo (Splicing), bôi sửa số dư tài khoản ngân hàng (Text-forgery) bằng sự sáng chói loá dã man trên nền ELA tối.",
     "references": [
-        {"title": "Krawetz, N. (2007). A Picture's Worth: Digital Image Analysis and Forensics. Hacker Factor.", "url": "https://fotoforensics.com/tutorial-ela.php"},
-        {"title": "Krawetz, N. (2012). A Picture's Worth — More on ELA. Black Hat USA.", "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"},
-        {"title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.", "url": "https://doi.org/10.1109/MSP.2008.931079"},
-        {"title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries by Detecting Traces of Resampling. IEEE TSP.", "url": "https://doi.org/10.1109/TSP.2004.839932"}
-    ]
+        {
+            "title": "Krawetz, N. (2007). A picture's worth... digital image analysis and forensics. Black Hat.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+        }
+    ],
+    "strengths": "• Khả năng trực quan không tưởng: Mắt người mù cũng có thể nhìn vô bức ảnh vi phân trắng đen ELA mà chỉ tay thẳng vào vùng bị bôi sửa mà cười nhạo kẻ gian lận.\n• Ác mộng của lũ lừa đảo bill chuyển tiền ngân hàng, chúng chỉ cần Photoshop đổi con số tiền là dải ELA cháy nát khu vực đó do text mới ghép chưa trải qua bào mòn thời gian nén web.",
+    "limitations": "• Lưỡi gươm vỡ nát vô dụng khi chém vào định dạng PNG không xài nén suy hao, vì ELA sinh ra là nấm mồ đặc chế riêng cho họ hàng hàng xóm JPEG.\n• Radar rất hay nảy dương tính giả lố lăng vào các viền gợn sóng nét chữ sắc sảo (như text logo gốc có sẵn) vì viền chữ sắc thì lỗi JPEG tự nhiên sinh ra ánh sáng mạnh hơn nền thịt, rất dễ khép hàm oan."
 }

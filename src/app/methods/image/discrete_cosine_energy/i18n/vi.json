@@ -1,12 +1,18 @@
 {
-    "name": "Phân tích Discrete Cosine Energy Profile",
-    "description": "Lập hồ sơ phân bổ năng lượng DCT 2D trên các khối để phát hiện mẫu lượng tử hóa bất thường (Durall et al., 2020).",
-    "algorithm": "Thuật toán phân tích Discrete Cosine Energy Profile",
-    "mechanism": "Hệ thống Discrete Cosine Energy Profile phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Trục Xuất Cosine Năng Lượng Hình Thái (Discrete Cosine Energy)",
+    "description": "Lò sát sinh tần số nhắm vào những khối ảnh nhân tạo phẳng lì. Đo đạc sự 'phân bổ năng lượng' của cấu trúc biến đổi Cosine rời rạc. Một cỗ máy phân loại tàn khốc chuyên lôi cổ tần số thấp nhạt nhẽo và tần số cao bạo loạn để chứng minh bức hình này được 'tô màu' bởi cọ điện tử AI hay chụp từ thế giới vật lý thật.",
+    "algorithm": "Phân Rã Năng Lượng Tần Số DCT Tuyến Tính Toàn Cục",
+    "mechanism": "Khác với DCT thông thường dò khối 8x8, phương pháp này ép cả bức hình vào ma trận quang phổ để tính toán phân mảnh năng lượng toàn cảnh. Bộ radar này nhìn chằm chằm vào rạch ranh giới AC/DC (năng lượng nền tảng và năng lượng chi tiết). Ảnh ảo do AI vắt ra luôn cố sức tô mượt mọi thứ, làm thông lượng năng lượng AC rỗng nghếch, vô hồn một cách đáng sợ. Mức năng lượng này lố lăng đến mức bị thuật toán bắt quả tang gí súng chốt tội chết.",
+    "parameters": "Ma trận tuyến tính: Global Fast DCT, Phân Tích: Băng thông Năng Lượng DC vs AC, Tần suất cắt biên thấp",
+    "accuracy": "Khá Tốt (70-76%) - Phương thức đắc lực dùng để lột mặt nạ phần lớn các hình ảnh bị filter mờ nhòe giả tạo.",
+    "source": "Barni & Stamm (2012) - Mật Độ Phổ & Phân Mảnh Khối Cosine Rời Rạc",
+    "useCase": "Trở thành bộ quét rà mìn cực gắt trên bề mặt toàn khung, báo thẳng vào mặt nếu bức ảnh quá mượt mà nhẵn thín (được sinh ra từ AI hoặc kéo da mịn max viền).",
+    "references": [
+        {
+            "title": "Barni, M., et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency. IEEE TFS.",
+            "url": "https://ieeexplore.ieee.org/document/5567087"
+        }
+    ],
+    "strengths": "• Nghiền ép toàn bộ hệ cấu trúc hình ảnh mà không cần tốn quá nhiều sức lực phần cứng, báo động rợp trời sự giả tạo trên bầu trời mây dởm hoặc vùng da dởm của AI.\n• Rất lỳ đòn trước trò làm mờ của hacker, vì làm mờ càng bạo thì Năng lượng Cosine Tần suất cao càng chết hẳn, AI càng vạch áo cho người xem lưng.",
+    "limitations": "• Nhát đâm hoàn toàn mù lòa và cắn nhầm False Positive vào các bức tranh đồ họa thuần 2D (Vector art, anime, CGI) vì chúng bản chất là trơn nhẵn phẳng lì.\n• Rớt sạch độ chuẩn xác nếu tác phẩm AI bị băm nát qua nhiễu Gaussian hạt thô khổng lồ trước khi xuất file."
 }

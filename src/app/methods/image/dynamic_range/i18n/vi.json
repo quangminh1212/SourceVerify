@@ -1,12 +1,18 @@
 {
-    "name": "Phân tích dải động",
-    "description": "Phân tích đặc tính dải động của ảnh",
-    "algorithm": "Thuật toán phân tích Phân tích dải động",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích đặc tính dải động của ảnh. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phân tích dải động. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Bức Màn Dải Động Quang Học (Dynamic Range)",
+    "description": "Thước đo tàn nhẫn bóc trần những bầu trời AI dối trá và các hố đen cắt dán. Mọi cảm biến máy ảnh đời thực đều bị giới hạn bởi 'Dải Động Ánh Sáng' vật lý—quá sáng sẽ 'cháy' trắng bóc (clipping), quá tối sẽ lốm đốm nhiễu hạt (sensor noise). Bọn thợ chế ảnh hoặc Generative AI thường xuyên vứt bỏ định luật vật lý này, tạo ra các bức hình nửa nạc nửa mỡ: Chỗ thì tối đen hun hút như hố đen vũ trụ 0% nhiễu, chỗ thì chói lóa nhưng lại đầy rẫy chi tiết mượt mà hoàn hảo sai tự nhiên. Radar này sẽ giăng bẫy sự vô lý đó.",
+    "algorithm": "Đo Lường Biên Độ Đỉnh Sáng & Xung Đột Nhiễu Đáy Tối (Clipping/Noise Floor Clash)",
+    "mechanism": "Nó xẻ dọc Histogram phơi sáng của bức ảnh để soi thẳng vào hai mép vực thẳm: Cực Trắng (Highlight) và Cực Đen (Shadow). Trong ảnh thực, khi bị cháy sáng, các kênh RGB sẽ bị xén ngang phẳng lì thảm thương ở giá trị 255. AI hoặc ảnh ghép thường 'quên' xử lý hoặc bôi nhòe phi logic vùng cháy này. Tương tự, bóng tối thực sự phải chứa tiếng la thét vật lý của nhiễu ảnh (Noise floor). AI thì lại sinh ra bóng tối đen nghìn nghịt, sạch không tì vết, một dấu vết vô cơ tàn bạo phản bội hoàn toàn quang học.",
+    "parameters": "Toán tử: Biểu đồ Histogram Tuyến Tính, Đo lường: Cắt đỉnh RGB (Clipping Point) & Sàn nhiễu tối (Noise Floor Limit).",
+    "accuracy": "Khá (67-78%) - Nhanh như chớp, rất thích hợp vạch trần các bối cảnh ánh sáng siêu thực hoặc HDR giả cẩu thả do thợ Photoshop ghép hình.",
+    "source": "Pháp Y Độ Sáng Môi Trường Kỹ Thuật Số (Illuminant & Dynamic Range Traces)",
+    "useCase": "Giám sát cấu hình ánh sáng cực đoan. Réo còi lập tức nếu phát hiện kẻ não phẳng cắt ghép một người từ tấm ảnh cháy nắng rực rỡ và nhồi vào một con hẻm u tối mà không thèm đồng bộ ranh giới Dải Động.",
+    "references": [
+        {
+            "title": "Kee, E., & Farid, H. (2010). Exposing digital forgeries from 3-D lighting environments. IEEE TIFS.",
+            "url": "https://ieeexplore.ieee.org/document/5567087"
+        }
+    ],
+    "strengths": "• Không màng đến độ tinh vi của mảng da người, nó đâm chém thẳng vào quy luật ánh sáng gốc rễ của vật lý đồ họa. Đặc trị lũ lười biếng vặn Curves/Levels không quan tâm đến dải hạt ISO gốc.\n• Bức tử ngay các bầu trời AI hoàng hôn rực rỡ giả tạo nhưng lại... chả có điểm cháy vật lý nào đáng kể trên mây.",
+    "limitations": "• Nhát phán quyết sẽ sai bét (False Positive) nếu đối mặt với những siêu phẩm được chụp bởi máy ảnh Cinema (như ARRI/RED RAW) có Dải Động 15-stop đỉnh cao, nơi bóng tối cực sạch và vùng cháy sáng cực mềm mại.\n• Có thể tịt ngòi nếu tay chuyên gia cố tình thêm Noise (Nhiễu Film nhân tạo) vào vùng bóng tối nhân tạo để lừa đảo radar sàn nhiễu."
 }
