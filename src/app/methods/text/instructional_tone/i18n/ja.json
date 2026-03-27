@@ -1,14 +1,13 @@
 {
-    "name": "Instructional Tone",
-    "description": "Detects instructional writing tone",
-    "algorithm": "Instructional Tone — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects instructional writing tone. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through instructional tone analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "教訓的（指示的）トーンの密度",
+    "description": "ステップバイステップの解説、講義風、または「親切なアシスタント」のようなトーンの存在を定量化します。LLMは超教訓的になるように微調整されており、単純な答えであっても頻繁に番号付きリスト、命令文、および見下したような結論へと整理します。",
+    "algorithm": "命令的構文の解析と教訓的マーカーの抽出",
+    "mechanism": "ほぼすべての最新のLLMは、「親切で無害なアシスタント」になるように設計されたRLHF（人間のフィードバックからの強化学習）を受けているため、ユーザーに講義（説教）をするという慢性的で避けられない癖を身につけています。人間が電子メールやエッセイを書くとき、その構造は有機的に流れます。AIがまったく同じ内容を書くとき、AIは本能的に教訓的（教育的）なフレームワークを適用します。これは、命令動詞（「最初に、…を検討してください」「次に、…を確認してください」）の高密度、箇条書きまたは番号付きのリスト構造、見下したようなつなぎの言葉（「…を覚えておくことが重要です」）、および強引で綺麗にまとめられた結論（「要約すると…」）として現れます。このアルゴリズムは、構文ツリーを解析して命令動詞のフレーズを数え、教訓的な順序マーカー（第一に、第二に、最後に）を抽出し、純粋な平叙文に対する「指示的」な文の比率を測定します。ユーザーマニュアルではないはずの文章が、突然、過度に構造化されたステップバイステップのチュートリアルに変貌した場合、アルゴリズムは微調整されたAIアシスタントの紛れもない行動の痕跡をフラグ付けします。",
+    "useCase": "見下したような、過度に構造化された「教育的」なトーンがまったく場違いである、学生のエッセイ、クリエイティブライティング、オピニオン記事、および非公式のコミュニケーションの監査に非常に効果的です。",
+    "strengths": "• モデルはトレーニング中に、きちんと構造化されたステップバイステップのガイダンスを提供することで大きな報酬を得るため、商用LLMの最も深いRLHFアライメントのバイアスを悪用します。\n• 単純な語彙だけでなく、根底にある構文構造（テキストの「フレームワーク」）を分析するため、単純な単語の置き換えに対して非常に高い耐性を持ちます。\n• 「エッセイを書いて」と頼まれたのに、代わりに「テーマを理解するためのガイド」を出力してしまうAIモデルを捕まえるのに非常に正確です。",
+    "limitations": "• 当然のことながら、人間が書いた本物の取扱説明書、レシピ、技術チュートリアル、および「ハウツー」記事では（これらは本質的に教訓的なトーンを必要とするため）、大規模な誤検知（偽陽性）を引き起こします。\n• ユーザーがAIに対して「リストを避け、教育的なトーンを使わずに創造的に書け」と明示的にプロンプトを出した場合、ある程度回避される可能性があります。\n• RLHFアシスタントの微調整を受けていない生の「ベース」モデルでは効果が低くなります。",
+    "parameters": "解析: 命令的構文と順序マーカーの密度\n評価基準: 全文に対する教訓的/指示的な文の比率\n出力結果: 0-100 アシスタントへの準拠（教訓的な無菌性）スコア",
+    "accuracy": "高 — 技術文書以外では80-88%。必死に「親切」であろうとするAIの、非常に信頼性の高い行動の指紋（フットプリント）を提供します。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",

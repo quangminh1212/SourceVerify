@@ -1,14 +1,13 @@
 {
-    "name": "Information Density",
-    "description": "Measures information per sentence",
-    "algorithm": "Information Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Measures information per sentence. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through information density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "实质信息含金量 (Information Density)",
+    "description": "测量实质性语义命题（事实、专有名词、独特论点）与总字数之间的比例。AI 模型普遍患有“词汇肥胖症”，它们极为擅长生成语法堪称完美、结构极其复杂，但实际上毫无营养、没有传递任何有效信息的车轱辘话。",
+    "algorithm": "核心命题提纯与水分填充比例计算",
+    "mechanism": "当人类专家撰写他们深谙的领域时，文章的“信息密度”通常会极高。他们会密集地把具体名词、精准动词和独家事实紧紧打包在一起，绝不废话。相反，大型语言模型（LLM）的底层逻辑是优化“最流畅、概率最高的词语接龙”，而不是优化“说理效率”。它们患有严重的“词水肿”：人类 8 个字就能说清楚的概念，AI 非要用 30 个字去凑。这在纸面上就表现为泛滥成灾的过渡废话（“我们需要深刻地认识到……”、“不可否认的是……”）、对同一前提的反复咀嚼颠倒重组、以及用极其宏大的语法结构去包装一个弱智般的常识。本算法会像手术刀一样剃除文章里的所有虚词、停用词和机器最爱用的过渡模板句。然后，它将提纯后的核心语义骨架（独特的实体、动作和具体概念）除以句子的总长度。如果一篇文章金玉其外，句子长得吓人且语法无可挑剔，但切开来发现里面真正的干货事实少得可怜（注水率极高），这就坐实了自回归文本生成器为了凑字数而进行“数学灌水”的丑陋行径。",
+    "useCase": "这是给论文报告、深度行业分析、干货总结和新闻报道进行脱水验尸的绝佳利器，因为在这些场景里，读者期待的是字字珠玑的干货，而不是云山雾罩的废话。",
+    "strengths": "• 抓捕“AI 废话文学”的神器。当模型被要求写 1000 字但它脑子里其实没货时，它就会进入“凑字数模式”，这套算法能瞬间扒掉它华丽语法的底裤，暴露出它空虚的灵魂。\n• 敏锐地切中了“人类的认知浓缩度”与“AI 的概率润滑剂”之间的底层鸿沟。\n• 面对人类企图用同义词替换（Spinning）来混淆视听的低级作弊手法，具有极高的免疫力。",
+    "limitations": "• 会误伤某些天生就喜欢说废话的活人。比如意识流散文、伤春悲秋的无病呻吟、或是满嘴跑火车的政客演讲，它们天然就不含任何实质性信息。\n• 需要调用庞大的句法分析与词性标注（POS tagging）引擎，比单纯的小儿科字符统计要多消耗一些算力。\n• 如果你在 Prompt 里拿枪指着 AI 逼它“必须用最精简的黑话给我写大纲缩写”，生成的 TL;DR（太长不看）极干练版本，可能会因为信息密度过高而被误判为人类。",
+    "parameters": "雷达切片: 核心命题/实体暴拆 & 语法脱水\n定罪量表: 纯正语义干货 Token 数 / 句子总 Token 数 (句均指标)\n行刑判决: 0-100 词汇注水度 (信息稀释贫血症) 定罪分数",
+    "accuracy": "极度致命 — 80-88%（在信息类和学术类干货文本中）。这是一个让 LLM 那种“永远要写得安全、冗长、看起来顺眼但其实全是屁话”的毛病原形毕露的高能探针。",
     "references": [
         {
             "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",

@@ -1,14 +1,13 @@
 {
-    "name": "Logical Connector",
-    "description": "Analyzes logical connector distribution",
-    "algorithm": "Logical Connector — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes logical connector distribution. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through logical connector analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "逻辑连接词画像 (Logical Connector Profiling)",
+    "description": "解剖过渡性词汇（例如：“然而”、“此外”、“总而言之”、“因此”）的出现频率与种类多样性。AI 模型为了让自己的输出看起来“条理清晰”，患有严重的“显性逻辑连接词依赖症”，这会导致文章呈现出一种极度死板、如同八股文般可预测的论证节奏。",
+    "algorithm": "语篇标记词频率与方差解析",
+    "mechanism": "该探针会对文本进行词法扫描，揪出所有用于桥接句子和段落的语篇标记（Discourse marker）和逻辑连接词。它会按功能（并列、转折、因果、顺承）将这些满地乱爬的连接词归类，并计算它们相对于文章总长度的“窒息密度”。大语言模型（LLM）长期被喂食结构化、说教意味浓厚的论证型数据，并且在对齐（Alignment）阶段被硬性教导必须给出“有帮助且完全清晰”的回答。这导致它们极度依赖一副由过渡副词（“首先”、“此外”、“基于上述原因”、“总之”）拼凑成的呆板骨架，来强行标榜自己的逻辑性。而真正的人类作家，即便是在撰写严肃的学术论文，使用这些显性路标词时也克制得多。人类更喜欢依赖隐性的逻辑暗流、叙事的自然惯性，或是更微妙的句式结构切换来推动文章前进。分析器会计算“显性连接词与句子数量的比例”，并与人类的正常基线进行比对。如果一篇文章展现出了教科书级别的恶心过渡词密度——尤其是在每个新句子或新段落的开头，都雷打不动地顶着一个“Firstly”或“However”——探测器就会拉响尖锐的 AI 代笔警报。",
+    "useCase": "这是针对学术论文、求职信和商业分析报告的强力杀伤武器。在这些文体里，AI 总是按捺不住它那股爹味十足的“五段式作文（总分总）”冲动，从而暴露无遗。",
+    "strengths": "• 精准打击 LLM 的底层“人类偏好对齐（Alignment）”训练基因——这种训练让 AI 为了追求绝对的表面清晰和结构化论证，彻底牺牲了人类行文该有的自然呼吸感。\n• 计算速度堪比闪电，因为它不需要进行复杂的长句语义撕裂，只需拿全面归档的语篇标记词典进行高速比对和数数。\n• “处刑”过程极其直观；它可以直接把那些被滥用的连接词（比如臭名昭著的“Furthermore / 此外”）用高亮标出，作为甩在脸上的铁证。",
+    "limitations": "• 容易误伤非母语人士（例如考雅思/托福的学生）或是写作新手，因为人类培训班和英语老师总是死板地教导他们“要多用路标连接词来拿高分”。\n• 会被高级的提示词工程反制屏蔽（例如下达指令：“写一篇文章，绝对禁止使用 however、furthermore 或 in conclusion 等任何过渡词”）。\n• 在应付创意小说、情感散文或碎片化日常对话时威力大减，因为这些场景下 LLM 本身就不太会触发正式的连接词模块。",
+    "parameters": "雷达切片: 语篇标记词典的高速 Token 匹配与分类\n定罪量表: 连词-句子比例溢出率 (以及连接词种类的贫乏方差)\n行刑判决: 0-100 行文骨架僵化度 (八股文模板) 审判分数",
+    "accuracy": "中流击水 — 72-84% 准确率。它是一记非常致命的补刀级辅助启发算法，能完美框定并嘲笑 ChatGPT 和 Claude 那种套路化、好为人师的说教式行文腔调。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

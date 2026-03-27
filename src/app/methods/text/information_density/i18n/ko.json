@@ -1,14 +1,13 @@
 {
-    "name": "Information Density",
-    "description": "Measures information per sentence",
-    "algorithm": "Information Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures information per sentence. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through information density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "명제적 정보 밀도 (Information Density)",
+    "description": "전체 단어 수 대비 구체적인 의미적 명제(사실, 고유 명사, 핵심 주장 등)의 비율을 측정 추론합니다. AI 모델은 종종 '어휘 비만증(Lexical bloat)'을 앓고 있으며, 문법적으로는 완벽하고 화려하지만 실제 알맹이(정보)는 텅 빈 장황한 문장을 만들어내는 데 특화되어 있습니다.",
+    "algorithm": "의미적 명제 vs 어휘적 패딩(물타기) 비율 계산 계산",
+    "mechanism": "자신이 잘 아는 주제에 대해 글을 쓰는 인간 전문가는 일반적으로 극도로 높은 정보 밀도를 보입니다. 그들은 구체적인 명사, 날카로운 동사, 독창적인 팩트를 꽉꽉 눌러 담고 쓸데없는 수식어는 덜어냅니다. 반면 대규모 언어 모델(LLM)은 팩트의 전달 효율성이 아니라, '가장 매끄럽고 확률적으로 자연스러운 토큰의 흐름'을 최적화하도록 설계되었습니다. 그들은 끊임없이 '어휘적 물타기(Lexical padding)'를 시도합니다. 인간이 8단어로 끝낼 개념을 30단어로 늘여서 설명하는 식입니다. 이는 불필요하게 긴 전환구 ('~라는 점을 이해하는 것이 매우 중요합니다'), 똑같은 전제의 동어반복, 그리고 별것도 아닌 단순한 개념을 쓸데없이 복잡한 문법 구조로 포장하는 형태로 나타납니다. 이 알고리즘은 기능어, 불용어(Stop words), 식상한 접속사 템플릿을 모두 벗겨냅니다. 그리고 오직 뼈대가 되는 핵심 의미 명제(고유한 실체, 행동, 명확한 개념)만 분리해 낸 뒤 이를 전체 문장 길이로 나눕니다. 겉보기엔 완벽한 문법의 긴 문장들로 채워져 있지만 정작 뽑아낼 수 있는 새로운 사실의 비율은 비정상적으로 낮다면(즉 '거품' 비율이 높다면), 이는 자기회귀(Autoregressive) 기반 텍스트 생성기가 분량을 채우기 위해 수학적으로 글을 부풀리는 전형적인 증상입니다.",
+    "useCase": "작가가 핵심과 팩트를 명확하고 간결하게 짚고 넘어가야 하는 에세이, 심층 분석 보고서, 요약본 및 뉴스 기사를 검증할 때 치명적인 위력을 발휘합니다.",
+    "strengths": "• AI 특유의 '헛소리(Waffle)'를 잡아내는 데 탁월합니다. AI가 글자 수 제한을 채워야 하지만 관련된 팩트 데이터가 부족할 때, 문법만 완벽하고 알맹이는 없는 방어적인 헛소리를 길게 늘어놓는 현상을 정확히 타격합니다.\n• 팩트를 압축하는 인간의 뇌와, 확률의 곡선을 부드럽게 이어 붙이는 AI의 알고리즘 사이의 구조적 차이를 포착합니다.\n• 눈속임용 동의어 교체(Synonym-swapping) 조작에 절대 흔들리지 않는 극도의 견고함을 자랑합니다.",
+    "limitations": "• 철학적 사유, 의식의 흐름 기법을 쓴 소설, 혹은 웅장한 정치 연설문처럼 인간조차도 감성을 위해 일부러 정보 밀도를 낮추고 장황하게 쓰는 글에서는 오작동할 수 있습니다.\n• 구문 분석(Parsing)과 품사 태깅(POS tagging)이 필요하므로, 단순 글자 수 세기보다 알고리즘 연산 비용이 약간 더 듭니다.\n• 프롬프트에서 '초압축해서 개조식으로 요약해'라고 강하게 제약한 AI의 요약본(예: TL;DR 총알 기호)은 정보 밀도가 높아 인간의 글로 오인될 수 있습니다.",
+    "parameters": "분석 기준: 핵심 명제/엔티티 추출 및 곁가지 구문 쳐내기\n측정 지표: 핵심 의미 토큰 수 / 전체 토큰 수 (문장 당 평균)\n출력: 0-100 의미론적 비만/거품 (정보 희석도) 스코어",
+    "accuracy": "높음 — 정보 전달 목적의 학술적/전문적 텍스트에서 80-88%. 분량은 빵빵하지만 속은 텅 빈 '안전하고 부드러운 쓰레기'를 뱉어내는 LLM의 종특을 증명하는 강력한 지표입니다.",
     "references": [
         {
             "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",

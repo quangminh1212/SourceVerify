@@ -1,22 +1,17 @@
 {
-    "name": "ヘッジ言語検出",
-    "description": "検出します パターン of ヘッジング and epistemic markersテキスト内の, as AI tends to use excessive cautious language and qualifiers.",
-    "useCase": "Identifying AI生成の text through overuse of uncertainty markers and safety qualifiers",
-    "mechanism": "識別します ヘッジング expressions (modal verbs: 'might', 'could', 'may'; adverbs: 'potentially', 'possibly', 'arguably'; phrases: 'it is worth noting', 'it should be mentioned') and computes their frequency relative to assertive language. AI systems, especially instruction-tuned models, systematically overuse ヘッジング to appear balanced and avoid making definitive claims, creating a measurable 統計的 signature.",
-    "accuracy": "中 - 70-80% 精度",
-    "source": "Liang, W. et al. (2024) - Mapping the Increasing Use of LLMs in Scientific Papers, arXiv",
-    "algorithm": "Hedging Lexicon Matching + Assertiveness Ratio + Modal Verb Frequency Analysis",
-    "parameters": "Hedge lexicon: 200+ expressions, Categories: epistemic/approximative/plausibility shields, Ratio: hedge-to-assertion, Normalization: per 100 words",
-    "strengths": "• 指示調整されたLLMの既知の体系的偏りを捕捉\n• 学術・専門テキストで良好に動作\n• 低計算コスト\n• 結果の解釈が容易",
-    "limitations": "• Scientific writing naturally contains ヘッジング\n• Cultural differences affect ヘッジング norms\n• Base models hedge less than RLHF-tuned ones\n• Simple paraphrasing can remove ヘッジング",
+    "name": "認識的ヘッジ（予防線の言語）の検出",
+    "description": "「ヘッジ（予防線）」を張る言語（「潜在的に」「間違いなく」「注目に値する」など）の密度を定量化します。RLHFの安全性トレーニングにより、AIモデルは断定的で絶対的な主張を避けるために、認識的マーカー（epistemic markers）を強迫的に乱用します。",
+    "algorithm": "認識的マーカー密度および妥当性シールド抽出",
+    "mechanism": "人間が自信を持って書くとき、彼らは決定的な断言をします（「Xが原因でプロジェクトは失敗した」）。不確実性を表現するときは、自然なヘッジを使用します（「たぶんXが原因だと思う」）。しかし、大規模言語モデルは、RLHF（人間のフィードバックからの強化学習）の過程で、「ハルシネーション（幻覚）」や誤った絶対的な答えを出すことに対して厳しいペナルティを受けています。これにより、「認識的な安全性」に対する根深い数学的なバイアスが生まれます。モデルは本能的に、ほぼすべての発言の周りに「妥当性シールド（plausibility shields）」のクッションを配置します（「…と主張することができます」「…を考慮することが重要です」「…につながる可能性があります」）。このアルゴリズムは、認識的動詞（might、could）、近似表現（roughly、somewhat）、および妥当性シールドに分類される200以上の既知のヘッジングマーカーの辞書とテキストをスキャン・照合します。絶対的な断言に対する「ヘッジされた」文の比率を計算します。確固たるスタンス（立場）をとるという人間の自然なリズムを欠き、過度に慎重な企業のPRの免責事項のように読めるテキストは、アルゴリズムによる高度な無菌性警告を生成します。",
+    "useCase": "説得力のあるエッセイ、オピニオン記事、技術分析、および人間の著者が決定的なスタンスをとることが期待されるビジネス上の意思決定コミュニケーションの監査に非常に効果的です。",
+    "strengths": "• すべての主要な商用LLM（GPT-4、Claude、Gemini）に組み込まれた安全性アライメントのガードレールを完全に悪用し、彼らに義務付けられた「礼儀正しい慎重さ」を彼ら自身に対する武器（弱点）に変えます。\n• 非常に主観的または法的に敏感なプロンプトに答えようとしているAIを捕まえるのに優れています。モデルの安全トリガーが最大限のヘッジを強制するからです。\n• 計算負荷が軽く、結果の解釈が非常に容易です。",
+    "limitations": "• 本物の学術的および科学的な文章（科学者が認識的なヘッジを使用するように専門的に訓練されている場合。例：「これらの結果は潜在的な相関関係を示唆している」）を分析する際、誤検知（偽陽性）を引き起こしやすいです。\n• RLHFの安全トレーニングによってロボトミー化されていない「ベース」モデル（指示チューニングされていないモデル）や、無検閲のオープンソースモデルにはまったく効果がありません。\n• 単純な人間の編集や、AIに対して「絶対的で傲慢な確信を持って書け」と明示的にプロンプトを出すことで、簡単に回避されてしまいます。",
+    "parameters": "解析: 認識的および近似的シールドの抽出\n評価基準: 絶対的な断言に対するヘッジされたフレーズの比率（100語あたり）\n出力結果: 0-100 防御的慎重さ（RLHFアライメント）スコア",
+    "accuracy": "中〜高 — 議論や説得の文脈で70-80%。責任を逃れようとするRLHFアライメントされたAIの、非常に信頼性の高い「行動の足跡」として機能します。",
     "references": [
         {
             "title": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.",
             "url": "https://arxiv.org/abs/2404.01268"
-        },
-        {
-            "title": "Hyland, K. (2005). Metadiscourse: Exploring Interaction in Writing. Continuum.",
-            "url": "https://doi.org/10.5040/9781350934016"
         },
         {
             "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",

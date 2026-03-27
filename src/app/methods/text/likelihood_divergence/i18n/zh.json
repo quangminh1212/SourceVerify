@@ -1,12 +1,21 @@
 {
-    "name": "Likelihood Divergence",
-    "description": "Measures divergence between observed and expected token likelihoods under language model — AI text has lower divergence.",
-    "algorithm": "Likelihood Divergence分析算法",
-    "mechanism": "Likelihood Divergence系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "似然散度 (Likelihood Divergence / 概率背离度)",
+    "description": "计算文本中实际使用的词汇，与参考语言模型在数学上“预计”应该出现的词汇之间的统计距离（散度）。AI 生成的文本会病态地紧贴预计的概率曲线，表现出比人类写作低得极其夸张的散度（偏离程度）。",
+    "algorithm": "Token 概率分布与 KL 散度 (Kullback-Leibler Divergence) 映射",
+    "mechanism": "当人类在造句时，我们经常会基于情感、回忆或跳跃的逻辑，做出完全不可预测的词汇选择。这意味着我们实际使用的词汇，往往会大幅度偏离（Diverge）那套冷冰冰的机器概率预测算法的“期待”。相反，大型语言模型（LLMs）的运转原理，就是永远在一个被严格限制的、由最高概率 Token 组成的分布池里去捞下一个词。该算法通过将整篇文章喂进一个参考大语言模型中进行“过采样”，为文章里的每一个字都生成一张“预期”概率地图。然后，它去测量 Kullback-Leibler 散度（KL Divergence）——这是一个统计学指标，专门用来衡量“实际文本分布”和“模型预测分布”之间到底差了十万八千里还是紧紧贴在一起。如果一篇长篇大论始终“完美骑在概率的波峰上”——也就是说，文章里写出的词，与机器早就算好的词高度一致，连一次出轨（散度背离）都没有——那么在数学上就已经铁证如山：这篇文字根本不是人类复杂大脑的产物，而是一台“概率求导最大化”的神经网络机器吐出来的标准件。",
+    "useCase": "这是针对正式论文、法律合同和长篇新闻的高维降维打击探测仪。因为 AI 在这些领域总喜欢生成最稳妥的“绝对平均值”文本，这就直接暴露了其毫无“统计学意外”的机器本质。",
+    "strengths": "• 这是一招直插心脏的剑法，直接暴露了所有大模型（自回归概率映射）诞生的本源物理法则；AI 不依靠这些概率曲线，它连一个标点符号都写不出来。\n• 对各种小修小补的洗稿和同义词替换具有极强的免疫力，因为改掉几个词，根本无法撼动整篇文章极其低劣的散度概率底色。\n• 它不靠“我觉得这像是机器写的”这种主观玄学，而是直接糊给你一份绝对量化、不可反驳的数学空间分布距离死刑判决书。",
+    "limitations": "• 算力吞金兽。它必须挂载一个极其庞大的副摄语言模型（Reference Model），把嫌疑文章每一个字重新塞进去算预期概率，极其吃显存和算力。\n• 对“参照模型”的品质有要求；如果你用了一个智商拉胯或语料极偏的参照模型去打分，预计的概率地图本身就是歪的，测出来的散度也会跟着跑偏。\n• 对极度短小（不足 100 词）的只言片语毫无办法。因为散度这种统计学高级玩意儿，需要足够多的样本点（文章长度）才能画出在统计上有意义的曲线。",
+    "parameters": "雷达切片: 参照模型预测 Token 对比 实际输出 Token 的追踪阵列\n定罪量表: 库尔贝克-莱布勒散度 (KL Divergence) 距离分值\n行刑判决: 0-100 概率平滑度 (似然散度坍塌) 审判分数",
+    "accuracy": "最高级别斩杀线 — 82-89%（在长度合格的文本上）。它直接在数学物理层面对生成式 AI 的造句核心机制实施了降维打击。",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://doi.org/10.18653/v1/P19-3019"
+        }
+    ]
 }

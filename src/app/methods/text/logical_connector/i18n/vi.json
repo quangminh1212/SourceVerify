@@ -1,12 +1,21 @@
 {
-    "name": "Liên kết logic",
-    "description": "Phân tích phân bổ liên kết logic",
-    "algorithm": "Thuật toán phân tích Liên kết logic",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ liên kết logic. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích liên kết logic. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Lập Hồ Sơ Từ Nối Logic (Logical Connector Profiling)",
+    "description": "Phân tích tần suất và sự đa dạng của các từ chuyển ý (ví dụ: 'tuy nhiên', 'hơn nữa', 'do đó'). Các mô hình AI có xu hướng lạm dụng các từ nối logic tường minh để cấu trúc hóa đầu ra của chúng một cách giả tạo, dẫn đến nhịp điệu lập luận dễ đoán và mang tính công thức cao.",
+    "algorithm": "Phân Tích Tần Suất & Phương Sai Dấu Hiệu Diễn Ngôn",
+    "mechanism": "Phương pháp này phân tích cú pháp văn bản để xác định tất cả các dấu hiệu diễn ngôn và từ nối logic được sử dụng để liên kết các câu và đoạn văn. Nó phân loại các từ nối này theo chức năng (bổ sung, đối lập, nhân quả, tuần tự) và tính toán mật độ tổng thể của chúng so với độ dài văn bản. Các hệ thống LLM được huấn luyện nặng nề trên các tập dữ liệu lập luận, có cấu trúc và được tinh chỉnh để tạo ra các câu trả lời 'hữu ích và rõ ràng'. Do đó, chúng thường dựa vào một bộ khung cứng nhắc gồm các phó từ chuyển ý ('Đầu tiên', 'Hơn thế nữa', 'Tóm lại', 'Vì vậy') để ép buộc chỉ báo logic của chúng. Người viết, ngay cả khi soạn thảo các bài luận trang trọng, cũng sử dụng các dấu hiệu rõ ràng này một cách tiết kiệm hơn nhiều, thường dựa vào luồng logic ngầm, động lực tự sự hoặc các sự chuyển đổi cấu trúc tinh tế hơn. Bộ phân tích so sánh tỷ lệ từ nối tường minh trên số câu so với mức cơ sở của con người. Nếu một văn bản thể hiện mật độ phi tự nhiên của các từ chuyển ý kiểu sách giáo khoa, đặc biệt là ở đầu mỗi câu hoặc đoạn văn mới, nó sẽ tạo ra điểm xác suất cao cho việc AI là tác giả.",
+    "useCase": "Cực kỳ hiệu quả để kiểm toán các bài báo học thuật, thư xin việc và báo cáo phân tích nơi AI có xu hướng bộc lộ bản thân thông qua việc định hình chuyển ý quá cứng nhắc, theo phong cách 'bài luận năm đoạn'.",
+    "strengths": "• Nhắm vào quá trình huấn luyện tinh chỉnh (alignment) cơ bản của LLM, vốn ưu tiên sự rõ ràng công khai và lập luận có cấu trúc hơn là nhịp độ hữu cơ.\n• Tốc độ tính toán rất nhanh, vì nó dựa trên việc đối chiếu với các từ vựng toàn diện về dấu hiệu diễn ngôn thay vì phân tích ngữ nghĩa phức tạp.\n• Khả năng diễn giải cao; các từ nối bị lạm dụng cụ thể (như từ 'Furthermore' (Hơn nữa) khét tiếng) có thể được đánh dấu rõ ràng làm bằng chứng.",
+    "limitations": "• Dễ bị dương tính giả (nhận nhầm) trong các văn bản được viết bởi người không phải người bản xứ (người học ngoại ngữ) hoặc những người mới viết, những người được dạy một cách máy móc phải lạm dụng các từ chuyển ý để cấu trúc bài viết của họ.\n• Có thể lách qua bằng kỹ thuật prompt (ví dụ: 'Viết mà không sử dụng các từ chuyển ý như tuy nhiên hoặc hơn nữa').\n• Ít hiệu quả hơn đối với tiểu thuyết hư cấu hoặc đối thoại thông thường, nơi LLM tự nhiên triệt tiêu các từ nối trang trọng.",
+    "parameters": "Kiểm Định: Đối Chiếu Token Dấu Hiệu Diễn Ngôn\nThước Đo: Tỷ Lệ Từ Nối Trên Câu và Phương Sai Từ Vựng của Từ Nối\nĐầu Ra: 0-100 Điểm Cứng Nhắc Chuyển Ý",
+    "accuracy": "Khá đến Cao — Độ chính xác 72-84%. Đóng vai trò như một phương pháp phỏng đoán bổ sung mạnh mẽ để làm nổi bật giọng điệu giáo khoa thái quá, rập khuôn của ChatGPT và Claude.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

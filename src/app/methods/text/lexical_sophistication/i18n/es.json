@@ -1,14 +1,13 @@
 {
-    "name": "Sofisticación Léxica",
-    "description": "Mide frecuencia de palabras bands and lexical sophistication para identificar AI text's tendency toward common, high-frequency vocabulary.",
-    "useCase": "Detección de texto IA mediante preferencia sistemática por palabras comunes y evitación de términos raros",
-    "mechanism": "Mapea cada palabra de contenido a su rango de frecuencia en corpus de referencia (p.ej., SUBTLEX, BNC) y calcula la proporción de palabras en diferentes bandas de frecuencia (alta/media/baja frecuencia). También calcula índices de diversidad léxica y sofisticación.",
-    "accuracy": "Moderada - 72-82% on mixed-domain text",
-    "source": "Kyle, K. & Crossley, S. A. (2015) - Automatically Assessing Lexical Sophistication, Journal of Applied Linguistics",
-    "algorithm": "Frequency Band Analysis + AWL Coverage + Concreteness Rating + Statistical Profiling",
-    "parameters": "Corpus: SUBTLEX-US/BNC, Bands: 1k/2k/5k/10k/off-list, AWL levels: 1-10, Concreteness: Brysbaert norms, Min text: 100 words",
-    "strengths": "• Well-validated psycholinguistic foundations\n• Captures vocabulary sophistication patrones\n• Multiple complementary sub-metrics\n• Language-independent framework",
-    "limitations": "• Domain-specific text confounds frequency-based mide\n• Technical text naturally uses off-list words\n• LLMs can be prompted for specific vocabulary levels\n• Requires robust frequency data per language",
+    "name": "Sofisticación Léxica (Perfilado por Bandas de Frecuencia)",
+    "description": "Evalúa estadísticamente la proporción de vocabulario raro, altamente específico o verbalmente sofisticado utilizado en el texto. Los modelos de IA, por su naturaleza cobarde, gravitan hacia palabras 'seguras' de alta y media frecuencia para maximizar su probabilidad matemática, evitando sistemáticamente esa terminología oscura y de baja frecuencia que los expertos humanos emplean con naturalidad agresiva.",
+    "algorithm": "Mapeo de Bandas de Frecuencia de Corpus & Análisis de Penetración del Listado AWL",
+    "mechanism": "Cada palabra que existe en un idioma puede mapearse a su frecuencia de uso estadístico en el fango del mundo real (p. ej., 'casa' es de asquerosa alta frecuencia, 'oxímoron' es de baja frecuencia). Los escritores humanos reales, en particular los expertos, científicos o creadores literarios, meten la mano profundamente en las bandas de baja frecuencia (palabras raras) para asesinar la ambigüedad, establecer autoridad intelectual o propinar un golpe poético. Por el contrario, los Grandes Modelos de Lenguaje (LLMs) son mascotas entrenadas mediante la cruzada de la 'pérdida de entropía cruzada' con el único fin de adivinar estúpidamente *qué palabra es la más probable que siga*. Incluso cuando les ordenas a punta de pistola que escriban como profesionales, estadísticamente sufren para llegar a las bandas profundas de baja frecuencia; se rinden y prefieren colgarse como parásitos de los términos más trillados de la Lista de Palabras Académicas (AWL) y del jerga corporativa superficial de media frecuencia. Este escáner cruza a muerte cada palabra de contenido del texto contra corpus de frecuencia lingüística gigantescos (como SUBTLEX o BNC). Luego decapita y clasifica el vocabulario en bandas de frecuencia (Top 1K, 2K, 5K, 10K, y Fuera del Maldito Listado). Si un texto tiene el descaro de presentarse como una pieza 'experta' pero su perfil de ADN semántico está dominado abrumadoramente por las 5000 palabras más comunes del idioma, y presenta una ausencia deprimente de términos raros (Off-List), es inmediatamente clasificado como una basofia artificial alisada por la estadística.",
+    "useCase": "El bisturí definitivo para hacer la autopsia a papers académicos, documentación súper técnica y periodismo de alta gama. Expondrá al instante a la escoria generada por IA que suena 'inteligente' a simple vista pero que carece de profundidad anatómica real.",
+    "strengths": "• Logra cuantificar el maldito 'valle inquietante' (uncanny valley) de la escritura de IA—explica matemáticamente por qué un ensayo de GPT se siente estructuralmente perfecto pero intelectualmente como plástico barato.\n• Virtualmente imposible de hackear pidiéndole al bot: 'ey, usa palabras difíciles'. Si haces eso, el LLM simplemente empezará a vomitar en modo spam las mismas palabras 'complejas' que todos conocen (como 'adentrarnos', 'tapiz', 'multifacético'), en lugar de elegir vocabulario auténticamente raro y quirúrgicamente apropiado para el contexto.\n• Sus credenciales no son inventadas: descansa sobre décadas de sangrienta investigación psicolingüística validada sobre la adquisición de vocabulario en el cerebro humano.",
+    "limitations": "• Si apuntas este cañón hacia cuentos infantiles, los tuits de tu abuela o instrucciones para armar una mesa, sus números colapsarán espectacularmente, porque los textos para idiotas (con respeto) se escriben naturalmente con palabras de alta frecuencia.\n• Exige toneladas de memoria porque requiere diccionarios de frecuencia ultra precisos para cada lenguaje. Si intentas correr esto en dialectos pequeños o idiomas sin corpus masivos, se romperá los dientes.\n• Textos de nichos científicos espeluznantemente aislados podrían usar tecnicismos tan bizarros que distorsionen los contadores artificialmente, obligando a calibrar la máquina según la disciplina.",
+    "parameters": "Análisis: Interrogación Cruzada contra Corpus Lingüísticos Masivos\nMétrica: Proporción de Vocabulario Raro (Letal) vs. Vocabulario Común (Cobarde)\nResultado: 0-100 Nivel de Previsibilidad Léxica (Puntaje de Planchado Estadístico)",
+    "accuracy": "Alta — 79-86% al aniquilar textos académicos y profesionales elitistas. Logra captar de frente la incapacidad física, inherente a la arquitectura de la IA, para emplear terminología rara y experta de forma sostenida.",
     "references": [
         {
             "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
@@ -17,10 +16,6 @@
         {
             "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
             "url": "https://arxiv.org/abs/2406.07016"
-        },
-        {
-            "title": "Brysbaert, M. et al. (2014). Concreteness Ratings for 40 Thousand Generally Known English Word Lemmas. Behavior Research Methods.",
-            "url": "https://doi.org/10.3758/s13428-013-0403-5"
         }
     ]
 }

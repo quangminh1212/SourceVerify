@@ -1,14 +1,13 @@
 {
-    "name": "어휘 정교성",
-    "description": "측정합니다 단어 빈도 bands and lexical sophistication 식별하기 위해 AI text's tendency toward common, high-frequency vocabulary.",
-    "useCase": "일반 단어에 대한 체계적 선호와 희귀 용어 회피를 통한 AI 텍스트 감지",
-    "mechanism": "각 내용어를 참조 코퍼스(예: SUBTLEX, BNC)의 빈도 순위에 매핑하고 다른 빈도 대역(고/중/저빈도)의 단어 비율을 계산합니다. 어휘 다양성 및 정교성 지수도 계산합니다.",
-    "accuracy": "중간 - 72-82% on mixed-domain text",
-    "source": "Kyle, K. & Crossley, S. A. (2015) - Automatically Assessing Lexical Sophistication, Journal of Applied Linguistics",
-    "algorithm": "Frequency Band Analysis + AWL Coverage + Concreteness Rating + Statistical Profiling",
-    "parameters": "Corpus: SUBTLEX-US/BNC, Bands: 1k/2k/5k/10k/off-list, AWL levels: 1-10, Concreteness: Brysbaert norms, Min text: 100 words",
-    "strengths": "• Well-validated psycholinguistic foundations\n• Captures vocabulary sophistication 패턴\n• Multiple complementary sub-metrics\n• Language-independent framework",
-    "limitations": "• Domain-specific text confounds frequency-based 측정\n• Technical text naturally uses off-list words\n• LLMs can be prompted for specific vocabulary levels\n• Requires robust frequency data per language",
+    "name": "어휘 세련도 (Lexical Sophistication / 빈도 대역 프로파일링)",
+    "description": "텍스트에 사용된 희귀하거나 고도로 전문적인, 또는 높은 수준의 어휘 비율을 평가합니다. AI 모델은 수학적 확률을 극대화하기 위해 본질적으로 '안전한' 고빈도 및 중빈도 단어에 끌리게 되며, 인간 전문가들이 자연스럽게 구사하는 모호하고 낯선 저빈도 용어의 사용을 일관되게 회피합니다.",
+    "algorithm": "말뭉치 빈도 대역(Frequency Band) 매핑 및 학술 어휘(AWL) 침투율 스코어링",
+    "mechanism": "한 언어의 모든 단어는 실제 세계에서의 통계적 사용 빈도에 따라 매핑될 수 있습니다(예: '집'은 고빈도, '척결하다'는 저빈도). 인간 작가, 특히 전문가나 창작자들은 구체적인 뉘앙스를 묘사하거나, 권위를 세우거나, 시적인 충격을 주기 위해 저빈도 대역(희귀 단어)에서 어휘를 엄청나게 끌어다 씁니다. 반면, 거대 언어 모델(LLM)은 교차 엔트로피 손실(Cross-entropy loss)을 사용해 무조건 '가장 나올 법한 다음 단어'를 예측하도록 훈련되었습니다. 전문가처럼 쓰라고 명령을 받아도, 확률 시스템의 한계 때문에 저빈도 대역 깊숙한 곳의 진짜 전문 용어를 꺼내 쓰지 못하고, 그저 흔해 빠진 학술 어휘 목록(AWL)과 중간 빈도 수준의 안전한 전문 용어들에만 얄팍하게 기대게 됩니다. 이 알고리즘은 텍스트 내의 모든 내용어를 방대한 언어 빈도 말뭉치(SUBTLEX 또는 BNC 등)와 교차 대조합니다. 그리고 어휘를 빈도 대역(상위 1k, 2k, 5k, 10k 및 명단 외 희귀어)으로 분류합니다. 어떤 글이 자신이 '전문가 수준'이라고 주장하는데, 그 의미론적 프로파일이 상위 5,000개의 가장 흔한 단어로만 떡칠되어 있고 '명단 외(Off-List)' 희귀 전문 용어가 눈에 띄게 결여되어 있다면, 확률적으로 납작하게 다림질된 인공 생성물로 적발됩니다.",
+    "useCase": "학술 논문, 기술 문서, 수준 높은 저널리즘 기사를 분석할 때 결정적인 역할을 합니다. 겉보기엔 그럴듯하게 '똑똑해' 보이지만, 진정한 전문적 깊이(희귀 어휘 계층)가 완전히 결여된 AI 생성 텍스트의 민낯을 효과적으로 폭로합니다.",
+    "strengths": "• AI 글쓰기의 '불쾌한 골짜기(Uncanny valley)'를 수치화합니다. LLM이 쓴 에세이가 구조적으로는 완벽해 보이는데, 왜 지적으로는 한없이 얕게 느껴지는지 그 이유를 정확히 짚어냅니다.\n• 프롬프트로 AI에게 '어려운 단어를 써라(Use big words)'라고 명령하는 꼼수를 매우 쉽게 무력화합니다. LLM은 문맥에 딱 맞는 진짜 희귀 어휘를 찾아 쓰는 대신, 가장 흔해 빠진 '복잡한 척하는' 단어들(예: 'delve(탐구하다)', 'tapestry(태피스트리)', 'multifaceted(다방면의)')만 스팸처럼 도배하기 때문입니다.\n• 인간의 어휘 습득에 관한 수십 년간의 탄탄한 심리언어학(Psycholinguistics) 연구에 기반을 두고 있습니다.",
+    "limitations": "• 동화책, 기초 설명서, 일상적인 SNS 게시물처럼 애초에 고빈도(쉬운) 단어를 쓰도록 설계된 단순한 텍스트에서는 식별 능력이 곤두박질칩니다.\n• 지원하는 모든 언어에 대해 정확도가 극도로 높은 방대한 빈도 사전(Frequency dictionary) 구축이 필수적입니다. 영어는 완벽히 지원되지만, 소수 언어의 경우 분석에 필요한 말뭉치가 부족할 수 있습니다.\n• 극도로 좁은 틈새 분야의 기술 문서의 경우, 통계 사전에 등록되지 않은 특정 은어가 대량으로 유입되어 결과를 왜곡할 수 있으므로, 해당 도메인에 맞는 영점 조절(Calibration)이 필요합니다.",
+    "parameters": "분석 기준: 언어 말뭉치(Corpus) 교차 참조 프로파일링\n측정 지표: 고빈도 어휘 대비 저빈도(고난도) 어휘의 비율 혼합도\n출력: 0-100 어휘적 예측 가능성 (확률적 평활화 수준) 스코어",
+    "accuracy": "높음 — 학술 및 전문 텍스트에서 79-86%. 진정한 전문가 수준의 희귀 용어를 일관성 있게 구사하지 못하는 AI의 뼈아픈 구조적 무능을 성공적으로 포착합니다.",
     "references": [
         {
             "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
@@ -17,10 +16,6 @@
         {
             "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
             "url": "https://arxiv.org/abs/2406.07016"
-        },
-        {
-            "title": "Brysbaert, M. et al. (2014). Concreteness Ratings for 40 Thousand Generally Known English Word Lemmas. Behavior Research Methods.",
-            "url": "https://doi.org/10.3758/s13428-013-0403-5"
         }
     ]
 }

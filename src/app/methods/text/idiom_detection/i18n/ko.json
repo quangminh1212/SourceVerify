@@ -1,14 +1,13 @@
 {
-    "name": "Idiom Detection",
-    "description": "Detects idiomatic expression usage",
-    "algorithm": "Idiom Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects idiomatic expression usage. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through idiom detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "관용구 및 속어 (Idiomatic Expression) 밀도",
+    "description": "관용구나 구어체 표현의 출현 빈도, 상황적 적합성 및 자연스러움을 평가합니다. AI 모델은 특정 문화권에 종속된 지역적 관용 어구를 본능적으로 기피하며, 억지로 사용하도록 강제받을 때조차도 뻔한 관용구를 어색하게 욱여넣거나 글자 그대로 번역(Literal translation)하는 촌극을 벌입니다.",
+    "algorithm": "비유적 어휘(Non-Literal Lexical) 밀도 및 문화적 구문 탐지",
+    "mechanism": "관용구('식은 죽 먹기', '귀가 얇다', '발을 빼다')는 언어적 돌연변이들입니다. 이것들은 특정 문화에 깊이 뿌리박혀 있어서, 단어 뜻 그대로의 직역을 완벽히 거부하며, 작가와 독자 사이의 암묵적인 '문화적 공감대'에 전적으로 의존합니다. 하지만 거대 언어 모델(LLM)은 전 세계 모든 사용자가 이해할 수 있는 '친절한 비서'가 되도록 훈련받았습니다. 따라서 그들의 핵심 확률 회로는 자칫 외국인 사용자를 혼란스럽게 만들 수 있는 고도로 지역화된 비유적 관용구를 적극적으로 탄압합니다. 만약 사용자가 AI에게 '친근하게 말해봐' 혹은 '요즘 유행어 좀 써봐'라고 강제하면, AI는 통계상 가장 흔해 빠진 클리셰(Cliché) 관용구 하나를 골라잡아 문맥에 전혀 녹아들지 않게 억지로 쑤셔 넣습니다. 이 알고리즘은 텍스트를 수천 개의 언어 장벽이 있는 관용구, 구동사, 구어체가 담긴 거대한 문화별 사전과 대조합니다. 그리고 텍스트의 '관용구 밀도'를 측정합니다. 당연히 친근하고 일상적인 말투가 나와야 할 글에 관용구가 씨가 말라 있거나, 누구나 다 아는 교과서적 관용구가 기계적으로 딱딱하게 끼워져 있다면, 이 글은 수학적으로 합성된 가짜로 판정됩니다.",
+    "useCase": "작가의 풍부한 은유적, 문학적 언어 사용 능력이 핵심이 되는 창작 글, 개인 블로그 포스팅, 편안한 이메일, 마케팅 문구 및 문학 작품을 검증하는 데 필수적인 도구입니다.",
+    "strengths": "• 일상적인 텍스트에서 압도적인 위력을 발휘합니다. 인간의 구어체 글은 태생적으로 지저분하고 관용구로 떡칠이 되어 있지만, AI는 아무 영혼도 없이 전 세계가 이해하는 무균실 언어를 기본값으로 씁니다.\n• '관용구 환각(Idiom Hallucination)'을 잡아냅니다. 이는 AI가 그럴싸한 관용구처럼 들리지만 실제 해당 문화권(ex. 한국)에는 존재하지도 않는 엉터리 속담을 지어내는 현상을 말합니다.\n• 단순 동의어 교체(Synonym-swapping) 꼼수를 가볍게 박살냅니다. 관용구 안의 단어를 동의어로 바꾸면 관용구 자체의 의미가 아예 파괴되기 때문입니다.",
+    "limitations": "• 정규 학술 논문, 법률 계약서, 또는 기술 매뉴얼에서는 완전히 무용지물입니다. 이런 글에서는 인간조차도 관용구의 사용을 엄격히 통제받기 때문입니다.\n• 지원하는 모든 언어와 심지어 지역적 방언(ex. 영국 영어 vs 미국 영어)에 대해 끝없이 교정되고 업데이트되는 거대한 딕셔너리를 유지보수해야만 돌아갑니다.\n• 현지인과 명확한 의사소통을 위해 일부러 관용구를 피하며 조심스럽게 글을 쓰는 비원어민(외국인)의 글을 억울하게 AI로 잡을 수 있습니다.",
+    "parameters": "분석 기준: 문화별 관용구 딕셔너리 기반 N-gram 매칭\n측정 지표: 비유적/관용적 구문 vs 표준 사전적 구문의 비율\n출력: 0-100 관용적 살균도 (문화적 정체성 이탈도) 스코어",
+    "accuracy": "보통에서 높음 — 비공식적, 창의적, 설득형 텍스트에서 75-85%. AI가 가진 '전 세계적으로 표준화된 무채색의 중립성'을 철저히 까발리는 훌륭한 문화적 지문(Fingerprinting) 감식기입니다.",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

@@ -1,22 +1,17 @@
 {
-    "name": "Detección de Lenguaje Hedging",
-    "description": "Detecta patrones of cobertura and epistemic markers en texto, as AI tends to use excessive cautious language and qualifiers.",
-    "useCase": "Identifying generado por IA text through overuse of uncertainty markers and safety qualifiers",
-    "mechanism": "Identifica cobertura expressions (modal verbs: 'might', 'could', 'may'; adverbs: 'potentially', 'possibly', 'arguably'; phrases: 'it is worth noting', 'it should be mentioned') and computes their frequency relative to assertive language. AI systems, especially instruction-tuned models, systematically overuse cobertura to appear balanced and avoid making definitive claims, creating a measurable estadístico signature.",
-    "accuracy": "Moderada - 70-80% precisión",
-    "source": "Liang, W. et al. (2024) - Mapping the Increasing Use of LLMs in Scientific Papers, arXiv",
-    "algorithm": "Hedging Lexicon Matching + Assertiveness Ratio + Modal Verb Frequency Analysis",
-    "parameters": "Hedge lexicon: 200+ expressions, Categories: epistemic/approximative/plausibility shields, Ratio: hedge-to-assertion, Normalization: per 100 words",
-    "strengths": "• Captura un sesgo sistemático conocido de los LLM ajustados por instrucciones\n• Funciona bien en texto académico y profesional\n• Bajo costo computacional\n• Resultados fáciles de interpretar",
-    "limitations": "• Scientific writing naturally contains cobertura\n• Cultural differences affect cobertura norms\n• Base models hedge less than RLHF-tuned ones\n• Simple paraphrasing can remove cobertura",
+    "name": "Densidad de Lenguaje Evasivo y Cauteloso",
+    "description": "Cuantifica la densidad del lenguaje 'evasivo' o de protección (ej., 'potencialmente', 'podría argumentarse', 'vale la pena señalar'). Debido al sádico entrenamiento de seguridad RLHF, los modelos de IA abusan compulsivamente de marcadores epistémicos para lavarse las manos y evitar hacer declaraciones definitivas y absolutas.",
+    "algorithm": "Densidad de Marcadores Epistémicos & Extracción de Escudos de Plausibilidad",
+    "mechanism": "Cuando los humanos escriben con confianza, hacen afirmaciones sangrientas y definitivas ('El proyecto fracasó por culpa de X'). Solo cuando realmente no están seguros usan evasivas naturales ('Creo que tal vez X lo causó'). Sin embargo, los Grandes Modelos de Lenguaje son castigados brutalmente durante el RLHF (Aprendizaje por Refuerzo de Retroalimentación Humana) por atreverse a tener 'alucinaciones' o dar respuestas absolutas e incorrectas. Esto crea un trauma matemático profundamente arraigado hacia la 'seguridad epistémica'. El modelo, temblando de miedo, instintivamente amortiguará casi todas sus oraciones con escudos de plausibilidad asquerosos ('Se puede argumentar que', 'Es importante considerar', 'Podría potencialmente conducir a'). Este algoritmo escanea el texto contra un diccionario negro de más de 200 marcadores evasivos conocidos, categorizados en verbos epistémicos (podría, quizás), aproximadores (aproximadamente, un poco) y escudos de plausibilidad legal. Calcula la proporción de declaraciones 'acolchadas' contra afirmaciones absolutas. Si un texto se lee como un aviso de descargo de responsabilidad corporativo, hiper-cauteloso y cobarde—careciendo del ritmo humano natural de tomar una postura firme y morir por ella—genera una advertencia letal de esterilidad algorítmica.",
+    "useCase": "El francotirador perfecto para auditar ensayos persuasivos, columnas de opinión, análisis técnicos y comunicaciones empresariales decisivas donde se espera y se exige que los autores humanos tomen posturas irrefutables.",
+    "strengths": "• Es pura poesía maliciosa: explota y usa en su contra las mismas barandillas de seguridad integradas a la fuerza en todos los LLM comerciales principales (GPT-4, Claude, Gemini), convirtiendo su obligatoria 'precaución educada' en su propia sentencia de muerte.\n• Excelente para atrapar a la IA cuando intenta responder a un prompt altamente subjetivo o legalmente sensible, ya que los gatillos de seguridad de la máquina encenderán sus escudos evasivos al nivel máximo.\n• Computacionalmente es un peso pluma, y la evidencia que arroja ('mira, usó 15 veces la palabra potencial') es absurdamente fácil de interpretar.",
+    "limitations": "• Sufre de masacres por falsos positivos al analizar escritura académica y científica real (donde los científicos son entrenados profesionalmente para ser cobardes y usar evasivas, ej., 'Estos resultados sugieren una correlación potencial').\n• Completamente estéril e inútil contra modelos 'Base' (sin entrenamiento de instrucciones) o modelos de código abierto salvajes y sin censura que no han sido lobotomizados por las reglas de seguridad de RLHF.\n• Trágicamente fácil de evadir: basta con una simple edición humana o un prompt agresivo que le ordene a la IA 'escribe con una certeza absoluta, arrogante y sin dudas', y el radar se vuelve ciego.",
+    "parameters": "Análisis: Extracción Violenta de Escudos Epistémicos y Aproximativos\nMétrica: Proporción de Frases Evasivas Cobardes vs Afirmaciones Absolutas / 100 palabras\nResultado: 0-100 Puntaje de Precaución Defensiva (Nivel de Lavado de Cerebro RLHF)",
+    "accuracy": "Media a Alta — 70-80% en contextos de pura argumentación o persuasión. Actúa como una huella conductual hiper-confiable de una IA alineada por RLHF que está aterrorizada de asumir responsabilidades.",
     "references": [
         {
             "title": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.",
             "url": "https://arxiv.org/abs/2404.01268"
-        },
-        {
-            "title": "Hyland, K. (2005). Metadiscourse: Exploring Interaction in Writing. Continuum.",
-            "url": "https://doi.org/10.5040/9781350934016"
         },
         {
             "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",

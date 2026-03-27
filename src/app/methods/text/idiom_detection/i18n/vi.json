@@ -1,12 +1,21 @@
 {
-    "name": "Phát hiện thành ngữ",
-    "description": "Phát hiện sử dụng thành ngữ",
-    "algorithm": "Thuật toán phân tích Phát hiện thành ngữ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện sử dụng thành ngữ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phát hiện thành ngữ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Thành Ngữ, Tục Ngữ (Idiomatic Expression)",
+    "description": "Đánh giá tần suất, độ chính xác và tính tự nhiên trong ngữ cảnh của các thành ngữ và cách nói thông tục. Các mô hình AI có xu hướng né tránh từ ngữ mang tính văn hóa địa phương, và khi bị ép dùng, chúng thường nhét các thành ngữ phổ biến vào một cách vụng về hoặc hiểu theo nghĩa đen.",
+    "algorithm": "Mật Độ Từ Vựng Bóng Bẩy & Phát Hiện Cụm Từ Văn Hóa",
+    "mechanism": "Thành ngữ ('tiền trảm hậu tấu', 'kẻ cắp gặp bà già') là những khối dị thường về mặt ngôn ngữ. Chúng gắn liền sâu sắc với các nền văn hóa cụ thể, hoàn toàn bất chấp logic dịch thuật theo nghĩa đen, và phụ thuộc rất nhiều vào sự thấu hiểu ngầm về bối cảnh giữa người viết và người đọc. Bởi vì các LLM được huấn luyện để tối đa hóa sự rõ ràng và có thể tiếp cận được trên toàn cầu nhằm hoạt động như một trợ lý hữu ích, nên các phân phối xác suất cốt lõi của chúng chủ động triệt tiêu các thành ngữ bóng bẩy, mang tính địa phương cao, có thể gây nhầm lẫn cho người dùng quốc tế. Khi một AI bị yêu cầu rõ ràng là 'hãy viết tự nhiên' hoặc 'dùng tiếng lóng', nó thường với tay lấy những thành ngữ rập khuôn, phổ biến nhất trên mặt thống kê và nhét chúng vào một cách đột ngột, thiếu đi sự pha trộn cú pháp tinh tế mà con người thường làm. Thuật toán này đối chiếu văn bản với một từ điển khổng lồ chứa hàng ngàn thành ngữ, cụm động từ và tiếng lóng đặc thù của từng ngôn ngữ. Nó đo lường 'Mật độ Thành ngữ' của văn bản. Sự vắng mặt hoàn toàn của ngôn ngữ thành ngữ trong một văn bản đáng lẽ phải là lời nói đời thường của con người, hoặc sự xuất hiện của những thành ngữ quá dễ đoán bị nhồi nhét một cách gượng gạo, sẽ cắm cờ đỏ đánh dấu báo hiệu nội dung đó được tổng hợp bằng toán học.",
+    "useCase": "Đặc biệt cần thiết để đánh giá văn bản sáng tạo, bài đăng trên blog cá nhân, email thân mật, bài PR quảng cáo và văn học, nơi các tác giả con người tự nhiên sử dụng thứ ngôn ngữ ẩn dụ phong phú.",
+    "strengths": "• Cực kỳ hiệu quả trên văn bản đời thường; văn phong thông tục của con người vốn dĩ lộn xộn và giàu thành ngữ, trong khi AI luôn chọn cách diễn đạt vô trùng, ai cũng hiểu được.\n• Bắt thóp được 'Ảo giác Thành ngữ'—nơi một mô hình AI bịa ra một cụm từ nghe có vẻ giống như một câu tục ngữ nhưng thực chất không hề tồn tại trong văn hóa đó.\n• Chống lại kỹ thuật tráo đổi từ đồng nghĩa, vì việc thay thế một từ trong thành ngữ thường phá hủy hoàn toàn ý nghĩa của nó.",
+    "limitations": "• Hoàn toàn vô nghĩa đối với các bài báo học thuật chính thống, hợp đồng pháp lý hoặc tài liệu kỹ thuật, nơi văn phong của con người cũng cấm tiệt việc sử dụng thành ngữ.\n• Phụ thuộc nhiều vào việc duy trì các từ điển thành ngữ văn hóa được cập nhật liên tục cho từng ngôn ngữ và phương ngữ khu vực (ví dụ: tiếng Anh Mỹ và tiếng Anh Anh).\n• Có thể đánh cờ đỏ nhầm đối với các bài viết của những người không phải là người bản ngữ, những người đang chủ động tránh dùng thành ngữ để đảm bảo họ được hiểu một cách rõ ràng.",
+    "parameters": "Kiểm Định: Đối Chiếu N-gram Với Từ Điển Thành Ngữ Văn Hóa\nThước Đo: Tỷ Lệ Cách Diễn Đạt Thành Ngữ Bóng Bẩy vs Thông Tin Nghĩa Đen Tiêu Chuẩn\nĐầu Ra: 0-100 Điểm Vô Hồn Thành Ngữ (Sự Tách Rời Văn Hóa)",
+    "accuracy": "Khá đến Cao — 75-85% trong các văn bản đời thường, sáng tạo hoặc thuyết phục. Nó đóng vai trò như một công cụ lấy dấu vân tay văn hóa mạnh mẽ, vạch trần thế đứng trung lập được tiêu chuẩn hóa toàn cầu của AI.",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

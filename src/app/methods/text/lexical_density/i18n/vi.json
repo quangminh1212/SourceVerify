@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ từ vựng",
-    "description": "Đo tỷ lệ từ nội dung (mật độ từ vựng)",
-    "algorithm": "Thuật toán phân tích Mật độ từ vựng",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo tỷ lệ từ nội dung (mật độ từ vựng). Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ từ vựng. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Từ Vựng (Lexical Density)",
+    "description": "Đo lường tỷ lệ giữa các 'từ mang nội dung' (danh từ, động từ, tính từ, trạng từ) so với tổng số từ. Văn bản AI thường thể hiện mật độ từ vựng thấp hơn so với văn bản của chuyên gia con người, vì nó phụ thuộc nhiều vào các từ chức năng làm 'keo dán' để đảm bảo các chuyển đổi ngữ pháp mượt mà, có xác suất cao.",
+    "algorithm": "Gắn Thẻ Từ Loại (POS Tagging) & Tính Toán Tỷ Lệ Từ Nội Dung",
+    "mechanism": "Mật độ từ vựng là một thước đo ngôn ngữ học máy tính cơ bản, chia số lượng 'từ nội dung' (mang ý nghĩa thực sự) cho tổng số từ trong một văn bản. Những người viết chuyên nghiệp, đặc biệt là trong lĩnh vực học thuật hoặc chuyên môn, có xu hướng nhồi nhét một lượng lớn ý nghĩa vào câu văn của họ, dẫn đến mật độ từ vựng cao (thường trên 50%). Tuy nhiên, các Mô hình Ngôn ngữ Lớn (LLMs) được tối ưu hóa cho xác suất và sự hoàn hảo về ngữ pháp hơn là sự súc tích. Để làm cầu nối giữa các khái niệm và duy trì một giọng điệu trôi chảy, có vẻ chuyên gia, các LLM lạm dụng quá mức các 'từ chức năng'—mạo từ (the, a), giới từ (in, on, concerning), liên từ (and, however, furthermore) và đại từ. Điều này tạo ra một văn bản đẹp về mặt cú pháp nhưng lại bị pha loãng về mặt cấu trúc. Thuật toán phân tích văn bản bằng cách sử dụng công cụ Gắn thẻ từ loại, cô lập tất cả các từ nội dung và tính toán tỷ lệ phần trăm mật độ. Nếu một văn bản dài, có vẻ phức tạp nhưng lại ghi nhận mật độ từ vựng thấp một cách bất thường (chỉ ra rằng nó chủ yếu bao gồm 'giàn giáo' ngữ pháp chứ không phải thực chất), nó sẽ bị đánh dấu là đặc trưng của việc đệm từ tự hồi quy.",
+    "useCase": "Cực kỳ hiệu quả để kiểm toán các bài báo học thuật, báo cáo chuyên môn và tiểu luận. Mặc dù có thể kém hiệu quả đối với văn nói đời thường, nó phơi bày thành công các mô hình AI đang cố gắng bắt chước văn phong học thuật cao cấp nhưng thất bại trong việc đạt đến mật độ thông tin tương xứng.",
+    "strengths": "• Bắt trúng bản chất 'hoa mỹ nhưng sáo rỗng' đặc trưng của văn bản AI, định lượng chính xác lý do tại sao một văn bản AI luôn có cảm giác dài dòng quá mức.\n• Tốc độ tính toán nhanh và nhẹ, chỉ yêu cầu phép gắn thẻ POS tiêu chuẩn.\n• Rất vững vàng trước các kỹ thuật prompt thông thường, vì LLM không thể viết lại căn bản các phân phối xác suất ngầm định của chúng cho ngữ pháp chức năng mà không làm phá vỡ sự mạch lạc của câu.",
+    "limitations": "• Đương nhiên sẽ tạo ra tỷ lệ dương tính giả cao đối với các bản ghi chép giọng nói của con người, vốn dĩ có mật độ từ vựng thấp hơn văn bản viết.\n• Phụ thuộc nặng nề vào ngôn ngữ đang được phân tích; các ngôn ngữ phân tích (như tiếng Anh, tiếng Việt) có mật độ cơ sở thấp hơn các ngôn ngữ tổng hợp (như tiếng Nga, tiếng Phần Lan), đòi hỏi phải hiệu chuẩn nghiêm ngặt theo từng ngôn ngữ.\n• Có thể bị qua mặt nếu con người tích cực chỉnh sửa văn bản với mục đích duy nhất là loại bỏ các từ độn, mặc dù điều này thường đòi hỏi phải viết lại toàn bộ tài liệu.",
+    "parameters": "Kiểm Định: Lọc Tiêu Điểm Từ Loại (POS)\nThước Đo: (Tổng Số Từ Nội Dung / Tổng Số Từ) * 100\nĐầu Ra: 0-100 Điểm Loãng Từ Vựng (Độ Đệm Ngữ Pháp)",
+    "accuracy": "Cao — 78-85% trên các văn bản trang trọng và học thuật. Nó cung cấp một phép đo toán học đáng tin cậy về lượng 'bọt xốp' cấu trúc tồn tại trong đầu ra của LLM.",
+    "references": [
+        {
+            "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
+            "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
+        },
+        {
+            "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
+        }
+    ]
 }

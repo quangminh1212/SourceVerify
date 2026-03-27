@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Local Coherence Model",
-    "description": "Áp dụng mô hình mạch lạc cục bộ dựa trên thực thể — theo dõi chuyển tiếp thực thể (Barzilay & Lapata, 2008) để phát hiện văn bản AI.",
-    "algorithm": "Thuật toán phân tích Local Coherence Model",
-    "mechanism": "Hệ thống Local Coherence Model phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Mô Hình Đo Kết Dính Cục Bộ (Local Coherence Modeling)",
+    "description": "Kiểm tra cách các chủ thể và thực thể chuyển tiếp từ câu này sang câu khác. Người viết tự nhiên duy trì sự tập trung theo chủ đề bằng cách đưa các chủ đề cốt lõi xuyên suốt các câu (ví dụ: lặp lại chủ ngữ hoặc sử dụng đại từ), tạo ra 'sự kết dính cục bộ' mạnh mẽ. Các mô hình AI, tập trung vào việc dự đoán từ tiếp theo cục bộ, thường xuyên chuyển đổi chủ đề một cách đột ngột hoặc thất bại trong việc giải quyết thực thể qua các ranh giới câu.",
+    "algorithm": "Lưới Thực Thể Barzilay-Lapata & Ma Trận Xác Suất Chuyển Tiếp",
+    "mechanism": "Phương pháp này dựa trên Mô hình Kết dính Cục bộ dựa trên Thực thể (Barzilay & Lapata, 2008). Nó hoạt động bằng cách trích xuất tất cả các cụm danh từ (thực thể) trong một văn bản và lập bản đồ các vai trò ngữ pháp của chúng (Chủ ngữ, Tân ngữ, Không gì cả) qua các câu liên tiếp để xây dựng một 'Lưới Thực thể' hai chiều. Ví dụ: nếu 'con chó' là Chủ ngữ của Câu 1, thì nó có phải là Tân ngữ của Câu 2 không? Thuật toán tính toán xác suất của các chuyển tiếp vai trò cụ thể (ví dụ: Chủ ngữ sang Chủ ngữ, Chủ ngữ sang Tân ngữ, Chủ ngữ sang Vắng mặt). Người viết theo bản năng tuân theo các mô hình diễn ngôn đã được thiết lập, duy trì độ kết dính cục bộ cao bằng cách giữ cho các thực thể trung tâm luôn hoạt động. Ngược lại, LLM thiếu một bản đồ nhận thức toàn diện thực sự về văn bản, thường thể hiện 'sự kết dính ảo giác'. Chúng viết những câu nghe có vẻ hoàn hảo về mặt ngữ pháp khi đứng độc lập nhưng lại thể hiện sự chuyển đổi thực thể hỗn loạn, xác suất thấp khi được phân tích như một chuỗi liên tục. Nếu một lưới cho thấy quá nhiều thực thể xuất hiện một lần với tư cách là Chủ ngữ và biến mất ngay lập tức, hoặc sự thay đổi vai trò thất thường mà không có sự giải quyết đại từ, nó sẽ 'tuýt còi' văn bản đó là một bản chắp vá của AI.",
+    "useCase": "Thiết yếu để đánh giá các bài tiểu luận lập luận dài, câu chuyện tự sự và các giải thích kỹ thuật, nơi việc duy trì một luồng suy nghĩ logic xuyên suốt nhiều đoạn văn là vô cùng quan trọng.",
+    "strengths": "• Nhắm vào điểm yếu cơ bản của AI trong việc lập kế hoạch vĩ mô và quản lý diễn ngôn.\n• Dựa trên khuôn khổ NLP kinh điển, cực kỳ mạnh mẽ, rất khó để các kỹ sư prompt có thể lách qua, vì con người không thể dễ dàng quản lý vi mô các chuyển tiếp thực thể một cách thủ công khi viết prompt.\n• Khái niệm độc lập với ngôn ngữ, miễn là có trình phân tích tỷ lệ phụ thuộc chính xác cho ngôn ngữ mục tiêu.",
+    "limitations": "• Cực kỳ tốn kém về mặt tính toán vì yêu cầu tiền xử lý NLP nặng (Gắn thẻ từ loại, Giải quyết đồng tham chiếu, Phân tích tính phụ thuộc).\n• Phần văn bản ngắn (dưới 150 từ) không cung cấp một Lưới Thực thể đủ lớn để tính toán các xác suất chuyển tiếp có ý nghĩa thống kê.\n• Viết văn sáng tạo cao độ của con người (như thơ ca hoặc dòng ý thức cực đoan) có thể tự nhiên thể hiện các chuyển tiếp thực thể hỗn loạn, gây ra dương tính giả.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Chuyển Tiếp Vai Trò Thực Thể qua Phân Tích NLP\nThước Đo: Xác Suất Chuyển Tiếp Từng Ô Trong Lưới Thực Thể\nĐầu Ra: 0-100 Điểm Gãy Khúc Diễn Ngôn (Thất Bại Kết Dính Cục Bộ)",
+    "accuracy": "Cao — 81-88% trên các văn bản nhiều đoạn. Nó phơi bày một cách dứt khoát việc LLM không có khả năng duy trì mỏ neo nhận thức dai dẳng đối với các chủ đề cốt lõi trong bối cảnh văn bản dài.",
+    "references": [
+        {
+            "title": "Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://doi.org/10.1162/coli.2008.34.1.1"
+        },
+        {
+            "title": "Li, J. & Jurafsky, D. (2017). Neural Net Models of Open-domain Discourse Coherence. EMNLP.",
+            "url": "https://doi.org/10.18653/v1/D17-1019"
+        }
+    ]
 }

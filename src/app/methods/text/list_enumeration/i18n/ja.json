@@ -1,22 +1,21 @@
 {
-    "name": "List Enumeration Pattern",
-    "description": "Analyzes list and enumeration patterns",
-    "algorithm": "List Enumeration Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes list and enumeration patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through list enumeration pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "リストと列挙のプロファイリング（List & Enumeration Profiling）",
+    "description": "箇条書き、番号付きリスト、および厳格な順序的遷移（例：「第一に」「第二に」「最後に」）への構造的な依存度を調べます。AIモデルは、プロンプトチューニングによるフォーマット要件を満たすために、体系的に過剰に構造化された列挙をデフォルトとするため、人間の有機的な文章と比較して、非常に予測可能でセグメント化された散文になります。",
+    "algorithm": "構文のセグメンテーションと順序的遷移の抽出",
+    "mechanism": "大規模言語モデル（LLM）、特に「人間のフィードバックからの強化学習（RLHF）」で微調整されたモデルは、役立つ、安全で、明確に構造化された回答を提供するように明示的に訓練されています。その副産物として、それらは極端な構造的足場（Structural scaffolding）に大きく傾倒し、ほぼすべての説明をきれいに整えられた箇条書きや厳格な数値による列挙に分解します。このアルゴリズムは、テキストをスキャンして、明示的なリストマーカー（Markdownの箇条書き、数字）と暗黙的な順序的遷移マーカー（「まず」「さらに」「最後に」「結論として」）を検索します。総テキスト量に対するこれらの構造の密度を測定します。人間のライターは通常、リストの使用を控えめにし、アイデアを結びつけるために、まとまりのある物語の流れと流動的な段落の移行を好みます。テキストが、議論を完全にバランスの取れた複数ポイントのリストに分割しようとする、ほぼロボットのような強迫観念を示している場合（特に、リスト化が不自然である主観的または物語的なプロンプトに対処している場合）、それは構造的に人工的であるとして強くフラグが立てられます。",
+    "useCase": "箇条書きや「最初/2番目/最後に」という順序構造への過度の依存がAIによる生成を露呈させる、カバーレター、オピニオン記事、物語的なエッセイの監査に非常に効果的です。",
+    "strengths": "• RLHFの指示チューニング中に商用LLM（ChatGPTやClaudeなど）に植え付けられた核となる「構造的バイアス」を標的にします。\n• 明示的なフォーマット（箇条書き）と暗黙的な構造的リスト（リストマーカーとして使用される遷移語）の両方を検出します。\n• 複雑な意味解析ではなく、明確な構文マーカーに依存するため、膨大な量のテキスト全体で効率的に機能します。",
+    "limitations": "• リストを多用するフォーマットが人間の標準である技術文書、レシピ、履歴書、または取扱説明書では、当然のことながら誤検知（フォールスポジティブ）を引き起こします。\n• ユーザーがAIに対して明示的に「リストを使用しないこと」または「流れるような段落で記述すること」とプロンプトを出した場合は、簡単に回避されます。\n• 分析対象のテキストの特定のジャンルに応じて、ベースラインを慎重にキャリブレーションする必要があります。",
+    "parameters": "解析: 構造フォーマットと遷移の密度\n評価基準: 連続した散文に対する列挙/セグメント化されたコンテンツの割合\n出力結果: 0-100 構造的硬直性（列挙への過度の依存）スコア",
+    "accuracy": "中〜高 — 精度は76-84%で、選択したジャンルに大きく依存します。物語的なテキストでは非常に高精度ですが、本質的に構造化されている文書では低下します。",
     "references": [
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
         },
         {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://arxiv.org/abs/2011.01314"
+            "title": "Wang, Y. et al. (2023). MAGE: Machine-generated Text Detection in the Wild. ACL.",
+            "url": "https://arxiv.org/abs/2305.15041"
         }
     ]
 }

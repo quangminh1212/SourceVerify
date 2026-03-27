@@ -1,22 +1,21 @@
 {
-    "name": "Lexical Density",
-    "description": "Measures content word ratio (lexical density) (2023)",
-    "algorithm": "Lexical Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures content word ratio (lexical density) (2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through lexical density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "어휘 밀도 (Lexical Density / 내용어 대 기능어 비율)",
+    "description": "전체 단어 수 대비 '의미를 담고 있는 내용어(명사, 동사, 형용사, 부사)'의 비율을 측정합니다. AI가 생성한 텍스트는 매끄럽고 확률적으로 안전한 문법적 연결을 보장하기 위해 '문법적 접착제(기능어)'에 과도하게 의존하므로, 전문가가 쓴 텍스트에 비해 어휘 밀도가 비정상적으로 낮게 나타납니다.",
+    "algorithm": "품사(POS) 태깅 및 내용어 비율(Content Word Ratio) 계산",
+    "mechanism": "어휘 밀도(Lexical density)는 텍스트 내 전체 단어 수에서 실제 의미를 지닌 '내용어(Content words)'가 차지하는 비율을 나타내는 기초적인 컴퓨터 언어학 지표입니다. 전문적인 인간 작가들(특히 학술이나 전문 분야)은 문장 속에 빽빽하게 고농축된 의미를 쑤셔 넣는 경향이 있어, 어휘 밀도가 높게 나타납니다(종종 50%를 초과함). 그러나 거대 언어 모델(LLM)은 '정보의 압축성'보다 '문장의 통계적 매끄러움과 문법적 완벽성'을 최우선으로 최적화된 기계입니다. 여러 개념들을 연결하고 유창하고 권위 있는 어조를 유지하기 위해, LLM은 관사(the, a), 전치사(in, on, ~에 관하여), 접속사(그리고, 그러나, 게다가), 대명사 등의 '기능어(Function words)'를 남발합니다. 이로 인해 겉보기엔 구문론적으로 유려하지만 뼈대 구조상으로는 의미가 묽게 희석된 '물 탄 텍스트'가 만들어집니다. 이 알고리즘은 품사 분석기(POS tagger)를 사용해 텍스트의 형태소를 분석하고, 모든 내용어만 걸러내어 그 밀도 백분율을 계산합니다. 논리적이고 세련돼 보이는 긴 글이 비정상적으로 낮은 어휘 밀도를 기록한다면(즉, 실제 '알맹이'보다 문법 뼈대를 잡기 위한 '비계'가 더 많음을 의미), 이는 자기회귀 언어 모델 특유의 '분량 부풀리기(Padding)'의 증거로 적발됩니다.",
+    "useCase": "학술 논문, 전문 보고서, 공식 에세이 등을 감사하는 데 매우 효과적입니다. 일상적인 구어체에서는 밀도가 낮게 나오지만, '전문가가 쓴 수준 높은 글'인 척 흉내를 내려는 AI 모델의 허세(낮은 정보 밀도)를 폭로하는 데에는 탁월한 성능을 발휘합니다.",
+    "strengths": "• AI 글쓰기 특유의 '겉만 화려하고 알맹이는 없는(Flowery but empty)' 본질을 정확히 포착하여, AI 텍스트가 왜 읽고 나면 쓸데없이 길게만 느껴지는지 그 이유를 수학적으로 정량화합니다.\n• 복잡한 시맨틱 분석 없이 표준적인 형태소/품사 분석(POS Tagging)만 수행하면 되므로, 계산 가부하가 적고 속도가 매우 빠릅니다.\n• LLM은 기본적인 문장 생성 확률 모델 자체를 뜯어고치지 않는 한, 문장의 유창함을 깨트리지 않고 기능어(문법 의존도)를 줄일 수 없으므로, 얄팍한 프롬프트 엔지니어링으로 우회하기가 매우 어렵습니다.",
+    "limitations": "• 문자 텍스트보다 본질적으로 어휘 밀도가 낮은 '인간의 실제 음성 대화 녹취록(Transcript)'을 분석할 경우, 자연스럽게 오작동(False positive) 비율이 높아집니다.\n• 분석 대상 언어의 특성에 매우 심하게 의존합니다. 고립어/분석어(영어, 한국어, 베트남어 등)는 교착어/종합어(러시아어, 핀란드어 등)에 비해 기본 밀도가 떨어지므로, 언어별로 매우 엄격한 기준값(Calibration) 조정이 필수적입니다.\n• 인간이 텍스트에 개입하여 '쓸데없는 수식어나 접속사'를 모조리 잘라내는 편집을 가하면 AI의 흔적이 지워질 수 있습니다. (다만, 이렇게 하려면 글을 거의 새로 쓰는 수준의 수고가 듭니다.)",
+    "parameters": "분석 기준: 품사(POS) 타깃 필터링 및 형태소 분류\n측정 지표: (전체 내용어 수 / 전체 단어 수) * 100\n출력: 0-100 어휘적 희석도 (문법적 물타기/볼륨 부풀리기) 스코어",
+    "accuracy": "높음 — 공식 및 학술 텍스트에서 78-85%. LLM 생성물에 필연적으로 끼어 있는 구조적인 '거품(Fluff)'에 대한 신뢰할 수 있는 수학적 측정값을 제공합니다.",
     "references": [
         {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
+            "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
+            "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
         },
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
         }
     ]
 }

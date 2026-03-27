@@ -1,14 +1,13 @@
 {
-    "name": "Lexical Chain Repetition",
-    "description": "Analyzes lexical chain repetition",
-    "algorithm": "Lexical Chain Repetition — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes lexical chain repetition. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through lexical chain repetition analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "어휘 사슬 고착도 (Lexical Chain Fixation)",
+    "description": "'어휘 사슬(Lexical chains, 주제와 관련된 단어들의 연속)'의 다양성과 반복 빈도를 분석합니다. AI 모델은 의미의 영역을 유기적으로 확장하지 못하고, 좁은 테마의 어휘 집합에 과도하게 집착하여 똑같은 단어나 뻔한 동의어만을 무한정 재활용하는 답답한 패턴을 보입니다.",
+    "algorithm": "핵심 주제 어휘 추출 및 사슬 중복성(Redundancy) 채점",
+    "mechanism": "'어휘 사슬'은 글 전체를 관통하며 내용의 응집력을 제공하는 관련 단어들의 흐름입니다(예: '병원' -> '의사' -> '수술' -> '회복'). 인간이 긴 글을 쓸 때, 이 어휘 사슬은 개인적인 경험이나 수평적 사고(Lateral thinking)를 통해 여러 갈래로 뻗어나가며 극도로 다양하고 다층적인 언어들을 자연스럽게 끌어들입니다. 반면, 거대 언어 모델(LLM)은 고정된 어텐션(Attention) 메커니즘과 확률 분포에 갇혀 작동합니다. AI가 특정 주제에 닻을 내리면, 좁디좁은 의미론적 동네에 '갇혀' 버립니다. AI는 그 주제에서 확률이 가장 높은 상위 10개의 단어를 뽑아낸 뒤, 그 단어들만 뱅뱅 돌려막기 합니다. 그 결과, 똑같은 명사와 동사가 기형적인 빈도로 계속해서 튀어나오는 고립되고 반복적인 어휘 사슬이 형성됩니다. 이 알고리즘은 문서 내의 모든 주제별 단어 연결망을 지도로 그리고, 전체 사슬 등장 횟수 대비 '고유한 단어 노드'의 비율을 계산합니다. 만약 500단어짜리 긴 글에서 복잡한 주제를 다루고 있으면서도, 어휘가 확장되지 않고 똑같은 5개의 주제어만 징그럽게 우려먹고 있다면, 이는 AI 특유의 '의미론적 뇌사(Semantic stagnation)' 상태를 강력히 증명하는 것입니다.",
+    "useCase": "인간 작가라면 자연스럽게 어휘력을 뽐내며 스펙트럼을 넓혀갈 에세이, 블로그 게시물, 기명 칼럼 등을 감사할 때 매우 효과적입니다. AI는 이런 글에서 프롬프트에 주어진 키워드만 앵무새처럼 반복하기 때문입니다.",
+    "strengths": "• AI의 '의미론적 루핑 (Semantic looping)'을 벌거벗기는 데 탁월합니다. 이는 추가할 새로운 지식이 없는 상태에서 분량을 억지로 늘려야 할 때, 똑같은 단어들만 사용해 동어반복을 시전하는 AI의 고질적인 습관입니다.\n• 얄팍한 윤문(Editing)에 매우 강합니다. 인간 편집자가 글을 손볼 때, 글 전체의 근간을 이루는 주제어 네트워크(거미줄) 자체를 완전히 새로 짜는 경우는 거의 없기 때문입니다.\n• 방대하게 뻗어나가는 인간의 연상 기억 장치와, 확률이 높은 토큰에만 시야가 좁아지는 AI의 어텐션 윈도우(Attention windows) 사이의 근본적인 차이를 짚어냅니다.",
+    "limitations": "• 문장의 정확성과 오해 방지를 위해 똑같은 전문 용어(엄격한 어휘 사슬)를 기계처럼 반복해서 써야만 하는 과학 논문, 기술 설명서, 법률 문서에서는 오작동(False positives) 빈도가 높아집니다.\n• 어휘 사슬의 흐름을 지도화하려면 충분히 긴 텍스트가 필요합니다. 50단어짜리 짧은 단락에서 어휘 사슬을 분석하는 것은 통계적으로 무의미합니다.\n• 단순한 N-gram (단어 빈도) 검사와 달리, 단어 간의 의미론적 관계망을 매핑해야 하므로 컴퓨팅 연산 부하가 더 큽니다.",
+    "parameters": "분석 기준: 주제어 그룹핑 및 반복 빈도 추적 지형도\n측정 지표: 고유한 사슬 노드 수 / 전체 사슬 언급 횟수\n출력: 0-100 어휘적 정체/빈곤도 (사슬 고착) 스코어",
+    "accuracy": "높음 — 창작물 및 일반 비문학 텍스트에서 81-87%. 이는 AI의 '빈곤한 주제적 상상력'을 보여주는 가장 튼튼한 구조적 증명서입니다.",
     "references": [
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",

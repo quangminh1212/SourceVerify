@@ -1,22 +1,17 @@
 {
-    "name": "Hedging Language Detection",
-    "description": "Detects patterns of hedging and epistemic markers in text, as AI tends to use excessive cautious language and qualifiers.",
-    "useCase": "Identifying AI-generated text through overuse of uncertainty markers and safety qualifiers",
-    "mechanism": "Identifies hedging expressions (modal verbs: 'might', 'could', 'may'; adverbs: 'potentially', 'possibly', 'arguably'; phrases: 'it is worth noting', 'it should be mentioned') and computes their frequency relative to assertive language. AI systems, especially instruction-tuned models, systematically overuse hedging to appear balanced and avoid making definitive claims, creating a measurable statistical signature.",
-    "accuracy": "Moderate - 70-80% accuracy",
-    "source": "Liang, W. et al. (2024) - Mapping the Increasing Use of LLMs in Scientific Papers, arXiv",
-    "algorithm": "Hedging Lexicon Matching + Assertiveness Ratio + Modal Verb Frequency Analysis",
-    "parameters": "Hedge lexicon: 200+ expressions, Categories: epistemic/approximative/plausibility shields, Ratio: hedge-to-assertion, Normalization: per 100 words",
-    "strengths": "• Captures a known systematic bias of instruction-tuned LLMs\n• Works well on academic and professional text\n• Low computational cost\n• Easy to interpret results",
-    "limitations": "• Scientific writing naturally contains hedging\n• Cultural differences affect hedging norms\n• Base models hedge less than RLHF-tuned ones\n• Simple paraphrasing can remove hedging",
+    "name": "Epistemic Hedging (Cautious Language)",
+    "description": "Quantifies the density of 'hedging' language (e.g., 'potentially', 'arguably', 'it is worth noting'). Due to RLHF safety training, AI models compulsively overuse epistemic markers to avoid making definitive, absolute claims.",
+    "algorithm": "Epistemic Marker Density & Plausibility Shield Extraction",
+    "mechanism": "When humans write confidently, they make definitive assertions ('The project failed because of X'). When they represent uncertainty, they use natural hedges ('I think maybe X caused it'). However, Large Language Models are heavily penalized during RLHF (Reinforcement Learning from Human Feedback) for 'hallucination' and giving incorrect absolute answers. This creates a deeply ingrained mathematical bias toward 'epistemic safety'. The model will instinctively cushion almost every statement with plausibility shields ('It can be argued that', 'It is important to consider', 'May potentially lead to'). This algorithm scans the text against a lexicon of over 200 known hedging markers, categorized into epistemic verbs (might, could), approximators (roughly, somewhat), and plausibility shields. It calculates the ratio of 'hedged' statements against absolute assertions. If a text reads like an overly cautious corporate PR disclaimer—lacking the natural human cadence of taking a firm stance—it generates a high algorithmic sterility warning.",
+    "useCase": "Highly effective for auditing persuasive essays, opinion pieces, technical analysis, and decisive business communications where human authors are expected to take definitive stances.",
+    "strengths": "• Perfectly exploits the safety-alignment guardrails built into all major commercial LLMs (GPT-4, Claude, Gemini), turning their mandated 'polite caution' against them.\n• Excellent at catching AI that is trying to answer a highly subjective or legally sensitive prompt, as the model's safety triggers will force maximum hedging.\n• Computationally lightweight and highly interpretable.",
+    "limitations": "• Susceptible to false positives when analyzing genuine academic and scientific writing (where scientists are professionally trained to use epistemic hedging, e.g., 'These results suggest a potential correlation').\n• Completely ineffective on 'Base' models (non-instruction tuned) or uncensored open-source models that haven't been lobotomized by RLHF safety training.\n• Easily bypassed by simple human editing or by explicitly prompting the AI to 'write with absolute arrogant certainty'.",
+    "parameters": "Analysis: Epistemic & Approximative Shield Extraction\nMetric: Ratio of Hedged Phrases vs Absolute Assertions / 100 words\nOutput: 0-100 Defensive Caution (RLHF Alignment) Score",
+    "accuracy": "Moderate to High — 70-80% in argumentative or persuasive contexts. It acts as a highly reliable behavioral footprint of an RLHF-aligned AI trying to avoid liability.",
     "references": [
         {
             "title": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.",
             "url": "https://arxiv.org/abs/2404.01268"
-        },
-        {
-            "title": "Hyland, K. (2005). Metadiscourse: Exploring Interaction in Writing. Continuum.",
-            "url": "https://doi.org/10.5040/9781350934016"
         },
         {
             "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",

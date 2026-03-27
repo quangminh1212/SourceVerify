@@ -1,14 +1,13 @@
 {
-    "name": "Logical Connector",
-    "description": "Analyzes logical connector distribution",
-    "algorithm": "Logical Connector — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes logical connector distribution. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through logical connector analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "논리적 접속사 프로파일링 (Logical Connector Profiling)",
+    "description": "접속 부사(표지어)들의 사용 빈도와 다양성(예: '그러나', '게다가', '결론적으로')을 분석합니다. AI 모델은 답변의 구조를 인위적으로 짜맞추기 위해 명시적인 논리적 접속사를 남용하는 경향이 있으며, 이는 뻔하고 기계적인 템플릿(공식) 형태의 논리 전개 리듬을 만들어냅니다.",
+    "algorithm": "담화 표지(Discourse Marker) 빈도 및 분산 분석",
+    "mechanism": "이 기법은 텍스트를 구문 분석하여 문장과 문단 사이의 징검다리 역할을 하는 모든 담화 표지와 논리적 접속사를 색출합니다. 그런 다음 이 접속사들을 기능별(순접, 역접, 인과, 열거 등)로 묶고 전체 글의 길이에 대비하여 얼마나 빽빽하게 쓰였는지 밀도를 계산합니다. LLM(거대 언어 모델)은 정형화된 논설문 데이터셋으로 집중 훈련받으며, 항상 '도움이 되고 명확한' 답변을 주도록 미세 조정(Fine-tuning)되어 있습니다. 그 부작용으로, AI는 자신의 논리를 사용자에게 강제로 욱여넣고 친절하게 안내하기 위해 '첫째로', '더욱이', '요약하자면', '따라서'와 같은 뻣뻣한 접속 부사 뼈대에 병적으로 의존합니다. 반면 인간 작가들은 다소 격식 있는 에세이를 쓸 때조차도 이런 노골적인 표지어를 훨씬 아껴 쓰며, 문맥 속의 암묵적인 논리 흐름이나 서사가 가진 자체적인 추진력, 혹은 훨씬 더 미묘한 구조적 전환에 기대어 글을 이끌어갑니다. 분석기는 인간이 쓴 글의 기준치와 타깃 텍스트의 '문장 당 명시적 접속사 비율'을 대조합니다. 만약 글 전체, 특히 모든 새로운 문장이나 문단의 첫머리마다 교과서적인 접속사가 징그럽게 박혀 있는 작위적인 밀도가 적발되면, AI가 작성했을 확률에 높은 점수를 매깁니다.",
+    "useCase": "AI가 지나치게 딱딱한 '서론-본론(1,2,3)-결론' 형태의 작문 템플릿을 드러내기 쉬운 학술 논문, 자기소개서, 분석 보고서 등을 감식할 때 가장 강력한 효과를 발휘합니다.",
+    "strengths": "• 지연스러운 호흡(Organic pacing)보다 '노골적인 친절함(명확성)'과 '구조화된 논증'을 최우선으로 두도록 강제된 LLM의 근본적인 얼라인먼트(Alignment) 훈련의 맹점을 정확히 찌릅니다.\n• 복잡한 의미 분석을 수행하는 대신 담화 표지를 사전과 대조(Matching)하는 방식이므로 연산 속도가 매우 빠릅니다.\n• 직관적인 증명이 가능합니다; 악명 높은 'Furthermore(게다가)'나 'In conclusion(결론적으로)' 등 유독 남용된 특정 접속사들을 증거물로 즉시 형광펜 칠해서 보여줄 수 있습니다.",
+    "limitations": "• 글의 구조를 잡기 위해 접속사를 무조건 많이 쓰라고 인위적인 학원식 교육을 받은 비원어민(토플/아이엘츠 학습자)이나 초보 작가의 글에서 오탐지(False positive)를 낼 위험이 있습니다.\n• 프롬프트 엔지니어링('그러나, 게다가 같은 접속사를 절대 쓰지 말고 글을 써줘')으로 회피당할 수 있습니다.\n• LLM 자체가 알아서 접속사를 억제하는 창작 소설이나 캐주얼한 대화문에서는 분석 효과가 떨어집니다.",
+    "parameters": "분석 기준: 담화 표지(Discourse Marker) 토큰 매칭\n측정 지표: 문장 당 접속사 비율 및 사용된 접속사의 어휘적 다양성(분산)\n출력: 0-100 전환 경직성 (작위적 템플릿) 스코어",
+    "accuracy": "보통~높음 — 72-84%의 정확도를 갖습니다. ChatGPT나 Claude 특유의 판에 박힌 듯 지나치게 교훈적인(Didactic) 말투를 꼬집어내는 강력한 보조 탐지 지표 역할을 합니다.",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

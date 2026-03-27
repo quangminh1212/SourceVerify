@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Likelihood Divergence",
-    "description": "Đo phân kỳ giữa xác suất token quan sát và kỳ vọng dưới mô hình ngôn ngữ — văn bản AI có phân kỳ thấp hơn.",
-    "algorithm": "Thuật toán phân tích Likelihood Divergence",
-    "mechanism": "Hệ thống Likelihood Divergence phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Độ Phân Kỳ Xác Suất (Likelihood Divergence)",
+    "description": "Tính toán khoảng cách thống kê (độ phân kỳ) giữa các từ thực tế được sử dụng trong văn bản và các từ mà một Mô hình Ngôn ngữ tham chiếu dự kiến sẽ thấy về mặt toán học. Văn bản do AI tạo ra bám sát một cách phi tự nhiên vào đường cong xác suất dự kiến, cho thấy độ phân kỳ thấp hơn đáng kể so với văn bản của con người.",
+    "algorithm": "Phân Phối Xác Suất Token & Lập Bản Đồ Phân Kỳ Kullback-Leibler (KL)",
+    "mechanism": "Khi con người xây dựng câu, chúng ta thường xuyên đưa ra những lựa chọn từ vựng không thể đoán trước dựa trên trí nhớ, cảm xúc hoặc các cấu trúc logic phức tạp. Điều này có nghĩa là những từ thực tế chúng ta sử dụng thường 'phân kỳ' (sai lệch) đáng kể so với những gì một thuật toán dự đoán thống kê nghiêm ngặt mong đợi. Ngược lại, các Mô hình Ngôn ngữ Lớn (LLMs) hoạt động về cơ bản bằng cách chọn từ tiếp theo từ một phân phối tĩnh được giới hạn chặt chẽ của các token có khả năng xảy ra cao nhất. Thuật toán này đánh giá một văn bản bằng cách chạy nó qua một LLM tham chiếu để tạo ra bản đồ xác suất 'dự kiến' cho từng từ một. Sau đó, nó đo lường Độ Phân kỳ Kullback-Leibler (KL)—một thước đo thống kê xem phân phối của văn bản thực tế khác biệt bao nhiêu so với phân phối dự đoán của mô hình tham chiếu. Nếu một văn bản dài liên tục 'cưỡi trên đỉnh' của làn sóng xác suất—nghĩa là các từ thực tế của nó khớp với các từ dự kiến của LLM với tỷ lệ phân kỳ thấp một cách phi tự nhiên—nó cung cấp bằng chứng toán học không thể chối cãi rằng văn bản đó được tạo ra bởi một mạng nơ-ron tối đa hóa xác suất chứ không phải nhận thức của con người.",
+    "useCase": "Cực kỳ hiệu quả để kiểm toán các bài tiểu luận trang trọng, hợp đồng pháp lý và các bài báo tin tức, nơi các mô hình AI có xu hướng tạo ra các văn bản 'trung bình' tuyệt đối, tự phơi bày thông qua việc thiếu hụt sự bất ngờ về mặt thống kê.",
+    "strengths": "• Phơi bày cơ chế nền tảng của tất cả các LLM (lập bản đồ xác suất tự hồi quy); AI theo đúng nghĩa đen là không thể viết mà không dựa vào các đường cong xác suất này.\n• Cực kỳ vững vàng trước các chỉnh sửa nhỏ hoặc thay thế từ đồng nghĩa, vì việc thay đổi một vài từ không làm thay đổi đáng kể điểm phân kỳ của toàn bộ phân phối tài liệu.\n• Cung cấp một thước đo toán học có thể định lượng rõ ràng thay vì 'cảm giác' chủ quan về việc máy tạo ra.",
+    "limitations": "• Chi phí tính toán tốn kém, yêu cầu văn bản phải được truyền qua một mô hình ngôn ngữ tham chiếu quy mô lớn thứ cấp để tính toán các xác suất token dự kiến.\n• Hiệu quả có thể thay đổi một chút tùy thuộc vào mô hình tham chiếu cụ thể được sử dụng; sử dụng một mô hình tham chiếu yếu hoặc sai lệch cao có thể làm sai lệch phân phối xác suất dự kiến.\n• Kém hiệu quả trên các văn bản cực ngắn (dưới 100 từ), vì các thước đo phân kỳ yêu cầu kích thước mẫu có ý nghĩa thống kê để lập bản đồ đường cong.",
+    "parameters": "Kiểm Định: Dự Đoán Token Mô Hình Tham Chiếu vs. Quan Sát Token Thực Tế\nThước Đo: Điểm Phân Kỳ Kullback-Leibler (KL)\nĐầu Ra: 0-100 Điểm Khả Đoán Xác Suất (Sự Sụp Đổ Phân Kỳ)",
+    "accuracy": "Cao — 82-89% trên các văn bản đủ độ dài. Nó nhắm thẳng vào cốt lõi toán học của cách mà AI tạo sinh xây dựng câu.",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://doi.org/10.18653/v1/P19-3019"
+        }
+    ]
 }

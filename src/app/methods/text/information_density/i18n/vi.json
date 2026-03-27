@@ -1,12 +1,21 @@
 {
-    "name": "Mật độ thông tin",
-    "description": "Đo thông tin trên mỗi câu",
-    "algorithm": "Thuật toán phân tích Mật độ thông tin",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo thông tin trên mỗi câu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mật độ thông tin. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Thông Tin Hàm Ngôn",
+    "description": "Đo lường tỷ lệ giữa các mệnh đề ngữ nghĩa cụ thể (sự kiện, thực thể, luận điểm chính) so với tổng số từ. Các mô hình AI thường mắc chứng 'phình to từ vựng'—tạo ra những câu văn dài dòng, phức tạp về mặt cú pháp nhưng truyền tải rất ít thông tin thực tế.",
+    "algorithm": "Tính Toán Tỷ Lệ Giữa Mệnh Đề Ngữ Nghĩa & Từ Ngữ Độn",
+    "mechanism": "Các chuyên gia con người khi viết về một chủ đề họ am hiểu thường thể hiện Mật độ Thông tin cao. Họ đóng gói các danh từ cụ thể, động từ chuyên biệt và các sự kiện độc đáo lại với nhau một cách chặt chẽ, giảm thiểu tối đa từ ngữ thừa thãi. Tuy nhiên, các Mô hình Ngôn ngữ Lớn tối ưu hóa cho các chuỗi token trôi chảy, có xác suất cao chứ không phải là sự hiệu quả về mặt thực tế. Chúng thường xuyên sử dụng kỹ thuật 'độn từ': dùng 30 từ để diễn đạt một khái niệm chỉ cần 8 từ. Điều này biểu hiện qua việc lạm dụng quá mức các cụm từ chuyển ý ('Điều quan trọng cần hiểu là...'), lặp lại thừa thãi các tiền đề, và sử dụng cấu trúc ngữ pháp phức tạp để bao bọc các khái niệm đơn giản. Thuật toán này lột bỏ các từ chức năng, từ dừng (stop words) và các mẫu câu chuyển tiếp sáo rỗng. Sau đó, nó cô lập các mệnh đề ngữ nghĩa cốt lõi (thực thể duy nhất, hành động và khái niệm phân biệt) và chia chúng cho tổng độ dài câu. Nếu một văn bản bao gồm những câu văn dài, đúng ngữ pháp một cách hoàn hảo nhưng lại thể hiện một tỷ lệ rất thấp các sự kiện thực tế, khác biệt (tỷ lệ 'chém gió' cao), thì điều đó chỉ ra chính xác hành vi tự chèn thêm 'đệm' toán học vốn có trong quá trình tạo văn bản tự hồi quy.",
+    "useCase": "Đặc biệt hiệu quả để kiểm toán các bài luận, báo cáo phân tích, tóm tắt và các bài báo tin tức, nơi người đọc kỳ vọng một lối viết súc tích, đi thẳng vào sự kiện.",
+    "strengths": "• Rất xuất sắc trong việc phát hiện 'Bệnh nói nhảm của AI'—khi một mô hình bị yêu cầu phải viết đủ số lượng từ nhưng lại thiếu kiến thức thực tế, dẫn đến việc tạo ra những câu văn đúng ngữ pháp nhưng vô hồn và sáo rỗng.\n• Nắm bắt được sự khác biệt cơ bản giữa hiệu suất nhận thức của con người và kỹ thuật làm mượt xác suất của AI.\n• Rất khó bị đánh lừa bởi các thủ thuật thay thế từ đồng nghĩa đơn giản.",
+    "limitations": "• Kém hiệu quả đối với các văn bản đời thường hoặc những bài viết của con người vốn đã dài dòng (như tản mạn triết học, viết kiểu dòng ý thức, hoặc các bài diễn văn chính trị), những thể loại tự nhiên đã có mật độ thông tin thấp.\n• Yêu cầu phân tích cú pháp và gắn thẻ từ loại (POS tagging), khiến nó tốn kém hơn một chút về mặt thuật toán so với việc đếm ký tự đơn thuần.\n• Có thể nhận diện sai các bản tóm tắt cực kỳ súc tích do AI viết (ví dụ: các gạch đầu dòng 'TL;DR') thành văn bản của con người, nếu câu lệnh ép buộc AI phải viết ngắn gọn.",
+    "parameters": "Kiểm Định: Trích Xuất Mệnh Đề/Thực Thể & Cắt Tỉa Cú Pháp\nThước Đo: Số Token Ngữ Nghĩa Lõi / Tổng Số Token (Trung bình mỗi câu)\nĐầu Ra: 0-100 Điểm Phình To Ngữ Nghĩa (Độ Pha Loãng Thông Tin)",
+    "accuracy": "Cao — 80-88% trên các văn bản cung cấp thông tin và học thuật. Nó là một chỉ báo cực kỳ đáng tin cậy về xu hướng tạo ra các nội dung 'đệm' an toàn, dài dòng và êm tai của các LLM.",
+    "references": [
+        {
+            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

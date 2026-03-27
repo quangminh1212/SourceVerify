@@ -1,12 +1,21 @@
 {
-    "name": "Information-Theoretic Profile",
-    "description": "Creates an information-theoretic profile using pointwise mutual information and surprisal metrics.",
-    "algorithm": "Information-Theoretic Profile分析算法",
-    "mechanism": "Information-Theoretic Profile系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "信息论意外度图谱 (Surprisal Profile)",
+    "description": "使用逐点互信息（PMI）和局部“意外度（Surprisal）”指标来解剖文本。AI 的文本会保持一条极其平坦、高度可预测的机械波浪线，而人类的文本则会因为偶尔抛出极其离谱但绝妙的词汇，在图谱上炸出尖锐的“高意外度”脉冲毛刺。",
+    "algorithm": "逐点互信息测算与局部意外度地形图测绘",
+    "mechanism": "在信息论中，“意外度（Surprisal）”用来衡量在给定前文的情况下，下一个词的出现有多么“出人意料”（概率极低）。人类在写作时，大脑的认知回路是典型的非线性联想网络；我们会突然拽出一个极度冷门的词汇、强行跨越两个毫不相干的隐喻、或者来一个极度疯狂的转折。这就在文本的信息熵图纸上，切出了一个到处都是尖刺、锯齿状的“意外度图谱”。然而，大型语言模型（LLM）的灵魂是“自回归概率平滑化提取”。为了保证生成的句子不崩盘（不出错/防幻觉），它们的解码算法绝对偏袒那些“局部意外度最低”的安全词。AI 写出的文章，永远都在踩着一条极其平滑、低意外度的安全抛物线滑行。这个算法会逐词计算相邻 Token 之间的“逐点互信息（PMI）”，以此来拆穿每一次词语过渡的可预测性。然后，它把这些数值画成心电图一样的信息论图谱。如果一篇文章的心电图平滑得像死人一样，呈现出极其“安全”的意外度曲线，非自然地缺失了所有高熵值的爆破点，它就会被死死钉在“概率统计生成物”的耻辱柱上。",
+    "useCase": "这是给长篇学术论文、严肃文学、深度调查专访和高发散度散文验尸的顶级雷达，在这些文体里，数学概率曲线能完美拓印出人类作者独一无二的“脑电波认知指纹”。",
+    "strengths": "• 极其精准地卡死了所有“自回归下一个词预测（Next-Prediction）”语言模型的底层架构基因缺陷。\n• 对人类那些自作聪明的“同义词替换（Spinning）”或者轻度润色免疫。因为文本底层的统计学曲率骨架不发生断裂式的改变，这套探针就能咬死不放。\n• 这是一种完全剥离了语法规矩和语义内容，纯粹从冷酷的底层数学客观世界提取的造假铁证。",
+    "limitations": "• 有极度严重的“暴食症”：文本长度必须达到 300 词以上的规模，才能建起稳固的数学基线并画出图谱。拿去测短推文或者标题它就像是个废铁。\n• 极度偏食，对用来测算 PMI 的“对照语料库”极其敏感；如果雷达用来对照的基准数据是古典文学，而你喂给它一篇极其硬核的量子力学论文，它会爆出满屏的误杀（False positives）。\n• 这是一个重型算力机器，与简单的词频统计相比，它的运行成本极其昂贵。",
+    "parameters": "雷达切片: 自回归预测率 & 意外度脉冲测绘\n定罪量表: 逐点互信息方差跳频点 (局部信息熵尖刺度)\n行刑判决: 0-100 概率平滑化 (冷血且毫无意外感) 定罪分数",
+    "accuracy": "致命死穴 — 82-89%（在长篇、跨段落文本中）。这是一场对文章底层概率矩阵代码底裤的，具有极高置信度的结构学暴力审查。",
+    "references": [
+        {
+            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

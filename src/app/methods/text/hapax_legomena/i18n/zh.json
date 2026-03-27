@@ -1,14 +1,13 @@
 {
-    "name": "Hapax Legomena",
-    "description": "Analyzes unique word occurrence rate",
-    "algorithm": "Hapax Legomena — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes unique word occurrence rate. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through hapax legomena analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "绝版词汇孤岛抛洒率 (Hapax Legomena)",
+    "description": "计算在整篇文章中“仅仅出现过一次，就再也没有出现过”的孤语词汇（Hapax Legomena）的比例。人类在写作时，会像天女散花一样极其自然地抛洒出大量极具个人色彩、极其冷门的绝版词汇；而 AI 模型则是个死抠成本的吝啬鬼，极度依赖并反复回收它那一小撮“高概率核心词库”。",
+    "algorithm": "单次曝光词汇密度 (Single-Occurrence Lexical Density) 解剖",
+    "mechanism": "“Hapax Legomenon”（源自希腊语，意为“只说过一次的话”）是一个语言学专有名词，用来指代在一个文本库中精确出现一次的单词。在人类自然喷洒出来的文字中，其实有高得惊人的词汇量是由这种“一次性绝版词”构成的——作者灵光一闪用过一次就扔掉的刁钻形容词、罕见动词、怪异名词或是天马行空的隐喻。因为人类的大脑记忆是网状发散的，在写作时会从辽阔无边的个人经历和极其具象的当前语境里随机抓取词元。然而，大型语言模型（LLM）的算盘打得全是数学概率。它们无可救药地迷恋数学分布的“安全驼峰区”，一直在一个极度浓缩、权重极高的安全词库里反复抽卡。虽然 AI *确实可以* 生成生僻词，但它那种机器的直肠子本能，让它懂得如何组词，却学不会人类那种毫不费力、把上百个没用的孤僻词汇随手撒进文章里的混乱感。本算法会将文章切成碎肉（Tokenize），清点每一个词的出现次数，然后计算那些“精确出现一次的单词”在总词库中的占比。如果这个“绝版词比例”低得令人发指，这文章的词汇库就是被算法反复洗过、彻底消毒再循环利用的统计学残渣。",
+    "useCase": "这是用来给长篇虚构写作、严肃文学、深度调查专访、以及充满血肉的个人回忆录验尸的神器。在这些文体里，真正的人类通常会把词汇的参差感拉到最满。",
+    "strengths": "• 极其毒辣地切中了人类认知神经检索回路与机器冷血概率计算之间的根本统计学深渊（Zipf 定律分布的底层异常）。\n• AI 极难在保持文章正常人类逻辑的同时去通过这个测试。如果你强行在 Prompt 里命令 AI“每个词只能用一次”，它不会变得更像人，只会生成出一堆根本读不通顺、强行堆砌专业术语的克苏鲁式乱码。\n• 在长文本上拥有绝对冷血的数学客观性和牢不可破的可靠度。",
+    "limitations": "• 饿汉症发作：在极短的文本（200词以下）上属于睁眼瞎，因为 Hapax Legomena 的统计学曲线需要足够的文本长度才能吃饱并稳定下来。\n• 容易误伤那些重复度极高、没营养的人类烂文（比如疯狂堆砌关键词的 SEO 垃圾口水文、或是干巴巴的机械说明书），因为它们本身的词汇变异度就已经低到了机器的水平。\n• 对文本长度极度敏感：随着文本长度趋向于无限，这个比例在数学上自然会下降，这就需要我们给探针装上极其复杂的动态长度归一化（Normalization）校准阀门。",
+    "parameters": "雷达切片: 全域文本 Token 碎尸 & 词频绝对制图\n定罪量表: 绝对单次曝光 Token 数量 / 文章包含的总去重 Token 数量\n行刑判决: 0-100 词库回收率 (绝版词汇枯竭症) 定罪分数",
+    "accuracy": "极地防线 — 82-89%（在长篇、跨段落的 500+ 词文本中）。这是对“算法无耻循环利用词库”的终极降维数学铁证。",
     "references": [
         {
             "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",

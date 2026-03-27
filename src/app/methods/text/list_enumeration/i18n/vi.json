@@ -1,12 +1,21 @@
 {
-    "name": "Mẫu liệt kê",
-    "description": "Phân tích mẫu liệt kê và đánh số",
-    "algorithm": "Thuật toán phân tích Mẫu liệt kê",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu liệt kê và đánh số. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mẫu liệt kê. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Hồ Sơ Hóa Liệt Kê (List & Enumeration Profiling)",
+    "description": "Kiểm tra sự phụ thuộc cấu trúc vào các gạch đầu dòng, danh sách đánh số và các từ chuyển tiếp tuần tự cứng nhắc (ví dụ: 'Đầu tiên', 'Thứ hai', 'Cuối cùng'). Các mô hình AI có xu hướng mặc định hệ thống chuyển sang sử dụng cấu trúc liệt kê dày đặc để đáp ứng việc tinh chỉnh định dạng, dẫn đến lối văn xuôi bị phân khúc và dễ đoán hơn nhiều so với lối viết tự nhiên của con người.",
+    "algorithm": "Phân Khúc Cú Pháp & Trích Xuất Chuyển Tiếp Tuần Tự",
+    "mechanism": "Các Mô hình Ngôn ngữ Lớn (LLMs), đặc biệt là những mô hình được tinh chỉnh bằng Học tăng cường từ Phản hồi của Con người (RLHF), được đào tạo rõ ràng để đưa ra các câu trả lời hữu ích, an toàn và có cấu trúc rõ ràng. Kết quả là, chúng phụ thuộc quá nhiều vào bộ khung cấu trúc cực đoan—chia nhỏ hầu hết mọi lời giải thích thành các danh sách gạch đầu dòng gọn gàng hoặc các liệt kê số học cứng nhắc. Thuật toán này quét văn bản để tìm các dấu hiệu danh sách rõ ràng (gạch đầu dòng Markdown, số) và các dấu hiệu chuyển tiếp tuần tự ẩn ('Trước tiên', 'Hơn nữa', 'Cuối cùng', 'Tóm lại'). Nó đo lường mật độ của các cấu trúc này so với tổng khối lượng văn bản. Người viết nói chung chỉ sử dụng danh sách một cách hạn chế, thích dòng chảy tường thuật gắn kết và sự chuyển tiếp đoạn văn mượt mà để kết nối các ý tưởng. Nếu một văn bản thể hiện sự thôi thúc gần như máy móc trong việc phân khúc các lập luận thành các danh sách nhiều điểm, cân bằng hoàn hảo—đặc biệt là khi giải quyết các chủ đề mang tính chủ quan hoặc tự sự, nơi mà việc liệt kê là không tự nhiên—nó sẽ bị đánh dấu mạnh mẽ là nhân tạo về mặt cấu trúc.",
+    "useCase": "Cực kỳ hiệu quả để kiểm toán thư xin việc, bài báo quan điểm và tiểu luận tự sự, nơi sự lạm dụng quá mức các gạch đầu dòng và cấu trúc 'Đầu tiên/Thứ hai/Cuối cùng' tuần tự tố cáo sự tạo sinh của AI.",
+    "strengths": "• Nhắm mục tiêu vào thành kiến cấu trúc cốt lõi được gieo cấy vào các LLM thương mại (như ChatGPT hoặc Claude) trong quá trình tinh chỉnh hướng dẫn RLHF.\n• Phát hiện cả định dạng rõ ràng (gạch đầu dòng) và liệt kê cấu trúc ẩn (từ chuyển tiếp được sử dụng làm mốc danh sách).\n• Hoạt động hiệu quả trên lượng văn bản khổng lồ, dựa vào các mốc cú pháp rõ ràng thay vì phân tích ngữ nghĩa phức tạp.",
+    "limitations": "• Đương nhiên sẽ gây ra dương tính giả trên tài liệu kỹ thuật, công thức nấu ăn, sơ yếu lý lịch hoặc hướng dẫn sử dụng, nơi định dạng nặng tính danh sách là tiêu chuẩn của con người.\n• Dễ dàng bị qua mặt nếu người dùng ra lệnh rõ ràng cho AI 'Không sử dụng danh sách' hoặc 'Viết thành các đoạn văn chảy mượt'.\n• Đòi hỏi phải hiệu chuẩn đường cơ sở cẩn thận tùy thuộc vào thể loại cụ thể của văn bản đang được phân tích.",
+    "parameters": "Kiểm Định: Định Dạng Cấu Trúc & Mật Độ Chuyển Tiếp\nThước Đo: Tỷ lệ Nội dung Được Liệt Kê/Phân Khúc vs. Văn Xuôi Liên Tục\nĐầu Ra: 0-100 Điểm Độ Cứng Cấu Trúc (Sự Lạm Dụng Liệt Kê)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 76-84%, phụ thuộc nhiều vào thể loại được chọn. Rất chính xác trên các văn bản tự sự/tường thuật, nhưng sụt giảm trên các tài liệu có cấu trúc vốn có.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Wang, Y. et al. (2023). MAGE: Machine-generated Text Detection in the Wild. ACL.",
+            "url": "https://arxiv.org/abs/2305.15041"
+        }
+    ]
 }

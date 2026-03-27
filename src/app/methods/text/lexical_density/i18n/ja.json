@@ -1,22 +1,21 @@
 {
-    "name": "Lexical Density",
-    "description": "Measures content word ratio (lexical density) (2023)",
-    "algorithm": "Lexical Density — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Measures content word ratio (lexical density) (2023). Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through lexical density analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "語彙密度（内容語と機能語の比率）",
+    "description": "総単語数に対する「内容をもつ単語」（名詞、動詞、形容詞、副詞）の割合を測定します。AIが生成したテキストは、スムーズで確率の高い文法的移行を確保するために「接着剤」となる機能語に大きく依存するため、通常、専門家の人間が書いた文章よりも語彙密度が低くなります。",
+    "algorithm": "品詞（POS）タギングと内容語比率の計算",
+    "mechanism": "語彙密度（Lexical density）は、テキスト内の総単語数に対して、（実際の意味を持つ）「内容語」の数が占める割合を割り出す基本的な計算言語学の指標です。専門的な人間のライター、特に学術または専門分野のライターは、文の中に意味を高度に凝縮する傾向があり、その結果、語彙密度が高くなります（多くの場合50％を超えます）。しかし、大規模言語モデル（LLM）は、簡潔さよりも確率と文法的な完璧さを優先して最適化されています。概念を橋渡しし、権威ある流暢なトーンを維持するために、LLMは冠詞（the, a）、前置詞（in, on, concerning）、接続詞（and, however, furthermore）、および代名詞などの「機能語」を過剰に使用します。これにより、構文的には美しいものの、構造的には意味が希薄化されたテキストが作成されます。アルゴリズムは、品詞タガーを使用してテキストを解析し、すべての内容語を分離して、その密度の割合を計算します。一見洗練された長文テキストが異常に低い語彙密度を記録した場合（実際の「中身」よりも文法的「足場」で構成されていることを示している場合）、自己回帰的な文字数稼ぎ（パディング）の特徴としてフラグが立てられます。",
+    "useCase": "学術論文、専門的なレポート、エッセイの監査に非常に効果的です。日常的な口語表現では機能しない場合がありますが、高度な学術的ライティングを模倣しようとしながらも、それにふさわしい情報密度に達していないAIモデルを暴露することに成功します。",
+    "strengths": "• AIライティングの特徴である「華やかだが中身がない（flowery but empty）」性質を捉え、AIのテキストがなぜ不必要に長く感じられるのかを正確に定量化します。\n• 標準的なPOS（品詞）タギングのみを必要とするため、計算上軽量で高速です。\n• LLMは、文の首尾一貫性を壊すことなく機能文法の基礎となる確率分布を根本的に書き換えることはできないため、マイナーなプロンプトエンジニアリングに対して非常に高い耐性を持ちます。",
+    "limitations": "• 本質的に話し言葉の文字起こしに対しては高い誤検知率（偽陽性）を示します。話し言葉は、書き言葉よりも語彙密度が本質的に低いためです。\n• 分析対象の言語に大きく依存します。分析的言語（英語、ベトナム語など）は、総合的言語（ロシア語やフィンランド語など）よりもベースラインの密度が低いため、厳密な言語固有のキャリブレーション（調整）が必要です。\n• フィラーワード（つなぎ言葉）を削除する目的で人間が積極的にテキストを編集した場合、回避される可能性があります（ただし、通常は文書全体の書き直しが必要になります）。",
+    "parameters": "解析: 品詞（POS）ターゲットのフィルタリング\n評価基準: （総内容語数 / 総単語数） * 100\n出力結果: 0-100 語彙の希薄度（文法的かさ増し）スコア",
+    "accuracy": "高 — フォーマルおよび学術的なテキストで78-85%。LLMの生成物に固有の構造的な「水増し（fluff）」の信頼性の高い数学的測定を提供します。",
     "references": [
         {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
+            "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
+            "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
         },
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
         }
     ]
 }

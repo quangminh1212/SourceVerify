@@ -1,14 +1,13 @@
 {
-    "name": "Idiom Detection",
-    "description": "Detects idiomatic expression usage",
-    "algorithm": "Idiom Detection — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Detects idiomatic expression usage. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through idiom detection analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "慣用句（イディオム）密度の分析",
+    "description": "慣用句や口語表現の頻度、正確さ、および文脈上の自然さを評価します。AIモデルは文化的にローカライズされた言い回しを避ける傾向があり、使用を強制された場合でも、一般的な慣用句を不器用に、あるいは非常に文字通り（直訳的）に配置することがよくあります。",
+    "algorithm": "非文字通りの語彙密度と文化的言い回しの検出",
+    "mechanism": "慣用句（イディオム）（「弾丸を噛む（bite the bullet）」「バケツを蹴る（kick the bucket：死ぬ）」「天気の下（under the weather：体調が悪い）」など）は、言語的な異常（アノマリー）です。これらは特定の文化と深く結びついており、文字通りの翻訳を完全に拒絶し、書き手と読み手の間で共有される暗黙の文脈的理解に大きく依存しています。LLMは有用なアシスタントとして機能するため、グローバルなアクセシビリティと明確さを最大化するようにトレーニングされているため、そのコアとなる確率分布は、海外のユーザーを混乱させる可能性のある、地域性の強い非文字通りの慣用句を積極的に抑制します。AIに「カジュアルに書け」や「スラングを使え」と明示的にプロンプトを出すと、通常は統計的に最も一般的で使い古された（クリシェの）慣用句に手を伸ばし、人間が使用するような微妙な構文的なブレンドなしに、それらを唐突に挿入します。このアルゴリズムは、数千の言語固有の慣用句、句動詞、口語表現の巨大な辞書とテキストを照合します。テキストの「慣用句密度」を測定します。カジュアルな人間のテキストであるべきものの中に慣用句がまったく存在しないこと、または不器用に押し込まれた、非常に予測可能な慣用句が存在することは、そのコンテンツが数学的に合成されたものであることを示しています。",
+    "useCase": "人間の著者が自然に豊かな比喩的言語を用いる、クリエイティブライティング、個人のブログ投稿、非公式の電子メール、マーケティングコピー、および文学を評価するために不可欠です。",
+    "strengths": "• カジュアルなテキストに非常に効果的です。人間の口語的な文章は本質的に乱雑で慣用句が豊富ですが、AIは無味乾燥で普遍的に理解される言い回しをデフォルトとします。\n• 「慣用句のハルシネーション（幻覚）」を捉えます。これは、AIモデルが慣用句のように聞こえるがターゲット文化には実際には存在しないフレーズを発明する場合です。\n• 慣用句内の単語を置き換えると通常はその意味が破壊されるため、単純な同義語の置換に対して回復力があります。",
+    "limitations": "• 人間の文体規則でも慣用句の厳格な根絶が求められる、正式な学術論文、法的契約書、または技術文書にはまったく無関係です。\n• サポートされているすべての言語と地域の方言（例：アメリカ英語とイギリス英語）について、常に更新される文化に特化した慣用句辞書を維持することに大きく依存しています。\n• 明確に理解されるように慣用句を意図的に避けている、ネイティブではない人間の話者による文章を誤ってフラグ付けする可能性があります。",
+    "parameters": "解析: 文化的慣用句語彙集に対するNグラム照合\n評価基準: 非文字通りの慣用的言い回し vs 標準的な文字通りの出力の比率\n出力結果: 0-100 慣用句の無菌性（文化的な分離）スコア",
+    "accuracy": "中〜高 — 非公式、創造的、または説得力のあるテキストで75-85%。AIのグローバルに標準化された中立性を暴露する、強力な「文化的指紋」採取ツールとして機能します。",
     "references": [
         {
             "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",

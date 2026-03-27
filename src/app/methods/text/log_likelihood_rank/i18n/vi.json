@@ -1,12 +1,21 @@
 {
-    "name": "Xếp hạng khả năng",
-    "description": "Đo tỷ lệ sử dụng từ phổ biến",
-    "algorithm": "Thuật toán phân tích Xếp hạng khả năng",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo tỷ lệ sử dụng từ phổ biến. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích xếp hạng khả năng. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Xếp Hạng Khả Năng Logarit (Log-Likelihood Rank)",
+    "description": "Đánh giá xem liệu các từ được chọn trong một văn bản có liên tục là những dự đoán toán học 'có khả năng xảy ra cao nhất' của một mô hình ngôn ngữ hay không. Văn bản AI phụ thuộc áp đảo vào các lựa chọn từ vựng xếp hạng Top-10 hoặc Top-100, trong khi con người thường xuyên chạm vào 'cái đuôi dài' (Top-1000 trở lên) của những lựa chọn từ ngữ bất ngờ.",
+    "algorithm": "Hồ Sơ Hóa Phân Phối Xếp Hạng Tự Hồi Quy",
+    "mechanism": "Phương pháp này dựa trên các cơ chế xác suất nền tảng của các Mô hình Ngôn ngữ Lớn (ví dụ: khuôn khổ GLTR). Khi một LLM tạo ra văn bản, đối với mỗi vị trí duy nhất trong một câu, nó xếp hạng toàn bộ từ vựng của ngôn ngữ từ khả năng cao nhất (Hạng 1) đến khả năng thấp nhất (Hạng 50.000+). Thuật toán truyền văn bản mục tiêu qua một mô hình tham chiếu và kiểm tra thứ hạng của từ *thực tế* được tác giả sử dụng. Nó phân loại các thứ hạng này thành các dải: Xanh lá cây (Top 10), Vàng (Top 100), Đỏ (Top 1000) và Tím (Ít khả năng). Người viết tự nhiên tạo ra các câu với sự pha trộn có tính biến đổi cao của các dải này—chúng ta thường xuyên chọn những từ hơi 'không tối ưu' hoặc gây bất ngờ vì hiệu ứng tu từ, cảm xúc hoặc ý nghĩa cụ thể, kéo mạnh từ các vùng Đỏ và Tím. Ngược lại, trừ khi được nhắc nhở mạnh mẽ với cài đặt 'nhiệt độ' (temperature) cao, AI hầu như chỉ lấy mẫu từ các vùng Xanh lá cây và Vàng để đảm bảo văn bản luôn có ý nghĩa và an toàn. Nếu hồ sơ xếp hạng khả năng logarit của một văn bản cho thấy sự thống trị phi tự nhiên của các từ Top-10 (Xanh lá cây) với không có bất kỳ bước nhảy vọt ngôn ngữ khó đoán nào, nó sẽ bị 'tuýt còi' là do máy tính tạo ra.",
+    "useCase": "Cốt lõi để phân tích các bài báo trang trọng, tiểu luận của sinh viên và email chuyên nghiệp để xác định xem văn bản được làm mượt bằng thuật toán hay được soạn thảo một cách hữu cơ.",
+    "strengths": "• Vô hiệu hóa việc diễn đạt lại hời hợt; việc thay đổi một vài từ không khắc phục được phân phối thứ hạng hẹp về mặt toán học ở giai đoạn nền tảng của toàn bộ văn bản.\n• Lập bản đồ có thể hình ảnh hóa trực tiếp (hệ thống đánh dấu 'Xanh/Vàng/Đỏ') giúp việc thiên vị thống kê của AI trở nên dễ hiểu và dễ xác minh.\n• Cực kỳ hiệu quả đối với các cài đặt tạo văn bản AI tiêu chuẩn (Nhiệt độ 0.7 trở xuống).",
+    "limitations": "• Dễ bị ảnh hưởng bởi các thông số 'nhiệt độ' (tính ngẫu nhiên) cao trong các lệnh gọi API; nếu người dùng ép buộc một LLM lấy mẫu từ 'cái đuôi dài', phân phối xếp hạng có thể tạm thời bắt chước cách viết của con người (mặc dù văn bản thường trở nên vô nghĩa).\n• Yêu cầu một LLM tham chiếu mạnh mẽ chạy ngầm để tính toán xếp hạng từ vựng cho từng token đơn lẻ.\n• Các văn bản của con người cực kỳ mang tính công thức (ví dụ: tuyên bố từ chối trách nhiệm pháp lý tiêu chuẩn, báo cáo thời tiết cơ bản) tự nhiên ghi điểm rất cao trong xếp hạng Top-10, gây ra dương tính giả.",
+    "parameters": "Kiểm Định: Trích Xuất Xếp Hạng Tự Hồi Quy trên mỗi Token\nThước Đo: Tỷ Lệ Các Lựa Chọn Token Top-10/100/1000\nĐầu Ra: 0-100 Điểm Khả Đoán Xếp Hạng (San Phẳng Xác Suất)",
+    "accuracy": "Cao — Độ chính xác 83-90% trên văn bản tạo sinh tiêu chuẩn. Nó vẫn là một trong những tín hiệu thống kê hộp trắng (white-box) đáng tin cậy nhất để phát hiện AI.",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

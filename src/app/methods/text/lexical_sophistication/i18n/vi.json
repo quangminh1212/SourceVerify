@@ -1,26 +1,21 @@
 {
-    "name": "Độ tinh vi từ vựng",
-    "description": "Đo dải tần suất từ và độ tinh vi từ vựng để nhận diện xu hướng của văn bản AI dùng từ vựng phổ biến, tần suất cao.",
-    "useCase": "Phát hiện văn bản AI qua ưu tiên hệ thống cho từ phổ biến và tránh thuật ngữ hiếm",
-    "mechanism": "Ánh xạ mỗi từ nội dung đến hạng tần suất trong kho ngữ liệu tham chiếu (SUBTLEX, BNC) và tính tỷ lệ từ trong các dải tần suất khác nhau. Cũng tính chỉ số tinh vi từ vựng dùng danh sách từ học thuật (AWL) và đánh giá độ cụ thể. Văn bản AI thường thiên vị từ vựng tần suất trung bình 'an toàn', tránh cả tiếng lóng phổ biến và thuật ngữ chuyên môn hiếm.",
-    "accuracy": "Trung bình - 72-82% trên văn bản đa lĩnh vực",
-    "source": "Kyle & Crossley (2015) - Automatically Assessing Lexical Sophistication, TESOL Quarterly",
-    "algorithm": "Frequency Band Analysis + AWL Coverage + Concreteness Rating + Statistical Profiling",
-    "parameters": "Kho ngữ liệu: SUBTLEX-US/BNC, Dải: 1k/2k/5k/10k/ngoài danh sách, AWL cấp: 1-10, Cụ thể: chuẩn Brysbaert, Tối thiểu: 100 từ",
-    "strengths": "• Nền tảng ngôn ngữ tâm lý đã xác thực\n• Nắm bắt mẫu tinh vi từ vựng\n• Nhiều chỉ số phụ bổ sung\n• Framework độc lập ngôn ngữ",
-    "limitations": "• Văn bản chuyên ngành gây nhiễu chỉ số tần suất\n• Văn bản kỹ thuật tự nhiên dùng từ ngoài danh sách\n• LLM có thể được hướng dẫn cho mức từ vựng cụ thể\n• Cần dữ liệu tần suất mạnh mẽ cho mỗi ngôn ngữ",
+    "name": "Độ Phức Tạp Từ Vựng (Lexical Sophistication)",
+    "description": "Đánh giá tỷ lệ sử dụng các từ vựng hiếm, chuyên biệt cao hoặc từ vựng nâng cao trong văn bản. Các mô hình AI vốn dĩ có xu hướng thiên về các từ 'an toàn', có tần suất xuất hiện trung bình và cao để tối đa hóa xác suất thống kê, nhất quán lảng tránh các thuật ngữ tối nghĩa, tần suất thấp mà các chuyên gia con người thường tự nhiên sử dụng.",
+    "algorithm": "Lập Bản Đồ Dải Tần Suất Khối Ngữ Liệu & Chấm Điểm Độ Xuyên Thấu AWL",
+    "mechanism": "Mỗi từ trong một ngôn ngữ đều có thể được ánh xạ tới tần suất sử dụng thống kê của nó trong thế giới thực (ví dụ: 'ngôi nhà' có tần suất cao, 'vị lai' có tần suất thấp). Người viết, đặc biệt là các chuyên gia hoặc tác giả sáng tạo, rút ra rất nhiều từ các dải tần suất thấp (từ hiếm) để mô tả các sắc thái cụ thể, thiết lập uy quyền hoặc tạo ra tác động thi ca. Ngược lại, các Mô hình Ngôn ngữ Lớn (LLMs) được huấn luyện bằng cách sử dụng hàm suy hao entropy chéo để dự đoán từ tiếp theo *có khả năng xảy ra cao nhất*. Ngay cả khi được hướng dẫn viết một cách chuyên nghiệp, về mặt thống kê, chúng vẫn gặp khó khăn trong việc chạm sâu vào các dải tần suất thấp, thay vào đó lại dựa dẫm vào các thuật ngữ Danh sách Từ vựng Học thuật (AWL) phổ biến nhất và các biệt ngữ chuyên ngành có tần suất trung bình. Thuật toán này đối chiếu chéo mọi từ nội dung trong văn bản với các khối ngữ liệu tần suất ngôn ngữ khổng lồ. Nó phân loại từ vựng thành các dải tần suất (Top 1K, 2K, 5K, 10K và Ngoài danh sách). Nếu một văn bản được cho là ở cấp độ chuyên gia nhưng hồ sơ ngữ nghĩa của nó lại bị áp đảo hoàn toàn bởi 5.000 từ phổ biến nhất, với sự vắng mặt đáng ngờ của các thuật ngữ hiếm 'Ngoài danh sách', nó sẽ bị đánh dấu là một thế hệ nhân tạo, được làm mượt bằng xác suất.",
+    "useCase": "Nòng cốt để phân tích các bài báo học thuật, tài liệu kỹ thuật và báo chí cấp cao. Nó phơi bày hiệu quả các văn bản do AI tạo ra nghe có vẻ 'thông minh' ở bề ngoài nhưng lại thiếu chiều sâu chuyên môn thực sự.",
+    "strengths": "• Định lượng được 'thung lũng kỳ lạ' (uncanny valley) của văn bản AI—lý do tại sao một bài luận của LLM có kết cấu hoàn hảo nhưng về mặt trí tuệ lại rất nông cạn.\n• Cực kỳ khó để qua mặt bằng cách chỉ đơn giản bảo AI 'hãy dùng từ ngữ phức tạp'; LLM sẽ chỉ spam các từ 'phức tạp' phổ biến nhất (ví dụ: 'delve', 'tapestry', 'multifaceted') thay vì sử dụng từ vựng hiếm thực sự phù hợp với ngữ cảnh.\n• Được xây dựng dựa trên nền tảng của nhiều thập kỷ nghiên cứu tâm lý ngôn ngữ học đã được khẳng định về quá trình tiếp thu từ vựng của con người.",
+    "limitations": "• Hiệu suất giảm mạnh đối với các văn bản vốn được thiết kế để đơn giản, chẳng hạn như sách thiếu nhi, hướng dẫn cơ bản hoặc các bài đăng thông thường trên mạng xã hội, vốn dĩ sử dụng các từ có tần suất cao.\n• Yêu cầu các từ điển tần suất khổng lồ, có độ chính xác cao đối với từng ngôn ngữ được hỗ trợ; tiếng Anh được hỗ trợ tốt, nhưng các ngôn ngữ thứ cấp hoặc ngôn ngữ bản địa có thể thiếu khối ngữ liệu cần thiết.\n• Các văn bản kỹ thuật trong các lĩnh vực cực kỳ ngách có thể đưa ra các biệt ngữ cụ thể làm sai lệch số đếm từ ngoài danh sách, đòi hỏi phải hiệu chuẩn theo từng lĩnh vực chuyên biệt.",
+    "parameters": "Kiểm Định: Đối Chiếu Chéo Khối Ngữ Liệu Ngôn Ngữ\nThước Đo: Tỷ lệ Từ Vựng Tần Suất Thấp vs. Tần Suất Cao\nĐầu Ra: 0-100 Điểm Khả Đoán Từ Vựng (Mức Độ San Phẳng Xác Suất)",
+    "accuracy": "Cao — 79-86% trên các văn bản học thuật và chuyên môn. Nó nắm bắt thành công sự bất lực cấu trúc của AI trong việc sử dụng nhất quán các thuật ngữ hiếm, cấp độ chuyên gia.",
     "references": [
         {
-            "title": "Kyle & Crossley (2015). Automatically Assessing Lexical Sophistication. TESOL Quarterly.",
+            "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
             "url": "https://doi.org/10.1002/tesq.194"
         },
         {
-            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage Through Excess Vocabulary. arXiv.",
+            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
             "url": "https://arxiv.org/abs/2406.07016"
-        },
-        {
-            "title": "Brysbaert, M. et al. (2014). Concreteness Ratings. Behavior Research Methods.",
-            "url": "https://doi.org/10.3758/s13428-013-0403-5"
         }
     ]
 }

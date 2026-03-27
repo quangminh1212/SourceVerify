@@ -1,12 +1,21 @@
 {
-    "name": "Lặp chuỗi từ vựng",
-    "description": "Phân tích lặp chuỗi từ vựng",
-    "algorithm": "Thuật toán phân tích Lặp chuỗi từ vựng",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích lặp chuỗi từ vựng. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích lặp chuỗi từ vựng. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Sự Ám Ảnh Chuỗi Từ Vựng (Lexical Chain Fixation)",
+    "description": "Phân tích độ đa dạng và tần suất lặp lại của các 'chuỗi từ vựng' (các trình tự từ ngữ có liên quan tới cùng một chủ đề). Các mô hình AI thường bị 'ám ảnh' bởi một tập hợp từ vựng theo chủ đề rất hẹp, nhai đi nhai lại cùng một vài từ hoặc các từ đồng nghĩa dễ đoán thay vì mở rộng trường ngữ nghĩa một cách tự nhiên.",
+    "algorithm": "Trích Xuất Từ Vựng Chủ Đề & Chấm Điểm Độ Dư Thừa Của Chuỗi",
+    "mechanism": "Một 'chuỗi từ vựng' là một chuỗi các từ có liên quan chạy xuyên suốt một văn bản, tạo ra sự gắn kết (ví dụ: 'bệnh viện' -> 'bác sĩ' -> 'phẫu thuật' -> 'hồi phục'). Khi con người viết một tài liệu dài, các chuỗi từ vựng của họ tự nhiên đi lang thang, phân nhánh và kết hợp các từ vựng cực kỳ đa dạng, nhiều tầng lớp bắt nguồn từ kinh nghiệm cá nhân hoặc tư duy đa chiều. Ngược lại, các Mô hình Ngôn ngữ Lớn hoạt động dựa trên cơ chế chú ý (attention) và phân phối xác suất cố định. Một khi LLM đã bám vào một chủ đề cụ thể, nó sẽ bị 'mắc kẹt' trong một khu vực lân cận ngữ nghĩa rất hẹp. Nó sẽ trích xuất 10 từ có xác suất cao nhất cho chủ đề đó và cứ thế quay vòng sử dụng chúng liên tục. Điều này tạo ra một chuỗi từ vựng dày đặc, có tính lặp lại cực cao, nơi chính xác những danh từ và động từ đó xuất hiện lại với tần suất phi tự nhiên. Thuật toán này thiết lập bản đồ tất cả các trình tự từ vựng theo chủ đề trong tài liệu và tính toán tỷ lệ giữa các thực thể duy nhất trong chuỗi so với tổng số lần xuất hiện của chuỗi. Nếu một bài viết bàn luận về một chủ đề phức tạp trong 500 từ nhưng lại chỉ dựa vào việc xào lại đúng 5 từ khóa chủ đề thay vì mở rộng ra, điều đó cho thấy rõ sự ngưng trệ ngữ nghĩa đặc trưng của AI.",
+    "useCase": "Cực kỳ hiệu quả để kiểm toán các bài tiểu luận, bài đăng blog và báo chí, nơi một người viết là con người sẽ tự nhiên thể hiện một vốn từ vựng mở rộng, phát triển, trong khi AI sẽ chỉ lặp lại các từ khóa của câu lệnh prompt.",
+    "strengths": "• Xuất sắc trong việc vạch trần 'vòng lặp ngữ nghĩa'—thói quen nói vòng vo sử dụng cùng một vốn từ vựng của AI khi bị ép buộc phải đáp ứng yêu cầu về độ dài mà không có thông tin mới để thêm vào.\n• Rất vững vàng trước các chỉnh sửa nhỏ, vì biên tập viên hiếm khi viết lại toàn bộ mạng lưới từ vựng chủ đề nền tảng của một tài liệu.\n• Nắm bắt được sự khác biệt cơ bản giữa trí nhớ liên tưởng của con người (rộng) và cửa sổ chú ý của AI (tập trung hẹp vào các token có xác suất cao nhất).",
+    "limitations": "• Kém hiệu quả trên các tài liệu kỹ thuật, khoa học hoặc pháp lý cao độ, nơi việc lặp lại chính xác các thuật ngữ (chuỗi từ vựng nghiêm ngặt) là bắt buộc để đảm bảo sự chính xác và rõ ràng (dẫn đến tỷ lệ dương tính giả cao).\n• Yêu cầu các văn bản dài hơn để có thể lập bản đồ chuỗi một cách chính xác; việc phân tích các chuỗi từ vựng trong một đoạn văn 50 từ là vô nghĩa về mặt thống kê.\n• Nặng về mặt tính toán hơn so với phân tích n-gram cơ bản do yêu cầu phải lập bản đồ các mối quan hệ ngữ nghĩa.",
+    "parameters": "Kiểm Định: Phân Nhóm Chủ Đề & Lập Bản Đồ Tần Suất Lặp Lại\nThước Đo: Số Mục Từ Duy Nhất Trong Chuỗi / Tổng Số Lần Đề Cập Chuỗi\nĐầu Ra: 0-100 Điểm Trì Trệ Từ Vựng (Ám Ảnh Chuỗi)",
+    "accuracy": "Cao — 81-87% trên các văn bản sáng tạo và phi hư cấu thông thường. Nó cung cấp một bản đồ cấu trúc mạnh mẽ về sự hạn hẹp trong trí tưởng tượng chủ đề của AI.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

@@ -1,25 +1,20 @@
 {
-    "name": "Phát hiện ngôn ngữ rào đón",
-    "description": "Phát hiện mẫu rào đón và dấu hiệu nhận thức trong văn bản, vì AI thường sử dụng quá mức ngôn ngữ thận trọng và từ hạn định.",
-    "useCase": "Nhận diện văn bản AI thông qua lạm dụng dấu hiệu không chắc chắn và từ hạn định an toàn",
-    "mechanism": "Nhận diện biểu thức rào đón (động từ tình thái: 'có thể', 'có lẽ'; trạng từ: 'tiềm năng', 'có khả năng'; cụm từ: 'đáng lưu ý', 'cần đề cập') và tính tần suất so với ngôn ngữ khẳng định. Hệ thống AI, đặc biệt mô hình instruction-tuned, lạm dụng rào đón một cách hệ thống để tỏ ra cân bằng, tạo dấu hiệu thống kê đo được.",
-    "accuracy": "Trung bình - 70-80%",
-    "source": "Liang, W. et al. (2024) - Mapping the Increasing Use of LLMs in Scientific Papers, arXiv",
-    "algorithm": "Hedging Lexicon Matching + Assertiveness Ratio + Modal Verb Frequency Analysis",
-    "parameters": "Bộ từ vựng rào đón: 200+ biểu thức, Phân loại: nhận thức/xấp xỉ/lá chắn hợp lý, Tỷ lệ: rào đón/khẳng định, Chuẩn hóa: trên 100 từ",
-    "strengths": "• Nắm bắt thiên lệch hệ thống đã biết của LLM instruction-tuned\n• Hoạt động tốt trên văn bản học thuật và chuyên nghiệp\n• Chi phí tính toán thấp\n• Kết quả dễ giải thích",
-    "limitations": "• Văn bản khoa học tự nhiên chứa rào đón\n• Khác biệt văn hóa ảnh hưởng chuẩn mực rào đón\n• Mô hình cơ sở rào đón ít hơn mô hình RLHF\n• Diễn đạt lại đơn giản có thể loại bỏ rào đón",
+    "name": "Mật Độ Ngôn Ngữ Nước Đôi (Hedging Language)",
+    "description": "Định lượng mật độ của ngôn ngữ 'nói rào trước đón sau' (ví dụ: 'có khả năng', 'có thể cho rằng', 'điều quan trọng cần lưu ý là'). Do huấn luyện an toàn RLHF, các mô hình AI bị ép buộc phải lạm dụng các từ ngữ rào đón để tránh đưa ra những khẳng định tuyệt đối.",
+    "algorithm": "Phân Tích Mật Độ Từ Nước Đôi & Trích Xuất Lá Chắn Trách Nhiệm",
+    "mechanism": "Khi con người viết với sự tự tin, họ đưa ra những khẳng định dứt khoát ('Dự án thất bại vì X'). Khi họ không chắc chắn, họ dùng những từ rào đón tự nhiên ('Tôi nghĩ có lẽ X gây ra nó'). Tuy nhiên, các Mô hình Ngôn ngữ Lớn bị trừng phạt rất nặng trong quá trình RLHF (Học tăng cường từ Phản hồi của Con người) do lỗi 'ảo giác' và việc đưa ra câu trả lời tuyệt đối sai. Điều này tạo ra một sự thiên vị toán học ăn sâu vào máu đối với 'sự an toàn nhận thức'. Mô hình sẽ theo bản năng lót thêm những 'lá chắn hợp lý' vào hầu hết mọi phát biểu ('Có thể lập luận rằng', 'Điều quan trọng cần xem xét là', 'Có khả năng dẫn đến'). Thuật toán này quét văn bản dựa trên một từ điển chứa hơn 200 dấu hiệu nói nước đôi đã biết, được phân loại thành động từ khuyết thiếu (might, could), từ ước lượng (khoảng chừng, phần nào), và lá chắn hợp lý. Nó tính toán tỷ lệ của các câu 'nói rào đón' so với các khẳng định tuyệt đối. Nếu một văn bản được đọc giống như một bản tuyên bố miễn trừ trách nhiệm PR công sở cực kỳ thận trọng—thiếu đi nhịp điệu tự nhiên của con người khi giữ một lập trường vững chắc—nó sẽ tạo ra một cảnh báo vô hồn thuật toán ở mức cao.",
+    "useCase": "Cực kỳ hiệu quả để kiểm toán các bài luận thuyết phục, bài nêu quan điểm, phân tích kỹ thuật và các giao tiếp kinh doanh quyết đoán, nơi các tác giả con người được kỳ vọng sẽ có lập trường rõ ràng.",
+    "strengths": "• Khai thác một cách hoàn hảo các rào chắn được xây dựng trong tất cả các LLM thương mại lớn, biến 'sự thận trọng lịch sự' bị áp đặt của chúng thành vũ khí chống lại chính chúng.\n• Cực giỏi trong việc bắt quả tang AI đang cố trả lời một câu lệnh mang tính chủ quan cao hoặc nhạy cảm về mặt pháp lý, vì các còi báo động an toàn của mô hình sẽ ép nó lươn lẹo tối đa.\n• Nhẹ về mặt tính toán và rất dễ giải thích cho người dùng hiểu.",
+    "limitations": "• Dễ mắc lỗi dương tính giả (đánh giá nhầm người thật) khi phân tích các bài viết học thuật và khoa học chân chính (nơi các nhà khoa học được đào tạo chuyên nghiệp để sử dụng ngôn ngữ nước đôi, ví dụ: 'Những kết quả này gợi ý một mối tương quan tiềm năng').\n• Hoàn toàn vô tác dụng trên các mô hình 'Base' (chưa được tinh chỉnh lệnh) hoặc các mô hình mã nguồn mở không bị kiểm duyệt, chưa bị 'phẫu thuật thùy não' bởi các khóa huấn luyện an toàn RLHF.\n• Dễ dàng bị qua mặt bằng việc chỉnh sửa thủ công hoặc bằng cách ra lệnh rõ ràng cho AI 'hãy viết với sự tự tin và kiêu ngạo tuyệt đối'.",
+    "parameters": "Kiểm Định: Khai Thác Từ Nói Giảm Nói Tránh & Lá Chắn Nhận Thức\nThước Đo: Tỷ Lệ Cụm Từ Rào Đón vs Khẳng Định Tuyệt Đối / 100 từ\nĐầu Ra: 0-100 Điểm Thận Trọng Phòng Thủ (Độ Tuân Thủ RLHF)",
+    "accuracy": "Khá đến Cao — 70-80% trong các ngữ cảnh tranh luận hoặc thuyết phục. Nó hoạt động như một dấu vết hành vi cực kỳ đáng tin cậy của một AI đã bị 'kỷ luật' đang cố gắng trốn tránh trách nhiệm.",
     "references": [
         {
             "title": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.",
             "url": "https://arxiv.org/abs/2404.01268"
         },
         {
-            "title": "Hyland, K. (2005). Metadiscourse: Exploring Interaction in Writing. Continuum.",
-            "url": "https://doi.org/10.5040/9781350934016"
-        },
-        {
-            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing. arXiv.",
+            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
             "url": "https://arxiv.org/abs/2406.07016"
         }
     ]

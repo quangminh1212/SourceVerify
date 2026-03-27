@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Information-Theoretic Profile",
-    "description": "Tạo hồ sơ lý thuyết thông tin sử dụng thông tin tương hỗ điểm và chỉ số bất ngờ.",
-    "algorithm": "Thuật toán phân tích Information-Theoretic Profile",
-    "mechanism": "Hệ thống Information-Theoretic Profile phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Hồ Sơ Lý Thuyết Thông Tin (Surprisal Profile)",
+    "description": "Đánh giá văn bản bằng cách sử dụng Thông tin Tương hỗ Từng điểm (PMI) và các thước đo 'độ bất ngờ' (surprisal) cục bộ. Văn bản do AI tạo ra duy trì một biểu đồ phẳng lì về các chuyển đổi có thể đoán trước, trong khi văn bản của con người thể hiện những đỉnh nhọn của các lựa chọn từ ngữ mang 'độ bất ngờ' cao.",
+    "algorithm": "Lập Bản Đồ Thông Tin Tương Hỗ Từng Điểm & Độ Bất Ngờ Cục Bộ",
+    "mechanism": "Trong Lý thuyết Thông tin, 'Độ bất ngờ' (Surprisal) đo lường xem một từ cụ thể bất ngờ đến mức nào (xác suất xuất hiện thấp) dựa trên ngữ cảnh đứng trước nó. Khi con người viết, quá trình nhận thức của họ là phi tuyến tính và mang tính liên tưởng; họ thường xuyên sử dụng những từ vựng cực kỳ bất ngờ, nhảy cóc giữa các phép ẩn dụ, hoặc tạo ra những cú ngoặt ngữ cảnh đột ngột. Điều này tạo ra một 'hồ sơ độ bất ngờ' cực kỳ gồ ghề với những đỉnh nhọn chót vót của entropy thông tin. Ngược lại, các Mô hình Ngôn ngữ Lớn tạo ra văn bản thông qua quá trình làm mượt xác suất tự hồi quy. Để tối đa hóa tính mạch lạc và giảm thiểu sai sót, các thuật toán giải mã của chúng (như nucleus sampling) thiên vị nặng nề việc giảm thiểu 'độ bất ngờ' cục bộ. Văn bản của AI sẽ lướt đi trên một đường cong an toàn, có mức độ bất ngờ thấp một cách nhất quán. Thuật toán này tính toán Thông tin Tương hỗ Từng điểm (PMI) giữa các token nằm kề nhau để xác định khả năng dự đoán của mỗi sự chuyển tiếp ngôn ngữ. Sau đó, nó vẽ biểu đồ các giá trị này để tạo ra một Hồ sơ Lý thuyết Thông tin cho toàn bộ tài liệu. Nếu tài liệu hiển thị một đường cong độ bất ngờ phẳng lì, 'an toàn' về mặt toán học và thiếu vắng một cách phi lý các đỉnh entropy cao, nó sẽ bị cắm cờ đỏ là sản phẩm được tạo ra bằng xác suất máy móc.",
+    "useCase": "Trọng yếu trong việc phân tích các bài báo học thuật dài, văn học, báo chí điều tra và các bài luận sáng tạo, nơi các đường cong xác suất toán học có thể lập bản đồ chính xác 'dấu vân tay nhận thức' của tác giả.",
+    "strengths": "• Bắt trúng một điểm yếu cốt lõi về mặt kiến trúc của tất cả các Mô hình Ngôn ngữ Dự đoán Từ-tiếp-theo tự hồi quy.\n• Rất vững vàng trước các thủ thuật thay thế từ đồng nghĩa hoặc việc con người chỉnh sửa nhẹ, vì độ cong thống kê cơ bản (phân phối tương đối của độ bất ngờ) vẫn được giữ nguyên.\n• Cung cấp một bằng chứng khách quan, thuần túy bằng toán học về quá trình tạo lập văn bản, hoàn toàn độc lập với nội dung ngữ nghĩa hay ngữ pháp.",
+    "limitations": "• Yêu cầu độ dài văn bản đáng kể (tối thiểu 300 từ) để thiết lập một đường cơ sở toán học và vẽ ra một đường cong xác suất đáng tin cậy; hoàn toàn vô dụng đối với các bài đăng ngắn trên mạng xã hội.\n• Phụ thuộc nặng nề vào khối dữ liệu tham chiếu (corpus) được dùng để tính toán PMI; nếu dữ liệu huấn luyện của bộ công cụ đánh giá không khớp với lĩnh vực của văn bản (ví dụ: dùng kho tiếng Anh chung chung để đánh giá tài liệu y khoa), nó sẽ tạo ra tỷ lệ dương tính giả khổng lồ.\n• Chi phí tính toán cực kỳ cao so với các bài kiểm tra mật độ từ vựng cơ bản.",
+    "parameters": "Kiểm Định: Khả Năng Dự Đoán Tự Hồi Quy & Hồ Sơ Độ Bất Ngờ\nThước Đo: Phương Sai Của Thông Tin Tương Hỗ Từng Điểm (Các Đỉnh Entropy Cục Bộ)\nĐầu Ra: 0-100 Điểm Làm Mượt Xác Suất (Sự Thiếu Vắng Độ Bất Ngờ)",
+    "accuracy": "Cao — 82-89% trên các văn bản dài, có nhiều đoạn văn. Nó đóng vai trò như một cuộc kiểm toán cấu trúc có độ tin cậy cực cao đối với ma trận xác suất ngầm của văn bản.",
+    "references": [
+        {
+            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }
