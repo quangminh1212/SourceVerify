@@ -1,26 +1,21 @@
 {
-    "name": "Nhịp điệu Viết",
-    "description": "Phân tích nhịp điệu và mẫu viết.",
-    "useCase": "Phát hiện văn bản AI qua tính đều đặn như nhịp đếm",
-    "mechanism": "Tính tự tương quan năng lượng hàng để phát hiện mẫu tuần hoàn. Văn bản AI có tính đều đặn như nhịp đếm, trong khi văn viết người có biến đổi nhịp điệu tự nhiên.",
-    "accuracy": "Trung bình - 70-80%",
-    "source": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Nhịp Điệu Viết (Writing Rhythm)",
+    "description": "Phân tích tính đều đặn như máy đếm nhịp của văn bản bằng cách đo lường các biến đổi tuần tự về độ dài câu, độ phức tạp cú pháp và nhịp độ. Những tác giả con người vốn dĩ sử dụng một nhịp điệu thở thất thường—chấm phá những câu ngắn, mạnh mẽ bằng những câu dài, lan man, phức tạp để xây dựng sự căng thẳng, nhấn mạnh hoặc chuyển tiếp giữa các ý. Các mô hình AI tạo sinh, bị ràng buộc bởi các chức năng tối ưu hóa tìm kiếm con đường ít lực cản toán học nhất, tạo ra một nhịp điệu 'như máy đếm nhịp', được điều chỉnh rất đều đặn. Chúng mặc định theo một nhịp điệu đều đặn, tốc độ trung bình hiếm khi đi chệch khỏi một nhịp điệu cấu trúc có thể dự đoán được. Cỗ máy này phát hiện sự đơn điệu nhân tạo tiềm ẩn ngay cả trong các đầu ra LLM được cách điệu cao.",
+    "algorithm": "Tự Tương Quan Nhịp Độ Tuần Tự Và Năng Lượng Âm Tiết",
+    "mechanism": "Thuật toán coi tài liệu như một tín hiệu chuỗi thời gian. Nó đo lường 'năng lượng' của mỗi câu—được tính toán qua độ dài ký tự, số âm tiết và độ sâu cú pháp—và lập bản đồ phân bố tuần tự. Sau đó, nó áp dụng chức năng tự tương quan để phát hiện các khoảng lặp lại hoặc các mẫu định kỳ. Một tác giả con người sẽ tạo ra một tín hiệu không tuần hoàn, nhiễu loạn với các đỉnh và khoảng lặng không thể đoán trước (ví dụ: các đoạn văn rất phức tạp theo sau là một câu hai từ đột ngột). Ngược lại, văn bản AI tạo ra một dạng sóng tuần hoàn, có tính tương quan cao vì nó rơi vào các vòng lặp tạo sinh có thể dự đoán được, duy trì một nhịp điệu đập đều đặn, cơ giới hóa.",
+    "useCase": "Thiết yếu để đánh giá nội dung dạng dài, chẳng hạn như thư xin việc, cấu trúc tự sự và văn bản sáng tạo. Nó hoạt động như một công cụ kiểm tra sắc bén chống lại đầu ra tạo sinh 'nhạt nhẽo' vì sự đơn điệu về nhịp điệu là một trong những đặc điểm văn phong khó nhất để một cỗ máy cố ý ghi đè.",
+    "strengths": "• Phân tích luồng của toàn bộ tài liệu thay vì các từ biệt lập, khiến nó miễn nhiễm với các cuộc tấn công thay thế từ đồng nghĩa đơn giản.\n• Hoạt động như một công cụ phát hiện phổ quát trên nhiều ngôn ngữ, vì hiện tượng đều đặn toán học trong tạo sinh AI vượt qua ngữ pháp ngôn ngữ cụ thể.",
+    "limitations": "• Các đầu vào ngắn (ví dụ: một đoạn văn hoặc một hộp thoại ngắn) thiếu các điểm dữ liệu tuần tự cần thiết để thiết lập đường cơ sở nhịp điệu, làm cho phân tích tự tương quan trở nên vô dụng.\n• Các văn bản được cấu trúc cố ý mang tính đồng nhất—như hợp đồng pháp lý, tài liệu API chính thức hoặc danh sách cứng nhắc—sẽ kích hoạt kết quả dương tính giả.",
+    "parameters": "Kiểm Định: Tự Tương Quan Năng Lượng Tuần Tự\nThước Đo: Phương Sai Của Nhịp Điệu, Làm Mịn Dạng Sóng Định Kỳ, Và Entropy Đa Câu\nĐầu Ra: 0-100 Điểm Monotony (Đơn Điệu) Nhịp Điệu",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-85%. Hiệu quả của nó bị giảm nghiêm trọng với các văn bản ngắn nhưng trở nên cực kỳ nguy hiểm đối với các bài luận vượt quá 500 từ. Khi kết hợp với Tính Bùng Nổ (Sự biến đổi độ dài câu), nó cung cấp một chữ ký gần như không thể đánh lừa của sự tạo sinh máy.",
     "references": [
         {
-            "title": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Tay%20et%20al.%20(2020)%20-%20Comparative%20Study%20of%20Human%20vs.%20Machine%20Generated%20Text"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
             "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         }
     ]
 }

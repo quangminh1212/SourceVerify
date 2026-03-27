@@ -1,26 +1,21 @@
 {
-    "name": "词汇多样性分析",
-    "description": "测量 词汇多样性 and word choice 模式 以识别 AI生成的 text.",
-    "useCase": "Detecting AI text through 分析 of vocabulary richness and word repetition 模式",
-    "mechanism": "计算 multiple 词汇多样性 metrics including Type-Token Ratio (TTR), Hapax Legomena ratio, and vocabulary growth rate. AI生成的 text often exhibits different vocabulary 分布 模式 compared to 人类写作 — typically using a narrower range of words with more repetitive phrasing.",
-    "accuracy": "中等 - 70-80% as standalone method",
-    "source": "Dugan et al. (2023) - Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text, AAAI",
-    "algorithm": "Type-Token Ratio (TTR) + Hapax Legomena + Vocabulary Growth Rate + Yule's K",
-    "parameters": "Window: 100-500 tokens, Metrics: TTR, MTLD, HD-D, Yule's K",
-    "strengths": "• Captures fundamental 模式 of word choice\n• Language-model agnostic 检测\n• Works 跨 multiple languages\n• 计算量轻",
-    "limitations": "• Topic-dependent vocabulary variation\n• Short texts reduce 准确度\n• Technical/specialized text has naturally limited vocabulary\n• AI models are improving 词汇多样性",
+    "name": "词汇贫瘠度与同质化分析 (Vocabulary Diversity)",
+    "description": "旨在绞杀并评估贯穿整篇文章的词汇丰富度和变异度。大语言模型（LLM）的底层逻辑建立在概率分布之上，这种发指的数学基因决定了它天生偏爱使用“高频、安全、不会翻车”的词汇。为了维持文章的连贯性并压低“困惑度（Perplexity）”，与其去词海里打捞冷门绝艳的同义词，AI 会像机械流水线一样，疯狂回收利用一小撮它认为“最优解”的词汇池。与此截然相反，人类创作者——受制于个人装腔作势的需求、神经质的记忆闪回，或者是出于“不想把同一个词连用两遍”的纯粹语法洁癖——会极其自然地在文章里强行塞入大量在概率学上“非最优解”、甚至偏门怪异的词汇。这个算法，就是用于捕捉那种被人工阉割过、经历过极端“词汇回收再利用”的数学犯罪现场。",
+    "algorithm": "词汇阶层贫瘠度透视 (MTLD, HD-D, 与 TTR)",
+    "mechanism": "雷达会交叉计算多项词汇变异度指标。它当然会先扫一眼最传统的词汇构成比（TTR，即去重后的废话占比），但它的核心致命武器是那些“免疫文本长度”的超限战指标，比如“文本词汇多样性度量（MTLD）”和“超几何分布 D（HD-D）”。这些高阶法医工具算的是：随着文章越写越长，TTR 崩溃的速度有多快？或者在乱序的文本残骸中，抽中新词的惨淡概率是多少？如果一篇文本在面临“换词”的十字路口时，表现出统计学上极度反常的“词汇枯竭”——在正常人类绝对会换个同义词的地方，它依然像复读机一样死皮赖脸地复用同一个修饰性形容词、转折套话或动词，系统就会立刻锁死它，并给出极高的工业塑料感得分。",
+    "useCase": "这是扒皮长篇散文、创意写作和万字水文的核心绞肉机。它在鉴别那种“文章看起来高级得发酵，但拆开看翻来覆去就那么几个破词儿”的 AI 缝合怪时，具有极具毁灭性的功效。",
+    "strengths": "• 对所谓的“改写（Paraphrase）”咒语拥有极强的装甲免疫力。你就算拿枪顶着 AI 告诉它“给我换点新鲜词”，它也只会在它那个悲惨的高频概率池里换几个同样庸俗的平替词，根本无法触及人类灵魂深处那种神经质的词汇多样性。\n• 因为实装了核武器级别的 MTLD 和 HD-D，这套雷达不会像三流的 TTR 算法那样，被文章的字数长短左右判决（文章越长TTR越低的历史顽疾被彻底攻克）。",
+    "limitations": "• 在扫描高度硬核的技术白皮书、冰冷的法律诉状或尖端科学论文时，极易发生“误杀友军”的情况（假阳性）。因为这些人类文件本身就受到“绝对禁止使用同义词，必须严守标准术语”的病态约束。\n• 需要投喂一定量的饲料（通常要求字数 > 150 词），否则雷达找不到足够的样本子集来计算出具备统计学威力的 HD-D 和 MTLD 读数。",
+    "parameters": "雷达切片: 词汇变异症测绘 与 同义词打捞密度\n定罪量表: MTLD（文本词汇多样性折损率） & HD-D\n行刑判决: 0-100 词汇复读机与修辞枯竭得分",
+    "accuracy": "中级至高级破甲 — 鉴别精度维稳在 75-82%。这是一把极为霸道的句法解剖刀，特别是当它与“词汇爆发突变（Burstiness）”或“语义逻辑链”混合双打时，能形成绝杀。因为 LLM 的致命缺陷就在于：它们的算力根本无法在同一毫秒内，完美兼顾“上下文极度连贯”和“真正的词汇阶跃多样性”。",
     "references": [
         {
-            "title": "Dugan, L. et al. (2023). Real or Fake Text? AAAI.",
-            "url": "https://doi.org/10.1609/aaai.v37i11.26501"
+            "title": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/BRM.42.2.381"
         },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

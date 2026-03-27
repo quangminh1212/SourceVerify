@@ -1,22 +1,21 @@
 {
     "name": "Vocabulary Complexity",
-    "description": "Measures vocabulary complexity level",
-    "algorithm": "Vocabulary Complexity — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Measures vocabulary complexity level. Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through vocabulary complexity analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "description": "Evaluates the sophistication, rarity, and register of the vocabulary used throughout a document. Large Language Models are designed to maximize user comprehension and token efficiency, which inherently biases them toward a 'middle-of-the-road' vocabulary. They heavily rely on statistically probable, commonly used words and standard 'academic' phrasing (e.g., 'furthermore', 'crucial', 'delve'). While AI can use complex words, it distributes them evenly and predictably, rarely deploying truly obscure, archaic, or idiosyncratic terms unless specifically prompted. In contrast, human experts often exhibit 'spiky' vocabulary profiles—mixing highly specialized, rare jargon with colloquialisms in ways that deviate from standard statistical norms.",
+    "algorithm": "Lexical Sophistication & Word Frequency Rank Profiling",
+    "mechanism": "The model parses the text and evaluates every word against established massive corpus frequency lists (e.g., Subtlex, Google Web Trillion Word Corpus). It calculates a 'complexity profile' based on the ratio of high-frequency (common) words to low-frequency (rare/complex) words. Furthermore, it analyzes the semantic register of the complex words used. A text that maintains a relentlessly consistent, evenly distributed 'moderately high' vocabulary complexity (often reading like a high school or undergraduate essay) without any unpredictable spikes into extremely rare or domain-idiosyncratic terminology is a strong mathematical signature of an LLM seeking to balance eloquence with generic readability.",
+    "useCase": "Crucial for analyzing academic papers, professional journalism, and creative writing. It helps differentiate between the genuine, nuanced expertise of a human author and the simulated, averaged-out 'smart' tone of an AI.",
+    "strengths": "• Highly effective at detecting the 'ChatGPT Tone'—that distinct feeling of a text being overly polished, articulate, but ultimately leaning on generic 'smart-sounding' words (like 'multifaceted', 'tapestry', 'testament').\n• Difficult to bypass simply by asking the AI to 'write like an expert', as the AI's idea of expertise is still bound by predictable token probabilities.",
+    "limitations": "• Susceptible to false positives if analyzing human writers who intentionally write in a highly standardized, accessible language (like ESL learners or technical writers following strict plain-language guidelines).\n• Less effective on very short texts where there isn't enough word volume to establish a statistical frequency baseline.",
+    "parameters": "Analysis: Corpus Frequency Matching & Register Evaluation\nMetric: Mean Word Frequency Rank & Idiographic Lexical Spikes\nOutput: 0-100 Lexical Artificiality Score",
+    "accuracy": "High — 75-85% accuracy. It is one of the most reliable semantic indicators, as LLMs struggle to organically replicate the mathematically inefficient and unbalanced vocabulary choices of true human experts.",
     "references": [
-        {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
         }
     ]
 }

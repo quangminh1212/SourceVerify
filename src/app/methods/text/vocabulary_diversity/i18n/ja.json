@@ -1,26 +1,21 @@
 {
-    "name": "語彙多様性分析",
-    "description": "測定します 語彙の多様性 and word choice パターン を識別するために AI生成の text.",
-    "useCase": "Detecting AI text through 分析 of vocabulary richness and word repetition パターン",
-    "mechanism": "計算します multiple 語彙の多様性 metrics including Type-Token Ratio (TTR), Hapax Legomena ratio, and vocabulary growth rate. AI生成の text often exhibits different vocabulary 分布 パターン compared to 人間の文章 — typically using a narrower range of words with more repetitive phrasing.",
-    "accuracy": "中 - 70-80% as standalone method",
-    "source": "Dugan et al. (2023) - Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text, AAAI",
-    "algorithm": "Type-Token Ratio (TTR) + Hapax Legomena + Vocabulary Growth Rate + Yule's K",
-    "parameters": "Window: 100-500 tokens, Metrics: TTR, MTLD, HD-D, Yule's K",
-    "strengths": "• Captures fundamental パターン of word choice\n• Language-model agnostic 検出\n• Works にわたる multiple languages\n• 計算負荷が軽い",
-    "limitations": "• Topic-dependent vocabulary variation\n• Short texts reduce 精度\n• Technical/specialized text has naturally limited vocabulary\n• AI models are improving 語彙の多様性",
+    "name": "語彙の多様性分析 (Vocabulary Diversity)",
+    "description": "テキスト全体で展開されている語彙の豊かさと多様性を評価します。大規模言語モデルは、高頻度で安全な単語の選択を本質的に優先する確率分布に基づいて動作します。一貫性を維持し、「パープレキシティ」（驚き）を最小限に抑えるために、AIは多様な同義語を探し回るのではなく、狭い範囲の「最適」な単語を頻繁にリサイクルします。対照的に、人間の書き手は、文体的なセンス、記憶の想起の癖、または冗長性を避けたいという欲求に駆られて、（純粋な確率の観点からは）しばしば最適ではない、はるかに幅広い種類のユニークな単語を自然に文章に注入します。このアルゴリズムは、人工的に制約され、高度にリサイクルされた語彙の数学的シグネチャを検出します。",
+    "algorithm": "語彙の豊富さの指標 (MTLD、HD-D、およびTTR)",
+    "mechanism": "アルゴリズムは、語彙の多様性の複数の指標を計算します。基本的な異なり語数比（Type-Token Ratio: TTR、総単語数に対する固有の単語数の比率）から始まりますが、テキストの語彙多様性の指標（Measure of Textual Lexical Diversity: MTLD）や超幾何分布D（Hypergeometric Distribution D: HD-D / vocd-D）などの長さに依存しない測定に大きく依存しています。これらの高度な指標は、テキストが長くなるにつれてTTRがどれだけ早く低下するかを計算したり、ランダムなテキストサンプルで新しい単語が見つかる確率を計算したりします。固有の単語のバリエーションが統計的に異常なほど不足している—人間が有機的に多様化するであろう場所で同じ修飾形容詞、遷移句、および動詞を再利用している—テキストは、高い人工性スコアをトリガーします。",
+    "useCase": "エッセイ、クリエイティブライティング、長編記事の分析にとって重要です。「賢く聞こえる」が、実際には非常に小さな洗練された単語のプールを繰り返しているテキストを特定するのに非常に効果的です。",
+    "strengths": "• 単純な「言い換え（パラフレーズ）」プロンプトに対して非常に弾力性があります。「異なる単語を使用する」ように指示されたAIは、依然として制約された高確率のプールから単語を引き出すため、真の人間のような語彙の多様性を達成できません。\n• MTLDとHD-Dを使用することで、基本的なTTRとは異なり、ドキュメントの長さの変動に対して堅牢な分析になります。",
+    "limitations": "• 標準化された用語の厳密な順守（と同義語の回避）が求められる、高度に専門的なドキュメント、法的契約書、または科学論文を分析する場合、偽陽性（誤検知）の影響を受けやすくなります。\n• 統計的に有意なHD-DおよびMTLDスコアを計算するには、最小限のテキストの長さ（通常は150単語以上）が必要です。",
+    "parameters": "解析: 語彙の変動と同義語の検索\n評価基準: MTLD (テキスト語彙多様性の指標) & HD-D\n出力結果: 0-100 語彙の反復性スコア",
+    "accuracy": "中〜高 — 75-82%の精度。特にバースト性や意味的な一貫性の指標と組み合わせると、強力な構文診断ツールになります。LLMは一貫性と真の語彙の多様性を同時に最適化することに苦労するためです。",
     "references": [
         {
-            "title": "Dugan, L. et al. (2023). Real or Fake Text? AAAI.",
-            "url": "https://doi.org/10.1609/aaai.v37i11.26501"
+            "title": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/BRM.42.2.381"
         },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

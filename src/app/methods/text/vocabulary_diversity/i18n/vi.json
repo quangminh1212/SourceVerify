@@ -1,26 +1,21 @@
 {
-    "name": "Phân tích Đa dạng Từ vựng",
-    "description": "Đo đa dạng từ vựng và mẫu chọn từ để nhận diện văn bản do AI tạo.",
-    "useCase": "Phát hiện văn bản AI qua phân tích sự phong phú từ vựng và mẫu lặp từ",
-    "mechanism": "Tính toán nhiều chỉ số đa dạng từ vựng bao gồm Tỷ lệ Type-Token (TTR), tỷ lệ Hapax Legomena, và tốc độ tăng trưởng từ vựng. Văn bản AI thường có phân bố từ vựng khác biệt — sử dụng phạm vi từ hẹp hơn với cách diễn đạt lặp lại nhiều hơn.",
-    "accuracy": "Trung bình - 70-80% khi sử dụng độc lập",
-    "source": "Dugan et al. (2023) - Real or Fake Text?, AAAI",
-    "algorithm": "Type-Token Ratio (TTR) + Hapax Legomena + Vocabulary Growth Rate + Yule's K",
-    "parameters": "Cửa sổ: 100-500 tokens, Chỉ số: TTR, MTLD, HD-D, Yule's K",
-    "strengths": "• Bắt được mẫu cơ bản của việc chọn từ\n• Phát hiện không phụ thuộc mô hình ngôn ngữ\n• Hoạt động trên nhiều ngôn ngữ\n• Tính toán nhẹ",
-    "limitations": "• Biến đổi từ vựng phụ thuộc chủ đề\n• Văn bản ngắn giảm độ chính xác\n• Văn bản kỹ thuật/chuyên ngành có từ vựng hạn chế tự nhiên\n• Mô hình AI đang cải thiện đa dạng từ vựng",
+    "name": "Phân Tích Sự Đa Dạng Từ Vựng (Vocabulary Diversity)",
+    "description": "Đánh giá mức độ phong phú và đa dạng của từ vựng được triển khai trong toàn bộ văn bản. Các Mô hình Ngôn ngữ Lớn hoạt động dựa trên các phân phối xác suất vốn dĩ ưu tiên các lựa chọn từ ngữ an toàn, tần suất cao. Để duy trì tính mạch lạc và giảm thiểu 'độ bối rối' (perplexity - sự bất ngờ), một AI sẽ thường xuyên tái sử dụng một dải hẹp các từ 'tối ưu' thay vì tìm kiếm các từ đồng nghĩa đa dạng. Ngược lại, những người viết—được thúc đẩy bởi phong cách cá nhân, đặc thù của trí nhớ hoặc mong muốn tránh sự lặp lại—sẽ tự nhiên đưa vào văn xuôi của họ một lượng từ độc đáo đa dạng hơn nhiều, thường là không tối ưu (từ góc độ xác suất thuần túy). Thuật toán này phát hiện chữ ký toán học của một từ vựng bị hạn chế nhân tạo và bị tái sử dụng cao.",
+    "algorithm": "Các Chỉ Số Phong Phú Từ Vựng (MTLD, HD-D và TTR)",
+    "mechanism": "Thuật toán tính toán nhiều chỉ số về sự đa dạng từ vựng. Nó bắt đầu với Tỷ lệ Loại-Token cơ bản (Type-Token Ratio - TTR, tỷ lệ giữa các từ duy nhất so với tổng số từ), nhưng phụ thuộc nhiều vào các phép đo không bị ảnh hưởng bởi độ dài như Phép đo Độ đa dạng Từ vựng Văn bản (MTLD) và Phân phối Siêu bội D (Hypergeometric Distribution D: HD-D / vocd-D). Các số liệu nâng cao này tính toán tốc độ giảm của TTR khi văn bản dài ra, hoặc tính xác suất tìm thấy từ mới trong các mẫu văn bản ngẫu nhiên. Văn bản thể hiện sự thiếu hụt bất thường về mặt thống kê của các biến thể từ độc đáo—tái sử dụng cùng một tính từ mô tả, cụm từ chuyển tiếp và động từ tại những nơi mà con người sẽ đa dạng hóa một cách tự nhiên—kích hoạt điểm nhân tạo cao.",
+    "useCase": "Nòng cốt để phân tích các bài tiểu luận, văn bản sáng tạo và các bài báo dài. Nó rất hiệu quả trong việc xác định văn bản 'nghe có vẻ thông minh' nhưng thực chất đang lặp lại một nhóm rất nhỏ các từ ngữ phức tạp.",
+    "strengths": "• Có khả năng chống chịu cao với các prompt 'diễn giải lại' (paraphrase) đơn giản; một AI được hướng dẫn 'sử dụng các từ khác' vẫn sẽ rút ra từ nhóm xác suất cao bị hạn chế của nó, không đạt được sự đa dạng từ vựng thực sự giống con người.\n• Việc sử dụng MTLD và HD-D làm cho phân tích này trở nên mạnh mẽ trước các biến thể về độ dài tài liệu, không giống như TTR cơ bản.",
+    "limitations": "• Dễ mắc lỗi dương tính giả khi phân tích tài liệu kỹ thuật cao, hợp đồng pháp lý hoặc các bài báo khoa học nơi yêu cầu tuân thủ nghiêm ngặt thuật ngữ chuẩn hóa (và tránh từ đồng nghĩa).\n• Yêu cầu độ dài văn bản tối thiểu (thường >150 từ) để tính toán điểm HD-D và MTLD có ý nghĩa thống kê.",
+    "parameters": "Kiểm Định: Sự Biến Đổi Từ Vựng và Tìm Kiếm Từ Đồng Nghĩa\nThước Đo: MTLD (Phép đo Độ đa dạng Từ vựng Văn bản) & HD-D\nĐầu Ra: 0-100 Điểm Lặp Lại Từ Vựng",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-82%. Đây là một công cụ chẩn đoán cú pháp mạnh mẽ, đặc biệt khi kết hợp với các chỉ số bùng nổ (burstiness) và tính mạch lạc ngữ nghĩa, vi các LLM gặp khó khăn trong việc đồng thời tối ưu hóa tính mạch lạc và Sự Đa Dạng Từ Vựng thực sự.",
     "references": [
         {
-            "title": "Dugan, L. et al. (2023). Real or Fake Text? AAAI.",
-            "url": "https://doi.org/10.1609/aaai.v37i11.26501"
+            "title": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/BRM.42.2.381"
         },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

@@ -1,25 +1,20 @@
 {
-    "name": "단어 빈도 순위",
-    "description": "분석합니다 단어 빈도 ranking 분포.",
-    "useCase": "Zipf 법칙 편차를 통한 AI 텍스트 감지",
-    "mechanism": "계산합니다 trigram frequency 분포 and checks compliance with Zipf's law. AI 생성 text tends to deviate from natural frequency rankings.",
-    "accuracy": "중간 - 72-82%",
-    "source": "Jawahar et al. (2020) - Automatic Detection of Machine Generated Text: A Critical Survey",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "윈도우 크기: 적응형, Quantization: 8-64 levels, Metrics: 엔트로피, CV, 상관관계",
-    "strengths": "- Effective for detecting AI 생성 text\n- Language-agnostic 통계적 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 오탐\n- Short texts provide less reliable signals\n- Performance varies 에 걸친 문체s",
+    "name": "단어 빈도 랭크 (Word Frequency Rank / GLTR)",
+    "description": "문서에 사용된 모든 단어의 절대적인 '출현 빈도 순위(Frequency Ranking)'를 거대한 기준 말뭉치(Baseline corpus)와 대조하여 검사합니다. 대규모 언어 모델(LLM)은 본질적으로 가장 확률이 높은 다음 토큰(단어)을 예측하도록 설계된 초고도화된 자동 완성 엔진입니다. 그 결과, AI가 생성한 텍스트의 생태계는 '상위 10개' 또는 '상위 100개'의 초고빈도 단어들에 의해 압도적으로 지배당합니다. 진정한 의미의 어휘적 이단아들(자연어 빈도 순위 1,000위나 10,000위 밖의 희귀 단어)이 멸종된, 수학적으로 징그럽게 매끄럽고 극도로 예측 가능한 표면을 만들어냅니다. 반면, 인간 작가들은 끊임없이 지프의 법칙(Zipfian distribution)의 '꼬리(Tail end)' 부분으로 처박혀 희귀하고 극도로 구체적인 단어들을 끄집어냅니다. 이 알고리즘은 고확률 단어들이 제공하는 안전띠에 필사적으로 매달려 있는 텍스트를 발가벗기는 통계적 거짓말 탐지기입니다.",
+    "algorithm": "토큰 확률 분포 및 지프의 법칙 이탈도 측정 (Token Probability Distribution & Zipf's Law Deviation)",
+    "mechanism": "이 엔진은 텍스트 내의 모든 단어를 거대한 텍스트 말뭉치와 교차 검증하여 해당 단어의 뼈대 있는 역사적 '빈도 순위'를 결정합니다. 단어들은 확률 바구니(예: Top 10, Top 100, Top 1000, 희귀어)에 담깁니다. 그런 다음 알고리즘은 단어 분포의 엔트로피와 자연어의 지프 곡선(Zipfian curves) 대비 통계적 상관관계를 계산합니다. 정상적인 인간의 텍스트는 흔한 단어들 사이에 희귀하고 확률이 뚝 떨어지는 단어들이 거칠고 건강하게 뒤섞인 형태를 띱니다. 그러나 AI의 텍스트는 'Top 100' 바구니 쪽으로 기괴할 정도로 쏠려 있는 히스토그램을 생성하며, 순위 확률의 분산이 대규모로 결핍되어 있고 지프의 법칙에서 자연스럽게 일탈하지 못하는 통계학적 무능함을 고스란히 드러냅니다.",
+    "useCase": "정교한 프롬프트 엔지니어링이나 온도(Temperature) 조작 없이 날것 그대로 생성된 '바닐라(Vanilla)' AI 텍스트를 색출하는 데 있어 타의 추종을 불허하는 황금 표준(Gold standard)입니다. 작성자가 표준적인 LLM의 답변을 자신의 독창적인 생각인 양 둔갑시키려는 뉴스 기사, 블로그 포스팅, 학생들의 에세이를 감사하는 데 극도로 치명적입니다.",
+    "strengths": "• 검사에 소요되는 시간이 믿을 수 없이 짧고 연산 과부하가 거의 없어서, 1차 필터링 도구(First-pass filter)로 쓰기에 완벽합니다.\n• 언어 생성의 가장 근본적인 수학적 원리로 작동하기 때문에, 기준이 될 빈도수 말뭉치(Baseline corpus)만 존재한다면 세상의 어떤 언어든 가리지 않고 도륙할 수 있습니다.",
+    "limitations": "• 작정하고 고도화된 프롬프트 공격(예: AI에게 '기괴하고 선택적인 어휘를 써라'라고 명령)이나, LLM의 '온도(Temperature)'를 한계치까지 끌어올려 억지로 저확률 토큰을 뱉어내게 만드는 꼼수에 당할 수 있습니다.\n• 텍스트 길이가 극단적으로 짧으면, 신뢰할 만한 통계적 순위-확률 히스토그램을 쌓아 올릴 표본 크기가 부족해집니다.",
+    "parameters": "분석 기준: 기준 말뭉치 대비 순위-확률 히스토그램 (Rank-Probability Histogram)\n측정 지표: 토큰 엔트로피, 변동 계수(CV) 및 Top-K 토큰 분포율\n출력: 0-100 고빈도 단어 편향성(High-Frequency Bias) 스코어",
+    "accuracy": "중상 — 72-82%의 안정적인 정확도를 보입니다. 단독으로 쓰일 때도 강력하지만, 의미론적 일관성(Semantic coherence) 및 버스티니스(Burstiness)와 교차 검증될 때 그 파괴력이 배가됩니다. 인간은 숨 막히는 문맥의 일관성을 유지하면서도 희귀 단어를 자연스럽게 집어넣을 수 있지만, '고온(High-temperature)' 세팅으로 억지로 쥐어짜낸 AI의 텍스트는 결국 문맥이 산산조각 나기 때문입니다.",
     "references": [
         {
-            "title": "Jawahar et al. (2020) - Automatic Detection of Machine Generated Text: A Critical Survey",
-            "url": "https://scholar.google.com/scholar?q=Jawahar%20et%20al.%20(2020)%20-%20Automatic%20Detection%20of%20Machine%20Generated%20Text%3A%20A%20Critical%20Survey"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
             "url": "https://arxiv.org/abs/1906.04043"
         },
         {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
             "url": "https://arxiv.org/abs/1908.09203"
         }
     ]

@@ -1,12 +1,21 @@
 {
-    "name": "Điểm hiếm từ",
-    "description": "Phát hiện sử dụng từ vựng cổ hiếm",
-    "algorithm": "Thuật toán phân tích Điểm hiếm từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phát hiện sử dụng từ vựng cổ hiếm. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích điểm hiếm từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Điểm Độ Hiếm Từ Vựng (Word Rarity Score)",
+    "description": "Đánh giá tài liệu dựa trên tần suất từ vựng 'hiếm' hoặc 'cổ xưa'. Các Mô hình Ngôn ngữ Lớn (LLM) được tối ưu hóa để đưa ra các chuỗi token dễ xảy ra nhất dựa trên tập dữ liệu đào tạo khổng lồ của chúng. Do đó, chúng có xu hướng thiên vị các từ phổ biến, xác suất cao và chủ động tránh các ngoại lệ từ vựng—những từ hiếm khi được sử dụng trong ngôn ngữ hàng ngày hiện đại. Tuy nhiên, người viết thường xuyên sử dụng các từ hiếm, từ chuyên ngành hoặc hơi cổ xưa để tăng thêm màu sắc, độ chính xác hoặc giọng điệu cá nhân cho bài viết của họ. Thuật toán này đo lường nồng độ của những từ 'đuôi dài' có xác suất thấp này. Việc thiếu vắng các từ hiếm là một chỉ báo mạnh mẽ về sự làm mịn nhân tạo điển hình của AI tạo sinh.",
+    "algorithm": "Phân Tích Đuôi Tần Suất Từ Vựng (Tulchinskii, 2023)",
+    "mechanism": "Thuật toán đối chiếu chéo từng token trong văn bản với một từ điển tần suất toàn diện của ngôn ngữ mục tiêu. Các từ được phân loại thành các dải tần suất. Hệ thống quét đặc biệt để tìm các từ rơi vào các phân vị xác suất thấp nhất ('đuôi dài' của phân phối Zipf). Sau đó, nó tính toán 'Điểm Độ Hiếm' tổng thể dựa trên mật độ và sự phân bố của những thuật ngữ bất thường này. Văn bản do AI tạo ra thường ghi nhận Điểm Độ Hiếm thấp một cách không cân xứng, tập trung nhiều vào top 5.000 từ phổ biến nhất. Văn bản của con người có các 'đỉnh' định kỳ đi sâu vào phần đuôi cực đoan của phân phối từ vựng.",
+    "useCase": "Rất hiệu quả để phân tích các bài báo học thuật, văn bản sáng tạo, đánh giá tài liệu và các bài viết quan điểm, nơi các tác giả con người thường sử dụng vốn từ vựng rộng và chuyên sâu. Nó đặc biệt hữu ích để phát hiện văn bản AI 'nhạt nhẽo' thiếu giọng văn khác biệt của tác giả.",
+    "strengths": "• Tuyệt vời trong việc phân biệt giữa vốn từ vựng sắc thái của một chuyên gia con người và các lựa chọn từ ngữ an toàn, chung chung của LLM.\n• Rất hiệu quả đối với các văn bản được tạo ra bằng prompt tiêu chuẩn mà không có sự tinh chỉnh thông số từ vựng phức tạp.",
+    "limitations": "• Dễ bị tấn công bởi các kỹ thuật prompt cụ thể khi người dùng ra lệnh cho AI 'sử dụng từ hiếm', 'viết theo phong cách cổ xưa' hoặc 'sử dụng từ vựng nâng cao'.\n• Có thể mang lại kết quả dương tính giả đối với các văn bản cố tình viết bằng 'Tiếng Anh Đơn Giản' (Plain English) hoặc các lĩnh vực yêu cầu thuật ngữ đơn giản, được tiêu chuẩn hóa nghiêm ngặt (ví dụ: hướng dẫn cơ bản, văn học thiếu nhi).",
+    "parameters": "Kiểm Định: Phân Phối Từ Vựng Đuôi Dài (Long-Tail)\nThước Đo: Mật Độ Token Tần Suất Thấp (tỷ lệ xuất hiện < 0.001%)\nĐầu Ra: 0-100 Điểm Độ Hiếm Từ Vựng & Làm Mịn Nhân Tạo",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 70-85%. Nó có tính dự đoán cao khi kết hợp với các số liệu cấu trúc như Sự Bùng Nổ (Burstiness), bởi vì khi AI bị yêu cầu sử dụng 'từ hiếm', nó thường chèn chúng một cách vụng về, phá hủy sự mạch lạc ngữ nghĩa mặc dù làm tăng điểm số độ hiếm.",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09880"
+        }
+    ]
 }

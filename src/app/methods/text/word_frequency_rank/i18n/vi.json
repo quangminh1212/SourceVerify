@@ -1,25 +1,20 @@
 {
-    "name": "Xếp hạng Tần số Từ",
-    "description": "Phân tích phân bố xếp hạng tần số từ.",
-    "useCase": "Phát hiện văn bản AI qua độ lệch định luật Zipf",
-    "mechanism": "Tính phân bố tần số trigram và kiểm tra tuân thủ định luật Zipf. Văn bản AI có xu hướng lệch khỏi xếp hạng tần số tự nhiên.",
-    "accuracy": "Trung bình - 72-82%",
-    "source": "Jawahar et al. (2020) - Automatic Detection of Machine Generated Text: A Critical Survey",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Xếp Hạng Tần Suất Từ (Word Frequency Rank / GLTR)",
+    "description": "Kiểm tra xếp hạng tần suất tuyệt đối của mỗi từ được sử dụng trong tài liệu so với kho ngữ liệu cơ sở. Các Mô hình Ngôn ngữ Lớn (LLM) về cơ bản là các công cụ tự động hoàn thành siêu cấp được thiết kế để chọn token tiếp theo có xác suất cao nhất. Do đó, văn bản do AI tạo ra bị thống trị áp đảo bởi các từ có tần suất cao thuộc 'Top-10' hoặc 'Top-100'. Nó tạo ra một bề mặt mượt mà, dễ đoán về mặt toán học, nơi các từ ngoại lệ về mặt từ vựng (những từ xếp thứ 1.000 hoặc 10.000 về tần suất trong ngôn ngữ tự nhiên) gần như hoàn toàn vắng bóng. Ngược lại, những người viết liên tục lặn xuống 'phần đuôi' của phân phối Zipf, lôi ra những từ vựng hiếm và cực kỳ cụ thể. Thuật toán này hoạt động như một máy phát hiện nói dối thống kê, vạch trần văn bản bám víu quá tuyệt vọng vào sự an toàn của các từ có xác suất cao.",
+    "algorithm": "Phân Phối Xác Suất Token & Độ Lệch Định Luật Zipf",
+    "mechanism": "Công cụ này đối chiếu chéo mọi từ trong văn bản với một kho ngữ liệu văn bản cơ sở khổng lồ để xác định 'Xếp hạng Tần suất' lịch sử của từ đó. Các từ được nhóm vào các nhóm xác suất (ví dụ: Top 10, Top 100, Top 1.000, Hiếm). Thuật toán sau đó tính toán entropy phân phối và tương quan thống kê so với các đường cong Zipf của ngôn ngữ tự nhiên. Văn bản của con người sẽ hiển thị một hỗn hợp lành mạnh, ngoằn ngoèo giữa các từ thông dụng xen kẽ với các từ hiếm, xác suất thấp. Tuy nhiên, văn bản AI sẽ tạo ra một biểu đồ bị nghiêng một cách bất thường về nhóm 'Top 100', chứng tỏ sự thiếu hụt lớn về phương sai xác suất xếp hạng và thất bại trong việc đi lệch khỏi Định luật Zipf một cách tự nhiên.",
+    "useCase": "Tiêu chuẩn vàng để phát hiện văn bản AI 'nguyên bản'—nội dung được tạo ra mà không có kỹ thuật prompt phức tạp (prompt engineering) hoặc thao tác điều chỉnh nhiệt độ (temperature). Nó cực kỳ hiệu quả trong việc kiểm toán các bài báo, bài đăng trên blog và bài luận của sinh viên khi người viết cố gắng ngụy trang đầu ra tiêu chuẩn của LLM thành suy nghĩ gốc.",
+    "strengths": "• Cực kỳ nhanh và yêu cầu độ trễ tính toán thấp, làm cho nó trở thành bộ lọc vượt qua lần đầu tiên xuất sắc.\n• Hoạt động dựa trên các nguyên tắc toán học cơ bản của việc tạo ngôn ngữ, làm cho nó hoàn toàn không phụ thuộc vào ngôn ngữ miễn là có một kho ngữ liệu tần suất cơ sở tồn tại.",
+    "limitations": "• Dễ bị đánh bại bởi các prompt nâng cao (ví dụ: hướng dẫn AI sử dụng 'từ vựng chiết trung') hoặc bằng cách tăng 'nhiệt độ' của LLM lên mức tối đa, buộc AI phải chọn các token có xác suất thấp hơn một cách nhân tạo.\n• Các văn bản ngắn cung cấp kích thước mẫu không đủ để xây dựng một biểu đồ xác suất hạng đáng tin cậy.",
+    "parameters": "Kiểm Định: Biểu Đồ Xác Suất Hạng So Với Ngữ Liệu Cơ Sở\nThước Đo: Entropy Token, Hệ Số Biến Thiên (CV) Và Phân Phối Top-K\nĐầu Ra: 0-100 Điểm Thiên Lệch Tần Suất Cao",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 72-82%. Mặc dù mạnh mẽ như một công cụ độc lập, hiệu quả của nó được nhân lên khi đối chiếu với tính mạch lạc ngữ nghĩa và tính bùng nổ (burstiness), vì con người có thể sử dụng các từ hiếm một cách tự nhiên trong khi vẫn duy trì tính mạch lạc hoàn hảo, trong khi văn bản AI ở nhiệt độ cao trở nên rời rạc.",
     "references": [
         {
-            "title": "Jawahar et al. (2020) - Automatic Detection of Machine Generated Text: A Critical Survey",
-            "url": "https://scholar.google.com/scholar?q=Jawahar%20et%20al.%20(2020)%20-%20Automatic%20Detection%20of%20Machine%20Generated%20Text%3A%20A%20Critical%20Survey"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
             "url": "https://arxiv.org/abs/1906.04043"
         },
         {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
             "url": "https://arxiv.org/abs/1908.09203"
         }
     ]

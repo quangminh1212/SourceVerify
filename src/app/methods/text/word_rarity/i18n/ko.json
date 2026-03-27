@@ -1,22 +1,21 @@
 {
-    "name": "Word Rarity Score",
-    "description": "Detects rare archaic vocabulary usage (Tulchinskii, 2023)",
-    "algorithm": "Word Rarity Score — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Detects rare archaic vocabulary usage (Tulchinskii, 2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through word rarity score analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "단어 희귀성 스코어 (Word Rarity Score)",
+    "description": "'희귀하거나' '고어적인' 어휘의 출현 빈도를 바탕으로 문서를 평가합니다. 대규모 언어 모델(LLM)은 방대한 학습 데이터 세트를 기반으로 가장 확률이 높은 토큰(단어)의 배열을 뱉어내도록 최적화되어 있습니다. 그 결과, 이들은 철저하게 흔하고 확률이 높은 단어들을 편애하며, 현대 일상 언어에서는 거의 쓰이지 않는 어휘적 이단아(희귀 단어)들을 필사적으로 회피합니다. 그러나 인간 작가들은 글에 자신만의 색채, 극도로 정밀한 의미, 또는 개인적인 목소리(Tone)를 덧입히기 위해 희귀하거나, 특정 분야에 극도로 전문적이거나, 심지어 약간 예스러운 단어들을 숨 쉬듯 자연스럽게 구사합니다. 이 알고리즘은 이렇게 출현 확률이 밑바닥을 기어 다니는 '롱테일(Long-tail)' 단어들의 농도를 측정합니다. 희귀 단어의 가뭄은 생성형 AI 특유의 소름 돋는 인위적 '다림질(Smoothing)'을 보여주는 가장 강력한 증거입니다.",
+    "algorithm": "어휘 빈도 테일 분석 (Lexical Frequency Tail Analysis / Tulchinskii, 2023)",
+    "mechanism": "알고리즘은 텍스트 내의 모든 토큰을 해당 언어의 방대한 역사적 빈도수 사전과 교차 대조합니다. 단어들은 빈도 대역별로 쪼개집니다. 시스템은 확률 통계의 가장 밑바닥(지프 분포의 '긴 꼬리')에 웅크리고 있는 단어들을 탐욕스럽게 스캔합니다. 그런 다음, 이 기괴하고 일상과 동떨어진 용어들의 밀도와 분포를 기반으로 종합적인 '희귀성 스코어'를 계산해 냅니다. AI가 생성한 텍스트는 불균형적으로 처참히 낮은 희귀성 점수를 기록하며, 가장 흔해 빠진 상위 5,000개 단어 주변에만 안전하게 몰려 있는 겁쟁이 같은 행동양식을 보입니다. 반면 인간의 텍스트는 어휘 분포의 극단적인 꼬리 부분을 향해 주기적으로 날카롭게 치솟는 '스파이크(Spikes)'를 특징으로 합니다.",
+    "useCase": "인간 작가가 방대하고 전문적인 어휘를 마음껏 휘두르는 학술 논문, 창작 문학, 문헌 고찰 및 오피니언 칼럼을 해부하는 데 극도로 치명적인 효과를 발휘합니다. 특히 작가만의 뚜렷한 목소리(Voice)가 완벽하게 거세된 '무미건조한(Bland)' AI의 글쓰기를 적발하는 데 최고의 성능을 보여줍니다.",
+    "strengths": "• 인간 전문가가 구사하는 미묘하고 세련된 어휘력과, 몸을 사리며 무난한 단어만 고르는 LLM의 범용적인 단어 선택을 구별해 내는 능력이 탁월합니다.\n• 복잡한 어휘 파라미터 조작(Tuning) 없이 생성된 표준적인 프롬프트 결과물들을 상대로는 거의 무적에 가까운 효과를 냅니다.",
+    "limitations": "• 사용자가 작정하고 AI에게 '극도로 희귀한 단어를 써라', '고어체로 써라', 또는 '고급 어휘를 총동원해라'라고 명령하는 기만적인 프롬프트 엔지니어링 공격에는 속아 넘어갈 수 있습니다.\n• 의도적으로 '쉬운 영어(Plain English)'로 쓰인 텍스트나, 철저하게 표준화되고 단순한 용어만을 써야 하는 분야(예: 영유아용 동화책, 기초 제품 매뉴얼)에서는 인간의 글을 AI로 오인하는 불상사(False positives)가 발생할 수 있습니다.",
+    "parameters": "분석 기준: 롱테일(Long-tail) 어휘 분포도\n측정 지표: 극저빈도 토큰 밀도 (출현 확률 0.001% 미만)\n출력: 0-100 어휘 희귀성 및 기계적 다림질(Smoothing) 스코어",
+    "accuracy": "중상 — 70-85%의 안정적인 정확도. 버스티니스(Burstiness)와 같은 구조적 지표와 결합될 때 그 예지력이 폭발합니다. 왜냐하면 AI에게 억지로 '희귀 단어를 써라'라고 명령할 경우, AI는 문맥을 무시한 채 어색하게 단어들을 쑤셔 넣어 희귀성 점수는 높일지언정 의미론적 일관성(Semantic coherence)을 완전히 박살 내기 때문입니다.",
     "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
             "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09880"
         }
     ]
 }

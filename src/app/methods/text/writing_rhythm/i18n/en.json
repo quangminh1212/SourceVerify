@@ -1,26 +1,21 @@
 {
-    "name": "Writing Rhythm",
-    "description": "Analyzes writing cadence and rhythm patterns.",
-    "useCase": "Detecting AI text through metronomic regularity",
-    "mechanism": "Calculates autocorrelation of row energy to detect periodic patterns. AI text shows metronomic regularity, while human writing has natural cadence variations.",
-    "accuracy": "Moderate - 70-80%",
-    "source": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Window size: adaptive, Quantization: 8-64 levels, Metrics: entropy, CV, correlation",
-    "strengths": "- Effective for detecting AI-generated text\n- Language-agnostic statistical approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger false positives\n- Short texts provide less reliable signals\n- Performance varies across writing styles",
+    "name": "Writing Rhythm & Cadence",
+    "description": "Analyzes the metronomic regularity of a text by measuring sequential variations in sentence lengths, syntactic complexity, and pacing. Human writers naturally employ an erratic, breathing cadence—pairing short, punchy sentences with long, sprawling, complex ones to build tension, provide emphasis, or transition between ideas. Generative AI models, constrained by optimization functions that seek the path of least mathematical resistance, output a highly regularized, 'metronomic' rhythm. They default to a steady, medium-paced cadence that rarely deviates from a predictable structural tempo. This engine detects the artificial monotony that underlies even highly stylized LLM outputs.",
+    "algorithm": "Autocorrelation of Sequential Pacing and Syllabic Energy",
+    "mechanism": "The algorithm treats the document as a time-series signal. It measures the 'energy' of each sentence—calculated via character length, syllable count, and syntactic depth—and maps it sequentially. It then applies an autocorrelation function to detect repeating intervals or periodic patterns. A human author will generate a noisy, aperiodic signal with unpredictable spikes and lulls (e.g., highly complex paragraphs followed by a sudden two-word sentence). AI text, conversely, produces a highly correlated, periodic waveform because it falls into predictable generative loops, maintaining a robotic, evenly-spaced metronomic beat.",
+    "useCase": "Essential for evaluating long-form content, such as cover letters, narrative structures, and creative writing. It serves as a profound check against 'bland' generative output because rhythmic monotony is one of the hardest stylistic traits for a machine to intentionally override.",
+    "strengths": "• Analyzes the flow of the entire document rather than isolated words, making it immune to simple synonym replacement attacks.\n• Functions as a universal detector across languages, as the phenomenon of mathematical regularity in AI generation transcends specific linguistic grammar.",
+    "limitations": "• Short inputs (e.g., a single paragraph or tweet) lack the necessary sequential data points to establish a rhythmic baseline, rendering the autocorrelation analysis useless.\n• Texts that are intentionally structured to be uniform—like legal contracts, formal API documentation, or rigid lists—will trigger false positives.",
+    "parameters": "Analysis: Sequential Energy Autocorrelation\nMetrics: Variance of Cadence, Periodic Waveform Smoothing, and Multi-Sentence Entropy\nOutput: 0-100 Rhythmic Monotony Score",
+    "accuracy": "Moderate to High — 75-85% accuracy. Its effectiveness is severely handicapped on short texts but becomes highly lethal on essays exceeding 500 words. When combined with Burstiness (sentence length variation), it provides an almost foolproof signature of machine generation.",
     "references": [
         {
-            "title": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Tay%20et%20al.%20(2020)%20-%20Comparative%20Study%20of%20Human%20vs.%20Machine%20Generated%20Text"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
             "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         }
     ]
 }

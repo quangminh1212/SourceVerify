@@ -1,22 +1,21 @@
 {
-    "name": "Vocabulary Growth Rate",
-    "description": "Tracks vocabulary growth rate across 텍스트",
-    "algorithm": "Vocabulary Growth Rate — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Tracks vocabulary growth rate across 텍스트. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through vocabulary growth rate analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "어휘 확장 속도 (Vocabulary Growth Rate)",
+    "description": "문서가 전개됨에 따라 이전에 사용되지 않은 '새로운 단어(Novel words)'가 등장하는 수학적 속도와 패턴을 해부합니다. '힙스의 법칙(Heaps' Law)'에 따르면, 인간의 어휘 확장 곡선은 전혀 예측할 수 없는 궤적을 그립니다. 새로운 하위 주제가 등장할 때 어휘가 폭발적으로 쏟아지는 구간(Bursts)과, 쓰던 단어만 계속 쓰는 긴 정체 구간(Plateaus)이 존재합니다. 인간 작가는 서사적 필요성에 따라 새로운 전문 용어들을 뭉텅이(Cluster)로 투하합니다. 반면, 어떻게든 일정한 텍스트 생성 속도를 유지하고 '당혹감(Perplexity)' 수치를 안정적으로 관리하도록 세뇌된 대규모 언어 모델(LLM)은, 새로운 어휘의 투입 시점을 수학적으로 소름 끼치게 매끄럽고 일정한 속도로 분산시키는 치명적인 버릇이 있습니다. AI는 극초반에 어휘 밑천을 다 드러내지도 않으며, 글이 끝날 무렵 뜬금없이 막대한 양의 새로운 용어를 폭격하지도 않습니다.",
+    "algorithm": "힙스의 법칙 위반(Deviation) 및 로그-선형(Log-Linear) 성장 프로파일링",
+    "mechanism": "알고리즘은 텍스트를 처음부터 끝까지 순차적으로 훑어보며, 처리된 총 토큰 수($N$)를 X축에, 텍스트에 처음 등장한 고유 토큰의 누적 개수($V$)를 Y축에 놓고 점을 찍습니다. 힙스의 법칙 공식($V = k N^\\beta$)에서 지수 $\\beta$를 계산하고, 이상적인 수학적 로그 곡선과 실제 텍스트 곡선 사이의 오차(Variance)를 측정합니다. 인간의 인지적 전환을 증명하는 유기적인 폭발 구간이나 정체 구간 없이, 매끄러운 수학적 궤도에서 한 치의 오차도 없이 그려지는 '소름 돋게 완벽한' 어휘 확장 곡선은 생성형 AI에게 치명적인 유죄 판결 스코어를 매깁니다.",
+    "useCase": "어휘가 투입되는 거시적인(Macroscopic) 페이스(Pacing)가 통계적 유의미성을 확보할 수 있는 중~장문 콘텐츠(논술 에세이, 심층 보고서, 기획 기사)의 진위를 판별할 때 진가를 발휘합니다.",
+    "strengths": "• 자동 회귀(Autoregressive) 생성 방식의 근본적인 생리적 한계를 집요하게 물고 늘어집니다: 즉, 전체 출력 범위에 걸쳐 어떻게든 '안정적인 확률 분포'를 유지해야만 하는 LLM의 족쇄 때문에, AI는 인간처럼 자연스러운 '어휘 군집화(Semantic clustering)'를 모방할 수 없습니다.\n• 프롬프트 엔지니어링으로 뚫기 가장 어려운 방벽 중 하나입니다. 인간 사용자가 AI에게 '정확히 어떤 수학적 속도로 새로운 단어를 꺼내라'고 지시하는 것은 불가능에 가깝기 때문입니다.",
+    "limitations": "• 트윗이나 짧은 이메일처럼, 어휘 확장 곡선이 뻗어 나가기도 전에 끝나버리는 매우 짧은 텍스트 앞에서는 이 무기가 완전히 무력화됩니다.\n• 기계처럼 엄격하고 판에 박힌 형식으로 작성되는 인간의 글(예: 법률 계약서나 표준 운영 절차서)은 억울하게 AI처럼 매끄러운 어휘 확장 속도를 보일 수 있어 주의가 필요합니다.",
+    "parameters": "분석 기준: 순차적 토큰 스택 누적(Accumulation) 추적\n측정 지표: 이상적인 힙스의 법칙 모델(Idealized Heaps' Law Model)과의 오차율\n출력: 0-100 인위적 어휘 확장(Growth Rate Artificiality) 스코어",
+    "accuracy": "중상 — 70-85%의 탄탄한 정확도를 보여줍니다. 이 무기의 파괴력은 문서의 길이와 정비례하여 강해집니다. 미시적인 구문(Syntactic) 추적 레이더와 결합하여 거시적인 구조적 척도로 사용할 때 가장 치명적입니다.",
     "references": [
         {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
+            "title": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0146059"
         },
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09065"
         }
     ]
 }

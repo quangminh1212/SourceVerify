@@ -1,12 +1,21 @@
 {
-    "name": "Độ phức tạp từ vựng",
-    "description": "Đo mức độ phức tạp từ vựng",
-    "algorithm": "Thuật toán phân tích Độ phức tạp từ vựng",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mức độ phức tạp từ vựng. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích độ phức tạp từ vựng. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Độ Phức Tạp Của Từ Vựng (Vocabulary Complexity)",
+    "description": "Đánh giá mức độ tinh tế, độ hiếm và phong cách (register) của từ vựng được sử dụng trong toàn bộ tài liệu. Các Mô hình Ngôn ngữ Lớn được thiết kế để tối đa hóa mức độ hiểu của người dùng và hiệu quả token, điều này vô tình khiến chúng thiên vị một vốn từ vựng 'trung dung'. Chúng phụ thuộc nhiều vào các từ có xác suất thống kê cao, được sử dụng phổ biến và các cụm từ 'học thuật' tiêu chuẩn (ví dụ: 'furthermore', 'crucial', 'delve'). Mặc dù AI có thể sử dụng các từ phức tạp, nó phân phối chúng một cách đồng đều và có thể dự đoán được, hiếm khi sử dụng các từ ngữ thực sự tối nghĩa, cổ xưa hoặc mang phong cách cá nhân trừ khi được nhắc cụ thể. Ngược lại, các chuyên gia con người thường thể hiện hồ sơ từ vựng 'gập ghềnh' (spiky) — kết hợp các thuật ngữ chuyên môn cao, hiếm gặp với các từ thông tục theo cách đi lệch khỏi các chuẩn mực thống kê tiêu chuẩn.",
+    "algorithm": "Lập Hồ Sơ Độ Tinh Tế Của Từ Vựng & Xếp Hạng Tần Suất Từ",
+    "mechanism": "Mô hình phân tích cú pháp văn bản và đánh giá mọi từ dựa trên các danh sách tần suất kho ngữ liệu khổng lồ đã thiết lập (ví dụ: Subtlex, Google Web Trillion Word Corpus). Nó tính toán một 'hồ sơ độ phức tạp' dựa trên tỷ lệ từ tần suất cao (phổ biến) so với từ tần suất thấp (hiếm/phức tạp). Hơn nữa, nó phân tích phong cách ngữ nghĩa của các từ phức tạp được sử dụng. Một văn bản duy trì độ phức tạp từ vựng 'cao vừa phải' một cách nhất quán một cách tàn nhẫn, được phân phối đều đặn (thường đọc giống như một bài tiểu luận của học sinh trung học hoặc sinh viên đại học) mà không có bất kỳ sự tăng vọt (spikes) khó đoán nào vào các thuật ngữ cực kỳ hiếm hoặc đặc thù của lĩnh vực là một dấu hiệu toán học mạnh mẽ của một LLM đang cố gắng cân bằng giữa sự hùng hồn với khả năng đọc chung.",
+    "useCase": "Rất quan trọng để phân tích các bài báo học thuật, báo chí chuyên nghiệp và văn bản sáng tạo. Nó giúp phân biệt giữa chuyên môn chân thực, tinh tế của một tác giả con người và giọng điệu 'thông minh' được cào bằng, mô phỏng của AI.",
+    "strengths": "• Rất hiệu quả trong việc phát hiện 'Giọng điệu ChatGPT'—cảm giác rõ rệt của một văn bản được trau chuốt quá mức, rõ ràng, nhưng cuối cùng lại dựa vào các từ chung chung 'nghe có vẻ thông minh' (như 'multifaceted', 'tapestry', 'testament').\n• Khó có thể vượt qua chỉ bằng cách yêu cầu AI 'viết như một chuyên gia', vì ý tưởng về chuyên môn của AI vẫn bị ràng buộc bởi các xác suất token có thể dự đoán được.",
+    "limitations": "• Dễ mắc lỗi dương tính giả nếu phân tích những người viết tay cố ý viết bằng ngôn ngữ dễ tiếp cận, được tiêu chuẩn hóa cao (như người học tiếng Anh [ESL] hoặc người viết tài liệu kỹ thuật tuân theo các nguyên tắc văn bản thuần túy nghiêm ngặt).\n• Kém hiệu quả trên các văn bản quá ngắn, nơi không có đủ khối lượng từ để thiết lập đường cơ sở tần suất thống kê.",
+    "parameters": "Kiểm Định: Khớp Tần Suất Kho Ngữ Liệu & Đánh Giá Phong Cách\nThước Đo: Thứ Hạng Tần Suất Từ Trung Bình & Các Điểm Cực Đại Của Từ Vựng Đặc Thù\nĐầu Ra: 0-100 Điểm Nhân Tạo Về Từ Vựng",
+    "accuracy": "Cao — Độ chính xác 75-85%. Đây là một trong những chỉ báo ngữ nghĩa đáng tin cậy nhất, vì các LLM gặp khó khăn trong việc sao chép một cách tự nhiên các lựa chọn từ vựng không cân bằng và kém hiệu quả về mặt toán học của các chuyên gia con người thực sự.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
+        }
+    ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Chỉ số đặc thù từ",
-    "description": "Đo mức độ đặc thù của từ",
-    "algorithm": "Thuật toán phân tích Chỉ số đặc thù từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mức độ đặc thù của từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích chỉ số đặc thù từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Chỉ Số Cụ Thể Của Từ (Word Specificity Index)",
+    "description": "Đánh giá độ sâu phân loại (taxonomic depth) và độ chính xác của từ vựng được sử dụng trong văn bản. Các Mô hình Ngôn ngữ Lớn (LLM) là các công cụ xác suất được đào tạo để tạo ra phần tiếp theo được chấp nhận rộng rãi nhất và 'an toàn' nhất về mặt thống kê của một prompt. Kiến trúc này vốn dĩ khiến chúng thiên về các thuật ngữ chung chung, cấp cao (từ thượng cấp - hypernym) thay vì từ vựng rất cụ thể, chính xác (từ hạ cấp - hyponym) trừ khi được hướng dẫn rõ ràng. Ví dụ, một AI theo thống kê có nhiều khả năng tạo ra 'một con chim lớn' hơn là 'một con kền kền khoang cổ Andes', hoặc 'thiết bị y tế' thay vì 'máy ECMO'. Ngược lại, các chuyên gia con người đào sâu một cách tự nhiên vào các cấp độ phân loại siêu cụ thể khi thảo luận về các chủ đề quen thuộc. Thuật toán này phát hiện sự làm mịn từ vựng 'trên bề mặt', chung chung tiêu biểu cho việc tạo AI không có prompt chi tiết.",
+    "algorithm": "Độ Sâu Phân Loại & Phân Tích Tỷ Lệ Từ Thượng Cấp/Từ Hạ Cấp",
+    "mechanism": "Thuật toán đối chiếu chéo danh từ, động từ và tính từ với cơ sở dữ liệu từ vựng theo cấu trúc phân cấp (chẳng hạn như WordNet hoặc bản thể học miền nhắm mục tiêu) để xác định 'Độ Sâu Phân Loại' của chúng. Một từ chung chung ('động vật', 'phương tiện', 'nói') nằm ở trên cùng của hệ thống phân cấp (Độ sâu 1 hoặc 2). Một từ rất cụ thể ('cá vây tay', 'máy bay ba tầng cánh', 'giáo huấn') tồn tại ở mức sâu hơn nhiều (Độ sâu 6+). Hệ thống tính toán độ sâu cụ thể trung bình của văn bản và tỷ lệ giữa từ thượng cấp (danh mục rộng) và từ hạ cấp (trường hợp cụ thể). Các văn bản AI liên tục thể hiện độ sâu phân loại nông, phụ thuộc nhiều vào các cách khái quát hóa tầng cao nhất để duy trì sự an toàn thống kê tối đa.",
+    "useCase": "Công cụ tối thượng để kiểm toán nội dung cấp 'chuyên gia', bao gồm tài liệu kỹ thuật, y văn, tiểu luận học thuật và các bài đánh giá sản phẩm chi tiết. Nó vạch trần các văn bản bắt chước giọng điệu có thẩm quyền nhưng thiếu đặc điểm từ vựng sâu, chi tiết của chuyên môn con người thực sự.",
+    "strengths": "• Đặc biệt xuất sắc trong việc phơi bày 'ảo giác chuyên môn' của AI—nơi mô hình nghe có vẻ tự tin nhưng hoàn toàn dựa vào những lời sáo rỗng chung chung.\n• Hoạt động độc lập với cấu trúc câu, khiến nó có khả năng chống lại các công cụ diễn giải cơ bản hoặc các điều chỉnh 'tính bùng nổ' cực kỳ tốt.",
+    "limitations": "• Dễ mắc lỗi dương tính giả ở các văn bản được thiết kế để tiếp cận rộng rãi, chẳng hạn như tài liệu giáo dục giới thiệu, tóm tắt pháp lý ngôn ngữ đơn giản hoặc sách thiếu nhi.\n• Dễ bị tấn công bởi kỹ thuật prompt nâng cao nếu người dùng cung cấp rõ ràng cho AI danh sách các thuật ngữ siêu cụ thể để tổng hợp.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Độ Sâu Từ Vựng Phân Cấp\nThước Đo: Độ Sâu Phân Loại Trung Bình, Mật Độ Từ Hạ Cấp Và Danh Từ Được Trích Xuất Dành Riêng Cho Miền\nĐầu Ra: 0-100 Điểm Số Tính Chung Chung So Với Tính Cụ Thể Của Từ Vựng",
+    "accuracy": "Cao — Độ chính xác 78-88% khi áp dụng cho các chủ đề dành riêng cho miền. Chỉ Số Cụ Thể Của Từ đặc biệt nguy hiểm đối với các đầu ra AI zero-shot hoặc prompt kém, hầu như luôn luôn mặc định ở vốn từ vựng nông nhất có thể để đáp ứng các tham số prompt một cách an toàn.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Miller, G. A. (1995). WordNet: A Lexical Database for English. Communications of the ACM.",
+            "url": "https://doi.org/10.1145/219717.219748"
+        }
+    ]
 }

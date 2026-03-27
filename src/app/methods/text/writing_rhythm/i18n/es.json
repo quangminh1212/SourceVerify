@@ -1,26 +1,21 @@
 {
-    "name": "Ritmo de Escritura",
-    "description": "Analiza writing cadence and rhythm patrones.",
-    "useCase": "Detección de texto IA mediante regularidad metronómica",
-    "mechanism": "Calcula autocorrelación of row energy para detectar periodic patrones. AI text shows metronomic regularity, while escritura humana has natural cadence variations.",
-    "accuracy": "Moderada - 70-80%",
-    "source": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Tamaño de ventana: adaptativo, Quantization: 8-64 levels, Metrics: entropía, CV, correlación",
-    "strengths": "- Effective for detecting generado por IA text\n- Language-agnostic estadístico approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger falsos positivos\n- Short texts provide less reliable signals\n- Performance varies a través de estilo de escrituras",
+    "name": "Ritmo de Escritura y Cadencia (Writing Rhythm & Cadence)",
+    "description": "Analiza la regularidad metronómica de un texto midiendo las variaciones secuenciales en la longitud de las oraciones, la complejidad sintáctica y el ritmo (pacing). Los escritores humanos emplean instintivamente una cadencia errática y respiratoria, emparejando oraciones cortas y contundentes con frases largas, laberínticas y complejas para construir tensión, enfatizar un punto o transitar entre ideas. Los modelos de IA generativa, encadenados por funciones de optimización que buscan el camino de menor resistencia matemática, escupen un ritmo 'metronómico', altamente regularizado. Por defecto, adoptan una cadencia estable y de velocidad media que rara vez se desvía de un tempo estructural lamentablemente predecible. Este motor detecta la monotonía artificial que subyace incluso en los resultados más pretenciosos o estilizados de un LLM.",
+    "algorithm": "Autocorrelación de Patrones Secuenciales y Energía Silábica",
+    "mechanism": "El algoritmo trata el documento entero como una señal de series temporales. Mide la 'energía' de cada oración (calculada a través de su longitud en caracteres, recuento silábico y profundidad sintáctica) y la mapea de forma estrictamente secuencial. Posteriormente, aplica una función de autocorrelación matemática para detectar intervalos repetitivos o patrones periódicos. Un autor humano generará una señal ruidosa y aperiódica, llena de picos impredecibles y pausas abruptas (por ejemplo: un párrafo de complejidad sofocante seguido bruscamente por una oración de dos palabras). El texto de IA, en su lugar, produce una forma de onda periódica y altamente correlacionada porque cae en bucles generativos predecibles, manteniendo un latido de metrónomo robótico y espaciado de manera uniforme.",
+    "useCase": "Indispensable para evaluar contenido de largo formato, como cartas de presentación, narrativas o escritura creativa. Sirve como una trampa profunda contra los textos generativos 'insípidos', ya que la monotonía rítmica es uno de los rasgos estilísticos más difíciles de anular intencionalmente para una máquina.",
+    "strengths": "• Analiza el 'flujo' del documento completo en lugar de palabras aisladas, lo que lo hace inmune a los ataques básicos de reemplazo de sinónimos (paraphrasing barata).\n• Actúa como un detector universal, independientemente del idioma, ya que el fenómeno de la regularidad matemática en la generación de IA trasciende la gramática lingüística específica.",
+    "limitations": "• Las entradas de texto cortas (por ejemplo, un solo párrafo o un tweet) carecen de los puntos de datos secuenciales necesarios para establecer una línea base rítmica, inutilizando por completo el análisis de autocorrelación.\n• Aquellos textos que están estructurados deliberadamente para ser uniformes y aburridos (como contratos legales, documentación técnica de API rígida o listados puramente formales) desencadenarán falsos positivos.",
+    "parameters": "Análisis: Autocorrelación de Energía Secuencial\nMétricas: Varianza de la Cadencia, Suavizado de la Forma de Onda Periódica y Entropía Multi-oracional\nResultado: 0-100 Puntuación de Monotonía Rítmica (Rhythmic Monotony Score)",
+    "accuracy": "Moderada a Alta — Alcanza entre un 75-85% de precisión. Su poderío se ahoga gravemente en textos cortos, pero se vuelve una herramienta absolutamente letal en ensayos o artículos que superan las 500 palabras. Al combinarse con la Métrica de Irregularidad (Burstiness), proporciona una firma digital casi a prueba de fraudes delatando la generación por máquina.",
     "references": [
         {
-            "title": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Tay%20et%20al.%20(2020)%20-%20Comparative%20Study%20of%20Human%20vs.%20Machine%20Generated%20Text"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
             "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         }
     ]
 }

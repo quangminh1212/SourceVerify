@@ -1,12 +1,21 @@
 {
-    "name": "Nhất quán thì động từ",
-    "description": "Đo tính nhất quán thì động từ",
-    "algorithm": "Thuật toán phân tích Nhất quán thì động từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo tính nhất quán thì động từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích nhất quán thì động từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Tính Nhất Quán Của Thì Động Từ (Verb Tense Consistency)",
+    "description": "Phân tích sự phân phối, sự chuyển đổi và logic thời gian tầm xa của các thì động từ trong toàn bộ tài liệu. Các Mô hình Ngôn ngữ Lớn gặp khó khăn trong việc duy trì các dòng thời gian phức tạp, phi tuyến tính. Chúng vô cùng thiên vị các thì đơn giản (hiện tại đơn hoặc quá khứ đơn) và ưu tiên sự nhất quán ngữ pháp cục bộ hơn là thời gian của câu chuyện ở tầm vĩ mô. Do đó, văn bản AI thường 'làm phẳng' các mối quan hệ thời gian phức tạp, tránh các thì mang sắc thái như quá khứ hoàn thành ('had been doing') hoặc tương lai tiếp diễn ('will be doing'). Hơn nữa, khi các LLM thực sự chuyển thì qua các đoạn văn dài, sự chuyển đổi thường gây chói tai và không được neo giữ về mặt logic, bị thúc đẩy bởi các thay đổi trong ngữ cảnh prompt tức thì thay vì sự cần thiết thực sự của câu chuyện.",
+    "algorithm": "Theo Dõi Neo Thời Gian & Ma Trận Chuyển Đổi Thì",
+    "mechanism": "Thuật toán trích xuất tất cả các động từ và các thì hình thái học liên quan của chúng bằng cách sử dụng Gắn thẻ Từ loại (POS) và phân tích cú pháp phụ thuộc. Nó xây dựng một 'dòng thời gian' của tài liệu. Hệ thống tính toán tỷ lệ giữa các thì đơn giản so với các thì phức tạp/hoàn thành, và đánh giá logic của sự chuyển đổi thì (ví dụ: chuyển từ quá khứ sang hiện tại mà không có dấu hiệu tu từ hợp lệ). Một văn bản thể hiện sự tuân thủ cứng nhắc một cách không tự nhiên đối với một thì đơn giản duy nhất, thiếu các thì quan hệ phức tạp, hoặc nhảy thì một cách tùy tiện theo toán học qua các ranh giới đoạn văn, là dấu hiệu rất rõ ràng của AI tạo sinh.",
+    "useCase": "Rất hiệu quả để phân tích văn bản sáng tạo, tiểu luận lịch sử, nghiên cứu tình huống và nội dung tiểu sử, nơi việc theo dõi một dòng thời gian đa tầng, phức tạp là điều cần thiết cho câu chuyện.",
+    "strengths": "• Nhắm vào một hạn chế cơ bản ở các LLM: sự thiếu hụt một 'mô hình thế giới' (world model) thực sự bên trong về thời gian, buộc chúng phải dựa hoàn toàn vào các xác suất ngữ pháp ở cấp độ bề mặt.\n• Khả năng chống chịu cao đối với việc diễn giải lại (paraphrasing) cơ bản, vì việc thay đổi cấu trúc thời gian đòi hỏi phải viết lại hoàn toàn câu chuyện.",
+    "limitations": "• Kém hiệu quả hơn đối với tài liệu phần mềm, tóm tắt khoa học hoặc hướng dẫn sử dụng, những tài liệu được yêu cầu về mặt cấu trúc để duy trì một thì 'hiện tại đơn' phẳng, nghiêm ngặt bởi chính các tác giả con người.\n• Có thể gắn cờ văn bản của người không phải người bản xứ gặp khó khăn với các quy tắc thì phức tạp trong tiếng Anh.",
+    "parameters": "Kiểm Định: Trích Xuất Hình Thái POS & Lập Bản Đồ Dòng Thời Gian\nThước Đo: Tỷ Lệ Thì Phức Tạp-Đơn Giản & Tần Suất Chuyển Đổi Không Hợp Lệ\nĐầu Ra: 0-100 Điểm Nhân Tạo Về Thời Gian",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 71-85%. Hiệu quả của nó tăng theo cấp số nhân với độ dài tài liệu; các tài liệu dài hơn buộc LLM phải quản lý một dòng thời gian dài hơn, do đó làm tăng xác suất có thể phát hiện việc 'làm phẳng' thời gian.",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ]
 }

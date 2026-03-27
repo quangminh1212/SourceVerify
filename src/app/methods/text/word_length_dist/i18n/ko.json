@@ -1,22 +1,21 @@
 {
-    "name": "Word Length Distribution",
-    "description": "Analyzes word length distribution patterns",
-    "algorithm": "Word Length Distribution — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes word length distribution patterns. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through word length distribution analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "단어 길이 분포 (Word Length Distribution)",
+    "description": "문서 전체에 걸친 단어의 길이(글자 수)에 대한 통계적 분포를 계산합니다. 인간 작가는 리듬을 만들거나, 특정 요점을 강조하거나, 주제의 인지적 무게감에 적응하기 위해 무의식적으로 자신이 쓰는 단어의 길이를 조절합니다. 그 결과, 자연스러운 산과 골짜기가 있는, 특유의 약간 변덕스러운 단어 길이 히스토그램이 생성됩니다. 반면, 당혹감(Perplexity)을 최소화하고 토큰 효율을 극대화하도록 설계된 대규모 언어 모델(LLM)은 태생적으로 '평균적인' 길이의 단어(영어의 경우 보통 4~6글자)를 압도적으로 선호합니다. 이들은 명시적인 명령(Prompt)을 받지 않는 한, 숨 가쁘게 이어지는 극단적으로 짧은 단어들의 나열이나 다음절 전문 용어가 빽빽하게 군집된 기괴한 구조를 피하려 합니다. 이 알고리즘은 확률에 멱살 잡힌 텍스트 생성 특유의 인위적으로 '다림질된', 그리고 극단적으로 중앙에 밀집된 단어 길이 분포를 적발합니다.",
+    "algorithm": "글자 수 수준의 히스토그램 분산 및 왜도(Skewness) 분석",
+    "mechanism": "알고리즘은 텍스트를 파싱하여 문장 부호를 걷어내고, 모든 단어의 정확한 글자 수를 측정합니다. X축을 단어의 길이(1~15+ 글자)로, Y축을 출현 빈도로 설정하여 거대한 히스토그램을 쌓아 올립니다. 그런 다음 이 곡선의 분산(Variance), 왜도(Skewness 비대칭도), 첨도(Kurtosis 뾰족함) 같은 수학적 특성을 해부합니다. 진정한 인간의 텍스트는 대체로 '비대칭적인' 또는 다봉형(봉우리가 여러 개) 분포를 보입니다. (예: 학술 논문에선 긴 단어 쪽으로 치우치거나, 의도적인 리듬감을 위해 삐죽삐죽 튀어나온 스파이크가 존재.) 그러나 AI의 텍스트는 해당 언어의 평균값 주변을 끔찍할 정도로 집요하게 맴도는, 촘촘하게 군집된 수학적으로 완벽한 종 모양의 곡선(Bell curve)을 그려내며 인간 특유의 리듬감이나 음절의 변칙성이 완벽하게 거세되어 있음을 폭로합니다.",
+    "useCase": "기사, 에세이, 창작 문학의 '자연스러운 흐름'을 평가하는 데 있어 진단 가치가 매우 뛰어납니다. 텍스트가 인간 작가의 변덕스럽고 독보적인 음절 리듬을 담고 있는지, 아니면 기계가 수학적 다림질로 빚어낸 매끄러운 페이스보드인지를 밝혀내는 근본적인 문체 탐지기 역할을 합니다.",
+    "strengths": "• 의미론적 이해, 무거운 API 호출, 딥러닝 신경망 분석이 전혀 필요 없기 때문에 연산 속도가 소름 돋게 빠릅니다.\n• 단순한 동의어 교체나 '패러프레이징(Paraphrasing)' 공격에 대해 강력한 맷집을 자랑합니다. AI 텍스트를 인간의 글로 위장하려는 얄팍한 사기꾼들은 '단어 길이의 수학적 분포'까지 신경 쓸 지능과 여력이 없기 때문입니다.",
+    "limitations": "• '단순하고 짧은 단어'만을 쓰도록 강제된 암울한 인간의 텍스트(예: 쉬운 말로 풀어쓴 법률 요약본, 유아용 동화책, 검색 엔진(SEO) 최적화를 위해 처참하게 난도질된 블로그 게시물)에서는 오폭(False positives)을 낼 수 있습니다.\n• 통계적으로 유의미한 히스토그램의 형태를 갖추려면 상당한 텍스트 덩어리(통상 200단어 이상)가 필요합니다. 초단문에서는 분포 곡선이 너무 엉망진창이라 분석 자체가 성립하지 않습니다.",
+    "parameters": "분석 기준: 토큰 글자 수의 분산(Variance) 및 첨도(Kurtosis)\n측정 지표: 단어 길이 평균, 표준 편차 및 분포 패임(Skew)\n출력: 0-100 분포 다림질(Distributional Smoothing) 스코어",
+    "accuracy": "중간 — 65-85%의 정확도. 단독으로 사형 판결을 내릴 수는 없지만, 소름 돋게 신뢰할 수 있는 교차 검증 지표입니다. AI가 문장 길이를 들쭉날쭉하게 만들어 '버스티니스(Burstiness)'를 위장하려 악을 써도, 단어 길이의 분포만큼은 고집스럽게 중앙으로 한 움큼 뭉쳐 있어 결국 기계의 밑천을 드러내고 맙니다.",
     "references": [
-        {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
         }
     ]
 }

@@ -1,22 +1,21 @@
 {
-    "name": "Vocabulary Growth Rate",
-    "description": "Tracks vocabulary growth rate across 文本",
-    "algorithm": "Vocabulary Growth Rate — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Tracks vocabulary growth rate across 文本. Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through vocabulary growth rate analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "词汇扩张速率法则 (Vocabulary Growth Rate)",
+    "description": "旨在剖析随着文章往后写，文中涌现“从未用过的新词（Novel words）”的相对数学速率。根据“赫普斯定律（Heaps' Law）”，人类写作时的词汇扩张曲线是一条神经质且不可预测的折线：当写到一个新话题时，新词会呈“爆炸式火山喷发（Bursts）”；而当思维停滞在某一段落时，曲线会呈现漫长的“词汇停滞高原期（Plateaus）”。人类是出于叙事的刚需，成群结队地抛出新术语的。而大语言模型（LLM）的底层逻辑是被死死锁在“稳定输出流”和“困惑度（Perplexity）阈值”中的，为了不出错，它们会像机械播种机一样，将新词的发放极其均匀、平滑地摊派在整篇文章里。AI 极少会在文章开头就把词藻储备打光，也绝对干不出在文章结尾突然歇斯底里地倾泻海量生僻词的勾当。",
+    "algorithm": "赫普斯定律背离 与 对数线性增长法医侧写",
+    "mechanism": "雷达会极其耐心地对文本进行序列化扫描，将“累积出现的不重复词元总数（$V$）”和“已经写出的总字数（$N$）”绘制成二维坐标系上的散点。它会冷酷地计算赫普斯定律公式（$V = k N^\\beta$）中的核心指数 $\\beta$，并测量这篇文本的实际爬升波形与那条“死气沉沉的完美对数曲线”之间的残差和方差。如果一条词汇增长曲线画得“太完美了”——严丝合缝地贴着那条平滑的对数轨迹，彻底丧失了人类在认知跳跃时那种标志性的“词汇暴增”与“便秘停滞”，系统就会毫不犹豫地给它打出极高的人工合成定罪分。",
+    "useCase": "这是用于肢解中长篇巨著（长文论述、深度报告、万字长文）的核武器级别雷达。在这种体裁里，宏观的词汇吐纳节奏（Pacing）具有不可辩驳的统计学显著性。",
+    "strengths": "• 它的屠刀精准切中了自回归（Autoregressive）生成模型的底层基因缺陷：LLM 天生就有强迫症，非要在整个输出窗口维持一个毫无波澜的稳态概率分布，这注定了它无法模仿人类那种狂野的“语义聚类暴增”。\n• 它是最难被“咒语（Prompting）”攻破的城墙之一。因为就算是造假大师，也无法在提示词里精确控制 AI 脑图中所谓“X轴每前进哪怕 10 个词，都要塞入 Y 个新词”这种微观数学变量。",
+    "limitations": "• 一旦遭遇短图文（如 140 字的推文或简短工作邮件），这颗雷达会直接哑火。因为文本太短，词汇增长曲线根本还没来得及发育出足够的 Token 去验证数学偏离。\n• 如果拿它去扫描那些本身就写法极其僵硬、八股化的人类工业垃圾（如法律霸王条款、死板的 SOP 操作手册），它可能会因为人类被迫写得像个机器而被骗出假阳性警报。",
+    "parameters": "雷达切片: 序列化 Token 指数累积测绘\n定罪量表: 严重偏离“理想赫普斯定律模型”的残差方差量\n行刑判决: 0-100 词汇速率极度人工平滑化得分",
+    "accuracy": "中级至核弹级 — 鉴别精度维系在 70-85% 之间。这颗雷达的摧毁力与文章长度成绝对正比。最完美的战术是：将它作为宏观的结构性降维打击武器，同时配合底层的局部句法探测雷达一起使用，能达成必杀。",
     "references": [
         {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
+            "title": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0146059"
         },
         {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09065"
         }
     ]
 }

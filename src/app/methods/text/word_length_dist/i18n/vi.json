@@ -1,12 +1,21 @@
 {
-    "name": "Phân bổ độ dài từ",
-    "description": "Phân tích mẫu phân bổ độ dài từ",
-    "algorithm": "Thuật toán phân tích Phân bổ độ dài từ",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu phân bổ độ dài từ. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phân bổ độ dài từ. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân Phối Độ Dài Từ (Word Length Distribution)",
+    "description": "Tính toán phân phối thống kê về độ dài của từ (số lượng ký tự) trên toàn bộ tài liệu. Những người viết thường thay đổi độ dài từ vựng một cách vô thức để tạo ra nhịp điệu, nhấn mạnh một điểm hoặc thích ứng với tải trọng nhận thức của chủ đề. Điều này dẫn đến một biểu đồ độ dài từ đặc trưng, hơi thất thường với các đỉnh và đáy tự nhiên. Các Mô hình Ngôn ngữ Lớn (LLM), được thiết kế để giảm thiểu độ bối rối (perplexity) và tối đa hóa hiệu quả token, vốn dĩ thích độ dài từ 'trung bình' (thường là 4-6 ký tự trong tiếng Anh). Chúng tránh các chuỗi từ cực kỳ ngắn, ngắt quãng hoặc các cụm thuật ngữ đa âm tiết quá dày đặc trừ khi được yêu cầu rõ ràng. Thuật toán này phát hiện sự phân phối độ dài từ được 'làm mịn' một cách nhân tạo và tập trung cao độ, đặc trưng của việc tạo văn bản theo hướng xác suất.",
+    "algorithm": "Phân Tích Phương Sai Biểu Đồ Và Độ Lệch Ở Cấp Độ Ký Tự",
+    "mechanism": "Thuật toán phân tích cú pháp văn bản, loại bỏ dấu câu và đo lường chính xác số lượng ký tự của mỗi từ. Nó xây dựng một biểu đồ tần suất trong đó trục X là độ dài từ (từ 1 đến 15+ ký tự) và trục Y là tần suất. Sau đó, nó tính toán các tính chất toán học của đường cong này, chẳng hạn như phương sai, độ lệch (skewness) và độ nhọn (kurtosis). Một văn bản của con người thường trình bày một phân phối 'lệch' hoặc đa phương thức—có lẽ nghiêng nhiều về các từ dài trong bối cảnh học thuật, hoặc có các đỉnh ngoằn ngoèo biểu thị sự lựa chọn nhịp điệu có chủ ý. Tuy nhiên, văn bản AI tạo ra một đường cong hình chuông toán học hoàn hảo, cụm chặt lại và xoay quanh mức trung bình khu vực của ngôn ngữ một cách gay gắt, cho thấy sự thiếu vắng nhịp điệu giống con người hoặc sự khác biệt về âm tiết.",
+    "useCase": "Rất hữu ích để đánh giá 'dòng chảy tự nhiên' của các bài báo, bài luận và văn bản sáng tạo. Nó hoạt động như một công cụ phát hiện phong cách nền tảng, tiết lộ liệu văn bản có nhịp điệu âm tiết đặc trưng, thất thường của tác giả con người hay nhịp độ được làm mịn bằng toán học của máy móc.",
+    "strengths": "• Tính toán cực kỳ nhanh chóng, vì nó không yêu cầu hiểu ngữ nghĩa, gọi API hoặc phân tích cú pháp mạng nơ-ron sâu.\n• Rất mạnh mẽ trước các cuộc tấn công hoán đổi từ đồng nghĩa hoặc 'diễn giải lại' đơn giản, bởi vì một tác giả cố gắng che giấu văn bản AI hiếm khi chú ý đến phân phối toán học của độ dài từ.",
+    "limitations": "• Dễ mắc lỗi dương tính giả trong các văn bản bị ràng buộc nhân tạo bởi tác giả, chẳng hạn như tóm tắt pháp lý ngôn ngữ đơn giản, sách thiếu nhi hoặc các bài đăng blog tối ưu hóa SEO cố tình bắt buộc phải sử dụng 'những từ ngắn, đơn giản'.\n• Yêu cầu một khối văn bản đáng kể (thường >200 từ) để tạo thành một biểu đồ có ý nghĩa thống kê; trên các văn bản siêu ngắn, đường cong phân phối quá hỗn loạn để phân tích.",
+    "parameters": "Kiểm Định: Phương Sai Và Độ Nhọn Của Số Lượng Ký Tự Token\nThước Đo: Độ Dài Từ Trung Bình, Độ Lệch Chuẩn Và Độ Lệch Phân Phối\nĐầu Ra: 0-100 Điểm Làm Mịn Phân Phối",
+    "accuracy": "Trung bình — Độ chính xác 65-85%. Mặc dù không mang tính quyết định nếu đứng một mình, nó là một số liệu kiểm chứng chéo cực kỳ đáng tin cậy. Khi một AI cố gắng giả mạo tính 'Bùng Nổ' (thay đổi độ dài câu), Phân Phối Độ Dài Từ thường vẫn cứng đầu tập trung ở khoảng giữa, phản bội nguồn gốc máy móc của nó.",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
+        }
+    ]
 }

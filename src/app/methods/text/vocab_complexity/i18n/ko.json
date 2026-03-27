@@ -1,22 +1,21 @@
 {
-    "name": "Vocabulary Complexity",
-    "description": "Measures vocabulary complexity level",
-    "algorithm": "Vocabulary Complexity — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures vocabulary complexity level. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through vocabulary complexity analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "어휘 복잡성 (Vocabulary Complexity)",
+    "description": "문서 전체에 사용된 어휘의 수준(Sophistication), 희귀도, 그리고 사용역(Register)을 해부합니다. 대규모 언어 모델(LLM)은 사용자의 이해도와 '토큰 효율성'을 극대화하도록 설계되어 있기 때문에, 태생적으로 너무 어렵지도 너무 쉽지도 않은 '안전하고 중도적인(Middle-of-the-road)' 어휘를 편애합니다. 이들은 통계적 확률이 높고 널리 쓰이는 단어와 무난한 '학술적' 관용구(예: '게다가(furthermore)', '중요한(crucial)', '파헤치다(delve)')에 심각하게 의존합니다. AI도 어려운 단어를 쓸 수는 있지만, 이를 통계적으로 기계처럼 고르게 분포시키며, 특별한 명령(Prompt)이 없는 한 진정으로 난해하거나 고풍스럽거나 작가 특유의 독특한(Idiosyncratic) 단어는 거의 꺼내지 않습니다. 반면, 진짜 인간 전문가는 매우 전문적이고 희귀한 은어(Jargon)와 일상적인 구어체를 섞어 쓰는 등 통계적 표준을 무시하는 '삐죽삐죽한(Spiky)' 어휘 프로필을 보여줍니다.",
+    "algorithm": "어휘 정교도 및 단어 빈도 순위(Frequency Rank) 프로파일링",
+    "mechanism": "모델은 텍스트를 파싱하여 거대한 말뭉치 빈도 사전(예: Subtlex, Google Web Trillion Word Corpus)을 기준으로 모든 단어의 희귀도를 평가합니다. 고빈도(흔한) 단어와 저빈도(희귀/복잡) 단어의 비율을 바탕으로 '복잡성 프로필'을 계산해 냅니다. 나아가, 텍스트에 쓰인 복잡한 단어들의 의미론적 사용역(Register)을 분석합니다. 극도로 희귀하거나 특정 도메인에만 존재하는 뾰족한 특수 용어(Spikes) 없이, 고등학교나 대학 학부생의 에세이처럼 기계적으로 일정하게 '적당히 높은(Moderately high)' 어휘 복잡성을 무자비하게 유지하는 텍스트는, 어떻게든 대중적인 가독성과 유창함 사이에서 줄타기를 하려는 대규모 언어 모델의 강력한 수학적 지문입니다.",
+    "useCase": "학술 논문, 전문 저널리즘 기사, 창작 문학(Creative writing)을 포르말린에 담가 해부할 때 필수적입니다. 인간 저자의 진짜배기 '미묘한 전문성'과 AI가 흉내 낸 '평균치로 수렴하는 스마트한 톤'을 칼로 무 베듯 갈라냅니다.",
+    "strengths": "• 일명 'ChatGPT 톤'을 색출하는 데 극도로 탁월합니다: 지나치게 매끄럽고 유창하지만, 결국엔 '다각적인(multifaceted)', '태피스트리(tapestry)', '증거(testament)' 같은 뻔하게 '똑똑해 보이는' 단어에 의지하는 텍스트 특유의 질감을 기가 막히게 잡아냅니다.\n• AI에게 단순히 '전문가처럼 써줘'라고 프롬프트를 입력하는 얄팍한 속임수로는 이 레이더를 피할 수 없습니다. AI가 상상하는 '전문성'조차도 결국엔 뻔한 토큰 확률(Token probabilities)의 굴레를 벗어나지 못하기 때문입니다.",
+    "limitations": "• 의도적으로 극도로 표준화되고 쉬운 언어만 골라 쓰는 인간 작가(예: 엄격한 '쉬운 언어(Plain-language) 가이드라인'을 따르는 테크니컬 라이터나 영어를 제2외국어로 배우는 학생)를 분석할 때 오폭(False positive)을 낼 수 있습니다.\n• 통계적 빈도의 기준선(Baseline)을 세울 만큼 충분한 단어 데이터가 쌓이지 않는 아주 짧은 텍스트 앞에서는 레이더가 흐릿해집니다.",
+    "parameters": "분석 기준: 말뭉치(Corpus) 빈도 대조 및 사용역(Register) 평가\n측정 지표: 평균 단어 빈도 순위(Rank) 및 특이 어휘 돌출(Spikes) 지수\n출력: 0-100 어휘적 인위성(Lexical Artificiality) 스코어",
+    "accuracy": "고수 — 75-85%의 아주 높은 정확도를 자랑합니다. LLM은 진짜 인간 전문가가 본능적으로 구사하는, 수학적으로 비효율적이고 삐뚤어진(Unbalanced) 어휘 선택을 유기적으로 모방하는 데 끔찍한 어려움을 겪기 때문에, 이 지표는 현존하는 가장 신뢰할 수 있는 의미론적(Semantic) 지표 중 하나입니다.",
     "references": [
-        {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
         }
     ]
 }

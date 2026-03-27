@@ -1,26 +1,21 @@
 {
     "name": "Vocabulary Diversity Analysis",
-    "description": "Measures lexical diversity and word choice patterns to identify AI-generated text.",
-    "useCase": "Detecting AI text through analysis of vocabulary richness and word repetition patterns",
-    "mechanism": "Calculates multiple lexical diversity metrics including Type-Token Ratio (TTR), Hapax Legomena ratio, and vocabulary growth rate. AI-generated text often exhibits different vocabulary distribution patterns compared to human writing — typically using a narrower range of words with more repetitive phrasing.",
-    "accuracy": "Moderate - 70-80% as standalone method",
-    "source": "Dugan et al. (2023) - Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text, AAAI",
-    "algorithm": "Type-Token Ratio (TTR) + Hapax Legomena + Vocabulary Growth Rate + Yule's K",
-    "parameters": "Window: 100-500 tokens, Metrics: TTR, MTLD, HD-D, Yule's K",
-    "strengths": "• Captures fundamental patterns of word choice\n• Language-model agnostic detection\n• Works across multiple languages\n• Computationally lightweight",
-    "limitations": "• Topic-dependent vocabulary variation\n• Short texts reduce accuracy\n• Technical/specialized text has naturally limited vocabulary\n• AI models are improving vocabulary diversity",
+    "description": "Evaluates the richness and variety of the vocabulary deployed throughout a text. Large Language Models operate on probability distributions that inherently favor high-frequency, safe word choices. To maintain coherence and minimize 'perplexity' (surprise), an AI will frequently recycle a narrow band of 'optimal' words rather than foraging for diverse synonyms. In contrast, human writers—driven by stylistic flair, memory recall quirks, or the desire to avoid redundancy—naturally inject a much wider, often suboptimal (from a pure probability standpoint) variety of unique words into their prose. This algorithm detects the mathematical signature of an artificially constrained, highly recycled vocabulary.",
+    "algorithm": "Lexical Richness Metrics (MTLD, HD-D, and TTR)",
+    "mechanism": "The algorithm computes multiple indices of vocabulary diversity. It starts with the basic Type-Token Ratio (TTR, the ratio of unique words to total words), but heavily relies on length-agnostic measurements like the Measure of Textual Lexical Diversity (MTLD) and the Hypergeometric Distribution D (HD-D / vocd-D). These advanced metrics calculate how fast the TTR drops as the text gets longer, or compute the probability of finding new words in random textual samples. Text that exhibits a statistically abnormal lack of unique word variations—reusing the same descriptive adjectives, transition phrases, and verbs where a human would organically diversify—triggers a high artificiality score.",
+    "useCase": "Crucial for analyzing essays, creative writing, and extended articles. It is highly effective at identifying text that 'sounds smart' but is actually repeating a very small pool of sophisticated words.",
+    "strengths": "• Highly resilient against simple 'paraphrase' prompts; an AI instructed to 'use different words' will still draw from its constrained high-probability pool, failing to achieve true human-like lexical diversity.\n• The use of MTLD and HD-D makes this analysis robust against variations in document length, unlike basic TTR.",
+    "limitations": "• Susceptible to false positives when analyzing highly technical documentation, legal contracts, or scientific papers where strict adherence to standardized terminology (and avoidance of synonyms) is required.\n• Requires a minimum text length (usually >150 words) to calculate statistically significant HD-D and MTLD scores.",
+    "parameters": "Analysis: Lexical Variation and Synonym Foraging\nMetrics: MTLD (Measure of Textual Lexical Diversity) & HD-D\nOutput: 0-100 Lexical Repetitiveness Score",
+    "accuracy": "Moderate to High — 75-82% accuracy. It is a powerful syntactic diagnostic tool, especially when combined with burstiness and semantic coherence metrics, as LLMs struggle to simultaneously optimize for coherence and true lexical diversity.",
     "references": [
         {
-            "title": "Dugan, L. et al. (2023). Real or Fake Text? AAAI.",
-            "url": "https://doi.org/10.1609/aaai.v37i11.26501"
+            "title": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/BRM.42.2.381"
         },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

@@ -1,26 +1,21 @@
 {
-    "name": "어휘 다양성 분석",
-    "description": "측정합니다 어휘 다양성 and word choice 패턴 식별하기 위해 AI 생성 text.",
-    "useCase": "Detecting AI text through 분석 of vocabulary richness and word repetition 패턴",
-    "mechanism": "계산합니다 multiple 어휘 다양성 metrics including Type-Token Ratio (TTR), Hapax Legomena ratio, and vocabulary growth rate. AI 생성 text often exhibits different vocabulary 분포 패턴 compared to 인간 글쓰기 — typically using a narrower range of words with more repetitive phrasing.",
-    "accuracy": "중간 - 70-80% as standalone method",
-    "source": "Dugan et al. (2023) - Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text, AAAI",
-    "algorithm": "Type-Token Ratio (TTR) + Hapax Legomena + Vocabulary Growth Rate + Yule's K",
-    "parameters": "Window: 100-500 tokens, Metrics: TTR, MTLD, HD-D, Yule's K",
-    "strengths": "• Captures fundamental 패턴 of word choice\n• Language-model agnostic 감지\n• Works 에 걸친 multiple languages\n• 계산 부하가 낮음",
-    "limitations": "• Topic-dependent vocabulary variation\n• Short texts reduce 정확도\n• Technical/specialized text has naturally limited vocabulary\n• AI models are improving 어휘 다양성",
+    "name": "어휘 다양성 분석 (Vocabulary Diversity)",
+    "description": "문서 전체에 쓰인 어휘의 풍부함과 다양성을 해부합니다. 대규모 언어 모델(LLM)은 태생적으로 통계적 확률이 높고 '안전한' 단어를 편애하는 확률 분포 위에서 작동합니다. 문장의 일관성을 유지하고 '당혹감(Perplexity)' 수치를 최소화하기 위해, AI는 다채로운 동의어를 찾아 헤매기보다는 좁고 뻔한 '최적의(Optimal)' 단어 풀(Pool)을 징그럽게 재활용합니다. 반면, 인간 작가는 개인적인 문체적 허영심, 예측 불가능한 기억력의 장난, 혹은 같은 단어를 두 번 쓰기 싫어하는 본능 때문에 훨씬 더 폭넓고 (순수 확률 관점에서는) 다소 비효율적인 고유 단어들을 산문 속에 유기적으로 섞어 넣습니다. 이 알고리즘은 인위적으로 통제되고 끔찍하게 재활용된 '플라스틱 어휘 풀'의 수학적 지문을 스캔합니다.",
+    "algorithm": "어휘 풍부도 측정 지표 (MTLD, HD-D 및 TTR)",
+    "mechanism": "알고리즘은 어휘 다양성의 여러 수학적 지표를 계산합니다. 가장 기본적인 TTR(Type-Token Ratio, 총 단어 수 대비 고유 단어 수의 비율)에서 출발하지만, 텍스트 길이에 영향받지 않는 고급 지표인 MTLD(Measure of Textual Lexical Diversity)와 극초기하 분포 D(HD-D / vocd-D)에 심각하게 의존합니다. 이런 고급 지표들은 텍스트가 길어질수록 TTR이 얼마나 빨리 바닥으로 곤두박질치는지 계산하거나, 무작위로 추출한 텍스트 샘플에서 '새로운 단어'가 튀어나올 확률을 분석합니다. 진짜 인간이라면 당연히 동의어나 다른 표현으로 비틀었을 자리에서조차 똑같은 묘사적 형용사, 전환구(Transition phrases), 동사를 앵무새처럼 재활용하는 등 고유 단어의 변주가 통계적으로 비정상적으로 결핍된 텍스트는 뼈아픈 인위성 점수를 받게 됩니다.",
+    "useCase": "논술 에세이, 창작 문학, 호흡이 긴 심층 기사를 해부할 때 핵심적인 지표입니다. 겉보기엔 '유식해 보이지만(Sounds smart)' 까고 보면 한 줌도 안 되는 소수의 '고급 단어'들만 돌려막기 하는 AI식 텍스트를 색출하는 데 극도로 탁월합니다.",
+    "strengths": "• 얄팍한 '패러프레이징(Paraphrase)' 프롬프트 공격에 대해 극강의 맷집을 자랑합니다. AI에게 '다른 단어 좀 써봐'라고 명령해 봤자, AI는 여전히 자신의 '안전한 고확률 단어 웅덩이' 안에서만 허우적대기 때문에 진정한 인간 수준의 어휘 다양성을 결코 달성하지 못합니다.\n• 조악한 TTR 통계와 달리, MTLD와 HD-D를 무기로 사용하기 때문에 문서의 길이가 들쭉날쭉해도 레이더가 흔들리지 않습니다.",
+    "limitations": "• 동의어 사용이 철저히 금기시되고 표준화된 용어의 엄격한 반복이 강제되는 고도의 기술 문서, 법률 계약서, 과학 논문 등을 검사할 때는 억울하게 오폭(False positives)을 낼 수 있습니다.\n• 통계적으로 유의미한 HD-D 및 MTLD 점수를 도출하려면 최소한의 텍스트 길이(보통 150단어 이상)가 필수적입니다.",
+    "parameters": "분석 기준: 어휘적 변변(Variation) 및 동의어 채집(Foraging) 능력\n측정 지표: MTLD(텍스트 어휘 다양성 지수) & HD-D\n출력: 0-100 어휘 재활용성(Lexical Repetitiveness) 스코어",
+    "accuracy": "중상 — 75-82%의 무난하면서도 꽤 날카로운 정확도입니다. LLM은 '문맥의 일관성'과 '진정한 어휘의 다양성'이라는 두 마리 토끼를 동시에 최적화하는 데 극심한 과부하를 겪기 때문에, 버스티니스(Burstiness)나 의미론적 일관성 지표와 콤보로 묶어서 쓸 때 가장 파괴적인 구문 진단(Syntactic diagnostic) 무기가 됩니다.",
     "references": [
         {
-            "title": "Dugan, L. et al. (2023). Real or Fake Text? AAAI.",
-            "url": "https://doi.org/10.1609/aaai.v37i11.26501"
+            "title": "McCarthy, P. M., & Jarvis, S. (2010). MTLD, vocd-D, and HD-D: A validation study of sophisticated approaches to lexical diversity assessment. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/BRM.42.2.381"
         },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

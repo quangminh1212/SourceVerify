@@ -1,22 +1,21 @@
 {
-    "name": "Word Length Distribution",
-    "description": "Analyzes word length distribution patterns",
-    "algorithm": "Word Length Distribution — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Analyzes word length distribution patterns. Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through word length distribution analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "Word Length Distribution (WLD)",
+    "description": "Calculates the statistical distribution of word lengths (character counts) across a document. Human writers unconsciously vary the length of their words to create cadence, emphasize a point, or adapt to the cognitive load of the subject matter. This results in a distinctive, slightly erratic word-length histogram with natural spikes and valleys. Large Language Models (LLMs), engineered to minimize perplexity and maximize token efficiency, inherently prefer 'average' word lengths (typically 4-6 characters in English). They avoid strings of extremely short, staccato words or overly dense clusters of polysyllabic terminology unless explicitly prompted. This algorithm detects the artificially 'smoothed' and heavily centralized word-length distribution characteristic of probability-driven text generation.",
+    "algorithm": "Character-Level Histogram Variance & Skewness Analysis",
+    "mechanism": "The algorithm parses the text, strips punctuation, and measures the exact character count of every word. It builds a frequency histogram where the X-axis is the word length (1 to 15+ characters) and the Y-axis is the frequency. It then calculates mathematical properties of this curve, such as variance, skewness, and kurtosis. A human text typically presents a 'lopsided' or multimodal distribution—perhaps heavily skewed toward long words in academic settings, or featuring jagged spikes representing intentional rhythmic choices. An AI text generates a tightly clustered, mathematically perfect bell curve revolving aggressively around the localized language average, indicating a lack of human-like rhythmic or syllabic variance.",
+    "useCase": "Highly diagnostic for evaluating the 'natural flow' of articles, essays, and creative writing. It serves as a foundational stylistic detector, revealing whether the text possesses the erratic, signature syllable-rhythm of a human author or the mathematically smoothed pacing of a machine.",
+    "strengths": "• Extremely fast to compute, as it requires no semantic understanding, API calls, or deep neural network parsing.\n• Highly robust against simple synonym-swapping or 'paraphrasing' attacks, because an author attempting to mask AI text rarely pays attention to the mathematical distribution of word lengths.",
+    "limitations": "• Susceptible to false positives in texts artificially constrained by the author, such as plain-language legal summaries, children's books, or SEO-optimized blog posts that intentionally mandate 'simple, short words'.\n• Requires a substantial text block (typically >200 words) to form a statistically significant histogram; on micro-texts, the distribution curve is too chaotic to analyze.",
+    "parameters": "Analysis: Variance and Kurtosis of Token Character Counts\nMetrics: Word Length Mean, Standard Deviation, and Distribution Skew\nOutput: 0-100 Distributional Smoothing Score",
+    "accuracy": "Moderate — 65-85% accuracy. While not definitive on its own, it is an extremely reliable cross-validation metric. When an AI attempts to fake 'Burstiness' (varying sentence lengths), the Word Length Distribution usually remains stubbornly centralized, betraying the machine origin.",
     "references": [
-        {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
-        },
         {
             "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
             "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
         }
     ]
 }

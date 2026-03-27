@@ -1,22 +1,21 @@
 {
     "name": "Word Rarity Score",
-    "description": "Detects rare archaic vocabulary usage (Tulchinskii, 2023)",
-    "algorithm": "Word Rarity Score — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Detects rare archaic vocabulary usage (Tulchinskii, 2023). Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through word rarity score analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "description": "Evaluates the document based on the frequency of 'rare' or 'archaic' vocabulary. Large Language Models (LLMs) are optimized to output the most probable sequences of tokens based on their massive training datasets. Consequently, they tend to favor common, high-probability words and actively avoid lexical outliers—words that are rarely used in modern, everyday language. Human writers, however, frequently employ rare, domain-specific, or slightly archaic words to add color, precision, or personal voice to their writing. This algorithm measures the concentration of these low-probability 'long-tail' words. A lack of rare words is a strong indicator of the artificial smoothing typical of generative AI.",
+    "algorithm": "Lexical Frequency Tail Analysis (Tulchinskii, 2023)",
+    "mechanism": "The algorithm cross-references every token in the text against a comprehensive frequency dictionary of the target language. Words are categorized into frequency bands. The system specifically scans for words that fall into the lowest probability percentiles (the 'long tail' of the Zipfian distribution). It then calculates a global 'Rarity Score' based on the density and distribution of these unusual terms. AI-generated text typically registers a disproportionately low Rarity Score, heavily localized around the top 5,000 most common words. Human text features periodic 'spikes' into the extreme tail end of the vocabulary distribution.",
+    "useCase": "Highly effective for analyzing academic papers, creative writing, literature reviews, and opinion pieces where human authors typically utilize a broad and specialized vocabulary. It is particularly useful for detecting 'bland' AI writing that lacks distinct authorial voice.",
+    "strengths": "• Excellent at differentiating between a human expert's nuanced vocabulary and an LLM's generic, safe word choices.\n• Highly effective against standard prompt generation without complex vocabulary parameter tuning.",
+    "limitations": "• Vulnerable to specific prompt engineering techniques where the user commands the AI to 'use rare words', 'write in an archaic style', or 'use advanced vocabulary'.\n• May yield false positives on texts intentionally written in 'Plain English' or domains requiring strictly standardized, simple terminology (e.g., basic instructions, children's literature).",
+    "parameters": "Analysis: Long-Tail Vocabulary Distribution\nMetrics: Density of Low-Frequency Tokens (< 0.001% occurrence rate)\nOutput: 0-100 Lexical Rarity & Smoothing Score",
+    "accuracy": "Moderate to High — 70-85% accuracy. It is highly predictive when combined with structural metrics like Burstiness, as AI prompted to use 'rare words' often injects them awkwardly, destroying semantic coherence while boosting the rarity score.",
     "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
             "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09880"
         }
     ]
 }

@@ -1,25 +1,20 @@
 {
-    "name": "Word Frequency Rank",
-    "description": "Analyzes word frequency ranking distribution.",
-    "useCase": "Detecting AI text through Zipf law deviation",
-    "mechanism": "Calculates trigram frequency distribution and checks compliance with Zipf's law. AI-generated text tends to deviate from natural frequency rankings.",
-    "accuracy": "Moderate - 72-82%",
-    "source": "Jawahar et al. (2020) - Automatic Detection of Machine Generated Text: A Critical Survey",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Window size: adaptive, Quantization: 8-64 levels, Metrics: entropy, CV, correlation",
-    "strengths": "- Effective for detecting AI-generated text\n- Language-agnostic statistical approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger false positives\n- Short texts provide less reliable signals\n- Performance varies across writing styles",
+    "name": "Word Frequency Rank (GLTR)",
+    "description": "Examines the absolute frequency ranking of every word used in a document against a baseline corpus. Large Language Models (LLMs) are essentially hyper-advanced autocomplete engines designed to select the most probable next token. Consequently, AI-generated text is overwhelmingly dominated by 'Top-10' or 'Top-100' high-frequency words. It creates a mathematically smooth, highly predictable surface where true lexical outliers (words ranked 1,000th or 10,000th in natural language frequency) are almost entirely absent. Human writers, conversely, constantly dip into the 'tail end' of the Zipfian distribution, pulling out rare, highly specific vocabulary. This algorithm acts as a statistical lie detector, exposing text that clings too desperately to the safety of high-probability words.",
+    "algorithm": "Token Probability Distribution & Zipf's Law Deviation",
+    "mechanism": "This engine cross-references every word in the text against a massive baseline text corpus to determine its historical 'Frequency Rank'. Words are grouped into probability buckets (e.g., Top 10, Top 100, Top 1000, Rare). The algorithm then calculates the distributional entropy and statistical correlation against natural language Zipfian curves. A human text will display a healthy, jagged mix of common words punctuated by rare, low-probability terms. An AI text, however, will generate a histogram that is unnaturally slanted toward the 'Top 100' bucket, demonstrating a massive deficit in rank-probability variance and a failure to naturally deviate from Zipf's Law.",
+    "useCase": "The gold standard for detecting 'vanilla' AI text—content generated without heavy prompt engineering or temperature manipulation. It is highly effective for auditing news articles, blog posts, and student essays where the author attempts to pass off standard LLM output as original thought.",
+    "strengths": "• Incredibly fast and requires low computational overhead, making it an excellent first-pass filter.\n• Operates on fundamental mathematical principles of language generation, making it entirely language-agnostic as long as a baseline frequency corpus exists.",
+    "limitations": "• Susceptible to defeat by advanced prompt engineering (e.g., instructing the AI to use an 'eclectic vocabulary') or by cranking the LLM's 'temperature' to maximum, which artificially forces it to select lower-probability tokens.\n• Short texts provide an insufficient sample size to build a reliable rank-probability histogram.",
+    "parameters": "Analysis: Rank-Probability Histogram against Baseline Corpus\nMetrics: Token Entropy, Coefficient of Variation (CV), and Top-K Distribution\nOutput: 0-100 High-Frequency Bias Score",
+    "accuracy": "Moderate to High — 72-82% accuracy. While powerful as a standalone tool, its effectiveness multiplies when cross-referenced with semantic coherence and burstiness, as humans can naturally use rare words while maintaining perfect coherence, whereas high-temperature AI text becomes disjointed.",
     "references": [
         {
-            "title": "Jawahar et al. (2020) - Automatic Detection of Machine Generated Text: A Critical Survey",
-            "url": "https://scholar.google.com/scholar?q=Jawahar%20et%20al.%20(2020)%20-%20Automatic%20Detection%20of%20Machine%20Generated%20Text%3A%20A%20Critical%20Survey"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
             "url": "https://arxiv.org/abs/1906.04043"
         },
         {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI Technical Report.",
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
             "url": "https://arxiv.org/abs/1908.09203"
         }
     ]

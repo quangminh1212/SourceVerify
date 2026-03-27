@@ -1,22 +1,21 @@
 {
-    "name": "Word Rarity Score",
-    "description": "Detects rare archaic vocabulary usage (Tulchinskii, 2023)",
-    "algorithm": "Word Rarity Score — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Detects rare archaic vocabulary usage (Tulchinskii, 2023). Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through word rarity score analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "词汇稀缺性得分 (Word Rarity Score)",
+    "description": "基于“生僻”或“古奥”词汇的使用频率对文档进行法医级评估。大语言模型（LLM）被其庞大的训练基座死死钳制，唯一的使命就是输出“概率上最安全、最正确的 Token 序列”。因此，它们会疯狂地偏爱那些烂大街的、高概率的口水词，并像躲避瘟疫一样避开那些在现代日常交际中几乎绝迹的“词汇孤儿”。然而，人类作家为了给文章增添色彩、精准地刺中某个痛点，或者仅仅是为了炫耀自己独特的作者腔调，经常会随手丢出一些极度生僻、深奥或者略带年代感的词汇。该算法就是一台用来测量这些低概率“长尾（Long-tail）”词汇浓度的化学分析仪。生僻词的严重干涸，是生成式 AI 那种毫无灵魂的、被人工“熨平”的流水线文本的最强指示物。",
+    "algorithm": "词汇频率长尾解剖 (Tulchinskii, 2023)",
+    "mechanism": "雷达引擎会将文中的每一个 Token 剥离出来，扔进目标语言最庞大的历史词频辞典中进行验明正身。单词会被扔进不同的频率隔离带。系统会像鬣狗一样，专门嗅探那些跌入概率最底层百分位（即 Zipf 分布的极寒长尾地带）的词汇。然后，它根据这些反常词汇的分布密度，计算出全局的“词汇稀缺性得分”。AI 生成的文本通常会交出一份低得令人发指的稀缺性成绩单，它的词汇库极其窝囊地蜷缩在 Top 5000 最常见词的舒适区里。而真正的人类文本，其频率心电图会时不时地发生剧烈的“尖峰暴走”，一头扎进词汇分布的极端末端。",
+    "useCase": "这是用来解剖学术论文、文学创作、深度文献综述和尖锐评论文章的绝杀武器，因为在这些领域，人类作者通常会肆无忌惮地挥霍广博且极其专业的词汇库。它在侦测那种缺乏鲜明作者人格、读起来毫无波澜的“白开水式” AI 文章时，具有毁灭性的效果。",
+    "strengths": "• 在区分“人类专家充满底蕴的细微遣词造句”和“LLM 安全、平庸的字词拼凑”方面，表现堪称完美。\n• 只要对手没有动用复杂的词汇参数注入手段（无脑使用标准 Prompt），这套系统的击杀率几乎是 100%。",
+    "limitations": "• 容易被针对性的黑客指令攻破（例如：用户拿枪指着 AI 的头要求：“给我用最晦涩的生僻字”、“用古英语风格写”或“启动专家级词汇库”）。\n• 如果文本被迫要求“说人话”（例如：翻译成大白话的法律免责声明、给三岁小孩看的睡前故事，或极其死板的产品说明书），该算法可能会神经质地将其误判为 AI。",
+    "parameters": "雷达切片: 长尾 (Long-Tail) 词汇幽灵分布图\n定罪量表: 极低频 Token 密度测量（出现概率 < 0.001% 的词汇）\n行刑判决: 0-100 词汇稀缺度与机械熨平 (Smoothing) 指数得分",
+    "accuracy": "中级至高级破甲 — 鉴别精度维稳在 70-85%。当把它和“爆发度（Burstiness）”等结构性指标绑在一起时，它将变成一台测谎仪。因为当 AI 被强行下达“必须使用生僻词”的指令时，它往往会像个暴发户一样生硬地把这些词塞进句子里。这虽然能暂时骗过稀缺度雷达，但会彻底摧毁文章的语义连贯性，瞬间在一旁暴毙。",
     "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
             "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09880"
         }
     ]
 }

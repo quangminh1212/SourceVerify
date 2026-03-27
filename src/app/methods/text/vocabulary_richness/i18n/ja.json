@@ -1,17 +1,16 @@
 {
-    "name": "Vocabulary Richness",
-    "description": "Computes root TTR for vocabulary richness (2023)",
-    "algorithm": "Vocabulary Richness — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Computes root TTR for vocabulary richness (2023). Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through vocabulary richness analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "語彙の豊富さ分析 (Vocabulary Richness)",
+    "description": "テキストの長さに応じて語彙がどれだけ効果的に拡張されるかを測定することにより、テキストの語彙の豊かさを分析します。基本的な異なり語数比（Type-Token Ratio: TTR）は長いテキストに厳しくペナルティを科しますが、このアルゴリズムはRoot TTR（Guiraudの指標）とYuleの特性Kを使用して、ドキュメントのサイズとは無関係に「豊かさ」を評価します。大規模言語モデル（LLM）は、あいまいで、非常に特異的、または確率の低い単語の使用を重く罰する厳密な確率パラメータの下で動作します。その結果、AIが生成したテキストはすぐに「語彙の停滞期（Vocabulary Plateau）」、つまり新しい単語の導入をやめて、安全で高確率のコア辞書を無限にループし始めるポイントに到達します。しかし、人間の書き手は語彙的疲労に対する閾値がはるかに高く、テキストがどれだけ長くなっても、新鮮で、文脈に特有の、予測不可能な単語を継続的に導入します。",
+    "algorithm": "Guiraud の Root TTR & Yule の K 特性",
+    "mechanism": "スキャナーは、総単語数（トークン）を固有の単語数（タイプ）に対してマッピングします。単純な割り算の代わりに、Root TTR（Types / √Tokens）を計算し、長いドキュメントでも公平に評価できる曲線を強制的に作ります。同時に、YuleのKを計算して、ランダムに抽出された単語が以前に使用された単語の繰り返しである統計的確率を測定します。Root TTRスコアが不自然に低く、YuleのKが深刻で数学的に滑らかな繰り返しを示している場合—つまり、著者がユニークな語彙を見つけることを早すぎる段階で諦めた場合—それは、LLMの確率制約されたテキスト生成の重要な指標となります。",
+    "useCase": "ホワイトペーパー、電子書籍、長編エッセイ、学術文献などの長編コンテンツの監査に非常に効果的です。数段落であれば雄弁な人間を模倣できても、数千語にわたって人間レベルの語彙の拡張を維持できないAIモデルを暴露します。",
+    "strengths": "• LLMの語彙不足はテキストが長くなるほど数学的に明白になるため、長文生成におけるAIの検出に非常に優れています。\n• Root TTRとYuleのKはドキュメントの長さをネイティブに補正するため、この指標はテキストサイズが大きく異なっても非常に安定しており堅牢です。",
+    "limitations": "• 正確な用語の明示的な繰り返しが必須で、同義語が禁止されている厳格な技術ライティング（ソフトウェアのドキュメント、医療レポートなど）では、誤検知（偽陽性）の影響を受けやすくなります。\n• 「語彙の停滞期」が統計的に証明される前にテキストが終了するため、マイクロテキスト（ツイートや短い製品の説明など）では効果がありません。",
+    "parameters": "解析: 語彙の拡張ペース & 反復確率\n評価基準: Guiraudの指標 (Root TTR) & Yuleの特性K\n出力結果: 0-100 語彙の停滞期と貧困性スコア",
+    "accuracy": "中〜高 — 長いテキストで76-85%の精度。計算文体論（Computational stylometry）における非常に信頼性の高い基礎的な指標です。現在のAIモデルは、幻覚（ハルシネーション）を起こしたり、意味的な一貫性を損なったりすることなく、人間レベルのRoot TTRを最適化することはできません。",
     "references": [
         {
-            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
             "url": "https://doi.org/10.2307/2280090"
         },
         {

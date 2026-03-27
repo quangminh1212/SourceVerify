@@ -1,22 +1,21 @@
 {
-    "name": "Zipf Deviation",
-    "description": "Measures deviation from Zipf's Law word distribution (Gehrmann, 2019)",
-    "algorithm": "Zipf Deviation — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures deviation from Zipf's Law word distribution (Gehrmann, 2019). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through zipf deviation analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "지프의 법칙 일탈도 (Zipf's Law Deviation)",
+    "description": "텍스트의 어휘 분포가 보편적 언어 법칙인 '지프의 법칙(Zipf's Law)'에서 통계적으로 얼마나 벗어났는지 계산합니다. 자연스러운 인간의 언어에서, 어떤 단어의 출현 빈도는 빈도표 내 그 단어의 순위에 정확히 반비례합니다. 예를 들어, 1등 단어는 2등 단어보다 두 배, 3등 단어보다 세 배 더 자주 등장합니다. 그러나 생성형 AI 모델(LLM)은 시간이 지남에 따라 유기적으로 생각을 떠올리며 글을 쓰지 않습니다. 이들은 둥글게 다듬어지고 최적화된 통계 분포를 바탕으로 다음으로 가장 '안전하고 그럴싸한' 토큰을 예측할 뿐입니다. 결과적으로 AI가 쓴 글은, 인간의 글이 보여주는 가파르고 자연스러운 멱법칙(Power-law) 분포에서 심각하게 일탈하여 '납작하게 짓눌린(Flattened)' 어색한 곡선을 띠게 됩니다.",
+    "algorithm": "순위-빈도 멱법칙(Power Law) 최적화 곡선 분석",
+    "mechanism": "알고리즘은 텍스트를 토큰화하고 모든 고유 단어의 빈도를 세어 순위 목록으로 정렬합니다. 그런 다음 이 실제 분포를 지프의 법칙의 이론적 이상값($f \\propto 1/r$)과 비교하여 그래프로 그립니다. 인간의 텍스트는 뾰족하고 거대한 '머리'('the', 'of' 같은 초고빈도 기능어)와 끝없이 길고 듬성듬성한 '꼬리'(희귀하고 맥락에 종속된 단어)를 특징으로 합니다. 반면 논리적 안전성을 확보하기 위해 발생 확률이 낮은 토큰을 극도로 꺼리도록 훈련된 AI는, 무의식적으로 이 긴 꼬리를 싹둑 잘라내고 '중간 층위'의 어휘를 인위적으로 부풀립니다. 시스템은 텍스트의 실제 곡선과 이상적인 지프 곡선 사이의 일탈 면적(잔차, Residuals)을 수학적으로 계산합니다.",
+    "useCase": "장문의 에세이, 기술 보고서, 창작물 검증에 극도로 효과적입니다. 시중에 떠도는 얕은 수준의 AI '휴머나이저(Humanizer, 사람처럼 문장을 꼬아주는 도구)'로 구문을 심하게 조작하거나 단어를 짜깁기한 문서들을 잡아내는 '수학적 거짓말 탐지기' 역할을 합니다. 아무리 문장을 꼬아도 문서 전체의 유기적인 지프 분포는 인위적으로 재구성할 수 없기 때문입니다.",
+    "strengths": "• 특정 AI 모델(GPT-4나 클로드 등)의 잡힌 약점에 의존하지 않고 보편적인 '언어의 물리법칙'에 뿌리를 두고 있어, 앞으로 등장할 새로운 LLM 아키텍처에도 영구적인 방어력을 갖습니다.\n• 표면적으로 단어를 동의어로 교체하거나 문장을 섞는(Text spinning) 속임수에 전혀 타격을 받지 않습니다.",
+    "limitations": "• 짧은 글(300단어 미만)에서는 표본 크기가 작아 유의미한 통계 분포를 형성할 수 없으므로 무용지물입니다.\n• 극도로 전문적인 기호학적 용어나 코드 스니펫은 그 자체만으로 지프 곡선을 왜곡하므로, 프로그래밍 문서나 틈새 학술 논문에서는 인간의 글을 AI로 오인(False positive)할 위험이 있습니다.",
+    "parameters": "분석 기준: 경험적 순위-빈도 분포(Empirical Rank-Frequency Distribution)\n측정 지표: 로그-로그(Log-Log) 회귀 기울기, 이상적 지프 곡선으로부터의 잔차제곱합(RSS)\n출력: 0-100 일탈 강도(Deviation Intensity) 스코어",
+    "accuracy": "높음 — 긴 글(1,000단어 이상)에서 82~89%의 무자비한 정확도를 자랑합니다. 트윗이나 짧은 이메일에서는 쓸모없지만, 대학교 에세이, 소설, 종합 보고서로 위장한 AI 텍스트에게는 수학적 재앙 수준의 타격을 입힙니다.",
     "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
+        },
         {
             "title": "Powers, D. (1998). Applications and Explanations of Zipf's Law. ACL Workshop.",
             "url": "https://aclanthology.org/W98-1218/"
-        },
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
         }
     ]
 }

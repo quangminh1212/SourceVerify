@@ -1,12 +1,21 @@
 {
-    "name": "Phong phú từ vựng",
-    "description": "Tính root TTR cho sự phong phú từ vựng",
-    "algorithm": "Thuật toán phân tích Phong phú từ vựng",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Tính root TTR cho sự phong phú từ vựng. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phong phú từ vựng. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Độ Phong Phú Của Từ Vựng (Vocabulary Richness)",
+    "description": "Phân tích sự hoa mỹ và phong phú về mặt từ vựng của một văn bản bằng cách đo lường hiệu quả mở rộng từ vựng so với độ dài của văn bản. Trong khi Tỷ lệ Loại-Token (TTR) cơ bản trừng phạt nghiêm khắc các văn bản dài, thuật toán này sử dụng Root TTR (Chỉ số Guiraud) và Đặc trưng K của Yule để đánh giá 'độ phong phú' độc lập với kích thước tài liệu. Các Mô hình Ngôn ngữ Lớn (LLM) hoạt động dưới các thông số xác suất nghiêm ngặt, phạt nặng việc sử dụng các từ ngữ tối nghĩa, quá cụ thể hoặc có xác suất thấp. Do đó, văn bản do AI tạo ra nhanh chóng đạt đến 'cao nguyên từ vựng'—điểm mà nó ngừng giới thiệu các từ mới và bắt đầu lặp lại vô tận từ điển cốt lõi an toàn, xác suất cao của nó. Ngược lại, những người viết có ngưỡng mệt mỏi từ vựng cao hơn nhiều, liên tục giới thiệu những từ vựng mới mẻ, đặc thù theo ngữ cảnh và không thể đoán trước bất kể văn bản có dài đến đâu.",
+    "algorithm": "Root TTR Của Guiraud & Đặc Trưng K Của Yule",
+    "mechanism": "Máy quét ánh xạ tổng số từ (token) với số lượng từ duy nhất (type). Thay vì một phép chia đơn giản, nó tính toán Root TTR (Types / √Tokens), tạo ra một đường cong san bằng sân chơi cho các tài liệu dài hơn. Đồng thời, nó tính toán K của Yule để đo xác suất thống kê của một từ được rút ngẫu nhiên là sự lặp lại của một từ đã sử dụng trước đó. Nếu điểm Root TTR thấp một cách bất thường và K của Yule chỉ ra sự lặp lại mượt mà, nghiêm trọng về mặt toán học—có nghĩa là tác giả đã bỏ cuộc trong việc tìm kiếm từ vựng độc đáo quá sớm—đó là một chỉ báo quan trọng về việc tạo văn bản bị giới hạn bởi xác suất của LLM.",
+    "useCase": "Cực kỳ hiệu quả trong việc kiểm toán nội dung dài như sách trắng (whitepapers), sách điện tử (eBooks), bài luận mở rộng và tài liệu học thuật. Nó vạch trần các mô hình AI có thể bắt chước tài hùng biện của con người trong một vài đoạn văn nhưng thất bại trong việc duy trì sự mở rộng từ vựng ở cấp độ con người qua hàng ngàn từ.",
+    "strengths": "• Đặc biệt xuất sắc trong việc phát hiện AI trong các văn bản dài, vì sự thiếu hụt từ vựng của các LLM trở nên rõ ràng hơn về mặt toán học khi văn bản càng dài.\n• Root TTR và K của Yule tự động điều chỉnh theo độ dài tài liệu, làm cho số liệu này cực kỳ ổn định và mạnh mẽ trên các kích thước văn bản hoàn toàn khác nhau.",
+    "limitations": "• Dễ mắc lỗi dương tính giả trong văn bản kỹ thuật cứng nhắc (ví dụ: tài liệu phần mềm, báo cáo y tế) nơi việc lặp lại rõ ràng thuật ngữ chính xác là bắt buộc và từ đồng nghĩa bị cấm.\n• Không hiệu quả trên các văn bản siêu ngắn (như tweet hoặc mô tả sản phẩm ngắn) vì văn bản kết thúc trước khi 'cao nguyên từ vựng' có thể được chứng minh về mặt thống kê.",
+    "parameters": "Kiểm Định: Tốc Độ Mở Rộng Từ Vựng & Xác Suất Lặp Lại\nThước Đo: Chỉ Số Guiraud (Root TTR) & Đặc Trưng K Của Yule\nĐầu Ra: 0-100 Điểm Cao Nguyên Và Trạng Thái Nghèo Nàn Từ Vựng",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 76-85% trên các văn bản dài. Nó là một số liệu nền tảng cực kỳ đáng tin cậy trong phép đo phong cách điện toán (computational stylometry). Các mô hình AI hiện tại không thể tối ưu hóa Root TTR ở cấp độ con người mà không bị ảo giác hoặc phá vỡ tính mạch lạc ngữ nghĩa.",
+    "references": [
+        {
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ]
 }

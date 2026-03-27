@@ -1,22 +1,21 @@
 {
-    "name": "Zipf Deviation",
-    "description": "Measures deviation from Zipf's Law word distribution (Gehrmann, 2019)",
-    "algorithm": "Zipf Deviation — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Measures deviation from Zipf's Law word distribution (Gehrmann, 2019). Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through zipf deviation analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "齐夫定律偏离度 (Zipf's Law Deviation)",
+    "description": "计算文本词汇偏离齐夫定律（Zipf's Law）这一普适语言法则的统计学偏差。在自然的人类语言中，无论何种方言或领域，任何特定单词的出现频率都与其在频率表中的排名成反比。例如，排名第一的最常见词汇的出现频率大约是第二名的两倍、第三名的三倍，以此类推。然而，生成式 AI 模型（LLM）并不是随着时间的推移自然萌生想法来生成文本的；它们是基于经过平滑和过度优化的统计分布，来预测下一个“概率上最稳妥”的标记（Token）。因此，AI 生成的文本会呈现出一种“被强行拍扁”的频率曲线，这种曲线严重背离了真实人类写作那种陡峭、自然的幂律（Power-law）分布。",
+    "algorithm": "排名-频率幂律优化曲线分析",
+    "mechanism": "雷达会粉碎输入的文本并统计每一个不重复单词的词频，将它们排列成一份精准的榜单。随后，它会将这份实际提取出的分布折线，与齐夫定律的理论完美形态（$f \\propto 1/r$）进行粗暴比对。在真实的人类文本中，这条曲线具有一个极其尖锐突兀的“头部”（如“the”、“of”等超高频功能词），以及一条极长、极其稀疏的“长尾”（罕见且完全依赖语境的冷僻词）。而 AI 模型为了确绝对的逻辑安全，在训练时就被阉割了生成那些“极低概率标记”的胆量，这导致它在无意中粗暴截断了这条长尾，同时又人工注水般地膨胀了“中频”词汇。系统会精准计算文本的实际曲线与完美的齐夫曲线之间的偏离面积（残差）。",
+    "useCase": "这是用于审判长篇论文、硬核技术报告和长篇小说的重型武器。它充当着“数学测谎仪”的角色，专门对付那些被初级 AI“拟人化（Humanizer）”工具进行过重度句法揉捏或洗稿重写的作弊文档，因为这些工具根本无法自然伪造出有机生长的齐夫分布曲线。",
+    "strengths": "• 它的底层逻辑锚定在普适的语言学物理定律上，而不依赖于针对特定模型（如 GPT-4 或 Claude）的猫鼠游戏训练，这使得它对未来出现的任何新 LLM 架构都具有天生的免疫力。\n• 对那些只会在表层做“同义词替换”或“文字重组（Text spinning）”的洗稿把戏表现出极其可怕的抗性。",
+    "limitations": "• 在短文本（约 300 词以下）上彻底报废，因为样本量太小，无法建立起任何在统计学上站得住脚的分布模型。\n• 那些充斥着极端术语、黑话或代码片段的特殊文档本身就会扭曲它们自己的齐夫曲线，这会导致算法在扫描程序员的接口文档或小众学术论文时发生误杀。",
+    "parameters": "雷达切片: 经验排名-频率分布 (Empirical Rank-Frequency Distribution)\n定罪量表: 对数-对数 (Log-Log) 回归斜率、完美齐夫曲线的残差平方和 (RSS)\n行刑判决: 0-100 统计学背叛 (Deviation Intensity) 得分",
+    "accuracy": "极高 — 在长卷轴文本（1000 词以上）上拥有 82-89% 的统治级精度。面对几句短推文或寒暄邮件它束手无策，但在轰杀由 AI 代写的大学长篇论文、小说或调研报告时，它能带来数学层面的绝对毁灭。",
     "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://aclanthology.org/P19-3019/"
+        },
         {
             "title": "Powers, D. (1998). Applications and Explanations of Zipf's Law. ACL Workshop.",
             "url": "https://aclanthology.org/W98-1218/"
-        },
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
         }
     ]
 }

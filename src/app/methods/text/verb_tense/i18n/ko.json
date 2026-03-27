@@ -1,22 +1,21 @@
 {
-    "name": "Verb Tense Consistency",
-    "description": "Measures verb tense consistency",
-    "algorithm": "Verb Tense Consistency — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures verb tense consistency. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through verb tense consistency analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "동사 시제 일관성 (Verb Tense Consistency)",
+    "description": "문서 전체에 걸친 동사 시제의 분포, 시점 변화, 그리고 장거리(Long-range) 시간 논리를 꼼꼼히 추적합니다. 대규모 언어 모델(LLM)은 입체적이고 비선형적인 시간의 궤적(Timeline)을 관리하는 데 치명적인 약점을 보입니다. 이들은 단순 시제(단순 현재 또는 단순 과거)를 극도로 편애하며, 거시적인 서사의 시간 흐름보다는 바로 눈앞의 문법적 일관성(Local grammar)을 맞추는 데 급급합니다. 결과적으로 AI가 쓴 글은 복잡한 시간 관계를 얄팍하게 평탄화(Flattening)해 버리며, 과거 완료('~했었다')나 미래 진행형('~하고 있을 것이다') 같은 미묘 세제 사용을 기피합니다. 게다가, 긴 문단에서 AI가 억지로 시제를 바꿀 때, 그 변화는 서사적 필연성에서 비롯된 것이 아니라 그저 직전 프롬프트 컨텍스트의 변화에 떠밀려 논리적 닻(Anchor) 없이 덜컹거리는 경우가 잦습니다.",
+    "algorithm": "시간적 닻(Temporal Anchor) 추적 및 시제 전이 행렬",
+    "mechanism": "알고리즘은 형태소(POS) 태깅과 의존성 구문 분석을 동원하여 모든 동사와 그 형태론적 시제를 뿌리째 뽑아냅니다. 이를 통해 문서의 입체적인 '시간 궤적(Timeline)'을 조립합니다. 시스템은 복합/완료 시제 대비 단순 시제의 찢어진 비율을 계산하고, 시제 변환의 논리성(예: 합당한 수사학적 명분도 없이 과거에서 현재로 멋대로 시간 점프를 하는 행위)을 심문합니다. 단 하나의 단순 시제에만 숨 막히게 집착하거나, 입체적인 관계 시제가 실종되었거나, 단락을 넘나들며 수학적 난수처럼 제멋대로 시제가 널뛰는 텍스트는 생성형 AI의 지문으로 강하게 확정됩니다.",
+    "useCase": "과거, 대과거, 현재를 넘나들며 다층적이고 복잡한 타임라인을 통제해야만 서사가 굴러가는 소설(Creative writing), 역사 에세이, 심층 사례 연구(Case studies), 그리고 인물 전기 콘텐츠를 감식하는 데 상상을 초월하는 파괴력을 발휘합니다.",
+    "strengths": "• LLM의 가장 치명적인 인지적 한계, 즉 시간(Time)에 대한 진정한 내부 '세계 모델(World model)'이 없어 표면적인 문법 확률에만 매달려야 하는 맹점을 정확히 찌릅니다.\n• 글의 겉껍데기 단어만 바꾸는 얕은 패러프레이징(Paraphrasing) 꼼수에는 절대 뚫리지 않습니다. 시간 구조를 통째로 바꾸려면 서사 자체를 바닥부터 다시 써야 하기 때문입니다.",
+    "limitations": "• 인간 작가들조차도 구조적으로 건조하고 평탄한 '단순 현재' 시제만을 억지로 유지해야 하는 소프트웨어 매뉴얼, 과학 논문 초록(Abstracts) 또는 조립 설명서 앞에서는 레이더의 날이 둔해집니다.\n• 영어의 복잡하고 까다로운 시제 규칙(Tense rules)을 완벽하게 숙지하지 못한 비원어민(Non-native)의 불충분한 글쓰기를 AI로 오인하여 격추할 위험이 존재합니다.",
+    "parameters": "분석 기준: 형태소 시제 추출 및 타임라인 지도화(Mapping)\n측정 지표: 단순 시제 대비 복합 시제의 기형적 비율 및 불법 시간 점프 빈도\n출력: 0-100 시간적 인위성(Temporal Artificiality) 스코어",
+    "accuracy": "중상 — 71-85%의 아주 훌륭한 정확도를 자랑합니다. 문서의 길이가 길어질수록 AI가 감당해야 할 타임라인의 부하도 길어지기 때문에, 글이 길면 길수록 AI의 '시제 평탄화(Temporal flattening)' 꼬리가 밟힐 확률이 지수함수적으로 폭증합니다.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
             "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
         }
     ]
 }

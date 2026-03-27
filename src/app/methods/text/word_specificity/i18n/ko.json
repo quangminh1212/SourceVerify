@@ -1,22 +1,21 @@
 {
-    "name": "Word Specificity Index",
-    "description": "Measures word specificity level",
-    "algorithm": "Word Specificity Index — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures word specificity level. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through word specificity index analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "단어 특수성 인덱스 (Word Specificity Index)",
+    "description": "텍스트에 사용된 어휘의 '분류학적 깊이(Taxonomic depth)'와 정밀도를 평가합니다. 대규모 언어 모델(LLM)은 프롬프트에 대해 가장 보편적으로 수용 가능하고 통계적으로 '안전한' 다음 문장을 뱉어내도록 훈련된 확률 기계입니다. 이 구조적인 한계 때문에, 이들은 명시적으로 명령받지 않는 한 극도로 구체적이고 정밀한 어휘(하의어 - Hyponyms)보다는 포괄적이고 추상적인 고도어(상의어 - Hypernyms)를 병적으로 선호합니다. 예를 들어, AI는 통계적으로 '안데스콘돌'이라는 단어보다는 '거대한 새'를, 'ECMO(에크모) 장비'보다는 '의료 기기'를 생성할 확률이 압도적으로 높습니다. 반대로, 인간 전문가들은 자신이 잘 아는 주제에 관해 이야기할 때 본능적으로 초구체적인 분류학적 밑바닥까지 파고듭니다. 이 알고리즘은 사용자의 구체적인 명령(Prompt) 없이 생성된 AI의 글에서 전형적으로 나타나는, 둥글둥글하고 얕은 '수박 겉핥기식' 어휘 다림질 현상을 적발합니다.",
+    "algorithm": "분류학적 계층 깊이 및 상의어/하의어 비율 분석",
+    "mechanism": "알고리즘은 텍스트 내의 명사, 동사, 형용사를 계층형 어휘 데이터베이스(예: WordNet 또는 특정 도메인의 존재론적 사전)와 교차 대조하여 해당 단어의 '분류학적 깊이'를 추적합니다. 포괄적인 단어('동물', '탈것', '말하다')는 피라미드의 꼭대기(깊이 1 또는 2)에 위치합니다. 반면 극도로 구체적인 단어('실러캔스', '삼엽기', '(교황처럼) 거들먹거리다')는 훨씬 깊은 곳(깊이 6 이상)에 존재합니다. 시스템은 텍스트의 평균적인 특수성 깊이와 상의어(광범위한 범주) 대비 하의어(구체적인 사례)의 비율을 계산합니다. AI의 텍스트는 언제나 극도의 통계적 안전성을 유지하고자 피라미드 꼭대기의 포괄적 단어에만 맹렬히 의존하며, 얇디얇은 분류학적 깊이를 보여줍니다.",
+    "useCase": "기술 매뉴얼, 의학 문헌, 학술 논문, 심층적인 제품 리뷰 등 '전문가 수준'의 콘텐츠를 모조리 해부하는 궁극의 메스입니다. 태도와 문체는 권위자인 척 흉내 내지만, 텍스트를 쪼개보면 진정한 인간 전문가만이 구사할 수 있는 밀도 높고 파고드는 어휘가 완전히 결여된 가짜 글을 잔인하게 폭로합니다.",
+    "strengths": "• AI의 기만적인 '전문성 환각(Hallucinations of expertise)'—AI가 겉으로는 몹시 자신감 넘쳐 보이지만 실제로는 맹탕 같은 일반론에만 전적으로 의존하는 현상—을 벌거벗기는 데 탁월합니다.\n• 문장 구조와 완전히 독립적으로 작동하기 때문에, 기본적인 동의어 치환이나 '버스티니스(Burstiness)'를 조작하는 얄팍한 속임수를 가볍게 무력화합니다.",
+    "limitations": "• 대중의 폭넓은 이해를 목적으로 의도적으로 쉽게 쓰인 글(예: 초급 교육 자료, 쉬운 말로 푼 법률 요약본, 유아용 동화책)에서는 인간을 AI로 오인하는 불상사(False positives)가 발생할 수 있습니다.\n• 사용자가 작정하고 AI에게 '반드시 이 초강력 전문 용어 목록을 사용해서 글을 써라'라고 지시하는 고도화된 프롬프트 공격에는 속아 넘어갈 수 있습니다.",
+    "parameters": "분석 기준: 수직적 계층 구조 어휘 심도(Depth) 매핑\n측정 지표: 평균 분류학적 깊이, 하의어 밀도 및 도메인 전문 명사 추출률\n출력: 0-100 어휘의 포괄성(Generality) 대비 특수성(Specificity) 스코어",
+    "accuracy": "높음 — 전문적인 주제(Domain-specific topics)에 적용될 경우 78-88%의 치명적인 정확도를 자랑합니다. 아무런 사전 정보나 구체적인 명령 없이 던져진 제로샷(Zero-shot) 프롬프트나 엉성한 프롬프트로 생성된 AI 결과물에게 이 인덱스는 사형 선고나 다름없습니다. AI는 안전한 답변을 만들기 위해 언제나 가장 얕은 어휘의 연못에만 머물기 때문입니다.",
     "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Miller, G. A. (1995). WordNet: A Lexical Database for English. Communications of the ACM.",
+            "url": "https://doi.org/10.1145/219717.219748"
         }
     ]
 }

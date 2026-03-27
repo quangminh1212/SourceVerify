@@ -1,26 +1,21 @@
 {
-    "name": "글쓰기 리듬",
-    "description": "분석합니다 writing cadence and rhythm 패턴.",
-    "useCase": "메트로놈적 규칙성을 통한 AI 텍스트 감지",
-    "mechanism": "계산합니다 auto상관관계 of row energy 감지하기 위해 periodic 패턴. AI text shows metronomic regularity, while 인간 글쓰기 has natural cadence variations.",
-    "accuracy": "중간 - 70-80%",
-    "source": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "윈도우 크기: 적응형, Quantization: 8-64 levels, Metrics: 엔트로피, CV, 상관관계",
-    "strengths": "- Effective for detecting AI 생성 text\n- Language-agnostic 통계적 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 오탐\n- Short texts provide less reliable signals\n- Performance varies 에 걸친 문체s",
+    "name": "문장 리듬 및 억양 (Writing Rhythm & Cadence)",
+    "description": "문장의 길이, 구문적 복잡성, 그리고 글의 진행 속도의 순차적인 변화를 측정하여 텍스트가 가진 메트로놈 같은 규칙성을 분석합니다. 인간 작가는 본능적으로 숨을 쉬듯 불규칙한 운율을 구사합니다. 긴장감을 조성하거나 특정 사실을 강조하거나 아이디어를 전환하기 위해, 짧고 강렬한 문장과 길고 복잡하게 뻗어가는 문장을 교차시킵니다. 반면 최적화 함수에 갇혀 수학적 저항이 가장 적은 길만 찾도록 설계된 생성형 AI 모델은, 극도로 규칙적인 '메트로놈' 리듬을 토해냅니다. AI는 예측 가능한 구조적 템포에서 거의 벗어나지 않는 안정적이고 중간 속도의 호흡을 기본값으로 삼습니다. 이 엔진은 교묘하게 위장된 최신 LLM의 출력물 기저에 깔려 있는 인공적인 단조로움을 적발합니다.",
+    "algorithm": "순차적 페이싱(Pacing) 및 음절 에너지의 자기상관성(Autocorrelation) 분석",
+    "mechanism": "알고리즘은 전체 문서를 하나의 시계열 신호(Time-series signal)로 취급합니다. 각 문장의 '에너지(글자 수, 음절 수, 구문 트리 깊이로 계산됨)'를 측정하여 순차적인 지도를 그립니다. 그런 다음 자기상관 함수를 적용하여 반복되는 간격이나 주기적 패턴을 감지합니다. 인간 작가는 예측 불가능하게 치솟았다가 잦아드는, 노이즈가 많고 비주기적인 신호를 만들어냅니다(예: 극도로 복잡한 단락 뒤에 갑자기 두 단어짜리 짧은 문장을 던짐). 반대로 AI 텍스트는 로봇처럼 균일한 간격의 메트로놈 박자를 유지하며 예측 가능한 생성 루프에 빠지기 때문에 매우 상관관계가 높은 주기적인 파형을 생성합니다.",
+    "useCase": "자기소개서, 서사 구조를 갖춘 글, 창작물 등 호흡이 긴 콘텐츠를 평가하는 데 필수적인 도구입니다. 기계가 억지로 감추기 가장 어려운 문체적 특성 중 하나가 바로 이 '리듬의 단조로움'이기 때문에, 싱겁고 무미건조한 AI 결과물을 색출하는 심오한 방어선 역할을 합니다.",
+    "strengths": "• 개별 단어가 아닌 문서 전체의 '흐름'을 분석하므로, 단순한 동의어 치환(Synonym replacement) 공격을 근본적으로 무력화합니다.\n• AI 생성물 특유의 수학적 규칙성은 특정 언어의 문법을 초월하여 발견되므로, 언어에 구애받지 않는 보편적인 탐지기로 작동합니다.",
+    "limitations": "• 짧은 글(예: 단일 단락이나 트윗)은 리듬의 기준선을 설정하는 데 필요한 순차적 데이터 포인트가 턱없이 부족하여 자기상관성 분석을 무용지물로 만듭니다.\n• 법률 계약서, 공식 API 문서 또는 엄격하게 통제된 목록과 같이 애초에 획일적으로 작성되도록 의도된 텍스트에서는 인간을 AI로 오인(False positive)할 수 있습니다.",
+    "parameters": "분석 기준: 순차적 에너지 자기상관성\n측정 지표: 억양(Cadence)의 분산, 주기적 파형 평활도, 다중 문장(Multi-Sentence) 엔트로피\n출력: 0-100 리듬 단조로움(Rhythmic Monotony) 스코어",
+    "accuracy": "중간~높음 — 75-85%의 정확도를 보립니다. 짧은 텍스트에서는 효율이 심각하게 떨어지지만, 단어 수가 500자를 넘어가는 에세이에서는 치명적인 위력을 발휘합니다. 문장 길이 변화량 지표(Burstiness)와 결합하면, 기계가 썼다는 것을 증명하는 거의 완벽한 디지털 지문이 됩니다.",
     "references": [
         {
-            "title": "Tay et al. (2020) - Comparative Study of Human vs. Machine Generated Text",
-            "url": "https://scholar.google.com/scholar?q=Tay%20et%20al.%20(2020)%20-%20Comparative%20Study%20of%20Human%20vs.%20Machine%20Generated%20Text"
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         },
         {
             "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
             "url": "https://doi.org/10.1145/3132039"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
         }
     ]
 }

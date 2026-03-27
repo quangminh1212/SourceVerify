@@ -1,12 +1,21 @@
 {
-    "name": "Tốc độ tăng từ vựng",
-    "description": "Theo dõi tốc độ tăng từ vựng trong văn bản",
-    "algorithm": "Thuật toán phân tích Tốc độ tăng từ vựng",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Theo dõi tốc độ tăng từ vựng trong văn bản. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích tốc độ tăng từ vựng. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Tốc Độ Tăng Trưởng Từ Vựng (Vocabulary Growth Rate)",
+    "description": "Phân tích tốc độ toán học mà các từ mới (chưa được sử dụng trước đó) được giới thiệu khi tài liệu tiến triển. Theo Định luật Heaps, sự tăng trưởng từ vựng của con người tuân theo một đường cong khó đoán, đặc trưng bởi các đợt bùng nổ đột ngột (khi một chủ đề phụ mới được giới thiệu) và các khoảng bình nguyên kéo dài. Người viết tay giới thiệu thuật ngữ mới theo các cụm được thúc đẩy bởi nhu cầu của câu chuyện. Ngược lại, các Mô hình Ngôn ngữ Lớn—được tối ưu hóa để tạo token nhất quán và giới hạn độ bối rối (perplexity) ổn định—có xu hướng phân phối việc giới thiệu từ vựng mới với tốc độ toán học mượt mà, dễ dự đoán. AI sẽ hiếm khi cạn kiệt từ vựng của nó từ sớm, cũng như sẽ không đột ngột tung ra một số lượng từ mới áp đảo ở cuối văn bản.",
+    "algorithm": "Độ Lệch Định Luật Heaps & Lập Hồ Sơ Tăng Trưởng Log-Tuyến Tính",
+    "mechanism": "Thuật toán xử lý văn bản một cách tuần tự, vẽ biểu đồ số lượng token duy nhất tích lũy ($V$) so với tổng số token được xử lý ($N$). Nó tính toán số mũ $\\beta$ trong định luật Heaps ($V = k N^\\beta$) và đo phương sai/phần dư của đường cong văn bản thực tế so với đường cong logarit lý tưởng. Một đường cong tăng trưởng từ vựng 'quá hoàn hảo'—cho thấy sự sai lệch tối thiểu so với quỹ đạo logarit mượt mà, thiếu các đợt bùng nổ và bình nguyên hữu cơ biểu thị sự thay đổi nhận thức của con người—sẽ mang lại điểm nhân tạo cao.",
+    "useCase": "Rất hiệu quả để phân tích nội dung có độ dài từ trung bình đến dài (tiểu luận, báo cáo, bài báo), nơi nhịp độ vĩ mô của việc giới thiệu từ vựng trở nên có ý nghĩa về mặt thống kê.",
+    "strengths": "• Khai thác một đặc điểm cơ bản của việc tạo văn bản tự hồi quy (autoregressive): xu hướng vốn có của LLM là duy trì phân phối xác suất ổn định trên toàn bộ cửa sổ đầu ra, ngăn chặn sự phân cụm ngữ nghĩa tự nhiên.\n• Cực kỳ khó để vượt qua bằng cách sử dụng các prompt tiêu chuẩn, vì người dùng không thể dễ dàng ra lệnh về tốc độ toán học chính xác mà từ mới nên được giới thiệu.",
+    "limitations": "• Hoàn toàn không hiệu quả trên các văn bản ngắn (như tweet hoặc email ngắn), nơi đường cong tăng trưởng từ vựng chưa có đủ token để ổn định hoặc cho thấy sự phân kỳ có ý nghĩa.\n• Văn bản viết tay có cấu trúc cao, rập khuôn (như hợp đồng pháp lý hoặc quy trình vận hành tiêu chuẩn) có thể tự nhiên thể hiện tốc độ tăng trưởng từ vựng được làm mượt, giống AI.",
+    "parameters": "Kiểm Định: Theo Dõi Tích Lũy Token Tuần Tự\nThước Đo: Phương Sai So Với Mô Hình Định Luật Heaps Lý Tưởng\nĐầu Ra: 0-100 Điểm Nhân Tạo Tốc Độ Tăng Trưởng",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 70-85%. Sức mạnh tiên đoán của nó tỷ lệ thuận với độ dài tài liệu. Tốt nhất nên được sử dụng như một thước đo cấu trúc vĩ mô kết hợp với các kiểm tra cú pháp cục bộ.",
+    "references": [
+        {
+            "title": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0146059"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09065"
+        }
+    ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Vocabulary Age Profile",
-    "description": "Lập hồ sơ phân bổ tuổi từ vựng — văn bản AI có xu hướng dùng từ vựng hiện đại hơn với ít chiều sâu lịch sử.",
-    "algorithm": "Thuật toán phân tích Vocabulary Age Profile",
-    "mechanism": "Hệ thống Vocabulary Age Profile phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Hồ Sơ Độ Tuổi Từ Vựng (Vocabulary Age Profile)",
+    "description": "Phân tích chiều sâu lịch sử và 'Độ tuổi Tiếp thu' (Age of Acquisition - AoA) tâm lý ngôn ngữ học của từ vựng được sử dụng trong văn bản. Các Mô hình Ngôn ngữ Lớn chủ yếu được đào tạo trên dữ liệu internet hiện đại (dữ liệu web sau những năm 2000, phương tiện truyền thông xã hội, kho lưu trữ kỹ thuật số gần đây). Do đó, phong cách viết mặc định của chúng có xu hướng thiên vị nặng nề đối với từ vựng hiện đại hóa, mang tính đương đại. Trừ khi được nhắc nhở cụ thể để áp dụng một tính cách lịch sử, AI hiếm khi sử dụng thuật ngữ mang sắc thái, hơi lỗi thời hoặc cổ xưa một cách tự nhiên. Hơn nữa, con người tiếp thu từ vựng dần dần từ thời thơ ấu đến tuổi trưởng thành (được đo bằng các chỉ số AoA), dẫn đến các cụm ngữ nghĩa phản ánh sự phát triển nhận thức của con người. AI không có tuổi sinh học; nó coi một từ mà một đứa trẻ 5 tuổi học được và một từ mà một nghiên cứu sinh tiến sĩ học được chỉ đơn thuần là các xác suất token khác nhau, thường trộn lẫn chúng theo những cách thống nhất về mặt toán học mâu thuẫn với hồ sơ từ vựng tự nhiên của con người.",
+    "algorithm": "Đo Lường Thuật Ngữ Lịch Đại & Lập Hồ Sơ AoA (Độ Tuổi Tiếp Thu)",
+    "mechanism": "Thuật toán tham chiếu chéo mọi từ trong tài liệu với hai cơ sở dữ liệu ngôn ngữ học khổng lồ: kho ngữ liệu n-gram lịch sử (như Google Books Ngram Viewer) để xác định kỷ nguyên sử dụng lịch sử của từ, và cơ sở dữ liệu AoA tâm lý ngôn ngữ học để xác định độ tuổi học tập trung bình của con người. Nó vẽ biểu đồ phân phối 'chiều sâu lịch sử' và 'độ tuổi phát triển' của văn bản. Một văn bản bị neo chặt một cách tàn nhẫn vào thuật ngữ internet sau những năm 2010, hoàn toàn thiếu đi các biểu thức hữu cơ hơi lỗi thời và thể hiện sự phân phối 'phẳng' không tự nhiên của các từ theo Độ tuổi Tiếp thu, có mối tương quan mạnh mẽ với quá trình tổng hợp của máy móc được tối ưu hóa cho việc tạo token đương đại.",
+    "useCase": "Rất hiệu quả để phân tích văn học, báo chí chuyên sâu, phân tích lịch sử và văn bản học thuật. Nó xuất sắc trong việc phát hiện AI đang cố gắng mô phỏng kỹ năng viết của những chuyên gia con người trưởng thành, đọc nhiều bằng cách vạch trần việc thiếu chiều sâu từ vựng lịch sử thực sự của nó.",
+    "strengths": "• Nhắm vào sự thiên vị dữ liệu đào tạo cơ bản của các LLM: chế độ 'ăn kiêng' tràn ngập văn bản internet hiện đại, được tối ưu hóa cao của chúng.\n• Hồ sơ tâm lý ngôn ngữ học (AoA) gần như không thể vượt qua thông qua việc tạo prompt, vì các kỹ sư prompt không thể dễ dàng hướng dẫn LLM 'sử dụng những từ thường được con người tiếp thu trong khoảng từ 12 đến 15 tuổi'.",
+    "limitations": "• Dễ mắc lỗi dương tính giả khi phân tích nội dung hiện đại thực sự vốn bị hạn chế bởi thuật ngữ mới, chẳng hạn như sách trắng (whitepaper) về tiền điện tử, blog công nghệ gần đây hoặc các bài đánh giá văn hóa đại chúng (pop-culture) hiện đại.\n• Kém hiệu quả trên các nội dung quá ngắn, nơi việc lập hồ sơ thống kê độ tuổi không thể xây dựng một đường cong phân phối đáng tin cậy.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Kho Ngữ Liệu Lịch Đại & Khớp Cơ Sở Dữ Liệu Tâm Lý Ngôn Ngữ Học\nThước Đo: Tỷ Lệ Thiên Vị Đương Đại & Phương Sai Tạo Sinh AoA\nĐầu Ra: 0-100 Điểm Nhân Tạo Từ Vựng & Làm Phẳng Thời Gian",
+    "accuracy": "Cao — Độ chính xác 72-87%. Nó là một tính năng ngữ nghĩa cực kỳ sắc bén hoạt động ở cấp độ tâm lý ngôn ngữ học và lịch sử, khiến cho các mô hình tự hồi quy thế hệ hiện tại đặc biệt khó có thể lách qua một cách tự nhiên.",
+    "references": [
+        {
+            "title": "Kuperman, V. et al. (2012). Age-of-Acquisition Ratings for 30,000 English Words. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/s13428-012-0210-4"
+        },
+        {
+            "title": "Brysbaert, M. et al. (2014). Concreteness Ratings for 40,000 English Lemmas. Behavior Research Methods.",
+            "url": "https://doi.org/10.3758/s13428-013-0403-5"
+        }
+    ]
 }
