@@ -1,22 +1,21 @@
 {
-    "name":  "Topic Model Divergence",
-    "description":  "Applies LDA topic modeling to measure topic coherence divergence — AI text shows unusual topic distributions.",
-    "algorithm":  "Topic Model Divergence Analysis Algorithm",
-    "mechanism":  "The Topic Model Divergence system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://jmlr.org/papers/v3/blei03a.html",
-                           "title":  "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1214/aoms/1177729694",
-                           "title":  "Kullback, S. \u0026 Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics."
-                       }
-                   ]
+    "name": "Topic Model Divergence",
+    "description": "Analyzes the statistical distribution of underlying themes within a text using advanced topic modeling. Generative AI models often synthesize information across diverse domains, resulting in an unnaturally smooth, mathematically perfect distribution of topics. Human writing, conversely, is typically 'lumpy'—heavily skewed toward a few dominant core themes with jagged, asymmetrical transitions. This method measures the divergence between the text's extracted topic distribution and the expected, naturally asymmetrical distributions found in human-authored corpora.",
+    "algorithm": "Latent Dirichlet Allocation (LDA) & Kullback-Leibler Divergence",
+    "mechanism": "The system processes the text using a probabilistic topic model, such as Latent Dirichlet Allocation (LDA), which maps words to hidden thematic topics. It calculates the probability distribution of these topics across the entire document. Next, it employs Kullback-Leibler (KL) Divergence to measure how much this specific topic distribution deviates from empirical human baselines. A text exhibiting a suspiciously uniform, low-variance topic mixture—indicating a mechanism trying to 'cover all bases' with statistical evenness—yields a high artificiality score.",
+    "useCase": "Highly effective for auditing long-form, comprehensive documents (e.g., whitepapers, extensive essays, literature reviews) where unnatural topical 'smoothness' becomes statistically obvious.",
+    "strengths": "• Detects fundamental structural anomalies at the thematic level, making it highly resistant to surface-level paraphrasing or synonym replacement.\n• Leverages established, peer-reviewed mathematical frameworks (LDA and KL Divergence).",
+    "limitations": "• Requires sufficient text length (ideally >500 words) for LDA to successfully extract and stabilize reliable topic distributions.\n• May flag highly structured, encyclopedic human texts that intentionally strive for perfectly balanced, multi-disciplinary coverage.",
+    "parameters": "Analysis: Probabilistic Topic Extraction (LDA)\nMetric: Kullback-Leibler (KL) Divergence from Human Baselines\nOutput: 0-100 Thematic Artificiality Score",
+    "accuracy": "Moderate to High — 70-85% accuracy. Its effectiveness scales linearly with document length and is best deployed as a structural complement to word-level statistical checks.",
+    "references": [
+        {
+            "title": "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR.",
+            "url": "https://jmlr.org/papers/v3/blei03a.html"
+        },
+        {
+            "title": "Kullback, S. & Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics.",
+            "url": "https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full"
+        }
+    ]
 }

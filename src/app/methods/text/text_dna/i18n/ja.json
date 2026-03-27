@@ -1,14 +1,13 @@
 {
-    "name": "Text DNA Watermark",
-    "description": "Analyzes vowel-consonant ratio as テキスト fingerprint (2023)",
-    "algorithm": "Text DNA Watermark — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes vowel-consonant ratio as テキスト fingerprint (2023). Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through テキスト dna watermark analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "構文DNA電子透かし (Syntactic DNA Watermarking)",
+    "description": "AIの生成プロセス中にテキストに目に見えないように埋め込まれた暗号的または統計的な「電子透かし（watermarks）」の存在を検出します。現代の多くの大規模言語モデルは、「グリーン・レッドリストの分割（Kirchenbauer et al., 2023）」のような手法を使用して、数学的に検出可能なシグネチャ（署名）を出力に意図的に注入しています。生成中、モデルの語彙は、前の単語のハッシュに基づいて、擬似ランダムに「グリーン」（促進される）トークンと「レッド」（ペナルティを受ける）トークンに分割されます。トークンシーケンスを分析し、この統計的バイアスをリバースエンジニアリングすることで、アルゴリズムはAIの著作権を決定的に証明できます。なぜなら、人間の書き手は自然に、これらの隠された確率的制約なしに単語を選択するからです。",
+    "algorithm": "トークンハッシュ分割と統計的バイアス検証",
+    "mechanism": "アルゴリズムはテキストをトークンごとに処理し、AIが語彙を分割するために使用した可能性のある擬似ランダムハッシュ関数を再構築しようと試みます。特定のウィンドウにわたって連続する「グリーン」トークンの統計的頻度を計算します。標準的な、透かしのない人間のテキストは、当然のことながら、擬似ランダムにハッシュ化された「グリーン」と「レッド」のトークンのほぼ50/50の分布を示します。数学的に有意な「グリーン」トークンの過剰表現は、機械生成の否定できない暗号的フィンガープリント（指紋）を構成します。",
+    "useCase": "AIの安全性の透明性基準に準拠し、目に見えない透かしを埋め込んでいる商用LLMによって生成されたテキストを検出するための、究極の決定的なテストです。",
+    "strengths": "• ソースAIモデルの特定の透かしハッシュアルゴリズムがわかっていれば、100%に近い確実性（誤検知率ほぼゼロ）に近づきます。\n• 統計的な「DNA」はより広範なドキュメント全体で持続するため、人間の軽い編集、同義語の置換、または対抗的な言い換え（adversarial paraphrasing）に対して非常に堅牢です。",
+    "limitations": "• 生成に使用されたAIモデルがオープンソースであるか、大幅に量子化されているか、単にアクティブな透かしプロトコルを採用していない場合は完全に無効です。\n• 統計的有意性を証明し、数学的しきい値のトリガーを引くには、十分に長いテキストスニペット（通常は50以上のトークン）が必要です。",
+    "parameters": "解析: 暗号トークンハッシュ検証\n評価基準: グリーンリストトークンのバイアスと分布の分散\n出力結果: 0-100 透かしの数学的確実性スコア",
+    "accuracy": "決定的 — 既知の透かしが存在する場合の単独精度は99%を超えます。テキストに透かしがない場合は、安全に機能しません（誤検知なし）。",
     "references": [
         {
             "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",

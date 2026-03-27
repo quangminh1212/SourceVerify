@@ -1,26 +1,21 @@
 {
-    "name": "トピック整合性",
-    "description": "測定します トピックの一貫性 throughout the text.",
-    "useCase": "不自然に一貫したトピックによるAIテキストの検出",
-    "mechanism": "比較します ヒストグラム 分布s 間の content segments using cosine similarity. AI text maintains extremely consistent topic signals throughout.",
-    "accuracy": "中-高 - 75-85%",
-    "source": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "ウィンドウサイズ: 適応型, Quantization: 8-64 levels, Metrics: エントロピー, CV, 相関",
-    "strengths": "- Effective for detecting AI生成の text\n- Language-agnostic 統計的 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 誤検出\n- Short texts provide less reliable signals\n- Performance varies にわたる 文体s",
+    "name": "意味的なトピックの整合性 (Semantic Topic Consistency)",
+    "description": "ドキュメント全体の「トピックの漂流（topic drift）」または意味的な分散の度合いを測定します。人間の認知は本質的に連想的です。長いテキストを書くとき、人間の著者は関連するサブトピック、脱線した思考、または個人的な逸話を自然に漂流し、意味の焦点が継続的に進化します。対照的に、生成AIモデルは、アテンションメカニズム（注意機構）を介して初期プロンプトに数学的に固定されています。したがって、それらは最初の文から最後の文まで、核となるトピックに対して人為的に緊密で、レーザーのように焦点の定まった一貫性を維持し、人間の思考に特有の、自然で乱雑な意味のさまよいを示すことはめったにありません。",
+    "algorithm": "スライディングウィンドウによる意味的漂流分析",
+    "mechanism": "アルゴリズムは、スライディングウィンドウアプローチを使用して、テキストを連続するブロックにセグメント化します。各セグメントに対して、密なベクトル埋め込み（例：BERTまたは類似のトランスフォーマーエンコーダーを介して）を生成します。次に、隣接するセグメント間のコサイン類似度シーケンス、およびすべてのセグメントと冒頭の主題（thesis）との類似度を計算します。すべてのセグメントにわたって異常に高く均一なコサイン類似度（ほぼゼロの意味的漂流）を維持するテキストは、厳格なアテンションウィンドウによって制約されたアルゴリズムによる生成を強く示しています。",
+    "useCase": "エッセイ、記事、複数ページにわたるレポートなど、理論的には人間の自然なトピックの漂流が最も明らかになるはずの長文コンテンツを分析するのに非常に効果的です。",
+    "strengths": "• 構文や文法規則ではなく、基本的な意味ベクトル表現に依存しているため、言語に依存しない（Language-agnostic）アプローチです。\n• 長くて包括的に見えるように意図的に生成されたAIテキストをキャッチするのに優れています。AIは、自然なトピックの進化の欠如をうっかり露呈してしまうためです。",
+    "limitations": "• 人間もAIもトピックの漂流を示すスペースがない、非常に短いテキスト（200語未満）では無効です。\n• 絶対的で揺るぎないトピックへの焦点を要求される、非常に厳格な人間の学術論文、技術マニュアル、または構造化された法的文書などで偽陽性（誤検知）を生成する可能性があります。",
+    "parameters": "解析: ベクトル埋め込み類似度マッピング\n評価基準: セグメント間のコサイン類似度とグローバルな意味の分散\n出力結果: 0-100 人為的なトピックの硬直性スコア",
+    "accuracy": "中〜高 — 長文テキストで75〜85%。構造的な予測可能性のメトリクスと相関させた場合、非常に強力です。",
     "references": [
         {
-            "title": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-            "url": "https://scholar.google.com/scholar?q=Bakhtin%20et%20al.%20(2019)%20-%20Real%20or%20Fake%3F%20Learning%20to%20Discriminate%20Machine%20from%20Human%20Text"
+            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Text. NeurIPS.",
+            "url": "https://arxiv.org/abs/1906.03351"
         },
         {
             "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
             "url": "https://arxiv.org/abs/1905.12616"
-        },
-        {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://doi.org/10.18653/v1/2020.coling-main.208"
         }
     ]
 }

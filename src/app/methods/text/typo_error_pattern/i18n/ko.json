@@ -1,22 +1,21 @@
 {
-    "name": "Typo Error Pattern",
-    "description": "Analyzes typo and error patterns — AI rarely makes human-like typos",
-    "algorithm": "Typo Error Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes typo and error patterns — AI rarely makes human-like typos. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through typo error pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "오타 및 문법 오류 패턴 (Typo & Error Pattern)",
+    "description": "오타(Typo)와 문법적 오류의 존재 여부, 빈도, 그리고 그 구체적인 성질을 해부합니다. 대규모 언어 모델(LLM)은 '토큰 확률(Token probabilities)'이라는 수학적 계산을 기반으로 단어와 문장을 조립합니다. 즉, 인간처럼 손가락이 미끄러져서 생기는 생리적인 '키보드 오타'(예: 'the'를 'teh'로 치거나 인접한 키보드 자판을 잘못 누르는 경우) 또는 흔한 인지적 철자 실수를 저지르는 일은 수학적으로 거의 불가능합니다. AI가 에러를 낼 때는 인간 같은 오타가 아니라 존재하지 않는 단어를 지어내는 환각(Hallucinated words)이나 기괴한 문맥을 만들어낼 뿐입니다. 반면, 진짜 인간의 글은 아무리 꼼꼼하게 편집을 거쳤다 하더라도 특유의 미세한 스크래치(Micro-errors), 동음이의어 혼동(예: 'their'와 'there'), 또는 구두점의 일관성 결여 등을 자연스러운 인간의 지문처럼 남기게 됩니다.",
+    "algorithm": "확률론적 오류 프로파일링 및 인간 오타(Typo) 감식",
+    "mechanism": "알고리즘은 방대한 사전 및 인간이 흔히 저지르는 생리적 오타 데이터베이스와 대조하여 텍스트를 스캔합니다. 감지된 이상 징후를 생리적 오류(키보드 미끄러짐), 인지적 오류(들리는 대로 잘못 적은 철자, 동음이의어), 그리고 AI 특유의 토큰화 찌꺼기(Tokenization artifacts)로 철저히 분류합니다. 철자 결함이 단 한 점도 없는 기계적으로 완벽하게 무균 상태인 텍스트, 혹은 유일한 결함이라고는 인간의 평범한 오타가 아니라 기괴한 토큰 조합뿐인 텍스트는 기계가 생성했음을 강력하게 암시합니다. 반대로 글자(Character) 단위의 진짜 인간적인 오타가 단 하나라도 발견되면 AI 확률 스코어는 곤두박질치게 됩니다.",
+    "useCase": "티끌 하나 없이 완벽한 철자와 무균 상태의 문법이 오히려 소름 끼치게 부자연스러운 캐주얼한 웹 문서, 인터넷 포럼 게시글, 학생들의 에세이, 소셜 미디어 콘텐츠의 진위를 감식할 때 가장 파괴적인 위력을 발휘합니다.",
+    "strengths": "• AI 생성을 부정하는 가장 신뢰할 수 있는 '방어(Negative) 지표'입니다: 조급한 타이핑으로 인한 키보드 옆 자판 누르기 같은 진짜 생리적 오타가 발견된다면, 이는 인간 작가의 강력한 알리바이가 됩니다.\n• LLM 특유의 소름 돋을 정도로 완벽하게 교정된 '불쾌한 골짜기(Uncanny valley)'를 효과적으로 짚어냅니다.",
+    "limitations": "• 악의적인 사용자가 AI가 생성한 텍스트에 고의로 오타를 끼워 넣거나 '휴머나이저(Humanizer)' 스크립트를 돌리면 손쉽게 속아 넘어갈 수 있는 약점이 있습니다.\n• 인간도 거의 완벽한 철자법을 구사하는, 강도 높은 교정과 편집을 거친 출판물(저널리즘 기사나 학술 논문) 앞에서는 이 레이더의 유용성이 현저히 떨어집니다.",
+    "parameters": "분석 기준: 사전(Dictionary) 검증 및 오류 유형(Error Classification) 감식\n측정 지표: 인지적 철자 오류 대비 생리적 키보드 오타의 밀도\n출력: 0-100 정서법 무결점(Orthographic Perfection) 스코어",
+    "accuracy": "중수 — 65-80%의 정확도를 보유하고 있습니다. 이 지표는 AI를 단죄하는 공격용 무기가 아니라, 인간 작가의 억울함을 풀어주는 훌륭한 '방어용 보조 스탯(Secondary feature)'으로 기능합니다.",
     "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
         {
             "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
             "url": "https://arxiv.org/abs/2011.01314"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

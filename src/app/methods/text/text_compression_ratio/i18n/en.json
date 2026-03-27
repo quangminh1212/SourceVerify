@@ -1,22 +1,17 @@
 {
-    "name": "Text Compression Ratio",
-    "description": "Uses data compression algorithms to measure text redundancy and predictability as indicators of AI generation.",
-    "useCase": "Detecting AI-generated text through lower information density and higher compressibility",
-    "mechanism": "Compresses the input text using lossless algorithms (gzip, zlib, LZ77) and computes the compression ratio (compressed size / original size). AI-generated text typically compresses more efficiently due to higher regularity, more repetitive patterns, and lower information entropy compared to human text. The method also analyzes the compression ratio of sliding windows to detect segments with varying compressibility—a sign of mixed human/AI authorship.",
-    "accuracy": "Moderate - 70-80% on longer texts (>500 words)",
-    "source": "Jiang, Z. et al. (2024) - Detecting LLM-Generated Text in Computing Education: A Comparative Study for ChatGPT Cases, IEEE Access",
-    "algorithm": "Multi-Algorithm Compression + Ratio Analysis + Sliding Window Segmentation",
-    "parameters": "Algorithms: gzip-9/zlib/brotli, Window: 200-500 chars sliding, Metrics: global ratio, segment ratios, ratio variance, Min text: 200 words",
-    "strengths": "• No training data required (unsupervised)\n• Language and model agnostic\n• Extremely fast computation\n• Captures information-theoretic properties",
-    "limitations": "• Lower accuracy on short texts\n• Technical text with repeated terms compresses well naturally\n• Depends on compression algorithm choice\n• Not sensitive to semantic-level patterns",
+    "name": "Compression Information Density",
+    "description": "Utilizes computational data compression algorithms (such as zlib, gzip, or LZ77) to measure the intrinsic information density, redundancy, and structural predictability of a text. Because Large Language Models generate text based on probabilistic token prediction, their outputs are fundamentally characterized by high syntactic regularity, lexical repetitions, and predictable n-gram sequences. Human writing is naturally more chaotic, featuring bursts of rare vocabulary, irregular formatting, and higher information entropy. Consequently, AI-generated text compresses significantly more efficiently (yielding a smaller file size relative to the original) than human-written text.",
+    "algorithm": "Multi-Algorithm LZ77/DEFLATE Ratio Analysis",
+    "mechanism": "The algorithm takes the raw input text and encodes it using standard lossless compression algorithms. It then calculates the Compression Ratio (Compressed Size / Original Size). A low ratio indicates high redundancy and structural predictability—a strong indicator of machine generation. Furthermore, the system employs a sliding window technique (e.g., 200-500 characters) to analyze local compressibility segments. Wild variances in compressibility across different windows often signal a 'Frankenstein' text, indicating mixed human and AI authorship within the same document.",
+    "useCase": "Highly effective as a rapid, language-agnostic, unsupervised filter for scanning massive volumes of text, particularly useful in academic and computing education environments.",
+    "strengths": "• Completely unsupervised and model-agnostic; requires no neural network training data to function.\n• Extremely fast computational execution (client-side capable).\n• Captures fundamental information-theoretic properties that are mathematically difficult for an AI to fake.",
+    "limitations": "• Performance degrades significantly on texts shorter than 200 words, as compression algorithms require sufficient data to build a dictionary.\n• Human-written technical, legal, or programming-related texts with naturally high repetition of specific jargon will compress very well, risking false positives.",
+    "parameters": "Analysis: Shannon Entropy & LZ77 Information Density\nMetric: Global & Sliding-Window Compression Ratio Variance\nOutput: 0-100 Compressibility (Algorithmic Predictability) Score",
+    "accuracy": "Moderate to High — 75-82% standalone accuracy on texts exceeding 500 words. Functions best as a rapid pre-filter in a multi-layered analysis pipeline.",
     "references": [
         {
             "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
-            "url": "https://doi.org/10.1109/ACCESS.2024.3361395"
-        },
-        {
-            "title": "Benedetto, D. et al. (2002). Language Trees and Zipping. Physical Review Letters.",
-            "url": "https://doi.org/10.1103/PhysRevLett.88.048702"
+            "url": "https://ieeexplore.ieee.org/document/10418933"
         },
         {
             "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",

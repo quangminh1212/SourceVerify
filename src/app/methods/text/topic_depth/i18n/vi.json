@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích chiều sâu chủ đề",
-    "description": "Đo chiều sâu khám phá chủ đề",
-    "algorithm": "Thuật toán phân tích Phân tích chiều sâu chủ đề",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo chiều sâu khám phá chủ đề. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phân tích chiều sâu chủ đề. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân Tích Độ Sâu Chủ Đề (Topic Depth Analysis)",
+    "description": "Đánh giá độ sâu, tính cụ thể và sự khám phá theo chiều dọc của các chủ đề trong một văn bản. Các mô hình AI tạo sinh, được đào tạo để dự đoán những từ tiếp theo có xác suất thống kê cao nhất trên một khối lượng dữ liệu khổng lồ, thường rất giỏi trong việc tạo ra các cái nhìn tổng quan rộng lớn nhưng hời hợt. Chúng 'làm phẳng' thông tin, thường thất bại trong việc đi sâu vào các sắc thái mang tính cụ thể cao, các trường hợp ngoại lệ và thuật ngữ chi tiết đặc trưng cho chuyên môn thực sự của con người. Những người viết có kiến thức chuyên môn thường giới thiệu một khái niệm và dần dần khám phá các cơ chế cụ thể, các ngoại lệ và các lớp sâu hơn của nó.",
+    "algorithm": "Lập Bản Đồ Khái Niệm Phân Cấp & Chấm Điểm Tính Cụ Thể",
+    "mechanism": "Hệ thống xử lý văn bản để xác định các chủ đề cốt lõi và vạch ra sự mở rộng của chúng. Nó sử dụng xử lý ngôn ngữ tự nhiên (NLP) để đo tỷ lệ giữa từ vựng chung, cấp cao so với các thuật ngữ siêu cụ thể, bị giới hạn trong miền phân tích. Hơn nữa, nó phân tích cấu trúc ngữ pháp để phát hiện các mẫu 'mở rộng theo chiều dọc' (ví dụ: theo sau một tuyên bố chung bằng nhiều câu nêu chi tiết về *như thế nào* và *tại sao*). Một văn bản chạm đến nhiều khái niệm nhưng hoàn toàn dựa vào từ vựng khái quát và các bản tóm tắt cấp cao, lặp đi lặp lại sẽ bị gắn cờ là dấu hiệu của việc tạo bằng AI.",
+    "useCase": "Rất hiệu quả để phân tích văn bản kỹ thuật, bài luận học thuật, bài báo nghiên cứu và các bài báo chuyên môn, nơi kiến thức chuyên môn sâu và chi tiết ở mức độ hạt (granular) là những kỳ vọng cơ bản.",
+    "strengths": "• Xác định một hạn chế nhận thức cơ bản trong các LLM hiện tại: khó khăn trong việc tạo ra những hiểu biết sâu sắc, thực sự mới mẻ thay vì tổng hợp các bản tóm tắt rộng lớn, hiện có.\n• Khả năng chống chịu tốt với việc diễn giải lại (paraphrasing) đơn giản, vì việc sắp xếp lại nội dung hời hợt không thể tự động tiêm vào độ sâu bị thiếu hoặc thuật ngữ chuyên ngành.",
+    "limitations": "• Có thể tạo ra dương tính giả đối với các văn bản của con người được thiết kế để mang tính giới thiệu hoặc bề mặt (ví dụ: bản tóm tắt tóm lược dành cho ban lãnh đạo, bản sao tiếp thị hoặc các bài báo tổng quan cơ bản).\n• Kém hiệu quả trên các văn bản quá ngắn, nơi việc 'đi sâu' vào một chủ đề là không thể về mặt vật lý do giới hạn độ dài.",
+    "parameters": "Kiểm Định: Theo Dõi Thuật Ngữ Chuyên Ngành & Chi Tiết Khái Niệm\nThước Đo: Tỷ Lệ Giữa Tuyên Bố Khái Quát So Với Cụ Thể\nĐầu Ra: 0-100 Điểm Hời Hợt/Độ Sâu",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-84%. Đặc biệt đáng tin cậy khi được kết hợp với các số liệu Độ Phức Tạp Từ Vựng và Mật Độ Thông Tin để xây dựng một hồ sơ toàn diện về sự 'nông cạn' của văn bản.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ]
 }

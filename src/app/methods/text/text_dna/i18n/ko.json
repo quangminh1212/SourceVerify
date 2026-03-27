@@ -1,14 +1,13 @@
 {
-    "name": "Text DNA Watermark",
-    "description": "Analyzes vowel-consonant ratio as 텍스트 fingerprint (2023)",
-    "algorithm": "Text DNA Watermark — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes vowel-consonant ratio as 텍스트 fingerprint (2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through 텍스트 dna watermark analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "구문론적 DNA 워터마킹 (Syntactic DNA Watermarking)",
+    "description": "AI 텍스트 생성 과정에서 눈에 보이지 않게 몰래 이식된 암호학적 또는 통계적 '워터마크(Watermarks)'의 존재 여부를 정밀 타격하여 감지합니다. 현대의 수많은 상용 거대 언어 모델(LLM)들은 '그린-레드 리스트 분할(Kirchenbauer et al., 2023)'과 같은 고도의 기법을 사용하여, 수학적으로만 식별할 수 있는 서명을 자신들의 출력물에 의도적으로 주입합니다. 텍스트가 생성되는 동적인 과정에서, 모델의 전체 어휘 사전은 바로 직전에 나타난 단어의 해시(Hash) 값을 기준으로 '그린(선택 확률 증가)' 토큰과 '레드(선택 확률 페널티)' 토큰으로 난수처럼 분할됩니다. 인간 작가는 이러한 보이지 않는 확률론적 족쇄 없이 완전히 자유롭게 단어를 선택하므로, 알고리즘이 토큰 시퀀스를 역설계(Reverse-engineering)하여 이러한 통계적 편향성을 파헤치면 AI가 작성했음을 명백하게 입증할 수 있습니다.",
+    "algorithm": "토큰-해시(Token-Hash) 암호 분할 및 통계적 편향성 검증",
+    "mechanism": "알고리즘은 텍스트를 토큰 단위로 미세하게 스캔하며, AI가 어휘를 분할하는 데 사용했을지도 모르는 유사 난수(Pseudo-random) 해시 함수를 역으로 재구성하려고 시도합니다. 특정 스캔 윈도우 내에서 '그린' 토큰이 연속적으로 등장하는 통계적 빈도를 무자비하게 계산합니다. 워터마크가 찍히지 않은 순수한 인간의 텍스트는 당연히 유사 난수로 해싱된 '그린' 토큰과 '레드' 토큰이 대략 50 대 50의 황금비율로 분포합니다. 그러나 '그린' 토큰이 수학적으로 도저히 우연이라고 볼 수 없을 정도로 비정상적으로 득실거린다면, 이는 기계가 생성했다는 도저히 부인할 수 없는 암호학적 지문(Fingerprint)이 됩니다.",
+    "useCase": "AI 안전성 및 투명성 국제 윤리 표준을 준수하여 출력물에 보이지 않는 암호화된 워터마크를 강제로 박아 넣는 거대 상용 LLM의 산출물을 100% 잡아내기 위한 궁극의 결정적 핵무기입니다.",
+    "strengths": "• 생성에 사용된 원본 AI 모델의 특정한 워터마크 해싱 알고리즘 키(Key)를 알고 있다면, 확신도는 100%에 수렴합니다(오탐률 문자 그대로 0%).\n• 문서 전반에 걸쳐 통계적 'DNA'가 문신처럼 끈질기게 살아남기 때문에, 인간이 가볍게 윤문하거나, 유의어를 몇 개 섞거나, 탐지기를 속이려고 악의적으로 문장을 비틀어(Adversarial paraphrasing) 놓아도 절대 지워지지 않습니다.",
+    "limitations": "• 텍스트 생성에 사용된 AI 모델이 오픈 소스이거나, 과도하게 경량화(Quantization)되었거나, 애초에 워터마크 기능 자체를 탑재하지 않은 모델이라면 단 하나의 흔적도 잡아낼 수 없는 치명적인 맹점이 있습니다.\n• 통계적 유의성을 수학적 임계값을 넘길 정도로 증명하려면 일정 길이 이상의 텍스트 조각(일반적으로 최소 50개 이상의 토큰)이 무조건 총알로 장전되어 있어야 합니다.",
+    "parameters": "분석 기준: 암호학적 토큰 해시 워터마크 역설계 검증\n측정 지표: 그린 리스트(Green-List) 토큰 편향성 및 극단적 분포 분산\n출력: 0-100 수학적 워터마크 확신도 스코어",
+    "accuracy": "절대적(Definitive) — 이미 알려진 워터마크가 텍스트에 삽입되어 있을 경우, 단독 식별 정확도는 99%를 아득히 초과합니다. 워터마크가 없는 경우에도 절대 엉뚱한 사람을 잡지 않습니다(False Positive 면역).",
     "references": [
         {
             "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",

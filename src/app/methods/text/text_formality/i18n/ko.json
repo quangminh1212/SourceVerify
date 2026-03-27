@@ -1,14 +1,13 @@
 {
-    "name": "Text Formality",
-    "description": "Measures 텍스트 formality level",
-    "algorithm": "Text Formality — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures 텍스트 formality level. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through 텍스트 formality analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "사용역 및 격식성 분석 (Register & Formality Analysis)",
+    "description": "격식 있고, 정중하며, 객관적인 학술적 또는 전문적 기준을 얼마나 잘 준수하는지 측정하여 텍스트의 사회 언어학적 사용역(Register)을 무자비하게 평가합니다. 상용 AI 모델(ChatGPT 또는 Claude 등)은 '유용하고, 무해하며, 정직하게' 행동하도록 설계된 가혹한 RLHF(인간 피드백 기반 강화학습)를 거칩니다. 그 결과, 기본 출력값은 흔들림 없이 정중하고, 극도로 격식을 차리며, 구조적으로 뻣뻣한 어조에 영구적으로 고정(Default)되어 있습니다. 반면 인간의 글쓰기는, 심지어 고도로 전문적인 문맥 속에서조차, 일시적으로 캐주얼한 표현으로 미끄러지거나, 감정을 드러내는 구두점을 쓰거나, 구어체 관용구를 남발하는 등 '사용역 이동(Register shifts)'을 자연스럽게 노출합니다. 인위적으로 일정하고 획일적인 초고득점의 격식성 스코어를 끈질기게 유지하는 텍스트는 기계 생성물 특유의 소름 돋는 징후입니다.",
+    "algorithm": "사회 언어학적 사용역 및 어조 프로파일링",
+    "mechanism": "분석기는 품사(POS) 태거와 특수 제작된 전문 어휘 사전을 활용하여 텍스트 내부의 사용역 마커(Register markers)들을 샅샅이 스캔합니다. 비격식적이거나 대화체의 어조를 암시하는 축약어(예: 'don't', 'can't'), 속어, 관용어, 감정 표출형 구두점(예: '!!!'), 그리고 1인칭/2인칭 대명사가 발견될 때마다 가차 없이 점수를 깎아내립니다. 반대로 복잡한 전치사구, 수동태 구조, 그리고 객관적이고 전문적인 특정 어휘에는 점수를 퍼줍니다. 알고리즘은 격식 마커와 비격식 마커 간의 비율을 계산하고 문단 전체에 걸친 격식성의 변동성(Variance)을 그래프로 그립니다. 사용역의 변동성이 아예 '0'에 수렴하면서 평평하고 일관되게 높은 격식성 궤적을 그리는 글은, 안전하게 조련(Safety-aligned)된 LLM의 산출물이라는 극강의 증거입니다.",
+    "useCase": "자연스러운 인간의 글쓰기가 대화체나 여러 사용역(Mixed-register)이 혼합된 어조를 요구하는 블로그 포스트, 이메일, 소셜 미디어 콘텐츠 및 학생들의 에세이를 해부하는 데 특히 뼈아픈 타격을 입힙니다.",
+    "strengths": "• 특별한 프롬프트 조작 없이 공장 출고 상태 그대로 뽑아내는 일반적인 LLM 생성물—거의 항상 멸균 처리된(Sanitized) 격식 어조를 띄는—을 상대로 압도적인 요격률을 자랑합니다.\n• 눈에 보이는 직관적인 어휘 매칭 및 POS 태깅 시퀀스에만 의존하므로, 연산 자원 소모가 극도로 적고 속도가 빠릅니다.",
+    "limitations": "• 사용자가 AI에게 '캐주얼하게 써줘', '인터넷 속어 좀 섞어', '10대처럼 말해봐'라고 노골적으로 프롬프트를 먹이면 너무나 쉽게 보안망이 뚫립니다(Spoofed).\n• 법적 계약서, 동료 평가는 뚫고 나온 학술 논문, 또는 기업의 빳빳한 공식 보도자료처럼, 인간의 텍스트가 본질적으로 AI의 격식성을 흉내 내는 환경에서는 억울한 오탐지(False positives)를 유발합니다.",
+    "parameters": "분석 기준: 어휘 및 구문론적 사용역(Register) 채점\n측정 지표: 격식/비격식 마커 비율 및 사용역의 획일적 변동성\n출력: 0-100 기계적 격식 획일화(Formality Monolith) 스코어",
+    "accuracy": "중간 — 일상적인(Casual) 텍스트 영역에서는 65-80%의 강력한 적중률을 보입니다. 그러나 인간의 텍스트가 서식 상 AI의 격식성과 유사한 학술적 또는 법적 문맥에서는 신뢰도가 떨어집니다. 난해도(Perplexity) 테스트와 함께 '교차 검증'용으로 사용할 때 최고의 성능을 발휘합니다.",
     "references": [
         {
             "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",

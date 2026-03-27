@@ -1,25 +1,20 @@
 {
-    "name": "Tỷ lệ nén văn bản",
-    "description": "Sử dụng thuật toán nén dữ liệu để đo mức độ dư thừa và dự đoán được của văn bản như chỉ báo AI.",
-    "useCase": "Phát hiện văn bản AI thông qua mật độ thông tin thấp hơn và khả năng nén cao hơn",
-    "mechanism": "Nén văn bản đầu vào bằng thuật toán không mất dữ liệu (gzip, zlib, LZ77) và tính tỷ lệ nén (kích thước nén / kích thước gốc). Văn bản AI thường nén hiệu quả hơn do tính quy tắc cao hơn, mẫu lặp lại nhiều hơn và entropy thông tin thấp hơn. Cũng phân tích tỷ lệ nén cửa sổ trượt để phát hiện phân đoạn có khả năng nén khác nhau—dấu hiệu tác giả hỗn hợp.",
-    "accuracy": "Trung bình - 70-80% trên văn bản dài (>500 từ)",
-    "source": "Jiang, Z. et al. (2024) - Detecting LLM-Generated Text in Computing Education, IEEE Access",
-    "algorithm": "Multi-Algorithm Compression + Ratio Analysis + Sliding Window Segmentation",
-    "parameters": "Thuật toán: gzip-9/zlib/brotli, Cửa sổ: 200-500 ký tự, Chỉ số: tỷ lệ toàn cục, theo phân đoạn, phương sai, Tối thiểu: 200 từ",
-    "strengths": "• Không cần dữ liệu huấn luyện (không giám sát)\n• Không phụ thuộc ngôn ngữ và mô hình\n• Tính toán cực nhanh\n• Nắm bắt tính chất lý thuyết thông tin",
-    "limitations": "• Độ chính xác thấp trên văn bản ngắn\n• Văn bản kỹ thuật với thuật ngữ lặp nén tốt tự nhiên\n• Phụ thuộc chọn thuật toán nén\n• Không nhạy với mẫu cấp ngữ nghĩa",
+    "name": "Mật Độ Thông Tin Dựa Trên Tỷ Lệ Nén (Compression Ratio)",
+    "description": "Sử dụng các thuật toán nén dữ liệu máy tính (như zlib, gzip hoặc LZ77) để đo lường mật độ thông tin nội tại, tính dư thừa và khả năng dự đoán cấu trúc của văn bản. Bởi vì các Mô hình Ngôn ngữ Lớn tạo ra văn bản dựa trên dự đoán token theo xác suất, các kết quả đầu ra của chúng về cơ bản có đặc trưng là tính đều đặn về cú pháp cao, lặp lại từ vựng và các chuỗi n-gram có thể dự đoán được. Văn bản do con người viết tự nhiên hỗn loạn hơn, có các đợt bùng nổ từ vựng hiếm, định dạng không đều và entropy thông tin cao hơn. Do đó, văn bản do AI tạo ra sẽ nén hiệu quả hơn đáng kể (tạo ra kích thước tệp nhỏ hơn so với bản gốc) so với văn bản do con người viết.",
+    "algorithm": "Phân Tích Tỷ Lệ Đa Thuật Toán LZ77/DEFLATE",
+    "mechanism": "Thuật toán lấy văn bản gốc đầu vào và mã hóa nó bằng các thuật toán nén không mất dữ liệu (lossless) tiêu chuẩn. Sau đó, nó tính toán Tỷ Lệ Nén (Kích Thước Đã Nén / Kích Thước Gốc). Tỷ lệ thấp cho thấy tính dư thừa và khả năng dự đoán cấu trúc cao—một dấu hiệu mạnh mẽ của việc tạo bằng máy. Hơn nữa, hệ thống sử dụng kỹ thuật cửa sổ trượt (ví dụ: 200-500 ký tự) để phân tích các phân đoạn khả năng nén cục bộ. Sự biến đổi rất lớn về khả năng nén qua các cửa sổ khác nhau thường báo hiệu một văn bản 'Frankenstein', chỉ ra sự pha trộn giữa tác giả con người và AI trong cùng một tài liệu.",
+    "useCase": "Rất hiệu quả như một bộ lọc nhanh, không phụ thuộc vào ngôn ngữ, không cần giám sát để quét khối lượng lớn văn bản, đặc biệt hữu ích trong môi trường học thuật và giáo dục máy tính.",
+    "strengths": "• Hoàn toàn không cần giám sát và không phụ thuộc vào mô hình; không yêu cầu dữ liệu huấn luyện mạng nơ-ron để hoạt động.\n• Tốc độ thực thi tính toán cực nhanh (có khả năng chạy phía máy khách - client-side).\n• Nắm bắt các thuộc tính lý thuyết thông tin cơ bản mà AI rất khó giả mạo về mặt toán học.",
+    "limitations": "• Hiệu suất giảm đáng kể trên các văn bản ngắn hơn 200 từ, vì các thuật toán nén yêu cầu đủ dữ liệu để xây dựng từ điển.\n• Các văn bản kỹ thuật, pháp lý hoặc liên quan đến lập trình do con người viết với sự lặp lại tự nhiên cao của biệt ngữ cụ thể sẽ nén rất tốt, có nguy cơ gây ra dương tính giả.",
+    "parameters": "Kiểm Định: Mật Độ Thông Tin LZ77 & Entropy Shannon\nThước Đo: Phương Sai Tỷ Lệ Nén Toàn Cục & Cửa Sổ Trượt\nĐầu Ra: 0-100 Điểm Khả Năng Nén (Khả Năng Dự Đoán Thuật Toán)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác độc lập 75-82% trên các văn bản vượt quá 500 từ. Hoạt động tốt nhất như một bộ lọc sơ bộ nhanh trong một quy trình phân tích nhiều lớp.",
     "references": [
         {
             "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
-            "url": "https://doi.org/10.1109/ACCESS.2024.3361395"
+            "url": "https://ieeexplore.ieee.org/document/10418933"
         },
         {
-            "title": "Benedetto, D. et al. (2002). Language Trees and Zipping. Physical Review Letters.",
-            "url": "https://doi.org/10.1103/PhysRevLett.88.048702"
-        },
-        {
-            "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Detectors. EACL.",
+            "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",
             "url": "https://arxiv.org/abs/2305.09859"
         }
     ]

@@ -1,14 +1,13 @@
 {
-    "name": "时间表达分析",
-    "description": "分析 时间表达 and verb tense consistency 以检测 AI生成的 text through temporal reasoning failures.",
-    "useCase": "通过不一致的时间标记和动词时态变化检测AI文本",
-    "mechanism": "提取 时间表达 (dates, durations, relative time references like 'recently', 'last year') and maps verb tenses throughout the text. 分析 temporal 连贯性 by checking for logical consistency 之间 temporal markers and verb tenses 内的 and 跨 paragraphs. AI生成的 text sometimes produces temporal 不一致—mixing past and present references without clear discourse signals, or generating implausible temporal sequences.",
-    "accuracy": "中等 - 69-79% on narrative and news text",
-    "source": "Verhagen, M. et al. (2007) - SemEval-2007 Task 15: TempEval Temporal Relation Identification, SemEval",
-    "algorithm": "Temporal Expression Extraction + Tense Chain Analysis + Temporal Coherence Scoring",
-    "parameters": "Extraction: rule-based + neural, Tense tracking: per-clause, Coherence: temporal graph consistency, Expression types: DATE/TIME/DURATION/SET",
-    "strengths": "• Captures temporal reasoning failures specific to AI\n• Effective on narrative and news domains\n• 检测 subtle logical 不一致\n• Complements semantic-level 分析",
-    "limitations": "• Complex to implement reliably\n• Some texts intentionally use temporal shifts (flashbacks)\n• Modern LLMs have improved temporal reasoning\n• Language-specific temporal expression 模式",
+    "name": "时序逻辑连贯性 (Temporal Coherence)",
+    "description": "旨在扫描并分析整篇文档中时间表达（例如：具体日期、持续时间、以及诸如“昨天”或“随后”等相对时间锚点）的逻辑自洽性，以及动词时态在时间轴上的推演轨迹。尽管大语言模型（LLM）在局部语法上表现得天衣无缝，但它们的大脑深处根本不存在对所描述事件的真实“编年史（Chronological）”物理感知。这不仅导致它们在长文本中经常性地爆发出隐蔽的“时序幻觉”——例如在段落之间出现毫无逻辑的动词时态错乱、缔造出祖父悖论般的时间线，或者将相对时间线索灾难性地错位（例如：在使用了表示未来的动词时，却搭配了“最近”这个时间词）。相反，人类作家在动笔时，会在潜意识中投射并严格维护一条贯穿始终的、物理自洽的心理时间线。",
+    "algorithm": "时序锚点榨取与动词时态重型追踪拓扑",
+    "mechanism": "该系统首先像猎犬一样从文本中嗅探并榨取所有的时序实体（包括精准日期、模糊时间、持续跨度、集合频次），并以严苛的眼光将盘根错节的动词时态与这些时间实体强行绑定。接着，它会在内存中构建一张极其复杂的时序关系拓扑图（Temporal relation graph）来进行物理逻辑的交叉审讯。一旦系统侦测到违背物理因果的时序错乱（比如：一个事件竟然发生在一个已经被确立为“时间终点”的节点“之后”），或者是文本在过去、现在和将来时态之间像精神分裂般进行着毫无动机的随机跳跃，该文本将立即被定罪为“缺乏真实世界时序认知”的 AI 生成物。",
+    "useCase": "这把手术刀在核查历史题材分析报告、突发新闻纪实、传记生平总结以及严苛的项目里程碑时间表时具有毁灭性的杀伤力，因为这些文本对编年史的严谨逻辑有着零容忍的精确度要求。",
+    "strengths": "• 它一针见血地刺穿了 AI 模型在“真实世界物理建模”能力上的底层残疾，这是提示词工程师（Prompter）用再高超的话术都极难掩盖和越狱的死穴。\n• 在捕捉 AI 撰写事实性纪实报道和局部时间轴演进时产生的重度幻觉（Hallucinations）方面表现出神入化的能力。",
+    "limitations": "• 算力黑洞：在后台构建一张绝对精确、容错率为零的时间关系拓扑图，在计算复杂度上是一场噩梦。\n• 容易误杀那些故意大玩“时间魔术”的文艺文本，比如大量使用非线性叙事、时空穿插或蒙太奇闪回（Flashbacks）手法的先锋小说或创意写作。\n• 必须承认，以 GPT-4 为代表的现代最强 LLM，其在短篇幅内的时序逻辑推演能力已经进化得相当可怕。",
+    "parameters": "雷达切片: 时序拓扑物理自洽度 & 时态链轨追踪\n定罪量表: 祖父悖论事件发生率 & 时态骨折频次\n行刑判决: 0-100 时序连贯性崩塌 (时间轴幻觉) 确诊率",
+    "accuracy": "中等段位护盾 — 拥有 69-79% 的实战准确率。它的最强猎场是那些时间必须像河流一样呈线性单向流动的纪实叙事和新闻报道；但在面对那些毫无时间概念、虚无缥缈的抽象哲学或纯理论文本时，它几乎是个瞎子。",
     "references": [
         {
             "title": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.",
@@ -17,10 +16,6 @@
         {
             "title": "Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL.",
             "url": "https://doi.org/10.18653/v1/N19-1112"
-        },
-        {
-            "title": "Krishna, K. et al. (2024). Paraphrasing Evades Detectors of AI-Generated Text. NAACL.",
-            "url": "https://arxiv.org/abs/2303.13408"
         }
     ]
 }

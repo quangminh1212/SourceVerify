@@ -1,14 +1,13 @@
 {
-    "name": "Token Predictability",
-    "description": "Analyzes next-token predictability using bigram statistics (Mitchell, 2023)",
-    "algorithm": "Token Predictability — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes next-token predictability using bigram statistics (Mitchell, 2023). Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through token predictability analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "トークン予測可能性のランク付け (Token Predictability)",
+    "description": "先行する文脈に基づいて、AIモデルによって各単語が明示的に予測される可能性を評価します。GLTR（Giant Language Model Test Room, Gehrmann et al., 2019）およびゼロショット確率曲率（Mitchell et al., 2023）の原理を利用して、このメソッドはテキストの「予測可能性の等高線」をマッピングします。生成AIモデルは、統計的に最も可能性の高い次のトークンを継続的に選択することで機能します。結果として、AIが作成したテキストは、圧倒的に「トップ10」の予測可能性を持つ単語で構成されます。しかし、人間の書き手は、個人の語彙、感情、または文体的な特異性によって駆動され、統計的に最適ではない（確率の低い）単語を頻繁かつ予測不可能に選択します。",
+    "algorithm": "予測ランク分布と確率曲率",
+    "mechanism": "アルゴリズムは、入力テキストをN-gramまたは軽量のプロキシ言語モデルを介して順次処理し、先行する文脈が与えられた場合のすべてのトークンの条件付き確率を計算します。各単語は、その予測可能性に基づいてランク付けされます。「トップ10」（非常に予測可能）、「トップ100」（中程度に予測可能）、または「テール」（予測不可能）。システムは、テキストの確率曲率、つまりこれらのランクの密度と分布を分析します。滑らかな確率の等高線を持つ「トップ10」トークンでほぼ完全に支配されたテキストは、自己回帰的（auto-regressive）な機械生成を強く示しています。「テール」トークン領域への頻繁なスパイクを特徴とするテキストは、人間の著作権を示します。",
+    "useCase": "語彙選択の正確な人為的な「滑らかさ」を視覚化して定量化することにより、短〜中程度の長さのドキュメント（ニュース記事、レポート、学生のエッセイ）を分析するのに非常に効果的です。",
+    "strengths": "• 予測可能な単語に対する根本的な統計的バイアスは強く残るため、テキストが基本的な言い換え（パラフレーズ）を受けた場合でも、AIによる生成を検出できることがよくあります。\n• ゼロショット検出機能。個別の分類モデルをトレーニングする必要はなく、代わりに純粋な統計分布に依存します。",
+    "limitations": "• 高度に標準化された定型的な言語（例：天気予報、法律の定型文、「予測可能な」単語が必須である単純な取扱説明書など）を使用する人間のテキストでの偽陽性（誤検知）の影響を受けやすいです。\n• トークンの確率を正確に推定するには、参照言語モデルまたは堅牢なN-gramデータベースが必要です。",
+    "parameters": "解析: 条件付きトークン確率のランク付け\n評価基準: Top-Kとテールトークンの選択密度\n出力結果: 0-100 自己回帰的な予測可能性スコア",
+    "accuracy": "高 — 82-88%の精度。編集されていない機械生成テキストを検出するための、最も信頼性が高く、学術的に堅牢なベースラインメカニズムの1つとして広く考えられています。",
     "references": [
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",

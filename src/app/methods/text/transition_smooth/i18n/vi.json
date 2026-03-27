@@ -1,12 +1,21 @@
 {
-    "name": "Mượt mà chuyển tiếp",
-    "description": "Phân tích độ mượt mà chuyển tiếp đoạn",
-    "algorithm": "Thuật toán phân tích Mượt mà chuyển tiếp",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích độ mượt mà chuyển tiếp đoạn. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mượt mà chuyển tiếp. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Độ Trơn Tru Chuyển Tiếp (Transition Smoothness)",
+    "description": "Đánh giá mức độ chồng chéo ngữ nghĩa và chuỗi từ vựng giữa phần cuối của một đoạn văn và phần đầu của đoạn văn tiếp theo. Những người viết là con người tự nhiên duy trì luồng chủ đề bằng cách tham chiếu các thực thể, khái niệm hoặc từ đồng nghĩa cụ thể từ phần kết luận của một ý tưởng trước đó ('thuyết - rheme') ở phần đầu của một ý tưởng mới ('đề - theme'). Các mô hình AI tạo sinh, phụ thuộc vào sự chú ý ngữ cảnh rộng thay vì tính liên tục của bộ nhớ ngắn hạn giống con người, thường thất bại trong việc tạo ra các chuỗi từ vựng chặt chẽ này. Thay vào đó, AI bù đắp cho sự thiếu chồng chéo ngữ nghĩa bằng cách chèn mạnh mẽ các trạng từ chuyển tiếp chung chung (ví dụ: 'Tiến về phía trước', 'Ngoài ra').",
+    "algorithm": "Phân Tích Chồng Chéo Ngữ Nghĩa & Chuỗi Từ Vựng Xuyên Biên Giới",
+    "mechanism": "Thuật toán cô lập 'phần đuôi' (1-2 câu cuối) của một đoạn văn và 'phần đầu' (1-2 câu đầu) của đoạn văn tiếp theo. Nó tính toán sự chồng chéo ngữ nghĩa bằng cách sử dụng nhúng vector và theo dõi các chuỗi từ vựng trực tiếp (lặp lại các danh từ chính, đại từ hoặc từ đồng nghĩa trực tiếp). Một văn bản liên tục cho thấy sự chồng chéo ngữ nghĩa gần như bằng không qua các ranh giới đoạn văn, nhưng lại hoàn toàn dựa vào các từ chuyển tiếp chính thức để thu hẹp khoảng cách, là dấu hiệu rất rõ ràng của AI tạo sinh. Sự chồng chéo ngữ nghĩa cao mà không cần đến các cụm từ chuyển tiếp gượng ép cho thấy rõ ràng lối viết xác thực của con người.",
+    "useCase": "Phù hợp nhất để phân tích các bài luận, bài báo và báo cáo nhiều đoạn văn, nơi luồng chảy tự nhiên dựa trên việc xây dựng dựa trên các ý tưởng ngay trước đó thay vì chỉ liệt kê các điểm rời rạc.",
+    "strengths": "• Nhắm mục tiêu vào một giới hạn nhận thức cụ thể trong cách các LLM quản lý ranh giới chú ý cục bộ so với cách trí nhớ làm việc của con người kết nối tự nhiên các suy nghĩ.\n• Khả năng chống chịu cao đối với các chiến lược thay thế từ đơn giản, vì sự chồng chéo ngữ nghĩa là một thuộc tính cấu trúc vốn có của luồng tường thuật.",
+    "limitations": "• Hiệu suất giảm trong các tài liệu có cấu trúc cao, có dấu đầu dòng hoặc mô-đun (như thông số kỹ thuật) nơi các đoạn văn được cố ý tách biệt.\n• Có thể gắn cờ văn bản của con người được tổ chức kém hoặc quá phụ thuộc vào các 'câu chủ đề' (topic sentences) rời rạc.",
+    "parameters": "Kiểm Định: Sự Chồng Chéo Ngữ Nghĩa Đầu-Đuôi\nThước Đo: Mật Độ Chuỗi Từ Vựng So Với Cầu Nối Trạng Từ Chung Chung\nĐầu Ra: 0-100 Điểm Chuyển Tiếp Nhân Tạo",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 72-84%. Nó đóng vai trò như một số liệu cấu trúc vi mô có độ chính xác cao, bổ sung hoàn hảo cho các bộ phân tích chuyển đổi chủ đề cấp vĩ mô rộng hơn.",
+    "references": [
+        {
+            "title": "Hearst, M.A. (1997). TextTiling: Segmenting Text into Multi-paragraph Subtopic Passages. Computational Linguistics.",
+            "url": "https://aclanthology.org/J97-1003/"
+        },
+        {
+            "title": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.",
+            "url": "https://link.springer.com/article/10.3758/s13428-015-0626-y"
+        }
+    ]
 }

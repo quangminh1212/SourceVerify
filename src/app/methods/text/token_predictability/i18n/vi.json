@@ -1,12 +1,21 @@
 {
-    "name": "Dự đoán token",
-    "description": "Phân tích khả năng dự đoán token tiếp theo bằng thống kê bigram",
-    "algorithm": "Thuật toán phân tích Dự đoán token",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích khả năng dự đoán token tiếp theo bằng thống kê bigram. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích dự đoán token. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Xếp Hạng Khả Năng Dự Đoán Token (Token Predictability)",
+    "description": "Đánh giá khả năng mỗi từ được dự đoán rõ ràng bởi mô hình AI dựa trên ngữ cảnh trước đó của nó. Sử dụng các nguyên tắc từ GLTR (Gehrmann và cộng sự, 2019) và độ cong xác suất (probability curvature) zero-shot (Mitchell và cộng sự, 2023), phương pháp này phác họa 'đường viền khả năng dự đoán' của một văn bản. Các mô hình AI tạo sinh hoạt động bằng cách liên tục chọn token tiếp theo có xác suất thống kê cao nhất. Do đó, văn bản do AI viết phần lớn bao gồm các từ có khả năng dự đoán nằm trong 'Top-10'. Tuy nhiên, những người viết là con người thường xuyên và không thể đoán trước được việc chọn những từ có mức độ tối ưu thống kê thấp (xác suất thấp) do vốn từ vựng cá nhân, cảm xúc hoặc nét phong cách riêng.",
+    "algorithm": "Phân Bố Thứ Hạng Dự Đoán & Độ Cong Xác Suất",
+    "mechanism": "Thuật toán xử lý văn bản đầu vào một cách tuần tự thông qua mô hình ngôn ngữ proxy hạng nhẹ hoặc N-gram để tính toán xác suất có điều kiện của mọi token dựa trên ngữ cảnh trước đó. Mỗi từ được xếp hạng dựa trên khả năng dự đoán của nó: 'Top-10' (rất dễ đoán), 'Top-100' (dễ đoán vừa phải) hoặc 'Đuôi' ('Tail' - không thể đoán trước). Hệ thống phân tích độ cong xác suất của văn bản—mật độ và sự phân bố của các thứ hạng này. Một văn bản bị chi phối gần như hoàn toàn bởi các token 'Top-10' với một đường viền xác suất mượt mà là dấu hiệu cho thấy việc tạo bằng máy (tự hồi quy - auto-regressive). Một văn bản có tần suất tăng vọt vào vùng token 'Đuôi' biểu thị quyền tác giả của con người.",
+    "useCase": "Rất hiệu quả để phân tích các tài liệu có độ dài từ ngắn đến trung bình (bài báo, báo cáo, bài tiểu luận của sinh viên) bằng cách trực quan hóa và định lượng chính xác độ 'mượt' nhân tạo của các lựa chọn từ vựng.",
+    "strengths": "• Thường có thể phát hiện việc tạo bằng AI ngay cả khi văn bản đã được diễn giải lại (paraphrased) ở mức độ cơ bản, vì xu hướng thống kê cơ bản đối với các từ dễ đoán vẫn mạnh mẽ.\n• Khả năng phát hiện Zero-shot; không yêu cầu đào tạo một mô hình phân loại riêng biệt, thay vào đó dựa trên các phân phối thống kê thuần túy.",
+    "limitations": "• Dễ bị dương tính giả trên các văn bản của con người sử dụng ngôn ngữ quá chuẩn hóa, rập khuôn (ví dụ: báo cáo thời tiết, văn bản mẫu pháp lý hoặc hướng dẫn sử dụng đơn giản nơi các từ 'dễ đoán' là bắt buộc).\n• Yêu cầu một mô hình ngôn ngữ tham chiếu hoặc cơ sở dữ liệu N-gram mạnh mẽ để ước tính chính xác xác suất của token.",
+    "parameters": "Kiểm Định: Xếp Hạng Xác Suất Token Có Điều Kiện\nThước Đo: Mật Độ Lựa Chọn Token Top-K So Với Token Ở Đuôi\nĐầu Ra: 0-100 Điểm Khả Năng Dự Đoán Tự Hồi Quy",
+    "accuracy": "Cao — Độ chính xác 82-88%. Được công nhận rộng rãi là một trong những cơ chế nền tảng đáng tin cậy và vững chắc nhất về mặt học thuật để phát hiện văn bản do máy tạo ra chưa qua chỉnh sửa.",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

@@ -1,14 +1,13 @@
 {
-    "name": "Temporal Expression Analysis",
-    "description": "Analyzes temporal expressions and verb tense consistency to detect AI-generated text through temporal reasoning failures.",
-    "useCase": "Detecting AI text through inconsistent temporal markers and verb tense shifts",
-    "mechanism": "Extracts temporal expressions (dates, durations, relative time references like 'recently', 'last year') and maps verb tenses throughout the text. Analyzes temporal coherence by checking for logical consistency between temporal markers and verb tenses within and across paragraphs. AI-generated text sometimes produces temporal inconsistencies—mixing past and present references without clear discourse signals, or generating implausible temporal sequences.",
-    "accuracy": "Moderate - 69-79% on narrative and news text",
-    "source": "Verhagen, M. et al. (2007) - SemEval-2007 Task 15: TempEval Temporal Relation Identification, SemEval",
-    "algorithm": "Temporal Expression Extraction + Tense Chain Analysis + Temporal Coherence Scoring",
-    "parameters": "Extraction: rule-based + neural, Tense tracking: per-clause, Coherence: temporal graph consistency, Expression types: DATE/TIME/DURATION/SET",
-    "strengths": "• Captures temporal reasoning failures specific to AI\n• Effective on narrative and news domains\n• Detects subtle logical inconsistencies\n• Complements semantic-level analysis",
-    "limitations": "• Complex to implement reliably\n• Some texts intentionally use temporal shifts (flashbacks)\n• Modern LLMs have improved temporal reasoning\n• Language-specific temporal expression patterns",
+    "name": "Temporal Coherence",
+    "description": "Analyzes the logical consistency of temporal expressions (e.g., dates, durations, relative markers like 'yesterday' or 'subsequently') and verb tense shifts across a document. While Large Language Models excel at local grammar, they lack a true internal chronological grounding of the events they generate. This frequently leads to subtle 'temporal hallucinations' in longer texts—shifting verb tenses inappropriately across paragraphs, creating paradoxical timelines, or misaligning relative time markers (e.g., using 'recently' alongside a future tense verb). Human writers naturally project and maintain a coherent mental timeline of the narrative.",
+    "algorithm": "Temporal Expression Extraction & Tense Chain Analysis",
+    "mechanism": "The algorithm extracts all temporal entities (DATE, TIME, DURATION, SET) and meticulously maps the verb tenses attached to them throughout the text. It constructs a temporal relation graph to check for logical consistency. If the system detects impossible sequences (e.g., an event occurring 'after' a point that was established as the chronological endpoint) or chaotic, unmotivated shifts between past, present, and future tenses, the text is flagged as lacking genuine chronological comprehension.",
+    "useCase": "Highly effective for auditing historical essays, news reports, biographical summaries, and project timelines where strict chronological accuracy is required.",
+    "strengths": "• Detects fundamental failures in world-modeling that AI models struggle to overcome, even with advanced prompting.\n• Excellent at catching AI hallucinations in factual reporting and localized timeline generation.",
+    "limitations": "• Computationally complex to build accurate temporal graphs.\n• May produce false positives on creative writing or avant-garde literature that intentionally uses non-linear narratives or flashbacks.\n• Modern LLMs (like GPT-4) have significantly improved their short-range temporal reasoning.",
+    "parameters": "Analysis: Temporal Graph Consistency & Verb Tense Tracking\nMetric: Incidence of Chronological Paradoxes & Tense Misalignments\nOutput: 0-100 Temporal Incoherence (Timeline Hallucination) Score",
+    "accuracy": "Moderate — 69-79% accuracy. Performs best on narrative and news texts where time flows linearly; less effective on abstract philosophical or theoretical texts.",
     "references": [
         {
             "title": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.",
@@ -17,10 +16,6 @@
         {
             "title": "Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL.",
             "url": "https://doi.org/10.18653/v1/N19-1112"
-        },
-        {
-            "title": "Krishna, K. et al. (2024). Paraphrasing Evades Detectors of AI-Generated Text. NAACL.",
-            "url": "https://arxiv.org/abs/2303.13408"
         }
     ]
 }

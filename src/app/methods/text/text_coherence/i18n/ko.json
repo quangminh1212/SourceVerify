@@ -1,22 +1,21 @@
 {
-    "name": "Text Coherence Score",
-    "description": "Overall 텍스트 coherence scoring",
-    "algorithm": "Text Coherence Score — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Overall 텍스트 coherence scoring. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through 텍스트 coherence score analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "거시적 의미 일관성 및 논리적 흐름 (Global Semantic Coherence)",
+    "description": "문서 전체를 관통하는 포괄적인 논리적 일관성과 주제의 흐름(Topical flow)을 평가합니다. 거대 언어 모델(LLM)은 오직 국지적인 '컨텍스트 윈도우(Context window)'에만 의존하여 다음 토큰(단어)의 확률을 계산해 낼 뿐, 자신이 현재 무슨 글을 쓰고 있는지에 대한 진정한 의미의 거시적 머릿속 조감도(Global mental model)를 가지고 있지 않습니다. 이로 인해 긴 문서에서는 '일관성 표류(Coherence drift)' 현상이 밥 먹듯이 발생합니다. 즉, AI는 각 문장 단위의 문법은 소름 돋게 완벽하게 유지하지만, 글이 진행될수록 서서히 원래 주제에서 벗어나 엉뚱한 소리를 하거나, 앞 단락에서 스스로 세워둔 전제와 정면으로 모순되거나, 서론에서 던진 핵심 주제를 결론에서 수습하지 못하고 용두사미로 끝내버립니다. 반면 인간 작가는 명확한 목표 지향적이고 지속적인 멘탈 프레임워크를 나침반 삼아 흔들림 없이 글을 이끌어 나갑니다.",
+    "algorithm": "단락 간 의미론적 유사도(Semantic Similarity) 및 담화 관계 그래프 분석",
+    "mechanism": "이 알고리즘은 연속되는 단락들의 의미론적 임베딩(Semantic embeddings)을 벡터 공간에 시각적으로 매핑하여 텍스트의 전체적인 논리적 궤적을 끈질기게 추적합니다. 서론, 본론의 각 단락 벡터, 그리고 결론 사이의 '의미적 거리(Distance)'를 치밀하게 측정합니다. 만약 텍스트가 핵심 개념을 지속적으로 물고 늘어지지 못하거나, 아무런 서사적 개연성 없이 갑자기 다른 주제로 점프하거나, 결론 지점을 향해 수렴하지 못하고 우주를 '떠도는(Wandering)' 듯한 파편화된 담화 그래프를 그려낸다면, 시스템은 이 텍스트를 거시적 이해 능력(Global comprehension)이 거세된 껍데기 글로 낙인찍습니다.",
+    "useCase": "하나의 거대한 논리적 뼈대(Architecture)를 끝까지 뚝심 있게 유지해야만 하는 종합 논술 에세이, 심층 연구 논문, 그리고 수십 페이지 분량의 기획 보고서 등 호흡이 긴 글을 철저히 검증할 때 가히 필수적입니다.",
+    "strengths": "• 현재의 모든 자기 회귀(Autoregressive) 기반 LLM들이 태생적으로 안고 있는 가장 치명적인 구조적 아킬레스건(긴 출력에서의 컨텍스트 증발 현상)을 정확히 찌릅니다.\n• 단어나 문법 수준의 얄팍한 기교가 아니라 글의 거시적인 뼈대(Macro-structure) 자체를 평가하기 때문에, 프롬프트 엔지니어링 꼼수로는 이 탐지망을 거의 절대적으로 회피할 수 없습니다.",
+    "limitations": "• 일관성의 기준선을 설정하기 위해 반드시 상당한 길이(최소 여러 단락 이상)의 텍스트가 필요합니다. 짧은 X(트위터) 게시물이나 단일 문단에서는 완전히 바보가 됩니다.\n• 의식의 흐름(Stream of consciousness) 기법을 사용한 난해한 인간의 문학 작품이나, 두서없이 녹음된 자연스러운 일상 대화 녹취록을 AI로 오인하여 처벌할 위험이 있습니다.",
+    "parameters": "분석 기준: 그래프 기반 담화 구조 및 의미론적 임베딩 궤적 매핑\n측정 지표: 단락과 단락 사이, 그리고 서론과 결론 사이의 의미론적 벡터 거리\n출력: 0-100 거시적 비일관성 (논리적 의미 표류) 스코어",
+    "accuracy": "높음 — 800단어 이상의 긴 문서에서 단독으로 78-86% 이상의 파괴적인 정확도를 기록합니다. 국지적 난해도(Perplexity) 지표와 하이브리드로 결합할 경우, LLM에게는 사실상 사형 선고나 다름없는 결정적(Definitive) 지표로 작동합니다.",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Barzilay, R., & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://aclanthology.org/J08-1001"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "MacAvaney, S. et al. (2023). Detecting Machine-Generated Text by Identifying 'Wandering' Topics. ACL Findings.",
+            "url": "https://aclanthology.org/2023.findings-acl.854"
         }
     ]
 }

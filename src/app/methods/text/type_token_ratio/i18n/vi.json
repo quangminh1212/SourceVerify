@@ -1,26 +1,21 @@
 {
-    "name": "Tỷ lệ Type-Token (TTR)",
-    "description": "Tính tỷ lệ từ duy nhất trên tổng số từ bằng biến thể MATTR để phát hiện mẫu từ vựng của văn bản AI.",
-    "useCase": "Phát hiện văn bản AI thông qua tỷ lệ đa dạng từ vựng bất thường trên các phân đoạn",
-    "mechanism": "Tính Moving-Average Type-Token Ratio (MATTR) bằng cửa sổ trượt để loại bỏ ảnh hưởng độ dài. Với mỗi cửa sổ N từ, tỷ lệ loại từ duy nhất trên tổng token được tính, rồi lấy trung bình. Văn bản AI thường có TTR đồng nhất hơn giữa các cửa sổ so với con người, vốn thay đổi tự nhiên do chuyển chủ đề và phong cách.",
-    "accuracy": "Trung bình - 68-78% khi đứng riêng",
-    "source": "Covington & McFall (2010) - Moving-Average TTR, Journal of Quantitative Linguistics",
-    "algorithm": "Moving-Average Type-Token Ratio (MATTR) + Variance Analysis + Segment Comparison",
-    "parameters": "Cửa sổ: 50-100 token, Chỉ số: MATTR trung bình, phương sai MATTR, phạm vi MATTR, Chuẩn hóa: độc lập độ dài",
-    "strengths": "• Đo lường độc lập độ dài qua MATTR\n• Chỉ số ngôn ngữ tâm lý đã thiết lập\n• Tính toán nhanh với tài nguyên tối thiểu\n• Nắm bắt mẫu sử dụng từ vựng",
-    "limitations": "• Sức mạnh phân biệt thấp khi đứng riêng\n• Nhạy cảm với thể loại và chủ đề\n• LLM tiên tiến ngày càng khớp phạm vi TTR con người\n• Chọn kích thước cửa sổ ảnh hưởng kết quả",
+    "name": "Tỷ Lệ Loại-Biểu Dấu (Type-Token Ratio - TTR)",
+    "description": "Đánh giá sự đa dạng từ vựng và sự phong phú về vốn từ bằng cách sử dụng Tỷ lệ Loại-Biểu Dấu Trung bình Động (MATTR). Số liệu này tính toán tỷ lệ giữa các từ duy nhất (loại - types) so với tổng số từ (biểu dấu - tokens) trên một cửa sổ trượt. Những người viết là con người tự nhiên thể hiện sự phương sai cao trong việc sử dụng từ vựng: họ đưa ra những đợt bùng nổ từ vựng mới khi chuyển đổi chủ đề, và lặp lại các từ khi đi sâu vào các khái niệm cụ thể. Các mô hình AI tạo sinh, bị ràng buộc bởi các tham số lấy mẫu không đổi (như nhiệt độ và top-p), có xu hướng phân bổ từ vựng mới ở một tốc độ đồng đều và dễ đoán theo mặt toán học, dẫn đến một hồ sơ MATTR phẳng một cách nhân tạo.",
+    "algorithm": "Phân Tích Phương Sai Tỷ Lệ Loại-Biểu Dấu Trung Bình Động (MATTR)",
+    "mechanism": "Thuật toán xử lý văn bản bằng một cửa sổ trượt (ví dụ: 50-100 token). Trong mỗi cửa sổ, nó tính toán tỷ lệ các từ duy nhất so với tổng số từ. Thay vì chỉ nhìn vào giá trị TTR trung bình tuyệt đối, chẩn đoán quan trọng là *phương sai* và *khoảng* của các giá trị này trên tất cả các cửa sổ. Một văn bản duy trì TTR đồng nhất một cách nhất quán từ đầu đến cuối, thiếu các xung từ vựng hỗn loạn, được thúc đẩy bởi chủ đề đặc trưng của văn bản con người, sẽ bị gắn cờ thống kê là do LLM tạo ra.",
+    "useCase": "Rất hiệu quả để phân tích nội dung dài, bài luận và bài báo nơi các tác giả con người sẽ tự nhiên lướt qua nhiều chủ đề phụ, do đó buộc sự phong phú về từ vựng phải biến động một cách tự nhiên.",
+    "strengths": "• Phân tích *nhịp điệu cấu trúc* của việc triển khai từ vựng thay vì chỉ đếm từ, làm cho nó mạnh mẽ trước các chiến thuật lách luật hoán đổi từ đồng nghĩa đơn giản.\n• MATTR kiểm soát hoàn hảo độ dài của tài liệu, giải quyết được lỗ hổng chết người của các phép đo TTR tĩnh truyền thống.",
+    "limitations": "• Yêu cầu độ dài văn bản đủ dài (thường >200 từ) để các cửa sổ trung bình động thiết lập một hồ sơ phương sai có ý nghĩa thống kê.\n• Có thể phân loại sai văn bản do con người viết bị ràng buộc cao, chẳng hạn như tài liệu kỹ thuật cứng nhắc hoặc văn bản pháp lý tiêu chuẩn hóa, những thứ vốn dĩ có phương sai từ vựng thấp.",
+    "parameters": "Kiểm Định: Lập Hồ Sơ Đa Dạng Từ Vựng\nThước Đo: Phương Sai, Khoảng và Điểm Trung Bình Độ Bằng Phẳng MATTR\nĐầu Ra: 0-100 Điểm Đồng Nhất Từ Vựng",
+    "accuracy": "Trung bình — Độ chính xác 68-78% như một tính năng độc lập. Sức mạnh dự đoán của nó tăng lên đáng kể khi được kết hợp với các chỉ số đo lường văn phong khác như 'Độ Bùng Nổ' (Burstiness) và 'Phương Sai Cú Pháp'.",
     "references": [
         {
-            "title": "Covington & McFall (2010). MATTR. Journal of Quantitative Linguistics.",
+            "title": "Covington, M. A. & McFall, J. D. (2010). Cutting the Gordian Knot: The Moving-Average Type-Token Ratio (MATTR). Journal of Quantitative Linguistics.",
             "url": "https://doi.org/10.1080/09296174.2010.492666"
         },
         {
-            "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection. NeurIPS.",
+            "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
             "url": "https://arxiv.org/abs/2306.04723"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

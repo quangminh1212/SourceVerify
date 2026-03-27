@@ -1,12 +1,21 @@
 {
-    "name": "Mẫu lỗi chính tả",
-    "description": "Phân tích mẫu lỗi chính tả — AI hiếm khi mắc lỗi giống người",
-    "algorithm": "Thuật toán phân tích Mẫu lỗi chính tả",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu lỗi chính tả — AI hiếm khi mắc lỗi giống người. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích mẫu lỗi chính tả. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mô Hình Lỗi Đánh Máy (Typo & Error Pattern)",
+    "description": "Phân tích sự hiện diện, tần suất và bản chất cụ thể của các lỗi đánh máy và ngữ pháp. Các Mô hình Ngôn ngữ Lớn hoạt động dựa trên xác suất token; chúng xây dựng các từ và câu một cách toán học, có nghĩa là chúng gần như không bao giờ mắc các 'lỗi trượt bàn phím' do sinh lý học (ví dụ: 'teh' thay vì 'the', đảo ngược các chữ cái liền kề) hoặc các lỗi chính tả nhận thức phổ biến. Khi AI mắc lỗi, nó thường tạo ra các từ bị ảo giác hoặc cách diễn đạt không tự nhiên thay vì lỗi đánh máy cơ học. Ngược lại, văn bản viết tay đích thực của con người—ngay cả khi đã được chỉnh sửa—thường vẫn giữ lại các lỗi siêu nhỏ đặc trưng, sự nhầm lẫn từ đồng âm ('their'/'there') hoặc sự không nhất quán trong dấu câu.",
+    "algorithm": "Lập Hồ Sơ Lỗi Xác Suất & Phân Loại Lỗi Đánh Máy",
+    "mechanism": "Thuật toán quét văn bản dựa trên một từ điển toàn diện và một cơ sở dữ liệu về các lỗi đánh máy phổ biến của con người. Nó phân loại các điểm bất thường được phát hiện thành các lỗi sinh lý (trượt bàn phím), lỗi nhận thức (viết sai chính tả theo ngữ âm, từ đồng âm) và các tạo tác token hóa. Một văn bản hoàn toàn nguyên sơ, không có bất kỳ khuyết điểm chính tả nào, hoặc một văn bản mà những điểm bất thường duy nhất là sự kết hợp token kỳ lạ chứ không phải lỗi đánh máy tiêu chuẩn của con người, có mối tương quan mạnh mẽ với việc do máy tạo ra. Sự hiện diện của các lỗi đánh máy đích thực của con người ở cấp độ ký tự làm giảm đáng kể điểm xác suất AI.",
+    "useCase": "Rất quan trọng để phân tích văn bản thông thường, bài đăng trên diễn đàn, bài tiểu luận của sinh viên và nội dung truyền thông xã hội nơi mà chính tả nguyên sơ, không có lỗi là rất không tự nhiên đối với tác giả con người.",
+    "strengths": "• Là chỉ báo âm tính có độ tin cậy cao đối với AI: sự hiện diện của các lỗi đánh máy sinh lý thực sự (như hoán đổi chữ cái trên bàn phím liền kề) là bằng chứng cực kỳ mạnh mẽ về quyền tác giả của con người.\n• Làm nổi bật một cách hiệu quả 'thung lũng kỳ lạ' (uncanny valley) của các đầu ra LLM được đánh bóng quá mức, chính tả hoàn hảo.",
+    "limitations": "• Dễ dàng bị đánh bại nếu người dùng cố ý chèn các lỗi đánh máy vào văn bản do AI tạo ra hoặc chạy nó qua một tập lệnh 'nhân hóa' (humanizer).\n• Ít hữu ích hơn trên các văn bản được chỉnh sửa chuyên nghiệp, được xuất bản hoặc được đọc thử (như báo chí hoặc bài báo học thuật) nơi con người cũng đạt được chính tả gần như hoàn hảo.",
+    "parameters": "Kiểm Định: Xác Thực Từ Điển & Phân Loại Lỗi\nThước Đo: Mật Độ Lỗi Sinh Lý So Với Lỗi Chính Tả Nhận Thức\nĐầu Ra: 0-100 Điểm Hoàn Hảo Về Chính Tả",
+    "accuracy": "Trung bình — Độ chính xác 65-80%. Rất xuất sắc khi đóng vai trò là một tính năng phụ; nó chủ yếu phục vụ để 'minh oan' (exonerate) cho các tác giả con người thay vì chứng minh dứt khoát việc do AI tạo ra.",
+    "references": [
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://arxiv.org/abs/2011.01314"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

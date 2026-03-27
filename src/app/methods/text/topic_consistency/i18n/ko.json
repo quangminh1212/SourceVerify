@@ -1,26 +1,21 @@
 {
-    "name": "주제 일관성",
-    "description": "측정합니다 주제 일관성 throughout the text.",
-    "useCase": "부자연스럽게 일관된 주제를 통한 AI 텍스트 감지",
-    "mechanism": "비교합니다 히스토그램 분포s 사이의 content segments using cosine similarity. AI text maintains extremely consistent topic signals throughout.",
-    "accuracy": "중-높음 - 75-85%",
-    "source": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "윈도우 크기: 적응형, Quantization: 8-64 levels, Metrics: 엔트로피, CV, 상관관계",
-    "strengths": "- Effective for detecting AI 생성 text\n- Language-agnostic 통계적 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 오탐\n- Short texts provide less reliable signals\n- Performance varies 에 걸친 문체s",
+    "name": "의미론적 주제 일관성 (Semantic Topic Consistency)",
+    "description": "문서 전체에 걸쳐서 일어나는 '주제 표류(Topic drift)' 또는 의미론적 분산의 정도를 무자비하게 측정합니다. 인간의 인지는 태생적으로 연상적(Associative)입니다. 긴 글을 쓸 때, 인간 작가는 관련 하위 주제, 곁가지로 빠진 생각, 또는 개인적인 일화들을 자연스럽게 넘나들며(표류하며), 글의 의미론적 초점이 끊임없이 유기적으로 진화하게 만듭니다. 반면, 생성형 AI 모델들은 어텐션 메커니즘(Attention mechanisms)이라는 사슬을 통해 최초의 프롬프트(Prompt)에 수학적으로 꽁꽁 묶여 있습니다. 그 결과, 이 모델들은 첫 문장부터 마지막 문장까지 핵심 주제에 대해 인위적일 정도로 빽빽하고 레이저처럼 집중된 일관성만을 징그럽게 유지하며, 인간의 사고에서 흔히 나타나는 자연스럽고 지저분한 '의미의 배회(Semantic wandering)'를 거의 보여주지 않습니다.",
+    "algorithm": "슬라이딩 윈도우(Sliding-Window) 기반 의미론적 표류 분석",
+    "mechanism": "알고리즘은 슬라이딩 윈도우(Sliding-Window) 기법을 사용하여 전체 텍스트를 연속적인 블록 체인으로 토막 냅니다. 그런 다음 각 조각마다 (BERT 모델이나 유사한 트랜스포머 인코더를 통해) 고밀도의 문맥 벡터 임베딩(Vector embeddings)을 부여합니다. 이후, 인접한 조각들 사이의 코사인 유사도(Cosine similarity) 흐름은 물론, 모든 개별 조각이 텍스트의 도입부(Thesis)와 얼마나 똑같이 닮았는지를 계산합니다. 모든 텍스트 조각에 걸쳐 비정상적으로 높고 미동조차 없는 균일한 코사인 유사도(의미론적 표류가 거의 '0'인 상태)를 기계적으로 유지하는 문서는, 융통성 없는 어텐션 윈도우(Attention window)에 갇힌 채 알고리즘이 토해낸 기계 생성물이라는 압도적인 증거입니다.",
+    "useCase": "인간의 자연스러운 주제 표류 현상이 이론적으로 가장 명확하게 드러나야만 하는 에세이, 심층 기사, 또는 수십 페이지짜리 기획 보고서 같은 장문(Long-form) 콘텐츠의 밑바닥을 파헤치는 데 소름 끼치도록 효과적입니다.",
+    "strengths": "• 피상적인 구문이나 문법 규칙의 껍데기가 아닌, 뼈대 그 자체인 지표적 '의미 벡터 표현'에 철저히 의존하므로, 텍스트가 어떤 언어로 작성되었든 무관하게(Language-agnostic) 작용하는 학술적 파괴력을 지닙니다.\n• 길고 종합적인 것처럼 보이도록 의도적으로 뻥튀기하여 생성된 AI 텍스트를 사냥하는 데 발군입니다. AI는 양을 늘리면서도 결국 자연스러운 주제의 진화를 이끌어내지 못한다는 태생적 한계를 스스로 폭로하기 때문입니다.",
+    "limitations": "• 인간이든 AI든 주제 표류를 보여줄 만한 시간적, 공간적 여유조차 없는 극단적으로 짧은 텍스트(200단어 미만) 앞에서는 무용지물입니다.\n• 절대적이고 흔들림 없는 칼 같은 주제 집중력을 요구하는 극도로 경직된 인간의 학술 논문, 딱딱한 기술 매뉴얼, 또는 고도로 구조화된 빳빳한 법률 문서 앞에서는 억울한 오탐지(False positives)를 발령할 수 있는 위험성이 존재합니다.",
+    "parameters": "분석 기준: 벡터 임베딩(Vector Embedding) 기반 유사도 지형 매핑\n측정 지표: 조각 간(Inter-Segment) 코사인 유사도 및 텍스트 전역(Global) 의미 분산\n출력: 0-100 인위적 주제 경직성(Artificial Topic Rigidity) 스코어",
+    "accuracy": "중상 — 장문 텍스트에서 75-85%의 준수한 적중률을 발휘합니다. 구조적 예측 가능성을 측정하는 다른 지표들과 '교차 검증'의 형태로 맞물려 터질 때, 그 파괴력은 극대화됩니다.",
     "references": [
         {
-            "title": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-            "url": "https://scholar.google.com/scholar?q=Bakhtin%20et%20al.%20(2019)%20-%20Real%20or%20Fake%3F%20Learning%20to%20Discriminate%20Machine%20from%20Human%20Text"
+            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Text. NeurIPS.",
+            "url": "https://arxiv.org/abs/1906.03351"
         },
         {
             "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
             "url": "https://arxiv.org/abs/1905.12616"
-        },
-        {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://doi.org/10.18653/v1/2020.coling-main.208"
         }
     ]
 }

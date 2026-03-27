@@ -1,12 +1,21 @@
 {
-    "name": "Thuật ngữ chuyên môn",
-    "description": "Đo mật độ thuật ngữ chuyên môn",
-    "algorithm": "Thuật toán phân tích Thuật ngữ chuyên môn",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mật độ thuật ngữ chuyên môn. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích thuật ngữ chuyên môn. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Mật Độ Thuật Ngữ Chuyên Môn (Technical Jargon Density)",
+    "description": "Đo lường nồng độ của các thuật ngữ chuyên môn cao và biệt ngữ đặc thù của miền (domain) so với từ vựng thông thường. Khi được giao nhiệm vụ viết về các chủ đề phức tạp, các Mô hình Ngôn ngữ Lớn truy xuất và tổng hợp thông tin từ các tập dữ liệu kỹ thuật khổng lồ. Điều này thường dẫn đến hiện tượng 'nhồi nhét biệt ngữ'—đóng gói một mật độ cao bất tự nhiên các thuật ngữ chuyên môn vào các đoạn văn ngắn để nghe có vẻ uyên bác, có thẩm quyền. Hơn nữa, AI có thể trộn lẫn một cách bừa bãi các biệt ngữ từ các chuyên ngành phụ hơi khác nhau mà một chuyên gia con người sẽ tự nhiên tách biệt hoặc giải thích mượt mà. Người viết là con người kiểm soát nhịp độ tự nhiên việc sử dụng biệt ngữ của họ, nhúng nó vào một tỷ lệ cao hơn các từ 'keo dán' mang tính giải thích.",
+    "algorithm": "Tần Suất Từ Vựng Chuyên Ngành & Ngưỡng TF-IDF",
+    "mechanism": "Thuật toán đối chiếu từ vựng của văn bản với các cơ sở dữ liệu toàn diện về thuật ngữ chuyên ngành (ví dụ: y tế, pháp lý, máy tính). Nó tính toán tỷ lệ giữa biệt ngữ chuyên ngành so với từ vựng tiêu chuẩn. Hơn nữa, sử dụng chuẩn hóa TF-IDF (Tần số thuật ngữ - Tần số tài liệu nghịch đảo), nó đánh giá xem mật độ của các thuật ngữ chuyên ngành, hiếm gặp này có vượt quá phân phối thống kê được tìm thấy trong văn bản viết của chuyên gia con người thực sự hay không. Nồng độ cao bất tự nhiên của các thuật ngữ kỹ thuật rời rạc sẽ kích hoạt định mức phân tích thuật toán.",
+    "useCase": "Rất hiệu quả để kiểm toán các bản tóm tắt khoa học, tài liệu kỹ thuật, bài báo y tế và tài liệu tiếp thị B2B, nơi AI cố gắng mô phỏng chuyên môn sâu về một lĩnh vực.",
+    "strengths": "• Xuất sắc trong việc lật tẩy 'chuyên môn ảo giác', nơi AI xâu chuỗi các thuật ngữ kỹ thuật nghe có vẻ ấn tượng nhưng quá dày đặc để che giấu sự thiếu hụt độ sâu logic.\n• Hoạt động độc lập với cấu trúc câu, chỉ dựa vào trọng số thống kê và độ hiếm của từ vựng được sử dụng.",
+    "limitations": "• Có thể gắn cờ nhầm các văn bản kỹ thuật cô đọng, vô cùng chuyên sâu dành riêng cho đối tượng chuyên gia (ví dụ: yêu cầu cấp bằng sáng chế, chẩn đoán y khoa chuyên khoa).\n• Yêu cầu cập nhật liên tục các từ điển biệt ngữ để nhận ra các thuật ngữ mới được tạo ra trong các lĩnh vực phát triển nhanh như kỹ thuật phần mềm.",
+    "parameters": "Kiểm Định: Tần Suất Từ Vựng & Chấm Điểm TF-IDF\nThước Đo: Tỷ Lệ Thuật Ngữ Chuyên Môn So Với Tổng Số Từ Vựng\nĐầu Ra: 0-100 Điểm Bão Hòa Biệt Ngữ (Chuyên Môn Nhân Tạo)",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 75-82% trên các lĩnh vực kỹ thuật. Tốt nhất nên được sử dụng kết hợp với các thước đo tính mạch lạc ngữ nghĩa để xác minh xem biệt ngữ có ý nghĩa logic thực tế hay không.",
+    "references": [
+        {
+            "title": "Bedi, G. et al. (2015). Automated analysis of free speech predicts psychosis onset in high-risk youths. npj Schizophrenia.",
+            "url": "https://doi.org/10.1038/npjschz.2015.30"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

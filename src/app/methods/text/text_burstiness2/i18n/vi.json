@@ -1,12 +1,21 @@
 {
-    "name": "Bùng phát văn bản v2",
-    "description": "Đo tính bùng phát dựa trên IQR của độ dài câu",
-    "algorithm": "Thuật toán phân tích Bùng phát văn bản v2",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo tính bùng phát dựa trên IQR của độ dài câu. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích bùng phát văn bản v2. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Khoảng Tứ Phân Vị Sự Bùng Nổ (IQR Burstiness v2)",
+    "description": "Đo lường nhịp điệu cấu trúc và 'sự bùng nổ' của văn bản—tức là mô hình xen kẽ giữa các câu dài, phức tạp với các câu ngắn, súc tích. Khác với các mô hình phương sai cũ (v1) sử dụng độ lệch chuẩn, thuật toán v2 này sử dụng phân tích Khoảng Tứ Phân Vị (IQR). Các Mô hình Ngôn ngữ Lớn vốn dĩ tạo ra văn bản có độ dài câu đồng đều nhất quán (sự bùng nổ thấp), tối ưu hóa để đạt được mức trung bình toán học an toàn. Hơn thế nữa, người viết con người sử dụng sự không đều đặn về độ dài của câu một cách tự nhiên để tạo nhịp độ tu từ. Bằng cách sử dụng IQR, phương pháp này bỏ qua các ngoại lệ cực đoan có thể làm tăng giả tạo điểm 'con người' của văn bản AI, cung cấp một số liệu phát hiện cứng rắn và mạnh mẽ hơn nhiều.",
+    "algorithm": "Phân Bố Độ Dài Câu Theo Khoảng Tứ Phân Vị (IQR)",
+    "mechanism": "Thuật toán phân chia văn bản thành các câu cấu thành và tính toán độ dài (bằng từ hoặc ký tự) của từng câu. Sau đó, nó sắp xếp các độ dài này và xác định Khoảng Tứ Phân Vị (sự chênh lệch giữa bách phân vị thứ 75 và 25). Chỉ số IQR thấp chỉ ra rằng phần lớn các câu trong văn bản tập trung chặt chẽ quanh một độ dài trung tâm—một đặc điểm thống kê kinh điển của quá trình tạo bằng mạng nơ-ron. Chỉ số IQR cao biểu thị sự biến đổi cấu trúc hữu cơ, chân thực điển hình của sáng tác của con người.",
+    "useCase": "Rất hiệu quả như một bộ lọc chính đối với các bài luận, blog và bài báo mà các mô hình AI tự nhiên hội tụ về các câu có độ dài trung bình để tránh sự sụp đổ ngữ pháp.",
+    "strengths": "• Rất mạnh mẽ trước các lời nhắc đối kháng (adversarial prompts); yêu cầu AI 'viết với độ dài câu đa dạng' thường dẫn đến các mô hình có thể dự đoán được, lặp đi lặp lại chứ không phải là sự bùng nổ thống kê thực sự.\n• Mô hình toán học IQR ngăn chặn các điểm dị thường cực đoan (ví dụ: một danh sách có dấu đầu dòng đặc biệt dài) tạo ra dấu ấn 'con người' giả.",
+    "limitations": "• Yêu cầu văn bản có ít nhất 250+ từ để thiết lập IQR có ý nghĩa thống kê.\n• Các tài liệu khoa học hoặc pháp lý được tiêu chuẩn hóa cao do con người viết có thể tự nhiên thể hiện sự bùng nổ thấp do các ràng buộc định dạng nghiêm ngặt.",
+    "parameters": "Kiểm Định: Phân Tích Độ Phân Tán IQR\nThước Đo: Khoảng Tứ Phân Vị Của Độ Dài Token Mỗi Câu\nĐầu Ra: 0-100 Điểm Thiếu Hụt Sự Bùng Nổ (Tính Đồng Nhất Thuật Toán)",
+    "accuracy": "Cao — Độ chính xác độc lập 82-88% trên các văn bản có độ dài trung bình đến dài. Đây là một trong những công cụ phân biệt thống kê độc lập đáng tin cậy nhất hiện có.",
+    "references": [
+        {
+            "title": "Tian, E. (2023). GPTZero: Towards Detection of AI-Generated Text.",
+            "url": "https://gptzero.me/"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ]
 }

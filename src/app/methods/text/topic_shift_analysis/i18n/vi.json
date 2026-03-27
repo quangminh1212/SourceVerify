@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích chuyển chủ đề",
-    "description": "Phân tích mẫu chuyển đổi chủ đề",
-    "algorithm": "Thuật toán phân tích Phân tích chuyển chủ đề",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu chuyển đổi chủ đề. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích phân tích chuyển chủ đề. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân Tích Chuyển Đổi Chủ Đề (Topic Shift Analysis)",
+    "description": "Phân tích nhịp độ thống kê và cơ chế định tính về cách một văn bản chuyển tiếp giữa các khái niệm hoặc ý tưởng khác nhau. Nhận thức của con người có tính liên tưởng rất cao; những người viết là con người thường xuyên thực hiện các bước nhảy đột ngột, phi tuyến tính giữa các chủ đề, đi từ dữ liệu thực nghiệm sang một giai thoại cá nhân, hoặc đột ngột xoay chiều một lập luận mà không có cảnh báo chính thức. Tuy nhiên, các mô hình AI tạo sinh bị phạt về mặt thống kê đối với các bước nhảy ngữ nghĩa đột ngột. Để duy trì sự gắn kết trên các cửa sổ token dài, AI tạo ra các chuyển đổi chủ đề mượt mà một cách thiếu tự nhiên, được báo hiệu dày đặc, phụ thuộc quá nhiều vào các cụm từ chuyển tiếp chính thức để làm cầu nối giữa các khái niệm.",
+    "algorithm": "Phát Hiện Chuyển Hướng Ngữ Nghĩa & Chấm Điểm Mật Độ Chuyển Tiếp",
+    "mechanism": "Thuật toán phân đoạn văn bản và tính toán khoảng cách ngữ nghĩa giữa các đoạn hoặc câu liền kề bằng cách sử dụng nhúng vector. Đồng thời, nó quét các khuôn khổ 'cầu nối' chuyển tiếp (ví dụ: 'Hơn nữa', 'Chuyển sự chú ý của chúng ta sang', 'Theo một hướng tương tự'). Một văn bản thể hiện khoảng cách ngữ nghĩa rất thấp giữa các phân đoạn (cho thấy sự trơn tru tột độ) kết hợp với mật độ cao các cụm từ chuyển tiếp chính thức được đánh dấu là rất đáng ngờ. Ngược lại, phương sai ngữ nghĩa cao giữa các phân đoạn liền kề mà không có ngôn ngữ cầu nối chính thức là một chỉ báo mạnh mẽ về phong cách viết liên tưởng của con người.",
+    "useCase": "Rất hiệu quả để phân tích nội dung dạng dài, tiểu luận và các báo cáo đa khía cạnh để xác định xem luồng tường thuật có cảm giác 'quá hoàn hảo' hoặc được làm mượt bằng toán học hay không.",
+    "strengths": "• Có khả năng phát hiện 'thung lũng kỳ lạ' (uncanny valley) trong luồng viết của AI, nơi văn bản hoàn hảo về mặt kỹ thuật nhưng thiếu tính liên tưởng tự nhiên, hơi hỗn loạn của luồng suy nghĩ con người.\n• Khả năng chống chịu cao với việc diễn giải lại cơ bản, vì nhịp độ cơ bản của việc chuyển đổi chủ đề là một đặc điểm cấu trúc của tài liệu.",
+    "limitations": "• Dễ bị dương tính giả (false positives) trên các văn bản của con người đã được các biên tập viên chuyên nghiệp chỉnh sửa nhiều để thực thi luồng cấu trúc và sự trơn tru nghiêm ngặt.\n• Kém hiệu quả trên các văn bản quá ngắn, nơi sự chuyển đổi chủ đề không xảy ra một cách tự nhiên.",
+    "parameters": "Kiểm Định: Theo Dõi Khoảng Cách Ngữ Nghĩa Giữa Các Phân Đoạn\nThước Đo: Tần Suất Xảy Ra Chuyển Đổi Chủ Đề Đột Ngột So Với Có Cầu Nối\nĐầu Ra: 0-100 Điểm Chuyển Tiếp Nhân Tạo",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 73-82%. Được sử dụng tốt nhất như một công cụ phát hiện bất thường cấu trúc kết hợp với các chỉ số phức tạp cú pháp và từ vựng.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Hearst, M.A. (1997). TextTiling: Segmenting Text into Multi-paragraph Subtopic Passages. Computational Linguistics.",
+            "url": "https://aclanthology.org/J97-1003/"
+        }
+    ]
 }

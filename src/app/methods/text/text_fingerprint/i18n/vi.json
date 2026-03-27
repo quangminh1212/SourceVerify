@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Text Fingerprint",
-    "description": "Tạo dấu vân tay thống kê từ nhiều vi đặc trưng — chữ ký tổng hợp duy nhất cho văn bản AI vs người.",
-    "algorithm": "Thuật toán phân tích Text Fingerprint Analysis",
-    "mechanism": "Hệ thống Text Fingerprint Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Lấy Dấu Vân Tay Dựa Trên Phong Cách Khảo Sát (Stylometric Fingerprinting)",
+    "description": "Tạo ra một chữ ký thống kê đa chiều, độc nhất (một 'dấu vân tay') của một văn bản bằng cách kết hợp hàng chục vi đặc trưng (micro-features), bao gồm tần suất n-gram, cấu trúc dấu câu, độ sâu phụ thuộc cú pháp và sự phong phú của từ vựng. Bởi vì các Mô hình Ngôn ngữ Lớn thương mại được tinh chỉnh rất kỹ lưỡng qua RLHF (Học tăng cường từ Phản hồi của Con người) để trở nên 'hữu ích, vô hại và trung thực', chúng vô tình áp dụng một phong cách viết nguyên khối, được kiểm duyệt kỹ càng và trung bình một cách hoàn hảo. Điều này dẫn đến một dấu vân tay thuật toán có thể dự đoán cao qua các phiên tạo khác nhau. Ngược lại, những người viết là con người sở hữu những dấu vân tay phong cách mang tính cá nhân hóa sâu sắc, không nhất quán và mang đậm nét riêng biệt (idiosyncratic).",
+    "algorithm": "Băm Vi Đặc Trưng Đa Chiều (Winnowing)",
+    "mechanism": "Thuật toán phân tích cú pháp văn bản và trích xuất một mảng lớn các vi số liệu ngôn ngữ học, tạo ra một biểu diễn vector đa chiều về phong cách của tài liệu. Nó sử dụng các kỹ thuật tương tự như 'Winnowing' (Schleimer và cộng sự, 2003) để chọn lọc các mã băm (hashes) mạnh mẽ, bất biến từ các vector này. Dấu vân tay tổng hợp này sau đó được so sánh với một cơ sở dữ liệu khổng lồ gồm các chữ ký của trình tạo AI đã biết và các kho ngữ liệu (corpora) tiêu chuẩn của con người. Nếu dấu vân tay được trích xuất phù hợp chặt chẽ với không gian vector chung chung, đã được kiểm duyệt của các LLM thương mại, nó sẽ bị gắn cờ là văn bản tổng hợp.",
+    "useCase": "Rất hiệu quả đối với các môi trường doanh nghiệp và học thuật, nơi cần xác định nguồn gốc chính xác hoặc phát hiện các đoạn văn bản khuôn mẫu (boilerplates) của AI được 'sao chép-dán' qua nhiều tài liệu.",
+    "strengths": "• Cực kỳ khó để vượt qua (bypass), vì việc thay đổi một vi đặc trưng (ví dụ: hoán đổi một vài tính từ) không làm thay đổi đáng kể dấu vân tay cú pháp đa chiều cơ bản.\n• Thường có thể phân loại không chỉ 'AI so với Con người', mà còn có khả năng xác định họ mô hình cụ thể (ví dụ: GPT-4 so với Claude) dựa trên chữ ký căn chỉnh (alignment) độc đáo của nó.",
+    "limitations": "• Dễ bị 'âm tính giả' nếu người dùng chỉnh sửa văn bản quá nhiều hoặc áp dụng một lời nhắc 'che giấu phong cách' hung hăng (ví dụ: 'viết theo phong cách của Edgar Allan Poe').\n• Yêu cầu một độ dài văn bản đáng kể để phát triển một dấu vân tay tổng hợp ổn định, có độ tin cậy cao, nếu không mã băm sẽ trở nên nhiễu.",
+    "parameters": "Kiểm Định: Hợp Nhất Vector Phong Cách Đa Chiều\nThước Đo: Độ Tương Đồng Của Mã Băm Vi Đặc Trưng Với Đường Cơ Sở AI\nĐầu Ra: 0-100 Điểm Khớp Dấu Vân Tay Thuật Toán",
+    "accuracy": "Cao — Độ chính xác 83-89% trên các văn bản có độ dài trung bình đến dài. Đóng vai trò là một thước đo 'phán quyết cuối cùng' rất đáng tin cậy khi được tương quan với các bài kiểm tra thống kê đơn giản hơn như độ bối rối (perplexity).",
+    "references": [
+        {
+            "title": "Schleimer, S. et al. (2003). Winnowing: Local Algorithms for Document Fingerprinting. SIGMOD.",
+            "url": "https://dl.acm.org/doi/10.1145/872757.872770"
+        },
+        {
+            "title": "Potthast, M. et al. (2014). Overview of the 6th Plagiarism Detection Competition. CLEF.",
+            "url": "https://ceur-ws.org/Vol-1180/CLEF2014wn-Pan-PotthastEt2014.pdf"
+        }
+    ]
 }

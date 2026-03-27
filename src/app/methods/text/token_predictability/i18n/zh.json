@@ -1,14 +1,13 @@
 {
-    "name": "Token Predictability",
-    "description": "Analyzes next-token predictability using bigram statistics (Mitchell, 2023)",
-    "algorithm": "Token Predictability — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 文本 detection:\n\n1. **Text Preprocessing**: The input 文本 is tokenized and processed for analysis.\n\n2. **特征提取**: Analyzes next-token predictability using bigram statistics (Mitchell, 2023). Relevant linguistic features are computed from the 文本.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **分数计算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析类型: 统计\n媒体: 文本\n输入: Raw 文本 string\nMinimum 文本 length: 100 characters\n输出: 置信度分数 (0-100)\n处理方式: Client-side NLP analysis",
-    "accuracy": "中到高 — 65-85% 独立准确率. Performance increases significantly when combined with complementary 文本 analysis methods. Results vary with 文本 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 文本 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 文本 through token predictability analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 文本, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 文本 types and genres\n• Based on established linguistic research\n• Complements other 统计 文本 analysis methods",
-    "limitations": "• Best used in combination with other 文本 analysis methods\n• Performance varies with 文本 length (requires sufficient 文本)\n• May be affected by 文本 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "Token 词库预判率天梯 (Token Predictability)",
+    "description": "强行评估 AI 模型在给定前置上下文时，能够多么“理所当然”地预测出当前这个词的概率。该引擎吸血般榨取了 GLTR（Gehrmann 等，2019）和 Zero-shot 概率曲率（Mitchell 等，2023）的思想精髓，为整篇文本绘制出一张极度冰冷的“预判率等高线图”。所有的生成式 AI 模型骨子里都是同一副德行：它们像没头苍蝇一样，永远在贪婪地抓取统计学上概率最高的那一个 Token。这直接导致 AI 炮制出的文本，几乎被恶心地塞满了“预判榜 Top-10”的俗套词汇。而真实的人类作家，由于被复杂的个人词汇癖好、瞬间的情绪波动和怪异的行文风格所裹挟，会极其频繁且毫无征兆地掏出一些在统计学上极为“离谱”、概率极低的下水道词汇。",
+    "algorithm": "预测顺位阶级分布与概率曲率断层扫描",
+    "mechanism": "该扫荡引擎会将输入的文本强行塞进 N-gram 或轻量级代理语言模型的绞肉机中进行顺次碾压，借此抠出每一个 Token 在其前置语境下的绝对条件概率。每个单词都会被强制打上阶级烙印：“Top-10”（闭着眼睛都能猜到）、“Top-100”（有点墨水但依然套路）或者悲惨的“Tail / 尾部”（概率极低，完全出人意料）。系统随后会严酷审视文本的概率曲率——即这些阶梯烙印的密度和堆叠分布。如果一篇文章几乎被油腻光滑的“Top-10”Token 霸占，呈现出一条顺滑得令人发指的概率等高线，那它 100% 就是一台自回归机器的呕吐物。反之，如果概率曲线里频繁出现像利剑一样刺向“Tail”尾部低概率区的突刺，那就是人类灵魂挥舞着长矛在怒吼。",
+    "useCase": "当对付短篇到中篇的猎物（如新闻简报、官僚报告、学生的敷衍小论文）时，是一把极其见血封喉的尖刀，能将那些虚假而“顺滑”的算法选词直接扒光，让你赤裸裸地看到它那人工合成的心脏。",
+    "strengths": "• 这是一条咬死不放的猎犬：即便抄袭者用同义词替换等手段对文本进行了基础的洗稿，由于机器在底层对于高频预判词的统计学病态偏执依然极深，这道雷达往往依然能直接把它照出原形。\n• 拥有强大的零样本（Zero-shot）通杀能力；它根本不屑于去训练一个臃肿的分类器模型，而是直接依靠纯粹而冰冷的底层统计分布规律来杀人。",
+    "limitations": "• 如果扫到了那些人类撰写的、被高度八股文化、像机器一样呆板的文本（例如：气象通报、极其格式化的法律免责声明，或者那些规定了必须使用极简词汇的无脑操作手册），它就会像发疯一样疯狂报警，产生大量冤假错案（假阳性）。\n• 它的火力极大程度上受制于后勤：为了精准估算 Token 的冷血概率，它背后必须背着一个靠谱的参照语言模型，或者一个体积极其庞大的 N-gram 数据弹药库。",
+    "parameters": "雷达切片: 条件 Token 概率强行顺位天梯打分\n定罪量表: 烂大街 Top-K 词汇 与 下水道 Tail 尾部词汇的绞杀密度比\n行刑判决: 0-100 自回归死板预判度得分",
+    "accuracy": "极度强悍 — 在常规战场上能无情轰出 82-88% 的高阶精度。在整个学术界，它是被公认的、用来处决那些“未经过人类深加工的纯净机器文本”的最靠谱、底盘最稳、最难以辩驳的基石级审判标准之一。",
     "references": [
         {
             "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",

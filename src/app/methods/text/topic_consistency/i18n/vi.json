@@ -1,26 +1,21 @@
 {
-    "name": "Nhất quán Chủ đề",
-    "description": "Đo tính nhất quán chủ đề trong toàn bộ văn bản.",
-    "useCase": "Phát hiện văn bản AI qua chủ đề nhất quán bất thường",
-    "mechanism": "So sánh phân bố histogram giữa các đoạn nội dung bằng cosine similarity. Văn bản AI duy trì tín hiệu chủ đề cực kỳ nhất quán.",
-    "accuracy": "Trung bình-Cao - 75-85%",
-    "source": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-    "algorithm": "Phân tích Phân bố Thống kê + Phát hiện Mẫu",
-    "parameters": "Kích thước cửa sổ: tự thích ứng, Lượng tử hóa: 8-64 mức, Chỉ số: entropy, CV, tương quan",
-    "strengths": "- Hiệu quả phát hiện văn bản AI\n- Tiếp cận thống kê không phụ thuộc ngôn ngữ\n- Hoạt động với mọi độ dài văn bản\n- Chi phí tính toán thấp",
-    "limitations": "- Kém hiệu quả trên văn bản AI đã chỉnh sửa\n- Nội dung chuyên ngành có thể gây báo sai\n- Văn bản ngắn cho tín hiệu kém tin cậy\n- Hiệu suất thay đổi theo phong cách viết",
+    "name": "Tính Nhất Quán Chủ Đề Ngữ Nghĩa (Semantic Topic Consistency)",
+    "description": "Đo lường mức độ 'trôi dạt chủ đề' (topic drift) hoặc phương sai ngữ nghĩa trên toàn bộ tài liệu. Tư duy của con người vốn dĩ mang tính liên tưởng; khi viết một văn bản dài, các tác giả con người thường chuyển đổi tự nhiên qua các chủ đề phụ có liên quan, những suy nghĩ lan man hoặc giai thoại cá nhân, khiến trọng tâm ngữ nghĩa liên tục thay đổi. Ngược lại, các mô hình AI tạo sinh được neo chặt về mặt toán học vào lời nhắc (prompt) ban đầu của chúng thông qua các cơ chế chú ý (attention mechanisms). Do đó, chúng duy trì sự nhất quán tập trung cao độ, cứng nhắc một cách giả tạo vào chủ đề cốt lõi từ câu đầu tiên đến câu cuối cùng, hiếm khi thể hiện sự lang thang ngữ nghĩa lộn xộn, tự nhiên đặc trưng cho suy nghĩ của con người.",
+    "algorithm": "Phân Tích Trôi Dạt Ngữ Nghĩa Cửa Sổ Trượt (Sliding-Window)",
+    "mechanism": "Thuật toán phân đoạn văn bản thành các khối liên tục bằng cách sử dụng phương pháp cửa sổ trượt. Nó tạo ra các nhúng vector dày đặc (dense vector embeddings - ví dụ: thông qua BERT hoặc các bộ mã hóa transformer tương tự) cho mỗi phân đoạn. Sau đó, nó tính toán chuỗi độ tương đồng cosine giữa các đoạn liền kề, cũng như độ tương đồng của mọi phân đoạn quay trở lại luận điểm mở đầu. Một văn bản duy trì độ tương đồng cosine đặc biệt cao và đồng đều trên tất cả các phân đoạn (độ trôi dạt ngữ nghĩa gần như bằng 0) đặc biệt cho thấy việc tạo bằng thuật toán bị ràng buộc bởi một cửa sổ chú ý cứng nhắc.",
+    "useCase": "Rất hiệu quả để phân tích nội dung dạng dài, chẳng hạn như bài luận, bài báo hoặc báo cáo nhiều trang, nơi mà quá trình trôi dạt chủ đề tự nhiên của con người về mặt lý thuyết sẽ rõ ràng nhất.",
+    "strengths": "• Phương pháp bất khả tri ngôn ngữ (Language-agnostic), vì nó dựa trên các biểu diễn vector ngữ nghĩa cơ bản thay vì luật cú pháp hoặc ngữ pháp.\n• Đặc biệt xuất sắc trong việc bắt các văn bản AI được cố tình tạo ra để trông có vẻ dài và toàn diện, vì AI sẽ vô tình để lộ sự thiếu hụt quá trình tiến triển chủ đề tự nhiên của nó.",
+    "limitations": "• Không hiệu quả trên các văn bản quá ngắn (dưới 200 từ), nơi mà cả con người lẫn AI đều không có đủ không gian để thể hiện sự trôi dạt chủ đề.\n• Có thể tạo ra dương tính giả trên các bài báo học thuật chuyên sâu của con người, sách hướng dẫn kỹ thuật hoặc các tài liệu pháp lý có cấu trúc đòi hỏi sự tập trung chủ đề tuyệt đối, kiên định.",
+    "parameters": "Kiểm Định: Lập Bản Đồ Tương Đồng Nhúng Vector\nThước Đo: Độ Tương Đồng Cosine Giữa Các Phân Đoạn & Phương Sai Ngữ Nghĩa Toàn Cầu\nĐầu Ra: 0-100 Điểm Cứng Nhắc Chủ Đề Nhân Tạo",
+    "accuracy": "Trung bình đến Cao — 75-85% trên văn bản dạng dài. Cực kỳ mạnh mẽ khi được tương quan với các số liệu khả năng dự đoán cấu trúc.",
     "references": [
         {
-            "title": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-            "url": "https://scholar.google.com/scholar?q=Bakhtin%20et%20al.%20(2019)%20-%20Real%20or%20Fake%3F%20Learning%20to%20Discriminate%20Machine%20from%20Human%20Text"
+            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Text. NeurIPS.",
+            "url": "https://arxiv.org/abs/1906.03351"
         },
         {
             "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
             "url": "https://arxiv.org/abs/1905.12616"
-        },
-        {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://doi.org/10.18653/v1/2020.coling-main.208"
         }
     ]
 }

@@ -1,26 +1,21 @@
 {
-    "name": "Phân tích biểu thức thời gian",
-    "description": "Phân tích biểu thức thời gian và nhất quán thì động từ để phát hiện văn bản AI qua lỗi suy luận thời gian.",
-    "useCase": "Phát hiện văn bản AI qua dấu hiệu thời gian không nhất quán và thay đổi thì động từ",
-    "mechanism": "Trích xuất biểu thức thời gian (ngày tháng, khoảng thời gian, tham chiếu tương đối như 'gần đây', 'năm ngoái') và theo dõi thì động từ trong văn bản. Phân tích mạch lạc thời gian bằng kiểm tra nhất quán logic giữa dấu hiệu thời gian và thì động từ. Văn bản AI đôi khi tạo không nhất quán thời gian—trộn tham chiếu quá khứ và hiện tại mà không có tín hiệu diễn ngôn rõ ràng.",
-    "accuracy": "Trung bình - 69-79% trên văn bản tường thuật và tin tức",
-    "source": "Verhagen, M. et al. (2007) - SemEval-2007 TempEval, SemEval",
-    "algorithm": "Temporal Expression Extraction + Tense Chain Analysis + Temporal Coherence Scoring",
-    "parameters": "Trích xuất: quy tắc + neural, Theo dõi thì: theo mệnh đề, Mạch lạc: nhất quán đồ thị thời gian, Loại: DATE/TIME/DURATION/SET",
-    "strengths": "• Nắm bắt lỗi suy luận thời gian đặc trưng AI\n• Hiệu quả trên miền tường thuật và tin tức\n• Phát hiện không nhất quán logic tinh vi\n• Bổ sung phân tích cấp ngữ nghĩa",
-    "limitations": "• Phức tạp để triển khai đáng tin cậy\n• Một số văn bản cố ý dùng chuyển đổi thời gian\n• LLM hiện đại cải thiện suy luận thời gian\n• Mẫu biểu thức thời gian theo ngôn ngữ",
+    "name": "Tính Mạch Lạc Về Thời Gian (Temporal Coherence)",
+    "description": "Phân tích tính nhất quán logic của các biểu thức thời gian (ví dụ: ngày tháng, thời lượng, các mốc thời gian tương đối như 'hôm qua' hoặc 'sau đó') và sự chuyển đổi thì của động từ trên toàn bộ tài liệu. Mặc dù các Mô hình Ngôn ngữ Lớn xuất sắc về ngữ pháp cục bộ, nhưng chúng thiếu nền tảng theo trình tự thời gian nội bộ thực sự của các sự kiện mà chúng tạo ra. Điều này thường dẫn đến 'ảo giác thời gian' tinh vi trong các văn bản dài—chuyển đổi thì của động từ một cách không phù hợp giữa các đoạn văn, tạo ra các dòng thời gian nghịch lý hoặc sắp xếp sai các mốc thời gian tương đối (ví dụ: sử dụng 'gần đây' cùng với động từ ở thì tương lai). Người viết (con người) tự nhiên phóng chiếu và duy trì một dòng thời gian liên kết, mạch lạc trong tâm trí của câu chuyện.",
+    "algorithm": "Khai Thác Biểu Thức Thời Gian & Phân Tích Chuỗi Thì",
+    "mechanism": "Thuật toán trích xuất tất cả các thực thể thời gian (NGÀY, THỜI GIAN, THỜI LƯỢNG, TẬP HỢP) và lập bản đồ tỉ mỉ các thì của động từ được gắn với chúng trong toàn bộ văn bản. Nó xây dựng một biểu đồ quan hệ thời gian để kiểm tra tính nhất quán logic. Nếu hệ thống phát hiện các chuỗi không thể xảy ra (ví dụ: một sự kiện xảy ra 'sau' một điểm được thiết lập làm điểm kết thúc theo trình tự thời gian) hoặc sự chuyển đổi hỗn loạn, không có động cơ rõ ràng giữa các thì quá khứ, hiện tại và tương lai, văn bản đó sẽ bị gắn cờ là thiếu sự hiểu biết thực sự về trình tự thời gian.",
+    "useCase": "Rất hiệu quả để kiểm toán các bài luận lịch sử, báo cáo tin tức, tóm tắt tiểu sử và dòng thời gian dự án, nơi yêu cầu độ chính xác nghiêm ngặt theo trình tự thời gian.",
+    "strengths": "• Phát hiện những thất bại cơ bản trong việc lập mô hình thế giới mà các mô hình AI phải vật lộn để vượt qua, ngay cả với các lời nhắc (prompt) nâng cao.\n• Xuất sắc trong việc bắt các ảo giác của AI trong các báo cáo thực tế và việc tạo ra dòng thời gian được bản địa hóa.",
+    "limitations": "• Phức tạp về mặt tính toán để xây dựng các biểu đồ thời gian chính xác.\n• Có thể tạo ra kết quả dương tính giả đối với văn bản sáng tạo hoặc văn học tiên phong cố ý sử dụng các câu chuyện phi tuyến tính hoặc hồi tưởng (flashback).\n• Các LLM hiện đại (như GPT-4) đã cải thiện đáng kể khả năng suy luận thời gian tầm ngắn của chúng.",
+    "parameters": "Kiểm Định: Tính Nhất Quán Của Biểu Đồ Thời Gian & Theo Dõi Thì Động Từ\nThước Đo: Tỷ Lệ Nghịch Lý Thời Gian & Sai Lệch Thì Động Từ\nĐầu Ra: 0-100 Điểm Không Mạch Lạc Thời Gian (Ảo Giác Dòng Thời Gian)",
+    "accuracy": "Trung bình — Độ chính xác 69-79%. Hoạt động tốt nhất trên các văn bản tự sự và tin tức nơi thời gian trôi qua theo tuyến tính; kém hiệu quả hơn trên các văn bản lý thuyết hoặc triết học trừu tượng.",
     "references": [
         {
-            "title": "Verhagen, M. et al. (2007). SemEval-2007 TempEval. SemEval.",
+            "title": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.",
             "url": "https://doi.org/10.3115/1621474.1621488"
         },
         {
-            "title": "Ning, Q. et al. (2019). Improved Neural Baseline for Temporal Relation Extraction. NAACL.",
+            "title": "Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL.",
             "url": "https://doi.org/10.18653/v1/N19-1112"
-        },
-        {
-            "title": "Krishna, K. et al. (2024). Paraphrasing Evades Detectors. NAACL.",
-            "url": "https://arxiv.org/abs/2303.13408"
         }
     ]
 }

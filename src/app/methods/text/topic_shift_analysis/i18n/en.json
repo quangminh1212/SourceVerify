@@ -1,22 +1,21 @@
 {
     "name": "Topic Shift Analysis",
-    "description": "Analyzes topic transition patterns",
-    "algorithm": "Topic Shift Analysis — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated text detection:\n\n1. **Text Preprocessing**: The input text is tokenized and processed for analysis.\n\n2. **Feature Extraction**: Analyzes topic transition patterns. Relevant linguistic features are computed from the text.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "Analysis type: statistical\nMedia: text\nInput: Raw text string\nMinimum text length: 100 characters\nOutput: Confidence score (0-100)\nProcessing: Client-side NLP analysis",
-    "accuracy": "Moderate to High — 65-85% standalone accuracy. Performance increases significantly when combined with complementary text analysis methods. Results vary with text length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated text detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated text through topic shift analysis analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated text, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various text types and genres\n• Based on established linguistic research\n• Complements other statistical text analysis methods",
-    "limitations": "• Best used in combination with other text analysis methods\n• Performance varies with text length (requires sufficient text)\n• May be affected by text language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "description": "Analyzes the statistical pacing and qualitative mechanics of how a text transitions between different concepts or ideas. Human cognition is highly associative; human writers frequently make abrupt, non-linear jumps between topics, moving from empirical data to a personal anecdote, or suddenly pivoting an argument without formal warning. Generative AI models, however, are statistically penalized for abrupt semantic jumps. To maintain coherence across long token windows, AI generates unnaturally smooth, heavily signposted topic shifts, relying aggressively on formal transitional phrases to bridge concepts.",
+    "algorithm": "Semantic Pivot Detection & Transition Density Scoring",
+    "mechanism": "The algorithm segments the text and computes the semantic distance between adjacent paragraphs or sentences using vector embeddings. It simultaneously scans for transitional 'bridge' frameworks (e.g., 'Furthermore', 'Turning our attention to', 'In a similar vein'). A text that exhibits very low semantic distance between segments (indicating extreme smoothness) coupled with a high density of formal transitional phrases is marked as highly suspicious. Conversely, high semantic variance between adjacent segments without formal bridging language is a strong indicator of human associative writing.",
+    "useCase": "Highly effective for analyzing long-form content, essays, and multifaceted reports to determine whether the narrative flow feels 'too perfect' or mathematically smoothed out.",
+    "strengths": "• Capable of detecting the 'uncanny valley' of AI writing flow, where the text is technically flawless but lacks the natural, slightly chaotic associativity of human thought.\n• Highly resistant to basic paraphrasing, as the underlying pacing of topic transitions is a structural feature of the document.",
+    "limitations": "• Susceptible to false positives on human texts that have been heavily edited by professional copyeditors to enforce strict structural flow and smoothness.\n• Less effective on very short texts where topic shifts do not naturally occur.",
+    "parameters": "Analysis: Inter-Segment Semantic Distance Tracking\nMetric: Frequency of Abrupt vs. Bridged Topic Transitions\nOutput: 0-100 Transition Artificiality Score",
+    "accuracy": "Moderate to High — 73-82% accuracy. Best utilized as a structural anomaly detector in conjunction with lexical and syntactic complexity metrics.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Hearst, M.A. (1997). TextTiling: Segmenting Text into Multi-paragraph Subtopic Passages. Computational Linguistics.",
+            "url": "https://aclanthology.org/J97-1003/"
         }
     ]
 }

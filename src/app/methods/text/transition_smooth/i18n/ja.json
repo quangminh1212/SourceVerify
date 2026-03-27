@@ -1,22 +1,21 @@
 {
-    "name": "Transition Smoothness",
-    "description": "Analyzes paragraph transition smoothness",
-    "algorithm": "Transition Smoothness — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes paragraph transition smoothness. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through transition smoothness analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "移行（トランジション）の滑らかさ (Transition Smoothness)",
+    "description": "ある段落の終わりと次の段落の始まりの間の意味的な重複と語彙連鎖（レキシカルチェーン）の度合いを評価します。人間の書き手は、前の思考の結論（「レーマ」）から特定のエンティティ、概念、または同義語を新しい思考の始まり（「テーマ」）で参照することによって、自然にテーマの流れを維持します。人間のような短期記憶の連続性ではなく、幅広い文脈的注意に依存する生成AIモデルは、多くの場合、これらの緊密な語彙連鎖を作成できません。代わりに、AIは、不十分な意味の重複を補うために、一般的な推移副詞（例：「前進して」、「さらに」）を積極的に挿入します。",
+    "algorithm": "境界を越えた語彙連鎖と意味的重複の分析",
+    "mechanism": "アルゴリズムは、段落の「尾」（最後の1〜2文）とその後の段落の「頭」（最初の1〜2文）を分離します。ベクトル埋め込みを使用して意味的な重複を計算し、直接的な語彙連鎖（主要な名詞、代名詞、または直接的な同義語の繰り返し）を監視します。段落の境界を越えて意味的な重複がほぼゼロであることを一貫して示しているにもかかわらず、ギャップを埋めるために公式な推移ワードに完全に依存しているテキストは、生成AIの可能性が非常に高いです。強制的な推移フレーズを必要としない高い意味的重複は、本物の人間の書いた文章であることを強く示唆しています。",
+    "useCase": "自然な流れが、単にバラバラのポイントを列挙するのではなく、直前のアイデアに基づいて構築することに依存している、複数の段落からなるエッセイ、記事、レポートの分析に最適です。",
+    "strengths": "• 人間のワーキングメモリが自然に思考を橋渡しする方法と、LLMが局所的な注意（アテンション）の境界を管理する方法との間にある、特定の認知的な限界を対象とします。\n• 意味的な重複は物語の流れに固有の構造的特性であるため、単語を置き換えるだけの単純な戦略に対して非常に強い耐性があります。",
+    "limitations": "• 段落が意図的にサイロ化されている、高度に構造化された箇条書きまたはモジュール式のドキュメント（技術仕様など）ではパフォーマンスが低下します。\n• 構成が不十分な、またはバラバラの「トピックセンテンス」に過度に依存している人間の文章をフラグする可能性があります。",
+    "parameters": "解析: 尾から頭への意味的重複\n評価基準: 語彙連鎖と一般的な副詞的橋渡しの密度\n出力結果: 0-100 推移の人工性スコア",
+    "accuracy": "中〜高 — 72-84%の精度。より広範なマクロレベルのトピック推移検出器を完全に補完する、非常に高精度な微細構造のメトリクスとして機能します。",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Hearst, M.A. (1997). TextTiling: Segmenting Text into Multi-paragraph Subtopic Passages. Computational Linguistics.",
+            "url": "https://aclanthology.org/J97-1003/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.",
+            "url": "https://link.springer.com/article/10.3758/s13428-015-0626-y"
         }
     ]
 }

@@ -1,22 +1,21 @@
 {
-    "name": "Topic Shift Analysis",
-    "description": "Analyzes topic transition patterns",
-    "algorithm": "Topic Shift Analysis — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes topic transition patterns. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through topic shift analysis analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "トピック推移分析 (Topic Shift Analysis)",
+    "description": "テキストが異なる概念やアイデアの間でどのように移行（トランジション）するかについて、統計的なペースと定性的なメカニズムを分析します。人間の認知は非常に連想的です。人間の書き手は、経験的データから個人的な逸話へと移動したり、正式な警告なしに突然議論の方向を変えたりするなど、トピック間で急激で非線形なジャンプを頻繁に行います。しかし、生成AIモデルは、急激な意味のジャンプに対して統計的なペナルティを受けます。長いトークンウィンドウ全体で一貫性を維持するために、AIは概念を橋渡しする公式な推移フレーズに激しく依存し、不自然に滑らかで、道標（サインポスト）が多すぎるトピックの推移を生成します。",
+    "algorithm": "意味的ピボットの検出と推移密度のスコアリング",
+    "mechanism": "アルゴリズムはテキストをセグメント化し、ベクトル埋め込みを使用して隣接する段落または文の間の意味的距離を計算します。同時に、推移的な「橋渡し（ブリッジ）」のフレームワーク（例：「さらに」、「注意を向けると」、「同様の傾向で」）をスキャンします。セグメント間の意味的距離が非常に短く（極端な滑らかさを示す）、公式な推移フレーズの密度が高いテキストは、非常に疑わしいとマークされます。逆に、公式な橋渡しの言語がないのに隣接するセグメント間の意味の分散が大きいことは、人間の連想的な文章の強力な指標です。",
+    "useCase": "長文のコンテンツ、エッセイ、多面的なレポートを分析して、物語の流れが「完璧すぎる」か、数学的に滑らかにされているかを判断するのに非常に効果的です。",
+    "strengths": "• テキストが技術的には完璧であるが、人間の思考の自然でわずかに混沌とした連想性を欠いている、AIの書く流れの「不気味の谷（uncanny valley）」を検出することができます。\n• トピック推移の根本的なペースはドキュメントの構造的特徴であるため、基本的な言い換え（パラフレーズ）に対して非常に強い耐性があります。",
+    "limitations": "• 厳密な構造の流れと滑らかさを強制するためにプロのコピーエディターによって大幅に編集された人間のテキストで偽陽性（誤検知）の影響を受けやすいです。\n• トピックの推移が自然に発生しない、非常に短いテキストでは効果が低くなります。",
+    "parameters": "解析: セグメント間の意味的距離の追跡\n評価基準: 急激なトピック推移と橋渡しされたトピック推移の頻度\n出力結果: 0-100 推移の人工性スコア",
+    "accuracy": "中〜高 — 73-82%の精度。語彙および構文の複雑さのメトリクスと組み合わせて、構造的な異常検出器として利用するのが最適です。",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Hearst, M.A. (1997). TextTiling: Segmenting Text into Multi-paragraph Subtopic Passages. Computational Linguistics.",
+            "url": "https://aclanthology.org/J97-1003/"
         }
     ]
 }

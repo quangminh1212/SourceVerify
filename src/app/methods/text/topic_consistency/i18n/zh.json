@@ -1,26 +1,21 @@
 {
-    "name": "主题一致性分析",
-    "description": "测量 主题一致性 throughout the text.",
-    "useCase": "通过不自然一致的主题检测AI文本",
-    "mechanism": "比较 直方图 分布s 之间 content segments using cosine similarity. AI text maintains extremely consistent topic signals throughout.",
-    "accuracy": "中-高 - 75-85%",
-    "source": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "窗口大小: 自适应, Quantization: 8-64 levels, Metrics: 熵, CV, 相关性",
-    "strengths": "- Effective for detecting AI生成的 text\n- Language-agnostic 统计 approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger 误报\n- Short texts provide less reliable signals\n- Performance varies 跨 写作风格s",
+    "name": "语义主题僵化度 (Semantic Topic Consistency)",
+    "description": "旨在冷血地测量整篇文档中的“主题漂移（Topic drift）”或语义发散方差。人类的大脑天生就是联想驱动的；当撰写长篇大论时，人类作家会不可抗拒地、极其自然地发散到相关的子主题、旁枝末节的思考或突然插播的个人轶事中去，导致文章的语义焦点像河流一样不断进化和蜿蜒。与之形成鲜明对比的是，生成式 AI 模型被它们底层的注意力机制（Attention mechanisms）死死地锁在了最初的提示词（Prompt）上。这种算法层面的思想钢印导致它们从第一句话到最后一句话，都维持着一种假到离谱的、像激光一样过度聚焦的核心主题一致性，极大概率丧失了人类思维中那种自然、混乱且充满跳跃感的主题漫游特征。",
+    "algorithm": "滑动窗口（Sliding-Window）语义漂移断层扫描",
+    "mechanism": "该扫荡引擎利用滑动窗口机制，将一整块文本无情地切割成连续的肉块。它为每一块肉（文本段）生成极其高维的密集词向量嵌入（Dense vector embeddings，例如通过 BERT 或同类的变压器编码器抽取芯核）。然后，它会严苛地计算相邻段落块之间的“余弦相似度（Cosine similarity）”链条，并交叉对比每一块文本回溯到开篇主旨的相似度。如果一篇文章在所有的切片上，都挂着极端反常、变态般均匀的超高余弦相似度（即语义漂移量无限趋近于零），这就构成了这篇文本全是一台被死板注意力窗口（Attention window）死死掐住脖子的算法机器呕吐出来的铁证。",
+    "useCase": "这套刑具在审问长篇巨著（如深度散文、长篇分析报道、或者长达几十页的注水报告）时是绝对的杀招。因为在这些领域，人类那散漫、随性的自然主题漂移原本应该暴露得最为彻底。",
+    "strengths": "• 这是一种完全无视语种壁垒（Language-agnostic）的底核战术，因为它根本不屑于去分析表层的语法或特定语种规则，而是直击全人类甚至全代码通用的底层语意向量矩阵。\n• 极其擅长扒光那些被故意提示“请写得长一点、全面一点”的 AI 洗稿文的画皮。因为不管 AI 怎么强行注水篇幅，它永远无法伪造出人类思维那种自然生长的、歪歪扭扭的主题进化树。",
+    "limitations": "• 当面对极度短小（通常字数低于 200 字）的快餐文本时，这把刀会彻底生锈失效——因为在这么小的空间里，无论活人还是机器，都没那个命去展示所谓的“主题漂移”。\n• 极容易引发误报（杀良冒功）：如果面对的是人类绞尽脑汁撰写的、本身就极其死板和要求绝对专注度的文献（比如：硬核学术论文枯燥的文献综述部分、干瘪的技术设备说明书、或者字句斟酌的严谨法律文书）。",
+    "parameters": "雷达切片: 向量嵌入（Vector Embedding）高维相似度轮廓映射\n定罪量表: 跨段落余弦相似度 与 全局语义漂移方差\n行刑判决: 0-100 人工合成式主题僵化度得分",
+    "accuracy": "中高级监控 — 在长文本阵地战中能够爆发出 75-85% 的锁定率。当它与评估深层结构的“结构预判度”探针形成火力交叉网时，杀伤力将呈指数级飙升。",
     "references": [
         {
-            "title": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-            "url": "https://scholar.google.com/scholar?q=Bakhtin%20et%20al.%20(2019)%20-%20Real%20or%20Fake%3F%20Learning%20to%20Discriminate%20Machine%20from%20Human%20Text"
+            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Text. NeurIPS.",
+            "url": "https://arxiv.org/abs/1906.03351"
         },
         {
             "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
             "url": "https://arxiv.org/abs/1905.12616"
-        },
-        {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://doi.org/10.18653/v1/2020.coling-main.208"
         }
     ]
 }

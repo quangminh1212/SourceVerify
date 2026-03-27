@@ -1,12 +1,21 @@
 {
-    "name": "Trang trọng văn bản",
-    "description": "Đo mức độ trang trọng văn bản",
-    "algorithm": "Thuật toán phân tích Trang trọng văn bản",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đo mức độ trang trọng văn bản. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích trang trọng văn bản. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Phân Tích Cấp Độ Trang Trọng (Register & Formality Analysis)",
+    "description": "Đánh giá ngữ vực (register) ngôn ngữ xã hội của một văn bản bằng cách đo lường sự tuân thủ của nó đối với các tiêu chuẩn học thuật hoặc chuyên môn trang trọng, lịch sự và khách quan. Các mô hình AI thương mại (như ChatGPT hoặc Claude) trải qua quá trình Học tăng cường từ Phản hồi của Con người (RLHF) nghiêm ngặt được thiết kế để làm cho chúng 'hữu ích, vô hại và trung thực'. Do đó, đầu ra mặc định của chúng luôn hướng tới một giọng điệu lịch sự tuyệt đối, cấu trúc cứng nhắc và vô cùng trang trọng. Văn bản của con người, ngay cả trong bối cảnh chuyên nghiệp, tự nhiên vẫn thể hiện những 'sự chuyển dịch ngữ vực'—những phút giây sa đà vào cách diễn đạt thông thường, dấu câu biểu cảm hoặc thành ngữ (idioms) thông dụng. Một văn bản duy trì điểm số trang trọng cực cao, kiên định một cách giả tạo mang đậm nét đặc trưng của việc tạo ra bằng máy móc.",
+    "algorithm": "Lập Hồ Sơ Ngữ Vực & Giọng Điệu Ngôn Ngữ Xã Hội",
+    "mechanism": "Bộ phân tích sử dụng trình gắn thẻ Từ loại (POS tagger) và một từ vựng chuyên dụng để quét các dấu hiệu ngữ vực. Nó trừ điểm khi có mặt các từ viết tắt (ví dụ: 'don't', 'can't'), tiếng lóng, thành ngữ, dấu câu biểu cảm (ví dụ: '!!!') và đại từ nhân xưng ngôi thứ nhất/thứ hai cho thấy giọng điệu thân mật hoặc trò chuyện. Nó thưởng điểm cho các cụm giới từ phức tạp, cấu trúc câu bị động và từ vựng chuyên ngành, khách quan. Thuật toán tính toán tỷ lệ giữa các dấu hiệu trang trọng và thân mật, đồng thời vẽ biểu đồ phương sai của mức độ trang trọng trên khắp các đoạn văn. Một quỹ đạo trang trọng cao, bằng phẳng một cách kiên định với phương sai ngữ vực bằng 0 là dấu hiệu dự báo cực mạnh về đầu ra của một LLM đã được căn chỉnh an toàn.",
+    "useCase": "Đặc biệt hiệu quả để phân tích các bài đăng trên blog, email, nội dung mạng xã hội và bài luận của sinh viên, nơi văn bản viết tự nhiên của con người thường đòi hỏi giọng điệu trò chuyện hoặc kết hợp nhiều loại ngữ vực.",
+    "strengths": "• Rất hiệu quả đối với các văn bản do LLM mặc định tạo ra, vốn hầu như luôn hướng tới một giọng điệu trang trọng, đã được kiểm duyệt kỹ càng.\n• Nhẹ về mặt điện toán, dựa trên việc khớp từ vựng đơn giản và các chuỗi gắn thẻ POS.",
+    "limitations": "• Dễ dàng bị vượt qua (spoofed) nếu người dùng yêu cầu AI một cách rõ ràng là 'hãy viết một cách thông thường', 'sử dụng tiếng lóng' hoặc 'hành xử như một thiếu niên'.\n• Tạo ra dương tính giả trên các văn bản của con người có tính trang trọng cao, chẳng hạn như hợp đồng pháp lý, bài báo học thuật được bình duyệt hoặc thông cáo báo chí chính thức của công ty.",
+    "parameters": "Kiểm Định: Chấm Điểm Ngữ Vực Cú Pháp & Từ Vựng\nThước Đo: Tỷ Lệ Dấu Hiệu Trang Trọng/Thân Mật & Phương Sai Ngữ Vực\nĐầu Ra: 0-100 Điểm Khối Trang Trọng Liền Mạch",
+    "accuracy": "Trung bình — Độ chính xác 65-80% trong các lĩnh vực ngôn ngữ thường ngày. Kém tin cậy hơn trong các bối cảnh học thuật hoặc pháp lý nơi văn bản của con người vốn dĩ bắt chước mức độ trang trọng của AI. Tốt nhất nên được sử dụng kết hợp với các thước đo độ bối rối (perplexity).",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

@@ -1,26 +1,21 @@
 {
-    "name": "Topic Consistency",
-    "description": "Measures topic consistency throughout the text.",
-    "useCase": "Detecting AI text through unnaturally consistent topics",
-    "mechanism": "Compares histogram distributions between content segments using cosine similarity. AI text maintains extremely consistent topic signals throughout.",
-    "accuracy": "Moderate-High - 75-85%",
-    "source": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-    "algorithm": "Statistical Distribution Analysis + Pattern Detection",
-    "parameters": "Window size: adaptive, Quantization: 8-64 levels, Metrics: entropy, CV, correlation",
-    "strengths": "- Effective for detecting AI-generated text\n- Language-agnostic statistical approach\n- Works with any text length\n- Low computational overhead",
-    "limitations": "- Less effective on edited or paraphrased AI text\n- Domain-specific content may trigger false positives\n- Short texts provide less reliable signals\n- Performance varies across writing styles",
+    "name": "Semantic Topic Consistency",
+    "description": "Measures the degree of 'topic drift' or semantic variance throughout a document. Human cognition is naturally associative; when writing a long text, human authors organically drift through related sub-topics, tangent thoughts, or personal anecdotes, causing the semantic focus to evolve continuously. In contrast, generative AI models are mathematically anchored to their initial prompt via attention mechanisms. Consequently, they maintain an artificially tight, laser-focused consistency on the core topic from the first sentence to the last, rarely exhibiting the natural, messy semantic wandering characteristic of human thought.",
+    "algorithm": "Sliding-Window Semantic Drift Analysis",
+    "mechanism": "The algorithm segments the text into continuous blocks using a sliding window approach. It generates dense vector embeddings (e.g., via BERT or similar transformer encoders) for each segment. It then calculates the cosine similarity sequence between adjacent segments, as well as the similarity of every segment back to the opening thesis. A text that maintains an extraordinarily high and uniform cosine similarity across all segments (near-zero semantic drift) strongly indicates algorithmic generation constrained by a rigid attention window.",
+    "useCase": "Highly effective for analyzing long-form content, such as essays, articles, or multi-page reports, where natural human topic drift should theoretically be most apparent.",
+    "strengths": "• Language-agnostic approach, as it relies on fundamental semantic vector representations rather than syntax or grammar rules.\n• Excellent at catching AI text that has been deliberately generated to look long and comprehensive, as the AI will inadvertently expose its lack of natural topic evolution.",
+    "limitations": "• Ineffective on very short texts (under 200 words) where neither humans nor AI have the space to exhibit topic drift.\n• Can produce false positives on highly rigid human academic papers, technical manuals, or structured legal documents which demand absolute, unwavering topical focus.",
+    "parameters": "Analysis: Vector Embedding Similarity Mapping\nMetric: Inter-Segment Cosine Similarity & Global Semantic Variance\nOutput: 0-100 Artificial Topic Rigidity Score",
+    "accuracy": "Moderate to High — 75-85% on long-form text. Extremely powerful when correlated with structural predictability metrics.",
     "references": [
         {
-            "title": "Bakhtin et al. (2019) - Real or Fake? Learning to Discriminate Machine from Human Text",
-            "url": "https://scholar.google.com/scholar?q=Bakhtin%20et%20al.%20(2019)%20-%20Real%20or%20Fake%3F%20Learning%20to%20Discriminate%20Machine%20from%20Human%20Text"
+            "title": "Bakhtin, A. et al. (2019). Real or Fake? Learning to Discriminate Machine from Human Text. NeurIPS.",
+            "url": "https://arxiv.org/abs/1906.03351"
         },
         {
             "title": "Zellers, R. et al. (2019). Defending Against Neural Fake News. NeurIPS.",
             "url": "https://arxiv.org/abs/1905.12616"
-        },
-        {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://doi.org/10.18653/v1/2020.coling-main.208"
         }
     ]
 }

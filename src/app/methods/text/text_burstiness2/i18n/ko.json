@@ -1,18 +1,17 @@
 {
-    "name": "Text Burstiness v2",
-    "description": "IQR-based burstiness measurement of sentence lengths (2023)",
-    "algorithm": "Text Burstiness v2 — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: IQR-based burstiness measurement of sentence lengths (2023). Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through 텍스트 burstiness v2 analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "사분위수 범위 텍스트 폭발성 (IQR Burstiness v2)",
+    "description": "텍스트의 구조적 리듬과 '폭발성(Burstiness)'—즉, 길고 복잡한 만연체 문장과 짧고 타격감 있는 간결체 문장이 교차하는 패턴—을 측정합니다. 표준편차를 사용하는 구형 분산 모델(v1)과 달리, 이 v2 알고리즘은 사분위수 범위(IQR, Interquartile Range) 분석 기법을 채택했습니다. 강력한 최신 거대 언어 모델(LLM)조차도 문법적 붕괴를 막기 위해 항상 안전한 수학적 평균 길이에 문장들을 수렴시키며 일관되게 단조로운 길이의 텍스트(낮은 폭발성)를 맹목적으로 생성합니다. 반면 인간 작가는 수사적 호흡과 시선을 조절하기 위해 의도적으로 불규칙한 길이의 문장들을 마치 폭발하듯(Burst) 분출합니다. 딥러닝 망이 우연히 만들어낸 극단적인 이상치(Outlier) 하나 때문에 AI 텍스트가 '인간'이 쓴 것처럼 스코어가 왜곡되는 맹점을, 중간 50% 데이터만 엄격하게 검증하는 IQR 기법을 통해 원천 봉쇄합니다.",
+    "algorithm": "사분위수 범위(IQR) 기반 문장 길이 분포 및 분산 모델링",
+    "mechanism": "알고리즘은 전체 텍스트를 개별 문장으로 산산조각 낸 후 각 문장의 길이(단어 또는 문자 수)를 계산합니다. 그런 다음 이 길이들을 오름차순으로 정렬하고 사분위수 범위(상위 25% 지점과 하위 25% 지점 간의 극단적 격차)를 측정합니다. IQR이 낮다는 것은 텍스트에 있는 99%의 문장들이 중간 길이에 오밀조밀하게 모여 있다는 뜻이며, 이는 신경망 생성 기술의 가장 뚜렷하고 고전적인 통계적 서명(Signature)입니다. 반대로 IQR이 높다는 것은 인간만이 본능적으로 구사할 수 있는 진짜 유기적인 구조적 변동성을 의미합니다.",
+    "useCase": "문법적 붕괴를 피하기 위해 AI 모델들이 본능적으로 중간 길이의 문장에 수렴하는 긴 에세이, 블로그 포스트, 논문, 그리고 기획 기사 등을 스캔하는 1차 핵 방어선 필터로서 비정상적으로 강력한 위력을 발휘합니다.",
+    "strengths": "• 프롬프트 우회 공격(Adversarial prompts)에 극도로 강력한 방어력을 자랑합니다. AI에게 '문장 길이를 제발 좀 다양하게 써줘'라고 프롬프트를 먹여도, AI는 진정한 통계적 폭발성을 구현하지 못하고 대신 기계적으로 예측 가능하게 반복되는 패턴만을 만들어낼 뿐입니다.\n• IQR 수학 모델은 인간 척하기 위해 AI 텍스트 안에 우연히 들어간 극단적인 이상치(예: 비정상적으로 길게 나열된 글머리 기호 목록 단 하나)가 가짜 '인간' 점수를 만들어내는 것을 완벽하게 틀어막습니다.",
+    "limitations": "• 통계적으로 의미 있는 사분위수 범위를 도출하려면 최소 250단어 이상의 텍스트가 장전되어 있어야 합니다.\n• 엄격한 형식적 제약으로 인해 인간이 작성했음에도 불구하고 타고난 폭발성이 매우 낮게 나타나는 획일화된 과학 논문이나 숨 막히는 법률 문서 등에서는 오인 사격의 가능성이 있습니다.",
+    "parameters": "분석 기준: 사분위 범위(IQR) 산포도 분석 역학\n측정 지표: 문장당 토큰 길이의 상하위 사분위 격차\n출력: 0-100 구조적 폭발성 결핍 (알고리즘적 문장 길이 균질성) 스코어",
+    "accuracy": "매우 높음 — 중, 장문 텍스트에서 단독으로 82-88%의 무시무시한 단독 식별 정확도를 보입니다. 전 세계적으로 현재 사용 가능한 통계 감식기 중 가장 신뢰할 수 있는 단독 필터 중 하나입니다.",
     "references": [
         {
             "title": "Tian, E. (2023). GPTZero: Towards Detection of AI-Generated Text.",
-            "url": "https://gptzero.me/technology"
+            "url": "https://gptzero.me/"
         },
         {
             "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",

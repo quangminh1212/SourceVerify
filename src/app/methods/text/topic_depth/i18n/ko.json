@@ -1,22 +1,21 @@
 {
-    "name": "Topic Depth Analysis",
-    "description": "Measures topic exploration depth",
-    "algorithm": "Topic Depth Analysis — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Measures topic exploration depth. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through topic depth analysis analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "주제 심도 분석 (Topic Depth Analysis)",
+    "description": "텍스트 내에 존재하는 주제의 깊이, 구체성, 그리고 수직적 탐구의 집요함을 평가합니다. 인터넷에 널려 있는 방대하고 일반적인 데이터 더미(Corpus)에서 '통계적으로 가장 그럴싸한 다음 단어'를 찍어내도록 훈련된 생성형 AI 모델들은, 아주 얕고 넓게 핥고 지나가는 '피상적인 개요(Superficial overviews)'를 뽑아내는 데는 선수입니다. 이들은 정보를 모서리 없이 둥글둥글하게 '다듬어버리며(Smooth out)', 진짜 인간 전문가만이 보여줄 수 있는 날카로운 뉘앙스, 극단적인 예외 상황(Edge cases), 그리고 뼛속까지 파고드는 전문 용어로 '수직 낙하(Drill down)'하는 데는 번번이 실패합니다. 해당 분야를 꿰뚫고 있는 인간 전문가는 보통 어설프게 개념 하나를 툭 던지는 데 그치지 않고, 그 이면의 적나라한 메커니즘, 얄미운 예외 조항, 그리고 심연의 작동 원리까지 집요하게 물고 늘어집니다.",
+    "algorithm": "계층적 개념 맵핑(Hierarchical Concept Mapping) 및 구체성 타격 스코어링",
+    "mechanism": "시스템은 텍스트를 해부하여 뼈대가 되는 핵심 주제를 발라내고, 그것이 어떻게 가지를 뻗어나가는지(Expansion) 지도를 그립니다. 자연어 처리(NLP)를 화학 무기처럼 살포하여, 속 빈 강정 같은 '일반적/포괄적 어휘'와 씹을수록 맛이 나는 '초특급 도메인 한정 핀셋 용어(Hyper-specific terminology)' 사이의 전투력 비율을 잽니다. 나아가, 문법 구조를 엑스레이로 찍어 '수직적 심화(Vertical elaboration)'의 징후(예: 겉핥기식 선언 뒤에 '*어떻게*'와 '*왜*'를 구구절절 캐묻는 문장들이 꼬리를 물고 이어지는지)를 포착합니다. 온갖 개념을 다 건드리면서도 정작 알맹이 없이 허공에 둥둥 떠다니는 일반 어휘와 동어반복적 요약본에만 기대는 텍스트는, 영혼 없는 AI의 짓거리로 즉각 철퇴를 맞습니다.",
+    "useCase": "깊고 진득한 도메인 전문성과 현미경 같은 해상도의 디테일이 생명인 기술 백서, 피 튀기는 학술 논문, 묵직한 연구 보고서 및 전문가의 칼럼을 도마 위에 올릴 때 소름 끼치도록 효과적입니다.",
+    "strengths": "• 현재 LLM들이 앓고 있는 불치병(근본적인 인지적 한계)을 정확하게 타격합니다. 즉, 남의 글을 짜깁기해서 뻔한 요약본을 만드는 건 잘해도, 진짜 새롭고 '심해(Deep)'에서 길어 올린 통찰력은 만들어내지 못한다는 맹점을 후벼 팝니다.\n• 인간이 어설프게 동의어나 문장 구조를 조금 비틀어 놓는(Paraphrasing) 얄팍한 속임수에 끄떡없습니다. 겉포장지를 아무리 바꿔봤자, 애초에 존재하지도 않았던 '깊이'와 '전문 용어'가 마법처럼 허공에서 솟아나지는 않기 때문입니다.",
+    "limitations": "• 인간이 썼더라도 태생적으로 '수박 겉핥기'를 목적으로 쓰여진 글(예: 바쁜 임원을 위한 3줄 요약본, 현란하기만 한 마케팅 브로셔, 아주 얕고 가벼운 입문용 기사) 앞에서는 기계 글로 오해하는 억울한 오탐지(False positives)를 발생시킬 수 있습니다.\n• 물리적인 텍스트 길이가 극단적으로 짧아, 애초에 주제의 바닥까지 구멍 파고 내려갈(Drilling down) 시간조차 없는 글 앞에서는 측정 자체가 무의미해집니다.",
+    "parameters": "분석 기준: 전문 도메인 용어 및 개념 심화 전개 궤적 추적\n측정 지표: 얕고 넓은 진술 vs 깊고 뾰족한 진술의 밀도 비율\n출력: 0-100 피상성(Superficiality)/깊이(Depth) 적나라도 스코어",
+    "accuracy": "중상 — 75-84%의 묵직한 정확도를 보여줍니다. 특히 '어휘의 세련도(Lexical Sophistication)'나 '정보의 압축 밀도(Information Density)' 지표와 연합 전선을 구축하여 텍스트의 '얄팍함(Shallowness)'을 다각도로 영혼까지 털어버릴 때 그 신뢰도는 극강에 달합니다.",
     "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
         {
             "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
             "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
         }
     ]
 }

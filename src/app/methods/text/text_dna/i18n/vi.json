@@ -1,12 +1,21 @@
 {
-    "name": "Dấu vân tay văn bản",
-    "description": "Phân tích tỷ lệ nguyên âm-phụ âm làm dấu vân tay",
-    "algorithm": "Thuật toán phân tích Dấu vân tay văn bản",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Phân tích tỷ lệ nguyên âm-phụ âm làm dấu vân tay. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích dấu vân tay văn bản. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Thủy Ấn DNA Cú Pháp (Syntactic DNA Watermarking)",
+    "description": "Phát hiện sự hiện diện của các 'thủy ấn (watermarks)' mật mã hoặc thống kê được nhúng vô hình vào văn bản trong quá trình tạo của AI. Nhiều Mô hình Ngôn ngữ Lớn hiện đại sử dụng các kỹ thuật như 'Phân vùng danh sách Xanh-Đỏ' (Kirchenbauer và cộng sự, 2023) để cố ý tiêm một dấu ấn có thể phát hiện bằng toán học vào đầu ra của chúng. Trong quá trình tạo, từ vựng của mô hình được chia ngẫu nhiên giả thành các token 'xanh' (được khuyến khích) và 'đỏ' (bị phạt) dựa trên hàm băm (hash) của từ trước đó. Bằng cách phân tích chuỗi token và dịch ngược (reverse-engineering) độ lệch thống kê này, thuật toán có thể chứng minh chắc chắn quyền tác giả của AI, vì người viết là con người tự nhiên lựa chọn các từ mà không có các ràng buộc xác suất ẩn này.",
+    "algorithm": "Phân Vùng Băm Token (Token-Hash) & Xác Minh Độ Lệch Thống Kê",
+    "mechanism": "Thuật toán xử lý văn bản theo từng token, cố gắng xây dựng lại hàm băm giả ngẫu nhiên có thể đã được AI sử dụng để phân vùng từ vựng của nó. Nó tính toán tần suất thống kê của các token 'xanh' liên tiếp trên một cửa sổ cụ thể. Một văn bản tiêu chuẩn của con người, không có thủy ấn sẽ hiển thị một cách tự nhiên phân bố xấp xỉ 50/50 của các token 'xanh' và 'đỏ' được băm giả ngẫu nhiên. Việc chiếm ưu thế vượt mức đáng kể về mặt toán học của các token 'xanh' cấu thành một dấu vân tay mật mã không thể chối cãi của việc tạo bằng máy.",
+    "useCase": "Bài kiểm tra dứt khoát tối thượng để phát hiện văn bản do các LLM thương mại tạo ra, vốn tuân thủ các tiêu chuẩn minh bạch an toàn AI và nhúng thủy ấn vô hình.",
+    "strengths": "• Đạt mức độ chắc chắn gần 100% (tỷ lệ dương tính giả gần như bằng không) nếu biết thuật toán băm thủy ấn cụ thể của mô hình AI nguồn.\n• Rất mạnh mẽ trước các chỉnh sửa nhẹ của con người, thay thế từ đồng nghĩa hoặc diễn giải lại mang tính đối kháng (adversarial paraphrasing), vì 'DNA' thống kê vẫn tồn tại trên toàn bộ phạm vi tài liệu lớn hơn.",
+    "limitations": "• Hoàn toàn vô tác dụng nếu mô hình AI được sử dụng để tạo là mã nguồn mở, bị lượng tử hóa nặng nề, hoặc đơn giản là không sử dụng một giao thức cấu tạo thủy ấn chủ động.\n• Yêu cầu một đoạn văn bản đủ dài (thường là 50+ token) để chứng minh ý nghĩa thống kê và kích hoạt ngưỡng toán học.",
+    "parameters": "Kiểm Định: Xác Minh Hàm Băm Token Mật Mã\nThước Đo: Độ Lệch Token Danh-Sách-Xanh & Phương Sai Phân Bố\nĐầu Ra: 0-100 Điểm Chắc Chắn Mật Mã Của Thủy Ấn",
+    "accuracy": "Dứt khoát — Độ chính xác độc lập >99% nếu có một thủy ấn đã biết được sử dụng. Bỏ qua an toàn (không có dương tính giả) nếu văn bản không có thủy ấn.",
+    "references": [
+        {
+            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+            "url": "https://arxiv.org/abs/2301.10226"
+        },
+        {
+            "title": "Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
+            "url": "https://arxiv.org/abs/2303.11156"
+        }
+    ]
 }

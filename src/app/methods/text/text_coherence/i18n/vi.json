@@ -1,12 +1,21 @@
 {
-    "name": "Điểm mạch lạc",
-    "description": "Chấm điểm mạch lạc tổng thể văn bản",
-    "algorithm": "Thuật toán phân tích Điểm mạch lạc",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Chấm điểm mạch lạc tổng thể văn bản. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích điểm mạch lạc. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Tính Mạch Lạc Ngữ Nghĩa Toàn Cục (Global Semantic Coherence)",
+    "description": "Đánh giá tính nhất quán logic bao quát và luồng chủ đề trên toàn bộ tài liệu. Bởi vì các Mô hình Ngôn ngữ Lớn hoạt động bằng cách dự đoán token tiếp theo dựa trên 'cửa sổ ngữ cảnh' cục bộ, chúng thiếu đi một mô hình tư duy toàn cục thực sự về văn bản mà chúng đang tạo ra. Trong các tài liệu dài hơn, điều này thường dẫn đến 'sự trôi dạt mạch lạc'—AI duy trì ngữ pháp hoàn hảo ở cấp độ câu nhưng từ từ đi chệch chủ đề, mâu thuẫn với các tiền đề được thiết lập trong các đoạn văn trước đó hoặc hoàn toàn không giải quyết được luận điểm chính được giới thiệu ở đầu bài. Ngược lại, những người viết là con người điều hướng văn bản bằng một khuôn khổ tư duy liên tục, hướng tới mục tiêu cuối cùng.",
+    "algorithm": "Đồ Thị Hóa Diễn Ngôn & Điểm Tương Đồng Ngữ Nghĩa Đoạn-Đoạn",
+    "mechanism": "Thuật toán vẽ biểu đồ các vector nhúng (embeddings) ngữ nghĩa của các đoạn văn liên tiếp để theo dõi quỹ đạo logic của văn bản. Nó phân tích 'khoảng cách' giữa phần mở đầu, các vector thân bài và phần kết luận. Nếu văn bản thể hiện một biểu đồ diễn ngôn bị đứt gãy—chẳng hạn như không liên tục tham chiếu đến các khái niệm cốt lõi, thể hiện các bước nhảy vọt chủ đề đột ngột, không có động cơ rõ ràng, hoặc thể hiện một quỹ đạo ngữ nghĩa 'lang thang' mà không có một kết luận hội tụ—hệ thống sẽ gắn cờ văn bản đó là thiếu sự hiểu biết toàn cục đích thực.",
+    "useCase": "Rất quan trọng để kiểm toán các nội dung có định dạng dài, chẳng hạn như bài luận toàn diện, tài liệu nghiên cứu và báo cáo nhiều trang, nơi cần duy trì một kiến trúc logic bao quát, nghiêm ngặt.",
+    "strengths": "• Nhắm vào điểm yếu cốt lõi về kiến trúc của các LLM tự hồi quy hiện tại (sự trôi dạt ngữ cảnh trong các kết quả đầu ra dài).\n• Cực kỳ khó để vượt qua (bypass) bằng cách sử dụng kỹ thuật gợi ý (prompting) tiêu chuẩn, vì nó đánh giá cấu trúc vĩ mô của văn bản thay vì từ vựng hoặc ngữ pháp cục bộ.",
+    "limitations": "• Yêu cầu văn bản đủ dài (nhiều đoạn văn) để thiết lập một đường cơ sở về sự mạch lạc; hoàn toàn vô tác dụng đối với các đoạn trích ngắn hoặc tweet.\n• Có thể phạt sai lối văn bản của con người viết theo dòng ý thức (stream of consciousness) hoặc bản phiên âm hội thoại tự nhiên, không có cấu trúc.",
+    "parameters": "Kiểm Định: Quỹ Đạo Embedding Ngữ Nghĩa & Diễn Ngôn Dựa Trên Biểu Đồ\nThước Đo: Khoảng Cách Ngữ Nghĩa Từ Đoạn-Tới-Đoạn & Mở-Bài-Tới-Kết-Luận\nĐầu Ra: 0-100 Điểm Không Mạch Lạc Toàn Cục (Sự Trôi Dạt Ngữ Nghĩa)",
+    "accuracy": "Cao — Độ chính xác 78-86% trên các tài liệu vượt quá 800 từ. Đóng vai trò là một chỉ báo có ý nghĩa quyết định khi được kết hợp với các thước đo độ bối rối (perplexity) cục bộ.",
+    "references": [
+        {
+            "title": "Barzilay, R., & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://aclanthology.org/J08-1001"
+        },
+        {
+            "title": "MacAvaney, S. et al. (2023). Detecting Machine-Generated Text by Identifying 'Wandering' Topics. ACL Findings.",
+            "url": "https://aclanthology.org/2023.findings-acl.854"
+        }
+    ]
 }

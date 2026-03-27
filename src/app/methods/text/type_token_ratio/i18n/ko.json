@@ -1,14 +1,13 @@
 {
-    "name": "유형-토큰 비율 (TTR)",
-    "description": "Computes the ratio of unique words to total words using MATTR variant 감지하기 위해 AI 생성 text's vocabulary 패턴.",
-    "useCase": "Detecting AI text through abnormal 어휘 다양성 ratios 에 걸친 text segments",
-    "mechanism": "계산합니다 the Moving-Average Type-Token Ratio (MATTR) using a sliding window approach to mitigate text length effects. For each window of N words, the ratio of unique types to total tokens is computed, then averaged. AI 생성 text often exhibits more uniform TTR values 에 걸친 windows compared to 인간 글쓰기, 는 naturally varies in vocabulary richness 사이의 different sections due to topic shifts and stylistic changes.",
-    "accuracy": "중간 - 68-78% as standalone 특징",
-    "source": "Covington, M. A. & McFall, J. D. (2010) - Cutting the Gordian Knot: The Moving-Average Type-Token Ratio (MATTR), Journal of Quantitative Linguistics",
-    "algorithm": "Moving-Average Type-Token Ratio (MATTR) + Variance Analysis + Segment Comparison",
-    "parameters": "윈도우 크기: 50-100 tokens, Metrics: mean MATTR, MATTR 분산, MATTR range, Normalization: length-independent",
-    "strengths": "• Length-independent measurement via MATTR\n• Well-established psycholinguistic metric\n• Fast computation with minimal resources\n• Captures vocabulary usage 패턴",
-    "limitations": "• Lower discriminative power as standalone 특징\n• Sensitive to text genre and topic\n• Advanced LLMs increasingly match human TTR ranges\n• Window size selection affects results",
+    "name": "어휘 다양성 비율 (Type-Token Ratio - TTR)",
+    "description": "이동 평균 어휘 다양성(MATTR) 지표를 사용하여 텍스트의 어휘적 다양성과 풍부함을 평가합니다. 이 지표는 슬라이딩 윈도우(Sliding window)를 이동시키며 '전체 단어 수(Tokens)' 대비 '고유한 단어 수(Types)'의 비율을 계산합니다. 인간 작가들은 어휘 사용에 있어 본능적으로 변동성(Variance)을 드러냅니다. 새로운 주제로 넘어갈 때는 완전히 새로운 어휘들을 폭발적으로 쏟아내고, 특정 개념을 깊이 파고들 때는 같은 단어를 집요하게 반복합니다. 하지만 온도(Temperature)나 Top-p 같은 고정된 샘플링 매개변수의 족쇄가 채워진 생성형 AI 모델들은 수학적으로 몹시 균일하고 예측 가능한 속도로 새 단어들을 꺼내 쓰는 경향이 있으며, 그 결과 인위적일 정도로 밋밋하고 평평한(Flat) MATTR 프로파일을 그려냅니다.",
+    "algorithm": "이동 평균 어휘 다양성(MATTR) 분산 단층 촬영",
+    "mechanism": "알고리즘은 슬라이딩 윈도우(예: 50-100 토큰 크기)로 텍스트를 훑으며 스캔합니다. 각 윈도우 내부에서 고유 단어와 전체 단어의 비율(TTR)을 계산합니다. 여기서 핵심은 단순한 평균 TTR 스코어가 아니라, 전체 윈도우에 걸친 그 값들의 **'분산(Variance)'**과 **'범위(Range)'**를 진단하는 것입니다. 인간의 글쓰기에서 나타나는 변화무쌍하고 다이내믹한 어휘의 파도(Spikes) 없이, 처음부터 끝까지 기계 계기판처럼 일정한 TTR 스코어를 유지하는 텍스트는 즉각적으로 LLM의 생성물로 통계적 수배(Flagged) 진단이 내려집니다.",
+    "useCase": "원작자가 당연히 여러 하위 주제(Subtopics)를 자연스럽게 넘나들며 어휘의 밀도와 풍부함에 출렁이는 파도(Fluctuations)를 만들어내야만 하는 장문의 콘텐츠, 에세이 및 심층 기사를 분석할 때 파괴력이 극대화됩니다.",
+    "strengths": "• 단순히 단어 개수만 세는 1차원적 접근이 아니라, 어휘가 전개되는 '구조적인 리듬(Structural rhythm)'을 분석하므로, 얄팍한 동의어 교체(Synonym-swapping) 꼼수를 거의 완벽하게 무력화시킵니다.\n• MATTR 기법은 문서의 길이에 따른 데이터 오염을 완벽하게 통제하여, 전통적인 고정 TTR 측정이 가졌던 치명적인 수학적 결함을 해결합니다.",
+    "limitations": "• 이동 평균 윈도우가 통계적으로 유의미한 분산(Variance) 프로파일을 도출해내려면 텍스트가 일정 길이(보통 200단어 이상) 이상이어야만 정상 작동합니다.\n• 엄격하게 통제된 기술 문서나 표준화된 법률 선언문처럼, 애초에 쓰이는 어휘가 극도로 제한되어 분산 수치가 낮게 깔릴 수밖에 없는 종류의 인간 텍스트를 잘못 기소(Misclassify)할 위험률이 존재합니다.",
+    "parameters": "분석 기준: 어휘 군집 다이버시티(Diversity) 프로파일링\n측정 지표: MATTR 분산(Variance), 진폭(Range), 그리고 평탄화된 평균값\n출력: 0-100 어휘 기계적 균일성 스코어",
+    "accuracy": "중수 — 68-78%의 독립적인 정확도를 가집니다. 단독으로 쓰일 때보다 '폭발성(Burstiness)'이나 '구문 변동성(Syntactic Variance)' 같은 다른 강력한 범죄 심리(Stylometric) 지표들과 합동 작전을 펼칠 때 그 예측력이 몇 배나 뻥튀기됩니다.",
     "references": [
         {
             "title": "Covington, M. A. & McFall, J. D. (2010). Cutting the Gordian Knot: The Moving-Average Type-Token Ratio (MATTR). Journal of Quantitative Linguistics.",
@@ -17,10 +16,6 @@
         {
             "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
             "url": "https://arxiv.org/abs/2306.04723"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

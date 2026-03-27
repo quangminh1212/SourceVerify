@@ -1,12 +1,21 @@
 {
-    "name": "Phân tích Topic Model Divergence",
-    "description": "Áp dụng mô hình chủ đề LDA để đo phân kỳ mạch lạc chủ đề — văn bản AI có phân bổ chủ đề bất thường.",
-    "algorithm": "Thuật toán phân tích Topic Model Divergence",
-    "mechanism": "Hệ thống Topic Model Divergence phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Sự Phân Tập Mô Hình Chủ Đề (Topic Model Divergence)",
+    "description": "Phân tích phân phối thống kê của các chủ đề cơ bản trong một văn bản bằng cách sử dụng mô hình hóa chủ đề nâng cao. Các mô hình AI tạo sinh thường tổng hợp thông tin trên nhiều lĩnh vực khác nhau, dẫn đến sự phân bố các chủ đề mượt mà, hoàn hảo về mặt toán học một cách thiếu tự nhiên. Ngược lại, văn bản của con người thường 'lổn nhổn' (lumpy) — thiên lệch nặng nề về một vài chủ đề cốt lõi thống trị với những sự chuyển đổi gồ ghề, bất đối xứng. Phương pháp này đo lường sự khác biệt (divergence) giữa phân phối chủ đề được trích xuất của văn bản và các phân phối tự nhiên, bất đối xứng dự kiến được tìm thấy trong các tập dữ liệu do con người viết.",
+    "algorithm": "Cấp Phát Dirichlet Tiềm Ẩn (LDA) & Phân Tập Kullback-Leibler",
+    "mechanism": "Hệ thống xử lý văn bản bằng cách sử dụng mô hình chủ đề xác suất, chẳng hạn như Cấp phát Dirichlet Tiềm ẩn (LDA), giúp ánh xạ các từ vào các chủ đề theo chủ đề ẩn. Nó tính toán phân phối xác suất của các chủ đề này trên toàn bộ tài liệu. Tiếp theo, nó sử dụng Phân tập Kullback-Leibler (KL Divergence) để đo lường mức độ sai lệch của phân phối chủ đề cụ thể này so với các đường cơ sở thực nghiệm của con người. Một văn bản thể hiện hỗn hợp chủ đề đồng đều, phương sai thấp một cách đáng ngờ — cho thấy một cơ chế đang cố gắng 'bao phủ mọi khía cạnh' với sự đồng đều thống kê — sẽ mang lại điểm nhân tạo cao.",
+    "useCase": "Rất hiệu quả để kiểm tra các tài liệu toàn diện, dạng dài (ví dụ: sách trắng, tiểu luận mở rộng, đánh giá tài liệu), nơi sự 'mượt mà' theo chủ đề thiếu tự nhiên trở nên rõ ràng về mặt thống kê.",
+    "strengths": "• Phát hiện các bất thường cấu trúc cơ bản ở cấp độ chủ đề, làm cho nó có khả năng chống lại việc diễn giải lại (paraphrasing) hoặc thay thế từ đồng nghĩa ở cấp độ bề mặt rất cao.\n• Tận dụng các khuôn khổ toán học đã được thiết lập, được bình duyệt (LDA và KL Divergence).",
+    "limitations": "• Yêu cầu độ dài văn bản đủ lớn (lý tưởng là >500 từ) để LDA trích xuất và ổn định thành công các phân phối chủ đề đáng tin cậy.\n• Có thể gắn cờ các văn bản bách khoa toàn thư, có cấu trúc cao của con người cố ý phấn đấu cho mức độ bao phủ đa ngành, cân bằng hoàn hảo.",
+    "parameters": "Kiểm Định: Trích Xuất Chủ Đề Xác Suất (LDA)\nThước Đo: Phân Tập Kullback-Leibler (KL) So Với Cơ Sở Con Người\nĐầu Ra: 0-100 Điểm Nhân Tạo Theo Chủ Đề",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 70-85%. Hiệu quả của nó chia tỷ lệ tuyến tính với độ dài tài liệu và được triển khai tốt nhất dưới dạng bổ sung cấu trúc cho các kiểm tra thống kê cấp độ từ.",
+    "references": [
+        {
+            "title": "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR.",
+            "url": "https://jmlr.org/papers/v3/blei03a.html"
+        },
+        {
+            "title": "Kullback, S. & Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics.",
+            "url": "https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full"
+        }
+    ]
 }

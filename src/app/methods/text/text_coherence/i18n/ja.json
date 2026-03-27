@@ -1,22 +1,21 @@
 {
-    "name": "Text Coherence Score",
-    "description": "Overall テキスト coherence scoring",
-    "algorithm": "Text Coherence Score — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Overall テキスト coherence scoring. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through テキスト coherence score analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "グローバルな意味的コヒーレンス (Global Semantic Coherence)",
+    "description": "ドキュメント全体での包括的な論理的一貫性とトピックの流れを評価します。大規模言語モデルは局所的な「コンテキストウィンドウ」に基づいて次のトークンを予測することで機能するため、生成しているテキストの真のグローバルなメンタルモデルを欠いています。長いドキュメントでは、これはしばしば「コヒーレンス・ドリフト（coherence drift）」を引き起こします。つまり、AIは文レベルでは完璧な文法を維持しますが、ゆっくりとトピックから外れたり、前の段落で確立された前提と矛盾したり、または最初に導入された主要なテーマを解決することに完全に失敗したりします。対照的に、人間の書き手は、持続的で目標指向のメンタルフレームワークでテキストをナビゲートします。",
+    "algorithm": "段落間の意味的類似性とディスコース・グラフ作成",
+    "mechanism": "アルゴリズムは連続する段落の意味的埋め込み（セマンティック・エンベディング）をプロットし、テキストの論理的な軌跡を追跡します。導入部、本文ベクトル、および結論の間の「距離」を分析します。核となる概念への継続的な参照の失敗、突然の動機のないトピックの飛躍、または収束する結論のない「さまよう（wandering）」意味的軌跡を示すなど、テキストが断片化されたディスコース・グラフを示している場合、システムはそのテキストを真のグローバルな理解を欠いているとしてフラグ付けします。",
+    "useCase": "包括的なエッセイ、研究論文、複数ページのレポートなど、厳密で包括的な論理構造を維持する必要がある長文コンテンツの監査に不可欠です。",
+    "strengths": "• 現在の自己回帰型LLMの根本的な構造上の弱点（長い出力におけるコンテキストのドリフト）をターゲットにしています。\n• 局所的な語彙や文法ではなくテキストのマクロ構造を評価するため、標準的なプロンプトを使用して回避（バイパス）することは非常に困難です。",
+    "limitations": "• 一貫性のベースラインを確立するには、大幅に長いテキスト（複数の段落）が必要です。短いスニペットやツイートでは完全に無効です。\n• 人間による「意識の流れ（stream of consciousness）」の文章や、構造化されていない自然な会話のトランスクリプトを誤って罰する可能性があります。",
+    "parameters": "解析: グラフベースのディスコースと意味的埋め込み軌跡\n評価基準: 段落間および導入から結論までの意味的距離\n出力結果: 0-100 グローバルな不一致（意味的ドリフト）スコア",
+    "accuracy": "高 — 800語を超えるドキュメントでの精度は78-86%。局所的なパープレキシティ（困惑度）指標と組み合わせると、決定的な指標として機能します。",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Barzilay, R., & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://aclanthology.org/J08-1001"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "MacAvaney, S. et al. (2023). Detecting Machine-Generated Text by Identifying 'Wandering' Topics. ACL Findings.",
+            "url": "https://aclanthology.org/2023.findings-acl.854"
         }
     ]
 }

@@ -1,12 +1,21 @@
 {
-    "name": "Chất lượng chuyển tiếp",
-    "description": "Đánh giá sự mượt mà chuyển tiếp giữa các ý",
-    "algorithm": "Thuật toán phân tích Chất lượng chuyển tiếp",
-    "mechanism": "Phương pháp này phân tích ngôn ngữ học để phát hiện văn bản AI:\n\n1. **Tiền xử lý văn bản**: Văn bản đầu vào được phân tách token và xử lý.\n\n2. **Trích xuất đặc trưng**: Đánh giá sự mượt mà chuyển tiếp giữa các ý. Các đặc trưng ngôn ngữ được tính toán.\n\n3. **Phân tích thống kê**: Đặc trưng được so sánh với phân bổ chuẩn từ văn bản người viết và AI.\n\n4. **Nhận dạng mẫu**: Các mẫu bất thường đặc trưng AI được nhận diện.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mẫu phát hiện.",
-    "parameters": "Loại phân tích: thống kê\nPhương tiện: văn bản\nĐầu vào: Chuỗi văn bản thô\nĐộ dài tối thiểu: 100 ký tự\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Phân tích NLP phía client",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 65-85% khi sử dụng độc lập. Hiệu quả tăng đáng kể khi kết hợp với các phương pháp phân tích văn bản bổ sung. Kết quả thay đổi theo độ dài, ngôn ngữ và loại nội dung.",
-    "source": "Phương pháp phân tích NLP thống kê để phát hiện văn bản AI. Dựa trên nghiên cứu ngôn ngữ học tính toán và lý thuyết thông tin.",
-    "useCase": "Phát hiện văn bản AI thông qua phân tích chất lượng chuyển tiếp. Phương pháp này kiểm tra các mẫu ngôn ngữ đặc thù khác biệt giữa văn bản người viết và AI, cung cấp bằng chứng bổ sung trong quy trình phân tích đa phương pháp.",
-    "strengths": "• Phân tích nhanh phía client, không cần server\n• Hiệu quả khi kết hợp nhiều phương pháp\n• Hoạt động trên nhiều loại văn bản\n• Dựa trên nghiên cứu ngôn ngữ học đã được thiết lập\n• Bổ sung cho các phương pháp phân tích thống kê khác",
-    "limitations": "• Tốt nhất khi kết hợp nhiều phương pháp\n• Hiệu suất thay đổi theo độ dài văn bản\n• Có thể bị ảnh hưởng bởi ngôn ngữ và phong cách viết\n• Độ chính xác phụ thuộc vào mô hình AI tạo văn bản\n• Văn bản người viết đôi khi gây dương tính giả"
+    "name": "Chất Lượng Chuyển Tiếp (Transition Quality)",
+    "description": "Đánh giá độ trơn tru cơ học và các thành phần liên kết rõ ràng giữa các câu và các đoạn văn. Các mô hình AI tạo sinh tối ưu hóa mạnh mẽ cho sự mạch lạc cục bộ, khâu các câu lại với nhau một cách cơ học bằng cách sử dụng một mảng các dấu hiệu chuyển tiếp chính thức có thể dự đoán được ('Hơn nữa', 'Ngoài ra', 'Do đó', 'Mặt khác'). Điều này tạo ra một trải nghiệm đọc siêu mượt mà, không có ma sát một cách nhân tạo. Ngược lại, những người viết là con người thường xuyên dựa vào các kết nối logic ngầm, tính liên tục theo chủ đề, hoặc động lực tường thuật, dẫn đến các chuyển đổi 'thô' hơn về mặt cấu trúc nhưng tự nhiên về ngữ cảnh và thường bỏ qua các chỉ dẫn rõ ràng.",
+    "algorithm": "Tỷ Lệ Chuyển Tiếp Ngầm/Rõ Ràng & Khả Năng Dự Đoán Dấu Hiệu",
+    "mechanism": "Thuật toán phân tích cú pháp văn bản để xác định ranh giới giữa các câu và đoạn văn. Sau đó, nó quét các điểm giao cắt này để tìm các công cụ chuyển tiếp rõ ràng đã biết (liên từ, trạng từ liên kết, các cụm giới từ cụ thể). Nó tính toán tỷ lệ giữa các chuyển đổi 'được kết nối rõ ràng' so với các chuyển đổi 'liên tục ngầm'. Hơn nữa, nó đánh giá khả năng dự đoán và sự đa dạng của các dấu hiệu được sử dụng. Một văn bản thể hiện việc cắm cắm biển chỉ dẫn rõ ràng gần như liên tục tại mọi điểm giao cắt logic, sử dụng một vốn từ vựng hẹp và rất dễ đoán về các từ nối chính thức, sẽ bị gắn cờ là thể hiện chất lượng chuyển tiếp nhân tạo.",
+    "useCase": "Hiệu quả trong việc phân tích các bài luận học thuật, email chuyên nghiệp và nội dung giải thích, nơi mà một luồng cấu trúc 'đầu tiên, thứ hai, cuối cùng' quá 'bóng bẩy' hoặc không ngừng nghỉ sẽ tố cáo nguồn gốc do AI tạo ra.",
+    "strengths": "• Rất hiệu quả trong việc phát hiện 'luồng công thức' đặc trưng của các LLM, vốn gặp khó khăn trong việc tin tưởng người đọc suy luận các kết nối một cách ngầm định.\n• Hoạt động tốt trên các văn bản có độ dài trung bình nơi các mẫu chuyển tiếp có thể được đếm một cách đáng tin cậy và thiết lập các tỷ lệ thống kê.",
+    "limitations": "• Có thể tạo dương tính giả trên các văn bản được viết bởi người không phải người bản xứ hoặc sinh viên ESL, những người đã được dạy rõ ràng cách lạm dụng các dấu hiệu chuyển tiếp chính thức để đảm bảo sự rõ ràng.\n• Kém hiệu quả hơn đối với các sách hướng dẫn kỹ thuật hoặc tài liệu pháp lý, nơi mà sự kết nối rõ ràng tột độ được yêu cầu về mặt cấu trúc.",
+    "parameters": "Kiểm Định: Nhận Diện Từ Nối Tại Ranh Giới Câu/Đoạn\nThước Đo: Tỷ Lệ Các Dấu Hiệu Chuyển Tiếp Rõ Ràng So Với Kết Nối Ngầm\nĐầu Ra: 0-100 Điểm Chuyển Tiếp Nhân Tạo",
+    "accuracy": "Trung bình đến Cao — Độ chính xác 74-83%. Hoạt động đặc biệt tốt khi được kết hợp với các số liệu về sự đa dạng từ vựng và phương sai cú pháp để tạo ra một hồ sơ đầy đủ về độ 'mượt mà' của tài liệu.",
+    "references": [
+        {
+            "title": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.",
+            "url": "https://link.springer.com/article/10.3758/s13428-015-0626-y"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ]
 }

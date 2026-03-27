@@ -1,14 +1,13 @@
 {
-    "name": "类型-标记比 (TTR)",
-    "description": "Computes the ratio of unique words to total words using MATTR variant 以检测 AI生成的 text's vocabulary 模式.",
-    "useCase": "Detecting AI text through abnormal 词汇多样性 ratios 跨 text segments",
-    "mechanism": "计算 the Moving-Average Type-Token Ratio (MATTR) using a sliding window approach to mitigate text length effects. For each window of N words, the ratio of unique types to total tokens is computed, then averaged. AI生成的 text often exhibits more uniform TTR values 跨 windows compared to 人类写作, 其 naturally varies in vocabulary richness 之间 different sections due to topic shifts and stylistic changes.",
-    "accuracy": "中等 - 68-78% as standalone 特征",
-    "source": "Covington, M. A. & McFall, J. D. (2010) - Cutting the Gordian Knot: The Moving-Average Type-Token Ratio (MATTR), Journal of Quantitative Linguistics",
-    "algorithm": "Moving-Average Type-Token Ratio (MATTR) + Variance Analysis + Segment Comparison",
-    "parameters": "窗口大小: 50-100 tokens, Metrics: mean MATTR, MATTR 方差, MATTR range, Normalization: length-independent",
-    "strengths": "• Length-independent measurement via MATTR\n• Well-established psycholinguistic metric\n• Fast computation with minimal resources\n• Captures vocabulary usage 模式",
-    "limitations": "• Lower discriminative power as standalone 特征\n• Sensitive to text genre and topic\n• Advanced LLMs increasingly match human TTR ranges\n• Window size selection affects results",
+    "name": "词汇丰富度比率 (Type-Token Ratio - TTR)",
+    "description": "使用移动平均词汇丰富度（MATTR）来评估文本的词汇多样性和丰富程度。该指标计算在一个滑动窗口内“独立不重复词汇（Type）”与“总词汇总数（Token）”之间的比例。活生生的人类在遣词造句时，本能地带有极高的词汇方差：他们在切换话题时，会猛烈地爆发出一大波全新的词汇；而当他们钻牛角尖深入某个特定概念时，又会疯狂地重复使用那几个核心词。生成式 AI 模型因为被诸如“温度（Temperature）”和“Top-p”等恒定的采样参数死死锁住，它们往往以一种极其数学化、高度均匀可预测的频率向外吐出新词，最终不可避免地画出一条极度人工、平坦如尸体心电图般的 MATTR 剖面线。",
+    "algorithm": "移动平均词汇多样性（MATTR）方差猎杀",
+    "mechanism": "算法使用一个滑动窗口（例如，50-100个词元）像扫描仪一样滑过文本。在每个窗口切片内，它会计算不重复词汇与总词汇的占比。这里最致命的定罪逻辑，不是看你整体的绝对平均 TTR 是多少，而是死盯着这些离散数值在所有窗口间的“方差（Variance）”和“振幅（Range）”。一篇从头到尾都死气沉沉地维持着绝对均匀的 TTR、完全丧失了人类写作时那种因为思维跳跃而引起的词汇脉冲性飙升的文本，在统计学法庭上会被毫无悬念地判决为 LLM 的人造合成物。",
+    "useCase": "这套扫描仪是专门伺候长篇大论、专栏散文和万字深度报告的重型武器。在这些马拉松式的体裁中，人类大脑一定会不可避免地跨越多个子话题，从而在词汇丰富度上激起剧烈的波峰与波谷，如果没有波折，就是机器。",
+    "strengths": "• 它的屠刀精准切中了词汇部署的“结构性呼吸节奏”，而不是像低级算法那样只知道数词频，这使得任何企图通过“批量替换同义词”来隐藏 AI 痕迹的黑客洗稿手段都在它面前彻底破产。\n• MATTR 算法完美且优雅地终结了文章长度带来的统计污染，彻底根治了传统静态 TTR 测量的致命顽疾。",
+    "limitations": "• 这台仪器存在预热下限：文本长度必须足够（通常 >200 个词），移动平均窗口才能有足够的空间建立起具有统计学定罪意义的方差图谱。\n• 当它扫描到人类编写的那种极端刻板、词汇受限的铁血工业技术文档，或者逐字逐句严丝合缝的标准法律合同（这些东西本身就带有人造的低语料方差）时，雷达极易发生误判报警。",
+    "parameters": "雷达切片: 波段式词汇多样性断层扫描\n定罪量表: 词汇心电图 MATTR 的方差、振幅与机械平均值\n行刑判决: 0-100 词汇机器定长喷射度得分",
+    "accuracy": "中级护甲击穿 — 作为一把独立手枪，其命中率维持在 68-78%。但当它与“文本爆炸度（Burstiness）”或“句法畸变方差（Syntactic Variance）”等其他文体学核弹组装在一起时，其火力预测精度会呈指数级飙升。",
     "references": [
         {
             "title": "Covington, M. A. & McFall, J. D. (2010). Cutting the Gordian Knot: The Moving-Average Type-Token Ratio (MATTR). Journal of Quantitative Linguistics.",
@@ -17,10 +16,6 @@
         {
             "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
             "url": "https://arxiv.org/abs/2306.04723"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

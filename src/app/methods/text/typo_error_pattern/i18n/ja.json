@@ -1,22 +1,21 @@
 {
-    "name": "Typo Error Pattern",
-    "description": "Analyzes typo and error patterns — AI rarely makes human-like typos",
-    "algorithm": "Typo Error Pattern — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated テキスト detection:\n\n1. **Text Preprocessing**: The input テキスト is tokenized and processed for analysis.\n\n2. **特徴抽出**: Analyzes typo and error patterns — AI rarely makes human-like typos. Relevant linguistic features are computed from the テキスト.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **スコア計算**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "分析タイプ: 統計\nメディア: テキスト\n入力: Raw テキスト string\nMinimum テキスト length: 100 characters\n出力: 信頼度スコア (0-100)\n処理方式: Client-side NLP analysis",
-    "accuracy": "中〜高 — 65-85% 単独精度. Performance increases significantly when combined with complementary テキスト analysis methods. Results vary with テキスト length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated テキスト detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated テキスト through typo error pattern analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated テキスト, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various テキスト types and genres\n• Based on established linguistic research\n• Complements other 統計 テキスト analysis methods",
-    "limitations": "• Best used in combination with other テキスト analysis methods\n• Performance varies with テキスト length (requires sufficient テキスト)\n• May be affected by テキスト language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "タイプミスとエラーのパターン (Typo & Error Pattern)",
+    "description": "誤植や文法的な誤りの存在、頻度、および具体的な性質を分析します。大規模言語モデルはトークンの確率確率に基づいて動作し、単語や文を数学的に構築します。つまり、生理学的な「キーボードの打ち間違い」（例：「the」の代わりに「teh」、隣接する文字の入れ替わり）や一般的な認知的なスペルミスを犯すことは事実上ありません。AIがエラーを犯す場合、通常は機械的なタイプミスではなく、幻覚化された（ハルシネーションの）単語や不自然な言い回しが生成されます。逆に、本物の人間の書いた文章は、編集された場合であっても、特有の微細なエラー、同音異義語の混同（「their」/「there」など）、または句読点の不一致が残っていることがよくあります。",
+    "algorithm": "確率的エラープロファイリングとタイプミスの分類",
+    "mechanism": "アルゴリズムは、包括的な辞書と、人間の一般的なタイプミスのデータベースに照らしてテキストをスキャンします。検出された異常を、生理学的エラー（キーボードの滑り）、認知的エラー（音声学的なスペルミス、同音異義語）、およびトークン化アーティファクトに分類します。正書法（スペル）の不完全性がまったくない完全に手付かずのテキスト、または唯一の異常が標準的な人間のタイプミスではなく奇妙なトークンの組み合わせであるテキストは、機械生成と強く相関しています。文字レベルでの本物の人間のタイプミスが存在すると、AIの確率スコアが大幅に低下します。",
+    "useCase": "著者が人間である場合、手付かずでエラーのない正書法が非常に不自然である、カジュアルなテキスト、フォーラムの投稿、学生のエッセイ、およびソーシャルメディアのコンテンツを分析するのに不可欠です。",
+    "strengths": "• AIに対する信頼性の高い否定的な指標：本物の生理学的なタイプミス（隣接するキーボードの文字の入れ替わりなど）の存在は、人間が著者であるという非常に強力な証拠です。\n• 過度に磨き上げられ、完璧に綴られたLLM出力の「不気味の谷」を効果的に強調します。",
+    "limitations": "• ユーザーが意図的にAIが生成したテキストにタイプミスを挿入したり、「ヒューマナイザー」スクリプトを実行したりすると、簡単に打ち負かされます。\n• プロによる編集、出版、または校正済みのテキスト（ジャーナリズムや学術論文など）では、人間もほぼ完璧な正書法を達成するため、有用性が低くなります。",
+    "parameters": "解析: 辞書の検証とエラーの分類\n評価基準: 認知的スペルミスに対する生理学的エラーの密度\n出力結果: 0-100 正書法の完璧さスコア",
+    "accuracy": "中 — 65-80%の精度。二次的な機能として優れています。断定的にAI生成を証明するのではなく、主に人間の書き手の「無実を証明する（免罪する）」ために機能します。",
     "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
         {
             "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
             "url": "https://arxiv.org/abs/2011.01314"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
         }
     ]
 }

@@ -1,22 +1,21 @@
 {
-    "name": "Transition Smoothness",
-    "description": "Analyzes paragraph transition smoothness",
-    "algorithm": "Transition Smoothness — Statistical Pattern Analyzer",
-    "mechanism": "This method performs linguistic analysis for AI-generated 텍스트 detection:\n\n1. **Text Preprocessing**: The input 텍스트 is tokenized and processed for analysis.\n\n2. **특징 추출**: Analyzes paragraph transition smoothness. Relevant linguistic features are computed from the 텍스트.\n\n3. **Statistical Analysis**: Features are compared against baseline distributions from human-written vs AI-generated corpora.\n\n4. **Pattern Detection**: Anomalous patterns characteristic of AI generation are identified.\n\n5. **점수 계산**: A confidence score (0-100) is calculated based on detected patterns.",
-    "parameters": "분석 유형: 통계\n미디어: 텍스트\n입력: Raw 텍스트 string\nMinimum 텍스트 length: 100 characters\n출력: 신뢰도 점수 (0-100)\n처리 방식: Client-side NLP analysis",
-    "accuracy": "중간~높음 — 65-85% 단독 정확도. Performance increases significantly when combined with complementary 텍스트 analysis methods. Results vary with 텍스트 length, language, and content type.",
-    "source": "Statistical NLP analysis methods for AI-generated 텍스트 detection. Based on computational linguistics and information theory research.",
-    "useCase": "Detection of AI-generated 텍스트 through transition smoothness analysis. This method examines specific linguistic patterns that differ between human-written and AI-generated 텍스트, providing complementary evidence in a multi-method analysis pipeline.",
-    "strengths": "• Fast client-side analysis with no server required\n• Effective as part of a multi-method analysis pipeline\n• Works across various 텍스트 types and genres\n• Based on established linguistic research\n• Complements other 통계 텍스트 analysis methods",
-    "limitations": "• Best used in combination with other 텍스트 analysis methods\n• Performance varies with 텍스트 length (requires sufficient 텍스트)\n• May be affected by 텍스트 language and writing style\n• Accuracy depends on the AI model used for generation\n• Human writing can occasionally trigger false positives",
+    "name": "전환(Transition) 매끄러움 분석 (Transition Smoothness)",
+    "description": "한 문단이 끝나는 꼬리 부분과 다음 문단이 시작되는 머리 부분 사이의 '의미론적 중복도(Semantic overlap)'와 '어휘적 사슬(Lexical chaining)'이 얼마나 끈끈하게 연결되어 있는지를 평가합니다. 인간 작가들은 이전 생각의 결론(레마, Rheme)에서 등장했던 특정 주체, 개념 또는 동의어를 새로운 생각의 시작점(테마, Theme)으로 다시 끌어와 자연스럽게 주제의 흐름을 유지합니다. 그러나 인간과 같은 '단기 기억의 연속성'이 아니라 넓고 얕은 문맥적 어텐션(Attention)에만 의존하는 생성형 AI 모델들은, 이렇게 쫀쫀하게 맞물려 돌아가는 어휘 사슬(Lexical chains)을 만들어내는 데 자주 실패합니다. 대신, AI는 의미론적으로 뚝 끊어져 버린 빈약한 연결 고리를 감추기 위해 '앞으로 나아가서', '추가적으로' 같은 영혼 없는 범용 접속 부사들을 과도하게 욱여넣는 것으로 보상 행동을 취합니다.",
+    "algorithm": "경계 초월 어휘 사슬(Lexical Chaining) 및 의미 중복도 단층 촬영",
+    "mechanism": "알고리즘은 문단의 '꼬리(마지막 1~2문장)'와 다음 문단의 '머리(처음 1~2문장)'를 격리하여 정밀 분석합니다. 벡터 임베딩을 사용하여 두 부분 사이의 의미론적 교집합(Overlap)을 계산하고, 노골적인 어휘 사슬(핵심 명사, 대명사, 직접적인 동의어의 끈질긴 반복)이 작동하고 있는지 감시합니다. 문단 경계를 넘나들 때마다 의미론적 교집합 수치가 계속 바닥(0에 수렴)을 치는데도 불구하고, 오직 기계적인 공식 접속어(Transition words)에만 의존하여 억지로 다리를 놓으려는 텍스트는 빼도 박도 못하는 생성형 AI의 산물입니다. 반대로, 억지스러운 접속어구가 없는데도 앞뒤 문단이 의미론적으로 깊이 맞물려(High overlap) 돌아간다면, 이는 온기를 품은 진짜 인간의 글쓰기일 확률이 압도적으로 높습니다.",
+    "useCase": "단락과 단락이 파편화된 리스트 구실을 하는 게 아니라, 직전문단의 아이디어를 디딤돌 삼아 계단식으로 자연스럽게 전개되어야 하는 다중 문단 에세이, 기획 기사, 심층 보고서를 유전자 감식하는 데 최적화되어 있습니다.",
+    "strengths": "• 인간의 작업 기억(Working memory)이 본능적으로 생각의 다리를 놓는 방식과 비교하여, LLM이 문맥의 국지적 경계를 처리할 때 겪는 근본적인 인지적 한계를 정확히 찌릅니다.\n• 단락 간의 의미론적 교집합 자체는 서사 흐름의 근원적인 뼈대(구조적 특성)이므로, 껍데기 단어 몇 개 갈아 끼우는 단순 꼼수(Word-replacement)에는 절대 뚫리지 않는 극강의 방어력을 자랑합니다.",
+    "limitations": "• 단락들이 철저히 독립적(Siloed)으로 놀도록 의도적으로 기획된 고도로 구조화된 글, 글머리 기호(Bullet)가 난무하는 글, 또는 모듈식 기계 매뉴얼 앞에서는 제 기능을 발휘하지 못합니다.\n• 인간이 썼더라도 논리 구조가 빈약하거나 파편화된 '주제문(Topic sentences)'에만 억지로 기대어 쓴 형편없는 글에 대해서는 AI로 오해하는 오탐지(Flag)를 낼 위험이 있습니다.",
+    "parameters": "분석 기준: 꼬리(Tail)-머리(Head) 의미 교집합(Semantic Overlap) 단층 촬영\n측정 지표: 어휘적 사슬(사골 육수) vs 범용 접속 부사(싸구려 조미료) 밀도 비교\n출력: 0-100 전환 인위성(Transition Artificiality) 스코어",
+    "accuracy": "중상 — 72-84%의 소름 돋는 정확도를 구현합니다. 넓은 숲을 보는 매크로(Macro) 레벨의 '주제 전환 탐지기(Topic shift analyzers)'들의 사각지대를 완벽하게 메워주는 고해상도 마이크로(Micro) 구조 측정 지표로 활약합니다.",
     "references": [
         {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+            "title": "Hearst, M.A. (1997). TextTiling: Segmenting Text into Multi-paragraph Subtopic Passages. Computational Linguistics.",
+            "url": "https://aclanthology.org/J97-1003/"
         },
         {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
+            "title": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.",
+            "url": "https://link.springer.com/article/10.3758/s13428-015-0626-y"
         }
     ]
 }
