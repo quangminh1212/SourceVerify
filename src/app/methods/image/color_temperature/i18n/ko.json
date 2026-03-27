@@ -1,18 +1,18 @@
 {
-    "name": "색온도 일관성 분석",
-    "description": "분석합니다 local color temperature variations 감지하기 위해 composited regions with mismatched 화이트 밸런스.",
-    "algorithm": "Regional Color Temperature Estimation and Consistency Check",
-    "mechanism": "Estimates local color temperature (Kelvin) 에 걸친 image patches 분석하여 the ratio of warm to cool spectral components. Spliced or AI 생성 regions may exhibit inconsistent values.",
-    "parameters": "Estimation: Planckian locus fitting, Patches: 32×32, Color space: CIE xy, Temperature range: 2000-10000K",
-    "accuracy": "중간 — 72-85%",
-    "source": "Hsu, Y.F. & Chang, S.F. (2010) — Image Splicing Detection Using Camera Response Function Consistency, IEEE ICME",
-    "useCase": "Detecting composited regions by identifying mismatched 화이트 밸런스 settings",
+    "name": "색온도(White Balance) 국소 지형도 붕괴 탐지",
+    "description": "이미지를 쪼개 각 조각마다 '플랑크 궤적(Planckian locus) 곡선'을 대조하여, 화소들 사이에 숨어있는 국소적인 색온도(화이트 밸런스)의 치명적 모순을 사냥합니다. 진짜 현실을 찍은 사진은 전체 풍경이 단일한 대자연이나 환경의 빛(Ambient light)에 푹 담겨 있으므로, 켈빈(K) 단위의 물리학적 색온도 곡선을 훼손함 없이 매끄럽게 따라갑니다. 하지만 생성형 AI 모델이나, 포토샵으로 조잡하게 이미지를 뜯어 붙인 인간(Splicing)은, 원래 다른 빛을 받던 피사체의 뼛속까지 '구워져 있는(Baked-in)' 출신 색온도를 눈치채지 못한 채 억지로 꿰매버리기 때문에, 이질적인 화이트 밸런스들이 미친 듯이 충돌하는 불가능한 모자이크 기형아를 낳게 됩니다.",
+    "algorithm": "국소 조명(Illuminant) 역추산 & 플랑크 곡선 수학적 일관성 검열",
+    "mechanism": "알고리즘은 무자비하게 이미지를 32x32 픽셀짜리 고기 조각(패치)으로 난도질한 다음, 각 조각에 묻어있는 빛의 스펙트럼 성분을 국제 조명 위원회(CIE)의 xy 색도도 위에 꽂아 넣습니다. 그리고 각 조각에 빛을 비추기 위해 필요한 구체적인 켈빈 온도를 수학적으로 역추적해 '플랑크 거리(Planckian distance)'를 파헤칩니다. 진짜 사진이라면(다중 조명이 섞였다 한들) 조명과 그림자는 물리학의 거리-제곱 반비례 법칙을 준수하며 부드럽고 논리적으로 흘러갑니다. 반면, AI의 환각이나 끔찍한 합성 사진 앞에서는, 이론상 똑같은 환경광을 뒤집어써야 할 바로 옆 피사체끼리 3200K(따스한 실내 전구)와 6500K(차가운 대낮 하늘) 극단을 미친 듯이 오가는 물리적 불가능성을 잡아내어 수갑을 채웁니다.",
+    "parameters": "역추적 모델: 플랑크 궤도 곡선 피팅(Fitting), 분석 촘촘함: 32x32 패치 단위 그릴, 추적 좌표계: CIE xy 색도 공간, 추적 온도 대역: 2,000K(붉은빛) ~ 10,000K(푸른빛)",
+    "accuracy": "중급~상급 (72-85%) - AI가 생성 과정에서 실수로 다른 배경을 융합시켜버린 '프랑켄슈타인 괴물(Outpainting)'과, 인간이 누끼 따서 합성해 놓은 모든 쓰레기 사진을 갈가리 찢어버리는데 특화된 일격필살의 포렌식 병기입니다.",
+    "source": "Hsu & Chang (2010), IEEE ICME - 카메라 응답 함수(CRF) 무결성과 광원 물리 추적 역학",
+    "useCase": "엄격하고 피도 눈물도 없는 '디지털 온도계' 역할을 자처하며, 한 프레임 안에 갇혀 있는 피사체들이 사실은 서로 완전히 다른, 논리적으로 절대로 양립할 수 없는 거짓된 빛(조명)의 온도를 뒤집어쓰고 있다는 물리적 수학 증명서를 영장처럼 발부합니다.",
     "references": [
         {
-            "title": "Hsu, Y.F. & Chang, S.F. (2010) — Image Splicing Detection Using Camera Response Function Consistency, IEEE ICME",
-            "url": ""
+            "title": "Hsu, Y.F. & Chang, S.F. (2010). Image Splicing Detection Using Camera Response Function Consistency. IEEE ICME.",
+            "url": "https://doi.org/10.1109/ICME.2010.5582495"
         }
     ],
-    "strengths": "• Physics-based color 분석\\n• 감지합니다 화이트 밸런스 mismatches\\n• Complementary to illuminant map\\n• Works 에 걸친 different scenes",
-    "limitations": "• Assumes consistent ambient lighting\\n• Mixed lighting complicates 분석\\n• Color temperature varies naturally\\n• Sensitive to noise in dark regions"
+    "strengths": "• 머리부터 발끝까지 절대적인 물리학 법칙에 딥하게 꽂혀 있습니다. 이 알고리즘은 화면 안에 사람이 있는지, 자동차가 있는지 그딴(Semantic) 의미는 철저히 무시한 채, 오로지 변하지 않는 빛의 반사 법칙이라는 차가운 잣대만 들이댑니다.\n• 다른 조명 아래 있던 사람이나 물체를 가짜 배경에 잘라 붙이는 '합성(Splicing)' 범죄, 혹은 맥락이 없는 요소를 하나의 화폭에 억지로 우겨넣는 멍청한 AI들에게는 지옥과도 같은 사형 집행관입니다.\n• 시너지 폭발: 이 온도 추적기를 '그림자 궤적(Shadow Trajectory) 분석기'와 짝을 이뤄 합동 수사를 펼치게 하면, 인간이건 AI 모델이건 빛의 위조 범죄를 숨기는 것은 지구상에서 불가능해집니다.",
+    "limitations": "• 화려하고 변태적인 빛들이 미쳐 날뛰는 환경(예: 사이버펑크 네온사인 간판 거리, 클럽, 화려한 조명이 싸우는 콘서트장, 푸른색 TV 빛과 주황색 난로가 동시에 얼굴을 때리는 거실)에 던져지면 대량의 헛구역질(오진, False Positive)을 하며 처참하게 무너집니다.\n• 카메라 센서의 끔찍한 노이즈(ISO) 파편이 색온도를 추정해야 할 미세한 스펙트럼 성분마저 잔혹하게 씹어 삼켜버리는, 빛이 부족한 극단적 섀도우(지하, 밤) 암부 영역에서는 알고리즘이 눈을 감아버립니다.\n• 색온도 데이터 자체를 의도적으로 학살하여 말살시켜버린 흑백(Monochrome), 무채색, 순수 세피아 톤의 사진 앞에서는 캘빈 온도를 잴 온도계 자체가 녹아버렸기에 아무 능력을 쓰지 못합니다."
 }

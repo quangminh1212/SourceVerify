@@ -1,18 +1,18 @@
 {
-    "name": "Color Temperature Consistency",
-    "description": "Analyzes local color temperature variations to detect composited regions with mismatched white balance.",
-    "algorithm": "Regional Color Temperature Estimation and Consistency Check",
-    "mechanism": "Estimates local color temperature (Kelvin) across image patches by analyzing the ratio of warm to cool spectral components. Spliced or AI-generated regions may exhibit inconsistent values.",
-    "parameters": "Estimation: Planckian locus fitting, Patches: 32×32, Color space: CIE xy, Temperature range: 2000-10000K",
-    "accuracy": "Medium — 72-85%",
-    "source": "Hsu, Y.F. & Chang, S.F. (2010) — Image Splicing Detection Using Camera Response Function Consistency, IEEE ICME",
-    "useCase": "Detecting composited regions by identifying mismatched white balance settings",
+    "name": "Color Temperature (White Balance) Topography",
+    "description": "Analyzes Planckian locus fitting across image patches to detect localized color temperature (White Balance) inconsistencies. Real-world photographs are fundamentally bathed in environmental ambient light, causing the entire scene to adhere to a unified, physics-based color temperature curve (measured in Kelvin). Generative AI, or sloppy human compositing (splicing), often stitches together disparate visual elements that unconsciously carry the heavily 'baked-in' color temperatures of their original conflicting latent origins, creating an impossible mosaic of clashing white balances.",
+    "algorithm": "Regional Illuminant Estimation & Planckian Consistency",
+    "mechanism": "The algorithm forcefully sections the image into 32x32 pixel patches and plots their underlying spectral components on the CIE xy chromaticity diagram. It then calculates the 'Planckian distance'—mathematically estimating the specific Kelvin temperature required to illuminate each patch. In an authentic photograph (even with multiple light sources), the temperature transitions are smooth, logical, and obey physical light falloff. In an AI hallucination or a fake composite, the algorithm detects violent, physically impossible snapping between 3200K (warm tungsten) and 6500K (cool daylight) on adjacent objects that theoretically must share the identical dominant ambient light source.",
+    "parameters": "Estimation Model: Planckian locus curve fitting, Resolution: 32x32 patch grid, Color Space: CIE xy Chromaticity, Kelvin Range: 2000K - 10000K",
+    "accuracy": "Medium-High (72-85%) - A highly specialized and potent piece of forensic machinery that excels at destroying 'Frankenstein' image composites (both AI outpainting and Photoshop splices).",
+    "source": "Hsu & Chang (2010) - Camera Response Function Consistency / Physics of Illuminant Estimation",
+    "useCase": "Acting as a digital 'thermometer', it aggressively uncovers composited anomalies by proving mathematically that the objects in the image are bathed in completely different, contradictory light sources.",
     "references": [
         {
             "title": "Hsu, Y.F. & Chang, S.F. (2010). Image Splicing Detection Using Camera Response Function Consistency. IEEE ICME.",
             "url": "https://doi.org/10.1109/ICME.2010.5582495"
         }
     ],
-    "strengths": "• Physics-based color analysis\\n• Detects white balance mismatches\\n• Complementary to illuminant map\\n• Works across different scenes",
-    "limitations": "• Assumes consistent ambient lighting\\n• Mixed lighting complicates analysis\\n• Color temperature varies naturally\\n• Sensitive to noise in dark regions"
+    "strengths": "• Deeply rooted in absolute physics; the algorithm is entirely blind to the image's semantic content and strictly evaluates the immutable laws of light reflection.\n• Extremely lethal against 'Splicing' (e.g., placing a person into a fake background) or AI models that clumsily merge separate conceptual elements with conflicting lighting logic.\n• Highly synergistic; when combined with shadow trajectory analysis, it makes lighting forgery nearly impossible for a human or machine to hide.",
+    "limitations": "• Prone to catastrophic confusion (massive false positives) in highly complex, authentic mixed-lighting environments (e.g., a neon-lit nightclub, concert stages, or a room lit simultaneously by a blue TV screen and a warm fireplace).\n• Effectiveness plummets in heavily underexposed, dark shadow areas where raw digital sensor noise entirely overwhelms the delicate spectral components required for accurate Kelvin estimation.\n• Conceptually fails completely on pure monochrome, black-and-white, or deeply sepia-toned images where all color temperature data has been intentionally destroyed."
 }

@@ -1,18 +1,18 @@
 {
-    "name": "色温一致性分析",
-    "description": "分析 local color temperature variations 以检测 composited regions with mismatched 白平衡.",
-    "algorithm": "Regional Color Temperature Estimation and Consistency Check",
-    "mechanism": "Estimates local color temperature (Kelvin) 跨 image patches 通过分析 the ratio of warm to cool spectral components. Spliced or AI生成的 regions may exhibit inconsistent values.",
-    "parameters": "Estimation: Planckian locus fitting, Patches: 32×32, Color space: CIE xy, Temperature range: 2000-10000K",
-    "accuracy": "中等 — 72-85%",
-    "source": "Hsu, Y.F. & Chang, S.F. (2010) — Image Splicing Detection Using Camera Response Function Consistency, IEEE ICME",
-    "useCase": "Detecting composited regions by identifying mismatched 白平衡 settings",
+    "name": "色彩温度（白平衡）拓扑断层扫描",
+    "description": "通过对全图切片并拟合普朗克轨迹（Planckian locus）曲线，来残酷狩猎并猎杀那些局部色温（白平衡）出现极端物理割裂的作伪区域。在真实的物理世界里，整幅风景必然沐浴在同一个大环境的光照场之下，这意味着所有被照亮的物体在热力学上都必须乖乖遵守一条统一的、基于光波物理的色温曲线（以开尔文 Kelvin 为单位）。然而，生成式AI（或者是那些在Photoshop里拙劣抠图的合成骗子），在强行缝合不同的视觉元素时，根本意识不到这些元素依然固执地携带着它们最初诞生时被“死死烤进去（baked-in）”的旧色温参数。这导致在一张图中，由于潜伏空间（Latent space）运算的混乱融合，各种互相厮杀、物理上根本无法共存的白平衡光源像科学怪物一样被强行拼凑在了一起。",
+    "algorithm": "局部光源光谱逆向估算与普朗克一致性（CIE xy）审判",
+    "mechanism": "该算力屠夫会将整张照片用极其暴力的手段剁成无数个 32x32 像素的肉块（切片），然后扒出它们底层的光谱色彩成分，将其死死地钉在国际照明委员会（CIE）xy 色度坐标图上。接着，它开始冰冷地计算“普朗克距离（Planckian distance）”——即在数学上逆向倒推出：到底需要多少开尔文（K）温度的实体灯泡，才能把这块肉（像素）照亮成现在这个颜色？在一张干干净净的真实摄影作品里（哪怕它同时被窗外的阳光和室内的台灯照射），温度的过渡也是丝滑、符合逻辑、并严格遵循光线平方反比衰减定律的。但是，如果这是一张AI产生的幻觉缝合怪，或者是人类抠图造假的图，算法就会眼睁睁地看着一个理论上明明应该共享同一个太阳光源的脸颊和脖子，竟在物理学上毫无征兆地从 3200K（温暖的室内钨丝灯）发生了如同精神分裂般的暴跳割裂，瞬间突变成 6500K（冰冷的户外白昼光）。",
+    "parameters": "逆推数学模型: 普朗克轨迹曲线疯狂拟合 (Planckian locus curve fitting), 肢解分辨率: 32x32 像素网格阵列, 追踪坐标空间: CIE xy 色度图, 凯尔文审判区间: 2000K (烛光) 到 10000K (阴天蓝光)",
+    "accuracy": "中上水准 (72-85%) - 这是一台高度专业化、极度致命的法医重型机械，它在摧毁那些如同“弗兰肯斯坦（科学怪人）”般由AI在画幅外脑补扩图（Outpainting）或是人类手动抠图缝合（Splices）出来的造假图片时，其恐怖的统治力无与伦比。",
+    "source": "Hsu & Chang (2010) - 摄像机响应函数 (CRF) 一致性铁律 / 照明物理学逆向估算定理",
+    "useCase": "化身为一把无情的数字“温度计”，它通过给出极其铁血冷酷的数学证明——即画面中紧紧依偎在一起的两个物体，实际上却犹如活在不同宇宙中一般被截然相反的光源所照射——来粗暴撕开那些造假合成或AI拼凑出的图景伪装。",
     "references": [
         {
-            "title": "Hsu, Y.F. & Chang, S.F. (2010) — Image Splicing Detection Using Camera Response Function Consistency, IEEE ICME",
-            "url": ""
+            "title": "Hsu, Y.F. & Chang, S.F. (2010). Image Splicing Detection Using Camera Response Function Consistency. IEEE ICME.",
+            "url": "https://doi.org/10.1109/ICME.2010.5582495"
         }
     ],
-    "strengths": "• Physics-based color 分析\\n• 检测 白平衡 mismatches\\n• Complementary to illuminant map\\n• Works 跨 different scenes",
-    "limitations": "• Assumes consistent ambient lighting\\n• Mixed lighting complicates 分析\\n• Color temperature varies naturally\\n• Sensitive to noise in dark regions"
+    "strengths": "• 它的根系深深地扎在绝对不可撼动的物理学土壤之中；这套算法完全是一个“瞎子”，它根本不在乎你这张照片里画的是阿猫阿狗还是大统领，它只盲目且狂热地丈量光线反射的硬性铁律。\n• 在对付“图像拼接移植（Splicing，比如把一个人的头换到另一个不存在的假背景上）”，或是对付那些总是笨拙地将完全矛盾的光源逻辑硬塞在一起的AI模型时，它是堪比核弹级别的必杀武器。\n• 拥有极其恐怖的协同作战能力；如果将这台温度计与“阴影轨迹分析（Shadow Trajectory）”联合执法，那么无论人类还是机器，想要在光影造假上瞒天过海，在地球上绝对是不可能的。",
+    "limitations": "• 如果把它扔进一张光源极端混乱、但却是真实拍摄的复杂混合光环境里（比如：霓虹狂闪的赛博朋克夜场、五颜六色的演唱会舞台，或者是脸上同时被冰蓝色的电视机冷光和橙红色的烤火炉暖光劈出的客厅），它会瞬间精神崩溃，爆发出极其惨烈的灾难级误杀（海量 False Positives）。\n• 当遭遇严重欠曝、被黑暗吞噬的死黑阴影区时，它会当场折戟沉沙；因为在这里，数码相机传感器那种粗糙肮脏的感光噪点（Noise）会像海啸一样，把原本用来精准估算凯尔文温度的脆弱光谱成分给当场撕碎吞没。\n• 如果造假者懂得断尾求生，狠心将整张图直接暴改成纯粹的黑白单色图（Monochrome）、或是极深的老旧复古泛黄（Sepia）色调，那么由于所有能用来测算色温的色彩数据都被人为屠杀殆尽了，这套算法在概念上就会被彻底废掉武功。"
 }
