@@ -1,30 +1,22 @@
 {
-    "name": "Phân tích Metadata Hồ sơ Màu",
-    "description": "Phân tích dữ liệu hồ sơ màu ICC, khai báo không gian màu, độ sâu bit, và metadata rendering intent để phát hiện các mẫu ảnh AI tạo. Camera chuyên nghiệp nhúng hồ sơ màu phức tạp, trong khi công cụ AI thường chỉ xuất sRGB cơ bản.",
-    "algorithm": "Bộ phân tích Metadata ICC/Không gian màu",
-    "mechanism": "Phân tích hồ sơ màu kiểm tra nhiều lớp metadata:\n\n1. **Phát hiện hồ sơ ICC**: Xác định loại hồ sơ ICC nhúng. Camera chuyên nghiệp sử dụng Adobe RGB, ProPhoto RGB, hoặc Display P3, trong khi ảnh AI hầu như luôn dùng sRGB IEC61966-2.1 cơ bản.\n\n2. **Phân tích độ sâu bit**: Kiểm tra metadata độ sâu màu. File RAW từ camera dùng 12-bit, 14-bit, hoặc 16-bit. Đầu ra AI luôn là 8-bit mỗi kênh.\n\n3. **Tính nhất quán không gian màu**: Đối chiếu khai báo không gian màu giữa EXIF, ICC, và XMP. Sự không nhất quán cho thấy metadata bị giả mạo.\n\n4. **Kiểm tra Rendering Intent**: Quy trình chuyên nghiệp giữ nguyên rendering intent (perceptual, relative colorimetric). Công cụ AI hiếm khi thiết lập đúng.",
-    "parameters": "Hồ sơ camera: Adobe RGB, ProPhoto RGB, Display P3, DCI-P3\nAI điển hình: sRGB IEC61966-2.1\nĐộ sâu bit: 8-bit (tiêu chuẩn/AI), 12/14/16-bit (RAW chuyên nghiệp)\nRendering intents: perceptual, relative colorimetric, saturation, absolute colorimetric",
-    "accuracy": "Trung bình - 70-80%. Dấu hiệu mạnh khi có hồ sơ màu nâng cao (Adobe RGB, ProPhoto). Kém tin cậy hơn với camera tiêu dùng mặc định sRGB.",
-    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
-    "useCase": "Bằng chứng hỗ trợ trong pipeline phân tích metadata. Đặc biệt hữu ích để phân biệt ảnh chụp chuyên nghiệp (dùng hồ sơ dải rộng) với nội dung AI tạo (dùng sRGB). Hiệu quả khi kết hợp nhiều tín hiệu.",
-    "strengths": "• Hồ sơ màu chuyên nghiệp rất khó cho công cụ AI sao chép\n• Phân tích độ sâu bit cho phép phân biệt rõ camera vs AI\n• Tỉ lệ dương tính giả thấp khi phát hiện hồ sơ dải rộng\n• Phân tích nhanh, không phá hủy\n• Hữu ích để xác định ảnh gốc từ RAW",
-    "limitations": "• Nhiều camera tiêu dùng cũng mặc định sRGB\n• Công cụ AI về lý thuyết có thể nhúng hồ sơ ICC tùy chỉnh\n• Chuyển đổi JPEG loại bỏ một số thông tin hồ sơ màu\n• Nền tảng mạng xã hội thường xóa hồ sơ ICC\n• Không phân biệt được camera sRGB và đầu ra AI",
+    "name": "Trích Xuất Hồ Sơ Màu ICC (Color Profile Meta)",
+    "description": "Phân tích nền tảng của tệp nhúng ICC Color Profile và các tệp khai báo không gian màu. Một chiếc máy ảnh chuyên nghiệp thực thụ luôn gắn vào bức ảnh những hồ sơ màu đặc thù, được hãng sản xuất (Nikon, Canon, Sony) cân chỉnh riêng cực kỳ phức tạp. Ngược lại, AI sinh ảnh hoàn toàn từ không gian toán học vô cực, không hề có phần cứng quang học (không có cảm biến, không có ống kính). Do đó, khi xuất xưởng ra file ảnh cuối cùng, các công cụ AI hầu như luôn nhét bừa một cấu hình màu web mặc định, rẻ tiền và chung chung nhất: sRGB IEC61966-2.1 hệ 8-bit.",
+    "algorithm": "Khai Thác Mã Đánh Dấu (Header) EXIF/XMP & Không Gian Màu ICC",
+    "mechanism": "Thuật toán không thèm đọc từng pixel ảnh mà 'mổ bụng' trực tiếp phần tiêu đề nhị phân (binary headers) của tệp tin. Nó tra cứu sự đồng nhất của không gian màu giữa các lớp siêu dữ liệu (metadata). Nếu một bức ảnh trông có vẻ là một kiệt tác phong cảnh dải động cao (HDR) chụp bằng máy cơ hàng xịn, nhưng khi bóc lõi thông tin ra lại chỉ thấy một cái hồ sơ màu sRGB rẻ tiền 8-bit, trùng khớp hoàn toàn với cấu trúc chữ ký mã nguồn mà Midjourney hay Stable Diffusion hay nhả ra, thuật toán sẽ gióng lên hồi chuông cảnh báo ảnh được tạo bởi AI.",
+    "parameters": "Mục tiêu truy xét: Mặc định sRGB IEC61966-2.1 vs. Gam màu rộng (Adobe RGB/ProPhoto/DCI-P3), Đặc điểm chữ ký: Tính nguyên vẹn khối dữ liệu ICC, Rendering Intents",
+    "accuracy": "Trung bình yếu (40-60%) - Hoạt động siêu tốt ở vai trò lính gác cổng kiểm tra nhanh, nhưng cực kỳ mỏng manh vì siêu dữ liệu (metadata) là thứ dễ bị làm giả, bóp méo hoặc tẩy xóa nhất trên đời.",
+    "source": "Tiêu chuẩn ICC v4.4 (ISO 15076-1) / Tiêu chuẩn Pháp y Siêu Dữ Liệu Hình Ảnh",
+    "useCase": "Giống như một bước 'kiểm tra giấy tờ tùy thân' chớp nhoáng, vạch trần những bức ảnh xưng danh là 'ảnh chụp thiên nhiên nguyên bản không chỉnh sửa' nhưng lại mang tấm hộ chiếu sRGB nhân tạo rẻ tiền của phần mềm AI.",
     "references": [
         {
             "title": "ICC Profile Specification v4.4 (ISO 15076-1:2010)",
             "url": "https://www.color.org/specification/ICC.1-2022-05.pdf"
         },
         {
-            "title": "sRGB Standard — IEC 61966-2.1:1999",
-            "url": "https://webstore.iec.ch/en/publication/6169"
-        },
-        {
             "title": "Fraser, B. et al. (2004). Real World Color Management. Peachpit Press.",
             "url": "https://www.color.org/whitepapers.xalter"
-        },
-        {
-            "title": "Adobe RGB (1998) Color Image Encoding",
-            "url": "https://www.adobe.com/digitalimag/adobergb.html"
         }
-    ]
+    ],
+    "strengths": "• Tốc độ chạy nhanh như một cái chớp mắt, vi tính không cần tốn 1 byte RAM nào để render hình ảnh mà chỉ cần đọc vài dòng văn bản nhị phân ở đầu tệp.\n• Bắt chẹt ngay lập tức những tác phẩm AI 'lười biếng' nếu bức ảnh đó muốn giả mạo làm ảnh RAW chụp từ máy cơ nhưng lại hoàn toàn trống rỗng dữ liệu màu gốc của nhà sản xuất.\n• Rất giỏi trong việc bóc phốt siêu dữ liệu mâu thuẫn (VD: Kẻ lừa đảo copy tag EXIF ghi là chụp bằng 'Sony A7R V' dán vào, nhưng file lại dùng chuẩn ICC chung chung xuất ra từ thư viện mã nguồn Python PIL).",
+    "limitations": "• Phế võ công hoàn toàn ngay sập tức nếu bức ảnh bị tải lên các mạng xã hội (Facebook, Instagram, Zalo) hoặc ứng dụng chat (Telegram, WhatsApp) vì các máy chủ này sẽ tự động 'cạo sạch' mọi metadata và tự ép chuẩn ảnh về sRGB để tiết kiệm dung lượng mạng.\n• Cực kỳ dễ bị qua mặt bởi một kẻ lừa đảo có chút kiến thức: Xóa dấu vết chỉ bằng cách mở ảnh AI đó trong Photoshop, gán cho nó một profile xịn (Adobe RGB) rồi lưu lại.\n• Dễ nghi oan (False Positive) cho những bức ảnh xịn nhưng được chụp bởi điện thoại thông minh giá rẻ, webcam cùi bắp, hoặc ảnh chụp màn hình điện thoại gốc (screenshot), vì chúng cũng lưu cấu hình sRGB y hệt AI."
 }

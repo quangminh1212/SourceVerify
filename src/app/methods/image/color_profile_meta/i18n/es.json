@@ -1,26 +1,22 @@
 {
-    "name": "Metadatos de Perfil de Color",
-    "description": "Analiza datos de perfil de color ICC, declaraciones de espacio de color, profundidad de bits y metadatos de intent de renderizado para detectar patrones de generación por IA.",
-    "algorithm": "Analizador de Metadatos ICC/Espacio de Color",
-    "mechanism": "El análisis de perfil de color examina múltiples capas:\n\n1. **Detección de perfil ICC**: Identifica el perfil ICC incrustado. Las cámaras profesionales usan Adobe RGB o ProPhoto RGB, mientras que las imágenes de IA usan sRGB básico.\n\n2. **Análisis de profundidad de bits**: Los archivos RAW usan 12/14/16 bits. Las salidas de IA son invariablemente 8 bits por canal.\n\n3. **Consistencia del espacio de color**: Valida cruzadamente las declaraciones entre EXIF, ICC y XMP.\n\n4. **Verificación de intent de renderizado**: Los flujos profesionales preservan el intent; las herramientas de IA raramente lo configuran.",
-    "parameters": "Perfiles de cámara: Adobe RGB, ProPhoto RGB, Display P3\nAI típico: sRGB IEC61966-2.1\nProfundidades: 8-bit (estándar/AI), 12/14/16-bit (RAW profesional)",
-    "accuracy": "Media - 70-80%. Indicador fuerte cuando perfiles avanzados están presentes.",
-    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
-    "useCase": "Evidencia de apoyo en el pipeline de análisis de metadatos. Útil para distinguir fotografía profesional de contenido generado por IA.",
-    "strengths": "• Los perfiles de color profesionales son muy difíciles de replicar por IA\n• El análisis de profundidad de bits distingue cámara vs IA\n• Baja tasa de falsos positivos\n• Análisis rápido y no destructivo\n• Útil para identificar imágenes originarias de RAW",
-    "limitations": "• Muchas cámaras de consumo usan sRGB por defecto\n• Las herramientas de IA podrían incrustar perfiles ICC personalizados\n• La conversión JPEG elimina información del perfil\n• Las redes sociales a menudo eliminan perfiles ICC\n• No distingue cámaras sRGB de salidas de IA",
+    "name": "Huella Dactilar de Metadatos y Perfil de Color ICC",
+    "description": "Crucifica y destripa las declaraciones de espacio de color ocultas y la data ICC incrustada en las entrañas de la foto. Las cámaras fotográficas profesionales divinas graban en sus archivos perfiles de color extremadamente detallistas, pesados, complejos y celosamente calibrados por el fabricante (Por ejemplo: los gloriosos perfiles de Nikon, Canon o Adobe RGB y auténticos Display P3). Las miserables IA generadoras jamás han visto el sol, pues escupen imágenes sintéticas desde vacíos espacios matemáticos (Latent spaces) sin matriz de hardware alguna real. Es por eso, que al nacer y renderizarse el archivo, la inepta herramienta IA automáticamente engrapa sin disimulo alguno el más barato, vago, estándar, vulgar y por defecto perfil web de colores existente: el simple sRGB IEC61966-2.1 en un miserable envoltorio de 8-bits.",
+    "algorithm": "Desollador de Cabeceras (Headers) y Firmas Criptográficas de Espacios ICC/XMP/EXIF",
+    "mechanism": "Este algoritmo jamás pierde el tiempo mirando la tinta o leyendo los píxeles; directamente como un sabueso arranca leyendo el texto binario de las cabeceras del archivo (EXIF, XMP, pedazos asquerosos del ICC). Aquí cruza la información en diferentes y variadas capas de metadatos buscando traiciones y contradicciones. Si la pintura luce espectacular, creyéndose una majestuosa asombrosa captura profesional de fotógrafo de National Geographic en HDR con profundidades ópticas envidiables, pero entre las sábanas su perfil ICC susurra confesar ser un estándar vulgar sRGB de 8 bits llevando además calcada la amarga idéntica huella dactilar y firma de las líneas de salidas escupidas por Midjourney o Stable Diffusion, el sistema dictamina sin dudar que es totalmente un horrendo render sintético disfrazado.",
+    "parameters": "Blancos Perfilados en la mira: Estándar sRGB IEC61966-2.1 vs. Gamut Extendido de la Verdad Óptica (Adobe RGB/ProPhoto/DCI-P3). Traiciones Acusadas: Integridad rota en el ICC Chunk, Rendering Intents Falsificados",
+    "accuracy": "Mísera a Mediana (40-60%) - Ferozmente letal y útil si es usada como el primer muro veloz (Heurístico) fronterizo, pero es dolorosamente un cristal de papel quebradizo; los metadatos son famosos en la informática por ser repugnantemente hiper-fáciles de clonar, borrar con un clic, robar y corromper falsificándolos.",
+    "source": "Sacra Biblia ICC Specifications v4.4 (ISO 15076-1) / Protocolos de Balística y Metadatos de Autenticidad",
+    "useCase": "Erigiéndose como una bofetada o 'Olisqueada relámpago', perfecta y capaz de reventar a esas fotos pretenciosas que ruegan a gritos ser llamadas 'Auténticas maravillas de cámara raw', pero acarrean consigo tristemente la calcomanía de fábrica basura sRGB de un simple bot de software.",
     "references": [
         {
             "title": "ICC Profile Specification v4.4 (ISO 15076-1:2010)",
             "url": "https://www.color.org/specification/ICC.1-2022-05.pdf"
         },
         {
-            "title": "sRGB Standard — IEC 61966-2.1:1999",
-            "url": "https://webstore.iec.ch/en/publication/6169"
-        },
-        {
-            "title": "Adobe RGB (1998) Color Image Encoding",
-            "url": "https://www.adobe.com/digitalimag/adobergb.html"
+            "title": "Fraser, B. et al. (2004). Real World Color Management. Peachpit Press.",
+            "url": "https://www.color.org/whitepapers.xalter"
         }
-    ]
+    ],
+    "strengths": "• ¡Su presteza y rapidez es fulminante! Exige un contundente cero (0%) en costos y drenajes de procesamiento del bendito pixel, tan solo husmea el código binario textual que corona la cabecera ligera del archivo.\n• Desgaza instantáneamente y atrapa en el acto a las tontas generaciones 'IAs Perezosas'. Cuando el rufián desea disfrazar mentiras en metadatos y pretende subirse al ring sin adjuntar ni media firma de los abrumadores y celosos datos reales de fábrica óptica.\n• Delata fácilmente paradojas grotescas de los estafadores torpes (Como robar un sucio archivo EXIF que reza altivamente 'Cámara Ultra Sony A7RV' pero sus arterias ICC respiran matemática asquerosa de las plantillas baratas Python PIL de uso open source).",
+    "limitations": "• Apagada, estrangulada, muerta totalmente 100% y arrodillada patéticamente inútil, si al estafador se le ocurre la grandísima idea de pasar su fotillo previamente o haberla bajado por las cuchillas trituradoras asquerosas de Whatsapp, Telegram, Facebook, X (Twitter) o Instagram. Porque a estos asquerosos monstruos no les importa nada y violan arrancan de cuajo cortando a machetazos todos los Metadatos sagrados para reciclar y reducir pesos server forzando todo al asqueroso sRGB.\n• Brutalmente hackeable. Un ciber-villano que sepa atarse los zapatos abre maldita IA generada malvada en Adobe Photoshop, en opciones de Perfil pega el 'Pro-ProPhoto RGB' o Adobe RGB, pulsa Guardar 'Exportar como', y así de humillante burla completamente sin piedad la trampa mortal.\n• Ataca sin piedad escupiendo (FALSOS POSITIVOS Mortales) condenando al inocente solo porque es pobre. Imágenes verdaderas lindas y preciosas emanadas de basuras Webcam patéticas, iPhones viejos de cristal mugriento, celulares chinos de oferta, o patéticos recortes pantallazos (Screenshots), terminando juzgadas asquerosa tristemente de Inteligencias Artificiales diabólicas solo por ser humildemente nacidas bajo el paraguas nativo asqueroso generalizado del sRGB por defecto."
 }

@@ -1,26 +1,22 @@
 {
-    "name": "カラープロファイルメタデータ",
-    "description": "分析します ICC color profile data, 色空間 declarations, bit depth, and rendering intent メタデータ を検出するために AI generation パターン. Professional cameras embed complex color profiles, while AI tools typically output basic sRGB.",
-    "algorithm": "ICC/色空間メタデータアナライザー",
-    "mechanism": "The color profile 分析 examines multiple メタデータ layers:\n\n1. **ICC Profile Detection**: 識別します the embedded ICC color profile type. Professional cameras use Adobe RGB, ProPhoto RGB, or Display P3 profiles, while AI生成の images almost universally use basic sRGB IEC61966-2.1.\n\n2. **Bit Depth Analysis**: チェックします color depth メタデータ. RAW files from cameras use 12-bit, 14-bit, or 16-bit color depth. AI outputs are invariably 8-bit per channel.\n\n3. **Color Space Consistency**: Cross-validates 色空間 declarations にわたる EXIF, ICC, and XMP メタデータ. Inconsistencies suggest メタデータ fabrication.\n\n4. **Rendering Intent Check**: Professional workflows preserve rendering intent (perceptual, relative colorimetric). AI tools rarely set this メタデータ correctly.",
-    "parameters": "Camera profiles: Adobe RGB, ProPhoto RGB, Display P3, DCI-P3\nAI-typical: sRGB IEC61966-2.1\nBit depths: 8-bit (standard/AI), 12/14/16-bit (professional RAW)\nRendering intents: perceptual, relative colorimetric, 彩度, absolute colorimetric",
-    "accuracy": "中 - 70-80%. Strong indicator when advanced color profiles (Adobe RGB, ProPhoto) are present. Less reliable for consumer cameras that default to sRGB.",
-    "source": "ICC Specification v4.4 (ISO 15076-1), sRGB IEC 61966-2.1",
-    "useCase": "Supporting evidence in メタデータ分析 pipeline. Particularly useful for identifying professional photography (は uses wide-gamut profiles) vs AI生成の content (は uses sRGB). Effective as part of a multi-signal approach.",
-    "strengths": "• プロのカラープロファイルはAIツールが複製困難\n• ビット深度分析でカメラとAIを明確に区別\n• 偽陽性率が低い\n• 高速で非破壊の分析\n• RAW由来の画像識別に有用",
-    "limitations": "• 多くの一般カメラもsRGBをデフォルト使用\n• AIツールがカスタムICCプロファイルを埋め込む可能性\n• JPEG変換でプロファイル情報が失われる\n• SNSプラットフォームがICCプロファイルを削除\n• sRGBカメラとAI出力を区別できない",
+    "name": "ICCカラープロファイル メタデータ指紋化",
+    "description": "埋め込まれたICCカラープロファイルデータと色空間宣言を分析します。プロの物理カメラは、メーカーによって校正された非常に特殊なカラープロファイル（Nikon/Canon/Sonyの独自のRGBプロファイルや本物のDisplay P3など）を埋め込みます。生成AIモデルは、実際のカメラのハードウェアの文脈（物理的特性）を一切持たず、純粋な数学的潜在空間で画像を生成します。そのため、最終的なファイルを出力する際、AIツールはほぼ例外なく、最も一般的でデフォルトのWebカラープロファイルである『基本的な8ビット sRGB IEC61966-2.1』を適当に付与します。",
+    "algorithm": "EXIF/XMPおよびICC色空間ヘッダー抽出",
+    "mechanism": "このアルゴリズムは、巨大なピクセル配列をデコード（解読）することなく、画像ファイルのバイナリヘッダー（EXIF、XMP、ICCチャンク）を読み取り、色空間のシグネチャを抽出します。複数のメタデータレイヤー間で一貫性があるかどうかをチェックします。画像が視覚的に信じられないほどの光学的深みを持つ、超リアルでハイダイナミックレンジのプロの写真に見えるのに、MidjourneyやStable Diffusionの出力パイプラインと全く同じデジタル署名を持つ、一般的でスカスカな8ビットsRGB ICCプロファイルしか持っていない場合、その画像はAIによって合成されたものであると強く判定します。",
+    "parameters": "ターゲットプロファイル: sRGB IEC61966-2.1 vs. 広色域 (Adobe RGB/ProPhoto/DCI-P3), 分析されるシグネチャ: ICCチャンクの整合性, レンダリングインテント",
+    "accuracy": "低〜中（40-60%） - 迅速な最前線のヒューリスティックフィルターとしては非常に有用ですが、メタデータは変更、コピー、または完全に破棄することが非常に簡単なため、極めて脆弱です。",
+    "source": "ICC仕様 v4.4 (ISO 15076-1) / メタデータフォレンジック標準",
+    "useCase": "未編集のプロの写真であると主張しながら、画像生成AIの安価で一般的なsRGBソフトウェアメタデータタグを帯びている画像を暴き出すための、瞬間的な「簡易検査（スニフテスト）」として機能します。",
     "references": [
         {
             "title": "ICC Profile Specification v4.4 (ISO 15076-1:2010)",
             "url": "https://www.color.org/specification/ICC.1-2022-05.pdf"
         },
         {
-            "title": "sRGB Standard — IEC 61966-2.1:1999",
-            "url": "https://webstore.iec.ch/en/publication/6169"
-        },
-        {
-            "title": "Adobe RGB (1998) Color Image Encoding",
-            "url": "https://www.adobe.com/digitalimag/adobergb.html"
+            "title": "Fraser, B. et al. (2004). Real World Color Management. Peachpit Press.",
+            "url": "https://www.color.org/whitepapers.xalter"
         }
-    ]
+    ],
+    "strengths": "• 瞬間的な計算速度を持っています。軽量なバイナリファイルヘッダーを解析するだけなので、ピクセルの処理能力は全く必要ありません。\n• 画像がカメラのRAW写真を装っているのに、本物のハードウェアメーカーのカラーデータが欠落している場合、「怠惰な」AIの作成物を即座に暴き出します。\n• 矛盾するメタデータを簡単に暴くことができます（例：画像に『Sony A7RV』と主張する偽のEXIFタグがあるのに、数学的にはPython PILの一般的なsRGB ICCテンプレートを使用している場合など）。",
+    "limitations": "• サーバーのスペースを節約するために、アップロード時にすべてのICCメタデータを積極的に剥ぎ取り、すべてを強制的に基本的なsRGBに変換するソーシャルメディアプラットフォーム（Facebook、X、Instagram）やメッセージングアプリ（WhatsApp、Telegram）に画像が送信されると、完全に無力化されます。\n• 悪意のある者が、AIの画像をPhotoshopで開き、Adobe RGBプロファイルを注入して再エクスポートするだけで簡単にチェックを回避できるため、極めて脆弱です。\n• 本質的に基本的なsRGBプロファイルがデフォルトになっている、安価なスマートフォン、低予算のWebカメラ、またはスクリーンショットで撮られた本物の写真に対して、誤検知（偽陽性）を引き起こす傾向があります。"
 }
