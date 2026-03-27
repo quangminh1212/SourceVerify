@@ -1,18 +1,18 @@
 {
-    "name": "Color Coherence Vector",
-    "description": "Differentiates spatially coherent vs. incoherent color distribution. AI images tend to have unnaturally high color coherence in regions.",
-    "algorithm": "Color Coherence Vector (CCV) Discrimination",
-    "mechanism": "Classifies each pixel as coherent or incoherent based on connected component membership relative to region size threshold. Computes ratio between coherent and incoherent pixels per color bin.",
-    "parameters": "Color quantization: 64 bins, Coherence threshold: 25 pixels, Connected components: 4-connectivity",
-    "accuracy": "Moderate — 65-75%",
-    "source": "Pass, G. et al. (1996) — Histogram Refinement for Content-Based Image Retrieval, ACM MM Workshop",
-    "useCase": "Detecting overly uniform color regions in AI-generated images",
+    "name": "Color Coherence Vector (CCV)",
+    "description": "Differentiates spatially coherent versus incoherent color distribution. Generative AI models often synthesize textures by relying on latent space shortcuts, frequently resulting in unnaturally massive, homogeneous 'blob-like' color regions (over-coherence) compared to the natural, chaotic micro-pixel scattering found in authentic, physically lit material textures.",
+    "algorithm": "Connected Component Color Dispersion & CCV Thresholding",
+    "mechanism": "The algorithm quantizes the image's colors into discrete bins and classifies each pixel as either 'coherent' (belonging to a massive, contiguous blob of the same color) or 'incoherent' (forming small, isolated islands of color). It computes the ratio of coherent to incoherent pixels per bin. Authentic photographs inherently scatter small, incoherent pixels across surfaces due to sensor grain, ambient light bouncing, and microscopic material roughness. Gen-AI models, conversely, find it mathematically 'cheaper' and statistically easier to decode large, perfectly coherent, plasticky color patches rather than meticulously rendering genuine, high-entropy micro-textures.",
+    "parameters": "Color Quantization: 64 bins (RGB space), Coherence Limit (tau): 25-50 connected pixels, Traversal: 4-way or 8-way connectivity",
+    "accuracy": "Moderate (65-75%) - Serves as a useful macro-statistical indicator but lacks the precision to be deployed as a standalone definitive diagnostic tool.",
+    "source": "Pass, G. et al. (1996) - Histogram Refinement for Content-Based Image Retrieval",
+    "useCase": "Identifying the 'digital plastic' signature of AI generation by detecting unnaturally uniform, contiguous color segments, effectively distinguishing algorithmic laziness from natural physical entropy.",
     "references": [
         {
             "title": "Pass, G. et al. (1996). Histogram Refinement for Content-Based Image Retrieval. ACM Multimedia Workshop.",
             "url": "https://doi.org/10.1109/MMCS.1996.534961"
         }
     ],
-    "strengths": "• Captures spatial color relationships\\n• Goes beyond simple histogram\\n• Fast connected component analysis\\n• Complementary color signal",
-    "limitations": "• Lower accuracy for complex scenes\\n• Sensitive to quantization parameters\\n• Limited without spatial context\\n• AI can produce diverse color regions"
+    "strengths": "• Successfully captures complex spatial color relationships that a basic, naive Color Histogram completely ignores.\n• Extremely potent at catching early-generation AI art, low-step diffusion renders, or synthetic media that exhibit a distinct 'airbrushed' or smooth vector-like aesthetic.\n• Computationally elegant and lightning-fast due to the intrinsic simplicity of connected component labeling arrays.",
+    "limitations": "• Cripplingly vulnerable to false positives when processing genuine macro photography, digital art, or images with massive out-of-focus (bokeh) backgrounds, all of which naturally manifest gigantic coherent color blobs.\n• Highly sensitive and computationally volatile regarding the initial color quantization threshold; improper binning aggressively fractures actual coherent regions.\n• Easily spoofed and bypassed if a modern AI workflow deliberately injects localized synthetic noise, which instantly scatters the color pixels and artificially successfully fakes the incoherence metric."
 }

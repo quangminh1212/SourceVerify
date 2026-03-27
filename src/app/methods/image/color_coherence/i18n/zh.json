@@ -1,18 +1,18 @@
 {
-    "name": "颜色一致性向量",
-    "description": "Differentiates spatially coherent vs. incoherent color 分布. AI images tend to have unnaturally high color 连贯性 in regions.",
-    "algorithm": "Color Coherence Vector (CCV) Discrimination",
-    "mechanism": "Classifies each pixel as coherent or incoherent based on connected component membership relative to region size 阈值. Computes ratio 之间 coherent and incoherent pixels per color bin.",
-    "parameters": "Color quantization: 64 bins, Coherence 阈值: 25 pixels, Connected components: 4-connectivity",
-    "accuracy": "中等 — 65-75%",
-    "source": "Pass, G. et al. (1996) — Histogram Refinement for Content-Based Image Retrieval, ACM MM Workshop",
-    "useCase": "Detecting overly uniform color regions in AI生成的 images",
+    "name": "色彩黏着连贯性(Color Coherence)块状病变排查",
+    "description": "主要用于划分和量化空间分布上属于“连贯聚集（Coherent，即巨大的同色黏着块）”与“离散散碎（Incoherent，即破裂散落的孤立像素）”的色块比例。生成式AI模型极其喜欢利用潜空间（Latent Space）计算捷径来合成表面纹理；这就导致与受到真实复杂光照、表面粗糙度与感光元件噪点影响而自然布满漫反射散碎像素(High-entropy)的正宗照片不同，AI生成的图像中往往会诡异地充斥着面积巨大、平滑且质地极其同质化、死板的塑料感“色块病变（过度连贯）”。",
+    "algorithm": "连通分量色彩弥散度切割与CCV硬阈值熔断",
+    "mechanism": "算法引擎犹如分拣器一般，将图片中所有杂乱的颜色按照设定强行划入几个特定的“收纳筐（Bins）”中。接着，它开始审视每一个像素，给它们贴上标签：如果这个像素与一大群同党紧紧抱团，形成了一个极其巨大的单一色块，那它就是‘连贯的（Coherent）’；如果它只是孤零零地散落在一旁，宛如孤岛，那就是‘离散的（Incoherent）’。真实数码相机的世界里，由于无处不在的微小感光颗粒噪点（Sensor grain）、四处乱窜的漫反射环境光以及千疮百孔的微观材质粗糙度，照片表面理所当然地会散落着海量的‘离散’微小斑点。然而，对于扩散模型的解码器（Decoder）而言，绞尽脑汁去精确模拟和渲染这些极度混乱无序、高信息熵的逼真微观纹理，在数学算力成本上是极其‘昂贵’且难以讨好的；因此，AI更倾向于偷懒，直接简单粗暴地涂抹出面积惊人、大而不当且颜色绝对一致的‘塑料连贯色块’。",
+    "parameters": "色彩强制量化收纳筐: 64个Bins(RGB三维空间), 连贯性结冰阈值(Tau): 25至50个极其紧密相连的像素, 遍历嗅探模式: 4方向或8方向邻域连通阵列",
+    "accuracy": "勉强中庸 (65-75%) - 只配充当一个泛泛而谈的宏观统计学风向标，如果它妄图脱离那些硬核的微观结构取证组件而单打独斗，它的判决就如同儿戏般软弱无力。",
+    "source": "Pass, G. et al. (1996) - 《面向基于内容的图像检索技术之直方图狂暴精炼启示录》",
+    "useCase": "专门用于嗅探和逮捕那些令人作呕的、平滑得如同‘数字塑料’般不自然的同质化块状区域，极其高效地将AI算力偷懒导致的同质恶果，与大自然物理世界原本该有的微观混沌熵值（Entropy）完全剥离开来。",
     "references": [
         {
             "title": "Pass, G. et al. (1996). Histogram Refinement for Content-Based Image Retrieval. ACM Multimedia Workshop.",
             "url": "https://doi.org/10.1109/MMCS.1996.534961"
         }
     ],
-    "strengths": "• Captures spatial color relationships\\n• Goes beyond simple 直方图\\n• Fast connected component 分析\\n• Complementary color signal",
-    "limitations": "• Lower 准确度 for complex scenes\\n• Sensitive to quantization parameters\\n• Limited without spatial context\\n• AI can produce diverse color regions"
+    "strengths": "• 成功且巧妙地捕获了复杂的空间色彩抱团关系，而这是传统那种极其弱智且天真的‘色彩直方图（Color Histogram）’哪怕看瞎了眼也绝对无法察觉的绝密维度。\n• 在疯狂围捕早期粗劣的AI画作、步数严重不足（Low-step）的半成品扩散渲染图、或是那些明显带有过分‘空气刷（Airbrushed）’与平滑矢量图塑料劣质感的合成垃圾时，表现得犹如嗜血恶狼般极其致命。\n• 算力消耗优雅且快如极光闪电，这完全得益于底层的‘连通分量标记（Connected Component Labeling）’数组极其轻量、原始且粗暴的遍历机制。",
+    "limitations": "• 这是一个令人极度头疼的‘冤案制造机（False positive）’：一旦让它去审查那些背景里带有一坨坨巨大焦外光学虚化（Bokeh）光斑的绝美真实人像摄影、本身就是大色块堆叠的数字矢量画，或是超级宏观特写照，由于这些图天生就必然存在巨型连贯色块，它会疯狂地发出虚假刺耳的错误警报。\n• 该引擎在设定初始‘色彩量化收纳界限（Quantization）’时表现出极度令人抓狂的娇贵和神经质；哪怕是对Bin（收纳区间）的划分稍有不慎或者出现偏差，都会极其粗暴地把原本好端端的真实宏大连贯区域硬生生撕碎。\n• 它极度容易被愚弄：如果现代的老道AI生成管线在出图的最后关头，故意险恶地注入局部的人工合成噪点（Synthetic noise），这些强加的‘胡椒面’会瞬间在物理上物理打散并肢解那些原本紧紧抱团的同色像素，从而极其成功且完美地伪造出‘离散（Incoherence）’的欺诈指标，令这套古老的检测机制彻底沦为失明的废铁。"
 }

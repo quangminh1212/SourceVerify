@@ -1,18 +1,18 @@
 {
-    "name": "Vector kết hợp màu",
-    "description": "Phân biệt phân bố màu kết hợp không gian vs. không kết hợp. Ảnh AI thường có kết hợp màu cao bất thường.",
-    "algorithm": "Phân biệt CCV",
-    "mechanism": "Phân loại pixel thành kết hợp hoặc không kết hợp dựa trên thành phần liên thông.",
-    "parameters": "Lượng tử màu: 64 bins, Ngưỡng kết hợp: 25 pixel",
-    "accuracy": "Trung bình — 65-75%",
-    "source": "Pass et al. (1996), ACM MM",
-    "useCase": "Phát hiện vùng màu đồng nhất quá mức trong ảnh AI",
+    "name": "Vector Mạch Lạc Màu Sắc (Color Coherence Vector)",
+    "description": "Phân định rạch ròi giữa sự phân bổ màu sắc có tính 'mạch lạc' (tụ thành mảng lớn) và 'rời rạc' (phân tán vụn vặt). Các mô hình AI khi sinh ảnh thường đi đường tắt trong không gian tiềm ẩn (latent space), dẫn đến việc bôi ra những mảng màu khổng lồ, đồng nhất và bẹt như nhựa (quá mạch lạc). Điều này đi ngược lại hoàn toàn với sự hỗn loạn vi mô (rời rạc) tự nhiên của vật liệu và ánh sáng trong thế giới thực.",
+    "algorithm": "Đo Lường Phân Tán Thành Phần Liên Thông & Phân Định CCV",
+    "mechanism": "Thuật toán băm nhỏ toàn bộ màu sắc bức ảnh vào các 'rổ' (bins) giới hạn, sau đó gán nhãn cho từng pixel là 'mạch lạc' (coherent - nếu nó đi chung với một bầy pixel cùng màu tạo thành một khối khổng lồ) hoặc 'rời rạc' (incoherent - nếu nó là những đốm màu cô đơn lẻ loi). Do cấu trúc vật liệu thực tế, hạt nhiễu cảm biến và ánh sáng dội lại nhiều hướng, ảnh chụp thật rải rác một lượng khổng lồ các đốm 'rời rạc'. Ngược lại, bộ giải mã của AI lại thấy việc tô ra những mảng màu trơn láng, kết dính chặt chẽ (mạch lạc) thì 'rẻ' và dễ tính toán toán học hơn rất nhiều so với việc phải cắn răng render từng chi tiết nhiễu loạn vi mô có entropy cao.",
+    "parameters": "Gộp rổ màu (Quantization): 64 bins (trực hệ RGB), Ngưỡng kết băng (tau): 25-50 pixel dính liền nhau, Thuật toán quét: Kết nối 4 hướng hoặc 8 hướng",
+    "accuracy": "Trung Bình (65-75%) - Đóng vai trò như một bộ cảm biến thống kê góc rộng rất tốt, nhưng quá mỏng manh để có thể đứng một mình làm bằng chứng buộc tội duy nhất.",
+    "source": "Pass, G. et al. (1996) - Tinh Chỉnh Biểu Đồ Tần Suất Cho Truy Xuất Ảnh Theo Nội Dung",
+    "useCase": "Săn lùng 'chất liệu nhựa kỹ thuật số' của AI bằng cách quét các vùng màu bưng bít, mịn màng một cách phi lý, lột trần sự lười biếng của thuật toán so với mức độ hỗn độn vật lý tự nhiên.",
     "references": [
         {
-            "title": "Pass, G. et al. (1996). Histogram Refinement for Content-Based Image Retrieval. ACM MM.",
+            "title": "Pass, G. et al. (1996). Histogram Refinement for Content-Based Image Retrieval. ACM Multimedia Workshop.",
             "url": "https://doi.org/10.1109/MMCS.1996.534961"
         }
     ],
-    "strengths": "• Nắm bắt quan hệ màu không gian\\n• Vượt xa histogram đơn giản\\n• Phân tích thành phần liên thông nhanh\\n• Tín hiệu màu bổ sung",
-    "limitations": "• Độ chính xác thấp cho cảnh phức tạp\\n• Nhạy cảm tham số lượng tử\\n• Hạn chế không có ngữ cảnh không gian\\n• AI có thể tạo vùng màu đa dạng"
+    "strengths": "• Đọc vị được hoàn hảo mối quan hệ không gian thực tế của màu sắc, thứ mà biểu đồ màu (Color Histogram) ngây ngô thông thường bị mù hoàn toàn.\n• Sát thủ tuyệt đối đối với các thế hệ AI đời đầu, AI vẽ bị thiếu bước (low-step diffusion), hoặc những bức ảnh có phong cách bóng lộn, sặc sỡ như vector đồ họa.\n• Tốc độ chạy nhanh như chớp nhờ việc dán nhãn thành phần liên thông (connected component) cực kỳ nhẹ nhàng về mặt tính toán.",
+    "limitations": "• Điểm yếu chí mạng chuyên đổ oan cho người tốt (False positives): Cực kỳ dễ bóp cò nhầm nếu đưa cho nó một tấm ảnh chụp chân dung xóa phông (bokeh) mịt mù, ảnh chụp macro côn trùng, hoặc ảnh đồ họa phẳng (những thứ sinh ra đã có sẵn các mảng màu mạch lạc khổng lồ).\n• Cực kỳ nhạy cảm và dễ hoang tưởng với thông số 'Rổ màu' (Quantization) ban đầu; chia rổ sai một ly là thuật toán tự xé nát các mảng màu mạch lạc thật sự.\n• Bị xỏ mũi dễ dàng nếu thuật toán AI được kẻ gian ra lệnh bơm thêm một làn sương nhiễu hạt (noise) mỏng lên ảnh; lớp nhiễu này ngay lập tức đập nát sự 'mạch lạc', làm giả thành công chỉ số 'rời rạc' tự nhiên."
 }

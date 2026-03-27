@@ -1,18 +1,18 @@
 {
-    "name": "색상 일관성 벡터",
-    "description": "Differentiates spatially coherent vs. incoherent color 분포. AI images tend to have unnaturally high color 일관성 in regions.",
-    "algorithm": "Color Coherence Vector (CCV) Discrimination",
-    "mechanism": "Classifies each pixel as coherent or incoherent based on connected component membership relative to region size 임계값. Computes ratio 사이의 coherent and incoherent pixels per color bin.",
-    "parameters": "Color quantization: 64 bins, Coherence 임계값: 25 pixels, Connected components: 4-connectivity",
-    "accuracy": "중간 — 65-75%",
-    "source": "Pass, G. et al. (1996) — Histogram Refinement for Content-Based Image Retrieval, ACM MM Workshop",
-    "useCase": "Detecting overly uniform color regions in AI 생성 images",
+    "name": "색상 응집 벡터 (Color Coherence Vector, CCV) 검사",
+    "description": "이미지 내 색상이 공간적으로 '응집(Coherent, 크고 뭉친 덩어리)'되었는지, 아니면 '산발(Incoherent, 파편화된 점들)'되었는지의 분포도를 갈라냅니다. 생성형 AI 모델들은 태생적으로 잠재 공간(Latent Space)의 꼼수(Shortcuts)에 의존해 질감을 합성하려 들기 때문에, 실제 물리적 조명과 물질이 빚어내는 자연스럽고 무질서한 마이크로 픽셀의 산란과는 극명하게 대비되는, 비정상적일 정도로 거대하고 균질한 '플라스틱 찰흙 덩어리' 같은 색상 응집 구역(과잉 응집)을 시도 때도 없이 토해냅니다.",
+    "algorithm": "연결 공간 색상 분산도 및 CCV 임계치 분할 분석",
+    "mechanism": "분석 엔진은 이미지의 색상을 일정한 '바구니(Bins)' 개수로 뭉뚱그려 양자화한 뒤, 개별 픽셀을 '응집 픽셀'(엄청나게 거대하게 하나로 들러붙은 동일 색상 덩어리 소속)과 '산발 픽셀'(외롭게 고립된 작은 색상 섬)로 딱지표를 붙입니다. 그러곤 바구니마다 응집 대비 산발 픽셀의 비율을 가혹하게 계산합니다. 진짜 카메라는 센서의 자체 노이즈, 난반사되는 앰비언트 라이트, 피사체 표면의 미세한 거친 질감 때문에 필연적으로 자잘하고 '산발적인' 점들을 사방에 흩뿌리게 됩니다. 반면, AI의 디코더는 진짜 고-엔트로피(복잡도 높은) 미세 질감을 힘들게 시뮬레이션하고 렌더링하는 것보다, 커다랗고 완벽하게 매끄러운 '플라스틱 같은' 떡진 색상 덩어리를 우르르 쏟아내는 것이 수학적으로 훨씬 연산 자원이 덜 들고('Cheaper') 편하기 때문에 이런 치명적인 게으름의 증거를 남깁니다.",
+    "parameters": "색상 뭉뚱그리기 분할수(Quantization): 64 Bins (RGB 공간), 응집 결빙 임계선(tau): 25-50개 연속 픽셀, 탐색 신경망: 4방향 또는 8방향 픽셀 접착 연결성",
+    "accuracy": "보통 (65-75%) - 거시적인 통계 기상도 역할로는 꽤 쓸만하지만, 이 검사지 한 장만 덜렁 들고 피의자(이미지)에게 사형 선고를 내리기엔 무리가 따릅니다.",
+    "source": "Pass, G. et al. (1996) - 내용 기반(Content-Based) 이미지 검색을 위한 히스토그램 전술의 정제",
+    "useCase": "매끄럽다 못해 플라스틱처럼 불쾌한, 덩어리진 AI식 '디지털 찰흙' 특유의 자국을 추적합니다. 자연의 물리적 엔트로피(혼돈)와 AI 알고리즘의 얄팍한 연산 게으름을 극명하게 대조하여 가짜를 털어냅니다.",
     "references": [
         {
             "title": "Pass, G. et al. (1996). Histogram Refinement for Content-Based Image Retrieval. ACM Multimedia Workshop.",
             "url": "https://doi.org/10.1109/MMCS.1996.534961"
         }
     ],
-    "strengths": "• Captures spatial color relationships\\n• Goes beyond simple 히스토그램\\n• Fast connected component 분석\\n• Complementary color signal",
-    "limitations": "• Lower 정확도 for complex scenes\\n• Sensitive to quantization parameters\\n• Limited without spatial context\\n• AI can produce diverse color regions"
+    "strengths": "• 흔해 빠지고 멍청한 단순 '색상 히스토그램' 따위는 꿈도 못 꾸는, 픽셀들 간의 복잡한 2차원 '공간적' 유착 관계를 완전히 거머쥠.\n• 구형 AI가 뽑아낸 기괴한 그림, 노이즈 샘플링 스텝을 대충 밟은 쓰레기같은 디퓨전 렌더링, 혹은 매끄러운 2D 벡터 그래픽처럼 미끌거리는 가짜 특유의 톤(에어브러시질)을 포착할 때 신의 경지에 이름.\n• 이웃 픽셀 연결(Connected component labeling)이라는 아주 원초적인 알고리즘 기법을 채용한 덕분에 연산 속도가 거의 번개나 다름없음.",
+    "limitations": "• 선량한 시민(진짜 사진)을 범죄자로 모는 오진(False Positive)의 지옥: 초점이 완전히 날아간 아웃포커스(Bokeh) 배경, 접사(Macro) 사진, 밋밋한 2D 디지털 일러스트 등 태생적으로 거대한 색상 덩어리를 품은 진짜 이미지를 만나면 여지없이 오작동 발작을 일으킴.\n• 최초 색상 분류(Quantization) 기준점에 완전히 목숨을 거는 치명적인 예민함; '바구니' 경계를 조금만 삑사리내면 진짜 거대한 응집 덩어리들을 무참히 난도질해버려 모든 계산이 폭발함.\n• 현대의 AI 작업자(프롬프트 엔지니어)가 이미지 특정 부위에만 합성 노이즈(Noise)를 비스듬히 뿌리는 기만 전술을 쓰면, 인공적으로 조작된 산란(Incoherence) 픽셀이 폭증해 알고리즘이 완벽하게 농락당해 장님이 됨."
 }
