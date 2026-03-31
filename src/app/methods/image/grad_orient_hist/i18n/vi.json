@@ -1,12 +1,18 @@
 {
-    "name": "Histogram hướng gradient",
-    "description": "Phân tích tính đồng đều hướng gradient",
-    "algorithm": "Thuật toán phân tích Histogram hướng gradient",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích tính đồng đều hướng gradient. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích histogram hướng gradient. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Radar Biểu Đồ Hướng Cạnh HOG (Histogram of Oriented Gradients)",
+    "description": "Cỗ máy đếm dơi săn tìm xương sống bề mặt. Khi một bức ảnh thật được chụp, ánh sáng tự nhiên tạt qua các vật thể (như cạnh chiếc bàn, viền má sọ người) sẽ rải đều các góc độ từ 0 đến 360 một cách liên tục. Khi bọn lừa đảo dùng dao ghép chèn thêm đầu người hay vật thể khác vào, sự liên tục của véc-tơ chiều sáng này bị gãy nát ở mép. HOG không thèm nhìn màu sắc, nó chỉ vạch lá tìm sâu, cộng dồn xem bao nhiêu điểm ảnh có chung một góc 45 độ, bao nhiêu bị bẻ cong sang 90 độ, để moi ra mũi khâu đứt đoạn của công cụ tẩy xóa AI.",
+    "algorithm": "Phân Tích Bất Thường Histogram Của Gradient Hướng (HOG Anomaly Forensics)",
+    "mechanism": "Thoát li màu sắc, máy cắt ảnh thành hàng vạn ô vuông nhỏ (Cells). Ở mỗi ô, nó đo lường mũi tên chỉ hướng (Gradient) của cường độ từ tối sang sáng. Bầu trời có hướng Gradient rất mượt, viền tóc người có hướng Gradient rất sắc lẹm. Kẻ gian dùng AI 'Content-Aware Fill' xóa một cái xe hơi đi, rồi đắp bù tường gạch ảo vào vùng trống. Ô vuông tại bức tường ảo đó sẽ phóng mũi tên toán học loạn xạ, lệch pha hoàn toàn với gạch thật liền kề. Còi báo động lập tức rú vang vì bức đồ thị HOG đột ngột gãy làm đôi.",
+    "parameters": "Khối Hình Học: 8x8 Pixel Cells, Dữ Liệu Lõi: Gradient Vectors (Magnitude & Angle), Radar Chẻ Đôi: Block Normalization",
+    "accuracy": "Cực Kì Tinh Nhạy (85-92%) - Nhát dao mổ điêu luyện kết liễu thẳng tay lũ xài cọ Clone Stamp copy kết cấu từ chỗ này đắp lên chỗ kia của ảnh.",
+    "source": "Dalal & Triggs (2005) - Histograms of Oriented Gradients for Human Detection",
+    "useCase": "Giáng đòn đánh phán xử vào các bản ghép nhảm nhí nơi con dao của phần mềm làm đẹp (Retouching) cắt ngọt vào da, hay copy vân lá cây lặp lại ngớ ngẩn (Copy-Move). HOG nhìn ngay ra các cụm mũi tên lặp y xì đúc không lối thoát.",
+    "references": [
+        {
+            "title": "Dalal, N., & Triggs, B. (2005). Histograms of oriented gradients for human detection. CVPR.",
+            "url": "https://ieeexplore.ieee.org/document/1467360"
+        }
+    ],
+    "strengths": "• Tuyệt đỉnh không bị làm mù bởi bóng râm, nhiễu ánh sáng hay filter (Lọc màu). Kẻ gian xài phông nền đen trắng hay thêm màng film xám xịt thì mũi tên HOG vẫn lì lợm chỉ đúng góc độ độ dốc kết cấu.\n• Không quan tâm ảnh đó là người, chó hay nhà cửa... Nó chém bay đầu bọn làm méo không gian hình học gốc của sự vật.",
+    "limitations": "• Nhát kiếm này sẽ gãy mũi mù đường nếu bức ảnh gốc cố tình bị Resize xoay vòng cực gắt (Geometric Transformation Blur), làm mũi tên hướng đi bị nát tươm ở hệ quy chiếu ma trận.\n• Mù lòa khi quét các bề mặt siêu nhẵn bóng, trơn tuột (ví dụ 1 màn hình máy tính trơn) vì nơi đó hướng Gradient bằng 0."
 }

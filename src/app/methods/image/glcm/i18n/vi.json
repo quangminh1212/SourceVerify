@@ -1,26 +1,18 @@
 {
-    "name": "Phân tích Kết cấu GLCM",
-    "description": "Phân tích mối quan hệ không gian giữa các mức cường độ pixel bằng ma trận đồng xuất hiện. Ảnh AI có kết cấu mượt hơn với độ đồng nhất cao.",
-    "algorithm": "Gray Level Co-occurrence Matrix (GLCM) + Haralick Features",
-    "mechanism": "Tính GLCM và trích xuất đặc trưng tương phản, năng lượng, đồng nhất. Ảnh AI có đồng nhất và năng lượng cao hơn.",
-    "parameters": "Mức: 16, Khoảng cách: 1, Góc: 0 độ",
-    "accuracy": "Trung bình - 72-82%",
-    "source": "Haralick et al. (1973), IEEE SMC",
-    "useCase": "Phát hiện kết cấu quá mượt trong nội dung AI",
-    "strengths": "• Bộ mô tả kết cấu thống kê được thiết lập từ 1973\n• Bắt quan hệ không gian pixel ở nhiều khoảng cách\n• Cung cấp nhiều đặc trưng bổ sung (tương phản, năng lượng, tương quan)\n• Bất biến xoay với phân tích đa góc\n• Tỷ lệ dương tính giả thấp cho bất thường kết cấu",
-    "limitations": "• Chi phí tính toán cao cho tham số khoảng cách lớn\n• Chọn tham số (khoảng cách, góc) ảnh hưởng đáng kể\n• Nhạy cảm với nhiễu ảnh và hiện vật nén\n• Lượng tử hóa mức xám giảm khả năng phân biệt\n• Kết cấu AI chất lượng cao có thể qua phân tích GLCM",
+    "name": "Bảng Chỉ Mục Đồng Xuất (GLCM Texture Matrix)",
+    "description": "Cỗ máy đếm dơi nhịp đôi. Giữa một vạn pixel, nếu 2 pixel hàng xóm cách nhau 1 pixel cùng màu sáng, chúng sẽ được cộng vô một cuốn sổ. Tự nhiên thì cái việc 'A đứng cạnh B' nó diễn ra theo một luật thống kê mượt mà (bầu trời mây khấp khểnh xịn, da mặt nhám thật). Bọn AI hoặc Photoshop tô cọ làm mượt thì hay khiến cuốn sổ này nảy số cực dị... Mượt như cái đĩa bay, hoàn toàn vắng bóng mấy cặp số lẻ tẻ gai cạnh.",
+    "algorithm": "Đo Độ Lệch Grey-Level Co-occurrence Matrix (Thuật Toán GLCM)",
+    "mechanism": "Trải tấm ảnh ra chiếu. Khảo sát một cặp 2 điểm ảnh cách nhau góc D và Distance r. GLCM lập hàng chục cuốn sổ chứa độ Tương Phản (Contrast), Năng lượng (Energy), Độ Đồng Nhất (Homogeneity) của cặp đó. AI dốt kết cấu vi mô, vẽ cái áo nhưng sợi lông áo luôn mượt láng hoặc lặp lại rập khuôn (Texture Clone), làm cho độ Đồng Nhất tăng đột biến, Khác Biệt rớt thẳng xuống đáy. Radar bắt ngay cái mùi đồ nhựa (Plastic look) nồng nặc đó.",
+    "parameters": "Không Gian Chứa: Ma trận GLCM Cấp xám, Vector Đo: Năng lượng, Tương phản, Entropy, Đồng nhất",
+    "accuracy": "Tinh Nhuệ (78-86%) - Sát thủ thầm lặng nuốt trọn mấy tay mơ dùng trò Copy-Move dán lá cây lặp đi lặp lại hay xóa nốt ruồi trên da.",
+    "source": "Haralick et al. (1973) - Textural Features for Image Classification",
+    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí nơi con dao của phần mềm làm đẹp (Retouching) cắt ngọt vào da thịt... dẹp sạch lỗ chân lông, làm ma trận GLCM cứng đơ vô vị.",
     "references": [
         {
-            "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
-            "url": "https://doi.org/10.1109/TSMC.1973.4309314"
-        },
-        {
-            "title": "Clausi, D.A. (2002). An Analysis of Co-occurrence Texture Statistics. Canadian J. Remote Sensing.",
-            "url": "https://doi.org/10.5589/m02-004"
-        },
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+            "title": "Haralick, R. M., et al. (1973). Textural features for image classification. IEEE TSMC.",
+            "url": "https://ieeexplore.ieee.org/document/4309314"
         }
-    ]
+    ],
+    "strengths": "• Bất khả chiến bại với mọi trò đổi màu hay tẩy tông của hacker vì ma trận soi mụn nhọt dưới cấp độ điểm 'Tối-Sáng' liên kết cặp, vô nhiễm với việc chỉnh hệ màu.\n• Giết lầm còn hơn bỏ sót mấy tên ăn cắp họa tiết hoa văn quấn quanh quần áo AI... AI vẽ rập khuôn, GLCM rú báo động Fake luôn.",
+    "limitations": "• Nhát kiếm đành gãy mũi nếu bức ảnh tự nhiên bẩm sinh là một tấm lụa satin đỏ bóng loáng. Sự chênh lệch cặp là thấp, radar sẽ báo động mù quáng.\n• Phế võ công và trở thành đống sắt vụn cực kỳ chậm chạp mất thời gian, nếu tính đa khoảng cách và góc quay trên tấm hình khổng lồ 4K."
 }

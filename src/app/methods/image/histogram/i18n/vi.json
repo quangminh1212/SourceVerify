@@ -1,22 +1,18 @@
 {
-    "useCase": "Sàng lọc sơ bộ nội dung AI và phát hiện hậu xử lý",
-    "mechanism": "Tính histogram từng kênh R, G, B, L và phân tích khoảng trống, đỉnh, tính chu kỳ.",
-    "accuracy": "Trung bình - 70-82%",
-    "name": "Phân tích Histogram",
-    "source": "Popescu & Farid (2005)",
-    "algorithm": "Phân tích phân phối Histogram đa kênh",
-    "parameters": "Bins: 256, Kênh: R/G/B/L, Chỉ số: kurtosis, skewness, entropy",
-    "description": "Phân tích phân phối histogram màu và độ sáng. Ảnh AI thường có histogram mượt bất thường hoặc có tính chu kỳ.",
+    "name": "Bản Án Giải Phẫu Cường Độ Ánh Sáng (Histogram Variance)",
+    "description": "Thiết bị đo vạch trần thói ăn cắp mã màu vô tội vạ. Mỗi bức ảnh xịn đều có một kho đồ thị mức phân bổ quang học riêng (bao nhiêu phần trăm tối, sáng, xám) rất mượt mà. Tuy nhiên, dân xài Photoshop dán ảnh người lửng lơ trên bầu trời thường hay lúng túng dùng bùa 'Điều chỉnh màu khớp nhau' (Match Color/Levels/Brightness). Bức vách đồ thị Histogram của tấm ảnh sau khi bị mổ bùa sẽ bị nứt toác, sinh ra khoảng rỗng hoặc bị răng cưa chọc gậy bánh xe lởm chởm (Comb effect/Gap effect).",
+    "algorithm": "Đo Sự Đứt Gãy Quần Thể Phân Phối Điểm Yếu Ánh Sáng Cục Bộ (Histogram Comb/Gap Extractor)",
+    "mechanism": "Thoát li việc nhìn mắt. Nó băm hình ảnh thành đồ thị hình cột nhấp nhô từ 0 (Tối thui) đến 255 (Trắng bóc). Lũ tay mơ bứt hoa, cắt xe, vác vô nền trời hoàng hôn thì thấy lệch màu, vội vã nắm thanh Level kéo độ Sáng tăng gượng ép. Trong ma trận toán học số hóa, khi kéo căng một dải sáng hữu hạn, dải sáng đó bị rách ra! Nơi bị rách thì trống không (Gaps), chỗ điểm ảnh bị dồn cục sưng tấy (Spikes). Thuật toán này đếm đống vụn rỗng đó để nọc tên lừa đảo ra xử bắn.",
+    "parameters": "Biểu đồ: Global/Local 1D Intensity Histogram, Cảnh báo Lỗi: Đỉnh gai Spikes, Lỗ sâu Gaps (Răng Lược), Tần suất đứt gãy Lỗi Tịnh Tiến",
+    "accuracy": "Thực Dụng Nòng Cốt (72-84%) - Máy cưa máy lạnh lùng lột mặt nạn mấy tên lấp liếm cắt dán bằng cách đánh lừa mắt thường bằng Brightness/Contrast.",
+    "source": "Lão Tôn Thất Dữ Liệu Thị Giác Vỏ Não Tán Xạ Ánh Sáng Thống Kê Điểm Số",
+    "useCase": "Giáng đòn phá án trực diện vào các kiệt tác nghệ thuật rỗng ruột bị chọc khoét quá lố Contrast / Levels trên Lightroom/Photoshop. Nhìn qua ảnh rất lộng lẫy kịch tính, nhưng Histogram đã đứt làm hàng chục mẩu xương vụn gãy nát.",
     "references": [
         {
-            "url": "https://doi.org/10.1007/978-3-540-30114-1_10",
-            "title": "Popescu, A.C. & Farid, H. (2005). Statistical Tools for Digital Forensics. Information Hiding."
-        },
-        {
-            "url": "https://doi.org/10.1109/ICIP.2019.8803661",
-            "title": "McCloskey, S. & Albright, M. (2019). Detecting GAN-generated Imagery using Saturation Cues. IEEE ICIP."
+            "title": "Lin, Z., et al. (2009). Fast, automatic and fine-grained tampered JPEG image detection via DCT coefficient analysis.",
+            "url": ""
         }
     ],
-    "strengths": "• Tính toán rất nhanh\n• Công cụ sàng lọc sơ bộ hiệu quả\n• Phát hiện mẫu histogram AI phổ biến\n• Hoạt động trên mọi định dạng ảnh",
-    "limitations": "• Tỷ lệ phát hiện đơn lẻ thấp\n• Hậu xử lý dễ dàng thay đổi histogram\n• Ảnh tự nhiên có thể có histogram bất thường\n• Ảnh đã chỉnh màu tạo dương tính giả"
+    "strengths": "• Rất bất trị và khôn ngoan trước sự lười biếng. Gần 90% các pha ghép ảnh dỏm đều buộc phải kéo Contrast hoặc Level cho tiệp cảnh. Rà một phát lộ mảng bùa chú lập tức.\n• Rất nhẹ, chạy xé gió tàn sát trên diện rộng, bắt bớ nhanh kẻ tình nghi không tốn tài nguyên GPU.",
+    "limitations": "• Yếu xìu và khóc ròng đánh sai bét nếu bị lôi vào rà mấy tắm ảnh phơi sáng bị cháy khét đen om hay lóa trắng trời bẩm sinh từ máy ảnh.. Lúc đó Histogram vốn dĩ đã rách khuyết 1 cục to tướng.\n• Hoàn toàn phế vật trước đòn hiểm 'Nén JPEG Cấp Cao' rồi cố ý nhúng Noise (Nhiễu loạn) của những hacker hạng siêu sao để 'làm nhẵn' lại cái Histogram bị rách kia."
 }

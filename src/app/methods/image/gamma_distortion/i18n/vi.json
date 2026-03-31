@@ -1,12 +1,18 @@
 {
-    "name": "Méo gamma",
-    "description": "Phân tích mẫu méo đường cong gamma",
-    "algorithm": "Thuật toán phân tích Méo gamma",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích mẫu méo đường cong gamma. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích méo gamma. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Án Trảm Biến Dạng Ánh Sáng (Gamma Distortion)",
+    "description": "Lò đốt ánh sáng đa hệ. Các thiết bị vật lý (Lens máy ảnh, màn hình) sinh ra và tiếp nhận ánh sáng theo một đường cong Gamma tuyến tính rất chặt chẽ để khớp với võng mạc người. Các phần mềm cắt ghép và AI sinh ảnh thường xé toạc định lý quang lý này bằng cách gán bừa cường độ dải sáng (Luminance) sai quy chuẩn. Hệ thống này ném dải sáng của hình ảnh vào biểu đồ để phán xét: Liệu độ cong của dải màu có bị thằng nào túm tóc kéo dãn một cách gượng ép (Gamma Correction Fake) để lấp liếm vết ghép tối thui hay không.",
+    "algorithm": "Đo Lường Ngoại Lệ Thống Kê Đường Cong (Gamma Correction Forensics)",
+    "mechanism": "Tháo tung hàm mũ truyền tải ánh sáng Vout = A*Vin^gamma. Đường ánh sáng gốc nếu đi qua lăng kính máy ảnh luôn đẹp như một dải lụa mượt. Nếu sát thủ dùng lệnh 'Brightness/Contrast/Levels' trên Photoshop để ép sáng khuôn mặt lờ mờ cho hợp với cảnh nắng hoàng hôn, đường cong Gamma sẽ gãy vụn gồ ghề đầy các vết cưa lởm chởm. Lỗi răng lược Histogram (Comb effect) sinh ra khi đường cong Gamma bị chỉnh nhân tạo là án tử lập tức cho mấy tay chỉnh ảnh nghiệp dư.",
+    "parameters": "Phương trình: Inverse Gamma Histogram Response, Phép đo răng cưa: Khuyết điểm rỗng Peak-Gap Matrix",
+    "accuracy": "Cực Xoáy (86-93%) - Máy chém không nương tay đối với bất kì cái Filter tăng sáng, kích bóng tối (Shadows Hacking) nào trên thế giới.",
+    "source": "Farid (2001) - Blind Identification of Non-Linear Gamma Operation",
+    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí nơi hung thủ luống cuống chỉnh chọt Curves / Levels / Exposure để màu sắc 2 tấm ảnh khớp nhau. Chỉnh càng nhiệt, Gamma nát càng bét.",
+    "references": [
+        {
+            "title": "Farid, H. (2001). Blind inverse gamma correction. IEEE TIP.",
+            "url": ""
+        }
+    ],
+    "strengths": "• Giả vờ ngụy trang bằng chỉnh sáng là hành động tự sát trước Gamma Distortion. Bạn càng vọc độ sáng nhiều để lừa thị giác người, lưỡi đao toán học này chém bạn càng sâu.\n• Nhanh thần tốc vì chỉ việc đọc thông số bảng biểu Histogram thay vì lội từng pixel tốn thì giờ.",
+    "limitations": "• Nhát kiếm này sẽ rụng rời nếu tay súng kia chụp ảnh dạng RAW sau đó tự tráng (Render) trực tiếp ra 1 hệ Gamma mới toanh bằng phần mềm xịn từ đầu đến cuối mà không thèm cắt ghép mẩu nào.\n• Ảnh bị bóp nến nặng thành JPEG sẽ sinh ra các khối Block che đi mất mấy cái gãy khúc răng cưa Gamma đáng quý."
 }

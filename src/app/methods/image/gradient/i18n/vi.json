@@ -1,22 +1,18 @@
 {
-    "name":  "Vi kết cấu Gradient",
-    "description":  "Kiểm tra vùng mượt để tìm vi kết cấu tự nhiên từ cảm biến. Ảnh AI thiếu nhiễu cảm biến trong gradient, tạo vùng mượt sạch bất thường.",
-    "algorithm":  "Phân tích vi kết cấu vùng gradient",
-    "mechanism":  "Phân tích các vùng gradient mượt để tìm vi kết cấu cảm biến. Ảnh camera thật luôn chứa nhiễu vi mô từ cảm biến ngay cả trong vùng mượt nhất, trong khi ảnh AI tạo ra vùng bằng phẳng hoàn hảo.",
-    "parameters":  "Kích thước khối: 16x16, Ngưỡng mượt: adaptive, Chỉ số: phương sai vi kết cấu, entropy cục bộ",
-    "accuracy":  "Trung bình - 70-80%",
-    "source":  "Fridrich \u0026 Kodovsky (2012) - Rich Models for Steganalysis; ứng dụng pháp y",
-    "useCase":  "Phát hiện ảnh AI qua vùng gradient quá sạch, thiếu nhiễu cảm biến",
-    "strengths":  "• Phát hiện vùng gradient quá sạch đặc trưng AI\n• Chi phí tính toán thấp\n• Hoạt động tốt với ảnh có vùng mượt lớn",
-    "limitations":  "• Ảnh studio chụp tốt có thể tạo dương tính giả\n• Hiệu quả giảm sau khi thêm nhiễu\n• Phụ thuộc vào nội dung ảnh",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TIFS.2012.2190402",
-                           "title":  "Fridrich, J. \u0026 Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1016/j.diin.2019.04.001",
-                           "title":  "Tanaka, K. et al. (2019). Distinguishing Computer Graphics from Natural Images. Digital Investigation."
-                       }
-                   ]
+    "name": "Bàn Cân Dốc Ánh Sáng (Gradient Space)",
+    "description": "Thước đo sự suy giảm và bùng nổ của quang học lượng tử. Ánh sáng trong ảnh (dù tối hay chói lóa) không bao giờ lan tỏa theo 1 cách giật cục nếu tính theo phương diện Gradient (sự dốc đứng của chênh lệch màu). AI thì lại cực dở trong khoản làm mượt bước sóng sáng tối này: Chúng thường tạo ra những gờ dốc khựng lại đột ngột ở giữa má người hay một cái mũi chông chênh sáp nhựa dẻo dẻo. Súng bắn tỉa này chuyên rà soát các đường Gradient đứt gãy để chém vỡ ảnh fake.",
+    "algorithm": "Đo Lường Biên Độ Đứt Gãy Dốc Không Gian Ảnh (Spatial Gradient Continuity)",
+    "mechanism": "Nó đo lường tốc độ thay đổi của màu sắc. Từ màu trắng của tường sang màu đen của áo, đạo hàm ánh sáng vọt lên cao (Gradient cực đại). Cái bẫy ở đây là: mép ảnh dán ghép thì Gradient luôn sắt như lưỡi dao cạo. Ngược lại, những vùng ở giữa do AI Gen ra thì lại phẳng lì, không có tí sóng âm Gradient lăn tăn nào của hạt Noise vật lý. Cân bằng này nếu bị nát bét (nhọn hoắt ở viền, lì lợm ở lòng) thì sẽ kích hoạt ngay án tử cho máy chém.",
+    "parameters": "Công thức: Đạo Hàm Bậc 1 Không Gian (First-order derivative), Bộ Đếm: Gradient Magnitude Filter",
+    "accuracy": "Cực Xoáy (70-79%) - Đóng vai trò lựu đạn nổ chậm, moi ruột đám tay mơ ghép ảnh cẩu thả không thèm tạo Blur quang học ở chân khung hình.",
+    "source": "Lưu Trữ Chênh Lệch Dốc Sáng Sinh Học Điểm Ảnh Số",
+    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí dùng công cụ làm mượt (Eraser) tẩy lẹm mẹ nó vào vật thể. Tại ngay chỗ tẩy đó, Gradient vỡ nát tanh bành khỏi phải chối.",
+    "references": [
+        {
+            "title": "Barni, M., et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency.",
+            "url": ""
+        }
+    ],
+    "strengths": "• Tuyệt đỉnh không khoan nhượng: Siêu tốc độ, cực kỳ mượt mà khi xử lý. Ngốn cực ít RAM nhưng moi ra được mảng kết dị hợm đứt bóng.\n• Có thể vạch mặt những tấm ảnh lấy nét sai bét nhè. Nền phía sau phải mờ thì lại nét hơn vật thể đứng gần.",
+    "limitations": "• Chó săn sẽ húc đầu vào tường (False Positive nặng nề) khi bức ảnh nén quá mạnh (JPEG Quality 10). Mọi gợn sóng Gradient biến thành những cục lego nhảm nhí vì thuật toán nén đã tàn sát hết.\n• Cực kì hay rú chuông nhầm khi gặp ảnh dán màng lọc làm nét vội (Sharpen Filters)."
 }

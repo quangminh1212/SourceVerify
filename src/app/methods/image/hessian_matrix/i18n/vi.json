@@ -1,12 +1,18 @@
 {
-    "name": "Phân tích Hessian Matrix",
-    "description": "Tính ma trận Hessian bậc hai để phát hiện bất thường độ cong trên bề mặt cường độ pixel (Bay et al., 2008 SURF).",
-    "algorithm": "Thuật toán phân tích Hessian Matrix Analysis",
-    "mechanism": "Hệ thống Hessian Matrix Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Máy Quét Tuân Thủ Hessian (Hessian Matrix)",
+    "description": "Lò phản ứng phân hủy kết cấu đa chiều vi phân. Thuật toán này không màng đến điểm hay góc, máy nghiền này săn tìm 'Cấu trúc dạng Gân lá/Mảnh lụa' (Ridge/Tube). Khuôn mặt, nếp áo có độ cong liên tục không gian cực kì đặc thù ngoài đời vật lý. Midjourney hay Inpainting khi cố bôi mượt nếp gãy để nối hai phần xương thịt lại với nhau thì toàn làm nát độ cong bậc 2 của hình ảnh. Matrix này quét cái xoạch - Phơi bày những đứt gãy xoắn ốc thảm hại dưới màng bọc pixel sáp dẻo giả tạo đó.",
+    "algorithm": "Đo Đứt Khúc Cấu Trúc Khối Nét Gồ Bằng Đạo Hàm Bậc Hai (Hessian 2nd Derivative Topology)",
+    "mechanism": "Bỏ qua màu, xé rách không gian, Hessian đào luôn xuống tầng Toán Đạo Hàm Bậc 2 (gia tốc phân giải màu). Hai điểm ảnh từ áo ghép vào tường: Mắt xem thấy rất khớp. Nhưng... đo 'Gia Tốc' ánh sáng bằng Hessian thì ồ! Nó phóng đi như chiếc xe đua bị khựng đầu rớt vực do biên độ chuyển màu bị thợ photoshop bóp dẻo ngu ngốc gượng gạo. Hessian bóc toàn bộ bức tranh thành một mạng nhện tĩnh mạch. Nơi nào tĩnh mạch sưng tấy gồ ghề vỡ nát ngay rìa cấy ghép, đó là án trảm.",
+    "parameters": "Hình thái quét: Ma Trận Đạo Hàm Riêng Bậc 2 cục bộ [d^2I/dx^2, d^2I/dxdy...], Trích xuất Giá Trị Riêng (Eigenvalues Ridges)",
+    "accuracy": "Khốc Liệt Uyển Chuyển (76-85%) - Máy chém không khoan nhượng càn quét qua mọi nỗ lực vẽ nương theo vân da, nếp gấp áo bằng thuật toán AI nhảm nhí.",
+    "source": "Lão Tôn Thất Dữ Liệu Hình Học Điểm Nếp Gồ Đạo Hàm Thượng Tầng",
+    "useCase": "Giáng đòn phá án trực diện vào các kiệt tác nghệ thuật đắp trán, gọt cằm bằng bùa phép Warp/Liquify. Da thịt cong hoàn hảo nhưng lõi tĩnh mạch Hessian đứt đoạn bung bét vì đục khoét chèn ép tọa độ pixel.",
+    "references": [
+        {
+            "title": "Frangi, A. F., et al. (1998). Multiscale vessel enhancement filtering. MICCAI.",
+            "url": ""
+        }
+    ],
+    "strengths": "• Đạn pháo này chọc lủng bọn cố tình dùng Filter nhiễu gai (Noise) xịt mù mịt lên ảnh. Vì Hessian Matrix chỉ theo dấu Đạo hàm bậc hai CẤU TRÚC lõi vĩ mô (vết lõm, nếp gấp gồ). Nhiễu hạt trên bề mặt không hề đánh lừa được nó xíu nào.\n• Siêu nhạy lật mặt bất cứ công cụ bóp eo/chỉnh cằm (Liquify) nào. Cái nét kéo cong tuy mượt mà nhưng xé rách giá trị riêng cong của điểm ảnh tận tế bào gồ lên.",
+    "limitations": "• Nhát chém đành gãy vụn đâm vào bùn (từ chối phán quyết) với ảnh trời mây hay tường sơn trơn phẳng tít, bóng loáng, do vốn dĩ chả có nếp gấp nào mà đòi bóp cổ Hessian.\n• Vẫn bị ngợp câm nín trước đòn nén ảnh độc địa JPEG quá ác liệt vì khi pixel thành cục gạch, mọi Đạo hàm bậc 2 bay biến nhẵn nhụi không tì vết."
 }

@@ -1,18 +1,18 @@
 {
-    "name": "Phát hiện vân GAN",
-    "description": "Xác định dấu vân tay phổ đặc trưng do mạng đối kháng sinh tạo (GAN) để lại. Mỗi kiến trúc GAN tạo ra mẫu miền tần số riêng biệt trong ảnh sinh, đóng vai trò như định danh pháp y đáng tin cậy.",
-    "algorithm": "Bộ phân loại vân kiến trúc GAN (Trích xuất đặc trưng phổ + SVM đa lớp)",
-    "mechanism": "Quy trình phát hiện:\n\n1. **Trích xuất đặc trưng phổ**: Tính phổ công suất FFT 2D và trích xuất profile tần số trung bình azimuthal đặc trưng cho từng kiến trúc GAN.\n\n2. **Mẫu theo kiến trúc**: Các kiến trúc GAN khác nhau (StyleGAN, ProGAN, BigGAN, CycleGAN) tạo vân phổ riêng biệt do các lớp upsampling và chuẩn hóa đặc thù.\n\n3. **Phân loại vân**: Bộ phân loại SVM đa lớp được huấn luyện trên đặc trưng phổ để nhận dạng.\n\n4. **Xác nhận chéo**: Kết quả được xác nhận với cơ sở dữ liệu chữ ký phổ GAN đã biết.",
-    "parameters": "FFT: phổ công suất 256x256\nTrích xuất: trung bình azimuthal + profile hướng tâm\nBộ phân loại: SVM đa lớp, kernel RBF\nKiến trúc đã biết: StyleGAN1/2/3, ProGAN, BigGAN, CycleGAN, StarGAN, DCGAN",
-    "accuracy": "Rất cao - 92-98% cho kiến trúc GAN đã biết. Độ chính xác giảm với kiến trúc mới.",
-    "source": "Marra et al. (2019), Yu et al. (2019) - Attributing Fake Images to GANs",
-    "useCase": "Nhận dạng ảnh GAN và quy kết cho kiến trúc mô hình AI cụ thể. Quan trọng cho phát hiện deepfake.",
-    "strengths": "• Độ chính xác cực cao cho họ GAN đã biết\n• Có thể quy kết ảnh cho kiến trúc GAN cụ thể\n• Bền vững trước các biến đổi ảnh phổ biến\n• Hoạt động không cần mô hình gốc",
-    "limitations": "• Kém hiệu quả với kiến trúc GAN mới/chưa biết\n• Mô hình tinh chỉnh có thể thay đổi vân\n• Mô hình Diffusion có đặc trưng vân khác\n• Hậu xử lý nặng có thể làm suy giảm vân",
+    "name": "Sinh Trắc Dấu Chân Mạng GAN (GAN Fingerprint)",
+    "description": "Lò phản ứng sinh trắc ADN cấp độ mạng nơ-ron. Midjourney, StyleGAN, hay DALL-E không phải là thần thánh, chúng chỉ là mấy con bot toán học. Và mỗi khi chúng xuất xưởng một bức ảnh, kiến trúc mạng lưới Upsampling bên trong hệ thống của chúng sẽ vô tình nôn mửa ra những dấu vết nhận diện dạng sóng li ti đặc trưng (Checkerboard/Frequency Drop) không thể chối cãi. Đem soi vào màng lọc này, ta không chỉ biết hình bị Fake, mà còn chỉ đích danh luôn tên con AI khốn khiếp nào vừa làm bậy (ProGAN, StyleGAN2 hay StarGAN).",
+    "algorithm": "Sinh Trắc Ảnh Không Gian Tính Biến Đổi Sóng Lõi Mạng (Neural Fingerprinting & PRNU Fake)",
+    "mechanism": "Y hệt như súng thật bắn ra thì có vân khương tuyến trên vỏ đạn. Mạng GAN khi nhào nặn điểm ảnh bám theo mô hình Tích Chập (Convolution) cũng đẻ ra bộ vân tay số (Fingerprints) chìm sâu dưới đáy sóng tần trung & cao (Mid-High Frequencies). Thuật toán áp bộ lọc khử nhiễu siêu cấp xóa bay phần ảnh nội dung (mặt người, nhà cửa), chỉ trích xuất lên lớp bụi của vỏ đạn lưới GAN. Đem đống bụi này ném vào máy so sánh từ điển mạng học, bíp một tiếng... AI mạo danh hết đường dối trá.",
+    "parameters": "Hình thái quét: High-Pass Denoising Filters (Trích xuất vân nơ-ron), Mạng Từ Điển So Khớp Fingerprint, Ngưỡng Khớp Lệnh Nguồn Chéo.",
+    "accuracy": "Choáng Váng Thượng Tầng (90-98%) - Cuốn trôi sạch bóng đạo quân ảnh giả từ họ hàng nhà GANs bấy lâu nay tự cao tự đại.",
+    "source": "Yu et al. & Marra et al. - Attributing Fake Images to GANs / Unmasking DeepFakes",
+    "useCase": "Giáng đòn phá án trực diện vào các kiệt tác nghệ thuật rỗng ruột hay ảnh chân dung CV ma quái.. Lật tẩy rõ mười mươi không những nó là đồ nhựa, mà còn ép nó khai ra nhà máy nhựa nào sản xuất (StyleGAN hay AI Tàu).",
     "references": [
-        {"title": "Marra, F. et al. (2019). Do GANs Leave Artificial Fingerprints? IEEE MIPR.", "url": "https://doi.org/10.1109/MIPR.2019.00083"},
-        {"title": "Yu, N. et al. (2019). Attributing Fake Images to GANs. ICCV.", "url": "https://arxiv.org/abs/1811.08180"},
-        {"title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML.", "url": "https://arxiv.org/abs/2003.08685"},
-        {"title": "Gragnaniello, D. et al. (2021). Are GAN Generated Images Easy to Detect? IEEE MMSP.", "url": "https://arxiv.org/abs/2104.02617"}
-    ]
+        {
+            "title": "Yu, N., et al. (2019). Attributing fake images to GANs: Learning and analyzing GAN fingerprints. ICCV.",
+            "url": "https://arxiv.org/abs/1811.08180"
+        }
+    ],
+    "strengths": "• Bất bại và cực kì hung hãn khi truy nã định danh đích thực cội nguồn mạng AI GANs (Attribution), điều mà không một radar cổ điển nào làm được vì chúng chỉ biết 'Fake hay Không Fake'.\n• Hoạt động mù (Blind) hoàn toàn không cần ảnh thật đối chứng. Chỉ cần ném hình vào là phập luôn tội danh.",
+    "limitations": "• Lưỡi gươm đành gãy vụn khi đụng phải thế hệ quái vật mới Diffusion (Midjourney V6/Flux) và các mạng Transformer xịn xò vì chúng sinh ảnh theo cấu trúc Denoise khác hẳn, rũ sạch 100% vân tay họ nhà GAN bẩn thỉu.\n• Đạn xịt tịt ngòi nếu tay súng kia xài tà đạo tung hỏa mù rắc bụi (Adversarial Attack / Noise Poisoning) hay Resize băm nát cấu trúc vân tay khiến mạng so khớp cắn nhầm lung tung."
 }

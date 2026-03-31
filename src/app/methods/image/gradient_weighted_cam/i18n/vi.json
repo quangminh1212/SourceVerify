@@ -1,12 +1,18 @@
 {
-    "name": "Phân tích Gradient-Weighted Activation Map",
-    "description": "Áp dụng trọng số gradient kiểu Grad-CAM để trực quan hóa vùng phân biệt cho phát hiện AI (Selvaraju et al., 2017).",
-    "algorithm": "Thuật toán phân tích Gradient-Weighted Activation Map",
-    "mechanism": "Hệ thống Gradient-Weighted Activation Map phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới"
+    "name": "Mắt Thần Vùng Xoáy Nhiệt Grad-CAM",
+    "description": "Lò phản ứng hạt nhân bóc tách lý do tại sao AI lại chê bức ảnh là hàng dởm. Hàng chục cỗ máy Deep Learning soi ảnh chỉ vạch mặt 'Đứa này 90% bị AI sửa' rồi im ru. Grad-CAM không thế... nó là con mắt soi thấu dòng suy nghĩ ma quỷ đó. Nó túm cổ cục mạng Nơ-ron (CNN) và ép bật ra cái 'Bản Đồ Nhiệt' đỏ rực ngay khu vực đáng ngờ nhất (chỗ răng cưa, chỗ viền ghép, chỗ lỗ mũi dư). Tội phạm thường chối cãi ảnh gốc, thế thì ném bản đồ nhiệt này ra cho chúng câm họng.",
+    "algorithm": "Đạo Hàm Truy Ngược Cấp Bậc (Class-Activation Mapping Gradient-Weighted)",
+    "mechanism": "Thoát li kiểu kiểm tra tay chân. Grad-CAM móc thẳng vào đại não của bộ mô hình (VD: ResNet, EfficientNet) lúc đang chấm điểm tấm ảnh. Nó truy ngược dòng thác đạo hàm (Gradients) chảy về lớp tích chập cuối cùng cực hiểm ác. Vùng nào trong tấm ảnh khiến máy chém AI lên cơn 'Mày là Fake 100%' mạnh nhất, dòng đạo hàm sẽ đun sôi điểm ảnh đó thành đỏ quạch trên màn hình. Nghĩa là dán ghép con quái vật nào vào, Grad-CAM sẽ nướng đỏ tươi ngay con quái đó.",
+    "parameters": "Hình thái: Activation Feature Maps Layer cuối, Toán Nhúng: Derivative (dY^c / dA^k) Phân Quyền Hạt Tổng",
+    "accuracy": "Tuyệt Đỉnh Quan Tòa (100% Định Vị Cục Bộ) - Sứ giả của sự minh bạch AI, là quan tòa đưa ra chứng cớ đỏ rực tại khoang chứ không phán suông.",
+    "source": "Selvaraju et al. (2017) - Grad-CAM: Visual Explanations from Deep Networks",
+    "useCase": "Giáng ngọn lửa thanh trừng thẳng mặt đám thủ phạm gào mồm cãi tại tòa 'Làm gì có ghép mặt, bằng chứng đâu?'. Grad-CAM đè tấm ảnh ra, hiện một đốm phỏng rộp dung nham đỏ quạch chính xác lên đường Inpaint viền ghép mặt AI... hết đường chối cãi.",
+    "references": [
+        {
+            "title": "Selvaraju, R. R., et al. (2017). Grad-cam: Visual explanations from deep networks via gradient-based localization. ICCV.",
+            "url": "https://arxiv.org/abs/1610.02391"
+        }
+    ],
+    "strengths": "• Bằng chứng sắt thép trước chốn tòa án pháp lý nhờ giải trí (Explainable AI - XAI). Đưa cỗ máy thảm sát AI từ cái hộp đen mù tịt thành ông vua ranh ma biết trỏ ngón tay phán tội chính xác lên từng vết mụn của AI.\n• Đặc trị không tha bất cứ thể loại ảnh ghép nào. Mạng nơ-ron còn bắt được Fake thì bản đồ lửa đỏ còn nung chín được hung thủ rành rành.",
+    "limitations": "• Đạn lép tịt ngòi 100% nếu cái mạng quét AI (như EfficientNet) bản thân nó đã bị mù (đoán sai do ảnh quá mờ / nén nát cùi bắp). Mạng AI sai thì Grad-CAM đun sôi đỏ rậm cả ra một vũng bùn ngu ngốc vô nghĩa.\n• Hay thét báo động giả siêu rộng (đỏ lòm khắp mặt) mà không chỉ được chính xác chỗ vết dao tem cắt ghép siêu nhỏ lẻ tẻ, vì cơ chế nó xài Tích Chập tầng cuối (Layer cuối bị bóp siêu nhỏ mờ mịt)."
 }

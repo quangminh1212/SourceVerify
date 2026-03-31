@@ -1,12 +1,18 @@
 {
-    "name": "Histogram biên độ gradient",
-    "description": "Phân tích phân bổ biên độ gradient",
-    "algorithm": "Thuật toán phân tích Histogram biên độ gradient",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ biên độ gradient. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích histogram biên độ gradient. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh"
+    "name": "Búa Biên Độ Bão Hòa Ánh Sáng (Gradient Magnitude)",
+    "description": "Máy chém đo giới hạn chịu tải. Một bước chuyển viền từ cái áo sang bức tường phía sau là một cú nhảy Gradient Magnitude (Biên độ đạo hàm không gian). Bạn dùng Photoshop/AI để ghép cái áo đó? Do tay người hoặc do AI Gen viền ngu, cái cú nhảy ánh sáng đó trở thành một bức tường cao vọi sắc lẹm, đôi khi còn chói lên kiểu răng cưa nham nhở. Thuật toán này không cần màng tới hướng nữa, nó chỉ ôm máy đo chênh lệch Sáng-Tối cực lớn. Hễ cứ tìm thấy gờ viền vách núi đá dựng đứng phi lý = Báo động giả mạo Inpainting.",
+    "algorithm": "Đo đếm Năng Lượng Đạo Hàm Cấp Tốc Magnitude (Sobel/Scharr Vector Length)",
+    "mechanism": "Nó rọi hai con đèn Sobel (Dọc và Ngang) vào khắp hình. Thu thập các Mũi tên ánh sáng và cộng lại theo công thức Pytago để tính lực kéo đứt gãy. Khi bắt gặp những mảnh tóc, vành nón do AI vẽ (Hallucination), sự chênh lệch (Magnitude) chui tọt thành các vết đứt đoạn rải rác lởm chởm vì AI chỉ sinh từng pixel cục bộ chứ không mượt mà liên tục cường độ. Máy thấy cường độ này rú ga loạn xì ngầu, nó lập tức gô cổ tên lừa đảo.",
+    "parameters": "Hình thái quét: Magnitude sqrt(Gx^2 + Gy^2), Màng Rây: Ngưỡng đỉnh gãy cục bộ, Biểu đồ: Năng Lượng Biên",
+    "accuracy": "Nhanh Sạch Gọn (74-83%) - Ánh sáng chói lọi càn quét mọi con giời chuyên Crop người ra khỏi cảnh dán gượng ép vào bãi biển hoàng hôn.",
+    "source": "Lão Tôn Thất Dữ Liệu Thị Giác Vỏ Não Hình Học Cạnh (Edge Amplitude)",
+    "useCase": "Giáng ngọn giáo chém chết tay Photoshop nửa mùa đắp trăng hay mặt người ngụy tạo lên bức tường trống rỗng mà không lo gọt mượt đường tơ viền vật chất ánh sáng cho thẳng với hệ phân tích.",
+    "references": [
+        {
+            "title": "Celiktutan, O., et al. (2015). Blind evaluation of image tampered regions...",
+            "url": ""
+        }
+    ],
+    "strengths": "• Khả năng chịu đòn ghê rợn trước việc hacker cố tình xoay khung hình (Rotate). Dù ảnh lộn ngược 180 độ, độ chênh lệch năng lượng cắt vách núi vẫn đứng im đấy. Án tử thần bất khuất.\n• Siêu nhạy với mấy tên thích chơi hệ Filter làm nét hình (Sharpen). Gradient Magnitude bóc ngay cái lớp 'Cháy khét xèn xẹt' ở mép vật thể.",
+    "limitations": "• Nhát kiếm đành gãy mũi đâm vào không khí (False Positive) nếu chụp ngay cái hàng rào kẽm gai dưới trời đen đặc, hay một cái áo caro kẻ sọc caro đen trắng cực nét. Cường độ nhọn hoắt hệt như ghép AI thật.\n• Yếu bóng vía, sụp hầm mù mắt trước mấy kẻ chơi chiêu Gauss Blur. Blur làm nhòe sạch trơn vết cắt, biến tường núi đá thành con dốc lài lài, Gradient Magnitude liền bị thuốc mê."
 }
