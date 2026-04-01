@@ -13,7 +13,6 @@ const nextConfig: NextConfig = {
   // Turbopack config
   turbopack: {},
   webpack: (config) => { return config; },
-  eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   experimental: {
     // Disable Turbopack persistent FS cache for dev to avoid SST file errors on Windows
