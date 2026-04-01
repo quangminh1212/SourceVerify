@@ -19,7 +19,7 @@ export type MethodTranslations = {
     mechanism: string;
     parameters: string;
     accuracy: string;
-    source: string;
+    source?: string;
     useCase: string;
     references?: Reference[];
     limitations?: string;
@@ -129,8 +129,6 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
     if (!tr.strengths && uniqueFb) tr.strengths = uniqueFb.strengths;
     if (!tr.limitations && uniqueFb) tr.limitations = uniqueFb.limitations;
     if (!tr.useCase && uniqueFb) tr.useCase = uniqueFb.useCase;
-    if (!tr.source && uniqueFb) tr.source = uniqueFb.source;
-    if ((!tr.references || tr.references.length === 0) && uniqueFb) tr.references = uniqueFb.references;
 
     if (!method) {
         return (
