@@ -1,0 +1,224 @@
+% Lưu ý: Bạn có thể xem tổng trang tại https://sourceverify.vercel.app
+% ============================================================
+%  BÁO CÁO TỔNG QUAN ĐỀ TÀI – SourceVerify
+%  Biên soạn: Ngày 07 tháng 04 năm 2026
+% ============================================================
+\documentclass[12pt, a4paper]{article}
+
+% ── Encoding & Fonts ────────────────────────────────────────
+\usepackage[utf8]{inputenc}
+\usepackage[T5]{fontenc}
+\usepackage[vietnamese]{babel}
+\usepackage{lmodern}
+
+% ── Page Layout ─────────────────────────────────────────────
+\usepackage[
+  top=2.5cm, bottom=2.5cm,
+  left=3cm,  right=2.5cm
+]{geometry}
+
+% ── Typography ──────────────────────────────────────────────
+\usepackage{setspace}
+\onehalfspacing
+\setlength{\parindent}{0.75cm}
+\setlength{\parskip}{4pt}
+
+% ── Colors & Graphics ───────────────────────────────────────
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
+
+% ── Tables ──────────────────────────────────────────────────
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{multirow}
+\usepackage{array}
+\usepackage{longtable}
+
+% ── Lists ───────────────────────────────────────────────────
+\usepackage{enumitem}
+\setlist[itemize]{leftmargin=1.5cm, topsep=4pt, itemsep=2pt}
+\setlist[enumerate]{leftmargin=1.5cm, topsep=4pt, itemsep=2pt}
+
+% ── Links & Metadata ────────────────────────────────────────
+\usepackage[
+  hidelinks,
+  pdftitle={Báo cáo đề tài SourceVerify},
+  pdfauthor={Bạch Minh Quang},
+  pdfsubject={Phát hiện nội dung AI}
+]{hyperref}
+
+% ── Headers / Footers ───────────────────────────────────────
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyhead[L]{\small\textit{SourceVerify – Báo cáo tổng quan đề tài}}
+\fancyhead[R]{\small\textit{07/04/2026}}
+\fancyfoot[C]{\thepage}
+
+% ── Section Styling ─────────────────────────────────────────
+\usepackage{titlesec}
+\definecolor{NavyBlue}{RGB}{0, 51, 102}
+\definecolor{AccentBlue}{RGB}{30, 100, 180}
+\definecolor{LightGray}{RGB}{245, 245, 245}
+\definecolor{SuccessGreen}{RGB}{34, 139, 34}
+\definecolor{WarnOrange}{RGB}{204, 102, 0}
+
+\titleformat{\section}[block]
+  {\large\bfseries}
+  {\thesection.}{0.5em}{}
+  [\vspace{-4pt}\rule{\textwidth}{1pt}\vspace{4pt}]
+
+\titleformat{\subsection}[block]
+  {\normalsize\bfseries}
+  {\thesubsection.}{0.5em}{}
+
+\titleformat{\subsubsection}[runin]
+  {\normalsize\bfseries}
+  {\thesubsubsection.}{0.5em}{}[~~]
+
+% ── Gantt / Progress ────────────────────────────────────────
+\usepackage{pgfgantt}
+
+% ── Code Listings ───────────────────────────────────────────
+\usepackage{listings}
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{LightGray},
+  frame=single,
+  breaklines=true,
+  columns=flexible
+}
+
+% ── Custom boxes ────────────────────────────────────────────
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\newtcolorbox{infobox}[1][]{
+  enhanced, breakable,
+  colback=gray!5!white, colframe=black!60,
+  title=#1, fonttitle=\bfseries,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+\newtcolorbox{progressbox}[1][]{
+  enhanced, breakable,
+  colback=gray!5!white, colframe=black!60,
+  title=#1, fonttitle=\bfseries,
+  left=6pt, right=6pt, top=4pt, bottom=4pt
+}
+
+% ── Misc ────────────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{microtype}
+
+% ============================================================
+\begin{document}
+
+% ── Title Page ──────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  {\large\bfseries
+    ĐẠI HỌC BÁCH KHOA HÀ NỘI\\[0.3em]
+  \par}
+
+  \vspace{0.8cm}
+  \rule{\textwidth}{1pt}
+  \vspace{0.5cm}
+
+  {\LARGE\bfseries BÁO CÁO TỔNG QUAN ĐỀ TÀI\par}
+
+  \vspace{0.6cm}
+  {\Huge\bfseries SourceVerify\par}
+  \vspace{0.3cm}
+  {\normalsize\itshape Hệ thống Phát hiện Nội dung do Trí tuệ Nhân tạo Tạo ra\par}
+
+  \vspace{0.5cm}
+  \rule{\textwidth}{1pt}
+  \vspace{1.5cm}
+
+  \begin{tabular}{rl}
+    \textbf{Sinh viên:}     & Bạch Minh Quang \\[4pt]
+    \textbf{MSSV:}          & 202490077 \\[4pt]
+    \textbf{Lớp:}           & CNTT VB2 CQ \\[4pt]
+    \textbf{Ngày báo cáo:}  & 07 tháng 04 năm 2026 \\
+  \end{tabular}
+
+  \vfill
+\end{titlepage}
+
+% ── Table of Contents ───────────────────────────────────────
+\tableofcontents
+\newpage
+
+% ============================================================
+\section{Tổng quan đề tài}
+
+\textbf{Lưu ý:} Bạn có thể xem tổng trang trực tuyến tại \href{https://sourceverify.vercel.app}{\textcolor{AccentBlue}{sourceverify.vercel.app}}.
+
+\textbf{Tên đề tài:} SourceVerify -- Hệ thống phát hiện nội dung do Trí tuệ Nhân tạo tạo ra.
+
+\textbf{Mục tiêu:}
+\begin{itemize}
+  \item Xây dựng ứng dụng web phát hiện nội dung AI cho ba loại đầu vào: hình ảnh, video và văn bản.
+  \item Toàn bộ phân tích chạy trực tiếp trên trình duyệt -- không gửi dữ liệu lên máy chủ, đảm bảo quyền riêng tư.
+  \item Các phương pháp phân tích dựa trên bài báo khoa học đã công bố (paper-faithful).
+  \item Cung cấp REST API để tích hợp vào hệ thống khác.
+  \item Hỗ trợ đa ngôn ngữ: Tiếng Việt, Tiếng Anh và một số ngôn ngữ khác.
+\end{itemize}
+
+% ============================================================
+\section{Công nghệ và Nền tảng}
+
+\begin{table}[h!]
+  \centering
+  \renewcommand{\arraystretch}{1.35}
+  \begin{tabularx}{\textwidth}{>{\bfseries}l l X}
+    \toprule
+    Tầng & Công nghệ & Mục đích \\
+    \midrule
+    Framework   & Next.js 16 (App Router) & Nền tảng web, routing, SSR/SSG \\
+    Ngôn ngữ    & TypeScript 5            & An toàn kiểu dữ liệu, dễ bảo trì \\
+    Giao diện   & Tailwind CSS 4          & Styling nhẹ, hiệu suất cao \\
+    Runtime     & React 19                & UI component, Concurrent features \\
+    Triển khai  & Vercel                  & Hosting toàn cầu, CI/CD tự động \\
+    \bottomrule
+  \end{tabularx}
+  \caption{Tech Stack sử dụng}
+\end{table}
+
+% ============================================================
+\section{Các chức năng và Mô-đun dự kiến}
+
+\begin{enumerate}
+  \item \textbf{Phân tích hình ảnh} -- phát hiện ảnh AI qua nhiều  phương pháp (phân tích pixel, tần số, texture, metadata, dấu vết GAN/Diffusion).
+
+  \item \textbf{Phân tích văn bản} -- phát hiện văn bản AI qua nhiều phương pháp (entropy, phong cách viết, dấu vân tay mô hình ngôn ngữ).
+
+  \item \textbf{Phân tích video} -- phát hiện video AI qua nhiều  phương pháp (phân tích từng khung hình + lip sync, motion artifact).
+
+  \item \textbf{REST API} -- cho phép tích hợp vào hệ thống khác qua endpoint \texttt{POST /api/analyze}.
+
+  \item \textbf{Giao diện người dùng} -- kéo thả file, nhập URL hoặc văn bản; hiển thị kết quả dạng điểm số và biểu đồ.
+
+  \item \textbf{Đa ngôn ngữ} -- hỗ trợ Tiếng Việt, Tiếng Anh, Hàn, Nhật, Trung.
+
+  \item \textbf{Benchmark tự động} -- đo độ chính xác từng phương pháp trên bộ dữ liệu kiểm thử, công bố kết quả công khai.
+\end{enumerate}
+
+% ============================================================
+\section{Kế hoạch tuần tiếp theo}
+
+\begin{itemize}
+  \item Hoàn thiện REST API: thêm rate limiting và logging.
+  \item Hoàn thành bản dịch KO, JA, ZH cho toàn bộ giao diện.
+  \item Chạy benchmark văn bản trên corpus thực tế.
+  \item Tinh chỉnh trọng số tổng hợp điểm.
+\end{itemize}
+
+\end{document}
