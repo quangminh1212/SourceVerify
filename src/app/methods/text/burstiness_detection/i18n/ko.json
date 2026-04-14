@@ -1,26 +1,26 @@
 {
-  "name": "시맨틱 버스티니스(Burstiness) 평가기",
-  "description": "전체 텍스트에 걸친 언어적 특징의 군집화와 리듬을 대조합니다.",
-  "useCase": "인간 표현에 필수적인 복잡한 정보 클러스터링이 없고 인위적으로 매끄러운 텍스트 흐름을 가진 일반적인 LLM 결과물을 노출시킵니다.",
-  "mechanism": "Human authors inherently employ complex cognitive rhythmic structures, intermittently interleaving long, highly dense informational 'bursts' with juxtaposed arrays of simple transitional clauses. Conversely, because modern autoregressive LLMs optimize token selection via a softmax normalization step subject to temperature-based probability flattening, machine generation heavily biases toward low burstiness (structural homogeneity). This method pinpoints the smoothing effect of generalized token generation, identifying the artificial rhythm produced when an encoder consistently gravitates towards median likelihoods instead of episodic spikes.",
-  "accuracy": "중간 - 72-82% as standalone method",
-  "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection, arXiv",
-  "algorithm": "비균질 확률 및 군집화(Clustering) 분석",
-  "parameters": "분석: 버스티니스(Burstiness) 채점\n지표: 분산 대 평균 비율(분포)\n출력: 0-100 변동치 예외 점수",
-  "strengths": "• GPT-3/GPT-4의 주요 인공적 신호를 타겟으로 하는 여러 학술 연구를 통해 광범위하게 검증됨.\n• 수백 개의 문단에 걸쳐 확장된 대용량 텍스트 분석에 매우 효과적.\n• 제로 템퍼러처(Zero-temperature, 창의성을 최소화한 파라미터) 출력에 내재된 스타일적 '단조로움'을 완벽히 특성화.",
-  "limitations": "• 인간이 작성한 기술 보고서나 공식적인 관료적 문서는 본질적으로 버스티니스가 낮아 오탐 위험 존재.\n• 리듬 변동성 데이터가 충분하지 않은 짧은 구문(250단어 미만)에서는 일관되게 탐지 실패.\n• 프롬프트를 통해 '문단 길이를 다양성 있게 주입하라'고 지시함으로써 손쉽게 우회가 가능.",
-  "references": [
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    },
-    {
-      "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
-      "url": "https://arxiv.org/abs/2306.04723"
-    }
-  ]
+    "name": "시맨틱 버스티니스(Burstiness) 평가기",
+    "description": "전체 텍스트에 걸친 언어적 특징의 군집화와 리듬을 대조합니다.",
+    "useCase": "인간 표현에 필수적인 복잡한 정보 클러스터링이 없고 인위적으로 매끄러운 텍스트 흐름을 가진 일반적인 LLM 결과물을 노출시킵니다.",
+    "mechanism": "인간 저자는 본질적으로 복잡한 인지적 리듬 구조를 사용하며, 길고 고밀도 정보적 '버스트'를 단순한 전환 절과 간헐적으로 교차 배치합니다. 반대로, 현대 자동 회귀 LLM은 온도 기반 확률 평탄화에 종속되는 소프트맥스 정규화 단계를 통해 토큰 선택을 최적화하기 때문에 기계 생성은 낮은 버스트성(구조적 균질성)에 크게 편향됩니다. 이 방법은 일반화된 토큰 생성의 평활화 효과를 정확히 찾아내어 인코더가 주기적 급등 대신 중앙 가능성으로 일관되게 끌릴 때 생성되는 인위적 리듬을 식별합니다.",
+    "accuracy": "중간 - 72-82% as standalone method",
+    "source": "Guo et al. (2023) - How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection, arXiv",
+    "algorithm": "비균질 확률 및 군집화(Clustering) 분석",
+    "parameters": "분석: 버스티니스(Burstiness) 채점\n지표: 분산 대 평균 비율(분포)\n출력: 0-100 변동치 예외 점수",
+    "strengths": "• GPT-3/GPT-4의 주요 인공적 신호를 타겟으로 하는 여러 학술 연구를 통해 광범위하게 검증됨.\n• 수백 개의 문단에 걸쳐 확장된 대용량 텍스트 분석에 매우 효과적.\n• 제로 템퍼러처(Zero-temperature, 창의성을 최소화한 파라미터) 출력에 내재된 스타일적 '단조로움'을 완벽히 특성화.",
+    "limitations": "• 인간이 작성한 기술 보고서나 공식적인 관료적 문서는 본질적으로 버스티니스가 낮아 오탐 위험 존재.\n• 리듬 변동성 데이터가 충분하지 않은 짧은 구문(250단어 미만)에서는 일관되게 탐지 실패.\n• 프롬프트를 통해 '문단 길이를 다양성 있게 주입하라'고 지시함으로써 손쉽게 우회가 가능.",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2024). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
+            "url": "https://arxiv.org/abs/2306.04723"
+        }
+    ]
 }

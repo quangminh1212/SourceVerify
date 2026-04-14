@@ -1,22 +1,22 @@
 {
-  "name": "Shadow Temporal",
-  "description": "Analyzes shadow movement consistency over time",
-  "algorithm": "Shadow Temporal — 픽셀 수준 공간 분석",
-  "mechanism": "This method analyzes temporal shadow consistency for video deepfake detection:\n\n1. **그림자감지&추적**: Shadows (both cast shadows and attached shadows) are detected per frame and tracked across time. Shadow regions are identified by their characteristic low luminance with preserved chromaticity relative to surrounding areas.\n\n2. **그림자-빛Source일관성**: Shadow direction and sharpness should be consistent with scene illumination across all frames. The method tracks shadow direction stability — in constant lighting, shadows should remain directionally stable. Temporal shadow direction changes without corresponding light source movement indicate manipulation.\n\n3. **얼굴그림자일관성**: Facial shadows (nose shadow, orbital shadows, chin shadow) should be temporally consistent with scene shadows. The method compares facial shadow dynamics with background shadow behavior. Deepfake face generation may produce facial shadows that evolve differently from scene shadows.\n\n4. **그림자Intensity안정성**: Shadow intensity (luminance ratio of shadow to illuminated region) should vary smoothly over time. The method tracks shadow intensity — sudden changes in shadow darkness without illumination changes indicate temporal artifacts from frame-independent generation.\n\n5. **Penumbra일관성**: Shadow edge softness (penumbra width) is determined by light source size and distance. Penumbra should remain consistent across the scene and over time. The method checks penumbra consistency — deepfakes may produce shadows with inconsistent or physically impossible penumbra characteristics.",
-  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through shadow temporal analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    }
-  ]
+    "name": "그림자 시간적 분석",
+    "description": "Analyzes shadow movement consistency over time",
+    "algorithm": "Shadow Temporal — 픽셀 수준 공간 분석",
+    "mechanism": "This method analyzes temporal shadow consistency for video deepfake detection:\n\n1. **그림자감지&추적**: Shadows (both cast shadows and attached shadows) are detected per frame and tracked across time. Shadow regions are identified by their characteristic low luminance with preserved chromaticity relative to surrounding areas.\n\n2. **그림자-빛Source일관성**: Shadow direction and sharpness should be consistent with scene illumination across all frames. The method tracks shadow direction stability — in constant lighting, shadows should remain directionally stable. Temporal shadow direction changes without corresponding light source movement indicate manipulation.\n\n3. **얼굴그림자일관성**: Facial shadows (nose shadow, orbital shadows, chin shadow) should be temporally consistent with scene shadows. The method compares facial shadow dynamics with background shadow behavior. Deepfake face generation may produce facial shadows that evolve differently from scene shadows.\n\n4. **그림자Intensity안정성**: Shadow intensity (luminance ratio of shadow to illuminated region) should vary smoothly over time. The method tracks shadow intensity — sudden changes in shadow darkness without illumination changes indicate temporal artifacts from frame-independent generation.\n\n5. **Penumbra일관성**: Shadow edge softness (penumbra width) is determined by light source size and distance. Penumbra should remain consistent across the scene and over time. The method checks penumbra consistency — deepfakes may produce shadows with inconsistent or physically impossible penumbra characteristics.",
+    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through shadow temporal analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "Video Hash Analysis",
-  "description": "Analyzes 비디오 perceptual hash",
-  "algorithm": "Video Hash Analysis — Statistical Pattern Analyzer",
-  "mechanism": "This method uses perceptual video hashing for forensic analysis:\n\n1. **지각적Hash계산**: A perceptual hash is computed per frame using established algorithms (pHash, dHash, wavelet hash). The hash captures the perceptual content summary — robust to minor modifications but sensitive to content changes.\n\n2. **시간적Hash안정성**: Frame-to-frame hash changes are tracked. Natural video shows smooth hash evolution. The method detects anomalous hash transitions — sudden hash changes without corresponding visual scene changes, or hash stability during what should be content changes (freeze-frame manipulation).\n\n3. **KnownContent매칭**: Frame hashes are optionally compared against databases of known deepfake content or original source material. Hash matching can identify specific deepfake videos or trace the source footage used in a face swap.\n\n4. **Hash-BasedTampering감지**: The ratio of frame-to-frame hash distance to visual change magnitude is analyzed. Manipulated frames may show hash distances disproportionate to the apparent visual change — indicating content modification below the perceptual threshold but detectable in the hash space.\n\n5. **Multi-해상도Hashing**: Hashes computed at multiple resolutions capture changes at different spatial scales. Face-swap deepfakes may produce normal hashes at coarse resolution (overall structure preserved) but anomalous hashes at fine resolution (detail-level generation artifacts), creating a resolution-dependent hash signature.",
-  "parameters": "분석 유형: 통계\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 hash analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    },
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    }
-  ]
+    "name": "비디오 해시 분석",
+    "description": "Analyzes 비디오 perceptual hash",
+    "algorithm": "Video Hash Analysis — Statistical Pattern Analyzer",
+    "mechanism": "This method uses perceptual video hashing for forensic analysis:\n\n1. **지각적Hash계산**: A perceptual hash is computed per frame using established algorithms (pHash, dHash, wavelet hash). The hash captures the perceptual content summary — robust to minor modifications but sensitive to content changes.\n\n2. **시간적Hash안정성**: Frame-to-frame hash changes are tracked. Natural video shows smooth hash evolution. The method detects anomalous hash transitions — sudden hash changes without corresponding visual scene changes, or hash stability during what should be content changes (freeze-frame manipulation).\n\n3. **KnownContent매칭**: Frame hashes are optionally compared against databases of known deepfake content or original source material. Hash matching can identify specific deepfake videos or trace the source footage used in a face swap.\n\n4. **Hash-BasedTampering감지**: The ratio of frame-to-frame hash distance to visual change magnitude is analyzed. Manipulated frames may show hash distances disproportionate to the apparent visual change — indicating content modification below the perceptual threshold but detectable in the hash space.\n\n5. **Multi-해상도Hashing**: Hashes computed at multiple resolutions capture changes at different spatial scales. Face-swap deepfakes may produce normal hashes at coarse resolution (overall structure preserved) but anomalous hashes at fine resolution (detail-level generation artifacts), creating a resolution-dependent hash signature.",
+    "parameters": "분석 유형: 통계\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 hash analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        },
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        }
+    ]
 }

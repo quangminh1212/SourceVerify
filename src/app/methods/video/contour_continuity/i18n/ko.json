@@ -1,22 +1,22 @@
 {
-  "name": "Contour Continuity",
-  "description": "Analyzes contour edge continuity patterns",
-  "algorithm": "Contour Continuity — 픽셀 수준 공간 분석",
-  "mechanism": "This method analyzes facial contour continuity for deepfake detection following Li et al. (2020) Face X-ray:\n\n1. **Facial윤곽추출**: The complete facial contour — forehead hairline, temple, cheekbone, jawline, chin — is traced per frame using high-resolution edge detection and facial landmark interpolation. The contour is parameterized as a smooth curve with measured curvature at each point.\n\n2. **CurvatureContinuity분석**: Natural facial contours are C² continuous (smooth second derivative) except at anatomical feature boundaries (chin point, jaw angle). The method detects breaks in curvature continuity — deepfake face swaps may produce contour kinks or unnaturally straight segments where the generated face mesh interfaces with the original face boundary.\n\n3. **윤곽-피부경계분석**: Following Li et al.'s Face X-ray approach, the method examines the blending boundary between the face and surrounding area. Authentic faces have seamless continuation from face to neck/hair. Deepfakes create a detectable blending boundary where the generated face patch meets the original footage, visible as subtle texture or color discontinuities along the contour.\n\n4. **시간적윤곽추적**: The facial contour is tracked across frames. Natural contours deform smoothly according to facial muscles and head rotation. Deepfake contours may exhibit temporal jitter — small frame-to-frame fluctuations in contour position inconsistent with smooth physical motion, caused by independent per-frame face generation.\n\n5. **Multi-Scale윤곽점수 산출**: Contour continuity is analyzed at multiple scales: coarse (overall shape), medium (local curvature), and fine (pixel-level edge quality). Natural faces show consistent quality at all scales. Deepfakes may show good coarse continuity but poor fine-scale continuity at blending boundaries, yielding a graded forensic score.",
-  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through contour continuity analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/1912.13458"
-    },
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    }
-  ]
+    "name": "윤곽 연속성 분석",
+    "description": "Analyzes contour edge continuity patterns",
+    "algorithm": "Contour Continuity — 픽셀 수준 공간 분석",
+    "mechanism": "This method analyzes facial contour continuity for deepfake detection following Li et al. (2020) Face X-ray:\n\n1. **Facial윤곽추출**: The complete facial contour — forehead hairline, temple, cheekbone, jawline, chin — is traced per frame using high-resolution edge detection and facial landmark interpolation. The contour is parameterized as a smooth curve with measured curvature at each point.\n\n2. **CurvatureContinuity분석**: Natural facial contours are C² continuous (smooth second derivative) except at anatomical feature boundaries (chin point, jaw angle). The method detects breaks in curvature continuity — deepfake face swaps may produce contour kinks or unnaturally straight segments where the generated face mesh interfaces with the original face boundary.\n\n3. **윤곽-피부경계분석**: Following Li et al.'s Face X-ray approach, the method examines the blending boundary between the face and surrounding area. Authentic faces have seamless continuation from face to neck/hair. Deepfakes create a detectable blending boundary where the generated face patch meets the original footage, visible as subtle texture or color discontinuities along the contour.\n\n4. **시간적윤곽추적**: The facial contour is tracked across frames. Natural contours deform smoothly according to facial muscles and head rotation. Deepfake contours may exhibit temporal jitter — small frame-to-frame fluctuations in contour position inconsistent with smooth physical motion, caused by independent per-frame face generation.\n\n5. **Multi-Scale윤곽점수 산출**: Contour continuity is analyzed at multiple scales: coarse (overall shape), medium (local curvature), and fine (pixel-level edge quality). Natural faces show consistent quality at all scales. Deepfakes may show good coarse continuity but poor fine-scale continuity at blending boundaries, yielding a graded forensic score.",
+    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through contour continuity analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/1912.13458"
+        },
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        }
+    ]
 }

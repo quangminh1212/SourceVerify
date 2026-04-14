@@ -1,22 +1,22 @@
 {
-  "name": "Temporal Jitter Detection",
-  "description": "Detects temporal jitter oscillation patterns",
-  "algorithm": "Temporal Jitter Detection — 픽셀 수준 공간 분석",
-  "mechanism": "This method detects temporal jitter for video deepfake detection:\n\n1. **Jitter측정**: Sub-pixel temporal jitter is measured across the video — the high-frequency component of point trajectories after removing the smooth (intentional) motion component. Jitter represents frame-to-frame positional noise.\n\n2. **JitterSource분류**: Different jitter sources produce different characteristics: (a) camera sensor noise → spatially uniform, small amplitude, (b) compression jitter → block-aligned, (c) deepfake generation jitter → content-dependent, potentially larger amplitude. The method classifies detected jitter by source.\n\n3. **얼굴-BackgroundJitter비교**: In authentic video, jitter characteristics are uniform across the frame (same camera). The method compares jitter in face regions vs. background. Deepfakes typically show elevated jitter in the generated face — the generator introduces positional uncertainty that differs from the camera's native noise.\n\n4. **Jitter시간적Structure**: Camera jitter has flat temporal spectrum (white noise). Generation jitter may show characteristic temporal structure — periodicity from the generation pipeline, correlation patterns from autoregressive generation, or specific spectral color from the training process.\n\n5. **JitterAmplitude평가**: The amplitude of detected jitter is compared against expected values for the estimated camera system. Excessive jitter (beyond what the camera would produce) in face regions indicates generation artifacts. The method quantifies excess jitter as a deepfake indicator.",
-  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through temporal jitter detection analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-    }
-  ]
+    "name": "시간적 지터 검출",
+    "description": "Detects temporal jitter oscillation patterns",
+    "algorithm": "Temporal Jitter Detection — 픽셀 수준 공간 분석",
+    "mechanism": "This method detects temporal jitter for video deepfake detection:\n\n1. **Jitter측정**: Sub-pixel temporal jitter is measured across the video — the high-frequency component of point trajectories after removing the smooth (intentional) motion component. Jitter represents frame-to-frame positional noise.\n\n2. **JitterSource분류**: Different jitter sources produce different characteristics: (a) camera sensor noise → spatially uniform, small amplitude, (b) compression jitter → block-aligned, (c) deepfake generation jitter → content-dependent, potentially larger amplitude. The method classifies detected jitter by source.\n\n3. **얼굴-BackgroundJitter비교**: In authentic video, jitter characteristics are uniform across the frame (same camera). The method compares jitter in face regions vs. background. Deepfakes typically show elevated jitter in the generated face — the generator introduces positional uncertainty that differs from the camera's native noise.\n\n4. **Jitter시간적Structure**: Camera jitter has flat temporal spectrum (white noise). Generation jitter may show characteristic temporal structure — periodicity from the generation pipeline, correlation patterns from autoregressive generation, or specific spectral color from the training process.\n\n5. **JitterAmplitude평가**: The amplitude of detected jitter is compared against expected values for the estimated camera system. Excessive jitter (beyond what the camera would produce) in face regions indicates generation artifacts. The method quantifies excess jitter as a deepfake indicator.",
+    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through temporal jitter detection analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+        }
+    ]
 }

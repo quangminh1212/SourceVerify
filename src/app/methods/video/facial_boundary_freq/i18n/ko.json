@@ -1,22 +1,22 @@
 {
-  "name": "Facial Boundary Frequency",
-  "description": "Analyzes facial boundary 주파수 content",
-  "algorithm": "Facial Boundary Frequency — Frequency Domain Analyzer",
-  "mechanism": "This method analyzes frequency characteristics at facial boundaries for deepfake detection:\n\n1. **경계영역추출**: The boundary zone between the face and surrounding content (hair, neck, background) is extracted as a narrow strip. This boundary is where face-swap blending produces the most detectable frequency-domain artifacts.\n\n2. **지역주파수분석**: Spatial frequency content in the boundary strip is analyzed via localized 2D FFT or wavelet transforms. The frequency characteristics on the face side vs. the background side of the boundary are compared. Different generation/capture pipelines produce different frequency signatures.\n\n3. **주파수TransitionProfiling**: The transition of frequency content across the boundary is measured. Natural face boundaries show smooth frequency transitions. Deepfake blending creates characteristic frequency discontinuities — typically a high-frequency step (different noise levels) or spectral notch (frequency content removed by low-pass blending).\n\n4. **Periodic아티팩트감지**: The method specifically searches for periodic frequency artifacts at the boundary that arise from: (a) resampling/interpolation during face alignment, (b) GAN generator architecture (checkerboard patterns from transposed convolutions), (c) encoder-decoder quantization in autoencoder-based face swaps.\n\n5. **Multi-방향주파수Scanning**: The boundary frequency content is analyzed at multiple orientations. Natural boundaries show orientation-dependent frequency content (hair has directional texture, skin is more isotropic). Deepfake boundaries may show unnatural frequency isotropy or orientation-dependent artifacts from the blending direction.",
-  "parameters": "분석 유형: 주파수\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through facial boundary 주파수 analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/1912.13458"
-    },
-    {
-      "title": "Zhou, P. et al. (2017). Two-Stream Neural Networks for Tampered Face Detection. CVPRW.",
-      "url": "https://arxiv.org/abs/1803.11276"
-    }
-  ]
+    "name": "얼굴 경계 주파수 분석",
+    "description": "Analyzes facial boundary 주파수 content",
+    "algorithm": "Facial Boundary Frequency — Frequency Domain Analyzer",
+    "mechanism": "This method analyzes frequency characteristics at facial boundaries for deepfake detection:\n\n1. **경계영역추출**: The boundary zone between the face and surrounding content (hair, neck, background) is extracted as a narrow strip. This boundary is where face-swap blending produces the most detectable frequency-domain artifacts.\n\n2. **지역주파수분석**: Spatial frequency content in the boundary strip is analyzed via localized 2D FFT or wavelet transforms. The frequency characteristics on the face side vs. the background side of the boundary are compared. Different generation/capture pipelines produce different frequency signatures.\n\n3. **주파수TransitionProfiling**: The transition of frequency content across the boundary is measured. Natural face boundaries show smooth frequency transitions. Deepfake blending creates characteristic frequency discontinuities — typically a high-frequency step (different noise levels) or spectral notch (frequency content removed by low-pass blending).\n\n4. **Periodic아티팩트감지**: The method specifically searches for periodic frequency artifacts at the boundary that arise from: (a) resampling/interpolation during face alignment, (b) GAN generator architecture (checkerboard patterns from transposed convolutions), (c) encoder-decoder quantization in autoencoder-based face swaps.\n\n5. **Multi-방향주파수Scanning**: The boundary frequency content is analyzed at multiple orientations. Natural boundaries show orientation-dependent frequency content (hair has directional texture, skin is more isotropic). Deepfake boundaries may show unnatural frequency isotropy or orientation-dependent artifacts from the blending direction.",
+    "parameters": "분석 유형: 주파수\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through facial boundary 주파수 analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/1912.13458"
+        },
+        {
+            "title": "Zhou, P. et al. (2017). Two-Stream Neural Networks for Tampered Face Detection. CVPRW.",
+            "url": "https://arxiv.org/abs/1803.11276"
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "Texture Periodicity",
-  "description": "Detects periodic 텍스트ure patterns common in AI generation",
-  "algorithm": "Texture Periodicity — 픽셀 수준 공간 분석",
-  "mechanism": "This method analyzes texture periodicity for image forensic analysis, based on texture analysis frameworks from Haralick et al. (1973):\n\n1. **Autocorrelation분석**: The 2D autocorrelation function of the image (or image regions) is computed. Periodic textures produce peaks in the autocorrelation at the period intervals. The method extracts periodicity parameters: period, orientation, and regularity.\n\n2. **Power스펙트럼Periodicity**: The 2D Fourier power spectrum is analyzed for spectral peaks indicating periodic content. The location of peaks reveals the spatial frequency and orientation of periodic patterns. The method distinguishes between natural periodicities (fabric weave, architectural patterns) and artificial periodicities (GAN grid artifacts, aliasing patterns).\n\n3. **PeriodRegularity평가**: The regularity (or irregularity) of detected periodicities is measured. Natural periodic textures show slight irregularity (variation in period, phase jitter) from the physical process generating them. AI-generated periodicities may be either too regular (perfect repetition from learned patterns) or show characteristic period variation from the generation process.\n\n4. **Periodicity공간적분포**: The spatial distribution of periodic content is mapped. Natural periodic textures are confined to specific objects (fabric, brickwork). AI generation may produce subtle periodicities throughout the image from the convolutional architecture (grid artifacts appearing across all generated content).\n\n5. **PeriodicityFeature점수 산출**: Periodicity features (detected periods, regularity measures, spatial distribution, spectral peak analysis) are combined into a forensic score. The score captures the presence of anomalous periodicities characteristic of AI generation or manipulation.",
-  "parameters": "분석 유형: 픽셀\n미디어: 이미지\n입력: 원시 픽셀 데이터 / 이미지 파일\n출력: 신뢰도 점수 (0-100)\n처리 방식: 클라이언트 측 Canvas API\n색 공간: RGB, 그레이스케일 (해당하는 경우)",
-  "accuracy": "중간~높음 — 70-90% 단독 정확도. 비압축 이미지에서 최고 성능 발휘 and 높은 JPEG 압축이나 소셜 미디어 재인코딩 시 감소할 수 있습니다.",
-  "source": "디지털 이미지 포렌식 연구. 신호 처리 및 컴퓨터 사진학 원리에 기반.",
-  "useCase": "다음을 통한 AI 생성 또는 조작된 이미지 감지: 텍스트ure periodicity 분석. 이 방법은 AI 생성의 특징적인 패턴과 아티팩트를 식별하여 포괄적인 이미지 포렌식 분석에 기여합니다.",
-  "strengths": "• Canvas API를 사용한 빠른 클라이언트 측 처리\n• 특정 AI 생성 아티팩트 감지에 효과적\n• 일반적인 이미지 형식 (JPEG, PNG, WebP) 지원\n• 보완적인 분석 방법과 결합 가능\n• 확립된 이미지 포렌식 연구에 기반",
-  "limitations": "• 이미지 압축 수준에 따라 성능이 달라질 수 있습니다\n• 소셜 미디어 재인코딩이 정확도에 영향을 줄 수 있습니다\n• 다른 포렌식 방법과 함께 사용하는 것이 가장 좋습니다\n• 과도하게 처리된 실제 이미지에서 오탐이 발생할 수 있습니다\n• 효과는 사용된 AI 생성 모델에 따라 다릅니다",
-  "references": [
-    {
-      "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
-      "url": "https://doi.org/10.1109/TSMC.1973.4309314"
-    },
-    {
-      "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval of Image Data. IEEE TPAMI.",
-      "url": "https://doi.org/10.1109/34.531803"
-    }
-  ]
+    "name": "텍스처 주기성 분석",
+    "description": "Detects periodic 텍스트ure patterns common in AI generation",
+    "algorithm": "Texture Periodicity — 픽셀 수준 공간 분석",
+    "mechanism": "This method analyzes texture periodicity for image forensic analysis, based on texture analysis frameworks from Haralick et al. (1973):\n\n1. **Autocorrelation분석**: The 2D autocorrelation function of the image (or image regions) is computed. Periodic textures produce peaks in the autocorrelation at the period intervals. The method extracts periodicity parameters: period, orientation, and regularity.\n\n2. **Power스펙트럼Periodicity**: The 2D Fourier power spectrum is analyzed for spectral peaks indicating periodic content. The location of peaks reveals the spatial frequency and orientation of periodic patterns. The method distinguishes between natural periodicities (fabric weave, architectural patterns) and artificial periodicities (GAN grid artifacts, aliasing patterns).\n\n3. **PeriodRegularity평가**: The regularity (or irregularity) of detected periodicities is measured. Natural periodic textures show slight irregularity (variation in period, phase jitter) from the physical process generating them. AI-generated periodicities may be either too regular (perfect repetition from learned patterns) or show characteristic period variation from the generation process.\n\n4. **Periodicity공간적분포**: The spatial distribution of periodic content is mapped. Natural periodic textures are confined to specific objects (fabric, brickwork). AI generation may produce subtle periodicities throughout the image from the convolutional architecture (grid artifacts appearing across all generated content).\n\n5. **PeriodicityFeature점수 산출**: Periodicity features (detected periods, regularity measures, spatial distribution, spectral peak analysis) are combined into a forensic score. The score captures the presence of anomalous periodicities characteristic of AI generation or manipulation.",
+    "parameters": "분석 유형: 픽셀\n미디어: 이미지\n입력: 원시 픽셀 데이터 / 이미지 파일\n출력: 신뢰도 점수 (0-100)\n처리 방식: 클라이언트 측 Canvas API\n색 공간: RGB, 그레이스케일 (해당하는 경우)",
+    "accuracy": "중간~높음 — 70-90% 단독 정확도. 비압축 이미지에서 최고 성능 발휘 and 높은 JPEG 압축이나 소셜 미디어 재인코딩 시 감소할 수 있습니다.",
+    "source": "디지털 이미지 포렌식 연구. 신호 처리 및 컴퓨터 사진학 원리에 기반.",
+    "useCase": "다음을 통한 AI 생성 또는 조작된 이미지 감지: 텍스트ure periodicity 분석. 이 방법은 AI 생성의 특징적인 패턴과 아티팩트를 식별하여 포괄적인 이미지 포렌식 분석에 기여합니다.",
+    "strengths": "• Canvas API를 사용한 빠른 클라이언트 측 처리\n• 특정 AI 생성 아티팩트 감지에 효과적\n• 일반적인 이미지 형식 (JPEG, PNG, WebP) 지원\n• 보완적인 분석 방법과 결합 가능\n• 확립된 이미지 포렌식 연구에 기반",
+    "limitations": "• 이미지 압축 수준에 따라 성능이 달라질 수 있습니다\n• 소셜 미디어 재인코딩이 정확도에 영향을 줄 수 있습니다\n• 다른 포렌식 방법과 함께 사용하는 것이 가장 좋습니다\n• 과도하게 처리된 실제 이미지에서 오탐이 발생할 수 있습니다\n• 효과는 사용된 AI 생성 모델에 따라 다릅니다",
+    "references": [
+        {
+            "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
+            "url": "https://doi.org/10.1109/TSMC.1973.4309314"
+        },
+        {
+            "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval of Image Data. IEEE TPAMI.",
+            "url": "https://doi.org/10.1109/34.531803"
+        }
+    ]
 }

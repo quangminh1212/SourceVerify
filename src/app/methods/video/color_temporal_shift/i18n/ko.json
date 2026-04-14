@@ -1,22 +1,22 @@
 {
-  "name": "Color Temporal Shift",
-  "description": "Analyzes color drift patterns across spatial regions to detect AI generation artifacts",
-  "algorithm": "Color Temporal Shift — 픽셀 수준 공간 분석",
-  "mechanism": "This method detects temporal color shifts in video for deepfake detection following Zheng et al. (2021):\n\n1. **색상채널신호추출**: Per-frame mean values of R, G, B channels (and derived Lab, HSV values) are extracted separately for face and background regions. These form temporal color signals tracking the color evolution of each region over time.\n\n2. **DriftRate분석**: The rate of color change across frames is computed. Natural video shows either stable colors (controlled lighting) or smooth drifts (changing daylight). Deepfakes may introduce subtle but detectable frame-to-frame color oscillations as the generator independently determines color for each frame.\n\n3. **얼굴-Background색상Coupling**: In authentic video, face and background color signals are physically coupled — both respond to the same illumination changes. The method measures temporal correlation between face and background color channels. Low correlation indicates the face is generated independently, lacking physical illumination coupling with the background.\n\n4. **색상Temperature일관성**: The correlated color temperature (CCT) of illumination is estimated per frame from color channel ratios. Natural lighting produces consistent CCT across all scene regions. Deepfake faces may be rendered with different effective color temperature than the background, creating detectable inter-region CCT disagreement.\n\n5. **스펙트럼분석of색상Signals**: The temporal color signals are analyzed via FFT. Natural color variation shows specific spectral characteristics (low-frequency illumination changes, camera AGC periodicity). AI-generated color variation may show different spectral signatures — higher-frequency fluctuations from frame-independent rendering or aliased patterns from the generation process.",
-  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through color temporal shift analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    }
-  ]
+    "name": "색상 시간적 시프트 분석",
+    "description": "Analyzes color drift patterns across spatial regions to detect AI generation artifacts",
+    "algorithm": "Color Temporal Shift — 픽셀 수준 공간 분석",
+    "mechanism": "This method detects temporal color shifts in video for deepfake detection following Zheng et al. (2021):\n\n1. **색상채널신호추출**: Per-frame mean values of R, G, B channels (and derived Lab, HSV values) are extracted separately for face and background regions. These form temporal color signals tracking the color evolution of each region over time.\n\n2. **DriftRate분석**: The rate of color change across frames is computed. Natural video shows either stable colors (controlled lighting) or smooth drifts (changing daylight). Deepfakes may introduce subtle but detectable frame-to-frame color oscillations as the generator independently determines color for each frame.\n\n3. **얼굴-Background색상Coupling**: In authentic video, face and background color signals are physically coupled — both respond to the same illumination changes. The method measures temporal correlation between face and background color channels. Low correlation indicates the face is generated independently, lacking physical illumination coupling with the background.\n\n4. **색상Temperature일관성**: The correlated color temperature (CCT) of illumination is estimated per frame from color channel ratios. Natural lighting produces consistent CCT across all scene regions. Deepfake faces may be rendered with different effective color temperature than the background, creating detectable inter-region CCT disagreement.\n\n5. **스펙트럼분석of색상Signals**: The temporal color signals are analyzed via FFT. Natural color variation shows specific spectral characteristics (low-frequency illumination changes, camera AGC periodicity). AI-generated color variation may show different spectral signatures — higher-frequency fluctuations from frame-independent rendering or aliased patterns from the generation process.",
+    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through color temporal shift analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        }
+    ]
 }

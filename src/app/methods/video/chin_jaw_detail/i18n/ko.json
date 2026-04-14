@@ -1,22 +1,22 @@
 {
-  "name": "Chin-Jaw Detail",
-  "description": "Analyzes chin and jawline detail",
-  "algorithm": "Chin-Jaw Detail — 픽셀 수준 공간 분석",
-  "mechanism": "This method analyzes chin and jawline detail for deepfake detection:\n\n1. **Jawline윤곽추출**: Facial landmarks along the mandible and chin are tracked per frame to extract the jawline contour. The contour is parameterized using curvature measures, capturing the anatomical shape signature unique to each individual.\n\n2. **Sub-Mandibular영역분석**: The region beneath the chin and along the jawline is examined for anatomical detail — skin folds, adipose tissue distribution, and the chin-neck junction. These areas are challenging for deepfake generators because they occur at the boundary of the face-swap region and often exhibit generation artifacts.\n\n3. **시간적윤곽안정성**: The jawline contour is tracked across frames during speech and head movement. Natural jawlines deform smoothly according to musculoskeletal constraints — the mandible rotates on the temporomandibular joint with predictable kinematics. Deepfake-generated jawlines may exhibit unnatural deformations, warping, or contour instability.\n\n4. **턱-Neck경계일관성**: The boundary between the face-generated region and the original neck/body is a critical artifact location for face-swap deepfakes. The method analyzes texture, color, and geometric continuity at this boundary — discontinuities indicate where the generated face mesh fails to blend seamlessly with the original body.\n\n5. **Detail해상도평가**: Fine details along the jawline (stubble, skin texture, moles) are analyzed for rendering quality and temporal consistency. Deepfake generators often produce lower-resolution detail in peripheral face regions (chin, jaw) compared to central regions (eyes, nose), creating a detectable detail gradient.",
-  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through chin-jaw detail analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/1912.13458"
-    }
-  ]
+    "name": "턱-하악 디테일 분석",
+    "description": "Analyzes chin and jawline detail",
+    "algorithm": "Chin-Jaw Detail — 픽셀 수준 공간 분석",
+    "mechanism": "This method analyzes chin and jawline detail for deepfake detection:\n\n1. **Jawline윤곽추출**: Facial landmarks along the mandible and chin are tracked per frame to extract the jawline contour. The contour is parameterized using curvature measures, capturing the anatomical shape signature unique to each individual.\n\n2. **Sub-Mandibular영역분석**: The region beneath the chin and along the jawline is examined for anatomical detail — skin folds, adipose tissue distribution, and the chin-neck junction. These areas are challenging for deepfake generators because they occur at the boundary of the face-swap region and often exhibit generation artifacts.\n\n3. **시간적윤곽안정성**: The jawline contour is tracked across frames during speech and head movement. Natural jawlines deform smoothly according to musculoskeletal constraints — the mandible rotates on the temporomandibular joint with predictable kinematics. Deepfake-generated jawlines may exhibit unnatural deformations, warping, or contour instability.\n\n4. **턱-Neck경계일관성**: The boundary between the face-generated region and the original neck/body is a critical artifact location for face-swap deepfakes. The method analyzes texture, color, and geometric continuity at this boundary — discontinuities indicate where the generated face mesh fails to blend seamlessly with the original body.\n\n5. **Detail해상도평가**: Fine details along the jawline (stubble, skin texture, moles) are analyzed for rendering quality and temporal consistency. Deepfake generators often produce lower-resolution detail in peripheral face regions (chin, jaw) compared to central regions (eyes, nose), creating a detectable detail gradient.",
+    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through chin-jaw detail analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/1912.13458"
+        }
+    ]
 }

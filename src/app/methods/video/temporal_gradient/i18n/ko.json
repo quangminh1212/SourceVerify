@@ -1,22 +1,22 @@
 {
-  "name": "Temporal Gradient",
-  "description": "Analyzes temporal gradient patterns",
-  "algorithm": "Temporal Gradient — 픽셀 수준 공간 분석",
-  "mechanism": "This method analyzes temporal gradient patterns for video deepfake detection:\n\n1. **시간적기울기계산**: The frame-to-frame difference (temporal gradient) I_t(x,y) = I(x,y,t+1) − I(x,y,t) is computed for each pixel. This captures the instantaneous rate of change of image intensity over time.\n\n2. **시간적기울기Statistics**: The distribution of temporal gradient values is analyzed. Natural video shows specific gradient distributions: approximately Laplacian with width depending on motion speed. The method detects anomalous gradient distributions — too narrow (overly stable, suggesting generated smoothing) or too wide (excessive temporal variation).\n\n3. **공간적-시간적기울기Relationship**: The relationship between spatial gradients (edges) and temporal gradients (motion) should follow the optical flow constraint equation: I_x·u + I_y·v + I_t = 0. The method checks this constraint. Generated video may violate the brightness constancy assumption in ways inconsistent with any physical motion.\n\n4. **얼굴-Background기울기비교**: Temporal gradient statistics of face and background regions are compared. In authentic video from a single camera, both show similar temporal noise characteristics. Deepfakes may show different temporal gradient statistics in the face (from the generation process) compared to the background (from the camera).\n\n5. **시간적기울기Map분석**: A map of temporal gradient magnitude reveals which regions change most between frames. In authentic video, high-gradient regions correspond to moving objects and edges. Deepfake artifacts may produce elevated temporal gradients at face boundaries, blending zones, or throughout the generated face due to per-frame rendering inconsistency.",
-  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 비디오 through temporal gradient analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-    }
-  ]
+    "name": "시간적 기울기 분석",
+    "description": "Analyzes temporal gradient patterns",
+    "algorithm": "Temporal Gradient — 픽셀 수준 공간 분석",
+    "mechanism": "This method analyzes temporal gradient patterns for video deepfake detection:\n\n1. **시간적기울기계산**: The frame-to-frame difference (temporal gradient) I_t(x,y) = I(x,y,t+1) − I(x,y,t) is computed for each pixel. This captures the instantaneous rate of change of image intensity over time.\n\n2. **시간적기울기Statistics**: The distribution of temporal gradient values is analyzed. Natural video shows specific gradient distributions: approximately Laplacian with width depending on motion speed. The method detects anomalous gradient distributions — too narrow (overly stable, suggesting generated smoothing) or too wide (excessive temporal variation).\n\n3. **공간적-시간적기울기Relationship**: The relationship between spatial gradients (edges) and temporal gradients (motion) should follow the optical flow constraint equation: I_x·u + I_y·v + I_t = 0. The method checks this constraint. Generated video may violate the brightness constancy assumption in ways inconsistent with any physical motion.\n\n4. **얼굴-Background기울기비교**: Temporal gradient statistics of face and background regions are compared. In authentic video from a single camera, both show similar temporal noise characteristics. Deepfakes may show different temporal gradient statistics in the face (from the generation process) compared to the background (from the camera).\n\n5. **시간적기울기Map분석**: A map of temporal gradient magnitude reveals which regions change most between frames. In authentic video, high-gradient regions correspond to moving objects and edges. Deepfake artifacts may produce elevated temporal gradients at face boundaries, blending zones, or throughout the generated face due to per-frame rendering inconsistency.",
+    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 비디오 through temporal gradient analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+        }
+    ]
 }
