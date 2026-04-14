@@ -1,18 +1,18 @@
 {
-    "name": "Mũi Đứt Khoảng Phân Kỳ (Gradient Divergence)",
-    "description": "Lưỡi hái moi đường ống nước bị vỡ của các điểm ảnh. Tưởng tượng ánh sáng đổ về một bờ vai như nước chảy. Ở ảnh gốc, dòng nước chảy xiết sẽ lan tỏa từ từ và triệt tiêu đồng đều quanh góc. Tuy nhiên bọn Inpainting hay Photoshop bóp lại mặt (Liquify) sẽ ép những dòng 'Gradient' sáng tối này đâm sầm vào nhau hoặc tạo ra hố xoáy hút sạch ánh sáng - thuật toán gọi đó là 'Đứt khoảng phân kỳ'. Thả radar này quét trúng mấy cái khe hở đó là lòi mặt nạ ma thuật ngay.",
-    "algorithm": "Đo Lường Phân Kỳ Trường Vector Ánh Sáng Nhị Phân (Spatial Divergence Flow)",
-    "mechanism": "Nó xé tấm ảnh ra thành một bản đồ hướng gió thời tiết. Đạo hàm bậc 1 chưa đủ, nó xài thêm toán học tính đạo hàm chéo (Độ tụ và tán của Gradient). Chỗ vạt áo mà bị tay súng kia lôi con chuột kéo dãn để hóp ngực/hack eo to lên (Liquify / Warp)... Dòng phân kỳ lập tức bị rối loạn cục bộ vì vector ánh sáng bị bóp méo không tuần hoàn. Nơi nào có độ 'tụ' Vector tụt sâu như hố đen là nơi đó dính bàn tay dao kéo của Hacker.",
-    "parameters": "Hình thái quét: Toán tử Divergence (Div F = dU/dx + dV/dy), Tín Hiệu Số: Ma trận Trường Nhỏ giọt Vector (Vector Field Sink)",
-    "accuracy": "Khủng Khiếp (74-85%) - Máy thảm sát khốc liệt tiêu diệt hoàn toàn bọn xài app Beauty / Photoshop kéo cong eo, bóp gọt cằm.",
-    "source": "Toán Học Cấu Hình Tín Hiệu Gradient Vỡ Vật Lý (Vector Field Forensics)",
-    "useCase": "Giáng ngọn giáo thẳng vào các bức tường, mép cửa bị cong một cách vô lí ở Hậu Cảnh do tay thợ ảnh mải bóp méo Cô Gái Siêu Mẫu ở Tiền Cảnh. Phân kỳ sẽ sặc nước và rú còi in ỏi ở khu vực bị bóp nghẹt đó.",
+    "name": "Phân Tích Phân Kỳ Gradient (Gradient Divergence)",
+    "description": "Phương pháp phân tích sự hội tụ và phân tán của trường vector ánh sáng. Trong ảnh gốc, dòng gradient ánh sáng lan tỏa đồng đều và triệt tiêu tự nhiên quanh các bề mặt. Khi sử dụng Inpainting hoặc Liquify (biến dạng hình học), các dòng gradient bị ép đâm vào nhau hoặc tạo ra các điểm hội tụ/phân kỳ bất thường — thuật toán gọi đó là 'đứt khoảng phân kỳ' (Divergence anomaly). Phương pháp này phát hiện chính xác vị trí can thiệp.",
+    "algorithm": "Đo Lường Phân Kỳ Trường Vector Ánh Sáng (Spatial Divergence Flow)",
+    "mechanism": "Thuật toán chuyển đổi ảnh thành bản đồ trường vector hướng ánh sáng. Đạo hàm bậc một không đủ phân biệt, nên hệ thống tính thêm đạo hàm chéo (độ tụ và tán của Gradient). Tại vùng bị kéo dãn bằng Liquify/Warp, dòng phân kỳ bị rối loạn cục bộ vì vector ánh sáng bị biến dạng không tuần hoàn. Các điểm có độ tụ Vector bất thường chính là vị trí can thiệp.",
+    "parameters": "Hình thái quét: Toán tử Divergence (Div F = ∂U/∂x + ∂V/∂y), Tín hiệu: Ma trận trường vector (Vector Field Sink)",
+    "accuracy": "Khá tốt (74–85%) — Hiệu quả đặc biệt trong phát hiện biến dạng Liquify/Warp và các công cụ làm đẹp.",
+    "source": "Barni et al. (2010) — Toán Học Trường Vector Gradient Pháp Y (Vector Field Forensics)",
+    "useCase": "Phát hiện biến dạng hình học tại hậu cảnh do chỉnh sửa tiền cảnh (bóp eo, gọt cằm), nơi các mép cửa, tường bị cong bất thường. Phân kỳ Gradient bộc lộ rõ ràng tại vùng bị biến dạng.",
     "references": [
         {
             "title": "Barni, M. et al. (2010). Forensic analysis of digital images.",
             "url": ""
         }
     ],
-    "strengths": "• Giả vờ ngụy trang bằng chỉnh sửa màu sắc là tự sát. Vì sự hội tụ ánh sáng (Divergence) là toán học vector phương ngang dọc, bất cần bạn thêm xanh đỏ tím hay bùa filter nhiễu xám.\n• Ác chủ bài bóc phốt các đường dao kéo phẫu thuật AI (Deepfake / SwapFace) chắp nối phần trán và mảng cằm. Giao diện có vẻ cong mượt nhưng Gradient đã đâm sầm chết tan tành.",
-    "limitations": "• Đạn lép nếu quét trúng bề mặt lông thú cực kì nham nhở, hay mạng nhện siêu mỏng trong rừng (Tự nhiên vốn dĩ vector rẽ rách tứ tung làm thuật toán nổ não và False Positive).\n• Trượt đòn khi thợ Fake nạp chiêu làm mờ sương (Gaussian Blur) vào vết cắt - dọn dẹp biến dòng chảy tàn nhẫn thành một vũng nước đục lờ đờ, chôn giấu luôn cả sự phân kỳ."
+    "strengths": "• Không bị ảnh hưởng bởi chỉnh sửa màu sắc, vì phân kỳ là phép đo toán học trên vector hướng, độc lập với cường độ pixel.\n• Hiệu quả cao trong phát hiện ghép nối Deepfake/SwapFace, nơi gradient tại ranh giới trán–cằm bộc lộ sự đứt gãy dù bề mặt trông mượt mà.",
+    "limitations": "• Tỷ lệ dương tính giả cao đối với bề mặt có kết cấu phức tạp tự nhiên (lông thú, mạng nhện), nơi vector gradient phân tán tự nhiên.\n• Mất hiệu lực khi vùng can thiệp được áp dụng Gaussian Blur, làm san phẳng dòng phân kỳ."
 }

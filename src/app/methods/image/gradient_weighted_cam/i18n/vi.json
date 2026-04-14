@@ -1,18 +1,18 @@
 {
-    "name": "Mắt Thần Vùng Xoáy Nhiệt Grad-CAM",
-    "description": "Lò phản ứng hạt nhân bóc tách lý do tại sao AI lại chê bức ảnh là hàng dởm. Hàng chục cỗ máy Deep Learning soi ảnh chỉ vạch mặt 'Đứa này 90% bị AI sửa' rồi im ru. Grad-CAM không thế... nó là con mắt soi thấu dòng suy nghĩ ma quỷ đó. Nó túm cổ cục mạng Nơ-ron (CNN) và ép bật ra cái 'Bản Đồ Nhiệt' đỏ rực ngay khu vực đáng ngờ nhất (chỗ răng cưa, chỗ viền ghép, chỗ lỗ mũi dư). Tội phạm thường chối cãi ảnh gốc, thế thì ném bản đồ nhiệt này ra cho chúng câm họng.",
-    "algorithm": "Đạo Hàm Truy Ngược Cấp Bậc (Class-Activation Mapping Gradient-Weighted)",
-    "mechanism": "Thoát li kiểu kiểm tra tay chân. Grad-CAM móc thẳng vào đại não của bộ mô hình (VD: ResNet, EfficientNet) lúc đang chấm điểm tấm ảnh. Nó truy ngược dòng thác đạo hàm (Gradients) chảy về lớp tích chập cuối cùng cực hiểm ác. Vùng nào trong tấm ảnh khiến máy chém AI lên cơn 'Mày là Fake 100%' mạnh nhất, dòng đạo hàm sẽ đun sôi điểm ảnh đó thành đỏ quạch trên màn hình. Nghĩa là dán ghép con quái vật nào vào, Grad-CAM sẽ nướng đỏ tươi ngay con quái đó.",
-    "parameters": "Hình thái: Activation Feature Maps Layer cuối, Toán Nhúng: Derivative (dY^c / dA^k) Phân Quyền Hạt Tổng",
-    "accuracy": "Tuyệt Đỉnh Quan Tòa (100% Định Vị Cục Bộ) - Sứ giả của sự minh bạch AI, là quan tòa đưa ra chứng cớ đỏ rực tại khoang chứ không phán suông.",
-    "source": "Selvaraju et al. (2017) - Grad-CAM: Visual Explanations from Deep Networks",
-    "useCase": "Giáng ngọn lửa thanh trừng thẳng mặt đám thủ phạm gào mồm cãi tại tòa 'Làm gì có ghép mặt, bằng chứng đâu?'. Grad-CAM đè tấm ảnh ra, hiện một đốm phỏng rộp dung nham đỏ quạch chính xác lên đường Inpaint viền ghép mặt AI... hết đường chối cãi.",
+    "name": "Bản Đồ Nhiệt Grad-CAM (Gradient-Weighted Class Activation Mapping)",
+    "description": "Phương pháp trực quan hóa vùng ảnh mà mô hình Deep Learning đánh giá là đáng ngờ nhất. Thay vì chỉ đưa ra kết luận 'ảnh bị chỉnh sửa', Grad-CAM tạo bản đồ nhiệt (Heatmap) đỏ rực tại chính xác khu vực nghi vấn (viền ghép, vùng Inpaint, chi tiết dư thừa). Phương pháp này thuộc nhóm AI giải thích được (Explainable AI — XAI), cung cấp bằng chứng trực quan cho kết luận của mô hình.",
+    "algorithm": "Ánh Xạ Kích Hoạt Lớp Có Trọng Số Gradient (Class-Activation Mapping Gradient-Weighted)",
+    "mechanism": "Grad-CAM truy ngược dòng đạo hàm (Gradients) từ lớp đầu ra về lớp tích chập cuối cùng của mô hình (ResNet, EfficientNet). Vùng nào trong ảnh khiến mô hình đưa ra kết luận 'Fake' mạnh nhất, dòng đạo hàm sẽ tạo ra giá trị kích hoạt cao tại vùng đó, được biểu diễn bằng bản đồ nhiệt đỏ trên ảnh gốc. Phương pháp này cho phép xác định chính xác vị trí can thiệp.",
+    "parameters": "Hình thái: Activation Feature Maps lớp cuối, Toán nhúng: ∂Y^c/∂A^k — Phân quyền hạt tổng",
+    "accuracy": "Rất cao — 100% định vị cục bộ (phụ thuộc độ chính xác của mô hình nền).",
+    "source": "Selvaraju et al. (2017) — Grad-CAM: Visual Explanations from Deep Networks",
+    "useCase": "Cung cấp bằng chứng trực quan cho kết luận phát hiện giả mạo. Bản đồ nhiệt chỉ rõ vị trí chính xác của vùng Inpaint, viền ghép mặt AI, giúp xác minh kết quả phân tích.",
     "references": [
         {
             "title": "Selvaraju, R. R., et al. (2017). Grad-cam: Visual explanations from deep networks via gradient-based localization. ICCV.",
             "url": "https://arxiv.org/abs/1610.02391"
         }
     ],
-    "strengths": "• Bằng chứng sắt thép trước chốn tòa án pháp lý nhờ giải trí (Explainable AI - XAI). Đưa cỗ máy thảm sát AI từ cái hộp đen mù tịt thành ông vua ranh ma biết trỏ ngón tay phán tội chính xác lên từng vết mụn của AI.\n• Đặc trị không tha bất cứ thể loại ảnh ghép nào. Mạng nơ-ron còn bắt được Fake thì bản đồ lửa đỏ còn nung chín được hung thủ rành rành.",
-    "limitations": "• Đạn lép tịt ngòi 100% nếu cái mạng quét AI (như EfficientNet) bản thân nó đã bị mù (đoán sai do ảnh quá mờ / nén nát cùi bắp). Mạng AI sai thì Grad-CAM đun sôi đỏ rậm cả ra một vũng bùn ngu ngốc vô nghĩa.\n• Hay thét báo động giả siêu rộng (đỏ lòm khắp mặt) mà không chỉ được chính xác chỗ vết dao tem cắt ghép siêu nhỏ lẻ tẻ, vì cơ chế nó xài Tích Chập tầng cuối (Layer cuối bị bóp siêu nhỏ mờ mịt)."
+    "strengths": "• Thuộc nhóm AI giải thích được (Explainable AI — XAI), biến kết quả từ hộp đen thành bằng chứng trực quan có giá trị pháp lý.\n• Áp dụng được cho mọi loại ảnh — bất kỳ nơi nào mô hình nơ-ron phát hiện được Fake, bản đồ nhiệt đều xác định được vị trí.",
+    "limitations": "• Phụ thuộc hoàn toàn vào độ chính xác của mô hình nền (EfficientNet). Nếu mô hình đoán sai (ảnh quá mờ, nén quá cao), bản đồ nhiệt cũng vô nghĩa.\n• Độ phân giải thấp ở bản đồ nhiệt (do sử dụng lớp tích chập cuối đã bị thu nhỏ), khó phát hiện chính xác các vết can thiệp siêu nhỏ."
 }

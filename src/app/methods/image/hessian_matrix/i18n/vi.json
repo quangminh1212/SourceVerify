@@ -1,18 +1,18 @@
 {
-    "name": "Máy Quét Tuân Thủ Hessian (Hessian Matrix)",
-    "description": "Lò phản ứng phân hủy kết cấu đa chiều vi phân. Thuật toán này không màng đến điểm hay góc, máy nghiền này săn tìm 'Cấu trúc dạng Gân lá/Mảnh lụa' (Ridge/Tube). Khuôn mặt, nếp áo có độ cong liên tục không gian cực kì đặc thù ngoài đời vật lý. Midjourney hay Inpainting khi cố bôi mượt nếp gãy để nối hai phần xương thịt lại với nhau thì toàn làm nát độ cong bậc 2 của hình ảnh. Matrix này quét cái xoạch - Phơi bày những đứt gãy xoắn ốc thảm hại dưới màng bọc pixel sáp dẻo giả tạo đó.",
-    "algorithm": "Đo Đứt Khúc Cấu Trúc Khối Nét Gồ Bằng Đạo Hàm Bậc Hai (Hessian 2nd Derivative Topology)",
-    "mechanism": "Bỏ qua màu, xé rách không gian, Hessian đào luôn xuống tầng Toán Đạo Hàm Bậc 2 (gia tốc phân giải màu). Hai điểm ảnh từ áo ghép vào tường: Mắt xem thấy rất khớp. Nhưng... đo 'Gia Tốc' ánh sáng bằng Hessian thì ồ! Nó phóng đi như chiếc xe đua bị khựng đầu rớt vực do biên độ chuyển màu bị thợ photoshop bóp dẻo ngu ngốc gượng gạo. Hessian bóc toàn bộ bức tranh thành một mạng nhện tĩnh mạch. Nơi nào tĩnh mạch sưng tấy gồ ghề vỡ nát ngay rìa cấy ghép, đó là án trảm.",
-    "parameters": "Hình thái quét: Ma Trận Đạo Hàm Riêng Bậc 2 cục bộ [d^2I/dx^2, d^2I/dxdy...], Trích xuất Giá Trị Riêng (Eigenvalues Ridges)",
-    "accuracy": "Khốc Liệt Uyển Chuyển (76-85%) - Máy chém không khoan nhượng càn quét qua mọi nỗ lực vẽ nương theo vân da, nếp gấp áo bằng thuật toán AI nhảm nhí.",
-    "source": "Lão Tôn Thất Dữ Liệu Hình Học Điểm Nếp Gồ Đạo Hàm Thượng Tầng",
-    "useCase": "Giáng đòn phá án trực diện vào các kiệt tác nghệ thuật đắp trán, gọt cằm bằng bùa phép Warp/Liquify. Da thịt cong hoàn hảo nhưng lõi tĩnh mạch Hessian đứt đoạn bung bét vì đục khoét chèn ép tọa độ pixel.",
+    "name": "Phân Tích Ma Trận Hessian (Hessian Matrix)",
+    "description": "Phương pháp phân tích cấu trúc hình học bậc cao bằng đạo hàm bậc hai. Thuật toán không phân tích điểm hay góc, mà tập trung vào các cấu trúc dạng gân, sống (Ridge/Tube). Khuôn mặt, nếp gấp vải có độ cong liên tục không gian đặc trưng trong ảnh thực. Khi Inpainting hoặc Photoshop cố nối hai vùng ảnh, độ cong bậc hai tại ranh giới bị phá vỡ. Ma trận Hessian phát hiện những điểm đứt gãy cấu trúc này dưới lớp pixel bề mặt.",
+    "algorithm": "Phân Tích Cấu Trúc Đạo Hàm Bậc Hai (Hessian 2nd Derivative Topology)",
+    "mechanism": "Thuật toán tính đạo hàm bậc hai (gia tốc biến đổi cường độ) tại mỗi điểm ảnh. Hai điểm ảnh liền kề có thể trông khớp về cường độ, nhưng khi đo gia tốc biến đổi bằng Hessian, sự gián đoạn bộc lộ rõ ràng — biên độ chuyển màu tại vùng ghép không tuân theo quy luật cong tự nhiên. Hessian phân tách toàn bộ ảnh thành bản đồ giá trị riêng (Eigenvalues), nơi các điểm đứt gãy cấu trúc tại ranh giới can thiệp hiện rõ.",
+    "parameters": "Hình thái quét: Ma trận đạo hàm riêng bậc 2 cục bộ [∂²I/∂x², ∂²I/∂x∂y...], Trích xuất giá trị riêng (Eigenvalues Ridges)",
+    "accuracy": "Khá tốt (76–85%) — Hiệu quả trong phát hiện các nỗ lực vẽ nương theo vân da, nếp gấp bằng công cụ AI.",
+    "source": "Frangi et al. (1998) — Hình Học Đạo Hàm Bậc Hai Đa Tỷ Lệ (Hessian Topology)",
+    "useCase": "Phát hiện can thiệp Warp/Liquify (đắp trán, gọt cằm). Bề mặt có vẻ cong mượt nhưng cấu trúc Hessian tại vùng can thiệp bộc lộ sự đứt đoạn do chèn ép tọa độ pixel.",
     "references": [
         {
             "title": "Frangi, A. F., et al. (1998). Multiscale vessel enhancement filtering. MICCAI.",
             "url": ""
         }
     ],
-    "strengths": "• Đạn pháo này chọc lủng bọn cố tình dùng Filter nhiễu gai (Noise) xịt mù mịt lên ảnh. Vì Hessian Matrix chỉ theo dấu Đạo hàm bậc hai CẤU TRÚC lõi vĩ mô (vết lõm, nếp gấp gồ). Nhiễu hạt trên bề mặt không hề đánh lừa được nó xíu nào.\n• Siêu nhạy lật mặt bất cứ công cụ bóp eo/chỉnh cằm (Liquify) nào. Cái nét kéo cong tuy mượt mà nhưng xé rách giá trị riêng cong của điểm ảnh tận tế bào gồ lên.",
-    "limitations": "• Nhát chém đành gãy vụn đâm vào bùn (từ chối phán quyết) với ảnh trời mây hay tường sơn trơn phẳng tít, bóng loáng, do vốn dĩ chả có nếp gấp nào mà đòi bóp cổ Hessian.\n• Vẫn bị ngợp câm nín trước đòn nén ảnh độc địa JPEG quá ác liệt vì khi pixel thành cục gạch, mọi Đạo hàm bậc 2 bay biến nhẵn nhụi không tì vết."
+    "strengths": "• Khả năng chống chịu tốt trước nhiễu nhân tạo (Noise Filter), vì Hessian Matrix chỉ theo dấu đạo hàm bậc hai cấu trúc vĩ mô (vết lõm, nếp gấp). Nhiễu hạt bề mặt không ảnh hưởng đến kết quả.\n• Nhạy cảm cao với công cụ biến dạng hình học (Liquify/Warp). Khi kéo cong mượt mà, giá trị riêng cong của Hessian vẫn bộc lộ sự bất thường.",
+    "limitations": "• Mất hiệu lực đối với ảnh có bề mặt đồng nhất (trời mây, tường sơn phẳng, bóng loáng), nơi không tồn tại cấu trúc nếp gấp để phân tích.\n• Hiệu quả giảm đáng kể khi ảnh bị nén JPEG ở mức cao, do quá trình nén phá hủy cấu trúc đạo hàm bậc hai nguyên bản."
 }

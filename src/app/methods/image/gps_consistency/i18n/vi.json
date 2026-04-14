@@ -1,12 +1,12 @@
 {
-    "name": "Thiên Nhãn Tính Toàn Vẹn Tọa Độ Vệ Tinh (GPS Consistency)",
-    "description": "Thần chết của siêu dữ liệu Không Gian. Một tên tội phạm thường photoshop hai tấm hình gộp làm một, chèn mặt ông chính trị gia đang tắm biển ở Hawaii vào Quảng Trường Đỏ (Nga) ghép vào cảnh khủng bố. Mắt người có thể lầm tin, nhưng bộ nhúng siêu dữ liệu GPS (Toạ độ địa lý gắn kèm EXIF) không biết nói dối. Dữ liệu GPS này cũng có tương quan logic vật lý với ánh sáng mặt trời.. Phân tách chúng ra, ta xé nát lớp ngụy trang không gian địa lý của kẻ gian.",
-    "algorithm": "Xác Minh Mâu Thuẫn Bóng Mặt Trời & Nhúng Toạ Độ GPS Địa Cầu",
-    "mechanism": "Thoát li toàn bộ các thể loại màu sắc pixel. Ma trận này mò trực tiếp vào mảng HEX rút ra Longitude (Kinh độ), Latitude (Vĩ độ), Timestamp (Giờ chụp). Một khi có Thời Gian và Vị Trí, thuật toán giả lập ngay Mặt Trời thật nằm vị trí góc nào ở ngoài đời thực (Solar Elevation Angle). Quay ngược lại đối chiếu: Góc bóng râm trong ảnh (do thuật toán ước lượng) chĩa ngược hướng Toán học mặt trời? -> Ghép cảnh ngu ngốc! Hoặc: Ảnh không hề có GPS tag? -> Nghi vấn tẩy sạch để chôn giấu tội ác AI / Photoshop ngay.",
-    "parameters": "Hình thái: Pháo đài truy quét EXIF GPSVersionID, Cơ chế giả lập: Solar Ephemeris Tracker & Crossover Shadow",
-    "accuracy": "Sinh Sát Rạch Ròi (98-100% Cố định góc) - Lệnh bắt lập tức được ban hành khi góc bóng râm và vệ tinh lệch nhau 1 mét.",
-    "source": "Lưu Trữ Khám Nghiệm Tọa Độ Dữ Liệu Thời Tiết Từ Máy Ảnh Số",
-    "useCase": "Giáng đòn phá án trực diện vào các bản ghép tin tức giả trị giá hàng tỷ đô (ví dụ: bôi nhọ nguyên thủ quốc gia xuất hiện ở một sự kiện sai trái). Nếu mặt trời không tự vỡ mặt trăng, thì bóng đổ trong ảnh không thể đi ngược kim chỉ nam vệ tinh.",
+    "name": "Xác Minh Tính Nhất Quán GPS (GPS Consistency)",
+    "description": "Phương pháp xác minh tính toàn vẹn của siêu dữ liệu địa lý (GPS) gắn kèm trong ảnh. Dữ liệu GPS (tọa độ, thời gian chụp) có tương quan logic vật lý với hướng bóng đổ mặt trời. Thuật toán đối chiếu tọa độ-thời gian EXIF với góc mặt trời thực tế, phát hiện sự mâu thuẫn giữa metadata và nội dung ảnh — dấu hiệu của ảnh cắt ghép hoặc metadata bị giả mạo.",
+    "algorithm": "Xác Minh Mâu Thuẫn Bóng Mặt Trời & Tọa Độ GPS Địa Cầu",
+    "mechanism": "Thuật toán trích xuất trực tiếp từ dữ liệu nhị phân EXIF các giá trị Longitude (kinh độ), Latitude (vĩ độ), Timestamp (thời gian chụp). Từ thời gian và vị trí, hệ thống tính toán góc cao mặt trời thực tế (Solar Elevation Angle) tại thời điểm chụp. Sau đó đối chiếu với hướng bóng đổ trong ảnh: nếu bóng đổ chỉ ngược hướng toán học mặt trời, ảnh bị nghi ngờ ghép cảnh. Nếu ảnh thiếu hoàn toàn thẻ GPS, đây là dấu hiệu metadata đã bị loại bỏ có chủ đích.",
+    "parameters": "Truy quét: EXIF GPSVersionID, Cơ chế giả lập: Solar Ephemeris Tracker & Crossover Shadow",
+    "accuracy": "Rất cao (98–100% khi có đủ dữ liệu GPS) — Góc mặt trời là đại lượng vật lý xác định, sai lệch nhỏ cũng bị phát hiện.",
+    "source": "Kee et al. (2013) — Phân Tích Tính Nhất Quán Tọa Độ GPS và Bóng Đổ",
+    "useCase": "Phát hiện ảnh tin tức giả mạo nơi đối tượng bị ghép vào bối cảnh sai vị trí địa lý. Sự mâu thuẫn giữa góc mặt trời và tọa độ GPS cung cấp bằng chứng khách quan.",
     "references": [
         {
             "title": "Kee, E., et al. (2013). Exposing photo manipulation from shading and shadows. ACM TOG.",
@@ -25,6 +25,6 @@
             "url": "https://exiftool.org/TagNames/GPS.html"
         }
     ],
-    "strengths": "• Bằng chứng sắt thép trước chốn tòa án pháp lý. Định luật mặt trời là bất biến, kẻ gian cực kỳ khó nhớ để sửa góc mặt trời của 2 ảnh gốc bằng phần mềm vì sai sai chút xíu là hệ thống bắt dính.\n• Tuyệt đỉnh không khoan nhượng. Tội phạm thường chùi dọn lộ liễu thẻ GPS, hoặc gắn thẻ Hawaii vào cảnh chụp núi tuyết Himalaya... tự đưa đầu vào máy chém.",
-    "limitations": "• Đạn lép hoàn toàn nếu tay súng kia chụp trong nhà (Studio không có mặt trời), hệ thống vệ tinh và bóng râm hoàn toàn mù lòa và không phản tác dụng.\n• Tạch 100% nếu ảnh đào từ Facebook/Zalo, vì mọi mạng xã hội đều chém bay đầu thẻ GPS để tránh tiết lộ chỗ ở người dùng. Toàn bộ là ảnh nén không vị trí."
+    "strengths": "• Có giá trị bằng chứng pháp lý cao — định luật mặt trời là bất biến vật lý, rất khó giả mạo đồng thời cả tọa độ GPS và góc bóng đổ chính xác.\n• Phát hiện hiệu quả metadata bị thay đổi hoặc tọa độ GPS bị gán sai vị trí.",
+    "limitations": "• Mất hiệu lực hoàn toàn đối với ảnh chụp trong nhà (studio), nơi không có ánh sáng mặt trời để đối chiếu.\n• Không áp dụng được cho ảnh từ mạng xã hội (Facebook, Zalo), vì các nền tảng này tự động loại bỏ thẻ GPS khi tải lên."
 }

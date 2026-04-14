@@ -1,18 +1,18 @@
 {
-    "name": "Ngân Hàng Biến Trạng Wavelet Gabor",
-    "description": "Siêu mạng nhện đo vi sai toàn cảnh. Thay vì thả một lưới, cỗ máy này giăng nguyên một 'Ngân hàng' hàng tá bộ lọc Gabor trải dài đủ mọi tỷ lệ (từ sợi tóc tới ngọn núi) và mọi góc xoay. Khác với tự nhiên có độ biến thiên họa tiết liền mạch, các cỗ máy tạo ảnh (Diffusion/GAN) thường rớt thẳng cẳng ở khả năng đồng nhất các tỷ lệ chéo (Cross-scale). Nghĩa là lưới Gabor ngân hàng sẽ thấy: Vùng cây cối có năng lượng cực đoan ở vỉ mô bé, nhưng bất thình lình chết ngắc ở vỉ mô lớn. Một thứ cấu trúc vật chất không hề tồn tại ở cõi trần gian.",
-    "algorithm": "Phân Tích Đa Độ Phân Giải Gabor Wavelet Bank Đa Phương Ngang Dọc",
-    "mechanism": "Thả khoảng 40 ma trận xoay Gabor quét càn quét toàn bộ không gian bức ảnh để bóc lớp tín hiệu (Feature Extraction). Bức ảnh nguyên thủy có sự kết nối từ từ giữa các dải. Trong khi ảnh ghép hoặc AI khi đổi quy mô (Scale/Crop/Inpaint) sẽ giật cục thảm hại. Góc quy chuẩn Gabor lập tức tạo ra đồ thị nứt nẻ lốm đốm y như mạng nhện rách. Ngân hàng tín hiệu chỉ việc túm lấy mấy chỗ mạng nhện đứt gãy để tuyên án tử.",
-    "parameters": "Ngân Hàng: 40 Biến thể Gabor (5 Scale x 8 Orientations), Khối Vector Đặc Trưng Wavelet Hủy Diệt",
-    "accuracy": "Mạng Nhện Độc (82-89%) - Nuốt chửng hàng tá kĩ thuật tẩy xóa, làm mịn hay nhét chi tiết bằng Brush nhảm nhí của thợ ảnh.",
-    "source": "Lưu Trữ Xử Lý Tín Hiệu Thị Giác Vỏ Não Đa Phương Digital",
-    "useCase": "Giáng ngọn lửa xuống đầu các tội phạm cố tình xóa mụn, tẩy người khỏi phông nền (Content-aware fill). Vùng bị lấp liếm sẽ hiện lên đen thui vì rách tan nát các dải sóng vi mô.",
+    "name": "Phân Tích Ngân Hàng Wavelet Gabor (Gabor Wavelet Bank)",
+    "description": "Phương pháp phân tích đa tỷ lệ toàn diện sử dụng ngân hàng bộ lọc Gabor. Thay vì áp dụng một bộ lọc đơn lẻ, hệ thống triển khai đồng thời nhiều bộ lọc Gabor trải dài trên mọi tỷ lệ (từ vi mô đến vĩ mô) và mọi hướng xoay. Ảnh tự nhiên thể hiện sự biến thiên kết cấu liền mạch giữa các tỷ lệ (cross-scale consistency), trong khi mô hình AI tạo sinh (Diffusion/GAN) thường thất bại trong việc duy trì tính đồng nhất này — năng lượng kết cấu biến đổi bất thường giữa các tỷ lệ, tạo ra dấu vết không tồn tại trong ảnh thực.",
+    "algorithm": "Phân Tích Đa Độ Phân Giải Gabor Wavelet Bank Đa Hướng",
+    "mechanism": "Khoảng 40 bộ lọc Gabor (5 tỷ lệ × 8 hướng) được áp dụng đồng thời để trích xuất đặc trưng (Feature Extraction) trên toàn bộ không gian ảnh. Ảnh nguyên bản thể hiện sự chuyển tiếp liên tục giữa các dải tần. Trong khi ảnh ghép hoặc ảnh AI khi thay đổi quy mô (Scale/Crop/Inpaint) tạo ra sự gián đoạn rõ rệt. Bộ lọc Gabor phát hiện các điểm đứt gãy trong đồ thị tần số — dấu hiệu của can thiệp nhân tạo.",
+    "parameters": "Ngân hàng: 40 biến thể Gabor (5 Scale × 8 Orientations), Khối vector đặc trưng Wavelet",
+    "accuracy": "Cao (82–89%) — Hiệu quả trong phát hiện các kỹ thuật tẩy xóa, làm mịn hoặc chèn chi tiết bằng công cụ chỉnh sửa.",
+    "source": "Stamm et al. (2013) — Xử Lý Tín Hiệu Thị Giác Đa Phương (Gabor Wavelet Forensics)",
+    "useCase": "Phát hiện các vùng bị xóa đối tượng, tẩy chi tiết khỏi phông nền (Content-Aware Fill). Vùng bị can thiệp bộc lộ sự đứt gãy rõ rệt trong các dải sóng vi mô.",
     "references": [
         {
             "title": "Stamm, M. C., et al. (2013). Information forensics: An overview. IEEE Access.",
             "url": ""
         }
     ],
-    "strengths": "• Khả năng bắt thóp toàn diện kinh độ vĩ độ của một mảnh vân da... Nhất là khi nó chỉ nhắm tới việc đo tiếng vọng đồng trán từ các mô hình tần số lớn bé khác nhau.\n• Hầu như miễn nhiễm toàn bộ với mấy trò đổi màu sắc, lọc ánh sáng (Color Grading) vì chỉ quét gai góc kết cấu.",
-    "limitations": "• Nhát kiếm này sẽ gãy mũi (tạo án oan) nếu đối mặt với một bức tường sơn giả vân gỗ, giả đá, cố tình làm đứt quãng kết cấu quang học y hệt như AI làm.\n• Cực kì tốn pin máy tính. Đo 40 mảng radar Gabor cùng lúc là một vụ tra tấn bộ não CPU kinh khủng."
+    "strengths": "• Phân tích toàn diện kết cấu bề mặt ở nhiều tỷ lệ và hướng khác nhau, đặc biệt hiệu quả trong phát hiện sự không nhất quán giữa các dải tần.\n• Gần như miễn nhiễm với các thao tác thay đổi màu sắc và Color Grading, vì chỉ phân tích cấu trúc kết cấu hình học.",
+    "limitations": "• Tỷ lệ dương tính giả cao khi phân tích bề mặt có kết cấu đứt quãng tự nhiên (vân gỗ giả, đá nhân tạo), dễ nhầm lẫn với dấu vết AI.\n• Chi phí tính toán lớn — việc xử lý đồng thời 40 bộ lọc Gabor đòi hỏi tài nguyên CPU đáng kể."
 }
