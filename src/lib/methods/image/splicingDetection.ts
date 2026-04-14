@@ -9,10 +9,11 @@ export function analyzeSplicingDetection(pixels: Uint8ClampedArray, w: number, h
     if (w < 16 || h < 16) {
         return {
             name: "Splicing Detection", nameKey: "signal.splicingDetection",
-            category: "forensic", score: 50, weight: 0.35,
+            category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.splicingDetection.error", icon: "✂️",
-        };
+ details,
+    };
     }
 
     let score: number;

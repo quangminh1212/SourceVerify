@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeEarSymmetryAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Ear Symmetry Analysis", nameKey: "signal.earSymmetryAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.earSymmetryAnalysis.error", icon: "👂" };
+        return { name: "Ear Symmetry Analysis", nameKey: "signal.earSymmetryAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.earSymmetryAnalysis.error", icon: "👂" };
     }
 let leftSum=0,rightSum=0,leftCnt=0,rightCnt=0;
 for(let y=0;y<h;y+=2){for(let x=0;x<w;x+=2){const i=(y*w+x)*4;const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;

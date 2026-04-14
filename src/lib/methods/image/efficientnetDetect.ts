@@ -12,7 +12,8 @@ export function analyzeEfficientnetFeatures(pixels: Uint8ClampedArray, w: number
             category: "sensor", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.efficientnetDetection.error", icon: "🧠",
-        };
+ details,
+    };
     }
 
     let score: number;

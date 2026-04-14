@@ -10,7 +10,7 @@ export function analyzeAutocorrelation(pixels: Uint8ClampedArray, width: number,
     if (width < 32 || height < 32) {
         return {
             name: "Autocorrelation Regularity", nameKey: "signal.autocorrelation",
-            category: "forensic", score: 50, weight: 0.35,
+            category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for autocorrelation analysis",
             descriptionKey: "signal.autocorr.error", icon: "⊕",
         };

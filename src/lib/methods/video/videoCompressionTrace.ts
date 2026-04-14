@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoCompressionTrace(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Video Compression Trace", nameKey: "signal.videoCompressionTrace", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoCompressionTrace.error", icon: "📦" };
+        return { name: "Video Compression Trace", nameKey: "signal.videoCompressionTrace", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoCompressionTrace.error", icon: "📦" };
     }
     // Analyze 8x8 block boundary artifacts (H.264/H.265 macroblock patterns)
     let blockBoundaryEnergy = 0, innerBlockEnergy = 0, bCnt = 0, iCnt = 0;

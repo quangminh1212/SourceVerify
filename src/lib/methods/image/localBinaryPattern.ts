@@ -77,7 +77,7 @@ export function analyzeLocalBinaryPattern(pixels: Uint8ClampedArray, width: numb
 
     return {
         name: "Local Binary Pattern", nameKey: "signal.localBinaryPattern",
-        category: "spatial", score, weight: 0.6,
+        category: "pixel", score, weight: 0.6,
         description: score > 55
             ? "LBP texture patterns lack diversity — characteristic of AI-generated surfaces"
             : "LBP texture shows natural diversity — consistent with real photography",

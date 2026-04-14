@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeBlinkRateAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Blink Rate Analysis", nameKey: "signal.blinkRateAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.blinkRateAnalysis.error", icon: "👁" };
+        return { name: "Blink Rate Analysis", nameKey: "signal.blinkRateAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.blinkRateAnalysis.error", icon: "👁" };
     }
 const bs=16,bx=Math.floor(w/bs),by=Math.floor(h/bs);const entropies=[];
 for(let j=0;j<by;j++){for(let i=0;i<bx;i++){const hist=new Array(16).fill(0);

@@ -12,7 +12,7 @@ export function analyzeLaplacianEdge(pixels: Uint8ClampedArray, width: number, h
     if (width < 16 || height < 16) {
         return {
             name: "Laplacian Edge Sharpness", nameKey: "signal.laplacianEdge",
-            category: "spatial", score: 50, weight: 0.35,
+            category: "pixel", score: 50, weight: 0.35,
             description: "Image too small for Laplacian edge analysis",
             descriptionKey: "signal.laplacian.error", icon: "◆",
         };

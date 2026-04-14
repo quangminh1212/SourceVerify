@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeDeepfakeArtifact(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Deepfake Artifact", nameKey: "signal.deepfakeArtifact", category: "forensic", score: 50, weight: 0.3, description: "Frame too small", descriptionKey: "signal.deepfakeArtifact.error", icon: "🎭" };
+        return { name: "Deepfake Artifact", nameKey: "signal.deepfakeArtifact", category: "statistical", score: 50, weight: 0.3, description: "Frame too small", descriptionKey: "signal.deepfakeArtifact.error", icon: "🎭" };
     }
     // Analyze face boundary blending artifacts - deepfakes show unnatural transitions at face edges
     const faceX = Math.floor(w * 0.25), faceY = Math.floor(h * 0.15);

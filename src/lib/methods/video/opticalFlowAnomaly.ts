@@ -10,7 +10,7 @@ export function analyzeOpticalFlowAnomaly(pixels: Uint8ClampedArray, w: number, 
     if (w < 16 || h < 16) {
         return {
             name: "Optical Flow Anomaly", nameKey: "signal.opticalFlowAnomaly",
-            category: "forensic", score: 50, weight: 0.25,
+            category: "statistical", score: 50, weight: 0.25,
             description: "Frame too small for analysis",
             descriptionKey: "signal.opticalFlowAnomaly.error", icon: "🌊",
         };

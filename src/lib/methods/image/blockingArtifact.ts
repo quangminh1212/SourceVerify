@@ -12,7 +12,8 @@ export function analyzeBlockingArtifact(pixels: Uint8ClampedArray, w: number, h:
             category: "frequency", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.blockingArtifact.error", icon: "🧱",
-        };
+ details,
+    };
     }
 
     let score: number;

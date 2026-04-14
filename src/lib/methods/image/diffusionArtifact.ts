@@ -70,7 +70,7 @@ export function analyzeDiffusionArtifact(pixels: Uint8ClampedArray, width: numbe
 
     return {
         name: "Diffusion Artifacts", nameKey: "signal.diffusionArtifact",
-        category: "generative", score, weight: 0.5,
+        category: "statistical", score, weight: 0.5,
         description: score > 55
             ? "Mid-frequency smoothing with sharp edges detected — pattern consistent with diffusion models"
             : "No diffusion model artifacts detected — frequency structure appears natural",

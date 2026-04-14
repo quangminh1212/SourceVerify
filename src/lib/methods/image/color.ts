@@ -49,7 +49,7 @@ export function analyzeColorChannelCorrelation(pixels: Uint8ClampedArray, width:
     if (count < 100) {
         return {
             name: "Color Channel Correlation", nameKey: "signal.colorCorrelation",
-            category: "statistical", score: 50, weight: 2.0,
+            category: "statistical", score: 50, weight: 1.5,
             description: "Insufficient data", descriptionKey: "signal.color.error", icon: "◈",
         };
     }

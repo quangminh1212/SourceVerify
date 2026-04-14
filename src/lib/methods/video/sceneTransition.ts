@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeSceneTransition(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Scene Transition", nameKey: "signal.sceneTransition", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.sceneTransition.error", icon: "🎬" };
+        return { name: "Scene Transition", nameKey: "signal.sceneTransition", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.sceneTransition.error", icon: "🎬" };
     }
     // Analyze spatial gradient distribution across frame quadrants
     const halfW = Math.floor(w / 2), halfH = Math.floor(h / 2);

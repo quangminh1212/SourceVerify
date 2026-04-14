@@ -9,7 +9,7 @@ export function analyzeColorCoherence(pixels: Uint8ClampedArray, width: number, 
     if (width < 16 || height < 16) {
         return {
             name: "Color Coherence Vector", nameKey: "signal.colorCoherence",
-            category: "color", score: 50, weight: 0.35,
+            category: "pixel", score: 50, weight: 0.35,
             description: "Image too small for CCV analysis",
             descriptionKey: "signal.ccv.error", icon: "â–¦",
         };

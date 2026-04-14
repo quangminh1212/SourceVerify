@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeEyeReflectionConsistency(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Eye Reflection Consistency", nameKey: "signal.eyeReflectionConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.eyeReflectionConsistency.error", icon: "👁" };
+        return { name: "Eye Reflection Consistency", nameKey: "signal.eyeReflectionConsistency", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.eyeReflectionConsistency.error", icon: "👁" };
     }
 const midY=Math.floor(h/2),midX=Math.floor(w/2);
 let tl=0,tr=0,bl=0,br=0,cnt=0;

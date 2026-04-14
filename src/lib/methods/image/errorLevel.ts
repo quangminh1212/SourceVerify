@@ -23,7 +23,7 @@ export function analyzeErrorLevel(pixels: Uint8ClampedArray, width: number, heig
     if (blocksX < 3 || blocksY < 3) {
         return {
             name: "Error Level Analysis", nameKey: "signal.errorLevel",
-            category: "compression", score: 50, weight: 0.4,
+            category: "frequency", score: 50, weight: 0.4,
             description: "Image too small for ELA",
             descriptionKey: "signal.ela.error", icon: "?",
         };

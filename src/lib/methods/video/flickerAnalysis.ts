@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFlickerAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Flicker Analysis", nameKey: "signal.flickerAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.flickerAnalysis.error", icon: "⚡" };
+        return { name: "Flicker Analysis", nameKey: "signal.flickerAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.flickerAnalysis.error", icon: "⚡" };
     }
     // Detect micro-flicker by analyzing local intensity oscillation patterns
     const step = Math.max(2, Math.floor(Math.min(w, h) / 100));

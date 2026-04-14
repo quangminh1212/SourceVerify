@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeMotionBlurConsistency(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Motion Blur Consistency", nameKey: "signal.motionBlurConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.motionBlurConsistency.error", icon: "💨" };
+        return { name: "Motion Blur Consistency", nameKey: "signal.motionBlurConsistency", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.motionBlurConsistency.error", icon: "💨" };
     }
     const blockSize = 16;
     const bx = Math.floor(w / blockSize), by = Math.floor(h / blockSize);

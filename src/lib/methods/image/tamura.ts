@@ -10,7 +10,7 @@ export function analyzeTamuraTexture(pixels: Uint8ClampedArray, width: number, h
     if (width < 32 || height < 32) {
         return {
             name: "Tamura Texture Features", nameKey: "signal.tamuraTexture",
-            category: "perceptual", score: 50, weight: 0.35,
+            category: "pixel", score: 50, weight: 0.35,
             description: "Image too small for Tamura analysis",
             descriptionKey: "signal.tamura.error", icon: "⊠",
         };

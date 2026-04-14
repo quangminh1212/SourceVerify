@@ -9,10 +9,11 @@ export function analyzeSRMFilter(pixels: Uint8ClampedArray, w: number, h: number
     if (w < 16 || h < 16) {
         return {
             name: "SRM Filter Response", nameKey: "signal.srmFilter",
-            category: "forensic", score: 50, weight: 0.3,
+            category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.srmFilter.error", icon: "🔬",
-        };
+ details,
+    };
     }
 
     let score: number;

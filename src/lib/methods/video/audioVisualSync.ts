@@ -10,7 +10,7 @@ export function analyzeAudioVisualSync(pixels: Uint8ClampedArray, w: number, h: 
     if (w < 16 || h < 16) {
         return {
             name: "Audio-Visual Sync", nameKey: "signal.audioVisualSync",
-            category: "forensic", score: 50, weight: 0.2,
+            category: "statistical", score: 50, weight: 0.2,
             description: "Frame too small for analysis",
             descriptionKey: "signal.audioVisualSync.error", icon: "🔊",
         };

@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeReflectionPhysics(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Reflection Physics", nameKey: "signal.reflectionPhysics", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.reflectionPhysics.error", icon: "🪞" };
+        return { name: "Reflection Physics", nameKey: "signal.reflectionPhysics", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.reflectionPhysics.error", icon: "🪞" };
     }
 let mirrorDiff=0,cnt=0;
 for(let y=0;y<h;y+=3){for(let x=0;x<w/2;x+=3){const i1=(y*w+x)*4,i2=(y*w+(w-1-x))*4;

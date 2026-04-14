@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoSaturation(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Saturation", nameKey: "signal.videoSaturation", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoSaturation.error", icon: "🎨" };
+        return { name: "Video Saturation", nameKey: "signal.videoSaturation", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoSaturation.error", icon: "🎨" };
     }
 const satHist=new Array(11).fill(0);
 for(let i=0;i<pixels.length;i+=8){const r=pixels[i],g=pixels[i+1],b=pixels[i+2];const mx=Math.max(r,g,b),mn=Math.min(r,g,b);

@@ -61,7 +61,7 @@ export function analyzeNoiseResidual(pixels: Uint8ClampedArray, width: number, h
     }
 
     if (blockStdDevs.length < 4) {
-        return { name: "Noise Residual", nameKey: "signal.noiseResidual", category: "pixel", score: 50, weight: 3.5, description: "Insufficient data", descriptionKey: "signal.noise.error", icon: "◫" };
+        return { name: "Noise Residual", nameKey: "signal.noiseResidual", category: "pixel", score: 50, weight: 1.5, description: "Insufficient data", descriptionKey: "signal.noise.error", icon: "◫" };
     }
 
     const mean = blockStdDevs.reduce((a, b) => a + b, 0) / blockStdDevs.length;

@@ -39,7 +39,7 @@ export function analyzeLightingConsistency(pixels: Uint8ClampedArray, width: num
     if (lightDirections.length < 3) {
         return {
             name: "Lighting Consistency", nameKey: "signal.lightingConsistency",
-            category: "geometric", score: 50, weight: 0.4,
+            category: "pixel", score: 50, weight: 0.4,
             description: "Not enough regions for lighting analysis",
             descriptionKey: "signal.lighting.error", icon: "☼",
         };

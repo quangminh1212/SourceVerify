@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoArtifactGrid(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Artifact Grid", nameKey: "signal.videoArtifactGrid", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoArtifactGrid.error", icon: "📐" };
+        return { name: "Video Artifact Grid", nameKey: "signal.videoArtifactGrid", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoArtifactGrid.error", icon: "📐" };
     }
 const gs=16;let gridE=0,nonGridE=0,gC=0,nC=0;
 for(let y=1;y<h;y++){const onGrid=y%gs===0;for(let x=0;x<w;x+=4){const i=(y*w+x)*4;const j=((y-1)*w+x)*4;

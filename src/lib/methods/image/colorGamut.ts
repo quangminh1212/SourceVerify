@@ -69,7 +69,7 @@ export function analyzeColorGamut(pixels: Uint8ClampedArray, width: number, heig
 
     return {
         name: "Color Gamut Analysis", nameKey: "signal.colorGamut",
-        category: "color", score, weight: 0.4,
+        category: "pixel", score, weight: 0.4,
         description: score > 55
             ? "Color gamut shows unnatural vibrancy — AI images often exceed natural camera gamut"
             : "Color gamut falls within natural range — consistent with camera sensor response",

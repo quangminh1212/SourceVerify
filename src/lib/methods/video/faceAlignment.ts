@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFaceAlignment(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Face Alignment", nameKey: "signal.faceAlignment", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceAlignment.error", icon: "📐" };
+        return { name: "Face Alignment", nameKey: "signal.faceAlignment", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceAlignment.error", icon: "📐" };
     }
 const profile=[];
 for(let x=0;x<w;x+=2){let sum=0,cnt2=0;for(let y=0;y<h;y+=2){const i=(y*w+x)*4;sum+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;cnt2++;}profile.push(sum/cnt2);}

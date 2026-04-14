@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeSpatialFreqTemporal(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Spatial Frequency Temporal", nameKey: "signal.spatialFreqTemporal", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.spatialFreqTemporal.error", icon: "📊" };
+        return { name: "Spatial Frequency Temporal", nameKey: "signal.spatialFreqTemporal", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.spatialFreqTemporal.error", icon: "📊" };
     }
 let low=0,high=0,cnt=0;const bs2=4;
 for(let y=0;y<h-bs2;y+=bs2){for(let x=0;x<w-bs2;x+=bs2){let dc=0,ac=0;

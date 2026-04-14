@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeColorQuantizationVideo(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Color Quantization", nameKey: "signal.colorQuantizationVideo", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.colorQuantizationVideo.error", icon: "🎨" };
+        return { name: "Color Quantization", nameKey: "signal.colorQuantizationVideo", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.colorQuantizationVideo.error", icon: "🎨" };
     }
     const blockSize = 8;
     const blocksX = Math.floor(w / blockSize), blocksY = Math.floor(h / blockSize);

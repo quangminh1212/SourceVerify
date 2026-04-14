@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeTextureFlowAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Texture Flow", nameKey: "signal.textureFlowAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.textureFlowAnalysis.error", icon: "🌊" };
+        return { name: "Texture Flow", nameKey: "signal.textureFlowAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.textureFlowAnalysis.error", icon: "🌊" };
     }
 let coh=0,cnt=0;
 for(let y=1;y<h-1;y+=3){for(let x=1;x<w-1;x+=3){const i=(y*w+x)*4;

@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeHandGestureConsistency(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Hand Gesture Consistency", nameKey: "signal.handGestureConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.handGestureConsistency.error", icon: "✋" };
+        return { name: "Hand Gesture Consistency", nameKey: "signal.handGestureConsistency", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.handGestureConsistency.error", icon: "✋" };
     }
     // Analyze lower frame regions where hands typically appear for texture anomalies
     const handY = Math.floor(h * 0.5), handH = Math.floor(h * 0.4);

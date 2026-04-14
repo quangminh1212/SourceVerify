@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeNoseGeometry(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Nose Geometry", nameKey: "signal.noseGeometry", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.noseGeometry.error", icon: "👃" };
+        return { name: "Nose Geometry", nameKey: "signal.noseGeometry", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.noseGeometry.error", icon: "👃" };
     }
 const profile=[];
 for(let y=0;y<h;y++){let sum=0;for(let x=Math.floor(w*0.3);x<Math.floor(w*0.7);x++){const i=(y*w+x)*4;sum+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;}profile.push(sum/Math.floor(w*0.4));}

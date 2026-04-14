@@ -41,7 +41,7 @@ export function analyzePerspectiveConsistency(pixels: Uint8ClampedArray, width: 
     if (edgeAngles.length < 20) {
         return {
             name: "Perspective Consistency", nameKey: "signal.perspectiveConsistency",
-            category: "geometric", score: 50, weight: 0.3,
+            category: "pixel", score: 50, weight: 0.3,
             description: "Not enough strong edges for perspective analysis",
             descriptionKey: "signal.perspective.error", icon: "⊿",
         };

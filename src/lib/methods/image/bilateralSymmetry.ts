@@ -10,7 +10,7 @@ export function analyzeBilateralSymmetry(pixels: Uint8ClampedArray, width: numbe
     if (width < 32 || height < 32) {
         return {
             name: "Bilateral Symmetry", nameKey: "signal.bilateralSymmetry",
-            category: "perceptual", score: 50, weight: 0.3,
+            category: "pixel", score: 50, weight: 0.3,
             description: "Image too small for symmetry analysis",
             descriptionKey: "signal.symmetry2.error", icon: "⊘",
         };

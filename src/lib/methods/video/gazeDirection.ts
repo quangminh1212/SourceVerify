@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeGazeDirection(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Gaze Direction", nameKey: "signal.gazeDirection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.gazeDirection.error", icon: "👁" };
+        return { name: "Gaze Direction", nameKey: "signal.gazeDirection", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.gazeDirection.error", icon: "👁" };
     }
     // Analyze eye region symmetry - deepfakes often have asymmetric eye patterns
     const eyeY = Math.floor(h * 0.25), eyeH = Math.floor(h * 0.15);

@@ -10,7 +10,7 @@ export function analyzeLipSyncAnalysis(pixels: Uint8ClampedArray, w: number, h: 
     if (w < 16 || h < 16) {
         return {
             name: "Lip Sync Analysis", nameKey: "signal.lipSyncAnalysis",
-            category: "forensic", score: 50, weight: 0.25,
+            category: "statistical", score: 50, weight: 0.25,
             description: "Frame too small for analysis",
             descriptionKey: "signal.lipSyncAnalysis.error", icon: "👄",
         };

@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeBokehNaturalness(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Bokeh Naturalness", nameKey: "signal.bokehNaturalness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.bokehNaturalness.error", icon: "📸" };
+        return { name: "Bokeh Naturalness", nameKey: "signal.bokehNaturalness", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.bokehNaturalness.error", icon: "📸" };
     }
 let sharpPx=0,total=0;
 for(let y=2;y<h-2;y+=3){for(let x=2;x<w-2;x+=3){const i=(y*w+x)*4;

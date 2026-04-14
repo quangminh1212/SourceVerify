@@ -9,10 +9,11 @@ export function analyzeIlluminantMap(pixels: Uint8ClampedArray, w: number, h: nu
     if (w < 16 || h < 16) {
         return {
             name: "Illuminant Map Analysis", nameKey: "signal.illuminantMap",
-            category: "forensic", score: 50, weight: 0.35,
+            category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.illuminantMap.error", icon: "💡",
-        };
+ details,
+    };
     }
 
     let score: number;

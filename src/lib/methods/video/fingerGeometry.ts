@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFingerGeometry(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Finger Geometry", nameKey: "signal.fingerGeometry", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.fingerGeometry.error", icon: "🖐" };
+        return { name: "Finger Geometry", nameKey: "signal.fingerGeometry", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.fingerGeometry.error", icon: "🖐" };
     }
 let satSum=0,cnt=0;
 for(let i=0;i<pixels.length;i+=8){const r=pixels[i],g=pixels[i+1],b=pixels[i+2];

@@ -10,7 +10,7 @@ export function analyzeDoubleJPEG(pixels: Uint8ClampedArray, width: number, heig
     if (width < 16 || height < 16) {
         return {
             name: "Double JPEG Detection", nameKey: "signal.doubleJpeg",
-            category: "forensic", score: 50, weight: 0.4,
+            category: "statistical", score: 50, weight: 0.4,
             description: "Image too small for double JPEG analysis",
             descriptionKey: "signal.doubleJpeg.error", icon: "⧉",
         };

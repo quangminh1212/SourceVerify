@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoBlockiness(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Blockiness", nameKey: "signal.videoBlockiness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoBlockiness.error", icon: "⬜" };
+        return { name: "Video Blockiness", nameKey: "signal.videoBlockiness", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoBlockiness.error", icon: "⬜" };
     }
 const bs3=8;let boundDiff=0,innerDiff=0,bCnt2=0,iCnt=0;
 for(let y=bs3;y<h-1;y+=bs3){for(let x=0;x<w;x+=2){const i=(y*w+x)*4;const j=((y-1)*w+x)*4;

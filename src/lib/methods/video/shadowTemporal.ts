@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeShadowTemporal(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Shadow Temporal Consistency", nameKey: "signal.shadowTemporal", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.shadowTemporal.error", icon: "🌗" };
+        return { name: "Shadow Temporal Consistency", nameKey: "signal.shadowTemporal", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.shadowTemporal.error", icon: "🌗" };
     }
 let darkPx=0,totalPx=0,darkVar=0;const darkVals=[];
 for(let i=0;i<pixels.length;i+=4){const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;totalPx++;if(g<60){darkPx++;darkVals.push(g);}}

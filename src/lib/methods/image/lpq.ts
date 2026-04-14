@@ -10,7 +10,7 @@ export function analyzeLocalPhaseQuantization(pixels: Uint8ClampedArray, width: 
     if (width < 32 || height < 32) {
         return {
             name: "Local Phase Quantization", nameKey: "signal.lpq",
-            category: "perceptual", score: 50, weight: 0.35,
+            category: "pixel", score: 50, weight: 0.35,
             description: "Image too small for LPQ analysis",
             descriptionKey: "signal.lpq.error", icon: "⊗",
         };

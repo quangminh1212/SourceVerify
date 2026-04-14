@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzePupilDilation(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Pupil Dilation", nameKey: "signal.pupilDilation", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pupilDilation.error", icon: "👁" };
+        return { name: "Pupil Dilation", nameKey: "signal.pupilDilation", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pupilDilation.error", icon: "👁" };
     }
 let centerE=0,borderE=0,cCnt=0,bCnt=0;const cx=w/2,cy=h/2,r=Math.min(w,h)/4;
 for(let y=0;y<h;y+=3){for(let x=0;x<w;x+=3){const i=(y*w+x)*4;const g=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;

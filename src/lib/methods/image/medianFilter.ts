@@ -9,10 +9,11 @@ export function analyzeMedianFilter(pixels: Uint8ClampedArray, w: number, h: num
     if (w < 16 || h < 16) {
         return {
             name: "Median Filtering Detection", nameKey: "signal.medianFilter",
-            category: "forensic", score: 50, weight: 0.35,
+            category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.medianFilter.error", icon: "🔲",
-        };
+ details,
+    };
     }
 
     let score: number;

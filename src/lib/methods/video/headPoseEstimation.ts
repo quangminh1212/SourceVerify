@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeHeadPoseEstimation(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Head Pose Estimation", nameKey: "signal.headPoseEstimation", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.headPoseEstimation.error", icon: "🗣" };
+        return { name: "Head Pose Estimation", nameKey: "signal.headPoseEstimation", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.headPoseEstimation.error", icon: "🗣" };
     }
 const fy=Math.floor(h*0.1),fh=Math.floor(h*0.5),fx=Math.floor(w*0.2),fw=Math.floor(w*0.6);
 let lMean=0,rMean=0,lC=0,rC=0;const mid=fx+fw/2;

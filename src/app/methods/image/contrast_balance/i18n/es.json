@@ -1,0 +1,18 @@
+{
+    "name": "Topografía de Balance de Contraste",
+    "description": "Una inspección brutalmente estricta de 'escalado de luz'. Evalúa la consistencia del rango dinámico y el contraste local en toda la imagen. Las fotografías ópticas reales exhiben naturalmente una degradación lógica del contraste sobre la profundidad espacial (debido a la neblina atmosférica). Por el contrario, las composiciones falsificadas o generadas por IA destruyen esta ley física al insertar objetos con contraste extremadamente alto en fondos nebulosos de bajo contraste, generando graves desconexiones visuales no físicas.",
+    "algorithm": "Variación de Contraste Local & Mapeo de Cuadrícula de Histograma",
+    "mechanism": "El algoritmo divide la imagen en miles de matrices de cuadrícula para realizar análisis de histograma aislados. Busca regiones fronterizas adyacentes que exhiban saltos de contraste hiper-anómalos. Si un rostro ultra-nítido con sombras duras se encuentra en un entorno de bajo contraste, nebuloso y subexpuesto, el sistema disparará la alarma inmediatamente debido al desequilibrio de contraste 'fuera de fase'.",
+    "parameters": "Modelo de Estimación: Variación de Contraste Local, Análisis: Impulsos de Histograma de Cuadrícula, Rastreador de Espacio de Color: Luma (YCbCr)",
+    "accuracy": "Moderada (65-75%) — Un detector de minas forense perfecto dirigido a operadores de Photoshop amateurs que no logran sincronizar las capas de luminosidad y tono.",
+    "source": "Stamm & Liu (2008) - Forense ciega de mejora de contraste en imágenes digitales",
+    "useCase": "Actúa como un inquisidor implacable que examina las discontinuidades de iluminación, arrancando el camuflaje de los componentes empalmados cuando aparecen agresivamente sobre-contrastados o antinaturalmente planos en comparación con su entorno inmediato.",
+    "references": [
+        {
+            "title": "Stamm, M.C. & Liu, K.R. (2008). Blind forensics of contrast enhancement in digital images. IEEE ICIP.",
+            "url": "https://doi.org/10.1109/ICIP.2008.4712450"
+        }
+    ],
+    "strengths": "• Excepcionalmente letal contra 'composiciones apresuradas de arrastrar y soltar': Pegar un coche fotografiado a pleno sol del mediodía en un horizonte crepuscular será desenmascarado sin piedad.\n• Computacionalmente ultrarrápido e increíblemente difícil de eludir a menos que el manipulador posea una profunda comprensión de la sincronización del rango dinámico óptico.",
+    "limitations": "• Generará falsos positivos masivos si la foto auténtica contiene fuentes de luz localizadas intensas y aisladas (como un flash directo de cámara, letreros de neón o farolas duras).\n• Vulnerable a ser engañado si un retocador experto utiliza quirúrgicamente el mapeo de Match Color/Curva de Tono para fusionar artificialmente el histograma de contraste del objeto empalmado al entorno de forma impecable."
+}

@@ -76,7 +76,7 @@ export function analyzeEdgeCoherence(pixels: Uint8ClampedArray, width: number, h
 
     return {
         name: "Edge Coherence", nameKey: "signal.edgeCoherence",
-        category: "structure", score, weight: 1.5,
+        category: "pixel", score, weight: 1.5,
         description: score > 55
             ? "Edges are unusually smooth with uniform directions — common in AI generation"
             : "Edge patterns show natural variation — consistent with real content",

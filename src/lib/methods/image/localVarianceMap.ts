@@ -35,7 +35,7 @@ export function analyzeLocalVarianceMap(pixels: Uint8ClampedArray, width: number
     if (variances.length < 4) {
         return {
             name: "Local Variance Map", nameKey: "signal.localVarianceMap",
-            category: "spatial", score: 50, weight: 0.5,
+            category: "pixel", score: 50, weight: 0.5,
             description: "Insufficient data for local variance analysis",
             descriptionKey: "signal.localVariance.error", icon: "◈",
         };

@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFacialWrinkle(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Facial Wrinkle Consistency", nameKey: "signal.facialWrinkle", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.facialWrinkle.error", icon: "🔍" };
+        return { name: "Facial Wrinkle Consistency", nameKey: "signal.facialWrinkle", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.facialWrinkle.error", icon: "🔍" };
     }
 let hf=0,total=0;
 for(let y=1;y<h-1;y+=2){for(let x=1;x<w-1;x+=2){const i=(y*w+x)*4;

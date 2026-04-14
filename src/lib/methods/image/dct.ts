@@ -29,7 +29,7 @@ export function analyzeDCTBlockArtifacts(pixels: Uint8ClampedArray, width: numbe
     if (blocksX < 3 || blocksY < 3) {
         return {
             name: "DCT Block Artifacts", nameKey: "signal.dctBlock",
-            category: "forensic", score: 50, weight: 2.0,
+            category: "statistical", score: 50, weight: 1.5,
             description: "Image too small for DCT analysis", descriptionKey: "signal.dct.error", icon: "▦",
         };
     }

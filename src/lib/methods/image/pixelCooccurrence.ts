@@ -10,7 +10,7 @@ export function analyzePixelCooccurrence(pixels: Uint8ClampedArray, width: numbe
     if (width < 16 || height < 16) {
         return {
             name: "Pixel Co-occurrence", nameKey: "signal.pixelCooccurrence",
-            category: "forensic", score: 50, weight: 0.4,
+            category: "statistical", score: 50, weight: 0.4,
             description: "Image too small for co-occurrence analysis",
             descriptionKey: "signal.cooccurrence.error", icon: "⊡",
         };

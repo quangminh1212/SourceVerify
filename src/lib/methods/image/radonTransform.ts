@@ -12,7 +12,8 @@ export function analyzeRadonTransform(pixels: Uint8ClampedArray, w: number, h: n
             category: "frequency", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.radonTransform.error", icon: "📡",
-        };
+ details,
+    };
     }
 
     let score: number;

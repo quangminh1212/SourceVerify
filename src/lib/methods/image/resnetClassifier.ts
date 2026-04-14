@@ -12,7 +12,8 @@ export function analyzeResnetClassifier(pixels: Uint8ClampedArray, w: number, h:
             category: "sensor", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.resnetClassifier.error", icon: "🏗️",
-        };
+ details,
+    };
     }
 
     let score: number;

@@ -60,7 +60,7 @@ export function analyzeGLCM(pixels: Uint8ClampedArray, width: number, height: nu
 
     return {
         name: "GLCM Texture", nameKey: "signal.glcmTexture",
-        category: "spatial", score, weight: 0.5,
+        category: "pixel", score, weight: 0.5,
         description: score > 55
             ? "GLCM features indicate overly smooth texture — typical of AI generation"
             : "GLCM texture features are consistent with natural image characteristics",

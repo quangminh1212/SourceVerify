@@ -9,10 +9,11 @@ export function analyzeResampling(pixels: Uint8ClampedArray, w: number, h: numbe
     if (w < 16 || h < 16) {
         return {
             name: "Resampling Detection", nameKey: "signal.resampling",
-            category: "forensic", score: 50, weight: 0.35,
+            category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.resampling.error", icon: "📐",
-        };
+ details,
+    };
     }
 
     let score: number;

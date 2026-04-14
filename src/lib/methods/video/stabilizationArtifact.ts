@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeStabilizationArtifact(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Stabilization Artifact", nameKey: "signal.stabilizationArtifact", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.stabilizationArtifact.error", icon: "📹" };
+        return { name: "Stabilization Artifact", nameKey: "signal.stabilizationArtifact", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.stabilizationArtifact.error", icon: "📹" };
     }
 const bw=Math.max(4,Math.floor(Math.min(w,h)*0.03));let borderVar=0,cnt=0;
 for(let y=0;y<bw;y++){for(let x=0;x<w;x+=2){const i=(y*w+x)*4;borderVar+=pixels[i];cnt++;}}

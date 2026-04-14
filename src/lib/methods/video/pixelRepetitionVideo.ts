@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzePixelRepetitionVideo(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Pixel Repetition", nameKey: "signal.pixelRepetitionVideo", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pixelRepetitionVideo.error", icon: "🔲" };
+        return { name: "Pixel Repetition", nameKey: "signal.pixelRepetitionVideo", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.pixelRepetitionVideo.error", icon: "🔲" };
     }
 let repCount=0,total=0;
 for(let y=0;y<h;y+=4){for(let x=0;x<w-8;x+=4){const i=(y*w+x)*4;const j=(y*w+x+8)*4;

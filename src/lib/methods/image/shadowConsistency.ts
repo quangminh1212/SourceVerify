@@ -30,7 +30,7 @@ export function analyzeShadowConsistency(pixels: Uint8ClampedArray, width: numbe
     if (blockBrightness.length < 9) {
         return {
             name: "Shadow Consistency", nameKey: "signal.shadowConsistency",
-            category: "geometric", score: 50, weight: 0.3,
+            category: "pixel", score: 50, weight: 0.3,
             description: "Not enough data for shadow analysis",
             descriptionKey: "signal.shadow.error", icon: "◑",
         };

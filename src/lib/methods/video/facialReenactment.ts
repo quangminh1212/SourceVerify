@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFacialReenactment(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Facial Reenactment", nameKey: "signal.facialReenactment", category: "forensic", score: 50, weight: 0.25, description: "Frame too small", descriptionKey: "signal.facialReenactment.error", icon: "🎪" };
+        return { name: "Facial Reenactment", nameKey: "signal.facialReenactment", category: "statistical", score: 50, weight: 0.25, description: "Frame too small", descriptionKey: "signal.facialReenactment.error", icon: "🎪" };
     }
     // Reenactment creates blending artifacts between inner face and outer face
     const innerX = Math.floor(w * 0.3), innerY = Math.floor(h * 0.25);

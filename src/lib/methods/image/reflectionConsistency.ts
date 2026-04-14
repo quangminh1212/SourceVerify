@@ -9,10 +9,11 @@ export function analyzeReflectionConsistency(pixels: Uint8ClampedArray, w: numbe
     if (w < 16 || h < 16) {
         return {
             name: "Reflection Consistency", nameKey: "signal.reflectionConsistency",
-            category: "forensic", score: 50, weight: 0.25,
+            category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.reflectionConsistency.error", icon: "🪞",
-        };
+ details,
+    };
     }
 
     let score: number;

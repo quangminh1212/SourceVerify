@@ -12,7 +12,8 @@ export function analyzeBrisque(pixels: Uint8ClampedArray, w: number, h: number):
             category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.brisque.error", icon: "📊",
-        };
+ details,
+    };
     }
 
     let score: number;

@@ -35,7 +35,7 @@ export function analyzeWeberDescriptor(pixels: Uint8ClampedArray, width: number,
     if (excitations.length < 10) {
         return {
             name: "Weber Descriptor", nameKey: "signal.weberDescriptor",
-            category: "spatial", score: 50, weight: 0.4,
+            category: "pixel", score: 50, weight: 0.4,
             description: "Insufficient data for Weber analysis",
             descriptionKey: "signal.weber.error", icon: "⊗",
         };

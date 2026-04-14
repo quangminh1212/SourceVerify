@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeBodyProportion(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Body Proportion", nameKey: "signal.bodyProportion", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.bodyProportion.error", icon: "🧍" };
+        return { name: "Body Proportion", nameKey: "signal.bodyProportion", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.bodyProportion.error", icon: "🧍" };
     }
     // Analyze vertical gradient density distribution - human bodies create specific patterns
     const strips = 8;

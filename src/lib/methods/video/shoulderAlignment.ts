@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeShoulderAlignment(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Shoulder Alignment", nameKey: "signal.shoulderAlignment", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.shoulderAlignment.error", icon: "🤷" };
+        return { name: "Shoulder Alignment", nameKey: "signal.shoulderAlignment", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.shoulderAlignment.error", icon: "🤷" };
     }
 let leftG=0,rightG=0,cnt=0;
 for(let y=Math.floor(h*0.6);y<h;y+=3){for(let x=0;x<w;x+=3){const i=(y*w+x)*4;

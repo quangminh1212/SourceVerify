@@ -9,10 +9,11 @@ export function analyzeContrastEnhancement(pixels: Uint8ClampedArray, w: number,
     if (w < 16 || h < 16) {
         return {
             name: "Contrast Enhancement Detection", nameKey: "signal.contrastEnhancement",
-            category: "forensic", score: 50, weight: 0.3,
+            category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.contrastEnhancement.error", icon: "🔆",
-        };
+ details,
+    };
     }
 
     let score: number;

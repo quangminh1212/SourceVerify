@@ -27,7 +27,7 @@ export function analyzeJPEGGhost(pixels: Uint8ClampedArray, width: number, heigh
     if (blocksX < 4 || blocksY < 4) {
         return {
             name: "JPEG Ghost Detection", nameKey: "signal.jpegGhost",
-            category: "compression", score: 50, weight: 0.4,
+            category: "frequency", score: 50, weight: 0.4,
             description: "Image too small for JPEG ghost analysis",
             descriptionKey: "signal.jpegGhost.error", icon: "⊟",
         };

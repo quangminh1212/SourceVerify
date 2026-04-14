@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeExpressionNaturalness(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Expression Naturalness", nameKey: "signal.expressionNaturalness", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.expressionNaturalness.error", icon: "😐" };
+        return { name: "Expression Naturalness", nameKey: "signal.expressionNaturalness", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.expressionNaturalness.error", icon: "😐" };
     }
 const row=new Float64Array(w);let energy=0,total=0;
 for(let y=0;y<h;y+=4){for(let x=0;x<w;x++){const i=(y*w+x)*4;row[x]=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;}

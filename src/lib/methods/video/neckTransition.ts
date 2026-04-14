@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeNeckTransition(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Neck Transition", nameKey: "signal.neckTransition", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.neckTransition.error", icon: "🔽" };
+        return { name: "Neck Transition", nameKey: "signal.neckTransition", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.neckTransition.error", icon: "🔽" };
     }
 const botStart=Math.floor(h*0.7);let gradSum=0,cnt=0;
 for(let y=botStart;y<h-1;y+=2){for(let x=0;x<w;x+=3){const i1=(y*w+x)*4,i2=((y+1)*w+x)*4;

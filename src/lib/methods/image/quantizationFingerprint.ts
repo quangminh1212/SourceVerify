@@ -15,7 +15,7 @@ export function analyzeQuantizationFingerprint(pixels: Uint8ClampedArray, width:
     if (blocksX < 3 || blocksY < 3) {
         return {
             name: "Quantization Fingerprint", nameKey: "signal.quantFingerprint",
-            category: "compression", score: 50, weight: 0.3,
+            category: "frequency", score: 50, weight: 0.3,
             description: "Image too small for quantization analysis",
             descriptionKey: "signal.quant.error", icon: "⊞",
         };

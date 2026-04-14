@@ -9,10 +9,11 @@ export function analyzeSteganalysis(pixels: Uint8ClampedArray, w: number, h: num
     if (w < 16 || h < 16) {
         return {
             name: "Steganalysis Detection", nameKey: "signal.steganalysis",
-            category: "forensic", score: 50, weight: 0.25,
+            category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.steganalysis.error", icon: "🔍",
-        };
+ details,
+    };
     }
 
     let score: number;

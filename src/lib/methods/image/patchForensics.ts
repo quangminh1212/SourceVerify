@@ -9,10 +9,11 @@ export function analyzePatchForensics(pixels: Uint8ClampedArray, w: number, h: n
     if (w < 16 || h < 16) {
         return {
             name: "Patch-level Forensics", nameKey: "signal.patchForensics",
-            category: "forensic", score: 50, weight: 0.3,
+            category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.patchForensics.error", icon: "🧩",
-        };
+ details,
+    };
     }
 
     let score: number;

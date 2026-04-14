@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoHashAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Hash Analysis", nameKey: "signal.videoHashAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoHashAnalysis.error", icon: "🔐" };
+        return { name: "Video Hash Analysis", nameKey: "signal.videoHashAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoHashAnalysis.error", icon: "🔐" };
     }
 const bs=8,bx=Math.min(Math.floor(w/bs),16),by2=Math.min(Math.floor(h/bs),16);let lowFreq=0,highFreq=0;
 for(let j=0;j<by2;j++){for(let i=0;i<bx;i++){let sum=0,sum2=0;

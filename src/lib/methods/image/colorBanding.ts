@@ -50,7 +50,7 @@ export function analyzeColorBanding(pixels: Uint8ClampedArray, width: number, he
 
     return {
         name: "Color Banding", nameKey: "signal.colorBanding",
-        category: "compression", score, weight: 0.3,
+        category: "frequency", score, weight: 0.3,
         description: score > 55
             ? "Significant color banding detected — AI generation or heavy post-processing artifact"
             : "Smooth gradients without banding — consistent with high-quality capture",

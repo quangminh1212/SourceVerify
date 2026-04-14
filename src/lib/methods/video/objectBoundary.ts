@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeObjectBoundary(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Object Boundary", nameKey: "signal.objectBoundary", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.objectBoundary.error", icon: "🔳" };
+        return { name: "Object Boundary", nameKey: "signal.objectBoundary", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.objectBoundary.error", icon: "🔳" };
     }
 let strong=0,weak=0,total=0;
 for(let y=1;y<h-1;y+=2){for(let x=1;x<w-1;x+=2){const i=(y*w+x)*4;

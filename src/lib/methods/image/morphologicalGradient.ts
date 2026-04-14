@@ -28,7 +28,7 @@ export function analyzeMorphologicalGradient(pixels: Uint8ClampedArray, width: n
     if (gradients.length < 10) {
         return {
             name: "Morphological Gradient", nameKey: "signal.morphGradient",
-            category: "spatial", score: 50, weight: 0.4,
+            category: "pixel", score: 50, weight: 0.4,
             description: "Insufficient data for morphological analysis",
             descriptionKey: "signal.morph.error", icon: "⊖",
         };

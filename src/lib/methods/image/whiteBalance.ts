@@ -37,7 +37,7 @@ export function analyzeWhiteBalance(pixels: Uint8ClampedArray, width: number, he
     if (rgRatios.length < 3) {
         return {
             name: "White Balance Consistency", nameKey: "signal.whiteBalance",
-            category: "color", score: 50, weight: 0.3,
+            category: "pixel", score: 50, weight: 0.3,
             description: "Not enough regions for white balance analysis",
             descriptionKey: "signal.wb.error", icon: "⊙",
         };

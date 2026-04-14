@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeTemporalNoise(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Temporal Noise Pattern", nameKey: "signal.temporalNoise", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.temporalNoise.error", icon: "🔊" };
+        return { name: "Temporal Noise Pattern", nameKey: "signal.temporalNoise", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.temporalNoise.error", icon: "🔊" };
     }
 let noiseSum=0,cnt=0;
 for(let y=2;y<h-2;y+=4){for(let x=2;x<w-2;x+=4){const i=(y*w+x)*4;

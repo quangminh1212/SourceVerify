@@ -10,7 +10,7 @@ export function analyzeFrameInterpolation(pixels: Uint8ClampedArray, w: number, 
     if (w < 16 || h < 16) {
         return {
             name: "Frame Interpolation", nameKey: "signal.frameInterpolation",
-            category: "forensic", score: 50, weight: 0.2,
+            category: "statistical", score: 50, weight: 0.2,
             description: "Frame too small for analysis",
             descriptionKey: "signal.frameInterpolation.error", icon: "🎞",
         };

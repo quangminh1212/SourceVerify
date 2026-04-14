@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeMicroExpressionAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Micro-Expression Analysis", nameKey: "signal.microExpressionAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.microExpressionAnalysis.error", icon: "🎭" };
+        return { name: "Micro-Expression Analysis", nameKey: "signal.microExpressionAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.microExpressionAnalysis.error", icon: "🎭" };
     }
 const fy=Math.floor(h*0.15),fh2=Math.floor(h*0.55);let gradSum=0,cnt=0;
 for(let y=fy;y<fh2;y+=2){for(let x=Math.floor(w*0.25);x<Math.floor(w*0.75)-1;x+=2){

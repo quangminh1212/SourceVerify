@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeHairDetailAnalysis(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Hair Detail Analysis", nameKey: "signal.hairDetailAnalysis", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.hairDetailAnalysis.error", icon: "💇" };
+        return { name: "Hair Detail Analysis", nameKey: "signal.hairDetailAnalysis", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.hairDetailAnalysis.error", icon: "💇" };
     }
 let autocorr=0,total=0;
 for(let y=0;y<h;y+=4){for(let x=0;x<w-2;x+=4){const i=(y*w+x)*4;const j=(y*w+x+2)*4;

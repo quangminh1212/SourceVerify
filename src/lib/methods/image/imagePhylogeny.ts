@@ -12,7 +12,8 @@ export function analyzeImagePhylogeny(pixels: Uint8ClampedArray, w: number, h: n
             category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.imagePhylogeny.error", icon: "🌳",
-        };
+ details,
+    };
     }
 
     let score: number;

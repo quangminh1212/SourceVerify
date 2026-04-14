@@ -32,7 +32,7 @@ export function analyzeMultiscaleReconstruction(
     if (totalBlocks < 4) {
         return {
             name: "Multi-scale Reconstruction", nameKey: "signal.multiScaleReconstruction",
-            category: "forensic", score: 50, weight: 4.0,
+            category: "statistical", score: 50, weight: 1.5,
             description: "Image too small for analysis",
             descriptionKey: "signal.reconstruction.error", icon: "⊞",
         };

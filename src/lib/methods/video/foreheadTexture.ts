@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeForeheadTexture(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Forehead Texture", nameKey: "signal.foreheadTexture", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.foreheadTexture.error", icon: "🧠" };
+        return { name: "Forehead Texture", nameKey: "signal.foreheadTexture", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.foreheadTexture.error", icon: "🧠" };
     }
 const topH=Math.floor(h*0.3);let variance=0,mean=0,cnt=0;
 for(let y=0;y<topH;y+=2){for(let x=0;x<w;x+=2){const i=(y*w+x)*4;mean+=pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114;cnt++;}}

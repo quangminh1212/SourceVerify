@@ -7,7 +7,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeBackgroundStability(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 32 || h < 32) {
-        return { name: "Background Stability", nameKey: "signal.backgroundStability", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.backgroundStability.error", icon: "🏔" };
+        return { name: "Background Stability", nameKey: "signal.backgroundStability", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.backgroundStability.error", icon: "🏔" };
     }
     // Analyze periphery regions (top/bottom/sides) for stability
     const margin = Math.floor(Math.min(w, h) * 0.15);

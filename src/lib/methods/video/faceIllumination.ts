@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFaceIllumination(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Face Illumination", nameKey: "signal.faceIllumination", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceIllumination.error", icon: "💡" };
+        return { name: "Face Illumination", nameKey: "signal.faceIllumination", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceIllumination.error", icon: "💡" };
     }
 const strips=8;const means=[];
 for(let s=0;s<strips;s++){const y1=Math.floor(s*h/strips),y2=Math.floor((s+1)*h/strips);let sum=0,cnt=0;

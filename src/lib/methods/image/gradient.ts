@@ -71,7 +71,7 @@ export function analyzeGradientMicroTexture(pixels: Uint8ClampedArray, width: nu
 
     return {
         name: "Gradient Micro-Texture", nameKey: "signal.gradientSmoothness",
-        category: "texture", score, weight: 1.5,
+        category: "pixel", score, weight: 1.5,
         description: score > 55
             ? "Smooth regions lack natural micro-texture — AI images miss sensor-level noise"
             : "Smooth regions contain natural micro-texture from camera sensor",

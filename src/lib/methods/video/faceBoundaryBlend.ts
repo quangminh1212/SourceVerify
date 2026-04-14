@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFaceBoundaryBlend(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Face Boundary Blend", nameKey: "signal.faceBoundaryBlend", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceBoundaryBlend.error", icon: "🎭" };
+        return { name: "Face Boundary Blend", nameKey: "signal.faceBoundaryBlend", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.faceBoundaryBlend.error", icon: "🎭" };
     }
 let blendScore2=0,cnt=0;const cx2=w/2,cy2=h/3;const r2=Math.min(w,h)/4;
 for(let a=0;a<360;a+=5){const x=Math.floor(cx2+r2*Math.cos(a*Math.PI/180));const y=Math.floor(cy2+r2*Math.sin(a*Math.PI/180));

@@ -10,7 +10,7 @@ export function analyzeCopyMoveForensics(pixels: Uint8ClampedArray, width: numbe
     if (width < 64 || height < 64) {
         return {
             name: "Copy-Move Detection", nameKey: "signal.copyMove",
-            category: "forensic", score: 50, weight: 0.4,
+            category: "statistical", score: 50, weight: 0.4,
             description: "Image too small for copy-move analysis",
             descriptionKey: "signal.copyMove.error", icon: "⊞",
         };

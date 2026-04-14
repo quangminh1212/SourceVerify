@@ -10,7 +10,7 @@ export function analyzeFractalDimension(pixels: Uint8ClampedArray, width: number
     if (width < 32 || height < 32) {
         return {
             name: "Fractal Dimension", nameKey: "signal.fractalDimension",
-            category: "perceptual", score: 50, weight: 0.35,
+            category: "pixel", score: 50, weight: 0.35,
             description: "Image too small for fractal analysis",
             descriptionKey: "signal.fractal.error", icon: "❋",
         };

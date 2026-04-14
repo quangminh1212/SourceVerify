@@ -9,10 +9,11 @@ export function analyzeColorTemperature(pixels: Uint8ClampedArray, w: number, h:
     if (w < 16 || h < 16) {
         return {
             name: "Color Temperature Consistency", nameKey: "signal.colorTemperature",
-            category: "forensic", score: 50, weight: 0.3,
+            category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.colorTemperature.error", icon: "🌡️",
-        };
+ details,
+    };
     }
 
     let score: number;

@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeFrameDropDetection(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Frame Drop Detection", nameKey: "signal.frameDropDetection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.frameDropDetection.error", icon: "📉" };
+        return { name: "Frame Drop Detection", nameKey: "signal.frameDropDetection", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.frameDropDetection.error", icon: "📉" };
     }
 let edgeCount=0,total=0;
 for(let y=1;y<h-1;y+=2){for(let x=1;x<w-1;x+=2){const i=(y*w+x)*4;

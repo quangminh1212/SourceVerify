@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeWatermarkDetection(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Watermark Detection", nameKey: "signal.watermarkDetection", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.watermarkDetection.error", icon: "🔍" };
+        return { name: "Watermark Detection", nameKey: "signal.watermarkDetection", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.watermarkDetection.error", icon: "🔍" };
     }
 const cs=Math.min(64,Math.floor(Math.min(w,h)/4));
 let cornerE=0,centerE=0,cCnt=0,eCnt=0;

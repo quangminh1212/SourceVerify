@@ -54,7 +54,7 @@ export function analyzeHOGAnomaly(pixels: Uint8ClampedArray, width: number, heig
 
     return {
         name: "HOG Anomaly", nameKey: "signal.hogAnomaly",
-        category: "spatial", score, weight: 0.5,
+        category: "pixel", score, weight: 0.5,
         description: score > 55
             ? "Gradient orientations are unusually uniform — typical of AI generation"
             : "Gradient orientations show natural variation — consistent with real scenes",

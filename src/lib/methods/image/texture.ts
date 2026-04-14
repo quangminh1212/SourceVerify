@@ -42,7 +42,7 @@ export function analyzeTextureConsistency(pixels: Uint8ClampedArray, width: numb
 
     return {
         name: "Texture Consistency", nameKey: "signal.textureConsistency",
-        category: "texture", score, weight: 1.0,
+        category: "pixel", score, weight: 1.0,
         description: score > 55
             ? "Texture is unusually consistent across regions — common in AI generation"
             : "Texture varies naturally across regions",

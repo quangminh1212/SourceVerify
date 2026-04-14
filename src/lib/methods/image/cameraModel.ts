@@ -12,7 +12,8 @@ export function analyzeCameraModel(pixels: Uint8ClampedArray, w: number, h: numb
             category: "sensor", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.cameraModel.error", icon: "📷",
-        };
+ details,
+    };
     }
 
     let score: number;

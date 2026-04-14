@@ -80,7 +80,7 @@ export function analyzeGANFingerprint(pixels: Uint8ClampedArray, width: number, 
 
     return {
         name: "GAN Fingerprint", nameKey: "signal.ganFingerprint",
-        category: "generative", score, weight: 0.6,
+        category: "statistical", score, weight: 0.6,
         description: score > 55
             ? "Spectral peaks detected — characteristic fingerprint of GAN-based generation"
             : "No GAN spectral fingerprint detected — frequency spectrum appears natural",

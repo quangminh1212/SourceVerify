@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeColorTemporalShift(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Color Temporal Shift", nameKey: "signal.colorTemporalShift", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.colorTemporalShift.error", icon: "🎨" };
+        return { name: "Color Temporal Shift", nameKey: "signal.colorTemporalShift", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.colorTemporalShift.error", icon: "🎨" };
     }
 const rH=new Array(256).fill(0),gH=new Array(256).fill(0),bH=new Array(256).fill(0);
 for(let i=0;i<pixels.length;i+=4){rH[pixels[i]]++;gH[pixels[i+1]]++;bH[pixels[i+2]]++;}

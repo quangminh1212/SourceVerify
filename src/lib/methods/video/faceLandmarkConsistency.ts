@@ -9,10 +9,11 @@ export function analyzeFaceLandmarkConsistency(pixels: Uint8ClampedArray, w: num
     if (w < 16 || h < 16) {
         return {
             name: "Face Landmark Consistency", nameKey: "signal.faceLandmarkConsistency",
-            category: "forensic", score: 50, weight: 0.25,
+            category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.faceLandmarkConsistency.error", icon: "👤",
-        };
+ details,
+    };
     }
 
     let score: number;

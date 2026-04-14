@@ -60,7 +60,7 @@ export function analyzeUpsamplingArtifact(pixels: Uint8ClampedArray, width: numb
 
     return {
         name: "Upsampling Artifacts", nameKey: "signal.upsamplingArtifact",
-        category: "generative", score, weight: 0.5,
+        category: "statistical", score, weight: 0.5,
         description: score > 55
             ? "Checkerboard upsampling artifacts detected — common in neural network generation"
             : "No upsampling artifacts found — image pixel structure appears natural",

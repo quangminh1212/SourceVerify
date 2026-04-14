@@ -6,7 +6,7 @@ import type { AnalysisMethod } from "../../types";
 
 export function analyzeVideoNoiseConsistency(pixels: Uint8ClampedArray, w: number, h: number): AnalysisMethod {
     if (w < 16 || h < 16) {
-        return { name: "Video Noise Consistency", nameKey: "signal.videoNoiseConsistency", category: "forensic", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoNoiseConsistency.error", icon: "🔊" };
+        return { name: "Video Noise Consistency", nameKey: "signal.videoNoiseConsistency", category: "statistical", score: 50, weight: 0.2, description: "Frame too small", descriptionKey: "signal.videoNoiseConsistency.error", icon: "🔊" };
     }
 const hist=new Array(256).fill(0);const n=pixels.length/4;
 for(let i=0;i<pixels.length;i+=4){const g=Math.round(pixels[i]*0.299+pixels[i+1]*0.587+pixels[i+2]*0.114);hist[g]++;}
