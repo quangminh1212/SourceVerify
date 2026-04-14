@@ -1,18 +1,18 @@
 {
-    "name": "Bản Án Giải Phẫu Cường Độ Ánh Sáng (Histogram Variance)",
-    "description": "Thiết bị đo vạch trần thói ăn cắp mã màu vô tội vạ. Mỗi bức ảnh xịn đều có một kho đồ thị mức phân bổ quang học riêng (bao nhiêu phần trăm tối, sáng, xám) rất mượt mà. Tuy nhiên, dân xài Photoshop dán ảnh người lửng lơ trên bầu trời thường hay lúng túng dùng bùa 'Điều chỉnh màu khớp nhau' (Match Color/Levels/Brightness). Bức vách đồ thị Histogram của tấm ảnh sau khi bị mổ bùa sẽ bị nứt toác, sinh ra khoảng rỗng hoặc bị răng cưa chọc gậy bánh xe lởm chởm (Comb effect/Gap effect).",
-    "algorithm": "Đo Sự Đứt Gãy Quần Thể Phân Phối Điểm Yếu Ánh Sáng Cục Bộ (Histogram Comb/Gap Extractor)",
-    "mechanism": "Thoát li việc nhìn mắt. Nó băm hình ảnh thành đồ thị hình cột nhấp nhô từ 0 (Tối thui) đến 255 (Trắng bóc). Lũ tay mơ bứt hoa, cắt xe, vác vô nền trời hoàng hôn thì thấy lệch màu, vội vã nắm thanh Level kéo độ Sáng tăng gượng ép. Trong ma trận toán học số hóa, khi kéo căng một dải sáng hữu hạn, dải sáng đó bị rách ra! Nơi bị rách thì trống không (Gaps), chỗ điểm ảnh bị dồn cục sưng tấy (Spikes). Thuật toán này đếm đống vụn rỗng đó để nọc tên lừa đảo ra xử bắn.",
-    "parameters": "Biểu đồ: Global/Local 1D Intensity Histogram, Cảnh báo Lỗi: Đỉnh gai Spikes, Lỗ sâu Gaps (Răng Lược), Tần suất đứt gãy Lỗi Tịnh Tiến",
-    "accuracy": "Thực Dụng Nòng Cốt (72-84%) - Máy cưa máy lạnh lùng lột mặt nạn mấy tên lấp liếm cắt dán bằng cách đánh lừa mắt thường bằng Brightness/Contrast.",
-    "source": "Lão Tôn Thất Dữ Liệu Thị Giác Vỏ Não Tán Xạ Ánh Sáng Thống Kê Điểm Số",
-    "useCase": "Giáng đòn phá án trực diện vào các kiệt tác nghệ thuật rỗng ruột bị chọc khoét quá lố Contrast / Levels trên Lightroom/Photoshop. Nhìn qua ảnh rất lộng lẫy kịch tính, nhưng Histogram đã đứt làm hàng chục mẩu xương vụn gãy nát.",
+    "name": "Phân Tích Phương Sai Biểu Đồ Cường Độ (Histogram Variance)",
+    "description": "Phương pháp phân tích biểu đồ phân bố cường độ sáng (histogram) nhằm phát hiện các dấu hiệu chỉnh sửa ảnh. Mỗi ảnh gốc có biểu đồ histogram phân bố mượt mà theo quy luật quang học tự nhiên. Khi thực hiện các thao tác chỉnh sửa như điều chỉnh Levels, Brightness/Contrast, hoặc ghép ảnh kèm hiệu chỉnh màu, biểu đồ histogram sẽ xuất hiện các khoảng trống (gaps) và đỉnh nhọn (spikes) bất thường — hiện tượng được gọi là hiệu ứng răng lược (Comb effect).",
+    "algorithm": "Phân tích đứt gãy phân phối cường độ sáng cục bộ (Histogram Comb/Gap Extractor)",
+    "mechanism": "Thuật toán chuyển đổi dữ liệu pixel thành biểu đồ cường độ sáng 256 mức (từ 0 đến 255). Khi thực hiện giãn dải sáng (stretching) để đồng nhất hóa độ sáng giữa vùng gốc và vùng ghép, các giá trị pixel bị kéo giãn tạo ra khoảng trống trong biểu đồ (gaps), đồng thời các giá trị bị dồn tụ tạo ra đỉnh nhọn (spikes). Thuật toán đếm và đánh giá mức độ đứt gãy này để xác định xem ảnh có dấu hiệu bị chỉnh sửa hay không.",
+    "parameters": "Biểu đồ: Global/Local 1D Intensity Histogram, Chỉ báo: Đỉnh nhọn (Spikes), Khoảng trống (Gaps), Tần suất đứt gãy tịnh tiến",
+    "accuracy": "Trung bình đến cao (72–84%) — Hiệu quả trong phát hiện các thao tác điều chỉnh Brightness/Contrast/Levels nhằm đồng nhất hóa vùng ghép với nền ảnh.",
+    "source": "Lin, Z., et al. (2009). Fast, Automatic and Fine-grained Tampered JPEG Image Detection via DCT Coefficient Analysis.",
+    "useCase": "Phát hiện các thao tác điều chỉnh tương phản và mức sáng (Contrast/Levels) quá mức trên phần mềm Lightroom/Photoshop. Phương pháp này cung cấp bằng chứng thống kê cho thấy biểu đồ histogram đã bị biến dạng do can thiệp nhân tạo.",
     "references": [
         {
             "title": "Lin, Z., et al. (2009). Fast, automatic and fine-grained tampered JPEG image detection via DCT coefficient analysis.",
             "url": ""
         }
     ],
-    "strengths": "• Rất bất trị và khôn ngoan trước sự lười biếng. Gần 90% các pha ghép ảnh dỏm đều buộc phải kéo Contrast hoặc Level cho tiệp cảnh. Rà một phát lộ mảng bùa chú lập tức.\n• Rất nhẹ, chạy xé gió tàn sát trên diện rộng, bắt bớ nhanh kẻ tình nghi không tốn tài nguyên GPU.",
-    "limitations": "• Yếu xìu và khóc ròng đánh sai bét nếu bị lôi vào rà mấy tắm ảnh phơi sáng bị cháy khét đen om hay lóa trắng trời bẩm sinh từ máy ảnh.. Lúc đó Histogram vốn dĩ đã rách khuyết 1 cục to tướng.\n• Hoàn toàn phế vật trước đòn hiểm 'Nén JPEG Cấp Cao' rồi cố ý nhúng Noise (Nhiễu loạn) của những hacker hạng siêu sao để 'làm nhẵn' lại cái Histogram bị rách kia."
+    "strengths": "• Phát hiện hiệu quả đa số các thao tác ghép ảnh kèm điều chỉnh Contrast/Levels, vì các thao tác này tất yếu tạo ra hiện tượng răng lược trên biểu đồ histogram.\n• Chi phí tính toán thấp, xử lý nhanh, phù hợp cho sàng lọc diện rộng mà không yêu cầu tài nguyên GPU.",
+    "limitations": "• Độ chính xác giảm đáng kể đối với ảnh gốc có dải tương phản tự nhiên rất hẹp (ảnh phơi sáng quá hoặc thiếu sáng nghiêm trọng), vì biểu đồ histogram vốn đã có khoảng trống tự nhiên.\n• Không hiệu quả khi ảnh đã được nén JPEG ở mức chất lượng cao kết hợp thêm nhiễu (noise) nhân tạo để làm mượt lại biểu đồ histogram bị đứt gãy."
 }

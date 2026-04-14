@@ -1,18 +1,18 @@
 {
-    "name": "Bản Đồ Chỉ Yếu Lỗi Cấp Độ Chói (ELA)",
-    "description": "Kho tia X-quang ELA (Error Level Analysis) chuyên vạch mặt những kẻ đào mồ cuốc mả hình ảnh. Bất cứ khi nào bạn đẩy một tấm hình JPEG lên mạng, nó bị nén lại. Khi thằng lừa đảo tải nó xuống, cắt cái đầu con chó dán lên thân người, rồi lưu lại thành JPEG lần nữa. Tức khắc! Cây nấm xôi thịt chó kia là hàng xịn nên mức độ bị tàn nhang (Lỗi nén ảnh) khác một trời một vực với cái body gốc. ELA thắp sáng rực rỡ cái sự chênh lệch đó giữa ban ngày không cho cãi bừa.",
-    "algorithm": "Phân Tích Khuếch Đại Khoảng Cách Mức Cấp (JPEG Error Level Amplification)",
-    "mechanism": "Thuật toán lấy lén bức hình hiện tại, chủ động tự nén lại thêm 1 phát nữa ở Quality (65-75%), sau đó nó lấy hình cũ TRỪ ĐI hình mới! Những chỗ nào là ảnh gốc từ xa xưa, nó đã nát sẵn rồi nên không thay đổi mấy (Lỗi ELA cực thấp, đen thui). Nhưng những chi tiết nhân tạo, mặt người, mây bão vừa được gã thợ xăm Photoshop dán vô hôm qua chưa bị nén mòn.. nó sẽ lập tức PHÁT SÁNG TRẮNG CHÓI LÓA báo hiệu sự không đồng bộ độ mòn thời gian.",
-    "parameters": "Trigger: Khả năng lưu đè thứ cấp, Hệ số nén chủ động: Bậc JPEG Quality 75, Trích xuất độ sáng dốc cấp (Luminance Amplification)",
-    "accuracy": "Đỉnh Cao Trực Quan (70-85%) - Chém chết tươi những bức ảnh giật gân, những tờ hóa đơn chuyển khoản bị bôi xóa, chỉnh sửa text bừa bãi vụng về trên các mặt báo.",
-    "source": "Krawetz (2007) - Công Cụ Độc Toàn Cầu Hacker Factor: Phân Tích Lỗi Nén Độc Lập",
-    "useCase": "Giáng đòn hiển thị bản đồ nhiệt báo cháy cho toàn bộ người xem thấy rõ mồn một các cục sứa dán ghép thô bạo (Splicing), bôi sửa số dư tài khoản ngân hàng (Text-forgery) bằng sự sáng chói loá dã man trên nền ELA tối.",
+    "name": "Phân Tích Mức Lỗi (ELA)",
+    "description": "Phương pháp Error Level Analysis (ELA) phát hiện các vùng chỉnh sửa trong ảnh JPEG bằng cách so sánh mức độ suy hao nén giữa các vùng khác nhau. Khi một ảnh JPEG được lưu lại, toàn bộ ảnh trải qua cùng một quá trình nén. Nếu một vùng được chèn hoặc chỉnh sửa sau đó và lưu lại, vùng đó sẽ có mức lỗi nén khác biệt so với phần còn lại — tạo ra sự bất đồng nhất dễ nhận biết trên bản đồ ELA.",
+    "algorithm": "Phân Tích Khuếch Đại Mức Lỗi Nén JPEG (JPEG Error Level Amplification)",
+    "mechanism": "Thuật toán thực hiện nén lại ảnh đầu vào ở mức chất lượng xác định (Quality 65–75%), sau đó tính hiệu số pixel giữa ảnh gốc và ảnh tái nén. Các vùng đã trải qua nhiều lần nén sẽ có mức lỗi thấp (hiển thị tối trên bản đồ ELA), trong khi các vùng mới được chèn hoặc chỉnh sửa — chưa trải qua cùng lịch sử nén — sẽ có mức lỗi cao hơn đáng kể (hiển thị sáng). Sự chênh lệch mức lỗi giữa các vùng liền kề là chỉ báo quan trọng của thao tác chỉnh sửa.",
+    "parameters": "Hệ số nén tái áp dụng: JPEG Quality 75, Phương pháp trích xuất: Khuếch đại độ chói (Luminance Amplification), Đầu ra: Bản đồ nhiệt mức lỗi toàn ảnh",
+    "accuracy": "Cao (70–85%) — Hiệu quả đặc biệt trong việc phát hiện các vùng ghép chèn (splicing), chỉnh sửa nội dung văn bản, hoặc thay đổi cục bộ trên ảnh JPEG đã qua nhiều lần lưu.",
+    "source": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics. Hacker Factor.",
+    "useCase": "Hiển thị bản đồ nhiệt trực quan giúp xác định các vùng ghép chèn (splicing) hoặc chỉnh sửa nội dung (text forgery) trên ảnh JPEG. Phương pháp này đặc biệt hữu ích trong phát hiện giả mạo hóa đơn, chứng từ tài chính có nội dung văn bản bị thay đổi.",
     "references": [
         {
             "title": "Krawetz, N. (2007). A picture's worth... digital image analysis and forensics. Black Hat.",
             "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         }
     ],
-    "strengths": "• Khả năng trực quan không tưởng: Mắt người mù cũng có thể nhìn vô bức ảnh vi phân trắng đen ELA mà chỉ tay thẳng vào vùng bị bôi sửa mà cười nhạo kẻ gian lận.\n• Ác mộng của lũ lừa đảo bill chuyển tiền ngân hàng, chúng chỉ cần Photoshop đổi con số tiền là dải ELA cháy nát khu vực đó do text mới ghép chưa trải qua bào mòn thời gian nén web.",
-    "limitations": "• Lưỡi gươm vỡ nát vô dụng khi chém vào định dạng PNG không xài nén suy hao, vì ELA sinh ra là nấm mồ đặc chế riêng cho họ hàng hàng xóm JPEG.\n• Radar rất hay nảy dương tính giả lố lăng vào các viền gợn sóng nét chữ sắc sảo (như text logo gốc có sẵn) vì viền chữ sắc thì lỗi JPEG tự nhiên sinh ra ánh sáng mạnh hơn nền thịt, rất dễ khép hàm oan."
+    "strengths": "• Khả năng trực quan hóa cao: bản đồ ELA cho phép quan sát trực tiếp các vùng có mức lỗi bất thường, hỗ trợ nhận diện nhanh vùng bị chỉnh sửa.\n• Hiệu quả đặc biệt trong phát hiện giả mạo văn bản trên ảnh (chẳng hạn chỉnh sửa số tiền trên hóa đơn chuyển khoản), vì nội dung mới chèn chưa trải qua lịch sử nén tương đương với phần còn lại.",
+    "limitations": "• Không áp dụng được cho định dạng PNG hoặc các định dạng nén không mất dữ liệu (lossless), vì ELA dựa hoàn toàn trên cơ chế nén suy hao của JPEG.\n• Có xu hướng tạo dương tính giả (false positive) tại các vùng có cạnh sắc nét (viền chữ, logo), vì các vùng này tự nhiên sinh ra mức lỗi JPEG cao hơn vùng nền đồng nhất."
 }

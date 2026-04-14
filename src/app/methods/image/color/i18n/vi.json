@@ -1,12 +1,12 @@
 {
     "name": "Phân Tích Tương Quan Kênh Màu (Color Correlation)",
-    "description": "Phân tích mức độ gắn kết và tương quan thống kê giữa ba kênh màu Đỏ, Xanh lá, và Xanh dương. Nhiếp ảnh chân thực dưới ánh sáng vật lý luôn tuân thủ các quy luật chiếu sáng khắt khe (ví dụ: Giả thuyết Thế giới Xám - Gray World), tạo ra mối liên kết chặt chẽ và không thể tách rời giữa các kênh màu. Trái lại, AI thường tổng hợp màu sắc bằng cách coi các kênh màu như những tham số toán học rời rạc, dẫn đến sự đứt gãy và xa lánh vi tế giữa các giá trị RGB.",
-    "algorithm": "Phân Tích Ma Trận Chiếu Sáng & Tương Quan Pearson Kênh Chéo",
-    "mechanism": "Thuật toán cô lập ba kênh R, G, và B rồi đo lường sự phụ thuộc lẫn nhau của chúng về mặt thống kê (như hệ số tương quan Pearson R-G, R-B, G-B) trong các khối nhỏ (ví dụ 32x32). Trong thế giới thực, khi một nguồn sáng chiếu xuống, các dải gradient từ vùng sáng tới vùng tối đổ bóng sẽ biến thiên nhịp nhàng trên cả ba kênh màu. Còn khi AI (đặc biệt là GAN) vẽ ảnh, nó đi chắp vá từ hàng triệu bức ảnh trộn lẫn. Hậu quả là, một vùng bóng râm do AI vẽ có thể tự nhiên rực lên màu xanh lá chỉ vì AI không hề có một nguồn sáng mô phỏng đồng nhất nào để giữ các kênh màu đi chung một hướng.",
-    "parameters": "Độ phân giải khối: 32x32 đến 64x64, Thước đo: Tương quan Pearson R-G/R-B/G-B, Khớp biểu đồ tần số toàn cục, Nền tảng Lý thuyết: Giả thuyết Thế Giới Xám",
-    "accuracy": "Thấp đến Trung Bình (60-70%) - Hoạt động xuất sắc nhất khi dùng làm công cụ phụ trợ chéo. Sức mạnh độc lập bị kìm hãm nặng nề do sự đa dạng của các kỹ thuật blend màu nghệ thuật cực đoan từ các nhiếp ảnh gia.",
-    "source": "Gijsenij et al. (2011) - Hằng Cố Quang Học Máy Tính / Riess & Angelopoulou",
-    "useCase": "Đóng vai trò là phương pháp hỗ trợ xác minh thứ cấp nhằm gõ gẫy những ảo giác phối màu phi logic do AI kém phát triển tạo ra, hoặc chỉ điểm những pha cắt ghép (copy-move) cẩu thả mang hai nguồn sáng đá nhau.",
+    "description": "Phân tích mức độ tương quan thống kê giữa ba kênh màu R, G, B nhằm phát hiện bất thường trong ảnh. Ảnh chụp thực dưới ánh sáng vật lý tuân thủ các quy luật chiếu sáng (ví dụ: Giả thuyết Thế giới Xám — Gray World), tạo ra mối liên kết chặt chẽ giữa các kênh màu. AI thường tổng hợp màu sắc bằng cách xử lý các kênh màu như tham số toán học độc lập, dẫn đến sự bất tương quan vi tế giữa các giá trị RGB.",
+    "algorithm": "Phân Tích Ma Trận Chiếu Sáng và Tương Quan Pearson Kênh Chéo",
+    "mechanism": "Thuật toán cô lập ba kênh R, G, B và đo lường hệ số tương quan Pearson (R-G, R-B, G-B) trong các khối cục bộ (32×32 pixel). Trong ảnh thực, khi một nguồn sáng chiếu xuống, gradient từ vùng sáng đến vùng tối biến thiên đồng bộ trên cả ba kênh. Khi AI (đặc biệt là GAN) tổng hợp ảnh từ dữ liệu huấn luyện hỗn hợp, các vùng bóng râm có thể xuất hiện màu sắc bất thường do thiếu mô hình chiếu sáng đồng nhất.",
+    "parameters": "Kích thước khối: 32×32 đến 64×64, Thước đo: Tương quan Pearson R-G/R-B/G-B, Phân tích biểu đồ tần số toàn cục, Cơ sở lý thuyết: Giả thuyết Thế Giới Xám",
+    "accuracy": "Thấp đến trung bình (60–70%) — Hoạt động hiệu quả nhất khi dùng làm công cụ hỗ trợ chéo. Độ tin cậy độc lập bị hạn chế do sự đa dạng của các kỹ thuật chỉnh màu nghệ thuật.",
+    "source": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
+    "useCase": "Phương pháp hỗ trợ xác minh thứ cấp, phát hiện sự bất nhất quán trong phối màu do AI tạo ra hoặc chỉ điểm các thao tác ghép chèn (copy-move) có hai nguồn sáng mâu thuẫn nhau.",
     "references": [
         {
             "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
@@ -17,6 +17,6 @@
             "url": "https://doi.org/10.1007/978-3-642-16435-4_5"
         }
     ],
-    "strengths": "• Băng thông tính toán siêu nhẹ và thần tốc, khiến nó trở thành một lá chắn tuần tra vòng ngoài cực tốt trong hệ thống pháp y đa lớp.\n• Sinh ra để rà soát đặc tính chiếu sáng tự nhiên, thừa sức tóm sống các tác phẩm deepfake tồi tàn không giả lập nổi ánh sáng môi trường hợp nhất.\n• Cực kỳ dễ tính, cân được mọi định dạng ảnh bất luận bị nén hay không nén, không thèm đoái hoài phụ thuộc vào lưới cấu trúc nén như JPEG.",
-    "limitations": "• Số liệu độ tin cậy độc lập tụt hậu khá nhiều (60-70%) nếu đem so với đám thuật toán điều tra cấu trúc nhiễu (noise) sừng sỏ.\n• Hệ thống báo động giả (False Positive) gần như chắc chắn sẽ ré lên ầm ĩ nếu bạn nhét vào một bức ảnh chụp thật nhưng đã bị các chuyên gia chỉnh màu (colorist) kéo màu tung tóe, split-tone hoặc áp filter quá nặng tay.\n• Bất lực, mù lòa và hoàn toàn vô dụng trước những bức ảnh đơn sắc (Trắng đen, b&w) hoặc các tranh minh họa vector tối giản không có quy luật ánh sáng."
+    "strengths": "• Chi phí tính toán thấp và tốc độ xử lý nhanh, phù hợp làm bộ lọc sơ bộ trong hệ thống pháp y ảnh số đa lớp.\n• Hiệu quả trong phát hiện ảnh deepfake không mô phỏng được đặc tính chiếu sáng môi trường đồng nhất.\n• Không phụ thuộc vào định dạng ảnh, hoạt động trên cả ảnh nén và không nén.",
+    "limitations": "• Độ tin cậy độc lập thấp (60–70%) so với các phương pháp phân tích cấu trúc nhiễu.\n• Dễ tạo dương tính giả (false positive) đối với ảnh thật đã được chỉnh màu chuyên nghiệp (color grading, split-tone, filter nghệ thuật).\n• Không hiệu quả đối với ảnh đơn sắc (trắng đen) hoặc tranh minh họa vector tối giản không có quy luật chiếu sáng vật lý."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Dấu Vân Nén Lượng Tử (DCT Artifacts)",
-    "description": "Bản án chung thân cho kẻ giả mạo cấy ghép ảnh JPEG. Mỗi khi lưu ảnh JPEG, nó bị nén và đánh dấu bởi ma trận lượng tử 8x8. Khi một thợ photoshop cắt 1 cái đầu từ ảnh A (lưu ở chất lượng 80) đắp vào ảnh B (chất lượng 95), toàn bộ khu vực cấy ghép sẽ la lên thảm thiết vì Dấu vân nén DCT hoàn toàn sai lệch và chọi nhau chan chát. Thuật toán này bóc tách tận gốc lưới 8x8 đó để kiểm tra mức độ đồng nhất lịch sử nén trên toàn bộ khung hình.",
-    "algorithm": "Phân Tích Bất Thường Biên Khối DCT 8x8 & Bảng Lượng Tử Kép",
-    "mechanism": "Thuật toán mổ phanh lớp vỏ hiển thị để trích xuất trực tiếp bảng Hệ số DCT (Discrete Cosine Transform) đang ẩn mình trong file. Tại các vùng có vật thể nhân tạo (hoặc thêm từ luồng khác), lưới 8x8 bị đâm thủng, trượt pha, hoặc mang theo một bảng lượng tử khác hẳn với những gì background đang mang. Máy quét này lôi các ranh giới block 8x8 ra, đo lường năng lượng cực đại và tìm kiếm các nếp gãy lệch pha kinh tởm—minh chứng rõ ràng nhất của tội phạm cắt ghép.",
-    "parameters": "Hạch tâm quét: Discrete Cosine Transform (DCT) 8x8 Block Grid, Phát hiện vết khâu: Block Artifact Grid Mismatch, Kênh quét: YCbCr Luma",
-    "accuracy": "Rất Cao (85-92%) - Tòa án tối cao chuyên trách dành cho các loại ảnh JPEG bị mở lên, chỉnh sửa và bóc lột lưu lại rất nhiều lần.",
-    "source": "Fan & De Queiroz (2003) - Giám Định Lịch Sử Nén Ảnh & Dấu Vết Lượng Tử DCT",
-    "useCase": "Soi cấu trúc hạt nén JPEG để lôi cỏ cụm những phần thi thể ảnh bị nhét vào cẩu thả, chứng minh bằng toán học rằng vật thể đó đến từ một file rác khác chứ không phải sinh ra cùng tại bức ảnh hiện tại.",
+    "name": "Phân Tích Dấu Vết Nén DCT (DCT Artifacts)",
+    "description": "Phương pháp phân tích dấu vết lượng tử hóa DCT trong ảnh JPEG nhằm phát hiện vùng chỉnh sửa. Khi lưu ảnh JPEG, toàn bộ ảnh được chia thành các khối 8×8 pixel và áp dụng biến đổi Cosine rời rạc (DCT) với bảng lượng tử hóa cụ thể. Nếu một vùng ảnh được chèn từ nguồn khác có lịch sử nén khác biệt, lưới khối 8×8 và bảng lượng tử tại vùng đó sẽ không đồng nhất với phần còn lại — tạo ra hiện tượng lệch pha khối (block artifact mismatch) dễ phát hiện bằng phân tích toán học.",
+    "algorithm": "Phân Tích Bất Thường Biên Khối DCT 8×8 và Bảng Lượng Tử Kép",
+    "mechanism": "Thuật toán trích xuất trực tiếp các hệ số DCT (Discrete Cosine Transform) từ file JPEG mà không cần giải mã toàn bộ ảnh. Tại các vùng có vật thể được chèn từ nguồn khác, lưới khối 8×8 bị lệch pha hoặc mang theo bảng lượng tử khác biệt so với phần nền. Hệ thống đo lường năng lượng cực đại và phân tích ranh giới khối để phát hiện sự không đồng nhất — bằng chứng rõ ràng của thao tác ghép chèn.",
+    "parameters": "Phương pháp quét: Lưới khối DCT 8×8, Phát hiện: Block Artifact Grid Mismatch, Kênh phân tích: YCbCr Luma",
+    "accuracy": "Rất cao (85–92%) — Đặc biệt hiệu quả đối với ảnh JPEG đã trải qua nhiều lần chỉnh sửa và lưu lại với các mức chất lượng nén khác nhau.",
+    "source": "Fan, Z. & de Queiroz, R.L. (2003). Identification of Bitmap Compression History. IEEE ICIP.",
+    "useCase": "Phân tích cấu trúc nén JPEG để xác định các vùng có lịch sử nén không đồng nhất, chứng minh rằng vật thể hoặc nội dung tại vùng đó có nguồn gốc từ file khác và được ghép chèn vào ảnh hiện tại.",
     "references": [
         {
             "title": "Fan, Z. & de Queiroz, R.L. (2003). Identification of Bitmap Compression History. IEEE ICIP.",
@@ -17,6 +17,6 @@
             "url": "https://doi.org/10.1109/TIFS.2012.2187516"
         }
     ],
-    "strengths": "• Xuyên thủng thẳng vào lõi thuật toán nén quốc tế, sự lệch pha ma trận lượng tử là một định luật vật lý máy tinh không thể tranh cãi.\n• Bắt thóp 100% tỷ lệ dính líu khi có ai cố tình chèn người vào khung hình mà lười không đồng bộ nén lại từ đầu bằng RAW.",
-    "limitations": "• Vô dụng tột cùng và tự sát hoàn toàn nếu đối mặt với file PNG, WebP mượt mà không dùng khối lượng tử, hoặc ảnh đã bị resize, cắt bớt 2 pixel làm vỡ hoàn toàn lưới 8x8 toàn cục.\n• Thuật toán sẽ mù đặc nếu kẻ thủ ác lưu lại tấm ảnh giả với chất lượng siêu cùi (Quality 30%) - lúc này rác JPEG vương vãi đè bẹp xé bỏ toàn bộ chứng cứ lịch sử cũ."
+    "strengths": "• Khai thác trực tiếp cấu trúc nén chuẩn quốc tế JPEG; sự lệch pha ma trận lượng tử là bằng chứng toán học khách quan và khó phản bác.\n• Phát hiện hiệu quả khi nội dung được chèn từ nguồn khác mà không được đồng bộ lại bảng lượng tử từ đầu.",
+    "limitations": "• Không áp dụng được cho các định dạng không sử dụng khối lượng tử DCT (PNG, WebP, RAW), hoặc ảnh đã bị thay đổi kích thước/cắt xén làm lệch lưới 8×8 toàn cục.\n• Hiệu quả giảm đáng kể khi ảnh được lưu ở mức chất lượng rất thấp (Quality ≤ 30%), vì nhiễu nén lớn sẽ che lấp các dấu vết lịch sử nén trước đó."
 }

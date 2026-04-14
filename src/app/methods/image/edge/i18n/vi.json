@@ -1,18 +1,18 @@
 {
-    "name": "Bản Đồ Đứt Gãy Cạnh Viền (Edge Rupture)",
-    "description": "Lưỡi hái tử thần bủa vây biên giới vật thể. Bọn cắt dán Photoshop dù tỉ mỉ tới mức nào cũng không bao giờ có thể tạo ra ranh giới hoàn mỹ như cảm biến quang học thật. Mép viền của kẻ lừa đảo luôn có một đường răng cưa vô hình, hoặc là bị bôi mờ (blur/feather/anti-aliasing) một cách bất bình thường để giấu nhẹm đi vết ghép dơ bẩn. Radar đo lường cạnh sườn này dò dẫm trên từng mi-li-mét đường bao để tóm gọn các dấu phẩy bất tương xứng đấy.",
-    "algorithm": "Phân Tích Cấu Cạnh Ranh Giới Định Hướng Bất Thường (Sobel/Canny Edge Thickness)",
-    "mechanism": "Nó đo lường độ dày và biên độ chuyển độ tương phản tại chính phần viền áo, cằm hay bờ vai. Máy ảnh thật tạo ra đường viền có chu kỳ ánh sáng gối lên nhau cực độ (Optical diffraction bờ mép hạt). Thợ sửa ảnh tay ngang dùng công cụ Lasso/Magic Wand tạo ra một nét cắt sắc như dao lam, thẳng tắp như tờ giấy chém vào nền... Thuật toán chỉ cần ngửi thấy sự vắng bóng của quang sai vi mô này là bấm nút tử hình kẻ ghép.",
-    "parameters": "Hình dạng: Canny/Sobel Biên, Cường độ: Ranh giới vi phân cấp 2, Nhận diện dị vật viền (Mask Feathering)",
-    "accuracy": "Cực Tốt (78-86%) - Sát thủ tối hậu chuyên dành dập ngay đầu bọn rảnh rỗi dùng Photoshop cắt người nhét vào cảnh nền khác.",
-    "source": "Lưu Trữ Hình Học Xử Lý Ảnh Số (Edge Inconsistency/Blur Detect)",
-    "useCase": "Giám định trực tiếp nơi hai vật thể kỳ lạ giáp lá cà: Phanh thui xem phần lấn chiếm nhau này là sinh lý quang học ánh sáng tự nhiên, hay là rác rưởi cắt ghép.",
+    "name": "Phân Tích Đứt Gãy Cạnh Viền (Edge Rupture)",
+    "description": "Phương pháp phân tích tính nhất quán của cạnh viền (edge) tại ranh giới giữa các vật thể trong ảnh. Cảm biến quang học tạo ra các cạnh viền tự nhiên có đặc trưng nhiễu xạ quang học (optical diffraction) đặc thù. Ngược lại, các thao tác ghép chèn bằng phần mềm thường tạo ra cạnh viền có độ sắc nét bất thường (do cắt bằng công cụ Lasso/Magic Wand) hoặc bị làm mờ quá mức (blur/feather) để che giấu vết ghép. Phương pháp này đo lường sự bất thường về độ dày và biên độ cạnh để phát hiện can thiệp.",
+    "algorithm": "Phân Tích Cạnh Ranh Giới Định Hướng Bất Thường (Sobel/Canny Edge Thickness)",
+    "mechanism": "Thuật toán đo lường độ dày và biên độ chuyển tiếp tương phản tại các cạnh viền vật thể. Máy ảnh thật tạo ra đường viền có đặc trưng nhiễu xạ quang học vi mô. Khi sử dụng công cụ chọn vùng (Lasso, Magic Wand), cạnh cắt tạo ra có độ sắc nét đồng nhất bất thường, thiếu sự chuyển tiếp quang học tự nhiên. Thuật toán phát hiện sự vắng mặt của đặc trưng quang sai vi mô này để xác định vùng bị ghép chèn.",
+    "parameters": "Bộ lọc cạnh: Canny/Sobel, Cường độ: Vi phân cấp 2, Phát hiện: Mask Feathering bất thường",
+    "accuracy": "Cao (78–86%) — Hiệu quả trong phát hiện các thao tác ghép chèn vật thể (compositing) sử dụng công cụ tách nền trong Photoshop.",
+    "source": "Barni, M. et al. (2010). Forensic Analysis of Digital Images: Spatial Contrast and Inconsistency.",
+    "useCase": "Giám định tính nhất quán cạnh viền tại ranh giới giữa các vật thể: xác định xem đường biên là kết quả của quang học tự nhiên hay là sản phẩm của thao tác ghép chèn kỹ thuật số.",
     "references": [
         {
             "title": "Barni, M. et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency.",
             "url": "https://ieeexplore.ieee.org/document/5567087"
         }
     ],
-    "strengths": "• Vượt qua mặt người một cách áp đảo. Nó nhìn thấy bờ mép áo đang dính với background phía sau theo định luật vật lý 3D hay chỉ là màn 2D phẳng lỳ rẻ tiền dán lên nhau.\n• Thực thi siêu chớp nhoáng vì nó chỉ quét qua rìa ranh giới vật thể mà bỏ qua toàn bộ khối ruột phức tạp bên trong.",
-    "limitations": "• Lưỡi hái chém trượt gãy văng nếu vật thể thật được chụp mờ bằng ống khẩu độ siêu lớn f/1.2 (Bokeh nát nhừ biên giới tự nhiên).\n• Phế võ công nếu kẻ thủ ác dùng AI Generative In-painting bôi nhòe tái tạo lại viền: AI sinh viền lại khá liền mạch với vật thể chứ không dính răng cưa kiểu Photoshop cũ."
+    "strengths": "• Phát hiện được sự khác biệt giữa cạnh viền tuân thủ quy luật quang học 3D (chiều sâu, nhiễu xạ) và cạnh viền 2D phẳng do ghép chèn tạo ra.\n• Tốc độ xử lý nhanh vì chỉ phân tích vùng cạnh viền vật thể mà không cần quét toàn bộ nội dung ảnh.",
+    "limitations": "• Giảm hiệu quả đáng kể đối với ảnh chụp với khẩu độ lớn (f/1.2–f/1.8) tạo hiệu ứng bokeh mạnh, vì cạnh viền tự nhiên vốn đã bị làm mờ do chiều sâu trường ảnh nông.\n• Không hiệu quả khi đối tượng sử dụng AI Generative Inpainting để tái tạo cạnh viền, vì kỹ thuật này có thể tạo ra đường biên liền mạch mà không có đặc trưng răng cưa của phần mềm chỉnh sửa truyền thống."
 }
