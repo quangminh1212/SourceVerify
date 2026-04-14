@@ -1,18 +1,18 @@
 {
-    "name": "Bức Màn Dải Động Quang Học (Dynamic Range)",
-    "description": "Thước đo tàn nhẫn bóc trần những bầu trời AI dối trá và các hố đen cắt dán. Mọi cảm biến máy ảnh đời thực đều bị giới hạn bởi 'Dải Động Ánh Sáng' vật lý—quá sáng sẽ 'cháy' trắng bóc (clipping), quá tối sẽ lốm đốm nhiễu hạt (sensor noise). Bọn thợ chế ảnh hoặc Generative AI thường xuyên vứt bỏ định luật vật lý này, tạo ra các bức hình nửa nạc nửa mỡ: Chỗ thì tối đen hun hút như hố đen vũ trụ 0% nhiễu, chỗ thì chói lóa nhưng lại đầy rẫy chi tiết mượt mà hoàn hảo sai tự nhiên. Radar này sẽ giăng bẫy sự vô lý đó.",
-    "algorithm": "Đo Lường Biên Độ Đỉnh Sáng & Xung Đột Nhiễu Đáy Tối (Clipping/Noise Floor Clash)",
-    "mechanism": "Nó xẻ dọc Histogram phơi sáng của bức ảnh để soi thẳng vào hai mép vực thẳm: Cực Trắng (Highlight) và Cực Đen (Shadow). Trong ảnh thực, khi bị cháy sáng, các kênh RGB sẽ bị xén ngang phẳng lì thảm thương ở giá trị 255. AI hoặc ảnh ghép thường 'quên' xử lý hoặc bôi nhòe phi logic vùng cháy này. Tương tự, bóng tối thực sự phải chứa tiếng la thét vật lý của nhiễu ảnh (Noise floor). AI thì lại sinh ra bóng tối đen nghìn nghịt, sạch không tì vết, một dấu vết vô cơ tàn bạo phản bội hoàn toàn quang học.",
-    "parameters": "Toán tử: Biểu đồ Histogram Tuyến Tính, Đo lường: Cắt đỉnh RGB (Clipping Point) & Sàn nhiễu tối (Noise Floor Limit).",
-    "accuracy": "Khá (67-78%) - Nhanh như chớp, rất thích hợp vạch trần các bối cảnh ánh sáng siêu thực hoặc HDR giả cẩu thả do thợ Photoshop ghép hình.",
-    "source": "Pháp Y Độ Sáng Môi Trường Kỹ Thuật Số (Illuminant & Dynamic Range Traces)",
-    "useCase": "Giám sát cấu hình ánh sáng cực đoan. Réo còi lập tức nếu phát hiện kẻ não phẳng cắt ghép một người từ tấm ảnh cháy nắng rực rỡ và nhồi vào một con hẻm u tối mà không thèm đồng bộ ranh giới Dải Động.",
+    "name": "Phân Tích Dải Động Quang Học (Dynamic Range)",
+    "description": "Phương pháp đánh giá tính nhất quán của dải động ánh sáng trong ảnh số. Mọi cảm biến máy ảnh đều bị giới hạn bởi dải động vật lý: vùng quá sáng sẽ bị cắt xén (clipping) và vùng quá tối sẽ xuất hiện nhiễu cảm biến (sensor noise). Các phần mềm chỉnh sửa hoặc mô hình AI tạo sinh thường vi phạm các quy luật vật lý này, tạo ra ảnh có vùng tối hoàn toàn không nhiễu hoặc vùng sáng vẫn giữ nguyên chi tiết một cách phi tự nhiên. Thuật toán phân tích các bất thường về dải động để nhận diện ảnh đã qua xử lý.",
+    "algorithm": "Đo Lường Biên Độ Cắt Xén Vùng Sáng và Mâu Thuẫn Sàn Nhiễu Vùng Tối (Clipping/Noise Floor Clash)",
+    "mechanism": "Thuật toán phân tích biểu đồ histogram phơi sáng của ảnh, tập trung vào hai vùng biên: Cực sáng (Highlight) và Cực tối (Shadow). Trong ảnh thật, khi bị cháy sáng, các kênh RGB bị cắt ngang tại giá trị 255 theo đặc trưng vật lý của cảm biến. Ảnh AI hoặc ảnh ghép thường xử lý không chính xác vùng cắt xén này. Tương tự, vùng bóng tối trong ảnh thật phải chứa mức nhiễu nền (Noise floor) theo đặc tính cảm biến. Trong khi đó, AI thường tạo ra vùng tối quá sạch, không có nhiễu hạt đặc trưng — một dấu hiệu rõ rệt của nguồn gốc nhân tạo.",
+    "parameters": "Công cụ phân tích: Biểu đồ Histogram tuyến tính, Chỉ số đo: Điểm cắt xén RGB (Clipping Point) và Ngưỡng sàn nhiễu tối (Noise Floor Limit)",
+    "accuracy": "Khá (67-78%) — Thích hợp để phát hiện nhanh các bối cảnh ánh sáng bất hợp lý hoặc HDR giả trong ảnh ghép.",
+    "source": "Pháp y độ sáng môi trường kỹ thuật số (Illuminant & Dynamic Range Traces)",
+    "useCase": "Giám sát tính nhất quán ánh sáng trong ảnh. Phát hiện các trường hợp ghép đối tượng từ môi trường chiếu sáng khác nhau mà không đồng bộ ranh giới dải động tương ứng.",
     "references": [
         {
             "title": "Kee, E., & Farid, H. (2010). Exposing digital forgeries from 3-D lighting environments. IEEE TIFS.",
             "url": "https://ieeexplore.ieee.org/document/5567087"
         }
     ],
-    "strengths": "• Không màng đến độ tinh vi của mảng da người, nó đâm chém thẳng vào quy luật ánh sáng gốc rễ của vật lý đồ họa. Đặc trị lũ lười biếng vặn Curves/Levels không quan tâm đến dải hạt ISO gốc.\n• Bức tử ngay các bầu trời AI hoàng hôn rực rỡ giả tạo nhưng lại... chả có điểm cháy vật lý nào đáng kể trên mây.",
-    "limitations": "• Nhát phán quyết sẽ sai bét (False Positive) nếu đối mặt với những siêu phẩm được chụp bởi máy ảnh Cinema (như ARRI/RED RAW) có Dải Động 15-stop đỉnh cao, nơi bóng tối cực sạch và vùng cháy sáng cực mềm mại.\n• Có thể tịt ngòi nếu tay chuyên gia cố tình thêm Noise (Nhiễu Film nhân tạo) vào vùng bóng tối nhân tạo để lừa đảo radar sàn nhiễu."
+    "strengths": "• Không phụ thuộc vào nội dung thị giác mà phân tích trực tiếp quy luật vật lý ánh sáng. Hiệu quả với các trường hợp điều chỉnh Curves/Levels mà không cân nhắc đặc tính nhiễu ISO gốc.\n• Phát hiện hiệu quả các ảnh AI có vùng sáng giả tạo nhưng thiếu điểm cắt xén vật lý đặc trưng.",
+    "limitations": "• Có thể cho kết quả dương tính giả (False Positive) đối với ảnh chụp bằng máy quay chuyên nghiệp (ARRI, RED RAW) có dải động 15-stop, nơi vùng tối rất sạch và vùng sáng chuyển tiếp mềm mại tự nhiên.\n• Có thể bị vượt qua nếu người can thiệp cố tình thêm nhiễu nhân tạo (Film Noise) vào vùng bóng tối để mô phỏng sàn nhiễu tự nhiên."
 }

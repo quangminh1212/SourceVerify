@@ -1,18 +1,18 @@
 {
-    "name": "Vết Sẹo Mạng Lưới Điểm Nút Tích Chập (Convolutional Trace)",
-    "description": "Con 'Ký sinh trùng' chuyên đánh hơi mạng nơ-ron: Đây là sát thủ tối thượng tàn nhẫn truy lùng vết sẹo lưới bàn cờ (Checkerboard Artifacts) đặc trưng của máy móc AI. Khi GAN hay mô hình Khuếch tán (Diffusion) cố gắng phóng to hoặc 'vẽ' ra một tấm ảnh từ nhiễu hạt mờ (upsampling/transpose convolution), các nơ-ron toán học của chúng vĩnh viễn và không thể tránh khỏi việc cày xới để lại một mạng lưới lưới caro li ti siêu việt chìm sâu dưới đáy các lớp pixel không thể tẩy rửa.",
-    "algorithm": "Khảo Sát Khuyết Tật Phổ Tần Số Phép Tính Tích Chập (Transposed Convolution Checkerboard)",
-    "mechanism": "Quét sạch bức ảnh bằng bộ lọc làm nổi bật cao tần (High-pass Filter), sau đó tàn sát nó thông qua biến đổi Fourier 2D. Thuật toán này không quan tâm con mắt hay cái miệng mà AI vẽ đẹp đến đâu. Nó nhẫn tâm gạch bỏ tất cả nội dung hình dáng, soi rọi siêu cường độ vào kết cấu nền tảng của bản thể bức hình. Hình ảnh AI do bị 'phình to' lên từ các bộ lọc hạt nhân (kernel filters) nhỏ hẹp luôn in hằn một vết dập caro ngang dọc (mô hình lặp tuần hoàn) rải rác. Các lưới này chớp đỏ rực trong phổ tần số Fourier tố cáo cỗ máy sinh ra nó.",
-    "parameters": "Cốt lõi: Transposed Convolution Checkerboard Extractor, Tính hiệu biểu diễn: Fast Fourier Transform 2D, Tín hiệu lõi tần số cao",
-    "accuracy": "Siêu Tối Thượng (90-98%) - Hình ảnh sinh ra từ thuật toán Generative (GAN/Diffusion) gần như đã bị tuyên án tử khi chiếc máy vắt sổ khuyết tật toán học gốc này bật lên.",
-    "source": "Odena et al. (2016) - Mạng Lưới Giải Tích Chập Khuyết Tật",
-    "useCase": "Vũ khí không thể bị chống cự chuyên dùng để phán quyết chắc nịch một bức ảnh là hàng thật từ ống kính (organic) hay là rác tái chế nhân tạo sinh ra từ các hệ thống deepfake, Midjourney, Stable Diffusion.",
+    "name": "Phát Hiện Dấu Vết Tích Chập (Convolutional Trace)",
+    "description": "Phương pháp chuyên phát hiện các hiện vật lưới bàn cờ (Checkerboard Artifacts) đặc trưng của mô hình sinh ảnh AI. Khi mạng GAN hoặc mô hình khuếch tán (Diffusion) thực hiện phép nội suy tăng kích thước (upsampling) thông qua phép tích chập chuyển vị (transpose convolution), cấu trúc toán học của các bộ lọc hạt nhân tất yếu tạo ra một mẫu lặp tuần hoàn dạng lưới ẩn sâu trong các lớp pixel, ngay cả khi nội dung thị giác trông hoàn toàn tự nhiên.",
+    "algorithm": "Phân Tích Khuyết Tật Phổ Tần Số Từ Phép Tích Chập Chuyển Vị (Transposed Convolution Checkerboard)",
+    "mechanism": "Thuật toán áp dụng bộ lọc thông cao (High-pass Filter) lên toàn bộ ảnh nhằm loại bỏ nội dung tần số thấp, sau đó thực hiện biến đổi Fourier 2D trên tín hiệu còn lại. Phương pháp này không phân tích nội dung ngữ nghĩa mà tập trung vào cấu trúc vi mô của ảnh. Do ảnh AI được tạo từ các bộ lọc hạt nhân (kernel) có kích thước nhỏ, quá trình nội suy tăng kích thước luôn để lại mẫu lặp tuần hoàn dạng lưới caro. Các mẫu này biểu hiện rõ ràng dưới dạng các đỉnh năng lượng đặc trưng trong miền tần số Fourier.",
+    "parameters": "Bộ trích xuất: Transposed Convolution Checkerboard Extractor, Biến đổi: Fast Fourier Transform 2D, Dải tín hiệu: Tần số cao",
+    "accuracy": "Rất cao (90-98%) — Đặc biệt hiệu quả đối với ảnh sinh bởi các kiến trúc GAN và Diffusion sử dụng phép tích chập chuyển vị.",
+    "source": "Odena et al. (2016) — Phân tích hiện vật giải tích chập",
+    "useCase": "Được sử dụng để xác định một bức ảnh có nguồn gốc từ thiết bị chụp thật hay được tạo bởi các hệ thống sinh ảnh AI như Deepfake, Midjourney hoặc Stable Diffusion, dựa trên dấu vết cấu trúc toán học nội tại.",
     "references": [
         {
             "title": "Odena, A., Dumoulin, V., & Olah, C. (2016). Deconvolution and Checkerboard Artifacts. Distill.",
             "url": "https://distill.pub/2016/deconv-checkerboard/"
         }
     ],
-    "strengths": "• Có năng lực đánh thẳng vào DNA lỗi cấu trúc lõi của kiến trúc Mạng nơ-ron (Convolutional Neural Networks), điều mà AI tạo sinh gần như không thể triệt tiêu triệt để dù có khéo léo đến đâu.\n• Không cần mạng nơ-ron phân tích chéo, chỉ tính toán thuần túy trên dải tần suất tín hiệu, tiêu diệt cái 'bẫy thẩm mỹ' lừa mắt người.",
-    "limitations": "• Nhát chém sẽ gãy nát nếu hacker sử dụng các kỹ năng nén ảnh (JPEG Compression) phá vỡ dải tần bậc cao hoặc resize nhỏ tấm ảnh gốc làm nổ nát cấu trúc bàn cờ lưới (Downsampling).\n• Có thể 'buộc tội nhầm' (False Positives) đối với các hoa văn áo len caro, lớp vảy cá siêu nhỏ hoặc lưới tản nhiệt ô tô do bản chất chúng vốn đã nằm theo mô hình tuần hoàn lặp lại."
+    "strengths": "• Nhắm trực tiếp vào khuyết tật cấu trúc cốt lõi của kiến trúc mạng nơ-ron tích chập (CNN), vốn rất khó để các mô hình AI tạo sinh triệt tiêu hoàn toàn.\n• Không yêu cầu mạng nơ-ron phân tích bổ sung, chỉ sử dụng các phép toán thuần túy trên miền tần số, giúp phát hiện các dấu hiệu mà mắt người không thể nhận biết.",
+    "limitations": "• Hiệu quả giảm đáng kể khi ảnh bị nén JPEG mạnh (phá hủy thông tin tần số cao) hoặc bị giảm kích thước (downsampling), làm mất cấu trúc lưới bàn cờ đặc trưng.\n• Có thể xảy ra dương tính giả (False Positives) đối với ảnh chứa các mẫu tuần hoàn tự nhiên như hoa văn vải caro, vảy cá vi mô hoặc lưới tản nhiệt công nghiệp."
 }

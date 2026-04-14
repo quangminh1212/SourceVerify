@@ -1,18 +1,18 @@
 {
-    "name": "Tỉ Lệ Bề Mặt Láng Bóng (Flat Region Ratio)",
-    "description": "Ác mộng của sự hoàn hảo nhân tạo. Khi máy AI như Midjourney cố vẽ ra làn da người hay bức tường sần sùi, do bản chất toán học hướng về sự tối giản (hệ thống khử nhiễu Denoise), thứ AI sinh ra luôn quá trơn tru, bóng nhẫy, và quá 'hoàn hảo' so với vật thật vốn phải có độ nhám phân bổ không đều. Phép đo này càn quét khắp bức hình để đo lường bao nhiêu phần trăm bề mặt bị 'trọc' hạt vi mô. Nếu mảng trọc quá lớn (vd: làn da cô gái không hề có 1 lỗ chân lông nào gờ lên), còi báo động sẽ rú vang.",
-    "algorithm": "Đo Lường Biên Độ Phẳng Nhẵn Bề Mặt Cục Bộ (Flat Variance Thresholding)",
-    "mechanism": "Thuật toán thả một lưới rây lọc qua từng mảng ảnh. Nó tìm những chỗ mà tại đó, sự biến thiên ánh sáng của các pixel gần như bằng số 0 tròn trĩnh (như bề mặt đĩa CD). Bề mặt chụp bằng ống kính thật luôn có sóng gợn lăn tăn cực nhỏ của nhiễu cảm biến ISO, không bao giờ nhẵn tới mức toán học đó. Cứ mảng nào đạt chuẩn trơn nhẵn phẳng lỳ, thuật toán sẽ cộng % lên. Diện tích mượt quá đà = tỷ lệ 90% là AI sản xuất vô cơ.",
-    "parameters": "Hình thái quét: Local Micro-Variance, Ngưỡng bão hòa nhẵn: Chênh lệch Threshold < 3, Trọng số diện tích bao phủ.",
-    "accuracy": "Cực Tốt (77-85%) - Chém gãy cổ bọn cố tình dùng AI để lăng xê chân dung khuôn mặt láng mịn sáp nhựa (Plastic Look).",
-    "source": "Lưu Trữ Nhận Diện Da Người AI Bằng Hiện Tượng Làm Mịn Vi Mô",
-    "useCase": "Giáng búa tử hình thẳng vào những siêu phẩm ảnh nghệ thuật sắc nét 8K. Dẫu nhìn ngoài lộng lẫy, nhưng Zoom kĩ lại là nguyên một tảng sáp vô tri. Flat Region Ratio quét và chứng minh ngay độ hư ảo đó.",
+    "name": "Tỷ Lệ Vùng Phẳng Bề Mặt (Flat Region Ratio)",
+    "description": "Phương pháp đo lường tỷ lệ các vùng có biến thiên cường độ cực thấp (vùng phẳng) trên toàn bộ ảnh. Do đặc tính toán học hướng theo sự tối giản của hệ thống khử nhiễu (Denoise), các mô hình AI tạo sinh thường xuất ra bề mặt quá mịn màng, mất hoàn toàn vi cấu trúc hạt nhiễu vốn có trong ảnh chụp thật. Thuật toán quét toàn bộ ảnh để đo tỷ lệ diện tích bề mặt có độ biến thiên vi mô gần bằng 0. Nếu tỷ lệ này vượt ngưỡng cho phép (ví dụ: làn da hoàn toàn không có lỗ chân lông), hệ thống sẽ đánh dấu ảnh là có nghi vấn nhân tạo.",
+    "algorithm": "Đo Lường Biến Thiên Phẳng Cục Bộ (Flat Variance Thresholding)",
+    "mechanism": "Thuật toán áp dụng một cửa sổ trượt lên toàn bộ ảnh và tính phương sai cường độ của các pixel trong từng vùng. Những vùng có phương sai gần bằng 0 được xác định là vùng phẳng. Bề mặt chụp bằng ống kính thật luôn tồn tại các dao động vi mô của nhiễu cảm biến ISO, không bao giờ đạt độ phẳng tuyệt đối về mặt toán học. Tổng diện tích các vùng phẳng được tính toán và so sánh với ngưỡng thống kê để xác định khả năng ảnh được tạo bởi AI.",
+    "parameters": "Phương pháp quét: Local Micro-Variance, Ngưỡng biến thiên: Threshold < 3, Trọng số: Tỷ lệ diện tích bao phủ",
+    "accuracy": "Tốt (77-85%) — Hiệu quả cao trong việc phát hiện ảnh AI sử dụng kỹ thuật làm mịn quá mức, đặc biệt ảnh chân dung.",
+    "source": "Nhận dạng ảnh AI thông qua phân tích hiện tượng làm mịn vi mô",
+    "useCase": "Kiểm tra các ảnh độ phân giải cao. Mặc dù trông sắc nét ở mức toàn cảnh, khi phóng to các vùng bề mặt, thuật toán có thể xác định sự vắng mặt của vi cấu trúc thực tế, chứng tỏ nguồn gốc nhân tạo.",
     "references": [
         {
             "title": "Marra, F., et al. (2020). A full-image full-resolution end-to-end-trainable CNN framework for image forgery detection. IEEE Access.",
             "url": "https://ieeexplore.ieee.org/document/9082156"
         }
     ],
-    "strengths": "• Không bị hoa mắt bởi độ phân giải nhồi nhét. Càng Upscale bằng AI, lớp trọc láng bóng càng bung bét ra diện tích rộng, thuật toán vớ bẫy càng sướng.\n• Trực diện bóc bài các chiêu xài In-painting (hàn gắn ảnh AI) vì vùng hàn này bao giờ cũng mượt mà, lì lợm hơn hẳn chỗ có da thật gai rạn.",
-    "limitations": "• Lưỡi gươm đành gãy vụn (False Positive nặng) khi gặp một bức ảnh thật cực kỳ sặc sỡ nhẵn nhụi: Ví dụ chiếc xe Lamborghini sơn bóng mới rửa xong, hay vách kính tòa nhà chĩa lên trời xanh thẳm. Chúng vốn dĩ đã nhẵn y hệt AI.\n• Đặc trị bị bẻ gãy khi thợ Fake nạp chiêu bài ngâm ảnh qua 1 đống filter Noise (Nhiễu Cát) của Lightroom để bơm độ nhám hạt lên che đậy vết thương láng bóng."
+    "strengths": "• Không bị ảnh hưởng bởi độ phân giải. Khi ảnh AI được nội suy tăng kích thước (Upscale), các vùng phẳng càng mở rộng, giúp thuật toán phát hiện dễ dàng hơn.\n• Hiệu quả trong việc phát hiện vùng In-painting (hàn gắn bằng AI), vì các vùng này thường có độ mịn cao hơn đáng kể so với vùng ảnh gốc.",
+    "limitations": "• Tỷ lệ dương tính giả (False Positive) cao đối với ảnh thật chứa bề mặt phản chiếu tự nhiên: xe hơi sơn bóng, vách kính, bầu trời xanh — vốn dĩ có độ biến thiên thấp tương tự ảnh AI.\n• Bị vượt qua khi người can thiệp thêm nhiễu hạt nhân tạo (Film Grain/Noise) qua Lightroom hoặc các bộ lọc, tăng độ nhám bề mặt để che giấu vùng phẳng."
 }
