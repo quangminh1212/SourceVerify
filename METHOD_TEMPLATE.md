@@ -303,16 +303,16 @@ const i18n = { en, vi, zh, ja, ko, es };
 
 ## 📊 Thống kê hiện tại
 
-| Media Type | Tổng methods (data.ts) | Lib files thực tế | Page + i18n | Có đủ 6 ngôn ngữ |
-|-----------|:---------------------:|:-----------------:|:-----------:|:-----------------:|
-| Image | 186 | 186 ✅ | 186 ✅ | 186 ✅ |
-| Video | 165 | 165 ✅ | 165 ✅ | 165 ✅ |
-| Text | 149 | 149 ✅ | 149 ✅ | 149 ✅ |
-| **Tổng** | **500** | **500** ✅ | **500** ✅ | **500** ✅ |
+| Media Type | Tổng entries (data.ts) | Lib files thực tế | Page directories | Có đủ 6 ngôn ngữ |
+|-----------|:---------------------:|:-----------------:|:----------------:|:-----------------:|
+| Image | 255 | 186 | 258 | ✅ |
+| Video | 228 | 165 | 228 | ✅ |
+| Text | 214 | 149 | 214 | ✅ |
+| **Tổng** | **697** | **500** | **700** | ✅ |
 
-> ✅ **1:1 Mapping đã hoàn chỉnh**: Tổng methods (500) = Tổng lib files (500) = Tổng page dirs (500). Mỗi method trong `data.ts` đều có đúng 1 file lib, 1 page directory với đủ 6 file i18n.
-> 
-> ⚠️ **Lưu ý**: 75 methods batch cuối (v14/v8/v7) chưa có trường `references` trong en.json. 7 file en.json cần sửa lại vì trộn tiếng Việt.
+> ✅ **Runtime core**: 500 method implementations (186 image + 165 video + 149 text).  
+> 📋 **Registry**: 697 entries in `data.ts` (bao gồm cả archived/extra pages chưa có lib riêng).  
+> 📄 **Pages**: 700 detail pages với đầy đủ i18n 6 ngôn ngữ.
 
 ---
 
@@ -321,7 +321,7 @@ const i18n = { en, vi, zh, ja, ko, es };
 **BẮT BUỘC**: Mỗi method đăng ký trong `data.ts` METHODS array **PHẢI** có **đúng 1 file lib tương ứng** tại `src/lib/methods/{mediaType}/{fileName}.ts`.
 
 ### Quy tắc:
-- **Tổng methods trong `data.ts`** (hiện tại: **500**) = **Tổng file `.ts` trong `src/lib/methods/`** (trừ `index.ts`, `types.ts`, `pixelUtils.ts`)
+- **Tổng lib files**: hiện tại **500** (186 image + 165 video + 149 text)
 - Mỗi file lib **chỉ chứa 1 hàm analyze** cho 1 method duy nhất
 - File lib **phải được export** trong `src/lib/methods/index.ts` (barrel export)
 - **Naming convention**: Method ID dạng `snake_case` (VD: `bg_complexity`) → File lib dạng `camelCase` (VD: `backgroundComplexity.ts`)

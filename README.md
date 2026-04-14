@@ -1,16 +1,16 @@
 # SourceVerify — AI-Generated Content Detector
 
-Advanced forensic analysis tool with a curated, paper-faithful runtime core for **images** and **text**. Methods that could not be defended as paper-faithful in the current browser architecture are archived from active runtime exposure. Built with Next.js 16 + TypeScript + Tailwind CSS 4.
+Advanced forensic analysis tool with **500 analysis method implementations** across image, video, and text — the largest client-side AI detection method library. A curated paper-faithful runtime core drives the default analysis; all other methods remain browsable for research and traceability. Built with Next.js 16 + TypeScript + Tailwind CSS 4.
 
 ## Features
 
-- **Curated Runtime Core** — Active detectors are restricted to the subset that is currently defensible against the cited descriptor/statistic or metadata-check literature
-- **Archived Experimental Routes** — Legacy method pages remain reachable for traceability, but non-verified methods are no longer active in analysis runtime
+- **500 Analysis Methods** — 186 image + 165 video + 149 text detection methods, with 700 detail pages and full i18n
+- **Curated Runtime Core** — Default analysis is restricted to ~38 paper-faithful methods (32 image + 6 text); all other methods remain browsable
 - **Image & Video & Text** — Supports JPEG, PNG, WebP, GIF, MP4, WebM, and plain text
 - **Client-Side Processing** — All analysis runs locally in browser (zero server upload)
 - **Privacy-First** — No data leaves the user's device
-- **Multi-Language** — i18n support (EN, VI, KO, JA, ZH, etc.)
-- **Academic References** — Active runtime methods are limited to the verified core; archived routes preserve historical references for traceability
+- **Multi-Language** — Full i18n in 6 languages (EN, VI, ZH, JA, KO, ES) for all 700 method detail pages
+- **Academic References** — Every method links to cited papers, standards, or algorithms; benchmark accuracy report included
 
 ## Tech Stack
 
@@ -43,19 +43,20 @@ src/
 ├── lib/
 │   ├── analyzer.ts          # Main orchestrator with paper-faithful runtime filtering
 │   ├── serverAnalyzer.ts    # Server-side analysis entry
-│   ├── types.ts             # Shared types + verified runtime allowlist
+│   ├── types.ts             # Shared types + verified runtime allowlist (~38 methods)
 │   └── methods/
-│       ├── index.ts          # Barrel exports for all method implementations
+│       ├── index.ts          # Barrel exports (502 exports)
 │       ├── pixelUtils.ts     # Shared pixel utilities (gray(), etc.)
-│       ├── image/            # Image method implementations
-│       ├── video/            # Archived/experimental video method implementations
-│       └── text/             # Text method implementations
+│       ├── image/            # 186 image method implementations
+│       ├── video/            # 165 video method implementations (single-frame proxy)
+│       └── text/             # 149 text method implementations
 └── app/
     └── methods/
-        ├── data.ts           # Active method registry filtered by verified allowlist
-        ├── _components/      # Shared UI components
-        ├── text/             # Text method pages + i18n
-        └── [method]/         # Image/Video method pages + i18n
+        ├── data.ts           # Full method registry (697 entries)
+        ├── _components/      # Shared UI components (MethodDetail, etc.)
+        ├── image/            # 258 image method pages + i18n (6 languages each)
+        ├── video/            # 228 video method pages + i18n (6 languages each)
+        └── text/             # 214 text method pages + i18n (6 languages each)
 ```
 
 ### Core Flow
@@ -658,9 +659,12 @@ Generated on **2026-03-12T09:28:02.570Z** by `npm run benchmark:methods`.
 
 <!-- METHOD_ACCURACY_REPORT:END -->
 
-## All 148 Analysis Methods
+## All 500 Analysis Method Implementations
 
-### Image Methods (97) — `src/lib/methods/image/`
+> Full method index with IDs: see [`docs/METHOD_INDEX.md`](docs/METHOD_INDEX.md)  
+> Benchmark accuracy for every method: see the auto-generated [Method Accuracy Benchmark](#method-accuracy-benchmark) above
+
+### Image Methods (186) — `src/lib/methods/image/`
 
 #### Sensor & Camera Forensics
 
@@ -796,50 +800,65 @@ Generated on **2026-03-12T09:28:02.570Z** by `npm run benchmark:methods`.
 
 ---
 
-### Video Methods (16) — `src/lib/methods/video/`
+### Video Methods (165) — `src/lib/methods/video/`
 
-| # | Method | File | Reference | Algorithm |
-|---|--------|------|-----------|-----------|
-| 1 | Temporal Consistency | `temporalConsistency.ts` | Frame coherence | Block-level abrupt/smooth ratio (spatial proxy for temporal) |
-| 2 | Lip Sync Analysis | `lipSyncAnalysis.ts` | Deepfake detection | Lip region texture + skin tone detection |
-| 3 | Deepfake Artifact | `deepfakeArtifact.ts` | Li et al. (2020) Face X-ray, CVPR | Face boundary sharpness vs interior smoothness ratio |
-| 4 | Optical Flow Anomaly | `opticalFlowAnomaly.ts` | Motion analysis | Gradient direction coherence + uniform region ratio |
-| 5 | Audio-Visual Sync | `audioVisualSync.ts` | AV forensics | Mouth region texture analysis (single-frame proxy) |
-| 6 | Face Landmark | `faceLandmarkConsistency.ts` | Facial geometry | Landmark spacing analysis |
-| 7 | Facial Reenactment | `facialReenactment.ts` | Reenactment detection | Face region artifact analysis |
-| 8 | Frame Interpolation | `frameInterpolation.ts` | Motion interpolation | Interpolation artifact detection |
-| 9 | Scene Transition | `sceneTransition.ts` | Cut detection | Inter-frame difference analysis |
-| 10 | Motion Blur Consistency | `motionBlurConsistency.ts` | Physics model | Blur direction consistency |
-| 11 | Background Stability | `backgroundStability.ts` | Scene analysis | Background region stability |
-| 12 | Gaze Direction | `gazeDirection.ts` | Eye tracking | Gaze consistency analysis |
-| 13 | Video Compression | `videoCompressionTrace.ts` | Codec forensics | Compression artifact uniformity |
-| 14 | Flicker Analysis | `flickerAnalysis.ts` | Temporal frequency | Luminance flicker detection |
-| 15 | Hand Gesture | `handGestureConsistency.ts` | Gesture analysis | Hand region consistency |
-| 16 | Body Proportion | `bodyProportion.ts` | Anatomy analysis | Body part ratio analysis |
+165 video analysis methods covering deepfake detection, facial analysis, body/gesture analysis, temporal coherence, audio-visual sync, and codec forensics. Key methods include:
+
+| Category | Example Methods | Count |
+|----------|----------------|------:|
+| Facial analysis | Lip Sync, Face Landmark, Face X-Ray, Iris Detail, Facial Symmetry, Teeth Consistency | ~40 |
+| Body & gesture | Body Proportion, Finger Geometry, Gait Analysis, Shoulder Alignment, Hand Gesture | ~10 |
+| Temporal coherence | Temporal Consistency, Frame Interpolation, Flicker, Inter-Frame Forgery, Frame Drop | ~20 |
+| Audio-visual | Audio-Visual Sync, Audio Spectral, Phoneme Correlation, Speech Cadence, Voice F0 | ~10 |
+| Scene & physics | Background Stability, Depth Consistency, Bokeh, Lens Distortion, Reflection Physics | ~15 |
+| Texture & skin | Skin Texture, Skin Pore, Cheek Texture, Forehead Texture, Skin Color Drift | ~15 |
+| Codec/compression | Video Codec Analysis, QP Analysis, B-Frame Consistency, Video Compression Trace | ~10 |
+| Other | Motion Vector, Edge Ringing, Watermark, Stabilization Artifact, etc. | ~45 |
+
+> Full list: see `docs/METHOD_INDEX.md` (V-001 to V-165)
 
 > **Note**: All video methods operate on a single extracted frame (`Uint8ClampedArray`). They analyze spatial characteristics as a proxy for temporal behavior. Multi-frame temporal analysis requires future enhancement.
 
 ---
 
-### Text Methods (15) — `src/lib/methods/text/`
+### Text Methods (149) — `src/lib/methods/text/`
 
-| # | Method | File | Reference | Key Formula |
-|---|--------|------|-----------|-------------|
-| 1 | Perplexity Analysis | `perplexityAnalysis.ts` | Mitchell et al. (2023) DetectGPT, Gehrmann et al. (2019) GLTR | Character trigram cross-entropy `H = -1/N · Σ log₂(P(c_i\|context))` + window entropy CV |
-| 2 | Burstiness Detection | `burstinessDetection.ts` | Goh & Barabási (2008) | `B = (σ - μ) / (σ + μ)` applied to sentence lengths |
-| 3 | Entropy Distribution | `entropyDistribution.ts` | Shannon (1948), GLTR | Sliding window character entropy `H = -Σ p·log₂(p)` → distribution stats (mean, CV, skewness, IQR) |
-| 4 | N-gram Frequency | `ngramFrequency.ts` | Lavergne et al. (2008), Zipf (1949) | Character bigram entropy (normalized) + word bigram Zipf compliance |
-| 5 | Punctuation Pattern | `punctuationPattern.ts` | Fagni et al. (2021), Neal et al. (2017) | Inter-punctuation spacing CV + type diversity entropy + punctuation rate |
-| 6 | Readability Score | `readabilityScore.ts` | Flesch (1948), Ippolito et al. (2020) | **FK**: `0.39(w/s) + 11.8(syl/w) - 15.59`, **ARI**: `4.71(c/w) + 0.5(w/s) - 21.43` + consistency CV |
-| 7 | Repetition Pattern | `repetitionPattern.ts` | Krishna et al. (2024), Tulchinskii et al. (2024) | Trigram repetition + sentence opening repetition + 4-gram uniqueness ratio |
-| 8 | Semantic Density | `semanticDensity.ts` | Halliday (1985), Dugan et al. (2023) | Content word density CV + average word length CV per sentence |
-| 9 | Sentence Length Variance | `sentenceLengthVariance.ts` | Uchendu et al. (2020), Mosteller & Wallace (1963) | CV of word counts + consecutive diff CV + extreme ratio (short ≤ 5, long ≥ 25) |
-| 10 | Stylometric Analysis | `stylometricAnalysis.ts` | Kumarage et al. (2023), Zheng et al. (2006) | Per-sentence: avgWordLen, funcWordRatio, clauseProxy, lexicalDensity → CV of each |
-| 11 | Topic Consistency | `topicConsistency.ts` | Bakhtin et al. (2019), Blei et al. (2003) | Vocabulary Jaccard similarity `\|A∩B\| / \|A∪B\|` between 4 text segments |
-| 12 | Vocabulary Diversity | `vocabularyDiversity.ts` | GLTR (2019), Uchendu et al. (2020) | **TTR** `V/N`, **MATTR** (window=50), **Hapax** ratio, **Yule's K** `10000(Σi²V_i - N)/N²` |
-| 13 | Word Frequency Rank | `wordFrequencyRank.ts` | Jawahar et al. (2020), Zipf (1949) | Log-log regression `log(f) = -α·log(r) + C`, **R²** = `1 - SS_res/SS_tot`. Natural: α ≈ 1.0 |
-| 14 | Writing Rhythm | `writingRhythm.ts` | Tay et al. (2020), Argamon et al. (2007) | Autocorrelation `r(lag) = Σ(x_i-μ)(x_{i+lag}-μ) / ((N-lag)·σ²)` of sentence lengths |
-| 15 | Coherence Analysis | `coherenceAnalysis.ts` | Zellers et al. (2019), Barzilay & Lapata (2008) | BoW cosine similarity `dot(A,B) / (‖A‖·‖B‖)` between adjacent sentences |
+149 text analysis methods covering statistical linguistics, stylometry, AI-specific detection, and discourse analysis. Key methods include:
+
+| Category | Example Methods | Count |
+|----------|----------------|------:|
+| Statistical NLP | Perplexity, Entropy Distribution, N-gram Frequency, Zipf Deviation, Token Predictability | ~20 |
+| Stylometric | Stylometric Analysis, Writing Rhythm, Vocabulary Diversity, Sentence Length Variance | ~15 |
+| AI-specific detectors | Binoculars, Fast-DetectGPT, Ghostbuster, RADAR, DNA-GPT, PHD Detection | ~15 |
+| Lexical analysis | Vocabulary Richness, Hapax Legomena, Lexical Density, Type-Token Ratio, Word Rarity | ~15 |
+| Syntax & grammar | POS Tag Analysis, Clause Depth, Syntactic Complexity, Mean Dependency Parse | ~10 |
+| Discourse & coherence | Coherence Analysis, Topic Consistency, Semantic Coherence Graph, Discourse Markers | ~10 |
+| Pragmatic & rhetorical | Hedging Language, Rhetorical Device, Analogy/Simile, Emotional Arc | ~10 |
+| Punctuation & formatting | Punctuation Pattern, Comma Frequency, Semicolon Usage, List Enumeration | ~10 |
+| Human-like signals | First Person Usage, Contraction Usage, Filler Words, Colloquial Expression, Typo Error | ~15 |
+| Other | Text Compression Ratio, Text DNA Watermark, Readability Score, etc. | ~29 |
+
+> Full list: see `docs/METHOD_INDEX.md` (T-001 to T-149)
+
+#### Core Text Methods (original 15 with detailed formulas)
+
+| # | Method | Reference | Key Formula |
+|---|--------|-----------|-------------|
+| 1 | Perplexity Analysis | Mitchell et al. (2023) DetectGPT, GLTR (2019) | Character trigram cross-entropy `H = -1/N · Σ log₂(P(c_i\|context))` |
+| 2 | Burstiness Detection | Goh & Barabási (2008) | `B = (σ - μ) / (σ + μ)` on sentence lengths |
+| 3 | Entropy Distribution | Shannon (1948), GLTR | Sliding window character entropy `H = -Σ p·log₂(p)` |
+| 4 | N-gram Frequency | Lavergne et al. (2008), Zipf (1949) | Character bigram entropy + word bigram Zipf compliance |
+| 5 | Punctuation Pattern | Fagni et al. (2021), Neal et al. (2017) | Inter-punctuation spacing CV + type diversity entropy |
+| 6 | Readability Score | Flesch (1948), Ippolito et al. (2020) | FK + ARI readability indices + consistency CV |
+| 7 | Repetition Pattern | Krishna et al. (2024), Tulchinskii et al. (2024) | Trigram repetition + 4-gram uniqueness ratio |
+| 8 | Semantic Density | Halliday (1985), Dugan et al. (2023) | Content word density CV per sentence |
+| 9 | Sentence Length Variance | Uchendu et al. (2020), Mosteller & Wallace (1963) | CV of word counts + extreme ratio |
+| 10 | Stylometric Analysis | Kumarage et al. (2023), Zheng et al. (2006) | Per-sentence feature CV analysis |
+| 11 | Topic Consistency | Bakhtin et al. (2019), Blei et al. (2003) | Vocabulary Jaccard similarity between segments |
+| 12 | Vocabulary Diversity | GLTR (2019), Uchendu et al. (2020) | TTR, MATTR, Hapax ratio, Yule's K |
+| 13 | Word Frequency Rank | Jawahar et al. (2020), Zipf (1949) | Log-log regression R² for Zipf compliance |
+| 14 | Writing Rhythm | Tay et al. (2020), Argamon et al. (2007) | Sentence length autocorrelation |
+| 15 | Coherence Analysis | Zellers et al. (2019), Barzilay & Lapata (2008) | BoW cosine similarity between adjacent sentences |
 
 ---
 
@@ -900,7 +919,6 @@ Some methods use simplified client-side statistical proxies instead of full pape
 - [ ] **Multi-frame video analysis** — Current video methods analyze single frames; add true temporal analysis with frame-to-frame comparison
 - [ ] **WebAssembly acceleration** — Port computationally heavy methods (DFT, wavelet) to WASM for 10-50x speedup
 - [ ] **WebGPU integration** — Use GPU compute shaders for parallel pixel processing
-- [ ] **Text method integration into analyzer.ts** — Text methods are exported but not yet orchestrated by the main analyzer; add text analysis pipeline
 
 ### Medium Priority
 - [ ] **ONNX Runtime in browser** — Load lightweight ONNX models for CLIP, ResNet, EfficientNet to replace statistical proxies
@@ -920,7 +938,7 @@ Some methods use simplified client-side statistical proxies instead of full pape
 - [ ] **Browser extension** — Right-click → "Verify this image" context menu
 
 ### Known Limitations
-1. **Single-frame video**: All 16 video methods analyze one extracted frame, not temporal sequences
+1. **Single-frame video**: All 165 video methods analyze one extracted frame, not temporal sequences
 2. **No neural inference**: Methods referencing neural networks use statistical proxies
 3. **Character-level perplexity**: Text perplexity uses trigrams, not LLM token probabilities
 4. **Fixed thresholds**: Score thresholds are manually tuned, not ML-calibrated
@@ -936,7 +954,9 @@ All methods are registered in `src/app/methods/data.ts` with:
 - `mediaType` — One of: `image`, `video`, `text`
 - `weight` — Relative weight in final score aggregation
 
-Total: **185 entries** (some image methods apply to video frames too).
+Total: **697 registry entries** (255 image + 228 video + 214 text).  
+Runtime implementations: **500** (186 image + 165 video + 149 text).  
+Paper-faithful runtime core: **~38** (32 image + 6 text + 0 video-only).
 
 ---
 
