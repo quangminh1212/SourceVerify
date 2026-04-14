@@ -1,18 +1,18 @@
 {
-    "name": "Án Trảm Biến Dạng Ánh Sáng (Gamma Distortion)",
-    "description": "Lò đốt ánh sáng đa hệ. Các thiết bị vật lý (Lens máy ảnh, màn hình) sinh ra và tiếp nhận ánh sáng theo một đường cong Gamma tuyến tính rất chặt chẽ để khớp với võng mạc người. Các phần mềm cắt ghép và AI sinh ảnh thường xé toạc định lý quang lý này bằng cách gán bừa cường độ dải sáng (Luminance) sai quy chuẩn. Hệ thống này ném dải sáng của hình ảnh vào biểu đồ để phán xét: Liệu độ cong của dải màu có bị thằng nào túm tóc kéo dãn một cách gượng ép (Gamma Correction Fake) để lấp liếm vết ghép tối thui hay không.",
-    "algorithm": "Đo Lường Ngoại Lệ Thống Kê Đường Cong (Gamma Correction Forensics)",
-    "mechanism": "Tháo tung hàm mũ truyền tải ánh sáng Vout = A*Vin^gamma. Đường ánh sáng gốc nếu đi qua lăng kính máy ảnh luôn đẹp như một dải lụa mượt. Nếu sát thủ dùng lệnh 'Brightness/Contrast/Levels' trên Photoshop để ép sáng khuôn mặt lờ mờ cho hợp với cảnh nắng hoàng hôn, đường cong Gamma sẽ gãy vụn gồ ghề đầy các vết cưa lởm chởm. Lỗi răng lược Histogram (Comb effect) sinh ra khi đường cong Gamma bị chỉnh nhân tạo là án tử lập tức cho mấy tay chỉnh ảnh nghiệp dư.",
-    "parameters": "Phương trình: Inverse Gamma Histogram Response, Phép đo răng cưa: Khuyết điểm rỗng Peak-Gap Matrix",
-    "accuracy": "Cực Xoáy (86-93%) - Máy chém không nương tay đối với bất kì cái Filter tăng sáng, kích bóng tối (Shadows Hacking) nào trên thế giới.",
-    "source": "Farid (2001) - Blind Identification of Non-Linear Gamma Operation",
-    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí nơi hung thủ luống cuống chỉnh chọt Curves / Levels / Exposure để màu sắc 2 tấm ảnh khớp nhau. Chỉnh càng nhiệt, Gamma nát càng bét.",
+    "name": "Phân Tích Biến Dạng Gamma (Gamma Distortion)",
+    "description": "Phương pháp phát hiện các thao tác điều chỉnh cường độ sáng (gamma correction) nhân tạo trong ảnh. Thiết bị quang học tạo ra ánh sáng tuân theo đường cong gamma xác định (Vout = A × Vin^γ). Phần mềm chỉnh sửa và AI sinh ảnh thường vi phạm quy luật quang học này khi áp dụng hiệu chỉnh gamma không đồng nhất để đồng nhất hóa độ sáng giữa vùng ghép và nền — tạo ra hiệu ứng răng lược (comb effect) trên biểu đồ histogram.",
+    "algorithm": "Phân Tích Pháp Y Đường Cong Gamma (Gamma Correction Forensics)",
+    "mechanism": "Thuật toán phân tích hàm truyền tải cường độ sáng Vout = A × Vin^γ. Ảnh gốc qua cảm biến quang học có đường cong gamma mượt mà. Khi sử dụng các công cụ Brightness/Contrast/Levels để điều chỉnh độ sáng nhằm đồng nhất hóa vùng ghép, đường cong gamma bị biến dạng tạo ra các vết gãy và hiệu ứng răng lược (comb effect) trên biểu đồ histogram — bằng chứng rõ ràng của hiệu chỉnh gamma nhân tạo.",
+    "parameters": "Phương trình: Inverse Gamma Histogram Response, Phân tích: Ma trận Peak-Gap trên biểu đồ",
+    "accuracy": "Rất cao (86–93%) — Hiệu quả cao trong phát hiện mọi thao tác điều chỉnh Brightness/Contrast/Levels/Exposure.",
+    "source": "Farid, H. (2001). Blind Inverse Gamma Correction. IEEE TIP.",
+    "useCase": "Phát hiện các thao tác điều chỉnh Curves/Levels/Exposure nhằm đồng nhất hóa độ sáng giữa hai vùng ảnh ghép chèn. Mức độ biến dạng gamma tỷ lệ thuận với cường độ điều chỉnh.",
     "references": [
         {
             "title": "Farid, H. (2001). Blind inverse gamma correction. IEEE TIP.",
             "url": ""
         }
     ],
-    "strengths": "• Giả vờ ngụy trang bằng chỉnh sáng là hành động tự sát trước Gamma Distortion. Bạn càng vọc độ sáng nhiều để lừa thị giác người, lưỡi đao toán học này chém bạn càng sâu.\n• Nhanh thần tốc vì chỉ việc đọc thông số bảng biểu Histogram thay vì lội từng pixel tốn thì giờ.",
-    "limitations": "• Nhát kiếm này sẽ rụng rời nếu tay súng kia chụp ảnh dạng RAW sau đó tự tráng (Render) trực tiếp ra 1 hệ Gamma mới toanh bằng phần mềm xịn từ đầu đến cuối mà không thèm cắt ghép mẩu nào.\n• Ảnh bị bóp nến nặng thành JPEG sẽ sinh ra các khối Block che đi mất mấy cái gãy khúc răng cưa Gamma đáng quý."
+    "strengths": "• Mức độ biến dạng gamma tỷ lệ thuận với cường độ điều chỉnh sáng, nên các thao tác điều chỉnh mạnh càng dễ phát hiện.\n• Tốc độ xử lý nhanh vì chỉ cần phân tích biểu đồ histogram thay vì xử lý từng pixel.",
+    "limitations": "• Không hiệu quả khi ảnh được chụp ở định dạng RAW và render trực tiếp với đường cong gamma tùy chỉnh từ đầu, vì đường cong này vẫn mượt mà dù khác với giá trị chuẩn.\n• Nén JPEG mạnh tạo ra nhiễu khối (block artifacts) che lấp các vết gãy răng lược gamma trên biểu đồ."
 }

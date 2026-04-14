@@ -1,18 +1,18 @@
 {
-    "name": "Bóng Ma Kép Nén (Double JPEG)",
-    "description": "Bản án tử hình phanh thui bí mật dơ bẩn nhất của tội phạm mạng. Gần như 98% thao tác lừa đảo trên mạng xã hội đều dính bẫy này: Tải ảnh trên mạng xuống (JPEG lần 1) -> Mở bằng Photoshop, tẩy xóa thêm bớt -> Nhấn nút Lưu (JPEG lần 2). Vụ va chạm kinh khủng giữa 2 lần ép nén 8x8 tạo ra một vết thương trí mạng vĩnh viễn không thể tẩy rửa: Hiệu ứng Lượng tử Răng lược kép (Double Quantization Effect). Radar này quét biểu đồ tần suất DCT để vạch trần đôi bàn tay chế ảnh đó.",
-    "algorithm": "Phát Hiện Lượng Tử DCT Kép & Nhận Diện Đỉnh Răng Lược (Periodic Peaks)",
-    "mechanism": "Nó xẻ thịt toàn bộ lưới điểm ảnh DCT để xây dựng một đồ thị tần suất các hệ số nén. Ở một bức ảnh chụp từ máy rồi gửi đi (Nén 1 lần), đồ thị là đường cong phân bổ nhẵn nhụi. Tuy nhiên, nếu bức ảnh đó đã bị mở ra và ép lại (Nén 2 lần ở 2 mức độ Quality khác nhau), đồ thị bỗng dưng xuất hiện các 'Răng lược' (Peaks) và 'Hố sâu' (Zeros) chu kỳ lặp lại kinh hoàng. Máy quét này cứ thấy đồ thị giật cục hình răng cưa là tống ngay án tử hình ngụy tạo.",
-    "parameters": "Toán tử: Biểu đồ Histogram Hệ số DCT, Hạch tâm: Double Quantization (DQ), Nhiệm vụ: Fast Fourier Periodicity",
-    "accuracy": "Cực Cao (85-98%) - Chó săn đắc lực nhất và dũng mãnh nhất của hệ thống pháp y số đối với định dạng ảnh đại chúng.",
-    "source": "Lukas & Fridrich (2003) - Bắt Mạch Lịch Sử Nén Ảnh Kép Giám Định Pháp Y",
-    "useCase": "Giáng đòn điều tra quyết định để chốt ngay câu trả lời: 'Bức ảnh trên mạng này là bản gốc từ máy chụp ra, hay là đã bị một thằng thợ sửa ảnh mở ra Lưu đè (Save As) lần thứ 2?'",
+    "name": "Phát Hiện Nén JPEG Kép (Double JPEG)",
+    "description": "Phương pháp phát hiện ảnh đã trải qua hai lần nén JPEG. Khi ảnh JPEG được mở, chỉnh sửa và lưu lại dưới dạng JPEG, quá trình lượng tử hóa DCT áp dụng hai lần với các bảng lượng tử khác nhau tạo ra hiệu ứng lượng tử kép (Double Quantization Effect) — biểu hiện qua các đỉnh tuần hoàn (periodic peaks) và khoảng trống (zeros) trên biểu đồ phân bố hệ số DCT. Đây là bằng chứng cho thấy ảnh đã bị chỉnh sửa và lưu lại.",
+    "algorithm": "Phát Hiện Lượng Tử DCT Kép và Nhận Diện Đỉnh Tuần Hoàn (Periodic Peaks)",
+    "mechanism": "Thuật toán phân tích biểu đồ phân bố các hệ số DCT trên toàn ảnh. Ảnh chỉ qua một lần nén JPEG có biểu đồ phân bố mượt mà. Khi ảnh trải qua hai lần nén ở các mức chất lượng khác nhau, biểu đồ xuất hiện các đỉnh tuần hoàn (peaks) và khoảng trống (zeros) lặp lại — hiệu ứng răng lược (comb effect) đặc trưng của nén kép. Thuật toán phát hiện tính tuần hoàn này để xác định lịch sử nén.",
+    "parameters": "Phân tích: Histogram hệ số DCT, Phát hiện: Double Quantization (DQ), Đánh giá tuần hoàn: FFT Periodicity",
+    "accuracy": "Rất cao (85–98%) — Phương pháp hiệu quả nhất trong hệ thống pháp y ảnh số cho định dạng JPEG.",
+    "source": "Lukas, J. & Fridrich, J. (2003). Estimation of Primary Quantization Matrix in Double Compressed JPEG Images. DFRWS.",
+    "useCase": "Xác định xem ảnh JPEG là bản gốc từ máy ảnh hay đã qua chỉnh sửa và lưu lại. Đặc biệt hữu ích trong phát hiện ghép chèn cục bộ (splicing), vì vùng ghép sẽ có dấu vết lượng tử khác biệt với phần còn lại.",
     "references": [
         {
             "title": "Lukas, J., & Fridrich, J. (2003). Estimation of primary quantization matrix in double compressed JPEG images. DFRWS.",
             "url": "https://www.ws.binghamton.edu/fridrich/Research/double.pdf"
         }
     ],
-    "strengths": "• Hung thần của giới Photoshop tay ngang. Chỉ cần bấm Save as JPEG là 100% lọt lưới răng lược này mà không có cách nào chống cự.\n• Nếu chỉ cắt ghép một nửa tấm ảnh (splicing), vùng bị cắt dán sẽ mất dấu răng lược hoặc lệch pha, tạo thành bản đồ tố cáo cực kỳ tráng lệ.",
-    "limitations": "• Nhát chém sẽ hoàn toàn gãy răng (vô tác dụng) nếu gã thợ Photoshop cực kỳ mưu mô: Cố tình Save ở định dạng PNG không nén, hoặc xài thủ thuật 'Bơm cắt lưới tọa độ 3 pixel' (Cropping) để làm nát hoàn toàn toàn cục 8x8 của ảnh cũ.\n• Radar cũng mù lòa nếu lần Save thứ 2 người ta chọn Quality thấp đến mức mờ mịt (VD: 30%) khiến răng lược nén cũ bị cày nát nát bét."
+    "strengths": "• Phát hiện chắc chắn mọi thao tác mở và lưu lại ảnh JPEG, vì nén kép tất yếu tạo ra hiệu ứng răng lược trên biểu đồ DCT.\n• Khi chỉ một phần ảnh bị ghép chèn (splicing), vùng đó sẽ mất hoặc lệch dấu răng lược so với nền, tạo bản đồ phát hiện chính xác.",
+    "limitations": "• Không hiệu quả khi ảnh được lưu ở định dạng không mất dữ liệu (PNG) hoặc khi thao tác cắt xén (cropping) phá vỡ lưới khối 8×8 toàn cục.\n• Hiệu quả giảm đáng kể khi lần lưu thứ hai sử dụng mức chất lượng rất thấp (Quality ≤ 30%), vì nhiễu nén lớn xóa bỏ dấu vết lượng tử kép."
 }

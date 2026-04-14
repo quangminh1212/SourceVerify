@@ -1,18 +1,18 @@
 {
-    "name": "Truy Vết Nhân Bản (Copydays / Copy-Move)",
-    "description": "Vũ khí hủy diệt hàng loạt chống lại trò ma giáo 'nhân bản vô tính' (người nhân bản, đám đông nhân bản, nhân bản mây trời). Những tay thợ sửa ảnh thường xài trò cắt một vùng ảnh (ví dụ: tán lá chẻ) và dán lặp lại nhiều lần để che giấu một vật thể khác. Thuật toán này sinh ra để đánh hơi sự trùng lặp cấu trúc pixel tuyệt đối - điều hoàn toàn bất khả thi trong tự nhiên.",
-    "algorithm": "Trích Xuất Đặc Trưng Khối Mạnh SIFT/SURF & Khớp Đồ Thị Nhanh",
-    "mechanism": "Cỗ máy quét tàn bạo này phân rã toàn bộ bức ảnh thành hàng trăm ngàn điểm đặc trưng (keypoints) siêu nhỏ có khả năng xoay chiều. Sau đó, nó điên cuồng so sánh chéo từng điểm một với tất cả các điểm còn lại để tìm 'anh em sinh đôi'. Bất chấp việc kẻ gian đã cố gắng lấp liếm bằng cách phóng to, thu nhỏ, làm mờ, lật ngược, hay xoay nghiêng cái cây vừa copy sang chỗ khác, thuật toán vẫn sẽ đóng đinh các điểm neo và vẽ ra những đường nối toán học tố cáo tội ác nhân bản không thể chối cãi.",
-    "parameters": "Mô hình cốt lõi: Dense SIFT / Khớp khối Zernike, Đo lường khoảng cách: L2-Norm chéo, Bộ lọc nhiễu: RANSAC, Hệ số nhận diện: Scale-Invariant",
-    "accuracy": "Cực Cao (88-95%) - Đối với các thao tác Copy-Move trên cùng một bức ảnh, đây là án tử hình không thể tránh khỏi.",
-    "source": "Fridrich (2003) / Mạng Lưới Nhận Diện Bản Sao Đồ Thị",
-    "useCase": "Lột mặt nạ các thủ đoạn nhân bản tinh vi nhất, vẽ ra mạng lưới các nốt ruồi sinh đôi để chứng minh rằng một đám đông biểu tình rầm rộ thực chất chỉ là 10 người được bôi thả (Copy-Paste) thành 1000 người.",
+    "name": "Phát Hiện Nhân Bản Vùng Ảnh (Copy-Move Detection)",
+    "description": "Phương pháp phát hiện thao tác copy-move — sao chép một vùng ảnh và dán vào vị trí khác trong cùng bức ảnh nhằm che giấu hoặc thêm vật thể. Thuật toán phát hiện sự trùng lặp cấu trúc pixel — điều không xảy ra trong ảnh tự nhiên — bằng cách so sánh chéo các điểm đặc trưng (keypoints) bất biến với phép biến đổi hình học.",
+    "algorithm": "Trích Xuất và Khớp Đặc Trưng Bất Biến SIFT/SURF (Scale-Invariant Feature Matching)",
+    "mechanism": "Thuật toán phân rã toàn bộ ảnh thành hàng trăm nghìn điểm đặc trưng (keypoints) bất biến với phép xoay và co giãn. Sau đó, thực hiện so sánh chéo giữa tất cả các điểm để xác định các cặp tương đồng. Bất kể vùng sao chép đã được phóng to, thu nhỏ, làm mờ, lật ngược hay xoay nghiêng, thuật toán vẫn xác định được các điểm neo tương ứng và thiết lập mối liên kết toán học giữa vùng gốc và vùng sao chép.",
+    "parameters": "Mô hình: Dense SIFT / Zernike Moments, Khoảng cách: L2-Norm, Lọc: RANSAC, Đặc tính: Scale-Invariant",
+    "accuracy": "Rất cao (88–95%) — Hiệu quả đặc biệt cao đối với các thao tác copy-move trong cùng một bức ảnh.",
+    "source": "Fridrich, J., Soukal, D., & Lukáš, J. (2003). Detection of Copy-Move Forgery in Digital Images. DFRWS.",
+    "useCase": "Phát hiện các thao tác nhân bản vùng ảnh, thiết lập bản đồ kết nối trực quan giữa vùng gốc và vùng sao chép — chứng minh rằng các vùng tưởng như khác nhau thực chất là bản sao của cùng một nguồn.",
     "references": [
         {
             "title": "Fridrich, J., Soukal, D., & Lukáš, J. (2003). Detection of copy-move forgery in digital images. DFRWS.",
             "url": "https://www.ws.binghamton.edu/fridrich/Research/copymove.pdf"
         }
     ],
-    "strengths": "• Trâu bò và bất tử trước mọi nỗ lực che giấu hình học: Nén JPEG te tua, làm nhòe ảnh, thêm nhiễu hạt, lật ngược hình, hay kéo méo hình đều vô dụng trước sự soi xét của bộ giải mã SIFT/SURF.\n• Bằng chứng trực quan đập thẳng vào mắt, xuất ra rành rành lưới kết nối giữa vùng 'gốc' và vùng 'nhái', khiến kẻ giả mạo chỉ còn biết câm nín.",
-    "limitations": "• Tốc độ rùa bò và tốn RAM khủng khiếp do phải tính toán không gian đa chiều (O(N^2)) trên hàng triệu vector đặc trưng, khiến thiết bị yếu có thể thở oxy.\n• Dễ bị đánh lừa (False Positives) bởi những bức ảnh bản chất có kết cấu lặp lại giống hệt nhau một cách tự nhiên (như một tòa nhà có 1000 ô cửa sổ kính giống hệt nhau từ nhà máy, hay tấm thảm lót gạch men thẳng tắp)."
+    "strengths": "• Bền vững trước các biến đổi hình học: nén JPEG, làm mờ, thêm nhiễu, lật, xoay, co giãn đều không ảnh hưởng đáng kể đến khả năng phát hiện của SIFT/SURF.\n• Cung cấp bằng chứng trực quan rõ ràng thông qua bản đồ kết nối giữa vùng gốc và vùng sao chép.",
+    "limitations": "• Chi phí tính toán cao (O(N²)) do cần so sánh chéo hàng triệu vector đặc trưng, yêu cầu bộ nhớ lớn.\n• Dễ tạo dương tính giả đối với ảnh có kết cấu lặp lại tự nhiên (mặt tiền tòa nhà với nhiều cửa sổ giống nhau, sàn gạch đồng nhất)."
 }

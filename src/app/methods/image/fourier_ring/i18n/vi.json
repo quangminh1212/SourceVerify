@@ -1,18 +1,18 @@
 {
-    "name": "Bản Án Vòng Tròn Tần Số Fourier (Fourier Ring)",
-    "description": "Cỗ máy điện từ quét ảnh y khoa chuyên đo phổ tần số 2D. Các mạng Neural AI kiểu cũ (GANs) khi cố gắng xài tích chập (Convolution layer) để sinh ảnh ra độ nét cao, chúng có một lỗi dị tật di truyền bẩm sinh từ mạng lưới toán học: Nếu đưa ảnh AI qua Không Gian Phổ Fourier, nó sẽ không tỏa ra ngẫu nhiên như tự nhiên, mà nó bị bao quanh bởi những vành khuyên khổng lồ, sáng chói, chia lớp lốm đốm như vết vân gỗ sần sùi (Moiré vòng đai đồng tâm).",
-    "algorithm": "Đo Lường Siêu Tần Số Vòng Đồng Tâm (Fourier Ring/Spectrum Peaks)",
-    "mechanism": "Thoát li hoàn toàn hệ quy chiếu điểm ảnh nhìn bằng mắt người thông thường, súng bắn tỉa này đẩy toàn bộ tấm ảnh về ma trận Bước sóng lượng tử (FFT 2D). Bức ảnh chụp tự nhiên phân bổ các ngôi sao hạt năng lượng lan tỏa đều không tổ chức. Đặc trị riêng hệ đào tạo sinh ảnh AI bằng Upsampling (phóng to), những điểm mù của mạng chập (checkerboard artifacts) lập tức liên kết lại... Thét lên thành những chiếc vòng điện từ (Rings) sáng quắc khổng lồ ngay giữa dải tần ngoại biên. Radar đếm vòng này sẽ ra lệnh trảm thủ con AI gian lận lập tức.",
-    "parameters": "Toán tử: Biến Đổi 2D Fast Fourier Transform (FFT), La bàn góc quy chuẩn, Chỉ số Peak Vòng tần số dị biến ngoại biên",
-    "accuracy": "Cực Tối Thượng (87-96%) - Lá bài hộ mệnh sắc bén nhất, chọi thẳng, chọi mạnh, chém đứt đầu đại đa số giống nòi StyleGAN2 hay Deepfake đời phổ thông.",
-    "source": "Wang et al. (2020) - Lỗi Upsampling Neural Trong Tần Số Không Gian CNN-Gen",
-    "useCase": "Giáng đòn đánh phán xử vào các tác phẩm Deepfake/GAN, vạch trần ra trước ánh sáng loại lỗi di truyền 'Vòng tròn khuyết tần số' cực kỳ dị dạng của những cỗ máy ép hình.",
+    "name": "Phân Tích Vòng Tròn Tần Số Fourier (Fourier Ring)",
+    "description": "Phương pháp phân tích phổ tần số 2D nhằm phát hiện ảnh do mạng GAN tạo ra. Các mô hình GAN sử dụng lớp tích chập (convolution layer) để nâng mẫu (upsampling) tạo ra hiện tượng checkerboard artifacts — biểu hiện dưới dạng các vòng tròn đồng tâm (concentric rings) đặc trưng trong không gian phổ Fourier 2D, khác biệt hoàn toàn so với phân bố phổ ngẫu nhiên của ảnh tự nhiên.",
+    "algorithm": "Phân Tích Đỉnh Phổ Vòng Đồng Tâm Fourier (Fourier Ring / Spectrum Peaks)",
+    "mechanism": "Thuật toán chuyển đổi toàn bộ ảnh sang miền tần số bằng biến đổi Fourier nhanh 2D (FFT 2D). Ảnh tự nhiên có phân bố năng lượng phổ lan tỏa đều và ngẫu nhiên. Ngược lại, ảnh AI tạo bởi GAN có hiện tượng nâng mẫu (upsampling) tạo ra các checkerboard artifacts — liên kết thành các vòng tròn (rings) năng lượng cao tại dải tần ngoại biên trên phổ Fourier. Thuật toán phát hiện và đo lường các vòng tròn bất thường này để xác định nguồn gốc ảnh.",
+    "parameters": "Phép biến đổi: FFT 2D (Fast Fourier Transform), Phân tích: Đỉnh phổ vòng tần số ngoại biên, Tiêu chuẩn góc quy chiếu",
+    "accuracy": "Rất cao (87–96%) — Hiệu quả đặc biệt cao đối với ảnh tạo bởi StyleGAN2 và các mô hình GAN thế hệ phổ biến.",
+    "source": "Wang, S.-Y., et al. (2020). CNN-generated Images Are Surprisingly Easy to Spot... for Now. CVPR.",
+    "useCase": "Phát hiện ảnh do GAN/Deepfake tạo ra bằng cách xác định hiện tượng vòng tròn tần số đặc trưng — dấu vết cấu trúc của quá trình upsampling trong mạng nơ-ron tích chập.",
     "references": [
         {
             "title": "Wang, S.-Y., et al. (2020). CNN-generated images are surprisingly easy to spot... for now. CVPR.",
             "url": "https://arxiv.org/abs/1912.11035"
         }
     ],
-    "strengths": "• Tuyệt đỉnh không khoan nhượng: Ác mộng của dòng mạng nơ-ron CNN. Đặc tính vành khuyên này khắc sâu vào lõi toán học tích chập, dù hacker có nén thêm hay đổi màu cũng khó lòng xóa cái dớp của sóng Fourier 2D.\n• Radar rất ghét lỗi Checkerboard băm vằm (Răng cưa vi mô GAN sinh ra), ngay khi thấy là sẽ kết tội 100% không bàn cãi.",
-    "limitations": "• Nhát chém đâm ngược vào bóng tối và trượt mục tiêu nếu tay súng kia xài các hệ thống AI cực tối tân (Diffusion loại xịn, FLUX/SORA), vốn dĩ đã fix triệt để lỗi upsampling sinh viền nên bản đồ Fourier tạch sóng, hoàn toàn sạch bong.\n• Bị thuốc độc JPEG nén quá nặng tàn sát: Khi nén JPEG độ mờ cực cao, các khối 8x8 chữ thập vương vãi trên Fourier sẽ che kín toàn bộ các vành khuyên GAN mong manh này."
+    "strengths": "• Khai thác dấu vết cấu trúc sâu trong lõi toán học tích chập của GAN; đặc tính vòng tròn phổ này bền vững trước các thao tác nén hoặc thay đổi màu sắc.\n• Phát hiện hiệu quả hiện tượng checkerboard artifacts vi mô — đặc trưng bẩm sinh của quá trình upsampling trong GAN.",
+    "limitations": "• Giảm hiệu quả đáng kể đối với các mô hình AI thế hệ mới (Diffusion, FLUX, SORA) đã khắc phục lỗi upsampling, khiến phổ Fourier không còn vòng tròn bất thường.\n• Nén JPEG ở mức chất lượng rất thấp tạo ra nhiễu khối 8×8 trên phổ Fourier, che lấp các vòng tròn GAN vốn có biên độ nhỏ."
 }
