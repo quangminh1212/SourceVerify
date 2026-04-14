@@ -1,12 +1,22 @@
 {
-  "name": "Background Object Physics",
-  "description": "Validates physics consistency of background objects (shadows, reflections, perspective) across frames.",
-  "algorithm": "Background Object Physics分析算法",
-  "mechanism": "This method verifies physical plausibility of background objects in video for deepfake and manipulation detection following Farid (2016):\n\n1. **Object检测&跟踪**: Background objects (furniture, walls, windows, vehicles) are detected and tracked across frames. Their positions, orientations, and visible surfaces are monitored for physical consistency throughout the video sequence.\n\n2. **Perspective一致性验证**: Object geometry is analyzed for correct linear perspective. Parallel edges should converge at consistent vanishing points across all background objects. Manipulated videos may introduce objects with inconsistent perspective geometry or perspective that shifts inconsistently with camera motion.\n\n3. **Lighting&阴影Physics**: Shadow directions, ambient occlusion, and specular highlights on background objects are verified for mutual consistency and agreement with the primary light source direction. Composited backgrounds or AI-generated scenes may produce physically impossible shadow configurations.\n\n4. **时间物理相干性**: Background objects must obey physical laws — rigid objects maintain shape, occluded objects remain consistent when revealed, and object motion follows Newtonian mechanics. AI-generated backgrounds may produce objects that subtly deform, disappear/reappear inconsistently, or move in physically impossible ways.\n\n5. **ChromaticAberration&镜头Effects**: Real camera lenses produce consistent chromatic aberration and distortion across the entire field of view. Background objects should exhibit the same optical characteristics as foreground subjects. Composited or generated backgrounds may show inconsistent lens effects, serving as manipulation indicators per Johnson & Farid (2007).",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "背景物体物理分析",
+    "description": "Validates physics consistency of background objects (shadows, reflections, perspective) across frames.",
+    "algorithm": "Background Object Physics分析算法",
+    "mechanism": "This method verifies physical plausibility of background objects in video for deepfake and manipulation detection following Farid (2016):\n\n1. **Object检测&跟踪**: Background objects (furniture, walls, windows, vehicles) are detected and tracked across frames. Their positions, orientations, and visible surfaces are monitored for physical consistency throughout the video sequence.\n\n2. **Perspective一致性验证**: Object geometry is analyzed for correct linear perspective. Parallel edges should converge at consistent vanishing points across all background objects. Manipulated videos may introduce objects with inconsistent perspective geometry or perspective that shifts inconsistently with camera motion.\n\n3. **Lighting&阴影Physics**: Shadow directions, ambient occlusion, and specular highlights on background objects are verified for mutual consistency and agreement with the primary light source direction. Composited backgrounds or AI-generated scenes may produce physically impossible shadow configurations.\n\n4. **时间物理相干性**: Background objects must obey physical laws — rigid objects maintain shape, occluded objects remain consistent when revealed, and object motion follows Newtonian mechanics. AI-generated backgrounds may produce objects that subtly deform, disappear/reappear inconsistently, or move in physically impossible ways.\n\n5. **ChromaticAberration&镜头Effects**: Real camera lenses produce consistent chromatic aberration and distortion across the entire field of view. Background objects should exhibit the same optical characteristics as foreground subjects. Composited or generated backgrounds may show inconsistent lens effects, serving as manipulation indicators per Johnson & Farid (2007).",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://mitpress.mit.edu/9780262534079/photo-forensics/",
+            "title": "Farid, H. (2016). Photo Forensics. MIT Press."
+        },
+        {
+            "url": "https://doi.org/10.1145/1288869.1288876",
+            "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMSEC."
+        }
+    ]
 }

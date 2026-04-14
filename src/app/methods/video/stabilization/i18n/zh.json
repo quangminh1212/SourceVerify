@@ -1,22 +1,22 @@
 {
-  "name": "Stabilization Artifact",
-  "description": "Detects 视频 stabilization artifacts",
-  "algorithm": "Stabilization Artifact — 像素级空间分析",
-  "mechanism": "This method detects video stabilization artifacts for forensic analysis:\n\n1. **相机运动估计**: Global camera motion is estimated from background feature tracking — translation, rotation, and zoom components per frame. The raw (unstabilized) camera motion trajectory is reconstructed.\n\n2. **Stabilization伪影检测**: Video stabilization smooths camera motion by applying compensating transforms. This produces characteristic artifacts: (a) cropped borders (stabilization reduces effective field of view), (b) warping residuals from rolling shutter correction, (c) motion blur inconsistent with the displayed (stabilized) motion.\n\n3. **DoubleStabilization检测**: If a deepfake video is stabilized and then the original footage was also stabilized, double-stabilization produces characteristic artifacts: excessive border cropping, over-smoothed motion (unnatural zero jitter), and cumulative warping residuals.\n\n4. **人脸-Background运动一致性**: After de-stabilization, the apparent motion of the face and background should be consistent with the same camera motion. If the face was generated and composited, its motion may not match the camera motion recovered from the background, creating a detectable motion inconsistency.\n\n5. **StabilizationHistory分析**: The method estimates whether and how many times the video was stabilized. Each stabilization pass leaves a characteristic imprint on the motion trajectory (reduced high-frequency components). Multiple stabilization passes indicate the video has been processed multiple times — consistent with a manipulation → re-stabilization pipeline.",
-  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through stabilization artifact analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-    },
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    }
-  ]
+    "name": "稳定化伪影分析",
+    "description": "Detects 视频 stabilization artifacts",
+    "algorithm": "Stabilization Artifact — 像素级空间分析",
+    "mechanism": "This method detects video stabilization artifacts for forensic analysis:\n\n1. **相机运动估计**: Global camera motion is estimated from background feature tracking — translation, rotation, and zoom components per frame. The raw (unstabilized) camera motion trajectory is reconstructed.\n\n2. **Stabilization伪影检测**: Video stabilization smooths camera motion by applying compensating transforms. This produces characteristic artifacts: (a) cropped borders (stabilization reduces effective field of view), (b) warping residuals from rolling shutter correction, (c) motion blur inconsistent with the displayed (stabilized) motion.\n\n3. **DoubleStabilization检测**: If a deepfake video is stabilized and then the original footage was also stabilized, double-stabilization produces characteristic artifacts: excessive border cropping, over-smoothed motion (unnatural zero jitter), and cumulative warping residuals.\n\n4. **人脸-Background运动一致性**: After de-stabilization, the apparent motion of the face and background should be consistent with the same camera motion. If the face was generated and composited, its motion may not match the camera motion recovered from the background, creating a detectable motion inconsistency.\n\n5. **StabilizationHistory分析**: The method estimates whether and how many times the video was stabilized. Each stabilization pass leaves a characteristic imprint on the motion trajectory (reduced high-frequency components). Multiple stabilization passes indicate the video has been processed multiple times — consistent with a manipulation → re-stabilization pipeline.",
+    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through stabilization artifact analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+        },
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        }
+    ]
 }

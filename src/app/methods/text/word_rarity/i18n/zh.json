@@ -1,22 +1,22 @@
 {
-  "name": "词汇稀缺性得分 (Word Rarity Score)",
-  "description": "基于“生僻”或“古奥”词汇的使用频率对文档进行法医级评估。大语言模型（LLM）被其庞大的训练基座死死钳制，唯一的使命就是输出“概率上最安全、最正确的 Token 序列”。因此，它们会疯狂地偏爱那些烂大街的、高概率的口水词，并像躲避瘟疫一样避开那些在现代日常交际中几乎绝迹的“词汇孤儿”。然而，人类作家为了给文章增添色彩、精准地刺中某个痛点，或者仅仅是为了炫耀自己独特的作者腔调，经常会随手丢出一些极度生僻、深奥或者略带年代感的词汇。该算法就是一台用来测量这些低概率“长尾（Long-tail）”词汇浓度的化学分析仪。生僻词的严重干涸，是生成式 AI 那种毫无灵魂的、被人工“熨平”的流水线文本的最强指示物。",
-  "algorithm": "词汇频率长尾解剖 (Tulchinskii, 2023)",
-  "mechanism": "The algorithm cross-references every token in the text against a comprehensive frequency dictionary of the target language. Words are categorized into frequency bands. The system specifically scans for words that fall into the lowest probability percentiles (the 'long tail' of the Zipfian distribution). It then calculates a global 'Rarity Score' based on the density and distribution of these unusual terms. AI-generated text typically registers a disproportionately low Rarity Score, heavily localized around the top 5,000 most common words. Human text features periodic 'spikes' into the extreme tail end of the vocabulary distribution.",
-  "useCase": "这是用来解剖学术论文、文学创作、深度文献综述和尖锐评论文章的绝杀武器，因为在这些领域，人类作者通常会肆无忌惮地挥霍广博且极其专业的词汇库。它在侦测那种缺乏鲜明作者人格、读起来毫无波澜的“白开水式” AI 文章时，具有毁灭性的效果。",
-  "strengths": "• 在区分“人类专家充满底蕴的细微遣词造句”和“LLM 安全、平庸的字词拼凑”方面，表现堪称完美。\n• 只要对手没有动用复杂的词汇参数注入手段（无脑使用标准 Prompt），这套系统的击杀率几乎是 100%。",
-  "limitations": "• 容易被针对性的黑客指令攻破（例如：用户拿枪指着 AI 的头要求：“给我用最晦涩的生僻字”、“用古英语风格写”或“启动专家级词汇库”）。\n• 如果文本被迫要求“说人话”（例如：翻译成大白话的法律免责声明、给三岁小孩看的睡前故事，或极其死板的产品说明书），该算法可能会神经质地将其误判为 AI。",
-  "parameters": "雷达切片: 长尾 (Long-Tail) 词汇幽灵分布图\n定罪量表: 极低频 Token 密度测量（出现概率 < 0.001% 的词汇）\n行刑判决: 0-100 词汇稀缺度与机械熨平 (Smoothing) 指数得分",
-  "accuracy": "中级至高级破甲 — 鉴别精度维稳在 70-85%。当把它和“爆发度（Burstiness）”等结构性指标绑在一起时，它将变成一台测谎仪。因为当 AI 被强行下达“必须使用生僻词”的指令时，它往往会像个暴发户一样生硬地把这些词塞进句子里。这虽然能暂时骗过稀缺度雷达，但会彻底摧毁文章的语义连贯性，瞬间在一旁暴毙。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
-      "url": "https://arxiv.org/abs/2304.09880"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS."
+    "name": "词汇稀缺性得分 (Word Rarity Score)",
+    "description": "基于“生僻”或“古奥”词汇的使用频率对文档进行法医级评估。大语言模型（LLM）被其庞大的训练基座死死钳制，唯一的使命就是输出“概率上最安全、最正确的 Token 序列”。因此，它们会疯狂地偏爱那些烂大街的、高概率的口水词，并像躲避瘟疫一样避开那些在现代日常交际中几乎绝迹的“词汇孤儿”。然而，人类作家为了给文章增添色彩、精准地刺中某个痛点，或者仅仅是为了炫耀自己独特的作者腔调，经常会随手丢出一些极度生僻、深奥或者略带年代感的词汇。该算法就是一台用来测量这些低概率“长尾（Long-tail）”词汇浓度的化学分析仪。生僻词的严重干涸，是生成式 AI 那种毫无灵魂的、被人工“熨平”的流水线文本的最强指示物。",
+    "algorithm": "词汇频率长尾解剖 (Tulchinskii, 2023)",
+    "mechanism": "该算法将文本中的每个令牌与目标语言的综合频率词典交叉引用。词被分类为频率段。系统专门扫描落入最低概率百分位（Zipfian分布的\"长尾\"）的词。然后根据这些不寻常术语的密度和分布计算全局\"稀有度分数\"。AI生成的文本通常注册不成比例的低稀有度分数，严重集中在最常见的5000个词附近。人类文本具有周期性地进入词汇分布极端尾端的\"尖峰\"。",
+    "useCase": "这是用来解剖学术论文、文学创作、深度文献综述和尖锐评论文章的绝杀武器，因为在这些领域，人类作者通常会肆无忌惮地挥霍广博且极其专业的词汇库。它在侦测那种缺乏鲜明作者人格、读起来毫无波澜的“白开水式” AI 文章时，具有毁灭性的效果。",
+    "strengths": "• 在区分“人类专家充满底蕴的细微遣词造句”和“LLM 安全、平庸的字词拼凑”方面，表现堪称完美。\n• 只要对手没有动用复杂的词汇参数注入手段（无脑使用标准 Prompt），这套系统的击杀率几乎是 100%。",
+    "limitations": "• 容易被针对性的黑客指令攻破（例如：用户拿枪指着 AI 的头要求：“给我用最晦涩的生僻字”、“用古英语风格写”或“启动专家级词汇库”）。\n• 如果文本被迫要求“说人话”（例如：翻译成大白话的法律免责声明、给三岁小孩看的睡前故事，或极其死板的产品说明书），该算法可能会神经质地将其误判为 AI。",
+    "parameters": "雷达切片: 长尾 (Long-Tail) 词汇幽灵分布图\n定罪量表: 极低频 Token 密度测量（出现概率 < 0.001% 的词汇）\n行刑判决: 0-100 词汇稀缺度与机械熨平 (Smoothing) 指数得分",
+    "accuracy": "中级至高级破甲 — 鉴别精度维稳在 70-85%。当把它和“爆发度（Burstiness）”等结构性指标绑在一起时，它将变成一台测谎仪。因为当 AI 被强行下达“必须使用生僻词”的指令时，它往往会像个暴发户一样生硬地把这些词塞进句子里。这虽然能暂时骗过稀缺度雷达，但会彻底摧毁文章的语义连贯性，瞬间在一旁暴毙。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09880"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS."
 }

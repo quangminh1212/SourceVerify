@@ -1,22 +1,22 @@
 {
-  "name": "语句碎片与残缺句侦测 (Sentence Fragment)",
-  "description": "旨在扫描并榨取文本中“刻意使用的句子碎片”——即那些嚣张地缺失了主句、主语或限定动词的残缺句子（Sentence fragments）。大语言模型（LLM）在被人类用强化学习（RLHF）毒打训练时，只要生成文法不完整的句子就会被扣掉成吨的分数。这种心理创伤导致它们现在几乎只敢排泄出完美契合教科书、标准到令人作呕的“主-谓-宾”完整结构。而带血带肉的人类写作者，尤其在进行创意写作、煽动性演讲或日常对话时，会像使用匕首一样，频繁而精准地投掷“句子碎片”，以此来撕裂节奏、重音强调或制造情绪落差（比如：“不完全是这样。”、“一场彻头彻尾的灾难。”、“有何不可？”）。",
-  "algorithm": "无头句法树的绞肉机式依赖解析",
-  "mechanism": "The algorithm parses the syntactic structure of every sentence using a dependency parser. It specifically hunts for sentences that fail to resolve to a 'ROOT' verb or lack a foundational subject-predicate relationship (headless syntax trees). If a document contains zero or near-zero fragments across a large volume of text, it strongly indicates the rigid grammatical compliance typical of an AI model. Conversely, the presence of well-placed, intentional fragments heavily weights the text toward human authorship.",
-  "useCase": "在审查博客文章、专栏评论、杀手级营销文案以及各类创意写作时，这是一把极其锋利的手术刀——在这些残酷的文字角斗场里，人类作者天生就会运用各种非标点符号和碎片化句法来操控读者的情绪。",
-  "strengths": "• 它是识破“活人体征”的超级雷达（极大降低了诬陷人类的假阳性率），因为除非你用极其变态且具体的 prompt 去逼迫它，否则 AI 的底层代码根本就不允许它“自然地”写出这种破碎的句子。\n• 在充斥着缩写、断句和碎片的现代赛博朋克交流环境（如暴躁的电子邮件、社交媒体狂欢）中，如鱼得水。",
-  "limitations": "• 如果把它扔进极其严肃刻板的学术论文或冷酷无情的法律合同堆里，它基本就是个摆设——因为人类在写这类东西时，也同样被剥夺了写“碎片句”的权利。\n• 文本如果太短，人类完全有可能碰巧一句话碎片都没用，此时这项指标就会因为样本塌缩而失去一切法理意义。",
-  "parameters": "雷达切片: 句法依赖拓扑与根动词 (Root Verb) 强制检索\n定罪量表: 语法残废句 (刻意碎片) 的散落频率\n行刑判决: 0-100 语法强迫症指数 (硅基合规僵硬度) 得分",
-  "accuracy": "中阶防线 — 68-75% 的准确率。它的灵魂价值在于作为一个“人类活体鉴定器（human-indicator）”；碎片的出现是人类作者的狂欢宣言，但没有碎片，也不能直接拉出去当 AI 枪毙。",
-  "references": [
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://aclanthology.org/2020.emnlp-main.673/"
-    },
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    }
-  ],
-  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
+    "name": "语句碎片与残缺句侦测 (Sentence Fragment)",
+    "description": "旨在扫描并榨取文本中“刻意使用的句子碎片”——即那些嚣张地缺失了主句、主语或限定动词的残缺句子（Sentence fragments）。大语言模型（LLM）在被人类用强化学习（RLHF）毒打训练时，只要生成文法不完整的句子就会被扣掉成吨的分数。这种心理创伤导致它们现在几乎只敢排泄出完美契合教科书、标准到令人作呕的“主-谓-宾”完整结构。而带血带肉的人类写作者，尤其在进行创意写作、煽动性演讲或日常对话时，会像使用匕首一样，频繁而精准地投掷“句子碎片”，以此来撕裂节奏、重音强调或制造情绪落差（比如：“不完全是这样。”、“一场彻头彻尾的灾难。”、“有何不可？”）。",
+    "algorithm": "无头句法树的绞肉机式依赖解析",
+    "mechanism": "该算法使用依存分析器解析每个句子的句法结构。它专门搜索无法解析到\"ROOT\"动词或缺乏基本主语-谓语关系的句子（无头句法树）。如果文档在大量文本中包含零或接近零的碎片，则强烈表明AI模型典型的僵硬语法遵守。相反，精心放置的、有意的碎片将文本严重倾向人类作者身份。",
+    "useCase": "在审查博客文章、专栏评论、杀手级营销文案以及各类创意写作时，这是一把极其锋利的手术刀——在这些残酷的文字角斗场里，人类作者天生就会运用各种非标点符号和碎片化句法来操控读者的情绪。",
+    "strengths": "• 它是识破“活人体征”的超级雷达（极大降低了诬陷人类的假阳性率），因为除非你用极其变态且具体的 prompt 去逼迫它，否则 AI 的底层代码根本就不允许它“自然地”写出这种破碎的句子。\n• 在充斥着缩写、断句和碎片的现代赛博朋克交流环境（如暴躁的电子邮件、社交媒体狂欢）中，如鱼得水。",
+    "limitations": "• 如果把它扔进极其严肃刻板的学术论文或冷酷无情的法律合同堆里，它基本就是个摆设——因为人类在写这类东西时，也同样被剥夺了写“碎片句”的权利。\n• 文本如果太短，人类完全有可能碰巧一句话碎片都没用，此时这项指标就会因为样本塌缩而失去一切法理意义。",
+    "parameters": "雷达切片: 句法依赖拓扑与根动词 (Root Verb) 强制检索\n定罪量表: 语法残废句 (刻意碎片) 的散落频率\n行刑判决: 0-100 语法强迫症指数 (硅基合规僵硬度) 得分",
+    "accuracy": "中阶防线 — 68-75% 的准确率。它的灵魂价值在于作为一个“人类活体鉴定器（human-indicator）”；碎片的出现是人类作者的狂欢宣言，但没有碎片，也不能直接拉出去当 AI 枪毙。",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ],
+    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
 }

@@ -1,22 +1,22 @@
 {
-  "name": "量词粒度与绝对性逃避画像 (Quantifier Granularity)",
-  "description": "分析量词（例如：“许多”、“一些”、“少许”、“所有”、“几个”、“大多数”）的统计分布和具体程度。大语言模型在算法底层带有一种根深蒂固的苟且偏好：它们极其钟爱那些模糊的、无需承担责任的退路型量词（“许多专家同意”、“一些研究表明”），而极度排斥使用精确的数值数据或承担高风险的绝对断言（“所有专家”、“绝无可能”）。这种怯懦的行径源于大模型困惑度（Perplexity）的优化逻辑以及所谓的安全护栏——护栏建立的初衷，就是为了防止模型“幻觉”出具体的假数据，或者喷出那种立刻就会被打脸的绝对性暴言。",
-  "algorithm": "模糊量词与绝对量词的比例化验",
-  "mechanism": "The analyzer extracts all quantity-indicating terms and categorizes them into two bins: 'Fuzzy Quantifiers' (some, many, various) and 'Absolute/Precise Quantifiers' (all, zero, exact numbers). It calculates the ratio between these two sets. Because AI models are fundamentally probability engines tuned (via RLHF) to avoid generating false absolutes, they mathematically cluster their outputs around safe, fuzzy quantifiers. A human writer typically anchors arguments with precise data or uses absolutes for rhetorical effect. The system flags texts that maintain a suspiciously high, unvarying density of vague quantifiers without committing to specific values.",
-  "useCase": "在审查行业研究摘要、金融市场分析和硬核学术论文时是一把极其锋利的手术刀——在这些领域，如果是机器写的，它会像个外行一样疯狂依赖“各种因素”或“在许多情况下”这种废话，而不是像真正的人类专家那样直接拍出精确的数据。",
-  "strengths": "• 极为擅长扒下 AI 的“幻觉规避”伪装裤衩——大模型经常会因为它的数据库里根本没检索到具体数字，而用宏观的模糊量词来掩饰自己的无知。\n• 在不同的神级语言模型之间具有极高的通用性和传染性，因为“泛化安全定出量”概率生成引擎最底层的核心基因。",
-  "limitations": "• 如果把它扔进社会学沉思或者哲学推演这种原本就需要宏大叙事和宽泛概括的文本中，它很容易发生大面积误杀（假阳性）。\n• 如果一个足够阴险的人类用户用强硬的提示词，逼着 AI 在文本里强行伪造并注入大量精确的假数字，这套雷达就会被彻底蒙蔽。",
-  "parameters": "雷达切片: 词汇提取 与 量词责任粒度分类\n定罪量表: 模糊退路量词 对冲 绝对量词 的比率\n行刑判决: 0-100 模糊量词浓度 (人造废话特征) 审判分数",
-  "accuracy": "中等破坏力 — 独立作战时拥有 70-80% 的命中率。它是一个高度依赖上下文环境的狙击手，必须与“词汇特异性”和“冷血证据引证”分析联合行动才能锁死目标。",
-  "references": [
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "量词粒度与绝对性逃避画像 (Quantifier Granularity)",
+    "description": "分析量词（例如：“许多”、“一些”、“少许”、“所有”、“几个”、“大多数”）的统计分布和具体程度。大语言模型在算法底层带有一种根深蒂固的苟且偏好：它们极其钟爱那些模糊的、无需承担责任的退路型量词（“许多专家同意”、“一些研究表明”），而极度排斥使用精确的数值数据或承担高风险的绝对断言（“所有专家”、“绝无可能”）。这种怯懦的行径源于大模型困惑度（Perplexity）的优化逻辑以及所谓的安全护栏——护栏建立的初衷，就是为了防止模型“幻觉”出具体的假数据，或者喷出那种立刻就会被打脸的绝对性暴言。",
+    "algorithm": "模糊量词与绝对量词的比例化验",
+    "mechanism": "该分析器提取所有量化指示术语，将其分为两类：\"模糊量词\"（一些、许多、各种）和\"绝对/精确量词\"（所有、零、精确数字）。它计算这两组之间的比率。因为AI模型从根本上是通过RLHF调整以避免生成虚假绝对值的概率引擎，它们在数学上将输出聚集在安全的模糊量词周围。人类作者通常用精确数据锚定论证或使用绝对值来达到修辞效果。系统标记在没有承诺于特定值的情况下维持可疑地高/不变的模糊量词密度的文本。",
+    "useCase": "在审查行业研究摘要、金融市场分析和硬核学术论文时是一把极其锋利的手术刀——在这些领域，如果是机器写的，它会像个外行一样疯狂依赖“各种因素”或“在许多情况下”这种废话，而不是像真正的人类专家那样直接拍出精确的数据。",
+    "strengths": "• 极为擅长扒下 AI 的“幻觉规避”伪装裤衩——大模型经常会因为它的数据库里根本没检索到具体数字，而用宏观的模糊量词来掩饰自己的无知。\n• 在不同的神级语言模型之间具有极高的通用性和传染性，因为“泛化安全定出量”概率生成引擎最底层的核心基因。",
+    "limitations": "• 如果把它扔进社会学沉思或者哲学推演这种原本就需要宏大叙事和宽泛概括的文本中，它很容易发生大面积误杀（假阳性）。\n• 如果一个足够阴险的人类用户用强硬的提示词，逼着 AI 在文本里强行伪造并注入大量精确的假数字，这套雷达就会被彻底蒙蔽。",
+    "parameters": "雷达切片: 词汇提取 与 量词责任粒度分类\n定罪量表: 模糊退路量词 对冲 绝对量词 的比率\n行刑判决: 0-100 模糊量词浓度 (人造废话特征) 审判分数",
+    "accuracy": "中等破坏力 — 独立作战时拥有 70-80% 的命中率。它是一个高度依赖上下文环境的狙击手，必须与“词汇特异性”和“冷血证据引证”分析联合行动才能锁死目标。",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

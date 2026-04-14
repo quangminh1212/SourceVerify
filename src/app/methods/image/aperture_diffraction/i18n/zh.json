@@ -1,22 +1,22 @@
 {
-  "name": "光圈衍射纹样分析 (Aperture Diffraction)",
-  "description": "验证光线通过真实相机光圈叶片时必然产生的光学衍射纹样是否存在。当真实相机拍摄时，尤其在窄光圈（f/11-f/22）下，点光源会产生由不可变的波动光学所决定的特征性星芒（Starburst）或艾里斑（Airy Disk）图案。AI 图像生成器对波动物理学一窍不通。它们偶尔可能在主要光源上模拟出一个粗糙的星芒效果，但它们在系统性地做到一件事上永远失败：即在同一场景中，同时对所有点光源复刻出一致的、物理正确的衍射行为。",
-  "algorithm": "波动光学衍射指纹验证",
-  "mechanism": "The algorithm identifies all high-intensity point light sources in the image (streetlights, reflections, distant sun). For each source, it analyzes the surrounding pixel data for the presence of a diffraction pattern: the number of spikes in a starburst (which must match 2× the number of aperture blades), the angular uniformity of spikes, and the characteristic Airy rings. It then validates cross-scene consistency: every point light source at a similar brightness in the same image must exhibit an identical diffraction fingerprint because they all passed through the same physical lens. AI images almost universally fail this cross-validation, producing differing starburst patterns on different lights—or no pattern at all.",
-  "useCase": "这是为点光源丰富的户外夜景摄影、城市天际线和演唱会照片进行身份认证的黄金标准。当前的 AI 要伪造出一致的衍射纹样，在物理层面上是不可能的。",
-  "strengths": "• 锚定在波动光学的不可撼动的物理定律之上，使其从根本上对任何 AI 架构都具有永久免疫力。\n• 全场景交叉验证（所有光源必须一致）在合格的图像上能提供误报率近乎为零的超高置信度信号。",
-  "limitations": "• 对不含点光源的图像（例如: 白天的风景、使用柔光的室内人像）完全无能为力。\n• 大光圈拍摄（f/1.4-f/2.8）产生的可见衍射极少，导致分析结果无法定论。",
-  "parameters": "雷达切片: 点光源衍射纹样匹配\n定罪量表: 星芒辐射线数、角度均匀性、艾里环存在性、跨光源一致性\n行刑判决: 0-100 光学真实性得分",
-  "accuracy": "极高 — 在包含 3 个以上可见点光源且以窄光圈拍摄的图像上，享有 88-95% 的精度。在大光圈或白天拍摄的图像上则降至无法定论。",
-  "references": [
-    {
-      "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2006.873602"
-    },
-    {
-      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-    }
-  ],
-  "source": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.; Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson."
+    "name": "光圈衍射纹样分析 (Aperture Diffraction)",
+    "description": "验证光线通过真实相机光圈叶片时必然产生的光学衍射纹样是否存在。当真实相机拍摄时，尤其在窄光圈（f/11-f/22）下，点光源会产生由不可变的波动光学所决定的特征性星芒（Starburst）或艾里斑（Airy Disk）图案。AI 图像生成器对波动物理学一窍不通。它们偶尔可能在主要光源上模拟出一个粗糙的星芒效果，但它们在系统性地做到一件事上永远失败：即在同一场景中，同时对所有点光源复刻出一致的、物理正确的衍射行为。",
+    "algorithm": "波动光学衍射指纹验证",
+    "mechanism": "该算法识别图像中所有高亮度点光源（路灯、反射光、远处的太阳）。对于每个光源，它分析周围像素数据以检测衍射图案：星芒中的尖刺数量（必须匹配光圈叶片数的2倍）、尖刺的角度均匀性以及特征性的艾里环。然后验证跨场景一致性：同一图像中每个亮度相似的点光源必须呈现完全相同的衍射特征，因为它们都通过同一物理镜头。AI图像几乎普遍无法通过此交叉验证，在不同光源上产生不同的星芒图案——或根本没有图案。",
+    "useCase": "这是为点光源丰富的户外夜景摄影、城市天际线和演唱会照片进行身份认证的黄金标准。当前的 AI 要伪造出一致的衍射纹样，在物理层面上是不可能的。",
+    "strengths": "• 锚定在波动光学的不可撼动的物理定律之上，使其从根本上对任何 AI 架构都具有永久免疫力。\n• 全场景交叉验证（所有光源必须一致）在合格的图像上能提供误报率近乎为零的超高置信度信号。",
+    "limitations": "• 对不含点光源的图像（例如: 白天的风景、使用柔光的室内人像）完全无能为力。\n• 大光圈拍摄（f/1.4-f/2.8）产生的可见衍射极少，导致分析结果无法定论。",
+    "parameters": "雷达切片: 点光源衍射纹样匹配\n定罪量表: 星芒辐射线数、角度均匀性、艾里环存在性、跨光源一致性\n行刑判决: 0-100 光学真实性得分",
+    "accuracy": "极高 — 在包含 3 个以上可见点光源且以窄光圈拍摄的图像上，享有 88-95% 的精度。在大光圈或白天拍摄的图像上则降至无法定论。",
+    "references": [
+        {
+            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        },
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        }
+    ],
+    "source": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.; Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson."
 }

@@ -1,22 +1,22 @@
 {
-  "name": "Hue Consistency",
-  "description": "Analyzes hue consistency across regions",
-  "algorithm": "Hue Consistency — 像素级空间分析",
-  "mechanism": "This method analyzes hue consistency to detect image manipulation and AI generation:\n\n1. **颜色SpaceConversion**: The image is converted from RGB to HSV (Hue-Saturation-Value) color space, isolating the hue channel. The hue channel represents the dominant wavelength of light independent of brightness and saturation, following Popescu & Farid's (2005) approach to color analysis.\n\n2. **RegionalHue分析**: The image is divided into overlapping regions and per-region hue statistics are computed — mean hue, hue variance, and circular hue histogram (since hue is angular). Natural images show smooth hue transitions between adjacent regions following physical illumination constraints.\n\n3. **Hue梯度计算**: The spatial gradient of the hue channel is computed. In authentic images, hue gradients correlate with material boundaries and illumination changes. AI-generated images may show hue inconsistencies — abrupt hue shifts not explained by scene geometry or lighting, especially at object boundaries.\n\n4. **Cross-通道Hue相关性**: The relationship between hue and luminance/saturation is analyzed. Natural scenes follow physical constraints (e.g., sky hue depends on viewing angle, skin hue varies with illumination). AI models may produce hue-luminance relationships that violate these physical priors.\n\n5. **Hue相干性评分**: A coherence score is computed measuring the overall consistency of hue across the image. Low coherence (high hue variation not explained by scene content) indicates potential manipulation. The score reflects deviations from the expected hue distribution for the detected scene type.",
-  "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-  "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-  "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-  "useCase": "通过以下方式检测AI生成或篡改的图像： hue consistency 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-  "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-  "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
-  "references": [
-    {
-      "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-      "url": "https://doi.org/10.1109/TSP.2005.855406"
-    },
-    {
-      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-      "url": "https://doi.org/10.1109/38.946629"
-    }
-  ]
+    "name": "色调一致性分析",
+    "description": "Analyzes hue consistency across regions",
+    "algorithm": "Hue Consistency — 像素级空间分析",
+    "mechanism": "This method analyzes hue consistency to detect image manipulation and AI generation:\n\n1. **颜色SpaceConversion**: The image is converted from RGB to HSV (Hue-Saturation-Value) color space, isolating the hue channel. The hue channel represents the dominant wavelength of light independent of brightness and saturation, following Popescu & Farid's (2005) approach to color analysis.\n\n2. **RegionalHue分析**: The image is divided into overlapping regions and per-region hue statistics are computed — mean hue, hue variance, and circular hue histogram (since hue is angular). Natural images show smooth hue transitions between adjacent regions following physical illumination constraints.\n\n3. **Hue梯度计算**: The spatial gradient of the hue channel is computed. In authentic images, hue gradients correlate with material boundaries and illumination changes. AI-generated images may show hue inconsistencies — abrupt hue shifts not explained by scene geometry or lighting, especially at object boundaries.\n\n4. **Cross-通道Hue相关性**: The relationship between hue and luminance/saturation is analyzed. Natural scenes follow physical constraints (e.g., sky hue depends on viewing angle, skin hue varies with illumination). AI models may produce hue-luminance relationships that violate these physical priors.\n\n5. **Hue相干性评分**: A coherence score is computed measuring the overall consistency of hue across the image. Low coherence (high hue variation not explained by scene content) indicates potential manipulation. The score reflects deviations from the expected hue distribution for the detected scene type.",
+    "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
+    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
+    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
+    "useCase": "通过以下方式检测AI生成或篡改的图像： hue consistency 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
+    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
+    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "references": [
+        {
+            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
+            "url": "https://doi.org/10.1109/TSP.2005.855406"
+        },
+        {
+            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+            "url": "https://doi.org/10.1109/38.946629"
+        }
+    ]
 }

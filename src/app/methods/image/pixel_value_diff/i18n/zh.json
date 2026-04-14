@@ -1,12 +1,22 @@
 {
-  "name": "Pixel Value Differencing",
-  "description": "Detects stego-like pixel value differencing patterns that leak into AI-generated images (Wu & Tsai, 2003).",
-  "algorithm": "Pixel Value Differencing分析算法",
-  "mechanism": "This method applies Pixel Value Differencing (PVD) analysis following Wu & Tsai (2003) for steganographic and manipulation detection:\n\n1. **块Partitioning**: The image is divided into non-overlapping blocks of two consecutive pixels. For each block, the difference value dₖ = |pᵢ − pᵢ₊₁| is computed between adjacent pixel pairs in both horizontal and vertical directions.\n\n2. **Difference直方图Construction**: A histogram of all pixel difference values is constructed. Natural images exhibit a characteristic PVD histogram following a Laplacian-like distribution — high concentration near zero (smooth regions) with exponential decay toward larger differences (edge regions).\n\n3. **RangeTable分析**: Differences are classified into ranges [lₖ, uₖ] following the PVD range table. Each range has an expected capacity proportional to its width. Steganographic embedding modifies the histogram within these ranges in detectable ways — creating artifacts in the distribution tails.\n\n4. **统计Regularity检测**: The method detects statistical anomalies in the PVD histogram: (a) unnatural steps between adjacent bins caused by embedding algorithms, (b) abnormal symmetry or flatness in typically peaked distributions, (c) deviations from the expected Benford-like first-digit distribution of differences.\n\n5. **AIGenerationIndicators**: AI-generated images typically exhibit PVD histograms with abnormal smoothness (lacking the fine-grained irregularities of real camera quantization), unusual uniformity across difference ranges, or artificial periodicity absent in natural pixel statistics. The analysis score quantifies these deviations.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "像素值差分分析",
+    "description": "Detects stego-like pixel value differencing patterns that leak into AI-generated images (Wu & Tsai, 2003).",
+    "algorithm": "Pixel Value Differencing分析算法",
+    "mechanism": "This method applies Pixel Value Differencing (PVD) analysis following Wu & Tsai (2003) for steganographic and manipulation detection:\n\n1. **块Partitioning**: The image is divided into non-overlapping blocks of two consecutive pixels. For each block, the difference value dₖ = |pᵢ − pᵢ₊₁| is computed between adjacent pixel pairs in both horizontal and vertical directions.\n\n2. **Difference直方图Construction**: A histogram of all pixel difference values is constructed. Natural images exhibit a characteristic PVD histogram following a Laplacian-like distribution — high concentration near zero (smooth regions) with exponential decay toward larger differences (edge regions).\n\n3. **RangeTable分析**: Differences are classified into ranges [lₖ, uₖ] following the PVD range table. Each range has an expected capacity proportional to its width. Steganographic embedding modifies the histogram within these ranges in detectable ways — creating artifacts in the distribution tails.\n\n4. **统计Regularity检测**: The method detects statistical anomalies in the PVD histogram: (a) unnatural steps between adjacent bins caused by embedding algorithms, (b) abnormal symmetry or flatness in typically peaked distributions, (c) deviations from the expected Benford-like first-digit distribution of differences.\n\n5. **AIGenerationIndicators**: AI-generated images typically exhibit PVD histograms with abnormal smoothness (lacking the fine-grained irregularities of real camera quantization), unusual uniformity across difference ranges, or artificial periodicity absent in natural pixel statistics. The analysis score quantifies these deviations.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1016/S0167-8655(02)00402-6",
+            "title": "Wu, D.C. & Tsai, W.H. (2003). A Steganographic Method for Images by Pixel-Value Differencing. Pattern Recognition Letters."
+        },
+        {
+            "url": "https://doi.org/10.1109/93.959097",
+            "title": "Fridrich, J. et al. (2001). Detecting LSB Steganography in Color and Gray-Scale Images. IEEE Multimedia."
+        }
+    ]
 }

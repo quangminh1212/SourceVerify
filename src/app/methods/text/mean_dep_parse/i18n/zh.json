@@ -1,22 +1,22 @@
 {
-  "name": "平均依存深度 (MDD)",
-  "description": "通过解析语法树，测量句子核心动词（根节点）与其从属词之间的平均“距离”（深度），以此暴露出文章结构的真实复杂程度。AI 模型为了将语法车祸的概率降到最低，通常只会生成深度极浅、结构极其扁平的句子；而人类则会天生带有一种结构极其多变、嵌套极深的从句迷宫本能。",
-  "algorithm": "句法依存树拓扑深度解析网络",
-  "mechanism": "This method utilizes a Natural Language Processing (NLP) dependency parser to map the grammatical structure of every sentence in the text. It identifies the 'root' of the sentence (usually the main verb) and builds a syntactic tree detailing how subjects, objects, and modifiers depend on each other. The 'Dependency Depth' is the number of grammatical links between the root and the most distant dependent word. The algorithm calculates the Mean Dependency Depth (MDD) across all sentences. Because LLMs operate via autoregressive next-token prediction, keeping track of deeply nested, long-distance grammatical dependencies (e.g., a subject separated from its verb by three relative clauses) requires significant 'attention' computation and risks breaking grammar. Consequently, model alignment heavily favors generating text with flat, straightforward syntactic trees (low MDD). Human writers, especially in formal or academic settings, organically write with deeper syntactic embedding, holding complex structures in their working memory. If a long, supposedly sophisticated text exhibits an unnaturally shallow Mean Dependency Depth bordering on simplistic syntax, it is strongly flagged as machine-generated.",
-  "useCase": "这是扒去长篇雄辩文、高级政论文章和重度技术论文“伪装外衣”的终极利器。它能一针见血地验出：这篇看似宏大的文章，其底层“骨架”究竟有没有人类那种百转千回的智力深度。",
-  "strengths": "• 对那些只会耍嘴皮子的“高级提示词工程”形成了绝对免疫；当你命令 AI “写得更高深复杂一点”时，AI 的本能反应只是往句子里疯狂塞入生僻词或堆砌形容词，它根本没有能力从骨子里把整个句法的依存树挖深。\n• 它是对“深层结构语法”降维打击，完全无视表层词汇，这使得那些靠着“同义词替换（洗稿）”来躲避审查的工具彻底沦为废铁。\n• 只要目标语言配有成熟的依存句法解析器，这套穿甲弹逻辑就是跨越人类所有语种的通用法则。",
-  "limitations": "• 算力无底洞。要为一篇文章里的几千句话挨个生成功耗巨大的依存句法树，对服务器的 CPU 和内存是地狱级的压榨。\n• 对于字数不足 150 词的短文本，由于造不出足够庞大的句子样本群体，算出的 MDD 均值缺乏统计学说服力。\n• 如果文章本来就是写给三岁小孩读的故事、短平快的说明书或生活随笔，人类自发写出来的句子也就很扁平，这会不可避免地触发系统的假阳性（误杀）。",
-  "parameters": "雷达切片: 基于单句级别的重型 NLP 依存树结构化拆解\n定罪量表: 根节点 (Root) 到边缘终端节点 (TerminalNodes) 的平均链路深度\n行刑判决: 0-100 残疾句法扁平度 (机器求稳退化) 审判分数",
-  "accuracy": "高维定罪 — 在学术与长逻辑文本中拥有 78-86% 的极高斩杀率。它冷酷无情地扒下了 AI 那套为了追求“结构绝对安全”和“可预测语法”而退化出的残疾骨架。",
-  "references": [
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    },
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    }
-  ],
-  "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
+    "name": "平均依存深度 (MDD)",
+    "description": "通过解析语法树，测量句子核心动词（根节点）与其从属词之间的平均“距离”（深度），以此暴露出文章结构的真实复杂程度。AI 模型为了将语法车祸的概率降到最低，通常只会生成深度极浅、结构极其扁平的句子；而人类则会天生带有一种结构极其多变、嵌套极深的从句迷宫本能。",
+    "algorithm": "句法依存树拓扑深度解析网络",
+    "mechanism": "该方法利用自然语言处理（NLP）依存分析器来映射文本中每个句子的语法结构。它识别句子的\"根\"（通常是主要动词）并构建一棵详细说明主语、宾语和修饰语如何相互依存的句法树。\"依存深度\"是根与最远的依存词之间的语法链接数量。该算法计算所有句子的平均依存深度（MDD）。因为LLM通过自回归下一个令牌预测运作，跟踪深层嵌套的、长距离语法依存（例如，主语与其动词被三个关系从句分隔）需要大量\"注意力\"计算，并有破坏语法的风险。因此，模型对齐严重偏好生成具有平坦、简单句法树（低MDD）的文本。人类作者，尤其是在正式或学术环境中，有机地用更深的句法嵌入写作，在工作记忆中保持复杂结构。如果一个长而假装精致的文本表现出接近简单句法的不自然浅平均依存深度，则被强烈标记为机器生成。",
+    "useCase": "这是扒去长篇雄辩文、高级政论文章和重度技术论文“伪装外衣”的终极利器。它能一针见血地验出：这篇看似宏大的文章，其底层“骨架”究竟有没有人类那种百转千回的智力深度。",
+    "strengths": "• 对那些只会耍嘴皮子的“高级提示词工程”形成了绝对免疫；当你命令 AI “写得更高深复杂一点”时，AI 的本能反应只是往句子里疯狂塞入生僻词或堆砌形容词，它根本没有能力从骨子里把整个句法的依存树挖深。\n• 它是对“深层结构语法”降维打击，完全无视表层词汇，这使得那些靠着“同义词替换（洗稿）”来躲避审查的工具彻底沦为废铁。\n• 只要目标语言配有成熟的依存句法解析器，这套穿甲弹逻辑就是跨越人类所有语种的通用法则。",
+    "limitations": "• 算力无底洞。要为一篇文章里的几千句话挨个生成功耗巨大的依存句法树，对服务器的 CPU 和内存是地狱级的压榨。\n• 对于字数不足 150 词的短文本，由于造不出足够庞大的句子样本群体，算出的 MDD 均值缺乏统计学说服力。\n• 如果文章本来就是写给三岁小孩读的故事、短平快的说明书或生活随笔，人类自发写出来的句子也就很扁平，这会不可避免地触发系统的假阳性（误杀）。",
+    "parameters": "雷达切片: 基于单句级别的重型 NLP 依存树结构化拆解\n定罪量表: 根节点 (Root) 到边缘终端节点 (TerminalNodes) 的平均链路深度\n行刑判决: 0-100 残疾句法扁平度 (机器求稳退化) 审判分数",
+    "accuracy": "高维定罪 — 在学术与长逻辑文本中拥有 78-86% 的极高斩杀率。它冷酷无情地扒下了 AI 那套为了追求“结构绝对安全”和“可预测语法”而退化出的残疾骨架。",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        }
+    ],
+    "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
 }

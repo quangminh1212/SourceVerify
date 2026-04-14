@@ -1,22 +1,22 @@
 {
-  "name": "Fast-DetectGPT 概率曲率",
-  "description": "一种极速、零样本（Zero-shot）的检测算法，它通过直接在数学层面上解析词元的条件概率曲率来锁定 AI 文本，彻底抛弃了慢如蜗牛的暴力文本扰动（Perturbation）测试。",
-  "algorithm": "条件概率曲率解析估计 (Bao et al., 2024)",
-  "mechanism": "DetectGPT proved that AI-generated text sits at the absolute peak (local maxima) of a model's log-probability curve. If you change a few words (perturbation), the probability drops drastically. Human text, however, sits in the random valleys of this curve, so changing words doesn't drastically lower the probability. The original DetectGPT was painfully slow because it required generating hundreds of variations of the text to map this curve. Fast-DetectGPT is a mathematical breakthrough. Instead of generating hundreds of fake variations, it analytically computes the conditional probability of each token and uses a surrogate scoring function to estimate the probability curvature in a single pass. It measures how much the current word's probability diverges from the expected probability of all other possible words in that exact context. If the text consistently hits the sharpest mathematical peaks of conditional probability space—meaning the words chosen are always the hyper-optimal, safest choices—it triggers the algorithmic detection threshold instantly.",
-  "useCase": "这是在实战流水线中大规模绞杀原生 AI 文本的终极劳模探测器。当面对海量语料，既要零样本盲测的精准度，又要追求毫秒级运算速度时，它是唯一解。",
-  "strengths": "• 速度极其残暴：比老大哥 DetectGPT 快了最高足足 340 倍，同时检测的精确度不降反升，甚至超越原版。\n• 零样本盲杀能力（Zero-shot）：不需要提前捕获并学习生成这篇瞎话的具体 AI 模型（哪怕是暗网里没见过的新模型），也能直接通过底层数学原理将其击落。\n• 铁一样的数学逻辑：它不屑于去分析你句子写得多优美或者有没有语法错误，它直接把枪管塞进所有自回归大语言模型（LLM）的发动机里测概率。",
-  "limitations": "• 容易被重度“洗稿工具”（如深度设定的 QuillBot 或 WordAI）欺骗，因为这些黑客工具会故意拉低词汇的概率峰值，强行模拟人类“颠沛流离”的低概率山谷。\n• 在面对极短的动态消息（低于 100 词）时会因为采样 Token 太少，画不出一张有统计学说服力的曲率地图而火力大减。\n• 容易误杀人类写的“高纯度八股文”（比如高度克制的技术说明书、硬核代码片段），因为这些人类由于职业病，写出来的东西也自然处于概率极高峰。",
-  "parameters": "雷达切片: 单轨条件概率硬算 & 替代函数评估\n定罪量表: 对数概率曲率异常偏离度估计\n行刑判决: 0-100 概率曲率 (触碰算法极峰点) 定罪分数",
-  "accuracy": "极高处刑率 — 85-95%（在长度合格的未经二次洗稿的 AI 原生文本上）。代表着当前 AI 法氏鉴定学中能做到“又快又准”的最强手术刀之一。",
-  "references": [
-    {
-      "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
-      "url": "https://arxiv.org/abs/2310.05130"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "Fast-DetectGPT 概率曲率",
+    "description": "一种极速、零样本（Zero-shot）的检测算法，它通过直接在数学层面上解析词元的条件概率曲率来锁定 AI 文本，彻底抛弃了慢如蜗牛的暴力文本扰动（Perturbation）测试。",
+    "algorithm": "条件概率曲率解析估计 (Bao et al., 2024)",
+    "mechanism": "DetectGPT证明AI生成的文本位于模型对数概率曲线的绝对峰值（局部最大值）。如果你改变几个词（扰动），概率会急剧下降。然而人类文本坐在该曲线的随机谷底中，所以改变词语不会急剧降低概率。原始DetectGPT痛苦地缓慢，因为它需要生成数百个文本变体来映射该曲线。Fast-DetectGPT是一个数学突破。它不是生成数百个假变体，而是分析性地计算每个令牌的条件概率，并使用替代评分函数在单次通过中估计概率曲率。它测量当前词的概率与该精确上下文中所有其他可能词语的预期概率之间的偏离程度。如果文本持续命中条件概率空间的最尖锐数学峰值——意味着选择的词语总是超最优、最安全的选择——它立即触发算法检测阈值。",
+    "useCase": "这是在实战流水线中大规模绞杀原生 AI 文本的终极劳模探测器。当面对海量语料，既要零样本盲测的精准度，又要追求毫秒级运算速度时，它是唯一解。",
+    "strengths": "• 速度极其残暴：比老大哥 DetectGPT 快了最高足足 340 倍，同时检测的精确度不降反升，甚至超越原版。\n• 零样本盲杀能力（Zero-shot）：不需要提前捕获并学习生成这篇瞎话的具体 AI 模型（哪怕是暗网里没见过的新模型），也能直接通过底层数学原理将其击落。\n• 铁一样的数学逻辑：它不屑于去分析你句子写得多优美或者有没有语法错误，它直接把枪管塞进所有自回归大语言模型（LLM）的发动机里测概率。",
+    "limitations": "• 容易被重度“洗稿工具”（如深度设定的 QuillBot 或 WordAI）欺骗，因为这些黑客工具会故意拉低词汇的概率峰值，强行模拟人类“颠沛流离”的低概率山谷。\n• 在面对极短的动态消息（低于 100 词）时会因为采样 Token 太少，画不出一张有统计学说服力的曲率地图而火力大减。\n• 容易误杀人类写的“高纯度八股文”（比如高度克制的技术说明书、硬核代码片段），因为这些人类由于职业病，写出来的东西也自然处于概率极高峰。",
+    "parameters": "雷达切片: 单轨条件概率硬算 & 替代函数评估\n定罪量表: 对数概率曲率异常偏离度估计\n行刑判决: 0-100 概率曲率 (触碰算法极峰点) 定罪分数",
+    "accuracy": "极高处刑率 — 85-95%（在长度合格的未经二次洗稿的 AI 原生文本上）。代表着当前 AI 法氏鉴定学中能做到“又快又准”的最强手术刀之一。",
+    "references": [
+        {
+            "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
+            "url": "https://arxiv.org/abs/2310.05130"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

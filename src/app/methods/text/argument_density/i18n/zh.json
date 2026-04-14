@@ -1,18 +1,18 @@
 {
-  "name": "论点密度指数 (Argument Density Score)",
-  "description": "测量从文本中提取的独立的、非冗余的论点与前提的数量，与其绝对物理字数之间的比例。",
-  "algorithm": "论辩命题提取器 (Proposition Extractor)",
-  "mechanism": "This method evaluates the informational efficiency of a text. When instructed to generate long texts, LLMs frequently engage in 'argumentative padding'—producing verbose paragraphs that eloquently circle around a single main point without introducing any novel claims, evidence, or nuance. They do this to meet length constraints without risking hallucination or breaking safety guardrails. By extracting the absolute number of distinct argumentative propositions (claims, premises, backing) and computing their ratio to the physical length of the text, this method yields an 'argument density score.' Exceptionally high word counts paired with a mathematically low number of distinct propositions strongly indicate the syntactic fluff typical of an AI attempting to hit a word count, whereas human experts instinctively write with much denser informational efficiency.",
-  "useCase": "剥去那些由 AI 生成的、听起来极具说服力但实际上内容空洞的冗长论文、专栏评论和报告的伪装，揭示其缺乏人类专家特有的实质性多重逻辑主张的本相。",
-  "strengths": "• 枪管直接顶向了 LLM 为了“规避幻觉”而疯狂进行语义注水拉长篇幅的底层行为逻辑。\n• 在分析长篇内容（如大学期末论文或自动化新闻报道）时，具有极其恐怖的杀伤力。\n• 它的运作完全独立于表面的词汇选择，这意味着那些试图通过“换个说法重写 (Rewrite)”的普通提示词小把戏根本无法蒙混过关。",
-  "limitations": "• 在评估那些本来就臭名昭著、喜欢玩“拼凑字数”把戏的人类作者（例如：为了水字数而痛苦挣扎的大学生）时，容易产生误判（False positives）。\n• 如果撞上诗歌、极简主义小说或营销口号这类天生就信息稀疏的体裁，它就成了毫无用处的废铁。\n• 极其依赖高达变态级别的命题解析逻辑，否则就会把同一个观点换壳重写的废话误判为两个不同的论点。",
-  "parameters": "分析类型: 语言学论辩命题剥离\n衡量指标: 每 1000 个 Token 中包含的独立语义主张数量\n输出判定: 0-100 信息注水通货膨胀指数",
-  "accuracy": "中上水准 — 75-84%。在打击论文、专栏评论和深度分析文章时精度极高。",
-  "references": [
-    {
-      "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",
-      "url": "https://doi.org/10.1162/COLI_a_00295"
-    }
-  ],
-  "source": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics."
+    "name": "论点密度指数 (Argument Density Score)",
+    "description": "测量从文本中提取的独立的、非冗余的论点与前提的数量，与其绝对物理字数之间的比例。",
+    "algorithm": "论辩命题提取器 (Proposition Extractor)",
+    "mechanism": "该方法评估文本的信息效率。当被指示生成长文本时，LLM经常进行\"论证填充\"——产生围绕单一要点优雅地兜圈子的冗长段落，而不引入任何新颖的主张、证据或细微差别。它们这样做是为了满足长度约束，同时避免产生幻觉或违反安全护栏。通过提取独特论证命题（主张、前提、支撑）的绝对数量并计算其与文本物理长度的比率，该方法产生\"论证密度分数\"。异常高的字数配以数学上低的独特命题数量，强烈表明AI试图凑字数时典型的句法绒毛，而人类专家本能地写出信息密度更高的文本。",
+    "useCase": "剥去那些由 AI 生成的、听起来极具说服力但实际上内容空洞的冗长论文、专栏评论和报告的伪装，揭示其缺乏人类专家特有的实质性多重逻辑主张的本相。",
+    "strengths": "• 枪管直接顶向了 LLM 为了“规避幻觉”而疯狂进行语义注水拉长篇幅的底层行为逻辑。\n• 在分析长篇内容（如大学期末论文或自动化新闻报道）时，具有极其恐怖的杀伤力。\n• 它的运作完全独立于表面的词汇选择，这意味着那些试图通过“换个说法重写 (Rewrite)”的普通提示词小把戏根本无法蒙混过关。",
+    "limitations": "• 在评估那些本来就臭名昭著、喜欢玩“拼凑字数”把戏的人类作者（例如：为了水字数而痛苦挣扎的大学生）时，容易产生误判（False positives）。\n• 如果撞上诗歌、极简主义小说或营销口号这类天生就信息稀疏的体裁，它就成了毫无用处的废铁。\n• 极其依赖高达变态级别的命题解析逻辑，否则就会把同一个观点换壳重写的废话误判为两个不同的论点。",
+    "parameters": "分析类型: 语言学论辩命题剥离\n衡量指标: 每 1000 个 Token 中包含的独立语义主张数量\n输出判定: 0-100 信息注水通货膨胀指数",
+    "accuracy": "中上水准 — 75-84%。在打击论文、专栏评论和深度分析文章时精度极高。",
+    "references": [
+        {
+            "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",
+            "url": "https://doi.org/10.1162/COLI_a_00295"
+        }
+    ],
+    "source": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics."
 }

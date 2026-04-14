@@ -1,22 +1,22 @@
 {
-  "name": "Temporal Noise Pattern",
-  "description": "Analyzes temporal noise pattern",
-  "algorithm": "Temporal Noise Pattern — Statistical Pattern Analyzer",
-  "mechanism": "This method analyzes temporal noise patterns for video deepfake detection:\n\n1. **时间噪声提取**: The temporal noise component is extracted by computing per-pixel temporal variance in static regions. This isolates noise from signal, capturing the stochastic temporal fluctuation characteristics of the imaging system.\n\n2. **噪声ModelIdentification**: Camera temporal noise follows specific models: (a) photon shot noise (Poisson, signal-dependent), (b) read noise (Gaussian, signal-independent), (c) thermal noise (dark current). The method fits these physical noise models to the observed temporal noise. AI-generated video typically doesn't follow physical camera noise models.\n\n3. **噪声空间Homogeneity**: Camera noise is spatially homogeneous (same sensor for all pixels) with possible variation from vignetting. The method checks noise spatial distribution — deepfakes show different noise characteristics in generated face regions (from the generator's stochastic process) vs. captured background (from camera noise).\n\n4. **噪声-信号Dependency**: In camera-captured video, noise variance depends on signal level (shot noise ∝ signal). The method checks this dependency — AI-generated noise may be signal-independent (additive noise model) or show incorrect signal-noise relationship.\n\n5. **时间噪声相关性**: Camera temporal noise is temporally uncorrelated (white). The method checks temporal autocorrelation of the noise signal — AI-generated temporal noise may show temporal correlations from the generation process (autoregressive generation, frame interpolation), producing non-white temporal noise distinguishable from camera noise.",
-  "parameters": "分析类型: 统计\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through temporal noise pattern analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    }
-  ]
+    "name": "时间噪声模式分析",
+    "description": "Analyzes temporal noise pattern",
+    "algorithm": "Temporal Noise Pattern — Statistical Pattern Analyzer",
+    "mechanism": "This method analyzes temporal noise patterns for video deepfake detection:\n\n1. **时间噪声提取**: The temporal noise component is extracted by computing per-pixel temporal variance in static regions. This isolates noise from signal, capturing the stochastic temporal fluctuation characteristics of the imaging system.\n\n2. **噪声ModelIdentification**: Camera temporal noise follows specific models: (a) photon shot noise (Poisson, signal-dependent), (b) read noise (Gaussian, signal-independent), (c) thermal noise (dark current). The method fits these physical noise models to the observed temporal noise. AI-generated video typically doesn't follow physical camera noise models.\n\n3. **噪声空间Homogeneity**: Camera noise is spatially homogeneous (same sensor for all pixels) with possible variation from vignetting. The method checks noise spatial distribution — deepfakes show different noise characteristics in generated face regions (from the generator's stochastic process) vs. captured background (from camera noise).\n\n4. **噪声-信号Dependency**: In camera-captured video, noise variance depends on signal level (shot noise ∝ signal). The method checks this dependency — AI-generated noise may be signal-independent (additive noise model) or show incorrect signal-noise relationship.\n\n5. **时间噪声相关性**: Camera temporal noise is temporally uncorrelated (white). The method checks temporal autocorrelation of the noise signal — AI-generated temporal noise may show temporal correlations from the generation process (autoregressive generation, frame interpolation), producing non-white temporal noise distinguishable from camera noise.",
+    "parameters": "分析类型: 统计\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through temporal noise pattern analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "文本困惑度深度剖析 (Perplexity)",
-  "description": "测量文本底层的统计学“可预测性”。大语言模型 (LLM) 的运行本质，就是像一台冷酷的印钞机一样，永远去预测下一个在数学上最符合常理的概率词。因此，AI 生成的文本在骨子里就是为了让另一个语言模型“毫不意外”而设计的，这就导致了其得分极低的“困惑度”。人类作家的脑回路恰恰相反，我们总是能丢出一些不可预测的、古怪的、或者极具创造力的词汇，这些词汇会粗暴地撕裂模型对下一个词的预期，从而产生极高的平均困惑度。",
-  "algorithm": "对数似然词元评估与基线偏离度矩阵",
-  "mechanism": "This algorithm runs the input text through an evaluative language model (often an open-source model like GPT-2 or a customized evaluator) and measures the log-probability of every single token given its preceding context. 'Perplexity' is essentially a mathematical measurement of how 'surprised' the evaluating model is by the text. In AI-generated text, because the text was originally constructed by selecting highly probable words, an evaluating model will easily 'guess' the sequence, yielding a low, uniform perplexity score. Humans do not write using statistical probability; we use colloquialisms, abrupt topic shifts, mixed metaphors, and unique phrasing that a language model cannot easily predict. When the evaluating model encounters these human quirks, its confidence drops, and the text's perplexity spikes. The system calculates an 'Artificial Predictability Score' by analyzing the overall average perplexity of the text against established human boundaries.",
-  "useCase": "这是几乎所有现代 AI 猎杀系统的“绝对底座”。用来快速对海量的学生散文、无良营销文案和新闻注水文章进行地毯式扫描——一针见血地扒出这些文字的底层逻辑，究竟是顺从了冰冷的概率统计曲线，还是源于人类大脑的瞬间冲动。",
-  "strengths": "• 在裸绞由标准大模型（比如未加任何掩饰的 ChatGPT 默认输出）生成的毫无防备的零样本（zero-shot）AI 文本时，杀伤力极其恐怖。\n• 它不需要针对各个领域去背一套复杂的“小抄规矩”，就能无视话题和文体，在全球语境下进行降维打击。\n• 这种攻击手段直接挖断了所有自回归大语言模型 (Autoregressive LLMs) 赖以生存的工作原理根基。",
-  "limitations": "• 防御系统也很脆弱，只要使用者在出图时动动手脚拔高“生成温度（temperature）”，或者是用钓鱼提示词（比如“一定要用极高困惑度写这段话”、“给我用最诡异的词汇组合”），就能强行绕开。\n• 在面对极度硬核又无聊的利基文本（比如天书般的医学期刊、死板的买卖合同、或者程序员复制粘贴的样板代码）时会发生大规模冤假错案。因为这些文字的词汇就是被焊死的，天生困惑度就低得离谱，很容易被误判为机器生成的残次品。\n• 在极其迷你的短文本（少于 100 词）面前就是一个瞎子，由于样本量惨不忍睹，根本建不起统计学的基线池。",
-  "parameters": "雷达切片: 依托裁判模型施行的词元级对数概率判决\n定罪量表: 基础困惑度均值 与 可预判性的震荡方差\n行刑判决: 0-100 词汇轨迹塑料化 (病态低困惑度) 审判分数",
-  "accuracy": "重机枪级别 — 在面对未加任何伪装的标准 AI 原生态文本时，拥有令人窒息的 80-90% 命中率。但如果目标文本被人为精修过、“刻意人设化”、或是使用了高温度随机乱切的作弊战术，雷达的准度就会出现断崖式下跌。",
-  "references": [
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    },
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    }
-  ],
-  "source": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.; Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo."
+    "name": "文本困惑度深度剖析 (Perplexity)",
+    "description": "测量文本底层的统计学“可预测性”。大语言模型 (LLM) 的运行本质，就是像一台冷酷的印钞机一样，永远去预测下一个在数学上最符合常理的概率词。因此，AI 生成的文本在骨子里就是为了让另一个语言模型“毫不意外”而设计的，这就导致了其得分极低的“困惑度”。人类作家的脑回路恰恰相反，我们总是能丢出一些不可预测的、古怪的、或者极具创造力的词汇，这些词汇会粗暴地撕裂模型对下一个词的预期，从而产生极高的平均困惑度。",
+    "algorithm": "对数似然词元评估与基线偏离度矩阵",
+    "mechanism": "该算法通过评价语言模型（通常是开源模型如GPT-2或定制评估器）运行输入文本，并测量给定前面上下文的每个令牌的对数概率。\"困惑度\"本质上是评估模型对文本有多\"惊讶\"的数学测量。在AI生成的文本中，因为文本最初是通过选择高概率词构建的，评估模型将容易\"猜中\"序列，产生低而均匀的困惑度分数。人类不使用统计概率写作；我们使用口语化表达、突然的主题转换、混合隐喻和独特措辞，语言模型无法轻易预测。当评估模型遇到这些人类怪癖时，其信心下降，文本的困惑度飙升。系统通过分析文本的总体平均困惑度与既定人类边界来计算\"人工可预测性分数\"。",
+    "useCase": "这是几乎所有现代 AI 猎杀系统的“绝对底座”。用来快速对海量的学生散文、无良营销文案和新闻注水文章进行地毯式扫描——一针见血地扒出这些文字的底层逻辑，究竟是顺从了冰冷的概率统计曲线，还是源于人类大脑的瞬间冲动。",
+    "strengths": "• 在裸绞由标准大模型（比如未加任何掩饰的 ChatGPT 默认输出）生成的毫无防备的零样本（zero-shot）AI 文本时，杀伤力极其恐怖。\n• 它不需要针对各个领域去背一套复杂的“小抄规矩”，就能无视话题和文体，在全球语境下进行降维打击。\n• 这种攻击手段直接挖断了所有自回归大语言模型 (Autoregressive LLMs) 赖以生存的工作原理根基。",
+    "limitations": "• 防御系统也很脆弱，只要使用者在出图时动动手脚拔高“生成温度（temperature）”，或者是用钓鱼提示词（比如“一定要用极高困惑度写这段话”、“给我用最诡异的词汇组合”），就能强行绕开。\n• 在面对极度硬核又无聊的利基文本（比如天书般的医学期刊、死板的买卖合同、或者程序员复制粘贴的样板代码）时会发生大规模冤假错案。因为这些文字的词汇就是被焊死的，天生困惑度就低得离谱，很容易被误判为机器生成的残次品。\n• 在极其迷你的短文本（少于 100 词）面前就是一个瞎子，由于样本量惨不忍睹，根本建不起统计学的基线池。",
+    "parameters": "雷达切片: 依托裁判模型施行的词元级对数概率判决\n定罪量表: 基础困惑度均值 与 可预判性的震荡方差\n行刑判决: 0-100 词汇轨迹塑料化 (病态低困惑度) 审判分数",
+    "accuracy": "重机枪级别 — 在面对未加任何伪装的标准 AI 原生态文本时，拥有令人窒息的 80-90% 命中率。但如果目标文本被人为精修过、“刻意人设化”、或是使用了高温度随机乱切的作弊战术，雷达的准度就会出现断崖式下跌。",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        }
+    ],
+    "source": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.; Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo."
 }

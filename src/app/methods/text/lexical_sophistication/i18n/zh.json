@@ -1,22 +1,22 @@
 {
-  "name": "词汇复杂度 (Lexical Sophistication / 频段剖析)",
-  "description": "评估文本中罕见词、高度专有名词或高阶词汇的使用比例。为了最大化统计安全概率，AI 模型天生像趋光性昆虫一样，疯狂趋向于使用那些“绝对安全”的高频和中频词汇，而极度、稳定地回避人类专家在自然表达中会精准使用的冷门低频词汇。",
-  "algorithm": "语料库频段降维映射与 AWL (学术词汇表) 穿透度打分",
-  "mechanism": "Every word in a language can be mapped to its statistical frequency of use in the real world (e.g., 'house' is high-frequency, 'defenestrate' is low-frequency). Human writers, especially experts or creative authors, draw heavily from low-frequency bands (rare words) to describe specific nuances, establish authority, or create poetic impact. Conversely, Large Language Models (LLMs) are trained using cross-entropy loss to predict the *most likely* next word. Even when instructed to write professionally, they statistically struggle to reach deep into the low-frequency bands, instead relying on the most common Academic Word List (AWL) terms and mid-frequency professional jargon. This algorithm cross-references every content word in the text against massive linguistic frequency corpora (such as SUBTLEX or BNC). It categorizes the vocabulary into frequency bands (Top 1K, 2K, 5K, 10K, and Off-List). If a text claims to be expert-level but its semantic profile is overwhelmingly dominated by the top 5,000 most common words with a conspicuous absence of 'Off-List' rare terminology, it is flagged as an artificial, probability-smoothed generation.",
-  "useCase": "这是用于肢解审核重量级学术论文、硬核技术文档和普利策级深度新闻的核心手术刀。它能极为精准地扒下那些“听起来像个懂哥，但毫无专业深度”的 AI 生成文的底裤。",
-  "strengths": "• 用极其冰冷的数学量化了 AI 写作的“恐怖谷（Uncanny valley）效应”——终于有人能解释为什么 LLM 写的几千字论文看起来结构完美无瑕，但读起来却感觉像白开水一样智力低下。\n• 极难被 Prompt 工程所欺骗：如果你命令 AI “使用华丽的高级词汇”，AI 只会像个刚学会炫耀的猴子，疯狂堆砌那些最烂大街的所谓“复杂”词汇（比如每天都在 delve, tapestry, multifaceted），而不是根据语境使用真正贴切罕见的高阶词汇。\n• 它的判据深深扎根于长达几十年的心理语言学关于人类词汇习得（Vocabulary acquisition）机理的铁证之上。",
-  "limitations": "• 如果你非拿它去测儿童读物、产品入门说明书或者网民的随手发帖，它的性能会直接跳水，因为这类面向低智或低理解门槛的文本，天生就全部由高频词构成。\n• 这是一台吞金兽，需要为它支持的每一种语言配备体量极其恐怖、校准极其精确的底层频率词典；主流英语玩得转，但小语种可能会因为语料库匮乏而无法起步。\n• 在极度极度冷门的亚文化或最前沿技术领域，人类作者也会大量生造特定的黑话或术语，这会极大地污染“查无此词”的数量统计，因此在这类领域需要进行专有词库的脱敏校准。",
-  "parameters": "雷达切片: 海量实体语言学语料库降维比对\n定罪量表: 低频高傲词汇 与 高频俗套词汇 的掺杂比例\n行刑判决: 0-100 词汇平庸可预测度 (统计学概率平滑) 审判分数",
-  "accuracy": "极高 — 79-86%（在所有学术和专业文本中）。它死死掐住了 AI 算力架构的阿喀琉斯之踵：AI 在统计学上根本做不到像人类专家那样自然、持续、精准地驾驭罕见且生僻的术语。",
-  "references": [
-    {
-      "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
-      "url": "https://doi.org/10.1002/tesq.194"
-    },
-    {
-      "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
-      "url": "https://arxiv.org/abs/2406.07016"
-    }
-  ],
-  "source": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.; Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv."
+    "name": "词汇复杂度 (Lexical Sophistication / 频段剖析)",
+    "description": "评估文本中罕见词、高度专有名词或高阶词汇的使用比例。为了最大化统计安全概率，AI 模型天生像趋光性昆虫一样，疯狂趋向于使用那些“绝对安全”的高频和中频词汇，而极度、稳定地回避人类专家在自然表达中会精准使用的冷门低频词汇。",
+    "algorithm": "语料库频段降维映射与 AWL (学术词汇表) 穿透度打分",
+    "mechanism": "语言中的每个词都可以映射到其在现实世界中的统计使用频率（例如\"house\"是高频词，\"defenestrate\"是低频词）。人类作者，尤其是专家或创意作者，大量从低频段（罕见词）中抽取，以描述特定的细微差别、建立权威或创造诗意影响。相反，大型语言模型使用交叉熵损失训练以预测*最可能*的下一个词。即使被指示专业写作，它们在统计上也难以深入低频段，而是依赖最常见的学术词表（AWL）术语和中频专业术语。该算法将文本中每个内容词与大规模语言频率语料库（如SUBTLEX或BNC）交叉引用。它将词汇分为频率段（前1K、2K、5K、10K和表外）。如果文本声称是专家级别，但其语义特征以最常见的5000个词压倒性地主导，且明显缺少\"表外\"罕见术语，则被标记为人工的、概率平滑的生成物。",
+    "useCase": "这是用于肢解审核重量级学术论文、硬核技术文档和普利策级深度新闻的核心手术刀。它能极为精准地扒下那些“听起来像个懂哥，但毫无专业深度”的 AI 生成文的底裤。",
+    "strengths": "• 用极其冰冷的数学量化了 AI 写作的“恐怖谷（Uncanny valley）效应”——终于有人能解释为什么 LLM 写的几千字论文看起来结构完美无瑕，但读起来却感觉像白开水一样智力低下。\n• 极难被 Prompt 工程所欺骗：如果你命令 AI “使用华丽的高级词汇”，AI 只会像个刚学会炫耀的猴子，疯狂堆砌那些最烂大街的所谓“复杂”词汇（比如每天都在 delve, tapestry, multifaceted），而不是根据语境使用真正贴切罕见的高阶词汇。\n• 它的判据深深扎根于长达几十年的心理语言学关于人类词汇习得（Vocabulary acquisition）机理的铁证之上。",
+    "limitations": "• 如果你非拿它去测儿童读物、产品入门说明书或者网民的随手发帖，它的性能会直接跳水，因为这类面向低智或低理解门槛的文本，天生就全部由高频词构成。\n• 这是一台吞金兽，需要为它支持的每一种语言配备体量极其恐怖、校准极其精确的底层频率词典；主流英语玩得转，但小语种可能会因为语料库匮乏而无法起步。\n• 在极度极度冷门的亚文化或最前沿技术领域，人类作者也会大量生造特定的黑话或术语，这会极大地污染“查无此词”的数量统计，因此在这类领域需要进行专有词库的脱敏校准。",
+    "parameters": "雷达切片: 海量实体语言学语料库降维比对\n定罪量表: 低频高傲词汇 与 高频俗套词汇 的掺杂比例\n行刑判决: 0-100 词汇平庸可预测度 (统计学概率平滑) 审判分数",
+    "accuracy": "极高 — 79-86%（在所有学术和专业文本中）。它死死掐住了 AI 算力架构的阿喀琉斯之踵：AI 在统计学上根本做不到像人类专家那样自然、持续、精准地驾驭罕见且生僻的术语。",
+    "references": [
+        {
+            "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
+            "url": "https://doi.org/10.1002/tesq.194"
+        },
+        {
+            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
+            "url": "https://arxiv.org/abs/2406.07016"
+        }
+    ],
+    "source": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.; Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv."
 }

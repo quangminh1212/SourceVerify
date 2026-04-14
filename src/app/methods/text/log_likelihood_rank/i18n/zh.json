@@ -1,22 +1,22 @@
 {
-  "name": "对数似然排名 (Log-Likelihood Rank / 采样概率洗稿分析)",
-  "description": "严苛评估文本中所选择的每一个词，是否总是乖乖躺在语言模型数学预测的“最可能选项”里。AI 文本会以一种令人窒息的比例，严重依赖排名前 10 或前 100 的“安全”词汇；而人类写作时，由于思路的火花，会频繁且自然地去触碰那些预测排名在 1000 名开外的“长尾（Long-tail）”奇词。",
-  "algorithm": "自回归排名分布画像系统",
-  "mechanism": "This method relies on the foundational probability mechanisms of Large Language Models (e.g., the GLTR framework). When an LLM generates text, for every single position in a sentence, it ranks the entire vocabulary of the language from most likely (Rank 1) to least likely (Rank 50,000+). The algorithm passes the target text through a reference model and checks the rank of the *actual* word used by the author. It categorizes these ranks into bands: Green (Top 10), Yellow (Top 100), Red (Top 1000), and Purple (Unlikely). Human writers naturally craft sentences with a highly variable mix of these bands—we frequently choose slightly 'suboptimal' or surprising words for rhetorical effect, emotion, or specific meaning, pulling heavily from the Red and Purple zones. Conversely, unless heavily prompted with high 'temperature' settings, an AI almost exclusively samples from the Green and Yellow zones to ensure the text remains sensical and safe. If a text's log-likelihood rank profile shows an unnatural dominance of Top-10 (Green) words with zero unpredictable linguistic leaps, it is flagged as machine-generated.",
-  "useCase": "扒下那些所谓高级感文章、学生满分范文和端庄商务邮件伪装的核心技术，一眼看透这篇文字到底是经过算法精密熨烫过的工业布料，还是充满纤维感的人工手织物。",
-  "strengths": "• 彻底降维粉碎了那种“改改几个同义词就想洗白”的低级洗稿手法。因为你改掉几个词，根本撼动不了一整篇文章以绿色词为主的、数学意义上极度狭窄的排名分布盘。\n• 直接可视化的彩虹图表（大面积的绿/黄/红高亮），让 AI 这种潜藏在底层的统计学偏见，瞬间变得肉眼可见、铁证如山。\n• 对付那些没怎么调过参数、直接用默认设置（温度 < 0.7）生成的普通 AI 文章，几乎一抓一个准，杀伤力极其恐怖。",
-  "limitations": "• 如果黑客懂行，故意在 API 里把“温度（随机性）”参数调得极高，逼迫 LLM 强行去拽长尾排名里的冷门词，这个工具就有可能被暂时晃过（尽管那种情况下的文章读起来已经像喝醉了酒）。\n• 这是个吃显存的饕餮巨兽。它需要在一旁挂载一个能打的参考语言模型，给文章里的每一个 Token 算全词表排名，运算极其沉重。\n• 当它遇到诸如《免责声明》、《天气预报》、《八股文合同》这类人类写得比机器还死板的套话大合集时，因为词汇本身就集中在 Top 10，会导致尴尬的假阳性（误杀）。",
-  "parameters": "雷达切片: 基于单 Token 级别的自回归排名强制提取\n定罪量表: Top-10 / 100 / 1000 取词习惯的病态比例\n行刑判决: 0-100 词汇宿命论可预测度 (概率熨烫度) 审判分数",
-  "accuracy": "高阶准星 — 83-90%（针对标准发情期的生成文本）。这是 AI 检测界至今为止最为硬核、数学逻辑最无懈可击的白盒统计学基准信号之一。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "对数似然排名 (Log-Likelihood Rank / 采样概率洗稿分析)",
+    "description": "严苛评估文本中所选择的每一个词，是否总是乖乖躺在语言模型数学预测的“最可能选项”里。AI 文本会以一种令人窒息的比例，严重依赖排名前 10 或前 100 的“安全”词汇；而人类写作时，由于思路的火花，会频繁且自然地去触碰那些预测排名在 1000 名开外的“长尾（Long-tail）”奇词。",
+    "algorithm": "自回归排名分布画像系统",
+    "mechanism": "该方法依赖大型语言模型的基础概率机制（如GLTR框架）。当LLM生成文本时，对于句子中的每一个位置，它将整个语言词汇表从最可能（排名1）到最不可能（排名50,000+）进行排名。该算法将目标文本通过参考模型，并检查作者使用的*实际*词语的排名。它将这些排名分为频段：绿色（前10）、黄色（前100）、红色（前1000）和紫色（不太可能）。人类作者自然地用这些频段的高度混合来构造句子——我们经常为修辞效果、情感或特定含义选择略微\"次优\"或令人惊讶的词语，大量从红色和紫色区域抽取。相反，除非用高\"温度\"设置大量提示，AI几乎完全从绿色和黄色区域采样以确保文本保持合理和安全。如果文本的对数似然排名特征显示前10名（绿色）词语的不自然主导，且零不可预测的语言跳跃，则被标记为机器生成。",
+    "useCase": "扒下那些所谓高级感文章、学生满分范文和端庄商务邮件伪装的核心技术，一眼看透这篇文字到底是经过算法精密熨烫过的工业布料，还是充满纤维感的人工手织物。",
+    "strengths": "• 彻底降维粉碎了那种“改改几个同义词就想洗白”的低级洗稿手法。因为你改掉几个词，根本撼动不了一整篇文章以绿色词为主的、数学意义上极度狭窄的排名分布盘。\n• 直接可视化的彩虹图表（大面积的绿/黄/红高亮），让 AI 这种潜藏在底层的统计学偏见，瞬间变得肉眼可见、铁证如山。\n• 对付那些没怎么调过参数、直接用默认设置（温度 < 0.7）生成的普通 AI 文章，几乎一抓一个准，杀伤力极其恐怖。",
+    "limitations": "• 如果黑客懂行，故意在 API 里把“温度（随机性）”参数调得极高，逼迫 LLM 强行去拽长尾排名里的冷门词，这个工具就有可能被暂时晃过（尽管那种情况下的文章读起来已经像喝醉了酒）。\n• 这是个吃显存的饕餮巨兽。它需要在一旁挂载一个能打的参考语言模型，给文章里的每一个 Token 算全词表排名，运算极其沉重。\n• 当它遇到诸如《免责声明》、《天气预报》、《八股文合同》这类人类写得比机器还死板的套话大合集时，因为词汇本身就集中在 Top 10，会导致尴尬的假阳性（误杀）。",
+    "parameters": "雷达切片: 基于单 Token 级别的自回归排名强制提取\n定罪量表: Top-10 / 100 / 1000 取词习惯的病态比例\n行刑判决: 0-100 词汇宿命论可预测度 (概率熨烫度) 审判分数",
+    "accuracy": "高阶准星 — 83-90%（针对标准发情期的生成文本）。这是 AI 检测界至今为止最为硬核、数学逻辑最无懈可击的白盒统计学基准信号之一。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

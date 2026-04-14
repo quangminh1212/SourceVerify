@@ -1,22 +1,22 @@
 {
-  "name": "列表与枚举习性分析 (List & Enumeration Profiling)",
-  "description": "审查文本对项目符号（Bullet points）、编号列表和极其僵硬的顺序过渡词（如“首先”、“其次”、“最后”）的结构性依赖。为了迎合对齐训练中的排版要求，AI 模型具有一种病态的默认机制，会将内容过度结构化为枚举格式，从而导致生成的散文与人类自然流露的写作相比，呈现出高度可预测的、如切香肠般的块状割裂感。",
-  "algorithm": "句法句段切割与顺序过渡词提取密度分析",
-  "mechanism": "Large Language Models (LLMs), particularly those fine-tuned with Reinforcement Learning from Human Feedback (RLHF), are explicitly trained to give helpful, safe, and clearly structured answers. As a byproduct, they lean heavily into extreme structural scaffolding—breaking down almost every explanation into neatly bulleted lists or rigid numerical enumerations. This algorithm scans the text for explicit list markers (Markdown bullets, numbers) and implicit sequential transition markers ('First', 'Furthermore', 'Lastly', 'In conclusion'). It measures the density of these structures relative to the total text volume. Human writers typically deploy lists sparingly, preferring cohesive narrative flow and fluid paragraph transitions to connect ideas. If a text exhibits a near-robotic compulsion to segment its arguments into perfectly balanced, multi-point lists—especially when addressing subjective or narrative prompts where listing is unnatural—it is strongly flagged as structurally artificial.",
-  "useCase": "在审查求职信、主观评论文章和叙事性散文时堪称大杀器，在这类文体中，一旦作者毫无节制地滥用项目符号和“首先/其次/最后”这种八股结构，就会立刻暴露其 AI 代笔的底色。",
-  "strengths": "• 精准打击了商业大模型（如 ChatGPT 或 Claude）在 RLHF 对齐调教过程中被刻进基因里的核心“结构性偏见”。\n• 通杀明线与暗线：既能抓到物理意义上的排版格式（项目符号），也能抓到伪装成段落的结构性枚举（将过渡词当列表用）。\n• 剥离了复杂的语义玄学，纯靠极其清晰的句法地标（Syntactic markers）运作，扫荡海量文本时效率极高且极其稳定。",
-  "limitations": "• 由于机制过于刚猛，在扫描技术文档、菜谱、个人简历或产品说明书时会引爆海量的假阳性（误报），因为人类写这些东西时也是列表满天飞。\n• 只要用户的抗侦察意识够强，在提示词里恶狠狠地加上一句“严禁使用任何列表或项目符号，写出如流水般的长段落”，就能将其轻松骗过。\n• 不具备“一招鲜吃遍天”的能力，必须根据正在被审判的文本“体裁（Genre）”进行极其严谨的基线参数重新校准。",
-  "parameters": "雷达切片: 文本排版物理结构 与 逻辑过渡词堆叠密度\n定罪量表: 被物理切割/枚举的块状内容占比 vs. 连贯自然散文的占比\n行刑判决: 0-100 结构僵尸化指数 (列表狂热依赖过量度) 审判分数",
-  "accuracy": "中等至高 — 76-84% 的命中率，且极度看碟下菜（依赖文体）。在小说和散文中精准度刀刀烈火，但在天生就需要结构的说明文中会瞬间瞎眼。",
-  "references": [
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    },
-    {
-      "title": "Wang, Y. et al. (2023). MAGE: Machine-generated Text Detection in the Wild. ACL.",
-      "url": "https://arxiv.org/abs/2305.15041"
-    }
-  ],
-  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Wang, Y. et al. (2023). MAGE: Machine-generated Text Detection in the Wild. ACL."
+    "name": "列表与枚举习性分析 (List & Enumeration Profiling)",
+    "description": "审查文本对项目符号（Bullet points）、编号列表和极其僵硬的顺序过渡词（如“首先”、“其次”、“最后”）的结构性依赖。为了迎合对齐训练中的排版要求，AI 模型具有一种病态的默认机制，会将内容过度结构化为枚举格式，从而导致生成的散文与人类自然流露的写作相比，呈现出高度可预测的、如切香肠般的块状割裂感。",
+    "algorithm": "句法句段切割与顺序过渡词提取密度分析",
+    "mechanism": "大型语言模型（LLM），特别是通过人类反馈强化学习（RLHF）微调的模型，被明确训练以给出有帮助、安全和清晰结构化的答案。作为副产品，它们严重倾向于极端结构化脚手架——将几乎每个解释分解为整齐的项目符号列表或刚性的数字枚举。该算法扫描文本以查找显式列表标记（Markdown项目符号、数字）和隐式顺序过渡标记（\"首先\"、\"此外\"、\"最后\"、\"总之\"）。它测量这些结构相对于总文本量的密度。人类作者通常谨慎地部署列表，更喜欢连贯的叙事流和流畅的段落过渡来连接想法。如果文本表现出近乎机器人般的冲动将论证分割为完美平衡的多点列表——尤其是在处理列表不自然的主观或叙事性提示时——则被强烈标记为结构人工。",
+    "useCase": "在审查求职信、主观评论文章和叙事性散文时堪称大杀器，在这类文体中，一旦作者毫无节制地滥用项目符号和“首先/其次/最后”这种八股结构，就会立刻暴露其 AI 代笔的底色。",
+    "strengths": "• 精准打击了商业大模型（如 ChatGPT 或 Claude）在 RLHF 对齐调教过程中被刻进基因里的核心“结构性偏见”。\n• 通杀明线与暗线：既能抓到物理意义上的排版格式（项目符号），也能抓到伪装成段落的结构性枚举（将过渡词当列表用）。\n• 剥离了复杂的语义玄学，纯靠极其清晰的句法地标（Syntactic markers）运作，扫荡海量文本时效率极高且极其稳定。",
+    "limitations": "• 由于机制过于刚猛，在扫描技术文档、菜谱、个人简历或产品说明书时会引爆海量的假阳性（误报），因为人类写这些东西时也是列表满天飞。\n• 只要用户的抗侦察意识够强，在提示词里恶狠狠地加上一句“严禁使用任何列表或项目符号，写出如流水般的长段落”，就能将其轻松骗过。\n• 不具备“一招鲜吃遍天”的能力，必须根据正在被审判的文本“体裁（Genre）”进行极其严谨的基线参数重新校准。",
+    "parameters": "雷达切片: 文本排版物理结构 与 逻辑过渡词堆叠密度\n定罪量表: 被物理切割/枚举的块状内容占比 vs. 连贯自然散文的占比\n行刑判决: 0-100 结构僵尸化指数 (列表狂热依赖过量度) 审判分数",
+    "accuracy": "中等至高 — 76-84% 的命中率，且极度看碟下菜（依赖文体）。在小说和散文中精准度刀刀烈火，但在天生就需要结构的说明文中会瞬间瞎眼。",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Wang, Y. et al. (2023). MAGE: Machine-generated Text Detection in the Wild. ACL.",
+            "url": "https://arxiv.org/abs/2305.15041"
+        }
+    ],
+    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Wang, Y. et al. (2023). MAGE: Machine-generated Text Detection in the Wild. ACL."
 }

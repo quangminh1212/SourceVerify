@@ -1,22 +1,22 @@
 {
-  "name": "Accessory Consistency",
-  "description": "Analyzes accessory rendering consistency in 视频",
-  "algorithm": "Accessory Consistency — 像素级空间分析",
-  "mechanism": "This method analyzes temporal consistency of accessories (glasses, earrings, hats) across video frames for deepfake detection:\n\n1. **Accessory检测&跟踪**: Facial landmarks and object detection are used to identify accessories in each frame — glasses frames, earring positions, hat contours, and other wearable items. Each accessory is tracked across consecutive frames using optical flow and bounding box correlation.\n\n2. **几何一致性分析**: The geometric properties of detected accessories (shape, aspect ratio, symmetry) are measured per frame. In authentic video, accessories maintain consistent geometry modulated only by smooth head pose changes. Deepfakes often produce frame-to-frame geometric fluctuations in accessories due to imperfect face-swapping at boundaries.\n\n3. **纹理&Appearance稳定性**: Accessory surface textures (reflective properties of glasses lenses, metallic sheen of jewelry) are tracked. Real accessories show physically coherent appearance changes with lighting. Deepfake generators frequently fail to maintain consistent accessory rendering, producing flickering or morphing artifacts.\n\n4. **边界相干性Check**: The edges where accessories meet skin/hair are examined. Authentic boundaries show consistent occlusion relationships and natural blending. Face-swap artifacts typically produce irregular boundary rendering — glasses frames may partially merge with skin, or earrings may appear to clip through hair.\n\n5. **时间异常评分**: Statistical measures of accessory consistency (variance of geometric features, temporal gradient of appearance) are computed. High variance or sudden discontinuities across otherwise smooth motion sequences indicate manipulation, yielding an elevated forensic score.",
-  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through accessory consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "配饰一致性分析",
+    "description": "Analyzes accessory rendering consistency in 视频",
+    "algorithm": "Accessory Consistency — 像素级空间分析",
+    "mechanism": "This method analyzes temporal consistency of accessories (glasses, earrings, hats) across video frames for deepfake detection:\n\n1. **Accessory检测&跟踪**: Facial landmarks and object detection are used to identify accessories in each frame — glasses frames, earring positions, hat contours, and other wearable items. Each accessory is tracked across consecutive frames using optical flow and bounding box correlation.\n\n2. **几何一致性分析**: The geometric properties of detected accessories (shape, aspect ratio, symmetry) are measured per frame. In authentic video, accessories maintain consistent geometry modulated only by smooth head pose changes. Deepfakes often produce frame-to-frame geometric fluctuations in accessories due to imperfect face-swapping at boundaries.\n\n3. **纹理&Appearance稳定性**: Accessory surface textures (reflective properties of glasses lenses, metallic sheen of jewelry) are tracked. Real accessories show physically coherent appearance changes with lighting. Deepfake generators frequently fail to maintain consistent accessory rendering, producing flickering or morphing artifacts.\n\n4. **边界相干性Check**: The edges where accessories meet skin/hair are examined. Authentic boundaries show consistent occlusion relationships and natural blending. Face-swap artifacts typically produce irregular boundary rendering — glasses frames may partially merge with skin, or earrings may appear to clip through hair.\n\n5. **时间异常评分**: Statistical measures of accessory consistency (variance of geometric features, temporal gradient of appearance) are computed. High variance or sudden discontinuities across otherwise smooth motion sequences indicate manipulation, yielding an elevated forensic score.",
+    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through accessory consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

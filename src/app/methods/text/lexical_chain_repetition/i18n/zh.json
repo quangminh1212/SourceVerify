@@ -1,22 +1,22 @@
 {
-  "name": "词汇链重度固着 (Lexical Chain Fixation)",
-  "description": "分析“词汇链”（即围绕同一主题的相关词语序列）的多样性和重复度。AI 模型经常会对一组极度狭窄的主题词汇产生“过度固着（Hyper-fixation）”，它们像无头苍蝇一样无限循环使用完全相同的单词或极度容易预测的同义词，而无法像人类一样有机地向外拓展语义场。",
-  "algorithm": "主题词汇穷举提取与词汇链冗余度打分",
-  "mechanism": "A 'lexical chain' is a sequence of related words that runs through a text, providing cohesion (e.g., 'hospital' -> 'doctor' -> 'surgery' -> 'recovery'). When humans write a long document, their lexical chains naturally wander, branch out, and incorporate highly diverse, multi-layered vocabulary derived from personal experience or lateral thinking. Conversely, Large Language Models operate on fixed attention mechanisms and probability distributions. Once an LLM anchors onto a specific topic, it gets 'trapped' in a narrow semantic neighborhood. It will extract the top 10 most probable words for that topic and simply cycle through them continuously. This creates a dense, highly repetitive lexical chain where the exact same nouns and verbs reappear with unnatural frequency. This algorithm maps all thematic word sequences in the document and calculates the ratio of unique chain entities to total chain occurrences. If a text discusses a complex topic for 500 words but relies on recycling the exact same 5 thematic words instead of branching out, it strongly indicates AI-generated semantic stagnation.",
-  "useCase": "这是用来给散文、博客杂谈、专栏测谎的极佳工具，因为在这类文章中，人类作家会大秀词汇量、天马行空地旁征博引，而 AI 只会像个复读机一样死死抱着 Prompt 里的关键词疯狂咀嚼。",
-  "strengths": "• 极其擅长曝光 AI 的“语义鬼打墙（Semantic looping）”——当 AI 被迫满足长度要求，肚子里又没新货时，只能用同一波词汇在原地绕圈子的恶心习惯。\n• 极其耐操，对人类枪手的轻度洗稿免疫。因为人类洗稿编辑几乎不可能把一篇文章底下盘根错节的主题词汇网络全部连根拔起重新织造。\n• 精准捕捉到了“人类发散性联想记忆（辽阔）”与“AI 概率注意力窗口（死盯最高概率 Token）”之间的底层算力鸿沟。",
-  "limitations": "• 如果拿去扫描高度理工科的硬核技术文档、医学报告或法律合同，这套雷达会炸膛（产生海量误杀）。因为在这些领域，为了追求绝对严谨，人类也必须像机器一样死板地重复使用专有名词（即维持严苛的词汇链）。\n• 必须吃进足够长的文本才能画出关系网。如果你让它去分析一段 50 个字的废话，提取出来的词汇链在统计学上毫无意义。\n• 算力消耗远大于那种只会数词频的儿童级 n-gram 分析，因为它必须构建出极其复杂的语义关系拓扑图。",
-  "parameters": "雷达切片: 主题聚类 & 重复振荡频率映射\n定罪量表: 词汇链独特节点数 / 词汇链触发总数\n行刑判决: 0-100 词汇库死水度 (主题词固着并发症) 审判分数",
-  "accuracy": "极高命中率 — 81-87%（在创意类和通用非虚构长文中）。它为“AI 那极其贫乏的主题想象力”提供了一张无可辩驳的结构定罪图。",
-  "references": [
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "词汇链重度固着 (Lexical Chain Fixation)",
+    "description": "分析“词汇链”（即围绕同一主题的相关词语序列）的多样性和重复度。AI 模型经常会对一组极度狭窄的主题词汇产生“过度固着（Hyper-fixation）”，它们像无头苍蝇一样无限循环使用完全相同的单词或极度容易预测的同义词，而无法像人类一样有机地向外拓展语义场。",
+    "algorithm": "主题词汇穷举提取与词汇链冗余度打分",
+    "mechanism": "\"词汇链\"是贯穿文本的一系列相关词语，提供衔接力（例如\"医院\"->\"医生\"->\"手术\"->\"康复\"）。当人类写长文档时，其词汇链自然地游荡、分支并融入高度多样的、多层次的词汇，来源于个人经验或横向思维。相反，大型语言模型基于固定的注意力机制和概率分布运作。一旦LLM锚定到特定主题，它就被\"困\"在狭窄的语义邻域中。它会提取该主题最可能的前10个词并简单地持续循环它们。这创造了密集的、高度重复的词汇链，其中完全相同的名词和动词以不自然的频率重复出现。该算法映射文档中的所有主题词序列，并计算唯一链实体与总链出现次数的比率。如果一个文本讨论复杂主题500个词，但依赖回收完全相同的5个主题词而不分支，则强烈表明AI生成的语义停滞。",
+    "useCase": "这是用来给散文、博客杂谈、专栏测谎的极佳工具，因为在这类文章中，人类作家会大秀词汇量、天马行空地旁征博引，而 AI 只会像个复读机一样死死抱着 Prompt 里的关键词疯狂咀嚼。",
+    "strengths": "• 极其擅长曝光 AI 的“语义鬼打墙（Semantic looping）”——当 AI 被迫满足长度要求，肚子里又没新货时，只能用同一波词汇在原地绕圈子的恶心习惯。\n• 极其耐操，对人类枪手的轻度洗稿免疫。因为人类洗稿编辑几乎不可能把一篇文章底下盘根错节的主题词汇网络全部连根拔起重新织造。\n• 精准捕捉到了“人类发散性联想记忆（辽阔）”与“AI 概率注意力窗口（死盯最高概率 Token）”之间的底层算力鸿沟。",
+    "limitations": "• 如果拿去扫描高度理工科的硬核技术文档、医学报告或法律合同，这套雷达会炸膛（产生海量误杀）。因为在这些领域，为了追求绝对严谨，人类也必须像机器一样死板地重复使用专有名词（即维持严苛的词汇链）。\n• 必须吃进足够长的文本才能画出关系网。如果你让它去分析一段 50 个字的废话，提取出来的词汇链在统计学上毫无意义。\n• 算力消耗远大于那种只会数词频的儿童级 n-gram 分析，因为它必须构建出极其复杂的语义关系拓扑图。",
+    "parameters": "雷达切片: 主题聚类 & 重复振荡频率映射\n定罪量表: 词汇链独特节点数 / 词汇链触发总数\n行刑判决: 0-100 词汇库死水度 (主题词固着并发症) 审判分数",
+    "accuracy": "极高命中率 — 81-87%（在创意类和通用非虚构长文中）。它为“AI 那极其贫乏的主题想象力”提供了一张无可辩驳的结构定罪图。",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

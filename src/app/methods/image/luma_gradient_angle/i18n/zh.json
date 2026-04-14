@@ -1,22 +1,22 @@
 {
-  "name": "Luma Gradient Angle",
-  "description": "Analyzes luminance gradient angle distribution",
-  "algorithm": "Luma Gradient Angle — 像素级空间分析",
-  "mechanism": "This method analyzes luminance gradient angles for image forensic analysis following the rich model framework of Fridrich & Kodovsky (2012):\n\n1. **梯度计算**: The luminance gradient vector is computed at each pixel using finite differences or Sobel operators: (∂I/∂x, ∂I/∂y). The gradient angle θ = arctan(∂I/∂y / ∂I/∂x) captures the local edge orientation.\n\n2. **梯度AngleStatistics**: The distribution of gradient angles across the image is analyzed. Natural images show characteristic angle distributions shaped by scene content. The method extracts statistical features from the gradient angle histogram — moments, entropy, and directional energy ratios.\n\n3. **局部梯度AnglePatterns**: Co-occurrence patterns of gradient angles between neighboring pixels are analyzed, similar to the rich model approach. Natural images show specific gradient angle co-occurrence patterns arising from smooth edge curves and continuous surfaces. AI artifacts disrupt these patterns.\n\n4. **梯度Angle一致性**: The spatial consistency of gradient angles along edges is checked. Real edges show gradually varying gradient angles (smooth contours). AI-generated images may show abrupt angle changes along edges or gradient angle patterns inconsistent with the expected camera imaging pipeline.\n\n5. **ForensicScorefrom梯度Features**: The gradient angle features (histogram statistics, co-occurrence patterns, consistency measures) are combined into a forensic score. Features are evaluated against models trained on natural vs. AI-generated images, following the rich model steganalysis framework adapted for AI detection.",
-  "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-  "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-  "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-  "useCase": "通过以下方式检测AI生成或篡改的图像： luma gradient angle 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-  "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-  "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
-  "references": [
-    {
-      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-    },
-    {
-      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-    }
-  ]
+    "name": "亮度梯度角度分析",
+    "description": "Analyzes luminance gradient angle distribution",
+    "algorithm": "Luma Gradient Angle — 像素级空间分析",
+    "mechanism": "This method analyzes luminance gradient angles for image forensic analysis following the rich model framework of Fridrich & Kodovsky (2012):\n\n1. **梯度计算**: The luminance gradient vector is computed at each pixel using finite differences or Sobel operators: (∂I/∂x, ∂I/∂y). The gradient angle θ = arctan(∂I/∂y / ∂I/∂x) captures the local edge orientation.\n\n2. **梯度AngleStatistics**: The distribution of gradient angles across the image is analyzed. Natural images show characteristic angle distributions shaped by scene content. The method extracts statistical features from the gradient angle histogram — moments, entropy, and directional energy ratios.\n\n3. **局部梯度AnglePatterns**: Co-occurrence patterns of gradient angles between neighboring pixels are analyzed, similar to the rich model approach. Natural images show specific gradient angle co-occurrence patterns arising from smooth edge curves and continuous surfaces. AI artifacts disrupt these patterns.\n\n4. **梯度Angle一致性**: The spatial consistency of gradient angles along edges is checked. Real edges show gradually varying gradient angles (smooth contours). AI-generated images may show abrupt angle changes along edges or gradient angle patterns inconsistent with the expected camera imaging pipeline.\n\n5. **ForensicScorefrom梯度Features**: The gradient angle features (histogram statistics, co-occurrence patterns, consistency measures) are combined into a forensic score. Features are evaluated against models trained on natural vs. AI-generated images, following the rich model steganalysis framework adapted for AI detection.",
+    "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
+    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
+    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
+    "useCase": "通过以下方式检测AI生成或篡改的图像： luma gradient angle 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
+    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
+    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "references": [
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        },
+        {
+            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+        }
+    ]
 }

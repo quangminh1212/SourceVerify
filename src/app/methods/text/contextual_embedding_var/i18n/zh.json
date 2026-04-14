@@ -1,22 +1,22 @@
 {
-  "name": "上下文词嵌入方差与张量偏离度 (Embedding Variance)",
-  "description": "通过测量上下文词嵌入向量（例如来自 BERT 的深层特征）的方差，来死磕自回归 AI 模型最致命的弱点：那种毫无波澜、缺乏跳跃性的句子内部语义平庸度。",
-  "algorithm": "Transformer 嵌入深度洗脱与张量方差画像",
-  "mechanism": "Autoregressive LLMs generate text by constantly predicting the most statistically probable next token based on the preceding context window. Because they are mathematically bound to maximize likelihood, the resulting sentences maintain a tight, highly predictable semantic trajectory. If you plot the contextual embeddings (vector representations) of the words in an AI-generated sentence, they cluster tightly together with very low variance from the running average. Human writers, conversely, do not operate via next-token prediction. They frequently pull from diverse cognitive schemas, introducing novel metaphors, sudden topic shifts, or stylistically surprising vocabulary in the middle of a sentence, which causes drastic spikes and high variance in the embedding vectors. This method calculates the mathematical variance of these contextual embeddings; an unnaturally smooth, low-variance trajectory strongly flags synthetic, probability-bound generation.",
-  "useCase": "对那些伪装极好、表面上文法无可挑剔的高级合成文本进行降维打击。它不看表面的字词，而是直接用 Transformer 的眼睛，剖析词与词之间深层的数学拓扑关系。",
-  "strengths": "• 这是一记真正的降维打击！因为它瞄准的是 LLM 文本生成最最底层的数学死穴（概率分布规律）。任何试图通过花哨的 Prompt 或者调节 Temperature 参数来逃避检测的把戏，在它面前都如同小丑般可笑。\n• 杀伤力恒定，完全无视文本的主题、流派或是使用了多么生僻刁钻的词汇。\n• 它是建立在冷酷无情、绝对客观的纯数学向量逻辑之上的，没有任何主观的文风判断，无可辩驳。",
-  "limitations": "• 它的算力开销极为恐怖，属于重型耗能雷达；在实战中，它必须要在内存中唤醒并挂载一个极其沉重的特征编码模型（如 BERT 或 RoBERTa）来进行实时高维向量剥离。\n• 存在误伤极度无聊人类的风险（False positives）：如果拿它去扫描人类撰写的格式化八股文，比如陈词滥调的法律免责声明或者车轱辘话连篇的机器维修手册，有概率会误报。\n• 雷达阵列需要一定的物理宽度：要建立具有统计学意义的数学方差画像，靶标文本的篇幅至少不能短于一个完整的自然段。",
-  "parameters": "雷达切片: 高维向量特征剥离 & KNN 近邻拓扑距离穷举\n定罪量表: 句子内部上下文嵌入坐标标准差\n行刑判决: 0-100 概率锁死人造轨迹 (低方差平庸度) 宣判指数",
-  "accuracy": "极高致命性 — 85-90%。这是目前学术界已知的、最残酷且最防不胜防的核武器级检测手段之一。对于那些只会用“同义词替换软件（伪原创工具）”洗稿的作弊者具有毁灭性的降维碾压效果。",
-  "references": [
-    {
-      "title": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.",
-      "url": "https://doi.org/10.18653/v1/N19-1423"
-    },
-    {
-      "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
-      "url": "https://arxiv.org/abs/2306.04723"
-    }
-  ],
-  "source": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS."
+    "name": "上下文词嵌入方差与张量偏离度 (Embedding Variance)",
+    "description": "通过测量上下文词嵌入向量（例如来自 BERT 的深层特征）的方差，来死磕自回归 AI 模型最致命的弱点：那种毫无波澜、缺乏跳跃性的句子内部语义平庸度。",
+    "algorithm": "Transformer 嵌入深度洗脱与张量方差画像",
+    "mechanism": "自回归LLM通过不断预测基于前面上下文窗口的最具统计概率的下一个令牌来生成文本。因为它们在数学上受限于最大化似然度，所生成的句子保持紧密、高度可预测的语义轨迹。如果将AI生成句子中词语的上下文嵌入（向量表示）绘制出来，它们会紧密聚集在一起，与运行平均值的方差极低。人类作者则不通过下一个令牌预测来运作。他们经常从多样的认知图式中提取，在句子中间引入新颖的隐喻、突然的主题转换或风格上出人意料的词汇，这导致嵌入向量的急剧尖峰和高方差。该方法计算这些上下文嵌入的数学方差；不自然的平滑、低方差轨迹强烈标记合成的、概率约束的生成。",
+    "useCase": "对那些伪装极好、表面上文法无可挑剔的高级合成文本进行降维打击。它不看表面的字词，而是直接用 Transformer 的眼睛，剖析词与词之间深层的数学拓扑关系。",
+    "strengths": "• 这是一记真正的降维打击！因为它瞄准的是 LLM 文本生成最最底层的数学死穴（概率分布规律）。任何试图通过花哨的 Prompt 或者调节 Temperature 参数来逃避检测的把戏，在它面前都如同小丑般可笑。\n• 杀伤力恒定，完全无视文本的主题、流派或是使用了多么生僻刁钻的词汇。\n• 它是建立在冷酷无情、绝对客观的纯数学向量逻辑之上的，没有任何主观的文风判断，无可辩驳。",
+    "limitations": "• 它的算力开销极为恐怖，属于重型耗能雷达；在实战中，它必须要在内存中唤醒并挂载一个极其沉重的特征编码模型（如 BERT 或 RoBERTa）来进行实时高维向量剥离。\n• 存在误伤极度无聊人类的风险（False positives）：如果拿它去扫描人类撰写的格式化八股文，比如陈词滥调的法律免责声明或者车轱辘话连篇的机器维修手册，有概率会误报。\n• 雷达阵列需要一定的物理宽度：要建立具有统计学意义的数学方差画像，靶标文本的篇幅至少不能短于一个完整的自然段。",
+    "parameters": "雷达切片: 高维向量特征剥离 & KNN 近邻拓扑距离穷举\n定罪量表: 句子内部上下文嵌入坐标标准差\n行刑判决: 0-100 概率锁死人造轨迹 (低方差平庸度) 宣判指数",
+    "accuracy": "极高致命性 — 85-90%。这是目前学术界已知的、最残酷且最防不胜防的核武器级检测手段之一。对于那些只会用“同义词替换软件（伪原创工具）”洗稿的作弊者具有毁灭性的降维碾压效果。",
+    "references": [
+        {
+            "title": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.",
+            "url": "https://doi.org/10.18653/v1/N19-1423"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
+            "url": "https://arxiv.org/abs/2306.04723"
+        }
+    ],
+    "source": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS."
 }

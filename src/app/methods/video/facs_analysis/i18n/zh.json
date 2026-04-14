@@ -1,12 +1,22 @@
 {
-  "name": "FACS Action Unit Analysis",
-  "description": "Analyzes Facial Action Coding System (FACS) action units for impossible facial muscle combinations in deepfakes (Ekman & Friesen, 1978).",
-  "algorithm": "FACS Action Unit Analysis分析算法",
-  "mechanism": "This method performs Facial Action Coding System (FACS) analysis for deepfake detection following Ekman & Friesen's framework:\n\n1. **综合AU检测**: All 30+ FACS action units are detected per frame with intensity ratings (A-E). This includes upper face AUs (AU1-7), lower face AUs (AU9-28), and miscellaneous AUs (AU38, AU39, AU43, AU45, AU46). Each AU is tracked with its activation intensity over time.\n\n2. **AUCombinationValidity**: The detected AU combination per frame is checked against the FACS combinatorial rules. Certain AU combinations are anatomically impossible (e.g., full AU1+AU4 simultaneous activation is constrained), while others co-occur in specific emotional expressions. The method flags anatomically invalid AU combinations produced by deepfake generators.\n\n3. **EmotionalExpression相干性**: Detected AU combinations are mapped to basic emotions (happiness:AU6+12, sadness:AU1+4+15, anger:AU4+5+7+23, etc.) and verified for emotional coherence. The method checks whether the expression is a valid emotional state and whether expression transitions follow logical emotional progression. Deepfakes may produce incoherent or emotionally impossible AU patterns.\n\n4. **AUIntensityDynamics**: AU intensity changes follow neuromuscular dynamics — smooth onset, peak, and offset with physiologically constrained velocities. The method analyzes intensity dynamics of each active AU. Deepfakes may show unnatural intensity profiles: stepped changes, too-fast transitions, or perfectly linear ramps instead of natural muscle contraction curves.\n\n5. **FACS-语音Coordination**: During speech, specific AU patterns correlate with phoneme articulation (AU25/26/27 for jaw opening, AU22/28 for lip pucker). The method verifies FACS-speech temporal coordination. Deepfakes may show misaligned lip-jaw AU patterns relative to the audio speech signal.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "FACS动作单元分析",
+    "description": "Analyzes Facial Action Coding System (FACS) action units for impossible facial muscle combinations in deepfakes (Ekman & Friesen, 1978).",
+    "algorithm": "FACS Action Unit Analysis分析算法",
+    "mechanism": "This method performs Facial Action Coding System (FACS) analysis for deepfake detection following Ekman & Friesen's framework:\n\n1. **综合AU检测**: All 30+ FACS action units are detected per frame with intensity ratings (A-E). This includes upper face AUs (AU1-7), lower face AUs (AU9-28), and miscellaneous AUs (AU38, AU39, AU43, AU45, AU46). Each AU is tracked with its activation intensity over time.\n\n2. **AUCombinationValidity**: The detected AU combination per frame is checked against the FACS combinatorial rules. Certain AU combinations are anatomically impossible (e.g., full AU1+AU4 simultaneous activation is constrained), while others co-occur in specific emotional expressions. The method flags anatomically invalid AU combinations produced by deepfake generators.\n\n3. **EmotionalExpression相干性**: Detected AU combinations are mapped to basic emotions (happiness:AU6+12, sadness:AU1+4+15, anger:AU4+5+7+23, etc.) and verified for emotional coherence. The method checks whether the expression is a valid emotional state and whether expression transitions follow logical emotional progression. Deepfakes may produce incoherent or emotionally impossible AU patterns.\n\n4. **AUIntensityDynamics**: AU intensity changes follow neuromuscular dynamics — smooth onset, peak, and offset with physiologically constrained velocities. The method analyzes intensity dynamics of each active AU. Deepfakes may show unnatural intensity profiles: stepped changes, too-fast transitions, or perfectly linear ramps instead of natural muscle contraction curves.\n\n5. **FACS-语音Coordination**: During speech, specific AU patterns correlate with phoneme articulation (AU25/26/27 for jaw opening, AU22/28 for lip pucker). The method verifies FACS-speech temporal coordination. Deepfakes may show misaligned lip-jaw AU patterns relative to the audio speech signal.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://www.paulekman.com/facial-action-coding-system/",
+            "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
+        },
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2017.2654479",
+            "title": "Martinez, B. et al. (2017). Automatic Analysis of Facial Actions. IEEE TPAMI."
+        }
+    ]
 }

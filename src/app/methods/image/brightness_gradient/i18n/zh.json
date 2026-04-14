@@ -1,22 +1,22 @@
 {
-  "name": "亮度梯度分析",
-  "description": "分析平滑过渡区域中亮度梯度的空间异常。AI 生成模型通常会造成局部的光照不一致，渲染出不可能实现的光线衰减或突然的梯度变化，这严重违反了正常的物理照明约束。",
-  "algorithm": "非线性梯度方差与照明一致性映射",
-  "mechanism": "The algorithm calculates the first and second-order spatial derivatives of the image luminance channel to map brightness gradients. In natural images, luminance transitions on smooth surfaces (like walls or skin) follow predictable, continuous parametric curves dictated by the inverse-square law of light. AI-synthesized images often display 'gradient fractures'—micro-abrupt changes, irregular banding, or physically impossible shadows caused by the model's localized patch-based generation and lack of global 3D scene understanding.",
-  "parameters": "色彩空间：亮度（Y 通道），分析指标：二阶梯度方差，全局检查：光照方向性",
-  "accuracy": "中等 (65-75%) - 对肖像、室内场景或具有柔和影棚照明的主体最为有效。",
-  "source": "Johnson & Farid (2007) 关于通过照明约束揭示数字伪造的研究",
-  "useCase": "检测合成的照明衰减，识别 AI 生成物中违反物理常理的光照物理现象，并揭露复合拼贴的篡改。",
-  "references": [
-    {
-      "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
-      "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
-    },
-    {
-      "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2007.903848"
-    }
-  ],
-  "strengths": "• 建立在现实世界光传输和辐射度测量的基础物理学之上。\n• 在捕捉高级生成模型留下的漏洞方面非常有效，即使此时它所产生的语义内容在视觉上看起来在物理上无可挑剔。\n• 揭露出了采用简单的业余照片编辑工具极难手动修复的光照矛盾不一致性。\n• 即使面临着网络普遍的图像压缩，在渐变覆盖幅度足够宽泛时仍能维系中等的实效性。",
-  "limitations": "• 对于缺乏具备可供充当基准面分析的光滑平坦表面的过度纹理化场景（例如植物叶片丛、拥挤不堪的人群等）失去其效能和价值。\n• 在充斥着极其庞杂和拥有繁多局部单点光源交错叠加的真实场景环境（如演唱会舞台）中，该分析功能很容易触发误报操作。\n• 过度压缩、暴力修图抑或者常见的深度转换为 8-bit 色彩时引起的色阶断块现象，都极有可能激发错误的警报。\n• 该功能需依仗于极其精准而繁复的深度空间形态的解构，运算执行速度相较于普通的单遍单程频率检测方案要缓慢许多。"
+    "name": "亮度梯度分析",
+    "description": "分析平滑过渡区域中亮度梯度的空间异常。AI 生成模型通常会造成局部的光照不一致，渲染出不可能实现的光线衰减或突然的梯度变化，这严重违反了正常的物理照明约束。",
+    "algorithm": "非线性梯度方差与照明一致性映射",
+    "mechanism": "该算法计算图像亮度通道的一阶和二阶空间导数以映射亮度梯度。在自然图像中，光滑表面（如墙壁或皮肤）上的亮度过渡遵循可预测的、连续的参数曲线，由光的平方反比定律决定。AI合成图像经常显示\"梯度断裂\"——微小的突变、不规则条带或物理上不可能的阴影，这是由模型基于局部块的生成方式和缺乏全局3D场景理解所造成的。",
+    "parameters": "色彩空间：亮度（Y 通道），分析指标：二阶梯度方差，全局检查：光照方向性",
+    "accuracy": "中等 (65-75%) - 对肖像、室内场景或具有柔和影棚照明的主体最为有效。",
+    "source": "Johnson & Farid (2007) 关于通过照明约束揭示数字伪造的研究",
+    "useCase": "检测合成的照明衰减，识别 AI 生成物中违反物理常理的光照物理现象，并揭露复合拼贴的篡改。",
+    "references": [
+        {
+            "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+        },
+        {
+            "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.903848"
+        }
+    ],
+    "strengths": "• 建立在现实世界光传输和辐射度测量的基础物理学之上。\n• 在捕捉高级生成模型留下的漏洞方面非常有效，即使此时它所产生的语义内容在视觉上看起来在物理上无可挑剔。\n• 揭露出了采用简单的业余照片编辑工具极难手动修复的光照矛盾不一致性。\n• 即使面临着网络普遍的图像压缩，在渐变覆盖幅度足够宽泛时仍能维系中等的实效性。",
+    "limitations": "• 对于缺乏具备可供充当基准面分析的光滑平坦表面的过度纹理化场景（例如植物叶片丛、拥挤不堪的人群等）失去其效能和价值。\n• 在充斥着极其庞杂和拥有繁多局部单点光源交错叠加的真实场景环境（如演唱会舞台）中，该分析功能很容易触发误报操作。\n• 过度压缩、暴力修图抑或者常见的深度转换为 8-bit 色彩时引起的色阶断块现象，都极有可能激发错误的警报。\n• 该功能需依仗于极其精准而繁复的深度空间形态的解构，运算执行速度相较于普通的单遍单程频率检测方案要缓慢许多。"
 }

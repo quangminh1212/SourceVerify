@@ -1,22 +1,22 @@
 {
-  "name": "交叉熵方差分析 (Cross-Entropy Variance)",
-  "description": "通过测量每个词元（Token）可预测性（交叉熵）的波动方差。AI 生成的文本为了求稳，其概率方差总是扁平而一致的；而人类由于时不时会有发散性的跳跃思维，会产生极高的交叉熵突刺。",
-  "algorithm": "词元级交叉熵与统计学方差拓扑打分",
-  "mechanism": "Autoregressive language models generate text by continuously predicting the most statistically probable next token. The 'cross-entropy' of a token measures how 'surprising' or mathematically improbable that word is according to the model's internal probability distribution. Because AI systems are optimized to select safe, high-probability tokens (low cross-entropy) across the entire document, the mathematical variance of these cross-entropy scores remains unnaturally tight and flat. In stark contrast, human cognition does not operate on localized statistical probabilities. Human writers frequently experience sudden bursts of inspiration, abrupt topic shifts, or the injection of highly idiosyncratic vocabulary, resulting in sudden, chaotic spikes of high cross-entropy tokens interspersed with standard phrasing. This method calculates the per-token cross-entropy using a reference language model and computes the overall statistical variance. A low variance score is a highly reliable indicator of synthetic, algorithmically smoothed text.",
-  "useCase": "专杀各种虚假的学术论文、枯燥的技术文档以及冗长的水文——在这些长文中，AI 那种令人窒息的、永动机般的“中等安全词汇输出模式”，会把它伪装人类的底裤直接扒掉。",
-  "strengths": "• 直接拿捏住了 LLM 生成机制的最底层数学架构；因此不管 AI 怎么微调（Fine-tune）语气、变换风格或角色扮演，在数学方差上它依旧插翅难逃。\n• 绝大部分基于自然语言的伪装指令（如“请写得非常天马行空、创意十足”）对其完全免疫无效，因为那些表层咒语根本无法改写语言模型底层的采样概率引擎。\n• 它是全球顶级的零样本（Zero-shot）机器生成文本检测算法（例如 DetectGPT）内部最核心的心脏指标。",
-  "limitations": "• 算力开销极其恐怖：必须要在服务器底层挂载一个沉甸甸的参考语言模型（如 GPT-2 级或 RoBERTa），才能在纳秒级别实时轰出每个词的概率，对系统资源压榨极大。\n• 极易产生误杀：有些纯正人类起草的文章（例如：八股文法务合同、公司保密协议、免责条款）本身也是废话连篇、词汇极其枯燥求稳，这种文本也几乎没有方差，探针很容易全盘误报。\n• 必须打持久战：如果是少于几十个字的短句，根本没有足够的数据点连成一条方差曲线。",
-  "parameters": "雷达切片: 逐字计算的概率分布交叉熵\n定罪量表: 统计学方差绝对值 (σ²), 词汇“惊讶度”的四分位距偏离量\n行刑判决: 0-100 行文数学平滑度 (方差丧失症) 指数",
-  "accuracy": "极具杀伤力 — 80-90%。这是现代 AI 侦测界当之无愧的基石算法，构成了目前所有高端统计算法防御塔的数学脊梁。",
-  "references": [
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    },
-    {
-      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
-      "url": "https://arxiv.org/abs/1908.09203"
-    }
-  ],
-  "source": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
+    "name": "交叉熵方差分析 (Cross-Entropy Variance)",
+    "description": "通过测量每个词元（Token）可预测性（交叉熵）的波动方差。AI 生成的文本为了求稳，其概率方差总是扁平而一致的；而人类由于时不时会有发散性的跳跃思维，会产生极高的交叉熵突刺。",
+    "algorithm": "词元级交叉熵与统计学方差拓扑打分",
+    "mechanism": "自回归语言模型通过不断预测最具统计概率的下一个令牌来生成文本。令牌的\"交叉熵\"衡量根据模型内部概率分布该词有多\"令人惊讶\"或数学上不太可能。因为AI系统被优化为在整个文档中选择安全、高概率的令牌（低交叉熵），这些交叉熵分数的数学方差保持不自然地紧密和平坦。与此形成鲜明对比的是，人类认知不以局部统计概率运作。人类作者经常经历突然的灵感爆发、突然的主题转换或注入高度特殊的词汇，导致高交叉熵令牌的突然、混沌尖峰穿插在标准措辞之间。该方法使用参考语言模型计算每个令牌的交叉熵并计算整体统计方差。低方差分数是合成、算法平滑文本的高度可靠指标。",
+    "useCase": "专杀各种虚假的学术论文、枯燥的技术文档以及冗长的水文——在这些长文中，AI 那种令人窒息的、永动机般的“中等安全词汇输出模式”，会把它伪装人类的底裤直接扒掉。",
+    "strengths": "• 直接拿捏住了 LLM 生成机制的最底层数学架构；因此不管 AI 怎么微调（Fine-tune）语气、变换风格或角色扮演，在数学方差上它依旧插翅难逃。\n• 绝大部分基于自然语言的伪装指令（如“请写得非常天马行空、创意十足”）对其完全免疫无效，因为那些表层咒语根本无法改写语言模型底层的采样概率引擎。\n• 它是全球顶级的零样本（Zero-shot）机器生成文本检测算法（例如 DetectGPT）内部最核心的心脏指标。",
+    "limitations": "• 算力开销极其恐怖：必须要在服务器底层挂载一个沉甸甸的参考语言模型（如 GPT-2 级或 RoBERTa），才能在纳秒级别实时轰出每个词的概率，对系统资源压榨极大。\n• 极易产生误杀：有些纯正人类起草的文章（例如：八股文法务合同、公司保密协议、免责条款）本身也是废话连篇、词汇极其枯燥求稳，这种文本也几乎没有方差，探针很容易全盘误报。\n• 必须打持久战：如果是少于几十个字的短句，根本没有足够的数据点连成一条方差曲线。",
+    "parameters": "雷达切片: 逐字计算的概率分布交叉熵\n定罪量表: 统计学方差绝对值 (σ²), 词汇“惊讶度”的四分位距偏离量\n行刑判决: 0-100 行文数学平滑度 (方差丧失症) 指数",
+    "accuracy": "极具杀伤力 — 80-90%。这是现代 AI 侦测界当之无愧的基石算法，构成了目前所有高端统计算法防御塔的数学脊梁。",
+    "references": [
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ],
+    "source": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
 }

@@ -1,12 +1,22 @@
 {
-  "name": "Head Nod/Shake Pattern",
-  "description": "Analyzes head nodding and shaking patterns for natural conversational synchronization — AI often desynchronizes.",
-  "algorithm": "Head Nod/Shake Pattern分析算法",
-  "mechanism": "This method analyzes head gesture dynamics for deepfake detection:\n\n1. **HeadPose跟踪**: Head orientation (yaw, pitch, roll) is estimated per frame using facial landmark geometry or 3D head model fitting. Head pose signals are decomposed to identify gestural movements (nods = pitch oscillation, shakes = yaw oscillation).\n\n2. **GestureKinematics分析**: Natural head gestures follow specific kinematics: (a) nodding involves 10-20° pitch oscillation at 1-2 Hz, (b) shaking involves 15-30° yaw oscillation at 1-2.5 Hz, (c) gestures show smooth sinusoidal profiles with physiologically constrained velocity. The method checks whether detected gestures fall within natural kinematic parameters.\n\n3. **Gesture-语音相关性**: Head gestures correlate with speech prosody — nods often coincide with stressed syllables, head movements accompany turn-taking in conversation. The method analyzes temporal correlation between head motion and speech intensity. Deepfakes may show gestures temporally decoupled from speech.\n\n4. **Neck-HeadCoordination**: Head rotation involves coupled neck and cervical spine motion with characteristic ranges — large yaw rotations involve torso contribution. The method verifies head-neck-shoulder coordination. Deepfake generators that only manipulate the face may produce head rotations that don't propagate correctly to neck and shoulders.\n\n5. **Inertial一致性**: Head motion should show proper inertial dynamics — acceleration/deceleration following the mass and muscle force constraints of the head-neck system. The method analyzes the frequency content and jerk profile of head motion. AI-generated head movements may lack natural inertial characteristics.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "头部点头/摇头模式分析",
+    "description": "Analyzes head nodding and shaking patterns for natural conversational synchronization — AI often desynchronizes.",
+    "algorithm": "Head Nod/Shake Pattern分析算法",
+    "mechanism": "This method analyzes head gesture dynamics for deepfake detection:\n\n1. **HeadPose跟踪**: Head orientation (yaw, pitch, roll) is estimated per frame using facial landmark geometry or 3D head model fitting. Head pose signals are decomposed to identify gestural movements (nods = pitch oscillation, shakes = yaw oscillation).\n\n2. **GestureKinematics分析**: Natural head gestures follow specific kinematics: (a) nodding involves 10-20° pitch oscillation at 1-2 Hz, (b) shaking involves 15-30° yaw oscillation at 1-2.5 Hz, (c) gestures show smooth sinusoidal profiles with physiologically constrained velocity. The method checks whether detected gestures fall within natural kinematic parameters.\n\n3. **Gesture-语音相关性**: Head gestures correlate with speech prosody — nods often coincide with stressed syllables, head movements accompany turn-taking in conversation. The method analyzes temporal correlation between head motion and speech intensity. Deepfakes may show gestures temporally decoupled from speech.\n\n4. **Neck-HeadCoordination**: Head rotation involves coupled neck and cervical spine motion with characteristic ranges — large yaw rotations involve torso contribution. The method verifies head-neck-shoulder coordination. Deepfake generators that only manipulate the face may produce head rotations that don't propagate correctly to neck and shoulders.\n\n5. **Inertial一致性**: Head motion should show proper inertial dynamics — acceleration/deceleration following the mass and muscle force constraints of the head-neck system. The method analyzes the frequency content and jerk profile of head motion. AI-generated head movements may lack natural inertial characteristics.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1145/971478.971509",
+            "title": "Kapoor, A. & Picard, R.W. (2001). A Real-Time Head Nod and Shake Detector. ACM PUI."
+        },
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2012.261",
+            "title": "Yang, Y. & Ramanan, D. (2012). Articulated Human Detection with Flexible Mixtures of Parts. IEEE TPAMI."
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "Clothing Fold Physics",
-  "description": "Analyzes clothing fold physics simulation",
-  "algorithm": "Clothing Fold Physics — 像素级空间分析",
-  "mechanism": "This method analyzes clothing fold physics for deepfake detection following Zheng et al. (2021):\n\n1. **Fold模式检测**: Clothing folds (wrinkles, creases, draping patterns) are detected using oriented gradient analysis and ridge/valley detection. Each fold is characterized by its orientation, depth (shadow intensity), and spatial extent.\n\n2. **物理Plausibility分析**: Clothing fold patterns should be physically consistent with fabric properties and body pose. The method verifies: (a) folds radiate from stress points (elbows, shoulders, waistband), (b) fold orientation follows fabric grain direction, (c) fold depth corresponds to fabric weight. AI-generated clothing may produce physically implausible fold patterns.\n\n3. **时间FoldDynamics**: As the body moves, clothing folds should evolve according to fabric physics — new folds form at flexion points, existing folds shift and merge. The method tracks fold evolution across frames. Deepfake generators may produce clothing folds that appear/disappear abruptly or don't respond naturally to body movement.\n\n4. **Fold-BodyCoordination**: Clothing fold changes should correlate with body motion — arm movement creates shoulder/sleeve folds, torso rotation shifts front panel draping. The method measures temporal correlation between detected body motion and fold pattern changes. Low correlation indicates AI generation where clothing is rendered independently of body dynamics.\n\n5. **Rendering一致性评分**: The spatial frequency content of clothing fold regions is analyzed. Real fabric folds show consistent texture quality with the rest of the image. AI-generated folds may show resolution disparities, unnatural smoothness, or repetitive patterns absent in real fabric. The score combines physical plausibility, temporal dynamics, and rendering quality assessments.",
-  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through clothing fold physics analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "服装褶皱物理分析",
+    "description": "Analyzes clothing fold physics simulation",
+    "algorithm": "Clothing Fold Physics — 像素级空间分析",
+    "mechanism": "This method analyzes clothing fold physics for deepfake detection following Zheng et al. (2021):\n\n1. **Fold模式检测**: Clothing folds (wrinkles, creases, draping patterns) are detected using oriented gradient analysis and ridge/valley detection. Each fold is characterized by its orientation, depth (shadow intensity), and spatial extent.\n\n2. **物理Plausibility分析**: Clothing fold patterns should be physically consistent with fabric properties and body pose. The method verifies: (a) folds radiate from stress points (elbows, shoulders, waistband), (b) fold orientation follows fabric grain direction, (c) fold depth corresponds to fabric weight. AI-generated clothing may produce physically implausible fold patterns.\n\n3. **时间FoldDynamics**: As the body moves, clothing folds should evolve according to fabric physics — new folds form at flexion points, existing folds shift and merge. The method tracks fold evolution across frames. Deepfake generators may produce clothing folds that appear/disappear abruptly or don't respond naturally to body movement.\n\n4. **Fold-BodyCoordination**: Clothing fold changes should correlate with body motion — arm movement creates shoulder/sleeve folds, torso rotation shifts front panel draping. The method measures temporal correlation between detected body motion and fold pattern changes. Low correlation indicates AI generation where clothing is rendered independently of body dynamics.\n\n5. **Rendering一致性评分**: The spatial frequency content of clothing fold regions is analyzed. Real fabric folds show consistent texture quality with the rest of the image. AI-generated folds may show resolution disparities, unnatural smoothness, or repetitive patterns absent in real fabric. The score combines physical plausibility, temporal dynamics, and rendering quality assessments.",
+    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through clothing fold physics analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

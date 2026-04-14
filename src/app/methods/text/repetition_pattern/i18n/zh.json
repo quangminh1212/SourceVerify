@@ -1,22 +1,22 @@
 {
-  "name": "微观模式循环侦测 (Repetition Pattern)",
-  "description": "专杀 AI 生成文本中那种如同卡带一般的周期性短语重播、N-gram（连续词组）滥用以及更深层的结构性死循环。大语言模型，特别是在使用集束搜索（Beam Search）等解码策略且没有施加致命的“重复惩罚（Repetition Penalty）”时，极易患上一种叫“神经文本退化 (Neural Text Degeneration)”的绝症——它们会不可自拔地陷入某种局部的、车轱辘话般的微观句型模式中。哪怕表面上的词汇换了皮，其底层的句法骨架或者特定的 N-gram 词组被重复调用的概率，依然会以一种非人类的恐怖频率飙升。",
-  "algorithm": "N-gram 自相关列阵与神经退化画像",
-  "mechanism": "The system computes the frequency and distribution of specific word sequences (n-grams) and syntactic structures across the text. It applies an autocorrelation function to detect cyclical patterns (e.g., using a specific 3-gram every 50 words). AI models rely heavily on their immediate context window, leading them to constantly 'prime' themselves with their own recent outputs, causing them to predictably loop back to the same phrasing structures. The algorithm measures the entropy and coefficient of variation of these patterns, flagging texts where the structural repetition is statistically too perfect or too frequent.",
-  "useCase": "在追捕长篇累牍的 AI 对话回复、旧版或未优化模型生成的廉价小说，以及那些 AI 被逼着瞎编滥造超出其知识盲区、被迫通过疯狂循环来凑字数的文本时，拥有核弹级的杀伤力。",
-  "strengths": "• 它是撕破 AI “为了凑字数而原地转圈 (Hallucinated Padding)”伪装的最强利器。\n• 真正的跨语言打击能力——神经网络这种退化循环所残留下来的纯数学指纹参数，不管是用中文还是英文写，都如出一辙地暴露无遗。",
-  "limitations": "• 如果生成文本被调高了“温度值 (Temperature, 即随机性)”或者被施加了极其严厉的重复惩罚（强行打断循环），雷达的敏锐度会下降。\n• 容易误伤那些极其死板、格式化的人类文档（比如产品说明书或法律条文），或者故意使用大量排比和副歌的人类诗歌及演讲稿。",
-  "parameters": "雷达切片: 动态句法与 N-gram 自相关矩阵扫描\n定罪量表: 循环发作频率方差与系统信息熵衰减斜率\n行刑判决: 0-100 神经网络词穷退化 (卡带循环) 得分",
-  "accuracy": "中高威胁 — 准确率 74-84%。它是整个反 AI 侦测体系中的定海神针，尤其在与“文本困惑度 (Perplexity)”和“突发性波动 (Burstiness)”打配合时，能形成绞杀局。",
-  "references": [
-    {
-      "title": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.",
-      "url": "https://arxiv.org/abs/1904.09751"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "微观模式循环侦测 (Repetition Pattern)",
+    "description": "专杀 AI 生成文本中那种如同卡带一般的周期性短语重播、N-gram（连续词组）滥用以及更深层的结构性死循环。大语言模型，特别是在使用集束搜索（Beam Search）等解码策略且没有施加致命的“重复惩罚（Repetition Penalty）”时，极易患上一种叫“神经文本退化 (Neural Text Degeneration)”的绝症——它们会不可自拔地陷入某种局部的、车轱辘话般的微观句型模式中。哪怕表面上的词汇换了皮，其底层的句法骨架或者特定的 N-gram 词组被重复调用的概率，依然会以一种非人类的恐怖频率飙升。",
+    "algorithm": "N-gram 自相关列阵与神经退化画像",
+    "mechanism": "系统计算特定词序列（n-gram）和句法结构在文本中的频率和分布。它应用自相关函数来检测循环模式（如每50个词使用特定3-gram一次）。AI模型严重依赖其即时上下文窗口，导致它们不断用自己最近的输出\"启动\"自己，使它们可预测地循环回到相同的措辞结构。该算法测量这些模式的熵和变异系数，标记结构重复在统计上过于完美或过于频繁的文本。",
+    "useCase": "在追捕长篇累牍的 AI 对话回复、旧版或未优化模型生成的廉价小说，以及那些 AI 被逼着瞎编滥造超出其知识盲区、被迫通过疯狂循环来凑字数的文本时，拥有核弹级的杀伤力。",
+    "strengths": "• 它是撕破 AI “为了凑字数而原地转圈 (Hallucinated Padding)”伪装的最强利器。\n• 真正的跨语言打击能力——神经网络这种退化循环所残留下来的纯数学指纹参数，不管是用中文还是英文写，都如出一辙地暴露无遗。",
+    "limitations": "• 如果生成文本被调高了“温度值 (Temperature, 即随机性)”或者被施加了极其严厉的重复惩罚（强行打断循环），雷达的敏锐度会下降。\n• 容易误伤那些极其死板、格式化的人类文档（比如产品说明书或法律条文），或者故意使用大量排比和副歌的人类诗歌及演讲稿。",
+    "parameters": "雷达切片: 动态句法与 N-gram 自相关矩阵扫描\n定罪量表: 循环发作频率方差与系统信息熵衰减斜率\n行刑判决: 0-100 神经网络词穷退化 (卡带循环) 得分",
+    "accuracy": "中高威胁 — 准确率 74-84%。它是整个反 AI 侦测体系中的定海神针，尤其在与“文本困惑度 (Perplexity)”和“突发性波动 (Burstiness)”打配合时，能形成绞杀局。",
+    "references": [
+        {
+            "title": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.",
+            "url": "https://arxiv.org/abs/1904.09751"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Holtzman, A. et al. (2020). The Curious Case of Neural Text Degeneration. ICLR.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

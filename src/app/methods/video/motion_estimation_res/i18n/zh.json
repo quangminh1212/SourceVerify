@@ -1,12 +1,22 @@
 {
-  "name": "Motion Estimation Residual",
-  "description": "Analyzes motion estimation residual energy — AI-generated motion creates distinctive residual patterns.",
-  "algorithm": "Motion Estimation Residual分析算法",
-  "mechanism": "This method analyzes motion estimation residuals for video deepfake detection:\n\n1. **运动估计**: Dense optical flow is computed between consecutive frames using established algorithms (Farnebäck, Lucas-Kanade, or variational methods). This estimates per-pixel motion vectors describing the apparent motion field.\n\n2. **Residual计算**: The motion-compensated prediction is computed by warping frame t using the estimated flow to predict frame t+1. The residual R = I_{t+1} − W(I_t, flow) captures what the motion model couldn't predict — new content, disoccluded regions, and artifacts.\n\n3. **Residual分布分析**: Natural video produces motion estimation residuals with characteristic distributions: small residuals in smooth regions (well-predicted), larger at occlusion boundaries and newly visible regions. The method analyzes residual statistics — AI-generated video may show anomalous residual patterns, particularly in face regions where generation artifacts create unpredictable inter-frame changes.\n\n4. **人脸-BackgroundResidual比较**: The residual characteristics of face regions vs. background are compared. In authentic video, both regions show similar residual statistics (same camera motion, natural object motion). Deepfakes may produce elevated face residuals because the independently generated face doesn't follow physically consistent inter-frame motion.\n\n5. **时间Residual模式分析**: The temporal signal of residual magnitude is tracked. Periodic or anomalous patterns — such as regular residual spikes at the generator's refresh rate or systematically higher face residuals — indicate deepfake manipulation. The score quantifies the deviation from expected motion estimation residual behavior.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "运动估计残差分析",
+    "description": "Analyzes motion estimation residual energy — AI-generated motion creates distinctive residual patterns.",
+    "algorithm": "Motion Estimation Residual分析算法",
+    "mechanism": "This method analyzes motion estimation residuals for video deepfake detection:\n\n1. **运动估计**: Dense optical flow is computed between consecutive frames using established algorithms (Farnebäck, Lucas-Kanade, or variational methods). This estimates per-pixel motion vectors describing the apparent motion field.\n\n2. **Residual计算**: The motion-compensated prediction is computed by warping frame t using the estimated flow to predict frame t+1. The residual R = I_{t+1} − W(I_t, flow) captures what the motion model couldn't predict — new content, disoccluded regions, and artifacts.\n\n3. **Residual分布分析**: Natural video produces motion estimation residuals with characteristic distributions: small residuals in smooth regions (well-predicted), larger at occlusion boundaries and newly visible regions. The method analyzes residual statistics — AI-generated video may show anomalous residual patterns, particularly in face regions where generation artifacts create unpredictable inter-frame changes.\n\n4. **人脸-BackgroundResidual比较**: The residual characteristics of face regions vs. background are compared. In authentic video, both regions show similar residual statistics (same camera motion, natural object motion). Deepfakes may produce elevated face residuals because the independently generated face doesn't follow physically consistent inter-frame motion.\n\n5. **时间Residual模式分析**: The temporal signal of residual magnitude is tracked. Periodic or anomalous patterns — such as regular residual spikes at the generator's refresh rate or systematically higher face residuals — indicate deepfake manipulation. The score quantifies the deviation from expected motion estimation residual behavior.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TCSVT.2003.815165",
+            "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
+        },
+        {
+            "url": "https://doi.org/10.1002/9780470989418",
+            "title": "Richardson, I.E.G. (2010). The H.264 Advanced Video Compression Standard. Wiley."
+        }
+    ]
 }

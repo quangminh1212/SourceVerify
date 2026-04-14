@@ -1,12 +1,22 @@
 {
-  "name": "Video Denoising Trace",
-  "description": "Detects traces of denoising applied to deepfake videos to mask generation artifacts.",
-  "algorithm": "Video Denoising Trace分析算法",
-  "mechanism": "This method detects denoising traces for video forensic analysis:\n\n1. **噪声Level估计**: The noise level and noise model of the video are estimated per frame. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **DenoisingSignature检测**: Denoising algorithms leave characteristic signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from neural network denoising). The method identifies these signatures.\n\n3. **SelectiveDenoising检测**: The method checks whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising-分辨率一致性**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). The method checks whether denoised regions show consistent effective resolution with non-denoised regions. Resolution mismatches reveal processing different regions with different denoising parameters.\n\n5. **Multi-PassDenoising检测**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. The method detects evidence of multiple denoising steps, consistent with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "视频去噪痕迹分析",
+    "description": "Detects traces of denoising applied to deepfake videos to mask generation artifacts.",
+    "algorithm": "Video Denoising Trace分析算法",
+    "mechanism": "This method detects denoising traces for video forensic analysis:\n\n1. **噪声Level估计**: The noise level and noise model of the video are estimated per frame. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **DenoisingSignature检测**: Denoising algorithms leave characteristic signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from neural network denoising). The method identifies these signatures.\n\n3. **SelectiveDenoising检测**: The method checks whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising-分辨率一致性**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). The method checks whether denoised regions show consistent effective resolution with non-denoised regions. Resolution mismatches reveal processing different regions with different denoising parameters.\n\n5. **Multi-PassDenoising检测**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. The method detects evidence of multiple denoising steps, consistent with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TIFS.2007.916285",
+            "title": "Chen, C. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS."
+        },
+        {
+            "url": "https://doi.org/10.1109/TIP.2007.901238",
+            "title": "Dabov, K. et al. (2007). Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering. IEEE TIP."
+        }
+    ]
 }

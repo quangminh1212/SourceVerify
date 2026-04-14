@@ -1,22 +1,22 @@
 {
-  "name": "Token 词库预判率天梯 (Token Predictability)",
-  "description": "强行评估 AI 模型在给定前置上下文时，能够多么“理所当然”地预测出当前这个词的概率。该引擎吸血般榨取了 GLTR（Gehrmann 等，2019）和 Zero-shot 概率曲率（Mitchell 等，2023）的思想精髓，为整篇文本绘制出一张极度冰冷的“预判率等高线图”。所有的生成式 AI 模型骨子里都是同一副德行：它们像没头苍蝇一样，永远在贪婪地抓取统计学上概率最高的那一个 Token。这直接导致 AI 炮制出的文本，几乎被恶心地塞满了“预判榜 Top-10”的俗套词汇。而真实的人类作家，由于被复杂的个人词汇癖好、瞬间的情绪波动和怪异的行文风格所裹挟，会极其频繁且毫无征兆地掏出一些在统计学上极为“离谱”、概率极低的下水道词汇。",
-  "algorithm": "预测顺位阶级分布与概率曲率断层扫描",
-  "mechanism": "The algorithm processes the input text sequentially through an N-gram or lightweight proxy language model to calculate the conditional probability of every token given its preceding context. Each word is ranked based on its predictability: 'Top-10' (highly predictable), 'Top-100' (moderately predictable), or 'Tail' (unpredictable). The system analyzes the text's probability curvature—the density and distribution of these ranks. A text dominated almost entirely by 'Top-10' tokens with a smooth probability contour is highly indicative of auto-regressive machine generation. A text featuring frequent spikes into 'Tail' token territory signifies human authorship.",
-  "useCase": "当对付短篇到中篇的猎物（如新闻简报、官僚报告、学生的敷衍小论文）时，是一把极其见血封喉的尖刀，能将那些虚假而“顺滑”的算法选词直接扒光，让你赤裸裸地看到它那人工合成的心脏。",
-  "strengths": "• 这是一条咬死不放的猎犬：即便抄袭者用同义词替换等手段对文本进行了基础的洗稿，由于机器在底层对于高频预判词的统计学病态偏执依然极深，这道雷达往往依然能直接把它照出原形。\n• 拥有强大的零样本（Zero-shot）通杀能力；它根本不屑于去训练一个臃肿的分类器模型，而是直接依靠纯粹而冰冷的底层统计分布规律来杀人。",
-  "limitations": "• 如果扫到了那些人类撰写的、被高度八股文化、像机器一样呆板的文本（例如：气象通报、极其格式化的法律免责声明，或者那些规定了必须使用极简词汇的无脑操作手册），它就会像发疯一样疯狂报警，产生大量冤假错案（假阳性）。\n• 它的火力极大程度上受制于后勤：为了精准估算 Token 的冷血概率，它背后必须背着一个靠谱的参照语言模型，或者一个体积极其庞大的 N-gram 数据弹药库。",
-  "parameters": "雷达切片: 条件 Token 概率强行顺位天梯打分\n定罪量表: 烂大街 Top-K 词汇 与 下水道 Tail 尾部词汇的绞杀密度比\n行刑判决: 0-100 自回归死板预判度得分",
-  "accuracy": "极度强悍 — 在常规战场上能无情轰出 82-88% 的高阶精度。在整个学术界，它是被公认的、用来处决那些“未经过人类深加工的纯净机器文本”的最靠谱、底盘最稳、最难以辩驳的基石级审判标准之一。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "Token 词库预判率天梯 (Token Predictability)",
+    "description": "强行评估 AI 模型在给定前置上下文时，能够多么“理所当然”地预测出当前这个词的概率。该引擎吸血般榨取了 GLTR（Gehrmann 等，2019）和 Zero-shot 概率曲率（Mitchell 等，2023）的思想精髓，为整篇文本绘制出一张极度冰冷的“预判率等高线图”。所有的生成式 AI 模型骨子里都是同一副德行：它们像没头苍蝇一样，永远在贪婪地抓取统计学上概率最高的那一个 Token。这直接导致 AI 炮制出的文本，几乎被恶心地塞满了“预判榜 Top-10”的俗套词汇。而真实的人类作家，由于被复杂的个人词汇癖好、瞬间的情绪波动和怪异的行文风格所裹挟，会极其频繁且毫无征兆地掏出一些在统计学上极为“离谱”、概率极低的下水道词汇。",
+    "algorithm": "预测顺位阶级分布与概率曲率断层扫描",
+    "mechanism": "该算法通过N-gram或轻量级代理语言模型顺序处理输入文本，计算给定前面上下文的每个令牌的条件概率。每个词根据其可预测性排名：\"前10\"（高度可预测）、\"前100\"（中度可预测）或\"尾部\"（不可预测）。系统分析文本的概率曲率——这些排名的密度和分布。几乎完全由\"前10\"令牌主导且概率轮廓平滑的文本高度表明自回归机器生成。具有频繁进入\"尾部\"令牌领域尖峰的文本标志着人类作者身份。",
+    "useCase": "当对付短篇到中篇的猎物（如新闻简报、官僚报告、学生的敷衍小论文）时，是一把极其见血封喉的尖刀，能将那些虚假而“顺滑”的算法选词直接扒光，让你赤裸裸地看到它那人工合成的心脏。",
+    "strengths": "• 这是一条咬死不放的猎犬：即便抄袭者用同义词替换等手段对文本进行了基础的洗稿，由于机器在底层对于高频预判词的统计学病态偏执依然极深，这道雷达往往依然能直接把它照出原形。\n• 拥有强大的零样本（Zero-shot）通杀能力；它根本不屑于去训练一个臃肿的分类器模型，而是直接依靠纯粹而冰冷的底层统计分布规律来杀人。",
+    "limitations": "• 如果扫到了那些人类撰写的、被高度八股文化、像机器一样呆板的文本（例如：气象通报、极其格式化的法律免责声明，或者那些规定了必须使用极简词汇的无脑操作手册），它就会像发疯一样疯狂报警，产生大量冤假错案（假阳性）。\n• 它的火力极大程度上受制于后勤：为了精准估算 Token 的冷血概率，它背后必须背着一个靠谱的参照语言模型，或者一个体积极其庞大的 N-gram 数据弹药库。",
+    "parameters": "雷达切片: 条件 Token 概率强行顺位天梯打分\n定罪量表: 烂大街 Top-K 词汇 与 下水道 Tail 尾部词汇的绞杀密度比\n行刑判决: 0-100 自回归死板预判度得分",
+    "accuracy": "极度强悍 — 在常规战场上能无情轰出 82-88% 的高阶精度。在整个学术界，它是被公认的、用来处决那些“未经过人类深加工的纯净机器文本”的最靠谱、底盘最稳、最难以辩驳的基石级审判标准之一。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

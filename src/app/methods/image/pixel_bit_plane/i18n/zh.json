@@ -1,22 +1,22 @@
 {
-  "name": "Pixel Bit Plane",
-  "description": "Analyzes bit plane patterns for hidden artifacts",
-  "algorithm": "Pixel Bit Plane — 像素级空间分析",
-  "mechanism": "This method analyzes pixel bit planes for image forensic analysis following the steganalysis framework of Fridrich & Kodovsky (2012):\n\n1. **BitPlane分解**: Each pixel value is decomposed into its constituent bit planes (8 bit planes for 8-bit images). Each bit plane is a binary image representing one bit position across all pixels. Higher bit planes carry structural information; lower bit planes carry fine detail and noise.\n\n2. **BitPlaneStatistics**: Statistical properties of each bit plane are analyzed — randomness (entropy), spatial correlation, and pattern regularity. In natural images, lower bit planes approach random binary noise while higher bit planes show image structure. AI-generated images may show different bit plane statistics — especially in lower planes where the generator's quantization produces non-random patterns.\n\n3. **BitPlane相关性分析**: The correlation between adjacent bit planes is measured. Natural camera images show specific inter-plane correlation patterns arising from the sensor's analog-to-digital conversion. AI-generated pixels don't arise from A/D conversion and may show different inter-plane correlations.\n\n4. **LSBPlane分析**: The least significant bit (LSB) plane receives special attention. In natural images, the LSB plane appears quasi-random. AI generators, depending on their output quantization method, may produce LSB planes with: residual patterns, reduced entropy, or spatial correlations that reveal the generation process.\n\n5. **Multi-PlaneFeature评分**: Features from all bit planes are combined into a forensic score. The score captures bit plane entropy ratios, inter-plane correlation anomalies, and spatial regularity in individual planes.",
-  "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-  "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-  "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-  "useCase": "通过以下方式检测AI生成或篡改的图像： 像素 bit plane 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-  "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-  "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
-  "references": [
-    {
-      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-    },
-    {
-      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-    }
-  ]
+    "name": "像素位平面分析",
+    "description": "Analyzes bit plane patterns for hidden artifacts",
+    "algorithm": "Pixel Bit Plane — 像素级空间分析",
+    "mechanism": "This method analyzes pixel bit planes for image forensic analysis following the steganalysis framework of Fridrich & Kodovsky (2012):\n\n1. **BitPlane分解**: Each pixel value is decomposed into its constituent bit planes (8 bit planes for 8-bit images). Each bit plane is a binary image representing one bit position across all pixels. Higher bit planes carry structural information; lower bit planes carry fine detail and noise.\n\n2. **BitPlaneStatistics**: Statistical properties of each bit plane are analyzed — randomness (entropy), spatial correlation, and pattern regularity. In natural images, lower bit planes approach random binary noise while higher bit planes show image structure. AI-generated images may show different bit plane statistics — especially in lower planes where the generator's quantization produces non-random patterns.\n\n3. **BitPlane相关性分析**: The correlation between adjacent bit planes is measured. Natural camera images show specific inter-plane correlation patterns arising from the sensor's analog-to-digital conversion. AI-generated pixels don't arise from A/D conversion and may show different inter-plane correlations.\n\n4. **LSBPlane分析**: The least significant bit (LSB) plane receives special attention. In natural images, the LSB plane appears quasi-random. AI generators, depending on their output quantization method, may produce LSB planes with: residual patterns, reduced entropy, or spatial correlations that reveal the generation process.\n\n5. **Multi-PlaneFeature评分**: Features from all bit planes are combined into a forensic score. The score captures bit plane entropy ratios, inter-plane correlation anomalies, and spatial regularity in individual planes.",
+    "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
+    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
+    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
+    "useCase": "通过以下方式检测AI生成或篡改的图像： 像素 bit plane 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
+    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
+    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "references": [
+        {
+            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+        },
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        }
+    ]
 }

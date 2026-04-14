@@ -1,22 +1,22 @@
 {
-  "name": "主动与被动语态失衡度 (Passive-Active Voice Ratio)",
-  "description": "分析主动语态和被动语态结构之间的比例平衡以及切换频率。AI 模型由于其底层被死死焊上了“中立”和“客观”的安全对齐协议，因此会呈现出一种病态的被动语态滥用倾向，目的是为了逃避指出直接的责任人（例如，它会写“有错误被犯下了”，而不是“我们犯了错”），不仅如此，它们还会在整篇文章里维持着一种僵硬且完全一致的主被动比例。而人类作家的语态切换是极其动态且随心所欲的，完全取决于当时的情绪意图、强调的重点以及叙事节奏。",
-  "algorithm": "句法施事者映射与语态切换方差分析",
-  "mechanism": "This algorithm uses dependency parsing to classify every clause in the text as either Active (Subject-Verb-Object) or Passive (Object-Verb-by-Subject). It calculates two primary metrics: the absolute ratio of Passive to Active sentences, and the 'Voice Transition Rate' (how often the text switches between the two). Large Language Models (LLMs) are RLHF-trained to sound authoritative, safe, and objective. This training inadvertently penalizes the use of first-person active voice in many contexts, causing the AI to rely heavily on passive constructions ('It is important to note that...', 'The data was analyzed...'). Even when prompted to write actively, AI texts often settle into a stagnant, mathematically consistent ratio of voice usage. Human writers are highly erratic: they might write a purely active, aggressive introductory paragraph, switch to a heavily passive methodology section, and return to an active conclusion. Human voice-switching is driven by narrative rhythm and rhetorical focus, creating clustered bursts of active or passive sentences. The system calculates an 'Agency Artificiality Score' by measuring both the over-reliance on passive structures and the lack of organic clustering in voice transitions.",
-  "useCase": "这是用来给企业公关稿、学术水文和充水新闻做外科手术的绝配。它能一针见血地撕开机器那种无菌的、塑料般虚假的客观语气，还原人类作家那种充满攻击性、极具偏向性的语态切换脉搏。",
-  "strengths": "• 在抓捕那些企图伪装成“专业人士”或“大学教授”的 AI 文本时杀伤力极大，因为只要用户的要求带有这种词汇，就一定能百分之百触发 AI 的底层被动语态滥用机制。\n• 让一般的“提示词小鬼”毫无招架之力，因为绝大多数提示词工程师的脑容量只够用来要求 AI 换换“词汇”，根本意识不到要去操控极深层次的句法语态架构。",
-  "limitations": "• 很容易在某些人类被迫成为机器的领域触发假阳性误伤。比如在及其古板的科研论文、实验室报告或技术手册中，人类作者被排版规范（比如老版的 APA 格式指南）拿枪顶着头，被强制要求必须且只能使用被动语态。\n• 在极其口语化的文字（比如短信、微信聊天记录）中等于废铁，因为在那种语境下，无论是 AI 还是人类，基本都不说被动句。",
-  "parameters": "雷达切片: 针对主-谓-宾施事者责任链的依存句法分析\n定罪量表: 被动/主动句悬殊比例 与 语态切换的扎堆爆发现象\n行刑判决: 0-100 施事者塑料化 (机器冰冷语态) 审判分数",
-  "accuracy": "中高维打击 — 75-85% 的狙击准确度。在那些严肃的、教育类的或者是职场文档审核中，只要 AI 为了“客观自保”而畏首畏尾，这个指标就能一抓一个准。",
-  "references": [
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "主动与被动语态失衡度 (Passive-Active Voice Ratio)",
+    "description": "分析主动语态和被动语态结构之间的比例平衡以及切换频率。AI 模型由于其底层被死死焊上了“中立”和“客观”的安全对齐协议，因此会呈现出一种病态的被动语态滥用倾向，目的是为了逃避指出直接的责任人（例如，它会写“有错误被犯下了”，而不是“我们犯了错”），不仅如此，它们还会在整篇文章里维持着一种僵硬且完全一致的主被动比例。而人类作家的语态切换是极其动态且随心所欲的，完全取决于当时的情绪意图、强调的重点以及叙事节奏。",
+    "algorithm": "句法施事者映射与语态切换方差分析",
+    "mechanism": "该算法使用依存分析将文本中的每个子句分类为主动语态（主语-动词-宾语）或被动语态（宾语-动词-被-主语）。它计算两个主要度量：被动与主动句子的绝对比率，以及\"语态转换率\"（文本在两者之间切换的频率）。大型语言模型通过RLHF训练以听起来权威、安全和客观。这种训练无意中惩罚了在许多语境中使用第一人称主动语态，导致AI严重依赖被动构造（\"值得注意的是……\"、\"数据被分析了……\"）。即使被提示主动写作，AI文本也经常稳定在停滞的、数学上一致的语态使用比率。人类作者高度不规则：他们可能写一个纯主动的、侵略性的引言段落，切换到严重被动的方法论部分，然后返回主动的结论。人类的语态切换由叙事节奏和修辞焦点驱动，创造主动或被动句子的集中爆发。系统通过测量对被动结构的过度依赖和语态转换中有机聚集的缺乏来计算\"施动性人工分数\"。",
+    "useCase": "这是用来给企业公关稿、学术水文和充水新闻做外科手术的绝配。它能一针见血地撕开机器那种无菌的、塑料般虚假的客观语气，还原人类作家那种充满攻击性、极具偏向性的语态切换脉搏。",
+    "strengths": "• 在抓捕那些企图伪装成“专业人士”或“大学教授”的 AI 文本时杀伤力极大，因为只要用户的要求带有这种词汇，就一定能百分之百触发 AI 的底层被动语态滥用机制。\n• 让一般的“提示词小鬼”毫无招架之力，因为绝大多数提示词工程师的脑容量只够用来要求 AI 换换“词汇”，根本意识不到要去操控极深层次的句法语态架构。",
+    "limitations": "• 很容易在某些人类被迫成为机器的领域触发假阳性误伤。比如在及其古板的科研论文、实验室报告或技术手册中，人类作者被排版规范（比如老版的 APA 格式指南）拿枪顶着头，被强制要求必须且只能使用被动语态。\n• 在极其口语化的文字（比如短信、微信聊天记录）中等于废铁，因为在那种语境下，无论是 AI 还是人类，基本都不说被动句。",
+    "parameters": "雷达切片: 针对主-谓-宾施事者责任链的依存句法分析\n定罪量表: 被动/主动句悬殊比例 与 语态切换的扎堆爆发现象\n行刑判决: 0-100 施事者塑料化 (机器冰冷语态) 审判分数",
+    "accuracy": "中高维打击 — 75-85% 的狙击准确度。在那些严肃的、教育类的或者是职场文档审核中，只要 AI 为了“客观自保”而畏首畏尾，这个指标就能一抓一个准。",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

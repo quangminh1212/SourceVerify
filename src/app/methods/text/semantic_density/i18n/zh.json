@@ -1,22 +1,22 @@
 {
-  "name": "语义信息密度分布雷达 (Semantic Density)",
-  "description": "度量整篇文章中“信息量”分布的均匀程度。AI 模型被底层算法（追求预测损失最小化和控制文本困惑度）所绑架，它们在抛出干货（如专有名词、新奇概念、复杂形容词）时，倾向于像在切片面包上均匀涂抹花生酱一样，把信息点极其呆板、均匀地分摊在每一段里。而真正的人类在写作时，其信息密度会呈现出剧烈的“呼吸感”：在抛出核心观点时会有极高的“语义爆发（高密度）”，紧接着便会进入低密度的“贤者模式”（长篇大论地解释、举例、感慨或过渡）。",
-  "algorithm": "滑动窗口信息熵与密度方差探针",
-  "mechanism": "The algorithm segments the text into sliding windows (e.g., 50-word chunks) and calculates the semantic density of each window. Density is quantified by the ratio of 'content words' (nouns, unique verbs, adjectives) to 'function words' (prepositions, conjunctions) and by the introduction rate of new vocabulary. It then measures the Coefficient of Variation (CV) of these density scores across the entire text. AI-generated text typically yields a very low CV (indicating unnatural uniformity), whereas human text yields a higher CV due to organic cognitive pacing.",
-  "useCase": "在剖析长篇大论的小论文、深度调研报告和商业文章时拥有统治级的表现，因为只有在足够长的文本里，信息流的宏观潮汐起伏才能被完美地统计学建模。",
-  "strengths": "• 它是撕破深度伪装的照妖镜——即使 AI 接收到了“请模仿人类极其自然的口吻”的指令，它依然无法在宏观的段落节奏上摆脱均匀排泄信息的机器本能。\n• 对那种试图通过“同义词替换（洗稿）”来逃避审查的手段拥有极高的免疫力，因为它丈量的是“概念”的骨架分布，而不是浮于表面的字眼。",
-  "limitations": "• 在面对极短文本（如一条推文或孤立的自然段）时彻底哑火，因为样本太少，根本建不出方差模型。\n• 会对那些人类刻意写出来的、从头到尾都干硬无比的技术说明书或维基百科硬核词条产生误杀（假阳性）。",
-  "parameters": "雷达切片: 自适应滑动窗口词汇阵列画像\n定罪量表: 语义信息熵 与 概念密度变异系数 (CV)\n行刑判决: 0-100 信息排布僵化均匀度 (机器涂抹感) 得分",
-  "accuracy": "中高防线 — 单体准确率 71-81%。当它（负责侦测思想概念的方差）与“突发性波动 Burstiness”（负责侦测句子长短的物理方差）双剑合璧时，将形成一道让 AI 绝望的天堑。",
-  "references": [
-    {
-      "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
-      "url": "https://arxiv.org/abs/2212.12672"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "语义信息密度分布雷达 (Semantic Density)",
+    "description": "度量整篇文章中“信息量”分布的均匀程度。AI 模型被底层算法（追求预测损失最小化和控制文本困惑度）所绑架，它们在抛出干货（如专有名词、新奇概念、复杂形容词）时，倾向于像在切片面包上均匀涂抹花生酱一样，把信息点极其呆板、均匀地分摊在每一段里。而真正的人类在写作时，其信息密度会呈现出剧烈的“呼吸感”：在抛出核心观点时会有极高的“语义爆发（高密度）”，紧接着便会进入低密度的“贤者模式”（长篇大论地解释、举例、感慨或过渡）。",
+    "algorithm": "滑动窗口信息熵与密度方差探针",
+    "mechanism": "该算法将文本分割为滑动窗口（如50词块），并计算每个窗口的语义密度。密度通过\"内容词\"（名词、独特动词、形容词）与\"功能词\"（介词、连词）的比率以及新词汇的引入率来量化。然后测量整个文本中这些密度分数的变异系数（CV）。AI生成的文本通常产生非常低的CV（表明不自然的均匀性），而人类文本由于有机的认知节奏产生更高的CV。",
+    "useCase": "在剖析长篇大论的小论文、深度调研报告和商业文章时拥有统治级的表现，因为只有在足够长的文本里，信息流的宏观潮汐起伏才能被完美地统计学建模。",
+    "strengths": "• 它是撕破深度伪装的照妖镜——即使 AI 接收到了“请模仿人类极其自然的口吻”的指令，它依然无法在宏观的段落节奏上摆脱均匀排泄信息的机器本能。\n• 对那种试图通过“同义词替换（洗稿）”来逃避审查的手段拥有极高的免疫力，因为它丈量的是“概念”的骨架分布，而不是浮于表面的字眼。",
+    "limitations": "• 在面对极短文本（如一条推文或孤立的自然段）时彻底哑火，因为样本太少，根本建不出方差模型。\n• 会对那些人类刻意写出来的、从头到尾都干硬无比的技术说明书或维基百科硬核词条产生误杀（假阳性）。",
+    "parameters": "雷达切片: 自适应滑动窗口词汇阵列画像\n定罪量表: 语义信息熵 与 概念密度变异系数 (CV)\n行刑判决: 0-100 信息排布僵化均匀度 (机器涂抹感) 得分",
+    "accuracy": "中高防线 — 单体准确率 71-81%。当它（负责侦测思想概念的方差）与“突发性波动 Burstiness”（负责侦测句子长短的物理方差）双剑合璧时，将形成一道让 AI 绝望的天堑。",
+    "references": [
+        {
+            "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
+            "url": "https://arxiv.org/abs/2212.12672"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

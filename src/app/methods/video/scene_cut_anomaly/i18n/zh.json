@@ -1,12 +1,22 @@
 {
-  "name": "Scene Cut Anomaly Detection",
-  "description": "Detects anomalous scene cut patterns and unnatural transition points in manipulated videos.",
-  "algorithm": "Scene Cut Anomaly Detection分析算法",
-  "mechanism": "This method detects scene cut anomalies for video forensic analysis:\n\n1. **SceneCut检测**: Scene cuts (hard cuts, dissolves, fades, wipes) are detected by analyzing inter-frame similarity metrics — histogram differences, pixel MSE, and structural similarity. Cut locations are identified and classified by type.\n\n2. **CutPointContent分析**: The content immediately before and after each cut is analyzed for consistency. Manipulated videos may contain cuts specifically placed to hide temporal discontinuities from deepfake insertion — cuts at moments where generation artifacts would be most visible.\n\n3. **Cut频率分析**: The temporal distribution of cuts is analyzed. Normal video editing follows content-driven patterns (cuts at speech pauses, action changes). Anomalous cut frequency — particularly rapid cuts correlating with challenging deepfake scenarios (profile views, extreme expressions) — may indicate editing to conceal generation failures.\n\n4. **Cross-Cut一致性**: Content properties (lighting, color balance, noise level) should be consistent across cuts within the same scene. The method checks for property discontinuities at cuts that might indicate different source material. Face properties changing at cut points (subtle identity shifts, quality changes) suggest manipulation.\n\n5. **Cut-压缩Alignment**: In properly encoded video, scene cuts should align with I-frame positions. Misalignment between detected cuts and I-frames may indicate post-manipulation re-encoding without proper scene detection, a forensic trace of manipulation processing.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "场景切换异常检测",
+    "description": "Detects anomalous scene cut patterns and unnatural transition points in manipulated videos.",
+    "algorithm": "Scene Cut Anomaly Detection分析算法",
+    "mechanism": "This method detects scene cut anomalies for video forensic analysis:\n\n1. **SceneCut检测**: Scene cuts (hard cuts, dissolves, fades, wipes) are detected by analyzing inter-frame similarity metrics — histogram differences, pixel MSE, and structural similarity. Cut locations are identified and classified by type.\n\n2. **CutPointContent分析**: The content immediately before and after each cut is analyzed for consistency. Manipulated videos may contain cuts specifically placed to hide temporal discontinuities from deepfake insertion — cuts at moments where generation artifacts would be most visible.\n\n3. **Cut频率分析**: The temporal distribution of cuts is analyzed. Normal video editing follows content-driven patterns (cuts at speech pauses, action changes). Anomalous cut frequency — particularly rapid cuts correlating with challenging deepfake scenarios (profile views, extreme expressions) — may indicate editing to conceal generation failures.\n\n4. **Cross-Cut一致性**: Content properties (lighting, color balance, noise level) should be consistent across cuts within the same scene. The method checks for property discontinuities at cuts that might indicate different source material. Face properties changing at cut points (subtle identity shifts, quality changes) suggest manipulation.\n\n5. **Cut-压缩Alignment**: In properly encoded video, scene cuts should align with I-frame positions. Misalignment between detected cuts and I-frames may indicate post-manipulation re-encoding without proper scene detection, a forensic trace of manipulation processing.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TMM.2005.861777",
+            "title": "Rasheed, Z. & Shah, M. (2005). Detection and Representation of Scenes in Videos. IEEE TMM."
+        },
+        {
+            "url": "https://doi.org/10.1145/2733373.2806316",
+            "title": "Baraldi, L. et al. (2015). A Deep Siamese Network for Scene Detection in Broadcast Videos. ACM MM."
+        }
+    ]
 }

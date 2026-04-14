@@ -1,22 +1,22 @@
 {
-  "name": "通道独立性分析",
-  "description": "评估RGB颜色通道之间的统计去相关性和独立性。物理相机通过光谱波段重叠的滤光片（Bayer滤色镜）捕捉光线，导致自然通道间的颜色必然存在强烈的关联。而生成式AI模型在合成图像时，常常表现出物理上不可能存在的通道独立性或者异常依赖关系。",
-  "algorithm": "通道间光谱相关性与互信息建模",
-  "mechanism": "The algorithm isolates the RGB and YCbCr channels to compute their mutual information, Pearson correlation coefficients, and high-frequency structural dependencies. In an authentic photograph, the physical properties of the camera's color filter array dictate a highly predictable spectrum of inter-channel correlation. Generative AI models, which predict pixel values natively from latent space distributions rather than simulating a physical sensor grid, often fail to perfectly replicate these subtle organic interactions. This results in localized color bleeding, impossible hue gradients, or unnatural statistical independence where strong correlation should biologically exist.",
-  "parameters": "色彩空间: RGB/YCbCr, 指标: 皮尔逊相关性矩阵、互信息强度, 采样窗口: 全局或分块分析",
-  "accuracy": "中等至高 (75-85%) - 对抗早期GAN尤为有效；结合空间结构分析时，也是打击最新Diffusion漫游伪影的有力辅助武器。",
-  "source": "Farid (2009) / McCloskey & Albright (2018) - 图像取证学中的颜色线索",
-  "useCase": "通过反常颜色的推演发现AI生成的虚假照片，侦测利用修图软件局部篡改上色(Splicing)的伪造痕迹，并逆向核实验明照片所声明之相机的真实光谱响应能力。",
-  "references": [
-    {
-      "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
-      "url": "https://doi.org/10.1109/MSP.2008.931079"
-    },
-    {
-      "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
-      "url": "https://doi.org/10.1109/WACV.2018.00001"
-    }
-  ],
-  "strengths": "• 深深扎根于相机传感器的纯物理光学定律，无需依赖表面且容易伪造的高层级语义和几何形态。\n• 计算开销极低且快如闪电，依靠线性代数矩阵的算力能瞬间扫荡完几千万像素级别的整张图片的矩阵空间。\n• 这是横亘在AI面前极其痛苦的天堑：只要AI不将死板且严苛的光谱物理约束从底层代码深植入神经网络中进行重新训练，它就绝对无法逾越这道相关性屏障。\n• 对甄别出局部切图移花接木式的“缝合怪”（例如Photoshop粗糙合成照）非常有效。在伪造的焊接点，其通道的色彩关联系数常常会急剧断崖式崩溃并暴露出破绽。",
-  "limitations": "• 被人类摄影师亲手严重重度调色过、经过电影质感LUT叠加、或执行过暴力HDR叠加合并融合的照片，会面目全非地彻底打碎原始通道间的依赖网，造成非常强烈的误判（假阳性报错）。\n• 互联网上传播最普遍的图像极度压缩格式（尤其是惨无人道的JPEG 4:2:0色度二次下采样压缩）拥有毁灭性威力，会永远且不可逆地损毁掉珍贵的高频通道关联信息。\n• 在黑白灰度照片、复古泛黄的赛ピア单色调以及纯色的绘画图片面前会由于失去了“颜色带宽”而束手无策，彻底沦为废铁。\n• 偶遇纯如死水的平面设计单色大色块、呆板平涂无渐变的3D生成苍穹夜空、或者没有真实自然光源渐变衍射渲染的简单2D卡通电视动画背景时，有几率出现迷失方向及卡壳情况。"
+    "name": "通道独立性分析",
+    "description": "评估RGB颜色通道之间的统计去相关性和独立性。物理相机通过光谱波段重叠的滤光片（Bayer滤色镜）捕捉光线，导致自然通道间的颜色必然存在强烈的关联。而生成式AI模型在合成图像时，常常表现出物理上不可能存在的通道独立性或者异常依赖关系。",
+    "algorithm": "通道间光谱相关性与互信息建模",
+    "mechanism": "该算法隔离RGB和YCbCr通道以计算它们的互信息、Pearson相关系数和高频结构依赖关系。在真实照片中，相机色彩滤波阵列的物理属性决定了高度可预测的通道间相关性频谱。生成式AI模型从潜在空间分布直接预测像素值，而非模拟物理传感器网格，通常无法完美复制这些微妙的有机交互。这会导致局部色彩溢出、不可能的色调渐变或不自然的统计独立性，而在这些位置本应存在强相关性。",
+    "parameters": "色彩空间: RGB/YCbCr, 指标: 皮尔逊相关性矩阵、互信息强度, 采样窗口: 全局或分块分析",
+    "accuracy": "中等至高 (75-85%) - 对抗早期GAN尤为有效；结合空间结构分析时，也是打击最新Diffusion漫游伪影的有力辅助武器。",
+    "source": "Farid (2009) / McCloskey & Albright (2018) - 图像取证学中的颜色线索",
+    "useCase": "通过反常颜色的推演发现AI生成的虚假照片，侦测利用修图软件局部篡改上色(Splicing)的伪造痕迹，并逆向核实验明照片所声明之相机的真实光谱响应能力。",
+    "references": [
+        {
+            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+            "url": "https://doi.org/10.1109/MSP.2008.931079"
+        },
+        {
+            "title": "McCloskey, S. & Albright, M. (2018). Detecting GAN-generated Imagery using Color Cues. IEEE WACV.",
+            "url": "https://doi.org/10.1109/WACV.2018.00001"
+        }
+    ],
+    "strengths": "• 深深扎根于相机传感器的纯物理光学定律，无需依赖表面且容易伪造的高层级语义和几何形态。\n• 计算开销极低且快如闪电，依靠线性代数矩阵的算力能瞬间扫荡完几千万像素级别的整张图片的矩阵空间。\n• 这是横亘在AI面前极其痛苦的天堑：只要AI不将死板且严苛的光谱物理约束从底层代码深植入神经网络中进行重新训练，它就绝对无法逾越这道相关性屏障。\n• 对甄别出局部切图移花接木式的“缝合怪”（例如Photoshop粗糙合成照）非常有效。在伪造的焊接点，其通道的色彩关联系数常常会急剧断崖式崩溃并暴露出破绽。",
+    "limitations": "• 被人类摄影师亲手严重重度调色过、经过电影质感LUT叠加、或执行过暴力HDR叠加合并融合的照片，会面目全非地彻底打碎原始通道间的依赖网，造成非常强烈的误判（假阳性报错）。\n• 互联网上传播最普遍的图像极度压缩格式（尤其是惨无人道的JPEG 4:2:0色度二次下采样压缩）拥有毁灭性威力，会永远且不可逆地损毁掉珍贵的高频通道关联信息。\n• 在黑白灰度照片、复古泛黄的赛ピア单色调以及纯色的绘画图片面前会由于失去了“颜色带宽”而束手无策，彻底沦为废铁。\n• 偶遇纯如死水的平面设计单色大色块、呆板平涂无渐变的3D生成苍穹夜空、或者没有真实自然光源渐变衍射渲染的简单2D卡通电视动画背景时，有几率出现迷失方向及卡壳情况。"
 }

@@ -1,22 +1,22 @@
 {
-  "name": "最大 Softmax 概率 (MSP)",
-  "description": "冷酷地审查语言模型在数学上赋予其所选单词的“绝对盲目自信度（Confidence level）”。AI 吐出的文本，其“Softmax”概率分布总是病态地向唯一一个拥有绝对优势的压倒性词汇倾斜。而人类的写作则呈现出狂野得多的随机性，人类经常会毫不犹豫地使用那些在机器看来“预测概率极低”的词。",
-  "algorithm": "Token 级别 Softmax 绝对自信度阈值判定系统",
-  "mechanism": "At the final layer of any Large Language Model, a 'Softmax' function converts raw mathematical scores (logits) into a probability distribution across the entire vocabulary, summing to 1.0 (100%). When an AI generates text (assuming standard temperature settings), the 'Maximum Softmax Probability' (the probability of the single word it actually chooses) is extremely high—often approaching 0.90 to 0.99 for grammatical connectors and predictable nouns. The AI is highly 'confident' in its choices because it is following mathematical optimization. Human writers, however, frequently select words that an LLM's Softmax function would assign a relatively low probability to (e.g., 0.15 or 0.05), because humans prioritize creative nuance or specific memory recall over statistical likelihood. By passing the target text through a reference model and calculating the average Maximum Softmax Probability for every token, this method detects the telltale 'overconfidence' signature of algorithmic generation. A text maintaining an unbroken chain of 90%+ softmax probability scores is mathematically impossible to have been written organically by a human.",
-  "useCase": "这是用于清洗 AI 批量生成的劣质新闻、学术论文摘要和商业营销文案的核武器。在这些领域，AI 总是会不可救药地陷入那种高度可预测、高度“满分自信”的八股文遣词造句中。",
-  "strengths": "• 彻底废掉“初级洗稿（同义词替换）”的把戏；你随便打乱一下句型，根本掩盖不了这篇文字的底层骨架全是由“满分概率 Token”拼接而成的数学真相。\n• 当手里恰好有“嫌疑模型”的本体作为参考模型对照时，它就是无解的“白盒（White-box）”终极宣判指标。\n• 完全建立在铁血的数学概率模型之上，生成的 0-100 分数有着极强、极具说服力的原理解释性。",
-  "limitations": "• 极其烧钱、吃显存。为了给几千个 Token 算 Softmax 分布，后台必须一直挂载着一个庞大的神经语言模型底座在狂转。\n• 如果遇到懂行的刺客，疯狂调高 API 的“Top-P（核采样）”和“温度（Temperature）”参数，逼迫 AI 强行吃下低概率废词，它就有可能被蒙骗（虽然生成的文章往往跟喝多了假酒一样胡言乱语）。\n• 人类世界中那些极其刻板、如同机械印刷般的文字（例如法律合同、八股公文），由于本身用词就极其死板预测度极高，会不可避免地触发高 MSP 爆表，造成假阳性误杀。",
-  "parameters": "雷达切片: 基于 Token 粒度的 Logit 到 Softmax 转换逆推打分\n定罪量表: 最大 Softmax 概率 (MSP) 的全篇平均值与统计算法方差\n行刑判决: 0-100 算法傲慢自信度 (机器死板概率) 审判分数",
-  "accuracy": "极度致命 — 在标准模型生成的文本上拥有 82-89% 的惊人命中率。它是 AI 检测领域最坚不可摧的数学基石，想绕过它，你只能把文章改得像疯子说胡话一样支离破碎。",
-  "references": [
-    {
-      "title": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.",
-      "url": "https://arxiv.org/abs/1610.02136"
-    },
-    {
-      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
-      "url": "https://arxiv.org/abs/1908.09203"
-    }
-  ],
-  "source": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
+    "name": "最大 Softmax 概率 (MSP)",
+    "description": "冷酷地审查语言模型在数学上赋予其所选单词的“绝对盲目自信度（Confidence level）”。AI 吐出的文本，其“Softmax”概率分布总是病态地向唯一一个拥有绝对优势的压倒性词汇倾斜。而人类的写作则呈现出狂野得多的随机性，人类经常会毫不犹豫地使用那些在机器看来“预测概率极低”的词。",
+    "algorithm": "Token 级别 Softmax 绝对自信度阈值判定系统",
+    "mechanism": "在任何大型语言模型的最后一层，\"Softmax\"函数将原始数学分数（logits）转换为整个词汇表的概率分布，总和为1.0（100%）。当AI生成文本时（假设标准温度设置），\"最大Softmax概率\"（它实际选择的单个词的概率）极高——对于语法连接词和可预测名词通常接近0.90到0.99。AI对其选择高度\"自信\"，因为它遵循数学优化。然而人类作者经常选择LLM的Softmax函数会分配相对低概率的词（如0.15或0.05），因为人类优先考虑创意细微差别或特定记忆回忆而非统计可能性。通过将目标文本通过参考模型并计算每个令牌的平均最大Softmax概率，该方法检测算法生成的标志性\"过度自信\"签名。保持不间断的90%+softmax概率分数链的文本，在数学上不可能是人类有机写作的。",
+    "useCase": "这是用于清洗 AI 批量生成的劣质新闻、学术论文摘要和商业营销文案的核武器。在这些领域，AI 总是会不可救药地陷入那种高度可预测、高度“满分自信”的八股文遣词造句中。",
+    "strengths": "• 彻底废掉“初级洗稿（同义词替换）”的把戏；你随便打乱一下句型，根本掩盖不了这篇文字的底层骨架全是由“满分概率 Token”拼接而成的数学真相。\n• 当手里恰好有“嫌疑模型”的本体作为参考模型对照时，它就是无解的“白盒（White-box）”终极宣判指标。\n• 完全建立在铁血的数学概率模型之上，生成的 0-100 分数有着极强、极具说服力的原理解释性。",
+    "limitations": "• 极其烧钱、吃显存。为了给几千个 Token 算 Softmax 分布，后台必须一直挂载着一个庞大的神经语言模型底座在狂转。\n• 如果遇到懂行的刺客，疯狂调高 API 的“Top-P（核采样）”和“温度（Temperature）”参数，逼迫 AI 强行吃下低概率废词，它就有可能被蒙骗（虽然生成的文章往往跟喝多了假酒一样胡言乱语）。\n• 人类世界中那些极其刻板、如同机械印刷般的文字（例如法律合同、八股公文），由于本身用词就极其死板预测度极高，会不可避免地触发高 MSP 爆表，造成假阳性误杀。",
+    "parameters": "雷达切片: 基于 Token 粒度的 Logit 到 Softmax 转换逆推打分\n定罪量表: 最大 Softmax 概率 (MSP) 的全篇平均值与统计算法方差\n行刑判决: 0-100 算法傲慢自信度 (机器死板概率) 审判分数",
+    "accuracy": "极度致命 — 在标准模型生成的文本上拥有 82-89% 的惊人命中率。它是 AI 检测领域最坚不可摧的数学基石，想绕过它，你只能把文章改得像疯子说胡话一样支离破碎。",
+    "references": [
+        {
+            "title": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.",
+            "url": "https://arxiv.org/abs/1610.02136"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ],
+    "source": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
 }

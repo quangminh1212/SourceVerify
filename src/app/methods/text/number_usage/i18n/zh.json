@@ -1,22 +1,22 @@
 {
-  "name": "数字使用痕迹分析 (Number Usage Expression)",
-  "description": "审查文本中数字、统计数据和图表的插入与排版方式。AI 模型在呈现数字时具有严重的“强迫症”，倾向于使用高度可预测、极其标准的格式（例如：死板遵守新闻写作规范、滥用精确到小数点后的百分比、或者伪造出一种人为平衡的统计结果），它们极其不擅长模仿人类在写数字时那种看心情、看语境且前后不一的随性风格。",
-  "algorithm": "数值排版解析与统计精确度映射技术",
-  "mechanism": "This algorithm scans the text to extract all numerical expressions, analyzing their format (digits vs. spelled-out words), precision (exact metrics vs. approximations), and syntactic distribution. Large Language Models (LLMs) are aligned to present information authoritatively and clearly. Therefore, when generating text involving data, they default to highly precise, 'textbook' formatting (e.g., 'In 2023, 47.3% of the demographic...'). They rarely mix formats inconsistently in the same paragraph unless explicitly prompted. Human writers, however, are naturally inconsistent: a human might write 'three hundred people' in one sentence and '300 visitors' in the next, or use colloquial approximations like 'a couple dozen' or 'roughly half'. Furthermore, AI text often exhibits 'statistical hallucination balance'—when generating fake statistics, it tends to distribute numbers evenly (avoiding too many numbers ending in 0 or 5 to seem 'authentic', ironically creating a mathematically detectable pattern of fake randomness). The system calculates a 'Numeric Rigidity Score' by evaluating the adherence to strict formatting rules and the distribution of approximations versus exact figures.",
-  "useCase": "这是用来对上市财报、科研论文摘要、冰冷的新闻通讯以及任何数字密集型长文进行深度尸检的绝佳武器。它能一针见血地剥离出机器那种极其“完美”、像手术室一样无菌的数字排版，与人类那种充满泥土气息、时常排版错乱的真实数据报表。",
-  "strengths": "• 在那些数字满天飞的干货数据报告或分析员文章中，杀伤力爆表。\n• 它直接读取了被死死焊在 AI 道德安全对齐底层里的排版天条，一般的“提示词小鬼”根本想不到要去修改自己让 AI 报数据时的格式细节。\n• 拥有一双火眼金睛，能通过对假随机数基本盘的数学解构，直接戳破大模型“一本正经胡说八道（幻觉）”捏造出来的假数据。",
-  "limitations": "• 很容易误伤友军。如果你拿它去扫那些本来就受到地狱级排版规则限制的人类文档（比如经过严苛审计的四大财报、主编拿皮鞭抽出来的美联社新闻、或者格式审查严到变态的 APA 格式学术论文），雷达会疯狂报错，因为那里的人类被逼得只能像机器一样写数字。\n• 在文学创作小说或者纯粹扯淡的哲学冥想文本（连个数字都没有的地方）里，这个雷达形同虚设。\n• 如果使用者是个老司机，明确在提示词里威逼 AI：“必须给我用非常随意的口头估算方式来编这些数”，这个防线就会被直接打穿。",
-  "parameters": "雷达切片: 正则表达式 (Regex) 暴力提取数字 与 排版特征素描\n定罪量表: 强迫症级别的格式一致性 与 绝对精确/模糊概数 的比例倒挂\n行刑判决: 0-100 数值僵尸度 (塑料化伪装格式) 审判分数",
-  "accuracy": "特化型中等 — 握有 65-75% 的判准率。这是一种极端偏科的特种兵指标，在满地都是数据的泥潭里它能提供绝杀级的情报，但在没有数字的纯文字荒漠里，请直接把它关掉。",
-  "references": [
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "数字使用痕迹分析 (Number Usage Expression)",
+    "description": "审查文本中数字、统计数据和图表的插入与排版方式。AI 模型在呈现数字时具有严重的“强迫症”，倾向于使用高度可预测、极其标准的格式（例如：死板遵守新闻写作规范、滥用精确到小数点后的百分比、或者伪造出一种人为平衡的统计结果），它们极其不擅长模仿人类在写数字时那种看心情、看语境且前后不一的随性风格。",
+    "algorithm": "数值排版解析与统计精确度映射技术",
+    "mechanism": "该算法扫描文本以提取所有数值表达，分析其格式（数字vs.拼写词语）、精度（精确度量vs.近似值）和句法分布。大型语言模型被对齐以权威且清晰地呈现信息。因此，在生成涉及数据的文本时，它们默认为高度精确的\"教科书\"格式（如\"在2023年，47.3%的人口……\"）。除非明确提示，它们很少在同一段落中不一致地混合格式。然而人类作者天然不一致：人类可能在一个句子中写\"三百人\"，在下一个句子中写\"300名访客\"，或使用口语近似如\"大约几十个\"或\"大约一半\"。此外，AI文本经常表现出\"统计幻觉平衡\"——在生成假统计数据时，它倾向于均匀分布数字（避免太多以0或5结尾的数字以显得\"真实\"，讽刺地创造了一种可数学检测的虚假随机模式）。系统通过评估对严格格式规则的遵守程度和近似值与精确数字的分布来计算\"数字刚性分数\"。",
+    "useCase": "这是用来对上市财报、科研论文摘要、冰冷的新闻通讯以及任何数字密集型长文进行深度尸检的绝佳武器。它能一针见血地剥离出机器那种极其“完美”、像手术室一样无菌的数字排版，与人类那种充满泥土气息、时常排版错乱的真实数据报表。",
+    "strengths": "• 在那些数字满天飞的干货数据报告或分析员文章中，杀伤力爆表。\n• 它直接读取了被死死焊在 AI 道德安全对齐底层里的排版天条，一般的“提示词小鬼”根本想不到要去修改自己让 AI 报数据时的格式细节。\n• 拥有一双火眼金睛，能通过对假随机数基本盘的数学解构，直接戳破大模型“一本正经胡说八道（幻觉）”捏造出来的假数据。",
+    "limitations": "• 很容易误伤友军。如果你拿它去扫那些本来就受到地狱级排版规则限制的人类文档（比如经过严苛审计的四大财报、主编拿皮鞭抽出来的美联社新闻、或者格式审查严到变态的 APA 格式学术论文），雷达会疯狂报错，因为那里的人类被逼得只能像机器一样写数字。\n• 在文学创作小说或者纯粹扯淡的哲学冥想文本（连个数字都没有的地方）里，这个雷达形同虚设。\n• 如果使用者是个老司机，明确在提示词里威逼 AI：“必须给我用非常随意的口头估算方式来编这些数”，这个防线就会被直接打穿。",
+    "parameters": "雷达切片: 正则表达式 (Regex) 暴力提取数字 与 排版特征素描\n定罪量表: 强迫症级别的格式一致性 与 绝对精确/模糊概数 的比例倒挂\n行刑判决: 0-100 数值僵尸度 (塑料化伪装格式) 审判分数",
+    "accuracy": "特化型中等 — 握有 65-75% 的判准率。这是一种极端偏科的特种兵指标，在满地都是数据的泥潭里它能提供绝杀级的情报，但在没有数字的纯文字荒漠里，请直接把它关掉。",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

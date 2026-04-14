@@ -1,12 +1,22 @@
 {
-  "name": "Voice Fundamental Frequency",
-  "description": "Analyzes voice F0 (fundamental frequency) patterns — voice cloning often has unnatural F0 contours.",
-  "algorithm": "Voice Fundamental Frequency分析算法",
-  "mechanism": "This method analyzes voice fundamental frequency (F0) for deepfake detection:\n\n1. **F0提取**: The fundamental frequency (pitch) of the voice is extracted per frame using autocorrelation, cepstral, or YIN algorithm. F0 corresponds to the vocal fold vibration rate, typically 85-180 Hz for males and 165-255 Hz for females.\n\n2. **F0轮廓分析**: The temporal F0 contour (pitch track) is analyzed for naturalness. Natural speech shows characteristic F0 patterns: (a) declination (gradual F0 decrease across utterances), (b) prosodic contours (rises for questions, falls for statements), (c) micro-prosody (F0 perturbations at phoneme boundaries). AI voice synthesis may produce F0 contours with incorrect prosodic patterns or missing micro-prosodic detail.\n\n3. **F0RangeandVariability**: Each speaker has a characteristic F0 range and variability. The method checks whether F0 statistics (mean, standard deviation, range) fall within physiologically plausible values for the apparent speaker. AI-generated voices may show either unnaturally constrained (monotone) or excessive F0 variability.\n\n4. **JitterandShimmer**: Natural voice shows slight cycle-to-cycle F0 variation (jitter, typically <1%) and amplitude variation (shimmer, typically <3%). These micro-perturbations reflect the biomechanics of vocal fold vibration. AI voice synthesis may produce either too-perfect (zero jitter/shimmer) or incorrectly modeled perturbation patterns.\n\n5. **F0-视觉相关性**: Voice F0 should correlate with visible physical effort — higher pitch may correspond with increased tension visible in the neck muscles. The method checks audio-visual F0 correspondence. Deepfakes combining generated audio with generated video may show poor F0-visual correlation.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "语音基频分析",
+    "description": "Analyzes voice F0 (fundamental frequency) patterns — voice cloning often has unnatural F0 contours.",
+    "algorithm": "Voice Fundamental Frequency分析算法",
+    "mechanism": "This method analyzes voice fundamental frequency (F0) for deepfake detection:\n\n1. **F0提取**: The fundamental frequency (pitch) of the voice is extracted per frame using autocorrelation, cepstral, or YIN algorithm. F0 corresponds to the vocal fold vibration rate, typically 85-180 Hz for males and 165-255 Hz for females.\n\n2. **F0轮廓分析**: The temporal F0 contour (pitch track) is analyzed for naturalness. Natural speech shows characteristic F0 patterns: (a) declination (gradual F0 decrease across utterances), (b) prosodic contours (rises for questions, falls for statements), (c) micro-prosody (F0 perturbations at phoneme boundaries). AI voice synthesis may produce F0 contours with incorrect prosodic patterns or missing micro-prosodic detail.\n\n3. **F0RangeandVariability**: Each speaker has a characteristic F0 range and variability. The method checks whether F0 statistics (mean, standard deviation, range) fall within physiologically plausible values for the apparent speaker. AI-generated voices may show either unnaturally constrained (monotone) or excessive F0 variability.\n\n4. **JitterandShimmer**: Natural voice shows slight cycle-to-cycle F0 variation (jitter, typically <1%) and amplitude variation (shimmer, typically <3%). These micro-perturbations reflect the biomechanics of vocal fold vibration. AI voice synthesis may produce either too-perfect (zero jitter/shimmer) or incorrectly modeled perturbation patterns.\n\n5. **F0-视觉相关性**: Voice F0 should correlate with visible physical effort — higher pitch may correspond with increased tension visible in the neck muscles. The method checks audio-visual F0 correspondence. Deepfakes combining generated audio with generated video may show poor F0-visual correlation.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1007/11613107_12",
+            "title": "Chetty, G. & Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
+        },
+        {
+            "url": "https://doi.org/10.1145/3394171.3413570",
+            "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM."
+        }
+    ]
 }

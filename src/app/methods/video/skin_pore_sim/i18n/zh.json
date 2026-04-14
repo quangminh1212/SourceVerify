@@ -1,22 +1,22 @@
 {
-  "name": "Skin Pore Simulation",
-  "description": "Detects simulated pore patterns vs real pores",
-  "algorithm": "Skin Pore Simulation — 像素级空间分析",
-  "mechanism": "This method analyzes skin pore similarity patterns for deepfake detection:\n\n1. **Pore模式提取**: Skin pore patterns are extracted from high-resolution facial regions using local morphological operators. Pore centers are localized and characterized by size, depth (estimated from shadow), and spacing.\n\n2. **Intra-FramePore一致性**: Within each frame, pore characteristics should vary systematically across the face (larger on nose, medium on cheeks, smaller on forehead). The method checks for anatomically correct pore distribution. AI generators may produce spatially uniform pore patterns or incorrect regional variation.\n\n3. **Inter-FramePore稳定性**: Pore patterns should remain identical across frames (pores are fixed skin structures). The method computes pore pattern similarity between frames using point matching. High inter-frame pore pattern variation indicates AI generation where pore texture is generated independently per frame.\n\n4. **Pore分辨率评估**: Pore visibility depends on resolution and should be consistent across the face at the same camera distance. The method checks whether pore resolution matches the video's spatial resolution. AI-generated faces may show resolution-inconsistent pore rendering — visible pores in some regions but smooth skin in others at the same scale.\n\n5. **SyntheticPore模式检测**: AI-generated pore patterns may show statistical regularities absent in natural skin: (a) too-perfect hexagonal spacing (crystalline pattern), (b) exact repetition of pore patches (texture tiling), (c) pore patterns that don't respond to skin stretching during expression. These markers are quantified for scoring.",
-  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through skin pore simulation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/1912.13458"
-    }
-  ]
+    "name": "皮肤毛孔模拟分析",
+    "description": "Detects simulated pore patterns vs real pores",
+    "algorithm": "Skin Pore Simulation — 像素级空间分析",
+    "mechanism": "This method analyzes skin pore similarity patterns for deepfake detection:\n\n1. **Pore模式提取**: Skin pore patterns are extracted from high-resolution facial regions using local morphological operators. Pore centers are localized and characterized by size, depth (estimated from shadow), and spacing.\n\n2. **Intra-FramePore一致性**: Within each frame, pore characteristics should vary systematically across the face (larger on nose, medium on cheeks, smaller on forehead). The method checks for anatomically correct pore distribution. AI generators may produce spatially uniform pore patterns or incorrect regional variation.\n\n3. **Inter-FramePore稳定性**: Pore patterns should remain identical across frames (pores are fixed skin structures). The method computes pore pattern similarity between frames using point matching. High inter-frame pore pattern variation indicates AI generation where pore texture is generated independently per frame.\n\n4. **Pore分辨率评估**: Pore visibility depends on resolution and should be consistent across the face at the same camera distance. The method checks whether pore resolution matches the video's spatial resolution. AI-generated faces may show resolution-inconsistent pore rendering — visible pores in some regions but smooth skin in others at the same scale.\n\n5. **SyntheticPore模式检测**: AI-generated pore patterns may show statistical regularities absent in natural skin: (a) too-perfect hexagonal spacing (crystalline pattern), (b) exact repetition of pore patches (texture tiling), (c) pore patterns that don't respond to skin stretching during expression. These markers are quantified for scoring.",
+    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through skin pore simulation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/1912.13458"
+        }
+    ]
 }

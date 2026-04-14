@@ -1,22 +1,22 @@
 {
-  "name": "Body Movement Fluidity",
-  "description": "Analyzes body movement smoothness",
-  "algorithm": "Body Movement Fluidity — 像素级空间分析",
-  "mechanism": "This method analyzes body movement naturalness for deepfake detection following Zheng et al. (2021):\n\n1. **Pose估计**: Full-body or upper-body pose is estimated per frame using landmark detection (shoulders, elbows, wrists, head, torso). Joint angles and positions are tracked to build temporal motion trajectories for each body part.\n\n2. **运动Smoothness分析**: Natural body movements follow minimum-jerk trajectories (Flash & Hogan, 1985) — meaning the third derivative of position (jerk) is minimized. The method computes jerk profiles for tracked joints. AI-generated body movements may violate this biological constraint, showing either excessive jerk (unnatural abruptness) or unnaturally perfect smoothness (lacking physiological tremor).\n\n3. **JointCoordinationPatterns**: Natural movements exhibit coordinated joint motion governed by biomechanical coupling. The method analyzes inter-joint correlations — shoulder-elbow coordination during gestures, head-torso coupling during turns. Deepfakes may produce joints that move independently in physically impossible ways.\n\n4. **时间频率分析**: Body motion signals are analyzed in frequency domain. Natural movements contain characteristic frequency components: voluntary motion (0-2 Hz), physiological tremor (~8-12 Hz), and postural sway (~0.5 Hz). Generated movements may lack these physiological frequency signatures or produce spectrally flat motion without natural frequency structure.\n\n5. **Fluidity评分**: Movement fluidity is quantified by combining jerk metrics, coordination scores, and spectral indicators. Low fluidity scores (jerky, uncoordinated, or spectrally abnormal motion) indicate AI generation. The method is particularly effective for full-body deepfakes where generation artifacts extend beyond the face region.",
-  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through body movement fluidity analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "身体运动流畅性分析",
+    "description": "Analyzes body movement smoothness",
+    "algorithm": "Body Movement Fluidity — 像素级空间分析",
+    "mechanism": "This method analyzes body movement naturalness for deepfake detection following Zheng et al. (2021):\n\n1. **Pose估计**: Full-body or upper-body pose is estimated per frame using landmark detection (shoulders, elbows, wrists, head, torso). Joint angles and positions are tracked to build temporal motion trajectories for each body part.\n\n2. **运动Smoothness分析**: Natural body movements follow minimum-jerk trajectories (Flash & Hogan, 1985) — meaning the third derivative of position (jerk) is minimized. The method computes jerk profiles for tracked joints. AI-generated body movements may violate this biological constraint, showing either excessive jerk (unnatural abruptness) or unnaturally perfect smoothness (lacking physiological tremor).\n\n3. **JointCoordinationPatterns**: Natural movements exhibit coordinated joint motion governed by biomechanical coupling. The method analyzes inter-joint correlations — shoulder-elbow coordination during gestures, head-torso coupling during turns. Deepfakes may produce joints that move independently in physically impossible ways.\n\n4. **时间频率分析**: Body motion signals are analyzed in frequency domain. Natural movements contain characteristic frequency components: voluntary motion (0-2 Hz), physiological tremor (~8-12 Hz), and postural sway (~0.5 Hz). Generated movements may lack these physiological frequency signatures or produce spectrally flat motion without natural frequency structure.\n\n5. **Fluidity评分**: Movement fluidity is quantified by combining jerk metrics, coordination scores, and spectral indicators. Low fluidity scores (jerky, uncoordinated, or spectrally abnormal motion) indicate AI generation. The method is particularly effective for full-body deepfakes where generation artifacts extend beyond the face region.",
+    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through body movement fluidity analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

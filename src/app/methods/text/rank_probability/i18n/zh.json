@@ -1,22 +1,22 @@
 {
-  "name": "Token 预测顺位概率 (Rank Probability)",
-  "description": "对文本中每个单词在语言模型词表分布中的统计学绝对排名进行暴力拆解。AI 语言模型的底层逻辑，就是永远去预测下一个在统计学上概率最高的词 (Token)。这种机械的本能导致 AI 生成的文本，会极其严重地扎堆使用那些在当前语境下排名前 10 (Top 10) 或前 100 (Top 100) 的“高频高概率词”。而人类作家的词汇库是凌乱且不可预测的，他们会随着思维的跳跃，频繁地掏出一些机器认为“概率极低”的长尾冷门词汇。",
-  "algorithm": "语境 Token 顺位矩阵核查",
-  "mechanism": "The method processes the text through a reference language model to calculate the absolute ranking of every word based on its preceding context. Words are categorized into probability tiers (e.g., Top 10, Top 100, Top 1000, >1000). The algorithm calculates the aggregate fraction of high-rank vs. low-rank tokens. AI text exhibits an artificially smooth, dense concentration of Top 10/100 words (the 'Green/Yellow' zones in GLTR visualizations). Human text is characterized by sudden spikes of low-probability, highly specific words (the 'Red/Purple' zones) that break the algorithmic sequence.",
-  "useCase": "在深度审计正式论文、新闻报道和商业文件时具有毁灭性的杀伤力。它不看表面句法，而是直接把文本做“核磁共振”，通过暴露文本底层的“概率测算”机制，提供最绝望的数学级铁证。",
-  "strengths": "• 它的屠刀直接架在所有自回归（Autoregressive）大语言模型无法摆脱的底层数学呼吸本能上。\n• 对那些企图通过“同义词替换”来逃避检测的小把戏拥有绝对的免疫力，因为不管你怎么换皮，句子整体的概率分布曲线依然是虚假且光滑的。",
-  "limitations": "• 极其贪婪的神经元开销：必须依靠庞大且沉重的参考语言模型（Reference LM）来对文本进行重新推演计算。\n• 在面对极短的尿崩文本（不足 100 词）时，由于统计学样本的断层，它无法勾勒出可靠的排名波动曲线。",
-  "parameters": "雷达切片: 自回归 Token 预测重演 与 绝对顺位阶级分化\n定罪量表: 概率阶层 (Top 10/100/1000) 的分布病态密度比\n行刑判决: 0-100 算法顺位可预测性 (机械概率暴走) 审判分数",
-  "accuracy": "数学暴击 — 猎杀准确率稳定在 85-90%。这是目前对抗未经过人类深度洗稿的“纯天然 AI 废话”时，在数学基础上最坚如磐石、最令人信服的法证手段之一。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
-      "url": "https://doi.org/10.18653/v1/P19-3019"
-    },
-    {
-      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
-      "url": "https://arxiv.org/abs/1908.09203"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
+    "name": "Token 预测顺位概率 (Rank Probability)",
+    "description": "对文本中每个单词在语言模型词表分布中的统计学绝对排名进行暴力拆解。AI 语言模型的底层逻辑，就是永远去预测下一个在统计学上概率最高的词 (Token)。这种机械的本能导致 AI 生成的文本，会极其严重地扎堆使用那些在当前语境下排名前 10 (Top 10) 或前 100 (Top 100) 的“高频高概率词”。而人类作家的词汇库是凌乱且不可预测的，他们会随着思维的跳跃，频繁地掏出一些机器认为“概率极低”的长尾冷门词汇。",
+    "algorithm": "语境 Token 顺位矩阵核查",
+    "mechanism": "该方法通过参考语言模型处理文本，根据前面上下文计算每个词的绝对排名。词被分类为概率层级（如前10、前100、前1000、>1000）。算法计算高排名与低排名令牌的聚合分数。AI文本表现出人工平滑的、密集集中于前10/100词的分布（GLTR可视化中的\"绿色/黄色\"区域）。人类文本的特征是突然出现打破算法序列的低概率、高度特定词语（\"红色/紫色\"区域）的尖峰。",
+    "useCase": "在深度审计正式论文、新闻报道和商业文件时具有毁灭性的杀伤力。它不看表面句法，而是直接把文本做“核磁共振”，通过暴露文本底层的“概率测算”机制，提供最绝望的数学级铁证。",
+    "strengths": "• 它的屠刀直接架在所有自回归（Autoregressive）大语言模型无法摆脱的底层数学呼吸本能上。\n• 对那些企图通过“同义词替换”来逃避检测的小把戏拥有绝对的免疫力，因为不管你怎么换皮，句子整体的概率分布曲线依然是虚假且光滑的。",
+    "limitations": "• 极其贪婪的神经元开销：必须依靠庞大且沉重的参考语言模型（Reference LM）来对文本进行重新推演计算。\n• 在面对极短的尿崩文本（不足 100 词）时，由于统计学样本的断层，它无法勾勒出可靠的排名波动曲线。",
+    "parameters": "雷达切片: 自回归 Token 预测重演 与 绝对顺位阶级分化\n定罪量表: 概率阶层 (Top 10/100/1000) 的分布病态密度比\n行刑判决: 0-100 算法顺位可预测性 (机械概率暴走) 审判分数",
+    "accuracy": "数学暴击 — 猎杀准确率稳定在 85-90%。这是目前对抗未经过人类深度洗稿的“纯天然 AI 废话”时，在数学基础上最坚如磐石、最令人信服的法证手段之一。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+            "url": "https://doi.org/10.18653/v1/P19-3019"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
 }

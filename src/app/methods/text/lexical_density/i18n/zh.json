@@ -1,22 +1,22 @@
 {
-  "name": "词汇密度 (Lexical Density / 实词虚词比)",
-  "description": "测量“实词”（携带实际内容的词：名词、动词、形容词、副词）在文本总字数中所占的比例。AI 生成的文本的词汇密度通常低于专业人类作者，因为它极度依赖作为“胶水”的虚词（功能词）来确保句子过渡的平滑度和语法的高概率安全性（即生成看着顺眼但废话极多的文本）。",
-  "algorithm": "词性标注 (POS Tagging) & 实词占比计算",
-  "mechanism": "Lexical density is a fundamental computational linguistics metric dividing the number of 'content words' (which carry actual meaning) by the total number of words in a text. Expert human writers, particularly in academic or professional fields, tend to pack a high concentration of meaning into their sentences, resulting in a high lexical density (often above 50%). Large Language Models (LLMs), however, are optimized for probability and grammatical perfection rather than conciseness. To bridge concepts and maintain an authoritative, flowing tone, LLMs over-utilize 'function words'—articles (the, a), prepositions (in, on, concerning), conjunctions (and, however, furthermore), and pronouns. This creates a text that is syntactically beautiful but structurally diluted. The algorithm parses the text using a Part-of-Speech tagger, isolates all content words, and calculates the density percentage. If a seemingly sophisticated, long-form text registers an unusually low lexical density (indicating that it consists mostly of syntactical scaffolding rather than actual substance), it is flagged as characteristic of autoregressive padding.",
-  "useCase": "这是用于审查学术论文、专业商业报告和长篇散文的利器。虽然它在检测人类日常口语录音时容易翻车，但它能极其成功地扒下那些“试图模仿高级学术腔调但信息密度极其干瘪”的 AI 模型的遮羞布。",
-  "strengths": "• 精准捕捉了 AI 写作“辞藻华丽但空洞无物（flowery but empty）”的灵魂特征，用纯数学的方式量化了解释了“为什么 AI 的文章读起来总是感觉废话连篇又水得要命”。\n• 算力开销极小且速度飞快，只需要调用最基础的词性（POS）标注引擎。\n• 对普通的 Prompt 提示词工程免疫——因为 LLM 为了维持句子的连贯性，在底层数学机制上就无法摆脱对功能性虚词分布概率的依赖，除非你让它生造病句。",
-  "limitations": "• 天生会对人类真实的口语对话转录稿产生极高的误杀率（False positive），因为人类说话时的词汇密度本来就远远低于书面语。\n• 极度依赖被分析的语种；分析语（如英语、汉语）的基础密度天生就低于综合语（如俄语或芬兰语），因此必须进行极其严格的单语言基准线校准。\n• 如果人类极其挑剔地逐词进行人工编辑，专门删掉所有连接词和虚词，这套雷达就会失效（但这通常意味着人类作者必须把文章从头到尾重写一遍，失去了用 AI 的意义）。",
-  "parameters": "雷达切片: 词性 (POS) 靶向过滤与剥离\n定罪量表: (实词总数 / 全文总词数) * 100\n行刑判决: 0-100 词汇注水度 (语法废话填充) 审判分数",
-  "accuracy": "高杀伤力 — 78-85%（在正式和学术文本上）。它为 LLM 文本生成中与生俱来的结构性“大水漫灌（fluff）”提供了极其可靠的数学标尺。",
-  "references": [
-    {
-      "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
-      "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
-    },
-    {
-      "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
-      "url": "https://doi.org/10.1017/CBO9780511621024"
-    }
-  ],
-  "source": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.; Biber, D. (1988). Variation across speech and writing. Cambridge University Press."
+    "name": "词汇密度 (Lexical Density / 实词虚词比)",
+    "description": "测量“实词”（携带实际内容的词：名词、动词、形容词、副词）在文本总字数中所占的比例。AI 生成的文本的词汇密度通常低于专业人类作者，因为它极度依赖作为“胶水”的虚词（功能词）来确保句子过渡的平滑度和语法的高概率安全性（即生成看着顺眼但废话极多的文本）。",
+    "algorithm": "词性标注 (POS Tagging) & 实词占比计算",
+    "mechanism": "词汇密度是一个基本的计算语言学度量，将\"内容词\"（携带实际意义的词）数量除以文本总词数。专家人类作者，特别是在学术或专业领域，倾向于将高浓度的意义打包到句子中，产生高词汇密度（通常超过50%）。然而，大型语言模型被优化以实现概率和语法完美而非简洁性。为了桥接概念并维持权威、流畅的语调，LLM过度使用\"功能词\"——冠词（the、a）、介词（in、on、concerning）、连词（and、however、furthermore）和代词。这产生了句法优美但结构稀释的文本。该算法使用词性标注器解析文本，隔离所有内容词，并计算密度百分比。如果一个看似精致的长篇文本注册了不寻常的低词汇密度（表明它主要由句法脚手架而非实际内容组成），则被标记为自回归填充的特征。",
+    "useCase": "这是用于审查学术论文、专业商业报告和长篇散文的利器。虽然它在检测人类日常口语录音时容易翻车，但它能极其成功地扒下那些“试图模仿高级学术腔调但信息密度极其干瘪”的 AI 模型的遮羞布。",
+    "strengths": "• 精准捕捉了 AI 写作“辞藻华丽但空洞无物（flowery but empty）”的灵魂特征，用纯数学的方式量化了解释了“为什么 AI 的文章读起来总是感觉废话连篇又水得要命”。\n• 算力开销极小且速度飞快，只需要调用最基础的词性（POS）标注引擎。\n• 对普通的 Prompt 提示词工程免疫——因为 LLM 为了维持句子的连贯性，在底层数学机制上就无法摆脱对功能性虚词分布概率的依赖，除非你让它生造病句。",
+    "limitations": "• 天生会对人类真实的口语对话转录稿产生极高的误杀率（False positive），因为人类说话时的词汇密度本来就远远低于书面语。\n• 极度依赖被分析的语种；分析语（如英语、汉语）的基础密度天生就低于综合语（如俄语或芬兰语），因此必须进行极其严格的单语言基准线校准。\n• 如果人类极其挑剔地逐词进行人工编辑，专门删掉所有连接词和虚词，这套雷达就会失效（但这通常意味着人类作者必须把文章从头到尾重写一遍，失去了用 AI 的意义）。",
+    "parameters": "雷达切片: 词性 (POS) 靶向过滤与剥离\n定罪量表: (实词总数 / 全文总词数) * 100\n行刑判决: 0-100 词汇注水度 (语法废话填充) 审判分数",
+    "accuracy": "高杀伤力 — 78-85%（在正式和学术文本上）。它为 LLM 文本生成中与生俱来的结构性“大水漫灌（fluff）”提供了极其可靠的数学标尺。",
+    "references": [
+        {
+            "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
+            "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
+        },
+        {
+            "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
+        }
+    ],
+    "source": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.; Biber, D. (1988). Variation across speech and writing. Cambridge University Press."
 }

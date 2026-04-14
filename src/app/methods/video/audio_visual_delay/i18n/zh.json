@@ -1,22 +1,22 @@
 {
-  "name": "Audio-Visual Delay",
-  "description": "Measures audio-视频 synchronization delay",
-  "algorithm": "Audio-Visual Delay — Sensor/Physical Model Analyzer",
-  "mechanism": "This method detects audio-visual temporal misalignment to identify deepfakes, following Chugh et al. (2020):\n\n1. **嘴唇运动提取**: Lip landmark positions are tracked per frame, computing lip aperture (vertical opening), lip spread (horizontal width), and lip area. The temporal signal of these geometric features captures the visual component of speech articulation.\n\n2. **音频Envelope提取**: The speech audio amplitude envelope and energy contour are computed in corresponding time windows. Additionally, voice activity detection (VAD) segments identify speech vs. silence boundaries in the audio stream.\n\n3. **Cross-相关性分析**: The temporal cross-correlation between lip motion signals and audio energy is computed at multiple lag values. Authentic speech shows peak correlation at near-zero lag (within the natural audio-visual asynchrony tolerance of ~±50ms). Deepfakes may exhibit shifted peaks due to imprecise lip-sync in face-swap or lip-sync models.\n\n4. **音素-LevelSynchronyCheck**: Specific phonemes with visually distinctive mouth shapes (visemes) — bilabials /p/, /b/, /m/ requiring lip closure, and open vowels /a/, /o/ requiring wide opening — are detected in audio and verified against corresponding visual frames. Temporal mismatches at these critical phonemes indicate manipulation per Mittal et al. (2020).\n\n5. **DynamicSynchronization评分**: The consistency of audio-visual synchrony is measured over time. Natural speech maintains stable synchrony throughout. Deepfake videos may show variable synchrony — good alignment in some segments but drifting in others — as the face generation model intermittently fails to track the audio signal accurately.",
-  "parameters": "分析类型: sensor\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 视频 through audio-visual delay analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-  "references": [
-    {
-      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-      "url": "https://doi.org/10.1145/3394171.3413700"
-    },
-    {
-      "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM.",
-      "url": "https://doi.org/10.1145/3394171.3413570"
-    }
-  ]
+    "name": "音视频延迟分析",
+    "description": "Measures audio-视频 synchronization delay",
+    "algorithm": "Audio-Visual Delay — Sensor/Physical Model Analyzer",
+    "mechanism": "This method detects audio-visual temporal misalignment to identify deepfakes, following Chugh et al. (2020):\n\n1. **嘴唇运动提取**: Lip landmark positions are tracked per frame, computing lip aperture (vertical opening), lip spread (horizontal width), and lip area. The temporal signal of these geometric features captures the visual component of speech articulation.\n\n2. **音频Envelope提取**: The speech audio amplitude envelope and energy contour are computed in corresponding time windows. Additionally, voice activity detection (VAD) segments identify speech vs. silence boundaries in the audio stream.\n\n3. **Cross-相关性分析**: The temporal cross-correlation between lip motion signals and audio energy is computed at multiple lag values. Authentic speech shows peak correlation at near-zero lag (within the natural audio-visual asynchrony tolerance of ~±50ms). Deepfakes may exhibit shifted peaks due to imprecise lip-sync in face-swap or lip-sync models.\n\n4. **音素-LevelSynchronyCheck**: Specific phonemes with visually distinctive mouth shapes (visemes) — bilabials /p/, /b/, /m/ requiring lip closure, and open vowels /a/, /o/ requiring wide opening — are detected in audio and verified against corresponding visual frames. Temporal mismatches at these critical phonemes indicate manipulation per Mittal et al. (2020).\n\n5. **DynamicSynchronization评分**: The consistency of audio-visual synchrony is measured over time. Natural speech maintains stable synchrony throughout. Deepfake videos may show variable synchrony — good alignment in some segments but drifting in others — as the face generation model intermittently fails to track the audio signal accurately.",
+    "parameters": "分析类型: sensor\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 视频 through audio-visual delay analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+    "references": [
+        {
+            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+            "url": "https://doi.org/10.1145/3394171.3413700"
+        },
+        {
+            "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM.",
+            "url": "https://doi.org/10.1145/3394171.3413570"
+        }
+    ]
 }

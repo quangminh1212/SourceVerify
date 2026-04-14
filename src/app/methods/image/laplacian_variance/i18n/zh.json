@@ -1,22 +1,22 @@
 {
-  "name": "Laplacian Variance",
-  "description": "Measures Laplacian variance for blur detection (Tenenbaum, 2004)",
-  "algorithm": "Laplacian Variance — 像素级空间分析",
-  "mechanism": "This method uses Laplacian variance statistics for image forensic analysis:\n\n1. **Laplacian计算**: The discrete Laplacian operator (second-order derivative) is applied to the image: ∇²I = ∂²I/∂x² + ∂²I/∂y². The Laplacian highlights regions of rapid intensity change — edges, textures, and noise — while suppressing smooth regions.\n\n2. **局部方差分析**: The local variance of the Laplacian response is computed in sliding windows across the image. This captures the spatial distribution of image detail and texture energy. Natural images show Laplacian variance patterns that follow scene content — high variance at textured regions, low variance at smooth surfaces.\n\n3. **Blur检测**: The overall Laplacian variance is a classic blur metric (higher values indicate sharper images). The method computes per-region Laplacian variance to detect focus inconsistencies. Regions with different Laplacian variance than expected for their scene position (relative to the focal plane) indicate potential compositing.\n\n4. **AIGenerationSignature检测**: AI-generated images often show characteristic Laplacian variance patterns: (a) unnaturally uniform Laplacian variance across regions that should vary (e.g., in-focus vs. out-of-focus), (b) excessive or insufficient high-frequency content in specific regions, (c) Laplacian variance ratios between spatial scales that don't match natural image statistics.\n\n5. **Comparative评分**: The overall Laplacian variance statistics are compared against expected values for the image type and content. Deviations from natural Laplacian variance distributions — measured by moments, kurtosis, and scale ratios — contribute to the forensic score.",
-  "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
-  "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
-  "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
-  "useCase": "通过以下方式检测AI生成或篡改的图像： laplacian variance 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
-  "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
-  "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
-  "references": [
-    {
-      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-    },
-    {
-      "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
-      "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
-    }
-  ]
+    "name": "拉普拉斯方差分析",
+    "description": "Measures Laplacian variance for blur detection (Tenenbaum, 2004)",
+    "algorithm": "Laplacian Variance — 像素级空间分析",
+    "mechanism": "This method uses Laplacian variance statistics for image forensic analysis:\n\n1. **Laplacian计算**: The discrete Laplacian operator (second-order derivative) is applied to the image: ∇²I = ∂²I/∂x² + ∂²I/∂y². The Laplacian highlights regions of rapid intensity change — edges, textures, and noise — while suppressing smooth regions.\n\n2. **局部方差分析**: The local variance of the Laplacian response is computed in sliding windows across the image. This captures the spatial distribution of image detail and texture energy. Natural images show Laplacian variance patterns that follow scene content — high variance at textured regions, low variance at smooth surfaces.\n\n3. **Blur检测**: The overall Laplacian variance is a classic blur metric (higher values indicate sharper images). The method computes per-region Laplacian variance to detect focus inconsistencies. Regions with different Laplacian variance than expected for their scene position (relative to the focal plane) indicate potential compositing.\n\n4. **AIGenerationSignature检测**: AI-generated images often show characteristic Laplacian variance patterns: (a) unnaturally uniform Laplacian variance across regions that should vary (e.g., in-focus vs. out-of-focus), (b) excessive or insufficient high-frequency content in specific regions, (c) Laplacian variance ratios between spatial scales that don't match natural image statistics.\n\n5. **Comparative评分**: The overall Laplacian variance statistics are compared against expected values for the image type and content. Deviations from natural Laplacian variance distributions — measured by moments, kurtosis, and scale ratios — contribute to the forensic score.",
+    "parameters": "分析类型: 像素\n媒体: 图像\n输入: 原始像素数据 / 图像文件\n输出: 置信度分数 (0-100)\n处理方式: 客户端 Canvas API\n色彩空间: RGB、灰度（视情况而定）",
+    "accuracy": "中到高 — 70-90% 独立准确率. 在未压缩图像上性能最佳 and 在重度JPEG压缩或社交媒体重新编码时可能降低.",
+    "source": "数字图像取证研究。基于信号处理和计算摄影原理.",
+    "useCase": "通过以下方式检测AI生成或篡改的图像： laplacian variance 分析。该方法识别AI生成特有的模式和伪影，为全面的图像取证分析做出贡献.",
+    "strengths": "• 使用 Canvas API 快速客户端处理\n• 有效检测特定的AI生成伪影\n• 支持常见图像格式（JPEG、PNG、WebP）\n• 可与互补的分析方法组合使用\n• 基于成熟的图像取证研究",
+    "limitations": "• 性能可能因图像压缩级别而异\n• 社交媒体重新编码可能影响准确性\n• 最好与其他取证方法结合使用\n• 对经过大量处理的真实图像可能产生误报\n• 有效性取决于所使用的AI生成模型",
+    "references": [
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        },
+        {
+            "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
+            "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
+        }
+    ]
 }

@@ -1,12 +1,22 @@
 {
-  "name": "Identity Switching Detection",
-  "description": "Detects face identity inconsistencies across frames — face-swap deepfakes show subtle identity drift.",
-  "algorithm": "Identity Switching Detection分析算法",
-  "mechanism": "This method detects temporal identity switches in video:\n\n1. **人脸IdentityEncoding**: A face identity embedding vector is computed per frame using established face recognition architectures. The embedding captures identity-specific features (bone structure, feature proportions) independent of expression and pose.\n\n2. **时间Identity一致性**: Identity embeddings are tracked across the video. In authentic video of a single person, embeddings cluster tightly (cosine similarity > 0.6). The method detects frames where identity embedding significantly deviates from the cluster — indicating face-swap deepfake where the generated face intermittently fails to maintain target identity.\n\n3. **GradualIdentityDrift检测**: Some deepfake methods produce gradual identity drift — the generated face slowly diverges from the target identity over time. The method tracks the moving average of identity embeddings for systematic drift that wouldn't occur with a real person.\n\n4. **Identity-Attribute一致性**: Identity should be consistent with auxiliary attributes: age, gender, ethnicity characteristics should remain stable across frames. The method detects inconsistencies where one frame shows older/younger appearance than others, or where ethnicity-related features vary, indicating identity blending between source and target.\n\n5. **Cross-ReferenceIdentity验证**: If multiple people appear in the video, each person's identity should remain distinct and stable. The method tracks per-person identity embeddings, detecting: identity confusion between individuals, partial face swaps where only some angles are swapped, or identity leakage where one person's features appear on another.",
-  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-  "source": "基于数字取证和AI内容检测的同行评审研究。",
-  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+    "name": "身份切换检测",
+    "description": "Detects face identity inconsistencies across frames — face-swap deepfakes show subtle identity drift.",
+    "algorithm": "Identity Switching Detection分析算法",
+    "mechanism": "This method detects temporal identity switches in video:\n\n1. **人脸IdentityEncoding**: A face identity embedding vector is computed per frame using established face recognition architectures. The embedding captures identity-specific features (bone structure, feature proportions) independent of expression and pose.\n\n2. **时间Identity一致性**: Identity embeddings are tracked across the video. In authentic video of a single person, embeddings cluster tightly (cosine similarity > 0.6). The method detects frames where identity embedding significantly deviates from the cluster — indicating face-swap deepfake where the generated face intermittently fails to maintain target identity.\n\n3. **GradualIdentityDrift检测**: Some deepfake methods produce gradual identity drift — the generated face slowly diverges from the target identity over time. The method tracks the moving average of identity embeddings for systematic drift that wouldn't occur with a real person.\n\n4. **Identity-Attribute一致性**: Identity should be consistent with auxiliary attributes: age, gender, ethnicity characteristics should remain stable across frames. The method detects inconsistencies where one frame shows older/younger appearance than others, or where ethnicity-related features vary, indicating identity blending between source and target.\n\n5. **Cross-ReferenceIdentity验证**: If multiple people appear in the video, each person's identity should remain distinct and stable. The method tracks per-person identity embeddings, detecting: identity confusion between individuals, partial face swaps where only some angles are swapped, or identity leakage where one person's features appear on another.",
+    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+    "source": "基于数字取证和AI内容检测的同行评审研究。",
+    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/CVPR42600.2020.00505",
+            "title": "Li, L. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR."
+        },
+        {
+            "url": "https://doi.org/10.1109/ICCV.2019.00728",
+            "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV."
+        }
+    ]
 }
