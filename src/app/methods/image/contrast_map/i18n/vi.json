@@ -1,18 +1,18 @@
 {
-    "name": "Bản Đồ Phân Hóa Tương Phản Cục Bộ (Contrast Map)",
-    "description": "Máy dò nhiệt độ ánh sáng cục bộ, nghiền nát mọi sự bất hợp lý về mặt phân bố tương phản không gian. Trên một bức ảnh thực, khi máy ảnh chụp một cảnh có vùng mờ (tiền cảnh nông) và vùng rõ, hoặc chiếu sáng hỗn hợp, sự chuyển biến tương phản luôn cực kỳ mượt mà. Tuy nhiên, khi một kẻ ném một vật thể cấy ghép siêu nét vào một góc ảnh vốn dĩ đang mờ nhòe (hoặc kém tương phản), Bản Đồ Tương Phản này sẽ ngay lập tức bắt thóp sự 'lệch tông' trắng trợn và đóng đạn bằng dấu đỏ rực.",
-    "algorithm": "Phân Tích Bất Thường Block Phân Giải Không Gian (Block Spatial Contrast)",
-    "mechanism": "Nó xé nhỏ hình ảnh ra hàng ngàn các Block lưới 8x8 hoặc 16x16 pixel, đo lường độ chênh lệch cực đại giữa điểm sáng nhất và điểm tối nhất (Tương phản Michelson/Weber) của từng ô. Sau đó, nó vẽ nên một bản đồ nhiệt Topography (như bản đồ không gian). Một điểm cấy ghép từ ảnh bên ngoài sẽ tạo ra một vách đá tương phản nhô lên đột ngột một cách phi logic, phá vỡ định luật mờ sương hoặc ánh sáng tản tự nhiên.",
-    "parameters": "Phương pháp: Tương phản cường độ Michelson, Block lưới: Lên tới đa khối 16x16 lưới, Ngưỡng độ lệch: Median Variance Anomaly",
-    "accuracy": "Khá Tốt (70-80%) - Một loại 'hải đăng' dò đường cực mạnh để vạch mặt mấy ông thợ nghiệp dư kéo lê chuột Copy-Paste ảnh giữa hai môi trường khác biệt ánh sáng.",
-    "source": "Lưu Trữ Xử Lý Tín Hiệu Pháp Y (Computational Photography)",
-    "useCase": "Trở thành đao phủ giám sát, chuyên đánh chặn các phi vụ 'lắp ráp lego' cấy ghép các bộ phận người, biển số xe hay đồ vật lạc loài mang một mảng tương phản chỏi lóa so với xung quanh.",
+    "name": "Bản Đồ Tương Phản Cục Bộ (Contrast Map)",
+    "description": "Phương pháp phân tích phân bố tương phản không gian nhằm phát hiện các bất nhất về mặt quang học trong ảnh. Trong ảnh chụp thật, sự chuyển tiếp tương phản giữa vùng mờ (tiền cảnh nông) và vùng rõ luôn tuân theo quy luật quang học mượt mà. Tuy nhiên, khi một đối tượng có độ nét cao được cấy ghép vào vùng ảnh có tương phản thấp, bản đồ tương phản sẽ hiển thị sự chênh lệch bất thường tại các đường ranh giới.",
+    "algorithm": "Phân Tích Bất Thường Tương Phản Theo Khối Không Gian (Block Spatial Contrast)",
+    "mechanism": "Thuật toán chia ảnh thành các khối lưới 8x8 hoặc 16x16 pixel, đo lường độ chênh lệch cực đại giữa điểm sáng nhất và tối nhất (tương phản Michelson/Weber) của từng khối. Kết quả được biểu diễn dưới dạng bản đồ nhiệt không gian. Các đối tượng cấy ghép từ ảnh bên ngoài sẽ tạo ra những vùng có tương phản nhô lên đột ngột, phá vỡ quy luật suy giảm tương phản tự nhiên do hiệu ứng khí quyển hoặc tán xạ ánh sáng.",
+    "parameters": "Phương pháp: Tương phản Michelson, Kích thước khối: tối đa 16x16 pixel, Ngưỡng bất thường: Median Variance Anomaly",
+    "accuracy": "Khá tốt (70-80%) — Hiệu quả trong việc phát hiện các thao tác ghép ảnh giữa hai môi trường chiếu sáng khác biệt.",
+    "source": "Xử lý tín hiệu pháp y ảnh số (Computational Photography)",
+    "useCase": "Phát hiện các đối tượng cấy ghép (người, biển số xe, đồ vật) có mức tương phản không phù hợp với vùng ảnh xung quanh. Đặc biệt hiệu quả với các thao tác Copy-Paste giữa hai môi trường ánh sáng khác biệt.",
     "references": [
         {
             "title": "Barni, M., et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency. IEEE TFS.",
             "url": "https://ieeexplore.ieee.org/document/5567087"
         }
     ],
-    "strengths": "• Tốc độ tính toán nhanh như chớp vì API Canvas có thể dọn sạch ma trận pixel phía client chưa tới một giây.\n• Dập tắt ngay lập tức những trò chắp vá đồ họa cẩu thả mà mắt thường không để ý, đặc biệt hiệu quả trên các vùng viền sắc nét dị biệt.",
-    "limitations": "• Sẽ phát rồ và bắn nhầm loạn xạ (tạo dương tính giả rợp trời) nếu ảnh là chân dung xóa phông thuật toán của iPhone (Cinematic mode) hoặc ảnh chụp Bokeh khẩu độ f/1.4, bởi độ tương phản sẽ giảm đột ngột tự nhiên do thấu kính.\n• Chết đứng nếu đối mặt với một manipulator lão luyện lôi trò Match Color đè lên vật thể cấy ghép để làm lụi tàn độ tương phản sao cho vừa vặn."
+    "strengths": "• Tốc độ tính toán nhanh nhờ xử lý trực tiếp trên ma trận pixel phía client.\n• Phát hiện hiệu quả các thao tác ghép ảnh thiếu đồng bộ quang học, đặc biệt tại các đường viền có sự chênh lệch tương phản rõ rệt.",
+    "limitations": "• Tỷ lệ dương tính giả cao đối với ảnh chân dung xóa phông thuật toán (iPhone Cinematic mode) hoặc ảnh bokeh khẩu độ lớn (f/1.4), vì độ tương phản giảm đột ngột tự nhiên do đặc tính thấu kính.\n• Hiệu quả giảm đáng kể nếu người chỉnh sửa sử dụng Match Color để đồng bộ tương phản của đối tượng cấy ghép với nền ảnh."
 }

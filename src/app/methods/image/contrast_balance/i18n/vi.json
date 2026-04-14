@@ -1,18 +1,18 @@
 {
-    "name": "Cán Cân Tương Phản (Contrast Balance)",
-    "description": "Phép 'đo lường ánh sáng' cực gắt. Đánh giá sự đồng nhất về dải động (dynamic range) và độ tương phản cục bộ trên toàn bộ bức ảnh. Ảnh chụp thật từ một cụm thấu kính luôn có độ tương phản giảm dần hợp lý theo chiều sâu không gian (do màn sương quang học atmospheric haze). Ngược lại, ảnh ghép hoặc AI thường xuyên phá vỡ quy luật này, ném những vật thể có độ tương phản quá gắt vào một không gian đang mờ sương, hoặc ngược lại, tạo ra cú tát thị giác phi vật lý nghiêm trọng.",
-    "algorithm": "Đo Lường Biến Thiên Tương Phản & Bản Đồ Lưới Histogram",
-    "mechanism": "Thuật toán băm nát hình ảnh thành hàng ngàn ma trận lưới nhỏ và đo đạc biểu đồ tần suất (Histogram) của từng ô. Nó truy lùng những vùng giáp ranh có mức độ nhảy cóc tương phản bất thường. Nếu một khuôn mặt quá sắc nét, đổ bóng gắt gỏng nhưng lại đứng trong một môi trường nền mờ mịt thiếu sáng với tương phản thấp, thuật toán sẽ hú còi báo động ngay lập tức vì sự 'lệch pha' trắng trợn về Cán cân tương phản.",
-    "parameters": "Mô hình đo lường: Local Contrast Estimation, Phân tích tần suất: Xung động Histogram lưới, Không gian màu: YCbCr/Luma",
-    "accuracy": "Khá (65-75%) - Cỗ máy dò mìn tuyệt hảo để bắt thóp những tay thợ Photoshop nghiệp dư không biết đồng bộ lớp màu và độ sáng khi ghép người vào cảnh mới.",
+    "name": "Phân Tích Cân Bằng Tương Phản (Contrast Balance)",
+    "description": "Phương pháp đánh giá tính đồng nhất về dải động (dynamic range) và độ tương phản cục bộ trên toàn bộ ảnh. Ảnh chụp thật từ hệ thống thấu kính luôn có độ tương phản giảm dần theo chiều sâu không gian do hiệu ứng sương mù khí quyển (atmospheric haze). Ngược lại, ảnh ghép hoặc ảnh AI thường vi phạm quy luật này bằng cách đặt các đối tượng có tương phản cao vào vùng nền có tương phản thấp, hoặc ngược lại, tạo ra sự bất nhất nghiêm trọng về mặt quang học.",
+    "algorithm": "Đo Lường Biến Thiên Tương Phản và Bản Đồ Lưới Histogram",
+    "mechanism": "Thuật toán phân chia ảnh thành hàng ngàn ô lưới nhỏ và tính toán biểu đồ histogram cường độ của từng ô. Hệ thống phân tích các vùng giáp ranh có mức độ chênh lệch tương phản bất thường. Ví dụ, nếu một khuôn mặt có độ sắc nét và tương phản cao nhưng lại nằm trong môi trường nền thiếu sáng với tương phản thấp, thuật toán sẽ đánh dấu vùng bất thường do sự mất cân bằng tương phản rõ rệt.",
+    "parameters": "Mô hình đo lường: Local Contrast Estimation, Phân tích tần suất: Histogram lưới, Không gian màu: YCbCr/Luma",
+    "accuracy": "Khá (65-75%) — Hiệu quả trong việc phát hiện các thao tác ghép ảnh nghiệp dư không đồng bộ lớp màu và độ sáng.",
     "source": "Stamm & Liu (2008) / Phát hiện ảnh ghép qua dị biệt tương phản ánh sáng",
-    "useCase": "Trở thành một vị phán quan tàn nhẫn soi xét mọi sự bất hợp lý về độ tương phản, lột trần những chi tiết bị cấy ghép khi chúng cố tình tỏ ra quá chói lọi hoặc quá chìm nghỉm so với môi trường xung quanh.",
+    "useCase": "Phân tích tính nhất quán về tương phản trên toàn bộ ảnh, phát hiện các chi tiết cấy ghép có mức tương phản không phù hợp với môi trường xung quanh.",
     "references": [
         {
             "title": "Stamm, M.C. & Liu, K.R. (2008). Blind forensics of contrast enhancement in digital images. IEEE ICIP.",
             "url": "https://doi.org/10.1109/ICIP.2008.4712450"
         }
     ],
-    "strengths": "• Cực kỳ tàn bạo đối với trò lừa đảo 'cắt ghép vội vã': Khi mang một cái xe hơi chụp giữa trưa nắng dán vào cảnh hoàng hôn, sự tương phản lệch pha sẽ bị bóc mẽ không thương tiếc.\n• Đơn giản, tính toán siêu tốc độ và dường như không thể bị qua mặt nếu kẻ gian không am hiểu sâu sắc về phân loại dải động quang học.",
-    "limitations": "• Sẽ phát điên và bó tay (False Positives rợp trời) nếu ảnh chứa các nguồn sáng nhân tạo như đèn flash đánh thẳng mặt, ánh đèn đường hay biển quảng cáo neon chói lóa tạo ra sự chênh lệch độ sáng hiển nhiên.\n• Rất dễ bị 'bịt mắt' nếu thợ photoshop chuyên nghiệp xài chức năng Match Color/Tone Curve để ép tương phản của vật cấy ghép hòa quyện hoàn hảo vào biểu đồ lưới nền."
+    "strengths": "• Hiệu quả cao đối với các trường hợp ghép ảnh vội vã: khi đối tượng từ môi trường chiếu sáng khác được ghép vào cảnh mới, sự chênh lệch tương phản sẽ được phát hiện ngay.\n• Tính toán đơn giản, tốc độ xử lý nhanh và khó bị vượt qua nếu người can thiệp không am hiểu về phân bố dải động quang học.",
+    "limitations": "• Tỷ lệ dương tính giả (False Positives) cao khi ảnh chứa các nguồn sáng nhân tạo như đèn flash, đèn đường hoặc biển quảng cáo neon tạo ra chênh lệch độ sáng tự nhiên.\n• Dễ bị vượt qua nếu người chỉnh sửa chuyên nghiệp sử dụng chức năng Match Color/Tone Curve để đồng bộ tương phản của đối tượng cấy ghép với nền ảnh gốc."
 }
