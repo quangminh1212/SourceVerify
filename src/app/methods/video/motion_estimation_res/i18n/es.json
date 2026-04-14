@@ -1,12 +1,22 @@
 {
-  "name": "Residual de Estimación de Movimiento",
-  "description": "Analiza residuales de estimación de movimiento para detectar manipulación",
-  "algorithm": "Algoritmo de análisis Motion Estimation Residual",
-  "mechanism": "This method analyzes motion estimation residuals for video deepfake detection:\n\n1. **Movimiento Estimación**: Dense optical flow is computed between consecutive frames using established algorithms (Farnebäck, Lucas-Kanade, or variational methods). This estimates per-pixel motion vectors describing the apparent motion field.\n\n2. **Residual Cálculo**: The motion-compensated prediction is computed by warping frame t using the estimated flow to predict frame t+1. The residual R = I_{t+1} − W(I_t, flow) captures what the motion model couldn't predict — new content, disoccluded regions, and artifacts.\n\n3. **Residual Distribución Análisis**: Natural video produces motion estimation residuals with characteristic distributions: small residuals in smooth regions (well-predicted), larger at occlusion boundaries and newly visible regions. The method analyzes residual statistics — AI-generated video may show anomalous residual patterns, particularly in face regions where generation artifacts create unpredictable inter-frame changes.\n\n4. **Rostro - Background Residual Comparación**: The residual characteristics of face regions vs. background are compared. In authentic video, both regions show similar residual statistics (same camera motion, natural object motion). Deepfakes may produce elevated face residuals because the independently generated face doesn't follow physically consistent inter-frame motion.\n\n5. **Temporal Residual Patrón Análisis**: The temporal signal of residual magnitude is tracked. Periodic or anomalous patterns — such as regular residual spikes at the generator's refresh rate or systematically higher face residuals — indicate deepfake manipulation. The score quantifies the deviation from expected motion estimation residual behavior.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Residual de Estimación de Movimiento",
+    "description": "Analiza residuales de estimación de movimiento para detectar manipulación",
+    "algorithm": "Algoritmo de análisis Motion Estimation Residual",
+    "mechanism": "This method analyzes motion estimation residuals for video deepfake detection:\n\n1. **Movimiento Estimación**: Dense optical flow is computed between consecutive frames using established algorithms (Farnebäck, Lucas-Kanade, or variational methods). This estimates per-pixel motion vectors describing the apparent motion field.\n\n2. **Residual Cálculo**: The motion-compensated prediction is computed by warping frame t using the estimated flow to predict frame t+1. The residual R = I_{t+1} − W(I_t, flow) captures what the motion model couldn't predict — new content, disoccluded regions, and artifacts.\n\n3. **Residual Distribución Análisis**: Natural video produces motion estimation residuals with characteristic distributions: small residuals in smooth regions (well-predicted), larger at occlusion boundaries and newly visible regions. The method analyzes residual statistics — AI-generated video may show anomalous residual patterns, particularly in face regions where generation artifacts create unpredictable inter-frame changes.\n\n4. **Rostro - Background Residual Comparación**: The residual characteristics of face regions vs. background are compared. In authentic video, both regions show similar residual statistics (same camera motion, natural object motion). Deepfakes may produce elevated face residuals because the independently generated face doesn't follow physically consistent inter-frame motion.\n\n5. **Temporal Residual Patrón Análisis**: The temporal signal of residual magnitude is tracked. Periodic or anomalous patterns — such as regular residual spikes at the generator's refresh rate or systematically higher face residuals — indicate deepfake manipulation. The score quantifies the deviation from expected motion estimation residual behavior.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TCSVT.2003.815165",
+            "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
+        },
+        {
+            "url": "https://doi.org/10.1002/9780470989418",
+            "title": "Richardson, I.E.G. (2010). The H.264 Advanced Video Compression Standard. Wiley."
+        }
+    ]
 }

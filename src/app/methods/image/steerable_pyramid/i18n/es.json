@@ -1,12 +1,22 @@
 {
-  "name": "Pirámide Orientable",
-  "description": "Aplica pirámide orientable para análisis de sub-banda selectivo por orientación — detecta artefactos de síntesis de textura IA.",
-  "algorithm": "Algoritmo de análisis Steerable Pyramid Decomposition",
-  "mechanism": "Este método applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **Pyramid Construction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **Subband Statistics Extracción**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce characteristic heavy-tailed distributions in oriented subbands.\n\n3. **Cross - Scale Fase Análisis**: Phase relationships between coefficients at adjacent scales reveal edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. generado por IA images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **Orientación Energy Análisis**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while generación de IA artifacts often produce anómalo peaks or gaps in the orientation energy function.\n\n5. **Textura Synthesis Detección**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). generado por IA textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Pirámide Orientable",
+    "description": "Aplica pirámide orientable para análisis de sub-banda selectivo por orientación — detecta artefactos de síntesis de textura IA.",
+    "algorithm": "Algoritmo de análisis Steerable Pyramid Decomposition",
+    "mechanism": "Este método applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **Pyramid Construction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **Subband Statistics Extracción**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce characteristic heavy-tailed distributions in oriented subbands.\n\n3. **Cross - Scale Fase Análisis**: Phase relationships between coefficients at adjacent scales reveal edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. generado por IA images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **Orientación Energy Análisis**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while generación de IA artifacts often produce anómalo peaks or gaps in the orientation energy function.\n\n5. **Textura Synthesis Detección**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). generado por IA textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/ICIP.1995.537667",
+            "title": "Simoncelli, E.P. & Freeman, W.T. (1995). The Steerable Pyramid: A Flexible Architecture for Multi-Scale Derivative Computation. IEEE ICIP."
+        },
+        {
+            "url": "https://doi.org/10.1023/A:1026553619983",
+            "title": "Portilla, J. & Simoncelli, E.P. (2000). A Parametric Texture Model Based on Joint Statistics of Complex Wavelet Coefficients. IJCV."
+        }
+    ]
 }

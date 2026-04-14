@@ -1,22 +1,22 @@
 {
-  "name": "Arrugas de Frente",
-  "description": "Analyzes forehead wrinkle consistency",
-  "algorithm": "Forehead Wrinkle — Análisis Espacial a Nivel de Píxel",
-  "mechanism": "This method specifically analyzes forehead wrinkle dynamics for deepfake detection:\n\n1. **Forehead Wrinkle Detección**: Horizontal forehead wrinkles are detected using oriented ridge detection filters. Each wrinkle is characterized: position (forehead height), depth (shadow contrast), length (ear-to-ear extent), and curvature (following frontal bone contour).\n\n2. **Frontalis - Wrinkle Biomechanics**: Forehead wrinkles are produced by frontalis muscle contraction. The method verifies biomechanical correctness: (a) wrinkles should be roughly horizontal following frontalis fiber direction, (b) wrinkle spacing reflects the muscle's compartmentalized structure, (c) wrinkle depth should correlate with brow elevation magnitude. Deepfakes may produce wrinkles with incorrect orientation or depth.\n\n3. **Dynamic Wrinkle Behavior**: As the brow raises, wrinkles deepen and become more visible; as the brow relaxes, they flatten. The method tracks the temporal correlation between brow position (AU1/AU2) and wrinkle visibility. Low correlation indicates the face generator produces wrinkles independently of expression.\n\n4. **Wrinkle Patrón Individual Consistencia**: Each person has a characteristic forehead wrinkle pattern determined by muscle anatomy and skin elasticity. The method checks whether the wrinkle pattern remains consistent across frames. Deepfakes may produce varying wrinkle patterns frame-to-frame, especially when combining different source identities.\n\n5. **Wrinkle Rendering Evaluación**: The 3D appearance of wrinkles (shadow on the upper edge, highlight on the lower edge in downward illumination) should be consistent with scene lighting. The method evaluates wrinkle rendering quality and lighting consistency. AI-generated wrinkles may show physically incorrect shadow patterns.",
-  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detección de deepfake y video generado por IA mediante forehead wrinkle analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "Arrugas de Frente",
+    "description": "Analyzes forehead wrinkle consistency",
+    "algorithm": "Forehead Wrinkle — Análisis Espacial a Nivel de Píxel",
+    "mechanism": "This method specifically analyzes forehead wrinkle dynamics for deepfake detection:\n\n1. **Forehead Wrinkle Detección**: Horizontal forehead wrinkles are detected using oriented ridge detection filters. Each wrinkle is characterized: position (forehead height), depth (shadow contrast), length (ear-to-ear extent), and curvature (following frontal bone contour).\n\n2. **Frontalis - Wrinkle Biomechanics**: Forehead wrinkles are produced by frontalis muscle contraction. The method verifies biomechanical correctness: (a) wrinkles should be roughly horizontal following frontalis fiber direction, (b) wrinkle spacing reflects the muscle's compartmentalized structure, (c) wrinkle depth should correlate with brow elevation magnitude. Deepfakes may produce wrinkles with incorrect orientation or depth.\n\n3. **Dynamic Wrinkle Behavior**: As the brow raises, wrinkles deepen and become more visible; as the brow relaxes, they flatten. The method tracks the temporal correlation between brow position (AU1/AU2) and wrinkle visibility. Low correlation indicates the face generator produces wrinkles independently of expression.\n\n4. **Wrinkle Patrón Individual Consistencia**: Each person has a characteristic forehead wrinkle pattern determined by muscle anatomy and skin elasticity. The method checks whether the wrinkle pattern remains consistent across frames. Deepfakes may produce varying wrinkle patterns frame-to-frame, especially when combining different source identities.\n\n5. **Wrinkle Rendering Evaluación**: The 3D appearance of wrinkles (shadow on the upper edge, highlight on the lower edge in downward illumination) should be consistent with scene lighting. The method evaluates wrinkle rendering quality and lighting consistency. AI-generated wrinkles may show physically incorrect shadow patterns.",
+    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detección de deepfake y video generado por IA mediante forehead wrinkle analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

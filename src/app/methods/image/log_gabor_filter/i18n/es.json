@@ -1,12 +1,22 @@
 {
-  "name": "Filtro Log-Gabor",
-  "description": "Aplica filtros log-Gabor para mejorar la selectividad de frecuencia sobre Gabor estándar — captura artefactos de generación por IA en el dominio de frecuencia.",
-  "algorithm": "Algoritmo de análisis Log-Gabor Filter Analysis",
-  "mechanism": "Este método applies Log-Gabor filters following Field's (1987) framework for analyzing image frequency structure:\n\n1. **Log - Gabor Bank Construction**: A bank of Log-Gabor filters is constructed in the dominio de frecuencia with logarithmic spacing. Unlike standard Gabor filters, Log-Gabor filters have zero DC component, no bandwidth limitation, and their transfer function is Gaussian on a logarithmic frequency scale: G(f) = exp(−(log(f/f₀))²/(2(log(σ/f₀))²)).\n\n2. **Multi - Orientación Filtering**: The filter bank spans multiple orientations (típicamente 6-8) and scales (4-6 octaves), providing comprehensive coverage of the 2D frequency plane. Each filter isolates a specific frequency band and orientation.\n\n3. **Response Energy Mapeo**: The local energy response is computed as E(x,y) = √(even²(x,y) + odd²(x,y)), where even and odd components are the real and imaginary parts of the filter response. This captures local frequency content independent of phase.\n\n4. **Natural Image Statistics Comparación**: Response statistics are compared to the known 1/f amplitude spectrum of natural images. generado por IA images exhibit characteristic deviations — GANs often show spectral peaks at grid frequencies, while diffusion models may underrepresent certain frequency bands.\n\n5. **Anomalía Puntuación**: The deviation from expected natural image frequency statistics across all filter responses is aggregated into a forensic score indicating the likelihood of generación de IA.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Análisis de Filtro Log-Gabor",
+    "description": "Aplica filtros log-Gabor para mejorar la selectividad de frecuencia sobre Gabor estándar — captura artefactos de generación por IA en el dominio de frecuencia.",
+    "algorithm": "Algoritmo de análisis Log-Gabor Filter Analysis",
+    "mechanism": "Este método applies Log-Gabor filters following Field's (1987) framework for analyzing image frequency structure:\n\n1. **Log - Gabor Bank Construction**: A bank of Log-Gabor filters is constructed in the dominio de frecuencia with logarithmic spacing. Unlike standard Gabor filters, Log-Gabor filters have zero DC component, no bandwidth limitation, and their transfer function is Gaussian on a logarithmic frequency scale: G(f) = exp(−(log(f/f₀))²/(2(log(σ/f₀))²)).\n\n2. **Multi - Orientación Filtering**: The filter bank spans multiple orientations (típicamente 6-8) and scales (4-6 octaves), providing comprehensive coverage of the 2D frequency plane. Each filter isolates a specific frequency band and orientation.\n\n3. **Response Energy Mapeo**: The local energy response is computed as E(x,y) = √(even²(x,y) + odd²(x,y)), where even and odd components are the real and imaginary parts of the filter response. This captures local frequency content independent of phase.\n\n4. **Natural Image Statistics Comparación**: Response statistics are compared to the known 1/f amplitude spectrum of natural images. generado por IA images exhibit characteristic deviations — GANs often show spectral peaks at grid frequencies, while diffusion models may underrepresent certain frequency bands.\n\n5. **Anomalía Puntuación**: The deviation from expected natural image frequency statistics across all filter responses is aggregated into a forensic score indicating the likelihood of generación de IA.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1364/JOSAA.4.002379",
+            "title": "Field, D.J. (1987). Relations Between the Statistics of Natural Images and the Response Properties of Cortical Cells. JOSA A."
+        },
+        {
+            "url": "https://www.peterkovesi.com/papers/phasecong.pdf",
+            "title": "Kovesi, P. (1999). Image Features from Phase Congruency. Videre."
+        }
+    ]
 }

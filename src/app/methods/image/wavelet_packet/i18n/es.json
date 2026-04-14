@@ -1,12 +1,22 @@
 {
-  "name": "Paquetes Wavelet",
-  "description": "Aplica descomposición completa de paquetes wavelet para análisis de energía de sub-banda de grano fino (Coifman & Wickerhauser).",
-  "algorithm": "Algoritmo de análisis Wavelet Packet Decomposition",
-  "mechanism": "Este método applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **Full Wavelet Packet Tree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **Best Basis Selection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than generado por IA ones.\n\n3. **Subband Energy Distribución**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce anómalo energy in specific subbands — GAN grid artifacts appear as energy peaks at characteristic spatial frequencies.\n\n4. **Inter - Subband Correlación Análisis**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. generado por IA images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **Coeficiente Distribución Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where generadores de IA struggle to reproduce correct statistics — are quantified for forensic scoring.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Descomposición de Paquete Wavelet",
+    "description": "Aplica descomposición completa de paquetes wavelet para análisis de energía de sub-banda de grano fino (Coifman & Wickerhauser).",
+    "algorithm": "Algoritmo de análisis Wavelet Packet Decomposition",
+    "mechanism": "Este método applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **Full Wavelet Packet Tree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **Best Basis Selection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than generado por IA ones.\n\n3. **Subband Energy Distribución**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce anómalo energy in specific subbands — GAN grid artifacts appear as energy peaks at characteristic spatial frequencies.\n\n4. **Inter - Subband Correlación Análisis**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. generado por IA images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **Coeficiente Distribución Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where generadores de IA struggle to reproduce correct statistics — are quantified for forensic scoring.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/18.119732",
+            "title": "Coifman, R.R. & Wickerhauser, M.V. (1992). Entropy-Based Algorithms for Best Basis Selection. IEEE TIT."
+        },
+        {
+            "url": "https://doi.org/10.1109/83.862633",
+            "title": "Chang, S.G. et al. (2000). Adaptive Wavelet Thresholding for Image Denoising. IEEE TIP."
+        }
+    ]
 }

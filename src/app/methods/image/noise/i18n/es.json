@@ -1,12 +1,12 @@
 {
-    "name": "Residuo de ruido",
+    "name": "Análisis de Residuos de Ruido",
     "description": "Examina high-frequency patrón de ruidos by applying Wiener deconvolution. Real cameras produce characteristic sensor noise that varies a través de the image, while AI generates unnaturally uniform patrón de ruidos.",
     "algorithm": "High-Frequency Noise Residual Analysis (Wiener Filter)",
     "mechanism": "The análisis process:\n\n1. **Noise extraction**: Aplica Wiener deconvolution filter to separate the noise component from image content.\n\n2. **Local varianza mapping**: Computes local noise varianza a través de overlapping blocks to create a noise varianza heatmap.\n\n3. **Uniformity análisis**: Real camera noise varies due to sensor manufacturing imperfections (No Uniformidad de Respuesta Fotónica). AI images lack this variation.\n\n4. **Statistical profiling**: Analiza distribución de ruido statistics (kurtosis, skewness) against known camera noise models.",
     "parameters": "Filter: Wiener deconvolution, Window: 5x5\nTamaño de bloque: 16x16 with 50% overlap\nNoise model: Gaussian + Poisson (heteroscedastic)\nMetrics: local varianza, kurtosis, skewness",
     "accuracy": "High - 80-90% for distinguishing natural vs synthetic noise",
     "source": "Fridrich and Kodovsky (2012), IEEE TIFS",
-    "useCase": "Detecting absence of authentic sensor noise patterns in AI-generated images",
+    "useCase": "Detección de imágenes de IA a través de patrones de ruido anormalmente uniformes. También se usa para identificación de fuente de cámara y detección de manipulación.",
     "references": [
         {
             "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",

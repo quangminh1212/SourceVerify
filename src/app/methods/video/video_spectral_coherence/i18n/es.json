@@ -1,12 +1,22 @@
 {
-  "name": "Coherencia Espectral de Video",
-  "description": "Analiza la coherencia espectral del video para detectar manipulación",
-  "algorithm": "Algoritmo de análisis Video Spectral Coherence",
-  "mechanism": "This method analyzes spectral coherence across video frame regions for deepfake detection:\n\n1. **Regional Espectral Análisis**: The spatial frequency spectrum is computed independently for multiple regions: face, background, clothing, hair. Each region's spectral characteristic — spectral slope, cutoff frequency, spectral peaks — is measured.\n\n2. **Cross - Región Espectral Coherencia**: All regions captured through the same optical system should show coherent spectral characteristics — same noise spectrum, same spectral cutoff (determined by the lens MTF), same compression artifacts. The method checks cross-region spectral coherence. Deepfake composites show spectral incoherence between generated face and captured background.\n\n3. **Espectral Ruido Floor Emparejamiento**: The spectral noise floor (high-frequency baseline noise level) should be uniform across the frame. The method compares noise floors between regions — different noise floors indicate content from different imaging/generation pipelines.\n\n4. **Espectral Transition Análisis**: At region boundaries (face-background border), the spectral transition should be smooth. The method analyzes spectral characteristics across boundaries — abrupt spectral changes at the face border (changing noise spectrum, changing spectral slope) indicate compositing.\n\n5. **Temporal Espectral Coherencia**: The spectral relationship between regions should remain stable over time. The method tracks inter-region spectral ratios — temporal variation in the face-to-background spectral ratio indicates the face content varies independently from the background, consistent with deepfake generation.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Coherencia Espectral de Video",
+    "description": "Analiza la coherencia espectral del video para detectar manipulación",
+    "algorithm": "Algoritmo de análisis Video Spectral Coherence",
+    "mechanism": "This method analyzes spectral coherence across video frame regions for deepfake detection:\n\n1. **Regional Espectral Análisis**: The spatial frequency spectrum is computed independently for multiple regions: face, background, clothing, hair. Each region's spectral characteristic — spectral slope, cutoff frequency, spectral peaks — is measured.\n\n2. **Cross - Región Espectral Coherencia**: All regions captured through the same optical system should show coherent spectral characteristics — same noise spectrum, same spectral cutoff (determined by the lens MTF), same compression artifacts. The method checks cross-region spectral coherence. Deepfake composites show spectral incoherence between generated face and captured background.\n\n3. **Espectral Ruido Floor Emparejamiento**: The spectral noise floor (high-frequency baseline noise level) should be uniform across the frame. The method compares noise floors between regions — different noise floors indicate content from different imaging/generation pipelines.\n\n4. **Espectral Transition Análisis**: At region boundaries (face-background border), the spectral transition should be smooth. The method analyzes spectral characteristics across boundaries — abrupt spectral changes at the face border (changing noise spectrum, changing spectral slope) indicate compositing.\n\n5. **Temporal Espectral Coherencia**: The spectral relationship between regions should remain stable over time. The method tracks inter-region spectral ratios — temporal variation in the face-to-background spectral ratio indicates the face content varies independently from the background, consistent with deepfake generation.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://proceedings.mlr.press/v119/frank20a.html",
+            "title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML."
+        },
+        {
+            "url": "https://doi.org/10.1109/CVPR42600.2020.00791",
+            "title": "Durall, R. et al. (2020). Watch Your Up-Convolution: CNN Based Generative Deep Neural Networks Are Failing to Reproduce Spectral Distributions. CVPR."
+        }
+    ]
 }

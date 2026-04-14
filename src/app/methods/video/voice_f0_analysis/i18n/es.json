@@ -1,12 +1,22 @@
 {
-  "name": "Análisis de Frecuencia F0 de Voz",
-  "description": "Analiza la frecuencia fundamental de voz para detectar manipulación de audio",
-  "algorithm": "Algoritmo de análisis Voice Fundamental Frequency",
-  "mechanism": "This method analyzes voice fundamental frequency (F0) for deepfake detection:\n\n1. **F0 Extracción**: The fundamental frequency (pitch) of the voice is extracted per frame using autocorrelation, cepstral, or YIN algorithm. F0 corresponds to the vocal fold vibration rate, typically 85-180 Hz for males and 165-255 Hz for females.\n\n2. **F0 Contorno Análisis**: The temporal F0 contour (pitch track) is analyzed for naturalness. Natural speech shows characteristic F0 patterns: (a) declination (gradual F0 decrease across utterances), (b) prosodic contours (rises for questions, falls for statements), (c) micro-prosody (F0 perturbations at phoneme boundaries). AI voice synthesis may produce F0 contours with incorrect prosodic patterns or missing micro-prosodic detail.\n\n3. **F0 Range and Variability**: Each speaker has a characteristic F0 range and variability. The method checks whether F0 statistics (mean, standard deviation, range) fall within physiologically plausible values for the apparent speaker. AI-generated voices may show either unnaturally constrained (monotone) or excessive F0 variability.\n\n4. **Jitter and Shimmer**: Natural voice shows slight cycle-to-cycle F0 variation (jitter, typically <1%) and amplitude variation (shimmer, typically <3%). These micro-perturbations reflect the biomechanics of vocal fold vibration. AI voice synthesis may produce either too-perfect (zero jitter/shimmer) or incorrectly modeled perturbation patterns.\n\n5. **F0 - Visual Correlación**: Voice F0 should correlate with visible physical effort — higher pitch may correspond with increased tension visible in the neck muscles. The method checks audio-visual F0 correspondence. Deepfakes combining generated audio with generated video may show poor F0-visual correlation.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Análisis de Frecuencia F0 de Voz",
+    "description": "Analiza la frecuencia fundamental de voz para detectar manipulación de audio",
+    "algorithm": "Algoritmo de análisis Voice Fundamental Frequency",
+    "mechanism": "This method analyzes voice fundamental frequency (F0) for deepfake detection:\n\n1. **F0 Extracción**: The fundamental frequency (pitch) of the voice is extracted per frame using autocorrelation, cepstral, or YIN algorithm. F0 corresponds to the vocal fold vibration rate, typically 85-180 Hz for males and 165-255 Hz for females.\n\n2. **F0 Contorno Análisis**: The temporal F0 contour (pitch track) is analyzed for naturalness. Natural speech shows characteristic F0 patterns: (a) declination (gradual F0 decrease across utterances), (b) prosodic contours (rises for questions, falls for statements), (c) micro-prosody (F0 perturbations at phoneme boundaries). AI voice synthesis may produce F0 contours with incorrect prosodic patterns or missing micro-prosodic detail.\n\n3. **F0 Range and Variability**: Each speaker has a characteristic F0 range and variability. The method checks whether F0 statistics (mean, standard deviation, range) fall within physiologically plausible values for the apparent speaker. AI-generated voices may show either unnaturally constrained (monotone) or excessive F0 variability.\n\n4. **Jitter and Shimmer**: Natural voice shows slight cycle-to-cycle F0 variation (jitter, typically <1%) and amplitude variation (shimmer, typically <3%). These micro-perturbations reflect the biomechanics of vocal fold vibration. AI voice synthesis may produce either too-perfect (zero jitter/shimmer) or incorrectly modeled perturbation patterns.\n\n5. **F0 - Visual Correlación**: Voice F0 should correlate with visible physical effort — higher pitch may correspond with increased tension visible in the neck muscles. The method checks audio-visual F0 correspondence. Deepfakes combining generated audio with generated video may show poor F0-visual correlation.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1007/11613107_12",
+            "title": "Chetty, G. & Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
+        },
+        {
+            "url": "https://doi.org/10.1145/3394171.3413570",
+            "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM."
+        }
+    ]
 }

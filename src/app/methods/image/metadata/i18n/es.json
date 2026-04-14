@@ -1,5 +1,5 @@
 {
-    "name": "Analisis de metadatos",
+    "name": "Análisis de Metadatos",
     "description": "Comprehensive examination of EXIF, XMP, and IPTC data embedded in image files para detectar signs of AI generation tools. Analiza camera make/model, GPS coordinates, processing software, creation timestamps, and file structure to verify image autenticidad.",
     "algorithm": "EXIF / XMP / IPTC Parser",
     "mechanism": "The análisis de metadatos system operates in multiple stages:\n\n1. **Data Extraction**: Reads all EXIF (Exchangeable Image File Format), XMP (Extensible Metadata Platform), and IPTC (International Press Telecommunications Council) metadatos fields embedded in the image.\n\n2. **Camera Verification**: Examina Make, Model, LensModel fields to verify the capture device. AI images typically lack or contain fabricated camera information.\n\n3. **Software Detection**: Identifica Software, CreatorTool, HistorySoftwareAgent tags containing AI tool names como 'Stable Diffusion', 'DALL-E', 'Midjourney', 'Adobe Firefly'.\n\n4. **Timestamp Validation**: Cross-references DateTimeOriginal, DateTimeDigitized, ModifyDate para detectar temporal anomalías.\n\n5. **GPS Analysis**: Verifica GPSLatitude, GPSLongitude — AI images rarely contain authentic GPS coordinates.",
@@ -34,5 +34,5 @@
         }
     ],
     "strengths": "• Extremely fast análisis time (< 10ms per image)\n• No pixel decoding required, only reads file headers\n• High precisión when metadatos is intact\n• Can identify specific AI tools through software tags\n• Compliant with international standards (EXIF, XMP, IPTC, C2PA)",
-    "limitations": "• Metadata can be easily stripped or forged\n• Many social media platforms auto-strip metadatos on upload\n• Cannot detect AI images that have had metadatos removed\n• Depends on whether AI tools embed software tags"
+    "limitations": "• Los metadatos pueden eliminarse o falsificarse fácilmente\n• Muchas plataformas de redes sociales eliminan automáticamente los metadatos al subir\n• No puede detectar imágenes de IA a las que se les han eliminado los metadatos\n• Depende de si las herramientas de IA incrustan etiquetas de software"
 }

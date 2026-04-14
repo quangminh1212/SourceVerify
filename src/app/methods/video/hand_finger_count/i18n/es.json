@@ -1,12 +1,22 @@
 {
-  "name": "Conteo de Dedos de Mano",
-  "description": "Verifica el conteo correcto de dedos en video para detectar errores de IA",
-  "algorithm": "Algoritmo de análisis Hand Finger Count Analysis",
-  "mechanism": "Este método verifies hand and finger count accuracy for generación de IA detection:\n\n1. **Hand Detección & Segmentation**: Hands are detected in each frame using object detection and precisely segmented. The hand mask isolates the palm and each finger for independent analysis.\n\n2. **Finger Counting**: Each detected hand is analyzed for the number of distinct fingers. Using skeleton estimation and topology analysis, El método counts finger-like protrusions from the palm. Correct count is 5 (4 fingers + 1 thumb) per hand. generadores de IA (especially diffusion models) frequently produce 4, 6, or 7 fingers, making this one of the most reliable AI detection signals.\n\n3. **Finger Anatomy Verificación**: Beyond counting, each finger's anatomy is checked: correct number of joints (3 for fingers, 2 for thumb), plausible length ratios (ring ≈ index > middle > pinky > thumb), and proper attachment to the palm. generadores de IA may produce extra joints, impossible length ratios, or fingers merging/splitting.\n\n4. **Bilateral Hand Consistencia**: When both hands are visible, they should be mirror-consistente with the same finger count and proportions. El método checks bilateral hand agreement — generadores de IA may produce different finger counts on left and right hands.\n\n5. **Temporal Finger Seguimiento**: Finger count and geometry should remain consistente a lo largo de los fotogramas. El método tracks finger topology a lo largo del tiempo — generadores de IA may produce different finger counts in different frames for the same hand, or show fingers appearing/disappearing during motion.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Análisis de Conteo de Dedos",
+    "description": "Verifica el conteo correcto de dedos en video para detectar errores de IA",
+    "algorithm": "Algoritmo de análisis Hand Finger Count Analysis",
+    "mechanism": "Este método verifies hand and finger count accuracy for generación de IA detection:\n\n1. **Hand Detección & Segmentation**: Hands are detected in each frame using object detection and precisely segmented. The hand mask isolates the palm and each finger for independent analysis.\n\n2. **Finger Counting**: Each detected hand is analyzed for the number of distinct fingers. Using skeleton estimation and topology analysis, El método counts finger-like protrusions from the palm. Correct count is 5 (4 fingers + 1 thumb) per hand. generadores de IA (especially diffusion models) frequently produce 4, 6, or 7 fingers, making this one of the most reliable AI detection signals.\n\n3. **Finger Anatomy Verificación**: Beyond counting, each finger's anatomy is checked: correct number of joints (3 for fingers, 2 for thumb), plausible length ratios (ring ≈ index > middle > pinky > thumb), and proper attachment to the palm. generadores de IA may produce extra joints, impossible length ratios, or fingers merging/splitting.\n\n4. **Bilateral Hand Consistencia**: When both hands are visible, they should be mirror-consistente with the same finger count and proportions. El método checks bilateral hand agreement — generadores de IA may produce different finger counts on left and right hands.\n\n5. **Temporal Finger Seguimiento**: Finger count and geometry should remain consistente a lo largo de los fotogramas. El método tracks finger topology a lo largo del tiempo — generadores de IA may produce different finger counts in different frames for the same hand, or show fingers appearing/disappearing during motion.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1145/2993148.2993165",
+            "title": "Barsoum, E. et al. (2016). Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label Distribution. ACM ICMI."
+        },
+        {
+            "url": "https://arxiv.org/abs/2006.10214",
+            "title": "Zhang, F. et al. (2020). MediaPipe Hands: On-device Real-time Hand Tracking. CVPR Workshop."
+        }
+    ]
 }

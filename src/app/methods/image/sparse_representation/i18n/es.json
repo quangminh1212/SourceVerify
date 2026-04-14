@@ -1,12 +1,22 @@
 {
-  "name": "Representación Dispersa",
-  "description": "Usa codificación dispersa y aprendizaje de diccionarios para detectar anomalías de representación en imágenes IA (Wright et al.).",
-  "algorithm": "Algoritmo de análisis Sparse Representation Analysis",
-  "mechanism": "Este método applies sparse representation theory following Wright et al. (2009) and Elad & Aharon (2006) para el análisis forense:\n\n1. **Dictionary Learning**: A redundant dictionary D ∈ ℝⁿˣᴷ (K >> n, overcomplete) is learned from natural image patches via K-SVD algorithm. Each atom captures a characteristic local structure (edge, texture, smooth region) found in authentic images.\n\n2. **Sparse Coding**: For each image patch y, the sparsest representation α is found via: min‖α‖₀ s.t. ‖y − Dα‖₂ ≤ ε. In practice, OMP (Orthogonal Matching Pursuit) or LASSO provides an approximate solution. Natural image patches admit highly sparse representations (few active atoms).\n\n3. **Representation Residual Análisis**: The residual r = ‖y − Dα‖₂ measures how well each patch fits the natural image dictionary. Authentic image patches yield low residuals, while generado por IA patches — containing artifacts outside the natural image manifold — produce elevated residuals.\n\n4. **Sparsity Map Construction**: A spatial map of sparsity levels (‖α‖₀) and residuals across the image reveals regions inconsistente with natural image statistics. Manipulated or generado por IA regions típicamente require more dictionary atoms (lower sparsity) yet still produce higher residuals.\n\n5. **Anomalía Puntuación**: The joint distribution of sparsity and residuals across all patches is compared to the expected distribution for natural images. Systematic deviations — particularly elevated residuals in textured regions that should be well-represented by the learned dictionary — indicate synthetic generation.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Representación Dispersa",
+    "description": "Usa codificación dispersa y aprendizaje de diccionarios para detectar anomalías de representación en imágenes IA (Wright et al.).",
+    "algorithm": "Algoritmo de análisis Sparse Representation Analysis",
+    "mechanism": "Este método applies sparse representation theory following Wright et al. (2009) and Elad & Aharon (2006) para el análisis forense:\n\n1. **Dictionary Learning**: A redundant dictionary D ∈ ℝⁿˣᴷ (K >> n, overcomplete) is learned from natural image patches via K-SVD algorithm. Each atom captures a characteristic local structure (edge, texture, smooth region) found in authentic images.\n\n2. **Sparse Coding**: For each image patch y, the sparsest representation α is found via: min‖α‖₀ s.t. ‖y − Dα‖₂ ≤ ε. In practice, OMP (Orthogonal Matching Pursuit) or LASSO provides an approximate solution. Natural image patches admit highly sparse representations (few active atoms).\n\n3. **Representation Residual Análisis**: The residual r = ‖y − Dα‖₂ measures how well each patch fits the natural image dictionary. Authentic image patches yield low residuals, while generado por IA patches — containing artifacts outside the natural image manifold — produce elevated residuals.\n\n4. **Sparsity Map Construction**: A spatial map of sparsity levels (‖α‖₀) and residuals across the image reveals regions inconsistente with natural image statistics. Manipulated or generado por IA regions típicamente require more dictionary atoms (lower sparsity) yet still produce higher residuals.\n\n5. **Anomalía Puntuación**: The joint distribution of sparsity and residuals across all patches is compared to the expected distribution for natural images. Systematic deviations — particularly elevated residuals in textured regions that should be well-represented by the learned dictionary — indicate synthetic generation.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2008.79",
+            "title": "Wright, J. et al. (2009). Robust Face Recognition via Sparse Representation. IEEE TPAMI."
+        },
+        {
+            "url": "https://doi.org/10.1109/TIP.2006.881969",
+            "title": "Elad, M. & Aharon, M. (2006). Image Denoising via Sparse and Redundant Representations. IEEE TIP."
+        }
+    ]
 }

@@ -1,12 +1,22 @@
 {
-  "name": "Análisis de Parámetro de Cuantización",
-  "description": "Analiza parámetros de cuantización de codec para detectar manipulación de video",
-  "algorithm": "Algoritmo de análisis Quantization Parameter Analysis",
-  "mechanism": "This method analyzes quantization parameter (QP) patterns for video forensic detection:\n\n1. **QP Map Extracción**: The per-macroblock quantization parameter is extracted from the video bitstream. The QP map reveals how the encoder allocated quality across the frame — lower QP (higher quality) for important/complex regions, higher QP (lower quality) for simpler regions.\n\n2. **QP Distribución Análisis**: The QP distribution across the frame is analyzed. Authentic single-encoded video shows QP values following the encoder's rate-control algorithm — smooth QP variation correlated with content complexity. Re-encoded video (manipulation + re-encoding) shows QP distributions influenced by two encoding passes.\n\n3. **QP - Content Consistencia**: The relationship between QP and local content complexity is verified. In normal encoding, complex regions (edges, texture) receive lower QP. Manipulated regions may show QP-content mismatches — the second encoder's QP decisions may not optimally match the inserted content.\n\n4. **Double Quantization Detección**: When video is decoded, manipulated, and re-encoded, characteristic double-quantization artifacts appear in the QP and DCT coefficient distributions. The method detects periodicities in DCT histograms that indicate the original QP, revealing the encoding history.\n\n5. **Temporal QP Patrón Análisis**: QP allocation across frames follows the encoder's rate control model — I-frames typically get lower QP than P/B-frames. The method analyzes temporal QP patterns for anomalies. Manipulated video segments may show QP pattern breaks where the manipulation disrupted the original rate control.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Análisis de Parámetro de Cuantización",
+    "description": "Analiza parámetros de cuantización de codec para detectar manipulación de video",
+    "algorithm": "Algoritmo de análisis Quantization Parameter Analysis",
+    "mechanism": "This method analyzes quantization parameter (QP) patterns for video forensic detection:\n\n1. **QP Map Extracción**: The per-macroblock quantization parameter is extracted from the video bitstream. The QP map reveals how the encoder allocated quality across the frame — lower QP (higher quality) for important/complex regions, higher QP (lower quality) for simpler regions.\n\n2. **QP Distribución Análisis**: The QP distribution across the frame is analyzed. Authentic single-encoded video shows QP values following the encoder's rate-control algorithm — smooth QP variation correlated with content complexity. Re-encoded video (manipulation + re-encoding) shows QP distributions influenced by two encoding passes.\n\n3. **QP - Content Consistencia**: The relationship between QP and local content complexity is verified. In normal encoding, complex regions (edges, texture) receive lower QP. Manipulated regions may show QP-content mismatches — the second encoder's QP decisions may not optimally match the inserted content.\n\n4. **Double Quantization Detección**: When video is decoded, manipulated, and re-encoded, characteristic double-quantization artifacts appear in the QP and DCT coefficient distributions. The method detects periodicities in DCT histograms that indicate the original QP, revealing the encoding history.\n\n5. **Temporal QP Patrón Análisis**: QP allocation across frames follows the encoder's rate control model — I-frames typically get lower QP than P/B-frames. The method analyzes temporal QP patterns for anomalies. Manipulated video segments may show QP pattern breaks where the manipulation disrupted the original rate control.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TCSVT.2003.815165",
+            "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
+        },
+        {
+            "url": "https://doi.org/10.1109/TIFS.2011.2119314",
+            "title": "Stamm, M.C. & Liu, K.J.R. (2011). Anti-Forensics of Digital Image Compression. IEEE TIFS."
+        }
+    ]
 }

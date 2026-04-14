@@ -1,12 +1,22 @@
 {
-  "name": "Reflexión Especular de Piel",
-  "description": "Analiza reflexiones especulares de piel para detectar anomalías de deepfake",
-  "algorithm": "Algoritmo de análisis Skin Specular Reflection",
-  "mechanism": "This method analyzes skin specular reflection for deepfake detection:\n\n1. **Specular Component Extracción**: The specular (glossy) component of skin reflectance is separated from the diffuse (matte) component using dichromatic reflection model decomposition. Specular highlights appear where skin surface is oriented to reflect light directly toward the camera.\n\n2. **Specular Highlight Distribución**: The spatial distribution of skin specular highlights should follow the face's 3D geometry and illumination. The method checks highlight positions against expected locations — forehead center, nose bridge and tip, cheekbone apexes. AI generators may produce specular highlights at incorrect locations or with wrong intensity distributions.\n\n3. **Físico Specular Model**: Skin specular reflection follows the Torrance-Sparrow (microfacet) BRDF model with characteristic roughness parameters. The method measures specular highlight shape and falloff, comparing against physical skin reflectance models. Generated highlights may show non-physical profiles — too sharp, too broad, or incorrect Fresnel behavior.\n\n4. **Temporal Specular Dynamics**: As the head moves, specular highlights should slide across the face following the changing reflection geometry. The method tracks highlight positions relative to landmarks — highlights should move according to the rotation of the surface normal relative to the light direction. Incorrect highlight dynamics indicate AI generation.\n\n5. **Sweat/Oil Physics**: Facial skin specularity varies with surface moisture — oily regions (forehead, nose) are more specular. This distribution should be consistent across frames and follow physiological patterns. AI generators typically don't model skin moisture variation, producing uniform or incorrectly distributed specularity.",
-  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+    "name": "Reflexión Especular de Piel",
+    "description": "Analiza reflexiones especulares de piel para detectar anomalías de deepfake",
+    "algorithm": "Algoritmo de análisis Skin Specular Reflection",
+    "mechanism": "This method analyzes skin specular reflection for deepfake detection:\n\n1. **Specular Component Extracción**: The specular (glossy) component of skin reflectance is separated from the diffuse (matte) component using dichromatic reflection model decomposition. Specular highlights appear where skin surface is oriented to reflect light directly toward the camera.\n\n2. **Specular Highlight Distribución**: The spatial distribution of skin specular highlights should follow the face's 3D geometry and illumination. The method checks highlight positions against expected locations — forehead center, nose bridge and tip, cheekbone apexes. AI generators may produce specular highlights at incorrect locations or with wrong intensity distributions.\n\n3. **Físico Specular Model**: Skin specular reflection follows the Torrance-Sparrow (microfacet) BRDF model with characteristic roughness parameters. The method measures specular highlight shape and falloff, comparing against physical skin reflectance models. Generated highlights may show non-physical profiles — too sharp, too broad, or incorrect Fresnel behavior.\n\n4. **Temporal Specular Dynamics**: As the head moves, specular highlights should slide across the face following the changing reflection geometry. The method tracks highlight positions relative to landmarks — highlights should move according to the rotation of the surface normal relative to the light direction. Incorrect highlight dynamics indicate AI generation.\n\n5. **Sweat/Oil Physics**: Facial skin specularity varies with surface moisture — oily regions (forehead, nose) are more specular. This distribution should be consistent across frames and follow physiological patterns. AI generators typically don't model skin moisture variation, producing uniform or incorrectly distributed specularity.",
+    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+        },
+        {
+            "url": "https://doi.org/10.1109/WIFS47025.2019.9035099",
+            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WIFS."
+        }
+    ]
 }

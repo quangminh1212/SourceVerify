@@ -1,12 +1,12 @@
 {
-    "name": "Analisis espectral de Nyquist",
+    "name": "Análisis Espectral de Nyquist",
     "description": "Analiza the frequency espectro at Nyquist boundaries para detectar upsampling artefactos. AI models often produce anomalous spectral peaks at these frequencies that are absent in real photographs, caused by upsampling operations in red neuronal architectures.",
     "algorithm": "Nyquist Frequency Spectral Analysis (2D FFT)",
     "mechanism": "The análisis process involves several stages:\n\n1. **2D FFT Transform**: Converts the image from dominio espacial to dominio de frecuencia using 2D Fast Fourier Transform.\n\n2. **High-frequency espectro análisis**: Examina spectral energy around the Nyquist frequency (f/2). Neural network image generators (GANs, Diffusion models) use upsampling layers (bilinear, nearest-neighbor, transposed convolution) that create characteristic frequency artefactos.\n\n3. **Periodic peak detección**: Identifica periodic energy peaks in the frequency espectro — a hallmark signature of upsampling in decoder/generator architectures.\n\n4. **Spectral comparison**: Compara the frequency energy distribución against natural spectral models. Camera images have natural high-frequency rolloff due to optics, while AI images show abnormal energy distribucións.",
     "parameters": "Transform: 2D FFT (radix-2), Analysis region: Nyquist band ±10%, Metrics: high/low frequency energy ratio, periodic peak coeficiente, spectral gradiente\n\nAnalysis size: full image + 256x256 blocks\nNormalization: logarithmic espectro, azimuthal averaging",
     "accuracy": "Alta - 80-90% for AI images with upsampling artefactos. Particularly effective for GAN-generated images (StyleGAN, ProGAN) due to heavy use of upsampling layers.",
     "source": "Durall et al. (2020) Watch your Up-Convolution, CVPR 2020",
-    "useCase": "Detection of frequency artefactos from generative networks and upsampling. Especially effective with GAN images and AI-upscaled images.",
+    "useCase": "Detección de artefactos de frecuencia de redes generativas y sobremuestreo. Especialmente efectivo con imágenes GAN e imágenes escaladas por IA.",
     "references": [
         {
             "title": "Zhang, X. et al. (2019). Detecting and Simulating Artifacts in GAN Fake Images. IEEE WIFS.",
