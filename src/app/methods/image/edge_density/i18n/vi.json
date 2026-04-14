@@ -1,12 +1,12 @@
 {
-    "name": "Mật Độ Nét Gãy Răng Cưa (Edge Density)",
-    "description": "Công cụ truy bắt lũ AI tạo rác vô cơ. Bọn Midjourney hay Stable Diffusion gặp ác mộng tuyệt vọng khi phải vẽ chi tiết hỗn loạn, như tán lá cây ngoài xa hay một búi tóc người thật đan xen chằng chịt. Vì thuật toán sinh điểm ảnh không hiểu vật lý thực tế, chúng sẽ rải rác một khối lượng kết cấu biên nham nhở, đứt đoạn, phi cấu trúc. Máy đếm 'Mật độ cạnh viền' sẽ giăng bẫy sự vô luân phi hình học này.",
-    "algorithm": "Phân Tích Khối Mật Độ Tổ Chức Đường Biên (Spatial Edge Concentration)",
-    "mechanism": "Bằng cách kéo một luống cày Canny-Edge chạy khắp tấm hình, cỗ máy đo xem số lượng 'nét đứt' (đường ngắn rác) tại một vùng cụ thể có đang ở ngưỡng điên rồ hay không. Ở ảnh tự nhiên, tán lá hay sợi tóc là một luồng nét liền mạch trơn tru của tự nhiên. Nhưng với ảnh AI, các nét sinh ra cực kỳ đứt quãng lìu tìu như vết cào của móng vuốt mèo loạn xạ. Hệ thống gióng chuông tử thần hễ mật độ nét đứt, băm vằm quá cao so với vật thể xung quanh.",
-    "parameters": "Hình dạng: Canny Spread Radar, Đo lường: Độ tập trung biên cực vĩ, Ngưỡng bùng nổ: Tần suất phân nhánh nét Edge Density.",
-    "accuracy": "Tốt (74-81%) - Bản đồ nhiệt bạo chúa phơi bày ngay tắp lự các vùng hình AI vẽ lỡ tay (artifact vỡ vụn).",
-    "source": "Lưu Trữ Xử Lý Ảnh Số & Đồ Thị Cấu Trúc Vi Mô Hình Trọng Lực",
-    "useCase": "Giám định trực tiếp vào các vùng phức tạp (mặt quỷ, tóc lòa xòa, lá cây, chữ viết ngáo trên nền). Quét một đường là biết nét này sinh ra bởi AI vì nó nát vụn và đứt đoạn hoang tưởng.",
+    "name": "Phân Tích Mật Độ Cạnh Viền (Edge Density)",
+    "description": "Phương pháp đo mật độ và phân bố đường cạnh trong các vùng ảnh phức tạp. Các mô hình AI (Midjourney, Stable Diffusion) gặp khó khăn khi tái tạo các chi tiết hỗn loạn tự nhiên như tán lá, sợi tóc đan chéo. Do không hiểu vật lý thực tế, AI thường tạo ra kết cấu viền đứt đoạn, phi cấu trúc. Phương pháp này đo mật độ cạnh để phát hiện sự bất thường này.",
+    "algorithm": "Phân Tích Mật Độ Tổ Chức Đường Biên Không Gian (Spatial Edge Concentration)",
+    "mechanism": "Bằng cách áp dụng bộ lọc Canny-Edge trên toàn ảnh, thuật toán đo mật độ đường cạnh tại từng vùng cục bộ. Trong ảnh tự nhiên, tán lá hay sợi tóc tạo ra các đường cạnh liền mạch, có cấu trúc tổ chức. Trong ảnh AI, các đường cạnh thường đứt đoạn, phân tán bất thường. Hệ thống cảnh báo khi mật độ cạnh đứt đoạn vượt ngưỡng bình thường so với khu vực xung quanh.",
+    "parameters": "Bộ lọc: Canny Spread, Đo lường: Độ tập trung biên cục bộ, Ngưỡng: Tần suất phân nhánh Edge Density",
+    "accuracy": "Tốt (74-81%) — Bản đồ nhiệt hiệu quả trong phát hiện các vùng AI tạo sinh có khuyết tật kết cấu (artifact).",
+    "source": "Lưu trữ xử lý ảnh số — Phân tích cấu trúc vi mô hình học",
+    "useCase": "Phân tích trực tiếp các vùng phức tạp (tóc, lá cây, chữ viết trên nền) để nhận diện kết cấu viền đứt đoạn bất thường đặc trưng của ảnh AI.",
     "references": [
         {
             "title": "Stamm, M. C., et al. (2013). Information forensics: An overview of the first decade. IEEE Access.",
@@ -21,6 +21,6 @@
             "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
         }
     ],
-    "strengths": "• Rất khoái khẩu việc 'ăn thịt' các vùng bị Diffusion model hallucinate (vẽ sai, ảo giác) hoặc ghép chi tiết siêu hiển vi một cách thất bại.\n• Tính toán cực lẹ vì chỉ lọc viền và đếm pixel trắng, không rườm rà mạng nơ-ron GPU đắt đỏ.",
-    "limitations": "• Nhát chém sẽ hoàn toàn mù mờ và tạo ra Dương tính giả rợp trời nếu chém vào 1 bức ảnh chụp bãi cỏ rậm rạp thật hoặc 1 bộ áo lông thú hàng riêu. Mật độ mép tự nhiên của chúng cũng rậm không kém hàng fake.\n• Dễ dàng phế võ công nếu kẻ thủ ác dùng Filter Gaussian Blur nhẹ dập lên 1 phát, xóa sạch nhẵn mọi mép đứt gãy AI, khiến máy quét chỉ thấy 1 dải trơn nhẵn bóng."
+    "strengths": "• Hiệu quả cao trong phát hiện các vùng ảnh AI bị lỗi hallucination hoặc ghép chi tiết vi mô thất bại.\n• Tốc độ xử lý nhanh vì chỉ cần lọc viền và đếm pixel, không yêu cầu mạng nơ-ron GPU.",
+    "limitations": "• Tỷ lệ dương tính giả trên ảnh chụp bãi cỏ rậm hoặc vật có bề mặt phức tạp tự nhiên, vì mật độ cạnh tự nhiên cũng rất cao tương tự ảnh AI.\n• Mất hiệu lực nếu ảnh AI được áp dụng bộ lọc Gaussian Blur nhẹ, xóa sạch các đường cạnh đứt đoạn."
 }

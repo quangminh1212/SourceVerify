@@ -1,12 +1,12 @@
 {
-    "name": "Búa Tạ Nhạy Bóng Kết Cấu (Gabor Response)",
-    "description": "Kẻ thống trị bản đồ nếp nhăn vi mô. Từng vết in hằn trên lá, từng sần sùi của bức tường, hay da mặt người đều là một phản xạ Gabor tinh túy đa tỷ lệ định hướng. Bọn hình xăm AI (Midjourney / DALL-E) thì hay làm mượt quá mức vùng trung gian, nhưng lại đẩy gai góc một cách khốn nạn vào viền biên. Bỏ hình vô máy Gabor Response, thuật toán sẽ đo tiếng dội đáp ứng của từng cái gai kết cấu. Cảnh báo fake vang rền khi nhịp điệu đáp ứng đột ngột nhạt phếch (phần chắp vá mượt sáp) hay sắc lẹm lố bịch (lỗi do Sharpen viền).",
-    "algorithm": "Ánh Xạ Quét Đáp Ứng Cực Trị Texture Gabor Rộng (Max Gabor Response Mapping)",
-    "mechanism": "Nó đè tấm ảnh ra, áp nguyên một mớ dao chẻ sóng Gabor siêu nhỏ chém lên từng kết cấu. Khác biệt với năng lượng tĩnh, máy đo 'Response' sẽ xem sự rung động độ nhạy của dải điểm ảnh khi dội qua Gabor. Nếu thuật toán vừa chạy qua chóp mũi mượt mà tự nhiên, bỗng chồm tới vùng trán bị Inpaint đắp da của AI và thấy sự chùng xuống tắt nghỉ của tần số đáp ứng (Cự ly phản xạ quá thấp vì không hề có vân da cấu trúc).. Mọi thứ kết thúc. Một án tử treo mồm chờ xác nhận AI Fake.",
-    "parameters": "Tính Hiệu Số: Max_{ô, hướng} |Gabor(ô,hướng)|, Ma trận: Đa tần Scale Mapped Histogram, Biên Độ Đáp Ứng",
-    "accuracy": "Chững Chạc (80-87%) - Tuyệt lữ sát thủ kết liễu bọn ảnh xù xì bỗng có vùng nhẵn lơ (Blur nham nhở) và ảnh nhẵn bỗng có vùng nhiễu (Add noise cục bộ).",
-    "source": "Lưu Trữ Mô Phỏng Phân Rã Cột Nhiễu Trắng - Tín Hiệu Gabor Ảnh Nguyên Thể",
-    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí dùng công cụ làm mượt da mặt ác ý, hay những kết cấu của mạng AI (GANs) bị đổ khuôn lỗi hỏng mất hết răng cưa vật lý của hiện thực.",
+    "name": "Phân Tích Đáp Ứng Gabor (Gabor Response)",
+    "description": "Phương pháp đo đáp ứng cực trị kết cấu qua bộ lọc Gabor đa tỷ lệ và đa hướng. Mỗi kết cấu tự nhiên (vân lá, bề mặt tường, da mặt người) tạo ra phản xạ Gabor đặc trưng. Các mô hình AI tạo sinh (Midjourney, DALL-E) thường làm mượt quá mức vùng trung gian nhưng tạo kết cấu viền không tự nhiên. Thuật toán đo cường độ đáp ứng kết cấu để phát hiện sự bất nhất — khi đáp ứng sụt giảm đột ngột (vùng được làm mượt nhân tạo) hoặc tăng bất thường (lỗi tăng cường viền).",
+    "algorithm": "Ánh Xạ Đáp Ứng Cực Trị Kết Cấu Gabor (Max Gabor Response Mapping)",
+    "mechanism": "Thuật toán áp dụng bộ lọc Gabor vi mô lên từng vùng kết cấu ảnh. Khác biệt với đo năng lượng tĩnh, phương pháp Response đo sự biến thiên độ nhạy của dải điểm ảnh khi đi qua bộ lọc Gabor. Khi thuật toán chuyển từ vùng kết cấu tự nhiên sang vùng bị Inpainting bởi AI, đáp ứng tần số sụt giảm bất thường do vùng đó thiếu kết cấu vi mô vật lý (không có vân da, lỗ chân lông). Sự gián đoạn này là dấu hiệu của ảnh được can thiệp.",
+    "parameters": "Tính toán: Max_{ô, hướng} |Gabor(ô,hướng)|, Ma trận: Đa tần Scale Mapped Histogram, Biên độ đáp ứng",
+    "accuracy": "Khá cao (80–87%) — Hiệu quả trong phát hiện ảnh có vùng bị làm mượt đột ngột hoặc nhiễu cục bộ bất thường.",
+    "source": "Celiktutan et al. (2015); Lyu & Farid (2005) — Phân Tích Đáp Ứng Gabor Pháp Y Ảnh Số",
+    "useCase": "Phát hiện các vùng được làm mượt da mặt bằng công cụ chỉnh sửa hoặc kết cấu do mạng GAN tạo sinh thiếu tính chất vật lý của bề mặt thực.",
     "references": [
         {
             "title": "Celiktutan, O., et al. (2015). Blind evaluation of image tampered regions... IEEE TIFS.",
@@ -25,6 +25,6 @@
             "url": "https://doi.org/10.1364/JOSAA.2.001160"
         }
     ],
-    "strengths": "• Khả năng chịu đòn ghê rợn trước độ nhiễu màu tự nhiên vì ma trận chỉ hút lấy cấu trúc hình học biên phản hồi sắc thái (Texture edge). Lỗi ở mép thì Gabor rạch tận ruột.\n• Siêu nhạy với vụ lừa đảo chải mịn nét mặt (Smooth/Beautify tool), bắt bằng chết sự trây trét của thuật toán app Trung Quốc.",
-    "limitations": "• Nhát kiếm đành gãy mũi đâm vào khoảng không (tạo cảnh cáo giả bừa bãi) nếu tấm ảnh vốn dĩ là một mảng vector màu bệt, Anime 2D.. nơi độ nhạy Response luôn thấp một cách khốn khổ như AI vẽ.\n• Bị vô hiệu não bộ khi kẻ xấu Resize kéo giãn ảnh cực mạnh bằng hệ AI thông minh (Gigapixel AI), dàn đều đều toàn bộ lượng Response ra toàn dải một cách cực mượt."
+    "strengths": "• Khả năng chống nhiễu màu tự nhiên cao vì ma trận chỉ phân tích cấu trúc hình học biên kết cấu (Texture edge), phát hiện tốt lỗi tại mép viền.\n• Nhạy cảm đặc biệt với các vùng được xử lý bằng công cụ làm mượt da (Smooth/Beautify), do thuật toán phát hiện sự suy giảm đáp ứng kết cấu.",
+    "limitations": "• Tỷ lệ dương tính giả cao đối với ảnh vector, anime 2D hoặc ảnh có vùng màu phẳng — nơi đáp ứng Response tự nhiên thấp, tương tự với đặc điểm ảnh AI.\n• Mất hiệu lực khi ảnh được phóng đại bằng công cụ AI (Gigapixel AI), do quá trình nội suy thông minh làm đồng nhất đáp ứng trên toàn dải."
 }

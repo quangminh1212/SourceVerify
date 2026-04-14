@@ -1,12 +1,12 @@
 {
-    "name": "Radar Đo Năng Lượng Gabor (Gabor Energy)",
-    "description": "Sát thủ bóng tối theo dõi tần vi phân định hướng lưới góc. Lọc Gabor vốn dĩ là mô phỏng võng mạc hệ thần kinh mắt người: Vừa nhìn rõ nét, vừa cảm thụ biên độ ánh sáng sắc cạnh theo tần số phức. Một bức ảnh thực từ ống kính quang học khi phân tích Gabor sẽ trả về 'ổ năng lượng mượt mà' vì dòng chảy ánh sáng tuân thủ góc độ. Ảnh AI thì đứt gãy tanh bành các cực trị, vì máy học đoán đại kết cấu phân mức điểm ảnh nên năng lượng Gabor đứt quãng dữ dội. Bỏ ảnh vô máy này để nhận xét tội chết ngay cho độ nát bét của đường viền năng lượng.",
-    "algorithm": "Ánh Xạ Năng Lượng Convolution Phức (Gabor Energy Response)",
-    "mechanism": "Thuật toán kích hoạt một siêu radar tích chập 2D (Gabor Filters) quay vòng nhiều góc độ (Ngang, dọc, xiên). Khi đi qua một vật thể (ví dụ: mép áo, răng, vân gỗ), Gabor đếm sốc điểm 'Năng Lượng cực đại' bị phát nổ ra màn hình. Khi thợ sửa hình cắt người dán vào nề cảnh, dòng mạch năng lượng phương vị Gabor tại ranh giới bị chém gãy thành một đường hố sâu thẳm hụt hẫng (Phase shift/Energy death). Máy quét cứ chẻ hụt năng lượng phát là nướng sạch thẻ meta và hét rú lên 'Mạo Danh!'.",
-    "parameters": "Cốt lõi: Convolution Gabor 2D Complex, Quét lưới: 8 phương vị góc chéo, Đo đếm: Biên độ sóng Năng Lượng (Energy Map)",
-    "accuracy": "Rất Ổn (78-85%) - Máy thảm sát khốc liệt dành riêng phanh thui các công cụ Auto-crop dán cắt không trọn vẹn vòng bao kết cấu.",
-    "source": "Lưu Trữ Tín Hiệu Sinh Cấu Trúc Động (Gabor Biological Filter Forensics)",
-    "useCase": "Giáng ngọn giáo chém chết tay Photoshop nửa mùa đắp trăng hay mặt người ngụy tạo lên bức tường trống rỗng mà không lo gọt mượt đường tơ viền vật chất ánh sáng cho thẳng với hệ phân tích.",
+    "name": "Phân Tích Năng Lượng Gabor (Gabor Energy)",
+    "description": "Phương pháp đo năng lượng đáp ứng bộ lọc Gabor theo nhiều hướng và tần số. Bộ lọc Gabor mô phỏng cơ chế thị giác của hệ thần kinh mắt người: nhận diện cạnh và kết cấu theo hướng và tần số cụ thể. Ảnh thực từ ống kính quang học cho phản hồi năng lượng Gabor liên tục và ổn định, do dòng ánh sáng tuân theo quy luật vật lý. Ảnh AI tạo sinh thường có sự đứt gãy năng lượng Gabor tại các vùng viền, do mô hình ước lượng kết cấu điểm ảnh thiếu tính liên tục vật lý.",
+    "algorithm": "Ánh Xạ Năng Lượng Tích Chập Gabor Phức (Gabor Energy Response)",
+    "mechanism": "Thuật toán áp dụng bộ lọc tích chập Gabor 2D phức quay theo nhiều hướng (ngang, dọc, chéo). Khi bộ lọc đi qua các cạnh vật thể (viền áo, vân gỗ, cạnh răng), hệ thống tính năng lượng cực đại tại mỗi điểm. Tại ranh giới giữa vùng cắt ghép và vùng gốc, dòng năng lượng phương vị Gabor sụt giảm đột ngột (Phase shift/Energy death), tạo thành dấu hiệu bất thường có thể phát hiện được.",
+    "parameters": "Cốt lõi: Convolution Gabor 2D Complex, Quét lưới: 8 phương vị góc chéo, Đo đếm: Biên độ sóng năng lượng (Energy Map)",
+    "accuracy": "Khá cao (78–85%) — Hiệu quả đặc biệt trong phát hiện các vùng cắt ghép không đồng nhất về kết cấu viền.",
+    "source": "Stamm et al. (2013) — Bộ Lọc Gabor Sinh Học Trong Pháp Y Ảnh Số (Gabor Biological Filter Forensics)",
+    "useCase": "Phát hiện các vùng ghép chèn (Photoshop) mà mặt người hoặc vật thể được dán lên nền không tương thích về năng lượng kết cấu viền, đặc biệt với ảnh Deepfake Face-Swap.",
     "references": [
         {
             "title": "Stamm, M. C., et al. (2013). Information forensics: An overview. IEEE Access.",
@@ -21,6 +21,6 @@
             "url": "https://doi.org/10.1109/TSMC.1973.4309314"
         }
     ],
-    "strengths": "• Bóp nát ảo giác bằng cách ép toàn cục bức ảnh ra các vùng hướng sóng điện từ. Điểm hay là nó soi được cả độ dày lởm chởm do lỗi làm mượt cọ vẽ khi ghép mặt người (Deepfake Face-Swap).\n• Thao tác đo năng lượng biên độ không ngại cả màu sắc hay nhiễu hạt vì lưới bắt điểm tần số rất chính quy và độc lập độ sáng.",
-    "limitations": "• Nhát chém đập phải một vũng lầy trống rỗng rồi False positive toàn tập khi quét trúng một vũng hình bầu trời đêm trống hoác, hoặc một bề mặt sơn tường lì lợm không có đường nét bấu víu Gabor.\n• File bị xé băm do nén WebP/JPEG cực gắt sẽ phá tan luôn cấu trúc năng lượng Gabor vi phân nguyên bản."
+    "strengths": "• Phân tích toàn cục ảnh theo các hướng sóng điện từ, có khả năng phát hiện lỗi làm mượt viền trong ảnh ghép mặt (Deepfake Face-Swap).\n• Phép đo năng lượng biên độ không phụ thuộc vào màu sắc hay nhiễu hạt, vì lưới bộ lọc tần số hoạt động độc lập với cường độ sáng.",
+    "limitations": "• Tỷ lệ dương tính giả cao khi quét các vùng ảnh đồng nhất (bầu trời đêm, bề mặt tường phẳng) — nơi năng lượng Gabor tự nhiên rất thấp.\n• Mất hiệu lực khi ảnh bị nén WebP/JPEG với tỷ lệ cao, phá hủy cấu trúc năng lượng Gabor vi phân nguyên bản."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Khám Nghiệm Tử Thi File Cấu Trúc (File Structure)",
-    "description": "Lưỡi hái moi móc lõi mã nhị phân hex. Trớ trêu thay, kẻ lừa đảo thường dồn toàn lực sửa thật đẹp phần hình ảnh mà quên mất rằng mọi file số (JPEG/PNG/WebP) đều tuân theo các chuẩn mực khối khung gầm (Format Bytes) rất thô cứng. File bị nhét thêm malware ẩn, nhét thêm chuỗi chữ dán ghép Steganography (giấu tin), hay Save đè bằng phần mềm mã nguồn mở dỏm? Thuật toán cấu trúc này sẽ đào lên thấy ngay các header dư thừa lòi lìa rịa ra ngoài.",
-    "algorithm": "Quét Lỗi Hexa Khối Gầm Nhị Phân (Binary File Format Forensics)",
-    "mechanism": "Thay vì đọc ảnh như bức tranh, nó đọc bức ảnh như một đoạn mã nhị phân khô khan. Tìm kiếm sự sai lệch độ dài Byte của Header (SOI, EOI, DQT trong file JPEG). Chó săn này bắt gặp một khối ứng dụng APP1 hay APP12 kỳ quái vốn không bao giờ thuộc về quy định xuất file của máy ảnh gốc Canon, Sony.. Nó kết luận ngay lập tức có sự chọc ngoáy can thiệp từ bàn tay ác ý của con người ở cấp độ mã lệnh.",
-    "parameters": "Trích xuất: Hex Dumping, Bộ chỉ mục: JPEG Markers (FFD8, FFE0), Độ dài Byte-offset Chunk",
-    "accuracy": "Đanh Thép (95-100% nếu có mẩu thừa) - Không cần cãi, vì byte thừa trong lõi Header là sai phạm cấu trúc máy tính tuyệt đối.",
-    "source": "Kee & Farid (2011) - Phân Rã Chữ Ký Nhị Phân File Header (Header Signatures)",
-    "useCase": "Giáng đòn rạch ròi trước mọi tòa án, lôi cổ kẻ gian đang giấu 1 mớ payload file RAR hay nhúng lén text độc hại vào sát đuôi EOI của file hình.",
+    "name": "Phân Tích Cấu Trúc File Nhị Phân (File Structure)",
+    "description": "Phương pháp phân tích cấu trúc nhị phân (hex) của tệp ảnh. Mọi tệp ảnh (JPEG/PNG/WebP) tuân theo các chuẩn mực khung header nghiêm ngặt. Tệp bị nhúng dữ liệu ẩn (Steganography), chèn payload phần mềm độc hại, hoặc lưu lại bằng phần mềm khác nguồn gốc đều để lại dấu vết trong cấu trúc header dư thừa hoặc bất thường.",
+    "algorithm": "Phân Tích Pháp Y Cấu Trúc Nhị Phân File (Binary File Format Forensics)",
+    "mechanism": "Thay vì phân tích nội dung pixel, thuật toán đọc tệp ảnh dưới dạng dữ liệu nhị phân. Nó kiểm tra tính hợp lệ của header (SOI, EOI, DQT trong JPEG), phát hiện sự sai lệch độ dài byte và các khối ứng dụng (APP1, APP12) không thuộc quy chuẩn xuất file của nhà sản xuất thiết bị gốc (Canon, Sony). Nếu phát hiện bất thường cấu trúc, thuật toán kết luận có sự can thiệp từ bên ngoài ở cấp độ mã lệnh.",
+    "parameters": "Trích xuất: Hex Dumping, Chỉ mục: JPEG Markers (FFD8, FFE0), Độ dài Byte-offset Chunk",
+    "accuracy": "Rất cao (95-100% khi có dấu vết cấu trúc) — Byte dư thừa trong header là bằng chứng cấu trúc máy tính xác định.",
+    "source": "Kee & Farid (2011) — Phân rã chữ ký nhị phân File Header (Header Signatures)",
+    "useCase": "Phát hiện tệp ảnh bị nhúng payload ẩn (RAR, văn bản) sau marker EOI, hoặc xác minh tính nguyên vẹn cấu trúc nhị phân của tệp gốc.",
     "references": [
         {
             "title": "Kee, E., et al. (2011). Digital image authentication from JPEG headers. IEEE TIFS.",
@@ -25,6 +25,6 @@
             "url": "https://docs.midjourney.com/"
         }
     ],
-    "strengths": "• Khả năng bắt sống Steganography (Kỹ thuật giấu tin). Bọn xảo quyệt giấu công cụ hack, tệp đính kèm trong thư mục đuôi JPEG sẽ bị hệ thống túm cổ lập tức vì độ dài byte dị thường.\n• Tốc độ quét kinh hoàng, không tốn RAM và không cần nhìn vào pixel.",
-    "limitations": "• Đạn lép hoàn toàn nếu tay súng kia quá pro: Vừa sửa ảnh cực xịn vừa dùng tool build lại 100% cấu trúc Binary chuẩn xác từ số 0, giấu sạch rác rưởi vào khoảng không hợp lệ.\n• Hay thét báo động giả (False Positives) nếu phần mềm edit rác trên điện thoại gắn thêm các thẻ quảng cáo vớ vẩn vào file nhưng thưc chất chẳng làm gì hình ảnh cả."
+    "strengths": "• Phát hiện kỹ thuật Steganography (giấu dữ liệu trong tệp ảnh) dựa trên sự bất thường về độ dài byte sau marker EOI.\n• Tốc độ quét rất nhanh, không yêu cầu giải mã pixel.",
+    "limitations": "• Mất hiệu lực nếu người can thiệp tái tạo lại cấu trúc nhị phân chuẩn xác từ đầu, loại bỏ mọi dấu vết dư thừa.\n• Tỷ lệ dương tính giả khi phần mềm chỉnh sửa trên điện thoại tự động gắn thêm các thẻ metadata quảng cáo vào tệp mà không can thiệp nội dung ảnh."
 }

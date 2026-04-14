@@ -1,18 +1,18 @@
 {
-    "name": "Trục Xuất Cosine Năng Lượng Hình Thái (Discrete Cosine Energy)",
-    "description": "Lò sát sinh tần số nhắm vào những khối ảnh nhân tạo phẳng lì. Đo đạc sự 'phân bổ năng lượng' của cấu trúc biến đổi Cosine rời rạc. Một cỗ máy phân loại tàn khốc chuyên lôi cổ tần số thấp nhạt nhẽo và tần số cao bạo loạn để chứng minh bức hình này được 'tô màu' bởi cọ điện tử AI hay chụp từ thế giới vật lý thật.",
-    "algorithm": "Phân Rã Năng Lượng Tần Số DCT Tuyến Tính Toàn Cục",
-    "mechanism": "Khác với DCT thông thường dò khối 8x8, phương pháp này ép cả bức hình vào ma trận quang phổ để tính toán phân mảnh năng lượng toàn cảnh. Bộ radar này nhìn chằm chằm vào rạch ranh giới AC/DC (năng lượng nền tảng và năng lượng chi tiết). Ảnh ảo do AI vắt ra luôn cố sức tô mượt mọi thứ, làm thông lượng năng lượng AC rỗng nghếch, vô hồn một cách đáng sợ. Mức năng lượng này lố lăng đến mức bị thuật toán bắt quả tang gí súng chốt tội chết.",
-    "parameters": "Ma trận tuyến tính: Global Fast DCT, Phân Tích: Băng thông Năng Lượng DC vs AC, Tần suất cắt biên thấp",
-    "accuracy": "Khá Tốt (70-76%) - Phương thức đắc lực dùng để lột mặt nạ phần lớn các hình ảnh bị filter mờ nhòe giả tạo.",
-    "source": "Barni & Stamm (2012) - Mật Độ Phổ & Phân Mảnh Khối Cosine Rời Rạc",
-    "useCase": "Trở thành bộ quét rà mìn cực gắt trên bề mặt toàn khung, báo thẳng vào mặt nếu bức ảnh quá mượt mà nhẵn thín (được sinh ra từ AI hoặc kéo da mịn max viền).",
+    "name": "Phân Tích Năng Lượng Cosine Rời Rạc (Discrete Cosine Energy)",
+    "description": "Phương pháp đo phân bố năng lượng biến đổi Cosine rời rạc toàn cục. Phân loại ảnh dựa trên tỷ lệ năng lượng giữa dải tần thấp và dải tần cao, cho phép phân biệt ảnh chụp quang học thực với ảnh do AI tạo sinh hoặc ảnh đã qua xử lý bộ lọc.",
+    "algorithm": "Phân Tích Năng Lượng Tần Số DCT Tuyến Tính Toàn Cục",
+    "mechanism": "Khác với phương pháp DCT khối 8x8, phương pháp này phân tích toàn bộ ảnh trong miền quang phổ để tính phân mảnh năng lượng tổng thể. Thuật toán đánh giá ranh giới năng lượng AC/DC (năng lượng nền và năng lượng chi tiết). Ảnh AI tạo sinh thường có xu hướng làm mịn kết cấu, dẫn đến thành phần năng lượng AC (chi tiết) suy giảm bất thường so với ảnh chụp thực.",
+    "parameters": "Ma trận: Global Fast DCT, Phân tích: Tỷ lệ năng lượng DC/AC, Ngưỡng cắt biên thấp",
+    "accuracy": "Khá (70-76%) — Phương pháp hiệu quả trong phát hiện ảnh bị áp dụng bộ lọc làm mờ hoặc ảnh AI có kết cấu quá mịn.",
+    "source": "Barni & Stamm (2012) — Phân tích mật độ phổ và phân mảnh khối Cosine rời rạc",
+    "useCase": "Phân tích phân bố năng lượng tần số toàn khung để phát hiện ảnh có kết cấu bị làm mịn bất thường, bao gồm ảnh AI tạo sinh và ảnh đã qua lọc mờ nhân tạo.",
     "references": [
         {
             "title": "Barni, M., et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency. IEEE TFS.",
             "url": "https://ieeexplore.ieee.org/document/5567087"
         }
     ],
-    "strengths": "• Nghiền ép toàn bộ hệ cấu trúc hình ảnh mà không cần tốn quá nhiều sức lực phần cứng, báo động rợp trời sự giả tạo trên bầu trời mây dởm hoặc vùng da dởm của AI.\n• Rất lỳ đòn trước trò làm mờ của hacker, vì làm mờ càng bạo thì Năng lượng Cosine Tần suất cao càng chết hẳn, AI càng vạch áo cho người xem lưng.",
-    "limitations": "• Nhát đâm hoàn toàn mù lòa và cắn nhầm False Positive vào các bức tranh đồ họa thuần 2D (Vector art, anime, CGI) vì chúng bản chất là trơn nhẵn phẳng lì.\n• Rớt sạch độ chuẩn xác nếu tác phẩm AI bị băm nát qua nhiễu Gaussian hạt thô khổng lồ trước khi xuất file."
+    "strengths": "• Xử lý toàn cục không yêu cầu nhiều tài nguyên phần cứng, phát hiện hiệu quả sự thiếu hụt năng lượng chi tiết trên các vùng AI tạo mịn.\n• Tính kháng nhiễu tốt trước thao tác làm mờ: làm mờ càng mạnh, năng lượng tần số cao càng suy giảm rõ rệt, tạo tín hiệu bất thường dễ phát hiện.",
+    "limitations": "• Tỷ lệ dương tính giả trên ảnh đồ họa 2D thuần túy (vector art, anime, CGI), vì các tác phẩm này vốn có kết cấu phẳng mịn tự nhiên.\n• Mất hiệu lực nếu ảnh AI được thêm nhiễu Gaussian cường độ cao trước khi xuất file."
 }

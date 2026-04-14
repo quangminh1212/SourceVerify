@@ -1,18 +1,18 @@
 {
-    "name": "Mũi Khoan Trượt Pha Gabor (Gabor Phase)",
-    "description": "Lưỡi cưa phát hiện kẻ phản trắc không gian (Phase Shift). Nếu [Năng Lượng Gabor] đo độ mạnh yếu của đường gồ lên bề mặt, thì [Trượt Pha Gabor] đâm sâu vào việc đánh giá sự liên hoàn của nó. Các làn sóng pixel giao thoa trên bề mặt thực vật luôn trượt với một góc tự nhiên. Nhưng với 2 vật cắt dán từ hố đen Photoshop, khi ráp vào nhau, chuỗi sóng pha Gabor bị vỡ tan tành - đột ngột khựng góc, dập nát và mất pha y như 2 chiếc răng cưa sai khớp cắn.",
-    "algorithm": "Đo Lệch Pha Cực Trị Gabor 2D (Gabor Phase Congruency & Shift Var)",
-    "mechanism": "Nó rà kim đo vào thẳng cái nhịp đập góc của biên độ sóng ảo ảnh. Sự biến đổi Fourier kết hợp lõi Gabor trả về kết quả 2 hàm: Phần Thực (nhìn thấy) và Phần Ảo (Pha góc). Mắt thường hoàn toàn mù tịt trước thứ này, vì mắt ta chỉ nạp độ sáng, không nạp góc Pha. Thuật toán này là vị quan tòa moi ra cái góc Pha đó. Ngay tại nếp gấp giữa ngực áo ghép và đường cổ thật của nạn nhân... hệ thống phát hiện độ trượt chênh quá 180 độ. Còi rú! Phiền báo động ghép nối không cùng 1 ảnh mẹ đẻ.",
-    "parameters": "Hình dạng: Lõi lưới Gabor 2D Phức, Đo Lường: Bóc tách Phần Ảo Pha Số, Sai Số Trượt Pha",
-    "accuracy": "Cực Xịn (81-90%) - Con mắt thứ 3 tối thượng soi mói mấy cái viền rìa bức ảnh sau khi dùng Selection Magic Wand ghép chọc lởm chởm.",
-    "source": "Lưu Trữ Tín Hiệu Pha Tích Chập Kỹ Thuật Số Toán Học",
-    "useCase": "Giáng ngọn lửa thẳng vào các mối nối khuyết tật siêu phàm do Inpainting, Copy-Move phẫu thuật trên khuôn mặt, nơi bóng tối ánh sáng rất ổn nhưng Sóng Pha từ 2 nguồn ảnh dội vào nhau thì lệch pha tung tóe.",
+    "name": "Phân Tích Trượt Pha Gabor (Gabor Phase)",
+    "description": "Phương pháp phân tích sự liên tục pha (Phase Congruency) của bộ lọc Gabor. Nếu phương pháp Năng Lượng Gabor đo cường độ kết cấu, thì Trượt Pha Gabor đánh giá tính liên hoàn của sóng kết cấu. Các làn sóng pixel trên bề mặt vật thể thực luôn trượt pha với góc tự nhiên liên tục. Khi hai vật thể từ nguồn ảnh khác nhau được ghép lại, chuỗi sóng pha Gabor tại ranh giới bị gián đoạn đột ngột — thể hiện sự lệch pha rõ rệt.",
+    "algorithm": "Đo Lệch Pha Cực Trị Gabor 2D (Gabor Phase Congruency & Shift Variance)",
+    "mechanism": "Thuật toán phân tích thành phần pha của bộ lọc Gabor. Biến đổi Fourier kết hợp lõi Gabor trả về hai thành phần: phần thực (biên độ) và phần ảo (pha góc). Mắt thường không thể nhận biết sự khác biệt pha vì thị giác chỉ xử lý cường độ sáng. Thuật toán trích xuất thành phần pha và đo sự trượt chênh tại các ranh giới — nơi ảnh ghép thể hiện độ lệch pha vượt ngưỡng cho phép, cho thấy hai vùng ảnh không cùng nguồn gốc.",
+    "parameters": "Hình dạng: Lõi lưới Gabor 2D phức, Đo lường: Phần ảo pha số, Sai số trượt pha",
+    "accuracy": "Rất cao (81–90%) — Hiệu quả đặc biệt trong phát hiện các vùng ghép viền do công cụ Selection/Magic Wand tạo ra.",
+    "source": "Kovesi (1999) — Phân Tích Pha Tích Chập Kỹ Thuật Số",
+    "useCase": "Phát hiện các mối nối ghép do Inpainting hoặc Copy-Move trên khuôn mặt, nơi cường độ sáng và bóng được chỉnh đồng nhất nhưng sóng pha từ hai nguồn ảnh vẫn thể hiện sự lệch pha đáng kể.",
     "references": [
         {
             "title": "Kovesi, P. (1999). Image features from phase congruency. Videre: Journal of computer vision research.",
             "url": "https://doi.org/10.1162/108842499569958"
         }
     ],
-    "strengths": "• Giả vờ ngụy trang bằng chỉnh sáng (Contrast/Level) là hoàn toàn bất lực trước Trượt Pha. Vì pha sóng (Gabor Phase) lì lợm tuyệt đối trước mọi sự thao túng tăng giảm cường độ pixel. Fake là lộ.\n• Nhát cắt vào phần tối nhạy của cấu trúc góc, bóc mặt nạ trọn vẹn mấy công cụ Smudge (cọ chà mờ) của Adobe do thợ cày nát các góc Pha.",
-    "limitations": "• Nhát kiếm này sẽ mẻ vỡ khi bị nhúng ảnh quá nhiễu tối om bằng hạt cát nhiễu sáng hỗn loạn, che lấp toàn bộ sóng pha Gabor bên dưới cái màng nhòe nhẹt của file thô.\n• Lại tiếp tục bị hù do ảnh nén quá nặng tàn sát cấu trúc ma trận thực-ảo của pixel, làm pha rối rắm như một giỏ cua đồng."
+    "strengths": "• Không bị ảnh hưởng bởi các thao tác chỉnh sáng (Contrast/Level), vì pha sóng Gabor bất biến trước sự thay đổi cường độ pixel.\n• Nhạy cảm cao với các vùng bị xử lý bằng công cụ Smudge (cọ chà mờ), do công cụ này phá hủy cấu trúc pha góc của kết cấu.",
+    "limitations": "• Độ chính xác giảm đáng kể đối với ảnh có nhiễu cao hoặc điều kiện chụp tối, khi nhiễu hạt che lấp thông tin sóng pha Gabor bên dưới.\n• Mất hiệu lực khi ảnh bị nén quá nặng, làm biến dạng cấu trúc phức thực-ảo của ma trận pixel."
 }
