@@ -1,18 +1,18 @@
 {
-    "name": "Đo Lường Cấu Trúc Cong Hữu Cơ (Curvelet Transform)",
-    "description": "Vũ khí theo dõi đường cong hữu cơ số 1. Trong khi Wavelet chỉ đo hình vuông, và Contourlet bắt góc chéo, thì Curvelet sinh ra để ôm trọn lấy các đường cong uốn lượn mượt mà chuẩn vật lý (như gò má người, bóng bay, viền xe hơi). Hệ thống AI tạo sinh thường 'hụt hơi' khi cố nội suy ra nhịp uốn cong liên tục, để lại vô vàn các vết nứt siêu nhỏ, đa diện mà máy quét Curvelet sẽ lột trần lập tức.",
-    "algorithm": "Biến Đổi Curvelet Đa Phân Giải & Định Tuyến Năng Lượng Cong",
-    "mechanism": "Thuật toán nhẫn tâm chẻ bức ảnh thành từng dải năng lượng đa giác linh hoạt. Nó quét dọc theo bề mặt các nếp gấp, đường bo tròn để đo đạc sự liền mạch của các nốt nhiễu. Hình ảnh thực tạo ra nốt nhiễu phân bố chạy song song hoàn hảo với đường cong của vật lý. Hình ảnh Deepfake hoặc nhào nặn AI lại in hằn những đống rác năng lượng lởm chởm vuông vắn tại chính các nếp bo viền này, kích hoạt ngay chuông báo động.",
-    "parameters": "Trực giao: Fast Discrete Curvelet Transform (FDCT), Góc phân giải: Đa hướng hữu cơ, Hệ số: Tính dị hướng cao",
-    "accuracy": "Cực Cao (80-88%) - Phép đo tối thượng không khoan nhượng đối với các vệt đứt viền cong - di chứng không thể chữa khỏi của mạng nơ-ron tạo ảnh.",
-    "source": "Candès & Donoho (2000) - Lý Thuyết Curvelet Đa Hướng / Hình Học Cong",
-    "useCase": "Giáng búa phán quyết thẳng vào những khuôn mặt deepfake giả tạo hoặc các vật thể bị cắt dán có những đường viền cong bo góc bị xử lý lởm chởm vội vàng dối trá.",
+    "name": "Phân Tích Biến Đổi Curvelet (Curvelet Transform)",
+    "description": "Phương pháp theo dõi đường cong hữu cơ sử dụng biến đổi Curvelet. Trong khi Wavelet phân tích theo hình vuông và Contourlet xử lý góc chéo, Curvelet được thiết kế để biểu diễn tối ưu các đường cong uốn lượn mượt mà theo quy luật vật lý (gò má, viền xe hơi, bề mặt cong). Các mô hình AI tạo sinh thường gặp khó khăn khi nội suy nhịp uốn cong liên tục, để lại các khuyết tật vi mô mà biến đổi Curvelet phát hiện hiệu quả.",
+    "algorithm": "Biến Đổi Curvelet Đa Phân Giải và Phân Tích Định Tuyến Năng Lượng Cong",
+    "mechanism": "Thuật toán phân tách ảnh thành các dải năng lượng đa giác linh hoạt, sau đó quét dọc theo bề mặt các đường cong để đánh giá tính liên tục phân bố nhiễu. Ảnh thật có nhiễu phân bố song song với các đường cong vật lý. Ảnh deepfake hoặc AI tạo sinh thường có các đứt đoạn năng lượng tại chính vị trí các đường viền cong, tạo dấu hiệu bất thường.",
+    "parameters": "Phương pháp: Fast Discrete Curvelet Transform (FDCT), Góc phân giải: Đa hướng hữu cơ, Hệ số: Tính dị hướng cao",
+    "accuracy": "Rất cao (80-88%) — Phương pháp hiệu quả đặc biệt đối với các khuyết tật đường viền cong, vốn là hạn chế cấu trúc của mạng nơ-ron tạo ảnh.",
+    "source": "Candès & Donoho (2000) — Lý thuyết Curvelet: Biểu diễn đa hướng hình học cong",
+    "useCase": "Phát hiện ảnh deepfake hoặc ảnh chắp vá có đường viền cong bị xử lý không chính xác, đặc biệt trên khuôn mặt hoán đổi (face-swap) và các đối tượng có bề mặt cong phức tạp.",
     "references": [
         {
             "title": "Candès, E.J., & Donoho, D.L. (2000). Curvelets: A surprisingly effective nonadaptive representation for objects with edges.",
             "url": "https://doi.org/10.1007/978-0-8176-4933-3_6"
         }
     ],
-    "strengths": "• Bất khả chiến bại trong việc 'ngửi' ra độ gai góc vật lý giả tạo của những vòng cung mà AI hay thợ cắt ghép không thể nào tạo ra cho mịn màng tự nhiên.\n• Độ chính xác kinh hoàng lên đường viền khuôn mặt - ác mộng của bọn Deepfake hoán đổi mặt (Face-swap).",
-    "limitations": "• Tính toán cồng kềnh khủng khiếp trên không gian tần số hướng 2D, khiến các máy cấu hình yếu có thể bị treo hoặc quá nhiệt khi chạy trên file độ phân giải siêu nét.\n• Bị lựu đạn khói JPEG làm hoa mắt: Nếu ảnh bị nén JPEG quá nát, các block 8x8 vuông vức chướng mắt sẽ phá hủy toàn bộ đường cong hữu cơ, gây dương tính giả trầm trọng."
+    "strengths": "• Hiệu quả vượt trội trong phát hiện khuyết tật đường cong mà AI hoặc kỹ thuật ghép ảnh không thể tái tạo mượt mà.\n• Độ chính xác rất cao trên đường viền khuôn mặt — điểm yếu cơ bản của công nghệ deepfake hoán đổi mặt (Face-swap).",
+    "limitations": "• Chi phí tính toán cao trên không gian tần số hướng 2D, có thể gây chậm trên ảnh độ phân giải rất cao.\n• Ảnh bị nén JPEG quá mạnh sẽ tạo các khối 8x8 phá hủy thông tin đường cong hữu cơ, gây dương tính giả."
 }

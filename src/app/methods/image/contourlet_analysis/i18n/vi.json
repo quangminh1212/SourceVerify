@@ -1,18 +1,18 @@
 {
-    "name": "Giám Định Cấu Trúc Vi Phân (Contourlet Analysis)",
-    "description": "Cỗ máy siêu soi chiếu để lột thấu cấu trúc đường viền phức tạp của bản ngã vật thể. Khác với wavelet thông thường chỉ nhìn nhận hình ảnh theo chiều dọc ngang, Contourlet 'uốn éo' linh hoạt theo mọi góc độ để bám chặt vào các đường cong vát nhọn tự nhiên. Các chương trình AI hiện tại (ngay cả Midjourney hay Flux) cực kỳ chật vật và thất bại thảm hại trong việc vẽ các đường bo góc chéo, thường sinh ra các nét nứt gãy lởm chởm siêu việt — thứ mà Contourlet ngay lập tức túm gáy.",
-    "algorithm": "Biến Đổi Contourlet Phân Hướng & Ngân Hàng Bộ Lọc Laplacian",
-    "mechanism": "Nó đánh lốt bức ảnh bằng Hệ thống ngọn tháp kim tự tháp Laplacian (Laplacian Pyramid) kết hợp Ngân hàng bộ lọc hướng (Directional Filter Bank). Thuật toán ép bức hình bị phân tách thành hàng vạn tần số siêu mỏng trên đa góc độ. Khi AI vẽ một đường mi mắt hay một gợn sóng chéo, nó để lại các mô hình 'vết cắt' năng lượng sai lệch hoàn toàn so với đường cong tán xạ ánh sáng thực. Máy đo Contourlet sẽ réo còi ầm ĩ khi phát hiện các 'viền nhựa' (plastic edges) giả tạo này.",
+    "name": "Phân Tích Biến Đổi Contourlet (Contourlet Analysis)",
+    "description": "Phương pháp phân tích cấu trúc đường viền phức tạp sử dụng biến đổi Contourlet. Khác với wavelet chỉ phân tích theo phương ngang và dọc, Contourlet có khả năng biểu diễn đa hướng, bám sát các đường cong tại mọi góc độ. Các mô hình AI (kể cả Midjourney hay Flux) gặp khó khăn trong việc tái tạo chính xác các đường viền chéo, thường tạo ra các khuyết tật hình học mà biến đổi Contourlet phát hiện hiệu quả.",
+    "algorithm": "Biến Đổi Contourlet Phân Hướng với Ngân Hàng Bộ Lọc Laplacian",
+    "mechanism": "Thuật toán áp dụng Hệ thống kim tự tháp Laplacian (Laplacian Pyramid) kết hợp Ngân hàng bộ lọc hướng (Directional Filter Bank) để phân tách ảnh thành nhiều dải tần số trên đa góc độ. Khi AI tái tạo các đường cong (mi mắt, gợn sóng chéo), nó thường tạo ra phân bố năng lượng sai lệch so với đường cong tán xạ ánh sáng thực. Biến đổi Contourlet phát hiện các đường viền phi tự nhiên này dựa trên sự bất thường trong phân bố năng lượng hướng.",
     "parameters": "Khung biến đổi: Contourlet Transform, Bộ lọc: Laplacian Pyramid/DFB, Số dải hướng phân rã: 8-16 góc xoay",
-    "accuracy": "Cực Cao (85-91%) - Một trong những đao phủ sắc bén nhất để xẻ đôi lớp ngụy trang của đường viền do AI khuếch tán tạo ra.",
-    "source": "Do & Vetterli (2005) - Mạng Phân Tích Contourlet / Biểu Diễn Đa Hướng Cạnh",
-    "useCase": "Trở thành 'kính lúp vạn năng' bắt trọn lỗi lởm chởm của các đường viền chéo, cung cấp bằng chứng thép để thi hành án cho các bức ảnh deepfake ngụy tạo độ sắc nét.",
+    "accuracy": "Rất cao (85-91%) — Một trong những phương pháp hiệu quả nhất trong phát hiện khuyết tật đường viền do các mô hình AI Diffusion tạo ra.",
+    "source": "Do & Vetterli (2005) — Biến đổi Contourlet: Biểu diễn đa hướng cạnh ảnh",
+    "useCase": "Phát hiện khuyết tật đường viền chéo trong ảnh AI, cung cấp bằng chứng phân tích hướng cho các trường hợp nghi ngờ ảnh deepfake có nét sắc phi tự nhiên.",
     "references": [
         {
             "title": "Do, M.N., & Vetterli, M. (2005). The contourlet transform: an efficient directional multiresolution image representation. IEEE TIP.",
             "url": "https://doi.org/10.1109/TIP.2005.859376"
         }
     ],
-    "strengths": "• Bám dính và phát hiện những vết đứt viền siêu nhỏ mà công cụ Wavelet (vốn chỉ dò phương ngang dọc) hoàn toàn mù lòa.\n• Sức tàn phá khủng khiếp lên các ảnh AI cố tình dùng kỹ thuật upscale tự động, vì phần viền chéo bị kích thước học sẽ lộ nguyên hình vết răng cưa giả tạo.",
-    "limitations": "• Ngốn lượng tính toán khủng khiếp; ép xung CPU lên mức cực đoan khi xử lý mảng kích cỡ 4K trở lên do chạy ma trận đa hướng.\n• Vô tình đánh rớt (False Positives) những tác phẩm đồ họa vector (thiết kế trong Illustrator) vì chúng vốn chứa các đường viền sắc bén toán học hoàn mỹ, không tuân theo tính quang học."
+    "strengths": "• Phát hiện được các khuyết tật viền ở góc chéo mà biến đổi Wavelet (chỉ phân tích phương ngang/dọc) không nhận diện được.\n• Hiệu quả cao đối với ảnh AI qua xử lý upscale tự động, vì phần viền chéo bị nội suy sẽ để lại các dấu vết răng cưa đặc trưng.",
+    "limitations": "• Yêu cầu tài nguyên tính toán cao; xử lý chậm trên ảnh 4K trở lên do phải chạy ma trận đa hướng.\n• Tỷ lệ dương tính giả trên các tác phẩm đồ họa vector (thiết kế trong Illustrator), vì chúng vốn chứa đường viền sắc nét hoàn hảo về mặt toán học, không tuân theo đặc tính quang học."
 }

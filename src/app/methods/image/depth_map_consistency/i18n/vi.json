@@ -1,12 +1,12 @@
 {
-    "name": "Bản Đồ Độ Sâu Không Gian (Depth Map)",
-    "description": "Máy dò Z-Axis 3 chiều siêu việt. Kẻ tử thù của những thợ ghép 2D dẹt lì. Khi ai đó cắt người từ ảnh khác dán vào bức hình, họ chỉ đang dán một lớp giấy phẳng. Chiều sâu độ hội tụ tiêu cự (Depth of Field) của môi trường hoàn toàn bị bỏ qua. Thuật toán này bóc tách không gian bằng cách gán tọa độ Z cho từng pixel, đo góc khuất và ánh sáng để lôi cổ các vùng phẳng phi vật lý đang lơ lửng không khớp với không gian phối cảnh 3D.",
-    "algorithm": "Phân Tích Bất Yếu Tố Phối Cảnh & Gradient Độ Mờ Mặt Cắt (Defocus/Blur Z-Depth)",
-    "mechanism": "Nó đo lường mức độ nhòe dần đi của cảnh quang (Bokeh/Defocus blur) dựa trên phương trình thấu kính mỏng. Một bức ảnh thật luôn tuân theo quy tắc nét nhất ở tiêu điểm và nhòe dần đằng xa. Kẻ chắp vá thường đưa vật thể quá sắc nét vào vùng background đang nhòe, hoặc cố tình làm nhòe nhưng sai hoàn toàn đồ thị phân bổ tiêu cự. Hệ thống sẽ ngay thẳng gõ búa báo động khi radar vẽ ra một bức tường độ sâu dị thường trên không gian.",
-    "parameters": "Hệ đo lường: Gaussian Defocus Estimation, Tính toán Gradient: Canny Edge Spread, Mô hình 3D: Geometric Blur Radius",
-    "accuracy": "Khá (75-82%) - Cực kỳ uy lực để phán quyết những kẻ lạm dụng xóa phông (Fake Bokeh) hoặc cấy người dán chồng lên đường chân trời.",
-    "source": "Lưu Trữ Xử Lý Ảnh Pháp Y 3 Đo Chiều Sâu Điểm Nết Thấu Kính",
-    "useCase": "Trở thành thước đo không gian ba chiều phác họa ra biểu đồ độ nhòe. Lột mặt nạ phần ảnh đang cố tỏ ra 'nằm trong không gian' nhưng bản chất là một tờ giấy bị in đè lên.",
+    "name": "Phân Tích Nhất Quán Bản Đồ Độ Sâu (Depth Map)",
+    "description": "Phương pháp phân tích không gian 3 chiều (trục Z) của ảnh. Khi một vùng ảnh được cắt ghép từ nguồn khác, chiều sâu hội tụ tiêu cự (Depth of Field) bị phá vỡ. Thuật toán gán tọa độ Z cho từng pixel dựa trên góc khuất và ánh sáng, phát hiện các vùng phẳng phi vật lý không khớp với phối cảnh 3D tổng thể.",
+    "algorithm": "Phân Tích Nhất Quán Phối Cảnh và Gradient Độ Mờ Tiêu Cự (Defocus/Blur Z-Depth)",
+    "mechanism": "Thuật toán đo mức độ nhòe dần của cảnh (Bokeh/Defocus blur) dựa trên phương trình thấu kính mỏng. Ảnh thật tuân theo quy tắc: nét nhất ở tiêu điểm và nhòe dần theo khoảng cách. Kỹ thuật ghép ảnh thường đưa vật thể quá sắc nét vào vùng nền đang nhòe, hoặc áp dụng hiệu ứng mờ không đúng đồ thị phân bố tiêu cự. Thuật toán phát cảnh báo khi phát hiện bất thường trong mô hình độ sâu không gian.",
+    "parameters": "Phương pháp: Gaussian Defocus Estimation, Gradient: Canny Edge Spread, Mô hình 3D: Geometric Blur Radius",
+    "accuracy": "Khá (75-82%) — Hiệu quả cao trong phát hiện các kỹ thuật giả mạo xóa phông (Fake Bokeh) hoặc cấy đối tượng vào nền.",
+    "source": "Lưu trữ xử lý ảnh pháp y — Phân tích chiều sâu tiêu cự thấu kính",
+    "useCase": "Phát hiện ảnh ghép dựa trên sự không nhất quán trong mô hình độ sâu không gian, xác minh tính vật lý của phân bố tiêu cự trên toàn khung hình.",
     "references": [
         {
             "title": "Wang, W., & Farid, H. (2006). Exposing digital forgeries in video by detecting duplication. ACM MM.",
@@ -21,6 +21,6 @@
             "url": "https://arxiv.org/abs/1912.11035"
         }
     ],
-    "strengths": "• Không thể bị lừa bởi thao tác làm mờ nhân tạo thủ công (Blur Tool) vì bán kính mờ do người tô cọ tay không bao giờ tạo thành hàm phân phối Gaussian chuẩn xác của thủy tinh thấu kính.\n• Chặn đứng các bản ghép 2D (copy-paste) cực gắt do sự lộ liễu của vector Z.",
-    "limitations": "• Nhát chém sẽ trượt hoàn toàn nếu bản gốc là ảnh phong cảnh chụp góc siêu rộng f/16 (nét rực từ trước ra sau, không có chiều sâu tiêu cự).\n• Dương tính giả xảy ra nếu máy ảnh cố tình chụp panning (đưa tay theo vật chuyển động) tạo hiệu ứng nhòe mượt kỳ quái."
+    "strengths": "• Không bị đánh lừa bởi thao tác làm mờ nhân tạo thủ công (Blur Tool), vì bán kính mờ tạo bằng cọ vẽ không tuân theo hàm phân phối Gaussian chuẩn của thấu kính quang học.\n• Phát hiện hiệu quả các vùng ghép 2D (copy-paste) dựa trên sự bất nhất quán của vector Z.",
+    "limitations": "• Mất hiệu lực trên ảnh phong cảnh chụp góc siêu rộng f/16 (nét toàn khung, không có gradient tiêu cự).\n• Tỷ lệ dương tính giả trên ảnh chụp panning (đưa máy theo vật chuyển động) tạo hiệu ứng nhòe mượt bất thường."
 }

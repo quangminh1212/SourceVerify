@@ -1,18 +1,18 @@
 {
-    "name": "Bản Đồ Nhiễu Hỗn Loạn (Crazy Noise)",
-    "description": "Máy quét X-quang siêu dẫn để soi rọi cấu trúc nhiễu hạt sâu thẳm (Sensor Noise/PRNU). Mỗi cảm biến camera vật lý trên đời đều có một 'dấu vân tay' nhiễu hạt độc bản, rải đều trên không gian điểm ảnh giống như một lớp tuyết mỏng. Khi một kẻ lừa đảo cắt người từ ảnh A dán sang ảnh B (hoặc AI tạo ra phần bị khuyết), khu vực bị khâu vá sẽ bộc lộ một dải nhiễu hạt điên loạn, chỏi lóa, hoặc nhẵn thín đáng ngờ, hoàn toàn mất liên kết với cấu trúc nhiễu tổng thể của cảm biến máy gốc.",
-    "algorithm": "Trích Xuất Vân Tay PRNU & Khớp Ma Trận Nhiễu Sóng",
-    "mechanism": "Thuật toán nhẫn tâm bóc lột bức ảnh, loại bỏ toàn bộ phần nội dung (mặt người, nhà cửa, màu sắc) để chỉ giữ lại một mạng lưới các hạt nhiễu tĩnh điện tinh khiết. Sau đó nó chạy rà quét để lập bản đồ phương sai nhiễu. Nếu có một khu vực trên bức ảnh đột ngột sở hữu một mô hình hạt lổn nhổn 'Crazy Noise' dị biệt (do mượn từ ảnh chụp máy khác) hoặc nhẵn mịn một cách chết chóc (do AI vẽ xằng bậy và quên phủ nhiễu màng ảo), thì toàn bộ vùng đó sẽ bị bôi đỏ chót trên bảng đồ pháp y.",
-    "parameters": "Lọc phi tuyến: Wavelet Denoising Filter, Nhận diện dị biệt: Photo-Response Non-Uniformity (PRNU), Bản đồ ngưỡng: Phương sai Gaussian",
-    "accuracy": "Cực Cao (85-92%) - Là một trong những đao phủ máu lạnh nhất và chính xác tuyệt đối trong việc lột mặt nạ các vùng ảnh can thiệp xâm nhập từ bên ngoài vào.",
-    "source": "Lukas (2006) / Cấu Trúc Khuyết Tật Cảm Biến Silicon",
-    "useCase": "Trở thành một 'tấm gương chiếu yêu', lột trần mọi vùng ảnh được cấy ghép từ không gian khác bằng cách soi thẳng vào bộ ADN nhiễu hạt cảm biến vật lý tuyệt đối không thể bị làm giả.",
+    "name": "Phân Tích Mẫu Nhiễu Cảm Biến (Crazy Noise / PRNU)",
+    "description": "Phương pháp phân tích cấu trúc nhiễu hạt cảm biến (Sensor Noise/PRNU). Mỗi cảm biến camera vật lý đều có một dấu vân tay nhiễu hạt duy nhất, phân bố đều trên toàn bộ không gian pixel. Khi một vùng ảnh bị cắt ghép từ nguồn khác hoặc do AI tạo sinh, vùng đó sẽ thể hiện cấu trúc nhiễu hạt bất thường — hoặc khác biệt hoàn toàn, hoặc vắng bóng nhiễu tự nhiên — mất liên kết với cấu trúc nhiễu tổng thể của cảm biến gốc.",
+    "algorithm": "Trích Xuất Dấu Vân Tay PRNU và Phân Tích Ma Trận Nhiễu",
+    "mechanism": "Thuật toán loại bỏ toàn bộ nội dung ảnh (đối tượng, màu sắc) để chỉ giữ lại mạng lưới nhiễu hạt tĩnh. Sau đó, nó lập bản đồ phương sai nhiễu trên toàn ảnh. Nếu một vùng có mô hình nhiễu hạt khác biệt đáng kể (do lấy từ ảnh chụp bằng thiết bị khác) hoặc thiếu vắng nhiễu tự nhiên (do AI tạo sinh không tạo được nhiễu cảm biến chân thực), vùng đó sẽ được đánh dấu là bất thường trên bản đồ pháp y.",
+    "parameters": "Lọc phi tuyến: Wavelet Denoising Filter, Nhận diện: Photo-Response Non-Uniformity (PRNU), Bản đồ ngưỡng: Phương sai Gaussian",
+    "accuracy": "Rất cao (85-92%) — Một trong những phương pháp chính xác nhất trong việc phát hiện các vùng ảnh bị can thiệp từ bên ngoài.",
+    "source": "Lukas (2006) / Phân tích khuyết tật cảm biến Silicon",
+    "useCase": "Phát hiện vùng ảnh bị cấy ghép từ nguồn khác bằng cách phân tích tính nhất quán của dấu vân tay nhiễu cảm biến vật lý — đặc trưng không thể tái tạo nhân tạo.",
     "references": [
         {
             "title": "Lukas, J., Fridrich, J., & Goljan, M. (2006). Digital camera identification from sensor pattern noise. IEEE TIFS.",
             "url": "https://doi.org/10.1109/TIFS.2006.873602"
         }
     ],
-    "strengths": "• Không thể bị qua mặt nếu kẻ gian không đủ trình độ đẳng cấp 'khoa học gián điệp' để thu hoạch và tái lập lớp nhiễu PRNU giả lập đè lên vùng cấy ghép.\n• Cực kỳ nhạy bén với AI: AI thế hệ mới thường tạo ra các tác phẩm trong vắt, sạch sẽ đến đáng sợ, điều này khiến Crazy Noise lập tức hú còi vì bức ảnh hoàn toàn thiếu vắng các cụm hạt nhiễu nhám vật lý tự nhiên của bán dẫn.",
-    "limitations": "• Sẽ trở nên mù lòa và vô dụng nếu bức ảnh gốc đã bị chia sẻ qua MXH (Zalo/Facebook/WhatsApp), vì các kênh nén tàn nhẫn này sẽ dập tắt và phá hủy triệt để 90% cấu trúc nhiễu hạt vi phân siêu mỏng manh.\n• Đòi hỏi bức ảnh phải có vùng chiếu sáng tương đối ổn; ở các hốc tối đen kịt thiếu sáng, ảnh bị nhiễu do ISO đẩy lên quá cao sẽ tạo ra 'bùn lầy' làm thuật toán mất phương hướng cục bộ."
+    "strengths": "• Rất khó bị vượt qua nếu kẻ can thiệp không có khả năng thu thập và tái lập lớp nhiễu PRNU giả trên vùng cấy ghép.\n• Hiệu quả cao với ảnh AI: các mô hình AI hiện đại thường tạo ra ảnh thiếu hoàn toàn các cụm nhiễu hạt vật lý tự nhiên của bán dẫn.",
+    "limitations": "• Mất hiệu lực khi ảnh đã được chia sẻ qua mạng xã hội (Zalo/Facebook/WhatsApp), vì quá trình nén phá hủy phần lớn cấu trúc nhiễu hạt vi mô.\n• Yêu cầu ảnh có vùng chiếu sáng tương đối ổn định; ở các vùng thiếu sáng nghiêm trọng, nhiễu ISO cao tạo ra nhiễu phụ gia làm suy giảm khả năng phân tích."
 }

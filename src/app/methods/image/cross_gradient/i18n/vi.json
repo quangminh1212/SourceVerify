@@ -1,12 +1,12 @@
 {
-    "name": "Dòng Chảy Gradient Chéo (Cross Gradient)",
-    "description": "Lưỡi cưa phát hiện điểm đứt gãy chéo. Kẻ tử thù của các mô hình AI Diffusion. Khi AI cố gắng nội suy và khuếch tán các cấu trúc hình học chéo, nó thường xuyên bị lỗi 'chảy nhựa' (melting) hoặc răng cưa (staircasing) vi phân. Phép đo này không nhìn vào bức ảnh chập ngang dọc, mà nó xẻ dọc bức ảnh theo các góc xiên để truy lùng sự bất đồng bộ của dòng chảy cường độ pixel.",
-    "algorithm": "Đo Lường Biến Thiên Định Hướng Chéo (Cross-directional Gradient Variance)",
-    "mechanism": "Thuật toán tính toán chuỗi vi phân bậc nhất và bậc hai dọc theo các trục 45 độ và 135 độ trên toàn bộ bức ảnh. Ở ảnh chụp thật từ ống kính, các gradient chéo luân chuyển mượt mà do tán xạ ánh sáng tự nhiên. Nhưng trên ảnh AI (hoặc ảnh phóng to bằng nội suy song tuyến), gradient chéo thường xuyên đâm sầm vào nhau, tạo ra các cột mốc 'chết' hoặc vết gãy góc cạnh sắc lẹm phi quang học.",
-    "parameters": "Toán tử: Sobel chéo (Scharr-cross), Ngưỡng biến thiên: Ma trận Hessian, Không gian quét: Tần số siêu cao.",
-    "accuracy": "Khá (70-79%) - Mũi khoan chuyên dụng để đâm thủng lớp ngụy trang của các chi tiết chéo nhăn nheo như mép quần áo, mái tóc hay mạng nhện bị AI làm biến dạng.",
-    "source": "Lưu trữ Pháp Y Nhận Diện Kỹ Thuật Số (Digital Image Forensics)",
-    "useCase": "Giám định sự liên tục của kết cấu đường xiên, báo động ngay tắp lự khi phát hiện một đường chéo đang mượt bỗng đứt đứt gãy gãy như bị băm nát—dấu vết đặc trưng của mạng lưới chập AI.",
+    "name": "Phân Tích Gradient Chéo (Cross Gradient)",
+    "description": "Phương pháp phát hiện bất thường gradient theo phương chéo. Khi AI nội suy và khuếch tán các cấu trúc hình học chéo, nó thường gặp lỗi răng cưa (staircasing) hoặc đứt đoạn vi phân. Phương pháp này phân tích ảnh theo các trục xiên để phát hiện sự bất đồng bộ trong dòng chảy cường độ pixel.",
+    "algorithm": "Đo Lường Biến Thiên Gradient Định Hướng Chéo (Cross-directional Gradient Variance)",
+    "mechanism": "Thuật toán tính toán vi phân bậc nhất và bậc hai dọc theo trục 45° và 135° trên toàn bộ ảnh. Trong ảnh chụp thực, gradient chéo chuyển đổi mượt mà nhờ tán xạ ánh sáng tự nhiên. Tuy nhiên, trên ảnh AI hoặc ảnh phóng to bằng nội suy song tuyến, gradient chéo thường có các điểm bất liên tục hoặc gãy góc phi quang học.",
+    "parameters": "Toán tử: Sobel chéo (Scharr-cross), Ngưỡng biến thiên: Ma trận Hessian, Không gian quét: Tần số cao",
+    "accuracy": "Khá (70-79%) — Phương pháp chuyên dụng để phát hiện các chi tiết chéo bị biến dạng (mép quần áo, mái tóc, mạng nhện) do AI xử lý không chính xác.",
+    "source": "Lưu trữ Pháp y Nhận Diện Kỹ Thuật Số (Digital Image Forensics)",
+    "useCase": "Phân tích tính liên tục của kết cấu đường xiên, phát hiện các đường chéo bị đứt đoạn bất thường — dấu vết đặc trưng của mạng lưới tích chập AI.",
     "references": [
         {
             "title": "Barni, M. et al. (2010). Forensic analysis of digital images: Spatial contrast and cross-gradient inconsistency.",
@@ -21,6 +21,6 @@
             "url": "https://doi.org/10.1109/TIFS.2012.2190402"
         }
     ],
-    "strengths": "• Rất nhạy bén với những vật thể có cấu trúc đan chéo phức tạp (mạng rào, lưới thép) mà AI hầu như không bao giờ có thể vẽ chuẩn 100% logic hình học.\n• Chạy nhanh và không cần mô hình AI nặng nề giám sát.",
-    "limitations": "• Nhát chém sẽ trượt lỏng lẻo nếu bức ảnh bị làm nhòe Gaussian nặng tay hoặc mất nét out-focus (nơi gradient chéo tự nhiên bị triệt tiêu hoàn toàn).\n• Rất hay bắn nhầm (False Positives) vào các hoa văn kẻ sọc vằn vện chéo sẵn có (áo sọc caro chéo, gạch lát sàn chéo)."
+    "strengths": "• Nhạy bén với các vật thể có cấu trúc đan chéo phức tạp (lưới rào, lưới thép) mà AI khó tái tạo chính xác 100% về mặt hình học.\n• Tốc độ xử lý nhanh, không yêu cầu mô hình AI phụ trợ.",
+    "limitations": "• Mất hiệu lực nếu ảnh bị làm mờ Gaussian mạnh hoặc mất nét (out-of-focus), vì gradient chéo tự nhiên bị triệt tiêu.\n• Tỷ lệ dương tính giả đáng kể trên ảnh có hoa văn kẻ sọc chéo sẵn có (áo sọc caro, gạch lát sàn chéo)."
 }

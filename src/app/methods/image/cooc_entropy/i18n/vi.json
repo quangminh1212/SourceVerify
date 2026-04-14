@@ -1,12 +1,12 @@
 {
-    "name": "Lưới Ngục Entropy Điểm Ảnh (Co-occurrence Entropy)",
-    "description": "Máy đo bức xạ hỗn loạn của thế giới số (GLCM - Gray Level Co-occurrence Matrix). Một bức ảnh chụp tự nhiên từ thấu kính luôn mang theo mình một tổ chức mô hình kết cấu vi mô hài hòa, có thể dự đoán được (ví dụ như thớ vải, hạt sương). Nhưng bọn tội phạm kỹ thuật số (hoặc AI tạo ảnh) thường xuyên nhào nặn điểm ảnh bừa bãi. Phép đo này tàn nhẫn phơi bày: một là cấu trúc quá hỗn độn điên loạn vì ghép tạp nham, hai là phẳng lì chết chóc như nhựa do AI cố cày nhẵn bề mặt.",
+    "name": "Phân Tích Entropy Đồng Xuất Hiện (Co-occurrence Entropy)",
+    "description": "Phương pháp đo entropy kết cấu dựa trên ma trận GLCM (Gray Level Co-occurrence Matrix). Ảnh chụp từ cảm biến quang học luôn mang theo các mô hình kết cấu vi mô tự nhiên có tính dự đoán được (thớ vải, hạt cát, vân gỗ). Ngược lại, ảnh ghép hoặc ảnh AI tạo sinh thường có sự bất thường trong phân bố entropy: hoặc quá hỗn loạn do ghép nhiều nguồn, hoặc quá đồng nhất do AI làm mịn bề mặt quá mức.",
     "algorithm": "Phân Tích Ma Trận Đồng Xuất Hiện Mức Xám (GLCM Entropy Measurement)",
-    "mechanism": "Thuật toán này bắt cóc mọi điểm ảnh trên bức hình và tra khảo xem 'vị láng giềng' của chúng (pixel kế cận) đang có mối quan hệ màu sắc cường độ như thế nào. Từ đó, nó vẽ ra một Lưới ma trận đồng xuất hiện (GLCM) kinh khiếp. Nó đếm tổng số lượng thông tin (Entropy) ẩn chứa. AI siêu sao cỡ nào đi nữa cũng không bao giờ có thể tự thêu dệt được một dạng kết cấu phân bố độ xám tự nhiên tinh vi giống như tự nhiên. Lưới này bắn cảnh báo ngay khi thấy vùng ghép xuất hiện điểm mù entropy 'vô hồn'.",
-    "parameters": "Hạch tâm: Gray-Level Co-occurrence Matrix (GLCM), Phương trình: Shannon Entropy Formula, Khoảng cách hướng: D=1, Góc đa chiều",
-    "accuracy": "Khá Ổn (68-83%) - Tỏ ra cực kỳ bạo chúa với trò cắt dán từ các bối cảnh khác mây mù hoặc AI cố bóc mẽ nét khối (in-painting lỗi).",
-    "source": "Haralick et al. (1973) - Cấu Trúc Đặc Trưng Vật Lý Mảnh",
-    "useCase": "Trở thành tòa thẩm phán khắc nghiệt chuyên lột trần mọi mảng da, kết cấu đất đá hoặc lông tóc bị dán ghép—chứng minh ngay tại chỗ rằng đám pixel này chỉ là đống hoang tàn rỗng tuếch do kẻ gian tạo ra.",
+    "mechanism": "Thuật toán xây dựng ma trận đồng xuất hiện (GLCM) bằng cách phân tích mối quan hệ cường độ giữa các pixel liền kề. Từ ma trận này, nó tính toán tổng lượng thông tin (Entropy) theo công thức Shannon. AI không thể tái tạo chính xác phân bố kết cấu mức xám tự nhiên vi mô. Phương pháp phát hiện bất thường khi xuất hiện các vùng có entropy thấp phi tự nhiên (do AI làm mịn quá mức, phá hủy kết cấu vi mô tự nhiên như lỗ chân lông).",
+    "parameters": "Ma trận: Gray-Level Co-occurrence Matrix (GLCM), Phương trình: Shannon Entropy, Khoảng cách: D=1, Góc: Đa chiều",
+    "accuracy": "Khá (68-83%) — Hiệu quả trong phát hiện ảnh ghép từ các bối cảnh khác nhau hoặc ảnh AI có lỗi in-painting.",
+    "source": "Haralick et al. (1973) — Đặc trưng kết cấu cho phân loại ảnh",
+    "useCase": "Phát hiện các vùng ảnh bị ghép hoặc AI tạo sinh dựa trên sự bất thường trong phân bố entropy kết cấu, chứng minh sự không đồng nhất vi mô giữa các vùng ảnh khác nhau.",
     "references": [
         {
             "title": "Haralick, R.M., Shanmugam, K., & Dinstein, I. (1973). Textural features for image classification. IEEE TSMC.",
@@ -21,6 +21,6 @@
             "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
         }
     ],
-    "strengths": "• Đo lường sự vô kỷ luật của nhiễu nhám kết cấu một cách vô hình, vượt qua hoàn toàn mắt người.\n• Bức tử ngay lập tức sự 'trắng mịn không tì vết' sinh ra từ AI Diffusion (cố làm mượt da người nhưng phá hủy toàn bộ entropy lỗ chân lông quang học tự nhiên).",
-    "limitations": "• Nhát chém đập nhầm False Positive vào các kết cấu chụp trong sương mù, trời đêm hoặc bầu trời quang đãng, nơi Entropy hoàn toàn có lượng thông tin siêu thấp bẩm sinh.\n• Ảnh bị bợt nát tung tóe qua Facebook/WhatsApp làm thuật toán bị mất phương hướng cục bộ trong mạng lưới GLCM."
+    "strengths": "• Đo lường sự bất thường trong kết cấu nhiễu ở mức độ vượt quá khả năng nhận diện bằng mắt thường.\n• Phát hiện hiệu quả hiện tượng AI Diffusion làm mịn quá mức, phá hủy entropy kết cấu tự nhiên trên bề mặt da hoặc vật liệu.",
+    "limitations": "• Tỷ lệ dương tính giả trên các kết cấu có entropy thấp tự nhiên: ảnh chụp trong sương mù, ban đêm, hoặc bầu trời quang đãng.\n• Ảnh bị nén mạnh qua mạng xã hội (Facebook/WhatsApp) làm suy giảm thông tin vi mô trong ma trận GLCM."
 }

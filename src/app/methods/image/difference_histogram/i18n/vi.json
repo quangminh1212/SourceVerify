@@ -1,12 +1,12 @@
 {
-    "name": "Biểu Đồ Tần Suất Xung Đột (Difference Histogram)",
-    "description": "Máy dò dấu chân tái lấy mẫu (Resampling) vô hình. Khi kẻ trộm đánh cắp một hình ảnh, phóng to hoặc thu nhỏ nó để ghép sao cho nhét vừa vào khung nền gốc, các hạt pixel cũ đã bị xé gãy và bồi đắp bằng pixel nội suy. Phép đo pháp y này chỉ đơn thuần quan sát các hiệu số (Sự khác biệt) lân cận của các điểm ảnh để tóm gọn tiếng thét của những hạt pixel đang gồng mình dãn nở phi vật lý.",
-    "algorithm": "Đo Lường Biểu Đồ Hiệu Số Tần Suất Xung Đỉnh (Peak-Valley Fluctuation)",
-    "mechanism": "Bằng cách lấy cường độ của pixel hiện tại trừ đi cường độ pixel liền kề, hệ thống xây dựng nên một Biểu đồ Hiệu số (Difference Histogram). Trong ảnh chưa từng bị vặn vẹo (origin), biểu đồ này sẽ vuốt êm như một quả đồi. Nhưng ngay khi bị Upscaling (phóng to) hoặc xoay góc (Rotation), đồ thị này lập tức nát lổn nhổn thành các hố sâu (Valleys) xen lẫn cột nhọn (Peaks), tố cáo rõ ràng nhất hành vi co kéo không gian ảnh của kẻ mạo danh.",
-    "parameters": "Ma trận vi phân: Láng giềng x/y 1-pixel, Quét sóng: Chu kỳ Biểu đồ Hiệu Tần, Kênh trích xuất: Grayscale Cường độ",
-    "accuracy": "Khá Ổn (65-75%) - Thuốc đặc trị chuyên bắt các tay chơi hệ 'bóp hình, kéo dãn' (Resize/Rotate) vội vã trong Photoshop.",
-    "source": "Popescu & Farid (2005) - Hiện Tượng Chu Kỳ Nội Suy Ráp Nối Phương Trình Tín Hiệu",
-    "useCase": "Giáng đòn trừng phạt thẳng vào đầu bất kỳ mảnh ghép nào chót lọt lướt qua được mặt người nhưng lại chịu sự tái cấu trúc (thu phóng biến ảo) làm sai lệch định luật lân cận pixel tự nhiên.",
+    "name": "Phân Tích Biểu Đồ Hiệu Số (Difference Histogram)",
+    "description": "Phương pháp phát hiện dấu vết tái lấy mẫu (Resampling). Khi một vùng ảnh bị phóng to, thu nhỏ hoặc xoay để ghép vào khung nền, các pixel gốc bị phá hủy và tái tạo bằng nội suy. Phương pháp này phân tích các hiệu số cường độ giữa pixel liền kề để nhận diện các đặc trưng tái lấy mẫu.",
+    "algorithm": "Đo Lường Biểu Đồ Hiệu Số Tần Suất Đỉnh-Hõm (Peak-Valley Fluctuation)",
+    "mechanism": "Bằng cách lấy cường độ pixel hiện tại trừ đi cường độ pixel liền kề, hệ thống xây dựng Biểu đồ Hiệu số (Difference Histogram). Trong ảnh chưa bị biến đổi, biểu đồ này có dạng đường cong mượt. Khi ảnh bị phóng to (Upscaling) hoặc xoay góc (Rotation), đồ thị xuất hiện các hõm sâu (Valleys) xen lẫn đỉnh nhọn (Peaks) — chỉ dấu rõ ràng của hành vi co kéo không gian ảnh.",
+    "parameters": "Ma trận vi phân: Láng giềng x/y 1-pixel, Quét: Chu kỳ biểu đồ hiệu tần, Kênh trích xuất: Grayscale cường độ",
+    "accuracy": "Khá (65-75%) — Phương pháp chuyên biệt trong phát hiện các thao tác thay đổi kích thước (Resize/Rotate) ảnh.",
+    "source": "Popescu & Farid (2005) — Phát hiện dấu vết tái lấy mẫu trong tín hiệu ảnh",
+    "useCase": "Phát hiện ảnh ghép đã qua thao tác thu phóng hoặc xoay, dựa trên sự bất thường trong biểu đồ hiệu số pixel lân cận.",
     "references": [
         {
             "title": "Popescu, A.C., & Farid, H. (2005). Exposing digital forgeries by detecting traces of resampling. IEEE TSP.",
@@ -21,6 +21,6 @@
             "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         }
     ],
-    "strengths": "• Phép đo thầm lặng với gia tốc khủng khiếp, đào mồ chôn bọn biến dạng hình ảnh (Upscale & Downscale) mà không cần bận tâm nội dung ảnh là gì.\n• Gần như hoàn thành việc xét xử trong chưa tới một giây do thuật toán vi phân tuyến tính vô cùng gọn nhẹ và độc diện.",
-    "limitations": "• Nhát đâm bị trượt hoàn toàn nếu thợ sửa đã biết mánh khóe và xài kỹ thuật rải nhiễu hạt siêu nhám (Noise Dithering) sau khi resize để lấp kín mọi hố sâu của biểu đồ hiệu số.\n• Nếu file ảnh đã bị qua bộ máy nghiền ép dung lượng của Facebook/WhatsApp, các dải khác biệt vi phân nhỏ nhẹ này đã bị bóp nát bét không còn một dấu vết để tra khảo."
+    "strengths": "• Tốc độ xử lý rất nhanh nhờ thuật toán vi phân tuyến tính gọn nhẹ, phát hiện hiệu quả ảnh qua Upscale/Downscale mà không phụ thuộc nội dung.\n• Có thể hoàn thành phân tích trong vài giây nhờ chi phí tính toán tối thiểu.",
+    "limitations": "• Mất hiệu lực nếu ảnh được thêm nhiễu hạt (Noise Dithering) sau khi thay đổi kích thước, vì nhiễu lấp đầy các hõm bất thường trong biểu đồ hiệu số.\n• Ảnh đã qua nén mạnh trên mạng xã hội (Facebook/WhatsApp) sẽ mất các dải vi phân nhỏ cần thiết cho phân tích."
 }

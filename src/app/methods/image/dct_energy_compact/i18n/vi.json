@@ -1,12 +1,12 @@
 {
-    "name": "Mật Độ Năng Lượng Lượng Tử (DCT Energy Compaction)",
-    "description": "Máy đo bức xạ quang phổ ép xung để bóc mẽ sự dối trá của AI. Một bức ảnh vật lý từ thấu kính thu thập thông lượng photon tạo ra một dải năng lượng phân bổ đa chiều, mượt mà từ âm trầm (mảng lớn) đến siêu âm cao (chi tiết gai góc). Bọn AI sinh ảnh thường bị liệt hẳn khả năng vẽ ra các nốt siêu cao tần sắc bén, nên chúng phải vội vã nhồi nhét năng lượng khổng lồ vào các tần số thấp (Low-frequency) để lấp liếm tạo ra vẻ mượt mà dối trá.",
-    "algorithm": "Đo Lường Suy Hao Tập Trung Tần Số DCT (Energy Compaction Ratio)",
-    "mechanism": "Nó thiêu rụi toàn bộ nội dung bức hình, chuyển đổi thô bạo sang dải tần số sóng siêu âm 2D (DCT 8x8 blocks). Thuật toán ép tất cả các block phải khai báo mức năng lượng đang chứa. Nếu có một khu vực cấy ghép hoặc cắt ráp (hoặc do AI hallucinate ra), dải năng lượng cao tần sẽ bỗng nhiên rớt cái rầm xuống ngưỡng 0 một cách cực kỳ mất tự nhiên. Toàn bộ năng lượng dồn ứ ngột ngạt tại dải trung/thấp, gióng lên hồi còi báo động về cấu trúc đồ họa nhựa dẻo.",
-    "parameters": "Miền phân tích: Tần số Không gian DCT, Bộ lọc: High-to-Low Ratio Threshold (HLRT), Hệ số Block: Luma 8x8",
-    "accuracy": "Khá Ổn (70-78%) - Radar vạch lá tìm sâu cực độc đoán chuyên bắt lũ thợ vẽ AI cẩu thả làm cháy, nát kết cấu chi tiết cao.",
-    "source": "Lưu Trữ Xử Lý Tín Hiệu DCT Biên Độ Phổ (Signal Processing Archive)",
-    "useCase": "Soi cấu trúc sóng từ lõi nhị phân để khẳng định chắc nịch rằng vùng ảnh bị bôi mượt thái quá kia thực chất là đồ dỏm 100%.",
+    "name": "Phân Tích Phân Bố Năng Lượng DCT (DCT Energy Compaction)",
+    "description": "Phương pháp phân tích phổ năng lượng trong miền tần số để phát hiện bất thường trong phân bố năng lượng. Ảnh chụp vật lý từ cảm biến quang tạo ra phân bố năng lượng đa tần tự nhiên, từ dải thấp (cấu trúc lớn) đến dải cao (chi tiết sắc nét). Các mô hình AI tạo sinh thường có hạn chế trong việc tái tạo thành phần tần số cao, dẫn đến sự tập trung bất thường năng lượng ở dải tần thấp-trung.",
+    "algorithm": "Đo Lường Tỷ Lệ Tập Trung Năng Lượng DCT (Energy Compaction Ratio)",
+    "mechanism": "Thuật toán chuyển đổi ảnh sang miền tần số 2D sử dụng DCT trên các khối 8x8 pixels. Sau đó, nó phân tích tỷ lệ phân bố năng lượng giữa các dải tần cho mỗi khối. Nếu một vùng ảnh bị cấy ghép hoặc do AI tạo sinh, dải năng lượng cao tần giảm đột ngột xuống gần bằng 0, trong khi năng lượng tập trung quá mức ở dải trung/thấp — chỉ dấu cấu trúc đồ họa tổng hợp.",
+    "parameters": "Miền phân tích: Tần số không gian DCT, Bộ lọc: High-to-Low Ratio Threshold (HLRT), Kích thước khối: Luma 8x8",
+    "accuracy": "Khá (70-78%) — Phương pháp chuyên biệt trong phát hiện ảnh AI có kết cấu chi tiết bị làm mịn quá mức.",
+    "source": "Lưu trữ xử lý tín hiệu DCT — Phân tích biên độ phổ (Signal Processing Archive)",
+    "useCase": "Phân tích cấu trúc tần số để xác nhận các vùng ảnh bị làm mịn bất thường, nhận diện sự thiếu hụt thành phần tần số cao đặc trưng của ảnh tổng hợp.",
     "references": [
         {
             "title": "Barni, M. et al. (2010). Forensic analysis of digital images: DCT energy compaction analysis. IEEE TFS.",
@@ -21,6 +21,6 @@
             "url": "https://arxiv.org/abs/2003.08685"
         }
     ],
-    "strengths": "• Bóp nát ảo tưởng của các file AI 8K 'nét căng giả tạo', bởi dù nét đến đâu thì cấu trúc phân bổ dải sóng siêu cao của AI cũng hoàn toàn lệch lạc.\n• Chạy nhanh mượt mà vì tính trực tiếp trên thông số vi phân nén chứ không phải dò thủ công từng mảnh pixel.",
-    "limitations": "• Nhát chém sẽ cắm thẳng vào chân đồng đội (False Positive) nếu tấm ảnh gốc vô tình chụp bầu trời xanh thẳm quang đãng không một gợn mây - nơi ánh sáng phân bổ 100% ở dải thấp tần.\n• Thuốc nổ sẽ bị nghẽn (phế võ công) nếu đối phương xài tool dập nhiễu hạt sắc nét siêu vi (High-pass Noise Injection) vào ảnh giả, lấp liếm hoàn toàn sự thiếu hụt hạt siêu âm."
+    "strengths": "• Phát hiện hiệu quả ảnh AI có độ phân giải cao nhưng thiếu cấu trúc tần số cao tự nhiên, bất kể độ nét biểu kiến.\n• Tốc độ xử lý nhanh vì tính toán trực tiếp trên hệ số nén thay vì dò thủ công từng pixel.",
+    "limitations": "• Tỷ lệ dương tính giả trên ảnh chụp bầu trời hoặc vùng đơn sắc rộng, nơi năng lượng tự nhiên tập trung hoàn toàn ở dải thấp tần.\n• Mất hiệu lực nếu ảnh giả được thêm nhiễu sắc nét nhân tạo (High-pass Noise Injection) để bù đắp sự thiếu hụt thành phần tần số cao."
 }
