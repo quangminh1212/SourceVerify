@@ -1,22 +1,22 @@
 {
-    "name": "Phoneme Correlation",
-    "description": "Correlates phoneme shapes with audio",
-    "algorithm": "Phoneme Correlation — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Correlates phoneme shapes with audio. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: sensor\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through phoneme correlation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/2012.07657"
-        },
-        {
-            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413700"
-        }
-    ]
+  "name": "Phoneme Correlation",
+  "description": "Correlates phoneme shapes with audio",
+  "algorithm": "Phoneme Correlation — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes phoneme-visual correlation for deepfake detection:\n\n1. **音频音素提取**: The audio track is processed to extract a phoneme sequence with precise temporal alignment. Each phoneme is identified with its onset-offset timestamps and confidence score using speech recognition.\n\n2. **视觉音素(Viseme)检测**: The corresponding visual phoneme (viseme) sequence is extracted from lip/jaw motion analysis. Key visemes include: bilabial closure (/m/, /p/, /b/), labiodental (/f/, /v/), dental (/θ/, /ð/), and open vowels (/a/, /o/).\n\n3. **音素-Viseme时间相关性**: The temporal alignment between audio phonemes and visual visemes is measured. In authentic speech, audio leads visual by ~50ms (auditory-visual speech lag). The method computes cross-correlation to check this temporal relationship. Deepfakes may show incorrect timing between audio and visual speech.\n\n4. **ArticulationCompleteness**: Certain phonemes require specific visual articulations that are physiologically mandatory — /m/ requires complete lip closure, /f/ requires lip-teeth contact. The method checks whether mandatory articulations are achieved. Deepfake lip generators may fail to produce complete target articulations.\n\n5. **Co-Articulation模式验证**: In natural speech, phoneme production is influenced by surrounding phonemes (anticipatory and carry-over coarticulation). The method checks for natural coarticulation effects in the visual speech signal. AI-generated lip movements often lack proper coarticulation, producing discrete viseme transitions.",
+  "parameters": "分析类型: sensor\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through phoneme correlation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/2012.07657"
+    },
+    {
+      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413700"
+    }
+  ]
 }

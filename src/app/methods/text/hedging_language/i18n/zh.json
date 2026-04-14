@@ -1,22 +1,22 @@
 {
-    "name": "认知免责声明密度 (Hedging Language)",
-    "description": "量化文本中“圆滑甩锅、不把话说死”的缓冲词语密度（例如：“潜在地”、“按理说”、“值得注意的是”）。由于 RLHF 安全对齐训练的毒打，AI 模型患上了严重的“绝对化恐惧症”，会强迫性地滥用认知标记词来逃避任何确定的、绝对的声明。",
-    "algorithm": "认知缓冲词密度与合理性护盾提取",
-    "mechanism": "当人类充满自信地写作时，他们会斩钉截铁地抛出结论（“项目失败就是因为 X”）。只有在真的拿不准时，人类才会用缓冲词（“我觉得可能 X 是部分原因吧”）。但是，大型语言模型（LLM）在 RLHF（基于人类反馈的强化学习）的训练流水线上，只要敢胡说八道（产生幻觉）或是给出了错误的绝对性答案，就会受到严厉的惩罚。这就导致 AI 的代码深处被烙印上了对“认知安全”的病态追求。模型会出于本能地在几乎每一句话的外面，都裹上一层厚厚的“合理性护盾（Plausibility shields）”（“不可否认的是”、“重要的是要考虑到”、“这可能会潜在地导致”）。这个算法准备了 200 多个已知“和稀泥”缓冲词的黑名单字典，分为认知动词（可能、也许）、模糊测算词（大约、一定程度上）和合理性护盾，并在文本中穷举扫描。它会计算那些“圆滑逃避”的句子与“绝对肯定”的句子之间的比例。如果一篇文章读起来就像是大公司法务部写的极度谨慎的免责声明——彻底丧失了人类那种斩钉截铁亮明立场的正常节奏——它就会触发最高级别的算法阉割警报。",
-    "useCase": "这是用于审计说服性文章、评论专栏、硬核技术分析和果断的商业决策邮件的最佳武器，因为在这些场景下，真正的人类作者理应立场鲜明、观点犀利。",
-    "strengths": "• 这一招极其阴损而完美：它利用了所有主流商业大模型（GPT-4、Claude、Gemini）底层的“安全护栏”，把人类强加给 AI 的“礼貌的谨慎”变成了刺穿伪装的利刃。\n• 在抓捕“回答高度主观或涉及法律敏感话题”的 AI 时一抓一个准。因为这时候模型的安全警报会响彻云霄，逼着它使用出最高级别的“废话打极”和圆滑甩锅。\n• 算力消耗极低，而且抓出来的缓冲词铁证如山，极其容易向用户解释。",
-    "limitations": "• 会误杀人类写的正规学术论文和科学报告。因为科学家受过的专业训练，就是要求他们不能把话说死（比如科学家也爱写：“这些实验结果表明了一种潜在的相关性”）。\n• 对那些初出茅庐、没经过任何指令微调的“基座模型（Base models）”，或者是没有被 RLHF 安全规则“物理阉割”过的无审查开源模型完全无效。\n• 极易被破解。人类随便删改两下，或者发狠在 Prompt 里命令 AI：“给我用最傲慢、最不留余地的绝对口吻来写这段话”，这个探针就废了。",
-    "parameters": "雷达切片: 认知护盾 & 模糊甩锅词暴力提取\n定罪量表: 缓冲防御短语与绝对肯定句的比率 / 每 100 词\n行刑判决: 0-100 法律防卫性谨慎度 (RLHF 洗脑对齐) 分数",
-    "accuracy": "中高破甲率 — 70-80%（在论辩或说服性语境下）。它是证明一个 AI 已经被 RLHF 规驯得“极其害怕承担任何事实责任”的最可靠的行为学指纹之一。",
-    "references": [
-        {
-            "title": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.",
-            "url": "https://arxiv.org/abs/2404.01268"
-        },
-        {
-            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
-            "url": "https://arxiv.org/abs/2406.07016"
-        }
-    ],
-    "source": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.; Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv."
+  "name": "认知免责声明密度 (Hedging Language)",
+  "description": "量化文本中“圆滑甩锅、不把话说死”的缓冲词语密度（例如：“潜在地”、“按理说”、“值得注意的是”）。由于 RLHF 安全对齐训练的毒打，AI 模型患上了严重的“绝对化恐惧症”，会强迫性地滥用认知标记词来逃避任何确定的、绝对的声明。",
+  "algorithm": "认知缓冲词密度与合理性护盾提取",
+  "mechanism": "When humans write confidently, they make definitive assertions ('The project failed because of X'). When they represent uncertainty, they use natural hedges ('I think maybe X caused it'). However, Large Language Models are heavily penalized during RLHF (Reinforcement Learning from Human Feedback) for 'hallucination' and giving incorrect absolute answers. This creates a deeply ingrained mathematical bias toward 'epistemic safety'. The model will instinctively cushion almost every statement with plausibility shields ('It can be argued that', 'It is important to consider', 'May potentially lead to'). This algorithm scans the text against a lexicon of over 200 known hedging markers, categorized into epistemic verbs (might, could), approximators (roughly, somewhat), and plausibility shields. It calculates the ratio of 'hedged' statements against absolute assertions. If a text reads like an overly cautious corporate PR disclaimer—lacking the natural human cadence of taking a firm stance—it generates a high algorithmic sterility warning.",
+  "useCase": "这是用于审计说服性文章、评论专栏、硬核技术分析和果断的商业决策邮件的最佳武器，因为在这些场景下，真正的人类作者理应立场鲜明、观点犀利。",
+  "strengths": "• 这一招极其阴损而完美：它利用了所有主流商业大模型（GPT-4、Claude、Gemini）底层的“安全护栏”，把人类强加给 AI 的“礼貌的谨慎”变成了刺穿伪装的利刃。\n• 在抓捕“回答高度主观或涉及法律敏感话题”的 AI 时一抓一个准。因为这时候模型的安全警报会响彻云霄，逼着它使用出最高级别的“废话打极”和圆滑甩锅。\n• 算力消耗极低，而且抓出来的缓冲词铁证如山，极其容易向用户解释。",
+  "limitations": "• 会误杀人类写的正规学术论文和科学报告。因为科学家受过的专业训练，就是要求他们不能把话说死（比如科学家也爱写：“这些实验结果表明了一种潜在的相关性”）。\n• 对那些初出茅庐、没经过任何指令微调的“基座模型（Base models）”，或者是没有被 RLHF 安全规则“物理阉割”过的无审查开源模型完全无效。\n• 极易被破解。人类随便删改两下，或者发狠在 Prompt 里命令 AI：“给我用最傲慢、最不留余地的绝对口吻来写这段话”，这个探针就废了。",
+  "parameters": "雷达切片: 认知护盾 & 模糊甩锅词暴力提取\n定罪量表: 缓冲防御短语与绝对肯定句的比率 / 每 100 词\n行刑判决: 0-100 法律防卫性谨慎度 (RLHF 洗脑对齐) 分数",
+  "accuracy": "中高破甲率 — 70-80%（在论辩或说服性语境下）。它是证明一个 AI 已经被 RLHF 规驯得“极其害怕承担任何事实责任”的最可靠的行为学指纹之一。",
+  "references": [
+    {
+      "title": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.",
+      "url": "https://arxiv.org/abs/2404.01268"
+    },
+    {
+      "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
+      "url": "https://arxiv.org/abs/2406.07016"
+    }
+  ],
+  "source": "Liang, W. et al. (2024). Mapping the Increasing Use of LLMs in Scientific Papers. arXiv.; Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv."
 }

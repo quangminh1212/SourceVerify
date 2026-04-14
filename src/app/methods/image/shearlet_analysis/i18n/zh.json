@@ -1,12 +1,12 @@
 {
-    "name": "Shearlet Transform Analysis",
-    "description": "Uses shearlet transform for multi-directional analysis — superior to wavelets for anisotropic features (Kutyniok et al., 2012).",
-    "algorithm": "Shearlet Transform Analysis分析算法",
-    "mechanism": "Shearlet Transform Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Shearlet Transform Analysis",
+  "description": "Uses shearlet transform for multi-directional analysis — superior to wavelets for anisotropic features (Kutyniok et al., 2012).",
+  "algorithm": "Shearlet Transform Analysis分析算法",
+  "mechanism": "This method applies the Shearlet Transform following Kutyniok & Labate (2012) for directional multi-scale forensic analysis:\n\n1. **ShearletSystemConstruction**: A shearlet system is constructed using parabolic scaling matrices Aₐ = diag(a, √a) and shear matrices Sₛ. The shearlet ψₐ,ₛ,ₜ(x) = a⁻³/⁴ψ(Sₛ⁻¹Aₐ⁻¹(x−t)) provides near-optimal sparse representation of images with edges along curves.\n\n2. **Directional分解**: Unlike wavelets, shearlets capture directional information via the shear parameter, enabling anisotropic analysis across multiple orientations at each scale. This is particularly effective for detecting edge artifacts in AI-generated images that exhibit unnatural directional properties.\n\n3. **相位Congruency分析**: Shearlet-domain phase congruency measures the coherence of frequency components at edge locations. Natural edges show high phase congruency across scales, while AI-generated boundaries may show inconsistent phase relationships.\n\n4. **SparsityProfiling**: The shearlet representation sparsity (measured by ℓ¹/ℓ² ratio) is analyzed per block. Natural images achieve near-optimal sparsity in the shearlet domain due to the geometric regularity of natural edges. AI artifacts — ringing, grid patterns, texture discontinuities — reduce sparsity in characteristic ways.\n\n5. **边缘Regularity评估**: The decay rate of shearlet coefficients across scales at detected edges is measured. Natural edges follow predictable decay patterns governed by Hölder regularity, while AI-generated edges often show anomalous coefficient decay indicating synthetic generation.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

@@ -1,22 +1,22 @@
 {
-    "name": "句子长度信息熵分析 (Sentence Entropy)",
-    "description": "将香农熵（Shannon Entropy）的冷酷法则直接降维打击在整篇文档的句子长度分布曲线上。大语言模型（LLM）的底层基因就是不停地做“局部概率最大化”的数学题，这导致它们的本能就是向一种自认为“最安全、最平均”的句子长度（通常是 15 到 25 个单词）靠拢。其结果是，AI 生成的文本在句子长度上呈现出一种极度收敛、高度可预测的、令人窒息的窄钟形曲线。而人类写作者在本质上是混沌的、感性的、充满神经质节奏的——他们可以为了情绪爆发突然砸出一个只有 3 个字的短促断句（Staccato），紧接着又毫无违和感地铺开一句长达 45 个字的史诗级从句嵌套。这种不按套路出牌的写法，直接导致其信息熵爆表。",
-    "algorithm": "基于句长词频分布的香农熵测算",
-    "mechanism": "算法像碎纸机一样将文本按句子锯开，并清点每一句话的精确单词量。然后，它将这些数字扔进不同的统计“收容仓”（例如：1-5 个字、6-10 个字等）。接着，套用香农熵公式（$H = -\\sum p(x) \\log p(x)$）对这些仓位的概率分布进行审判。高熵值意味着句子的长短分布极度广泛且不可捉摸（这是活体人类的铁证）。而低得可怜的熵值，则无情地揭露了几乎所有句子都被困在了那几个可预测的长度牢笼里，将 AI 生成特有的“工业流水线数学同质化”特征暴露无遗。",
-    "useCase": "绝对是核验中长篇重磅内容（如万字博文、深度新闻报道、学术结课论文）的杀手级应用。在这类长文中，有着足够庞大的统计学数据基数，能够画出一条无比精确、无法抵赖的句长分布曲线。",
-    "strengths": "• 这是一种极其冷血的、完全无视语言和语种差异的数学降维打击。它根本不屑于去分析文字的意思或语法结构，只盯着数字分布的拓扑图看。\n• 无论“洗稿作弊者”如何在提示词里疯狂哀求 AI “请把句子写得长短不一”，AI 受限于其底层的概率预测数学锁，始终无法逼真地复刻出人类那种灵魂深处真正的病态熵值，可以说是极难被绕过的铁壁防线。",
-    "limitations": "• 如果文本短于 150 个字，它就彻底瞎了。因为数据样本实在太少，根本画不完一条有统计学意义的曲线。\n• 有些人类文章天生就没有任何感情和波澜（比如枯燥的法律条款、八股文般的公文、全是参数的机器说明书），这种文本的熵值自带出厂底温，有可能会被算法一刀切成“假阳性（误以为是机器写的）”。",
-    "parameters": "雷达切片: 每句字数 (Word Count) 的冷酷阵列提取\n定罪量表: 长度分布统计仓的 香农熵 测算\n行刑判决: 0-100 信息熵塌缩度 (数学同质化重灾区) 剥夺分",
-    "accuracy": "极高震慑力 — 当文本字数超过 500 时，准确率能飙升至 82-88%。这是统计学 AI 文本刑侦领域的根本基石之一。",
-    "references": [
-        {
-            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
-            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
-        },
-        {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        }
-    ],
-    "source": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+  "name": "句子长度信息熵分析 (Sentence Entropy)",
+  "description": "将香农熵（Shannon Entropy）的冷酷法则直接降维打击在整篇文档的句子长度分布曲线上。大语言模型（LLM）的底层基因就是不停地做“局部概率最大化”的数学题，这导致它们的本能就是向一种自认为“最安全、最平均”的句子长度（通常是 15 到 25 个单词）靠拢。其结果是，AI 生成的文本在句子长度上呈现出一种极度收敛、高度可预测的、令人窒息的窄钟形曲线。而人类写作者在本质上是混沌的、感性的、充满神经质节奏的——他们可以为了情绪爆发突然砸出一个只有 3 个字的短促断句（Staccato），紧接着又毫无违和感地铺开一句长达 45 个字的史诗级从句嵌套。这种不按套路出牌的写法，直接导致其信息熵爆表。",
+  "algorithm": "基于句长词频分布的香农熵测算",
+  "mechanism": "The algorithm tokenizes the text into sentences and counts the word length of each. It groups these lengths into statistical 'bins' (e.g., 1-5 words, 6-10 words, etc.). It then applies the Shannon Entropy formula ($H = -\\sum p(x) \\log p(x)$) to the probability distribution of these bins. A high entropy score means the sentence lengths are widely and unpredictably distributed (human). A low entropy score indicates that almost all sentences fall into a few predictable length bins, exposing the mathematical homogenization typical of AI generation.",
+  "useCase": "绝对是核验中长篇重磅内容（如万字博文、深度新闻报道、学术结课论文）的杀手级应用。在这类长文中，有着足够庞大的统计学数据基数，能够画出一条无比精确、无法抵赖的句长分布曲线。",
+  "strengths": "• 这是一种极其冷血的、完全无视语言和语种差异的数学降维打击。它根本不屑于去分析文字的意思或语法结构，只盯着数字分布的拓扑图看。\n• 无论“洗稿作弊者”如何在提示词里疯狂哀求 AI “请把句子写得长短不一”，AI 受限于其底层的概率预测数学锁，始终无法逼真地复刻出人类那种灵魂深处真正的病态熵值，可以说是极难被绕过的铁壁防线。",
+  "limitations": "• 如果文本短于 150 个字，它就彻底瞎了。因为数据样本实在太少，根本画不完一条有统计学意义的曲线。\n• 有些人类文章天生就没有任何感情和波澜（比如枯燥的法律条款、八股文般的公文、全是参数的机器说明书），这种文本的熵值自带出厂底温，有可能会被算法一刀切成“假阳性（误以为是机器写的）”。",
+  "parameters": "雷达切片: 每句字数 (Word Count) 的冷酷阵列提取\n定罪量表: 长度分布统计仓的 香农熵 测算\n行刑判决: 0-100 信息熵塌缩度 (数学同质化重灾区) 剥夺分",
+  "accuracy": "极高震慑力 — 当文本字数超过 500 时，准确率能飙升至 82-88%。这是统计学 AI 文本刑侦领域的根本基石之一。",
+  "references": [
+    {
+      "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+      "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+    },
+    {
+      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+      "url": "https://arxiv.org/abs/2301.11305"
+    }
+  ],
+  "source": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

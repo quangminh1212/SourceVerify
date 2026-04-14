@@ -1,22 +1,22 @@
 {
-    "name": "排版强调癖好侦测 (Emphasis Profiling)",
-    "description": "分析文本中强调符号（加粗、斜体、全大写）的爆发频率与建筑级摆放位置。AI 模型患有严重的“排版强迫症”，比如标志性的把每一个列表项的前几个词像强迫症一样全部加粗。",
-    "algorithm": "Markdown/排版强调符号拓扑分布分析",
-    "mechanism": "人类作家在使用排版手段（加粗、斜体、全大写）时，往往是随性、凌乱且充满机动性的——为了宣泄一种真实的情感爆破、划清复杂概念的界限，或者模拟人声骂街时的咬字重音。相比之下，大型语言模型（LLM）骨子里只是把强调符号（尤其是 Markdown 的 **加粗**）当作一种支撑排版结构的“钢筋脚手架”，而不是情感表达的载体。在生成科普解释类文本时，AI 系统会对标准的排版模板表现出一种病态的顺从。最臭名昭著的 AI 签名就是“加粗起手式列表”：生成一个带圆点的列表，所有列表项的开头前 2 到 5 个词被精准加粗，紧接着打一个冒号（或破折号），然后是一段脱掉加粗格式的佛系解释。此外，AI 几乎绝不使用斜体来表达微妙的阴阳怪气，也不会用全大写字母（ALL CAPS）来歇斯底里地咆哮，因为这严重违反了其底层“中立无害”的对齐规则（Alignment）。本探针会解析文本中的所有排版化词元，并用数学工具测量它们的摆放方差、密度和结构可预测性。如果一篇文章里的加粗词语分布得像“节拍器”一样精准无误、均匀且刻板（例如：每一自然段正好安排一处加粗小标题），这就赤裸裸地暴露了机器生成底层的钢筋骨架模板。",
-    "useCase": "核查博客文章、流水线营销软文和“干货分享”，在这些重灾区中，排版往往感觉“精致得过于虚假”且规律极度可预测，完全丧失了人类排版的天然粗糙感和随性。",
-    "strengths": "• 抓获“毛坯房”文本的神器：对付那些未经精修、直接从 ChatGPT 或 Claude 里复制粘贴出来的原样文本有奇效，因为它们默认极度依赖 Markdown 来显得条理清晰。\n• 降维打击：它是直接跳出词汇本身、在更高维度的“视觉排版逻辑”上进行定罪的探测器，传统那些数词频的 AI 探针连它的尾灯都看不到。\n• 铁证如山：非常容易向最终用户解释定罪理由——毕竟，“只加粗前几个词然后冒号”这种恶心的排版早就被全网群嘲为 AI 写作的陈词滥调（Cliché）了。",
-    "limitations": "• 极其容易被物理毁灭：只要无良造假者在粘贴时随手按一个“清除格式（粘贴为纯文本）”，抹掉所有的 Markdown 星号，探针当场变成瞎子。\n• 会对某些被迫遵守公司严格的排版军规、或者在写极度结构化硬核文档（如：API 接口说明书、菜谱步骤）的人类产物产生误伤暴击。\n• 英雄无用武之地：在那些天生不支持富文本排版的场景下（如：普通的 SMS 短信、推特纯文本）纯属摆设。",
-    "parameters": "雷达切片: Markdown 裸句解析 & 强调符号跨度阵列分布\n定罪量表: 格式化词元排布的结构刻板规律度 (空间坐标分布方差)\n行刑判决: 0-100 排版强迫症 (节拍器式加粗频率) 定罪分数",
-    "accuracy": "中等至高 — 75-85%（在带有排版的富文本主场）。它像一台 X 光机，不看你衣服穿得漂不漂亮，只看你的骨架是不是 LLM 出厂默认的批量化模具。",
-    "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        },
-        {
-            "title": "Bhat, M. et al. (2020). How Formats Shape Text. NAACL.",
-            "url": "https://aclanthology.org/2020.naacl-main.123/"
-        }
-    ],
-    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Bhat, M. et al. (2020). How Formats Shape Text. NAACL."
+  "name": "排版强调癖好侦测 (Emphasis Profiling)",
+  "description": "分析文本中强调符号（加粗、斜体、全大写）的爆发频率与建筑级摆放位置。AI 模型患有严重的“排版强迫症”，比如标志性的把每一个列表项的前几个词像强迫症一样全部加粗。",
+  "algorithm": "Markdown/排版强调符号拓扑分布分析",
+  "mechanism": "Human writers use typographical emphasis (bold, italics, capitalization) organically and irregularly to convey genuine emotion, clarify complex distinctions, or simulate vocal inflection. In contrast, Large Language Models treat emphasis—particularly markdown bolding (**)—as a structural crutch rather than an emotional tool. When generating explanatory text, AI models exhibit a pathological adherence to standard formatting templates. A classic AI signature is the 'Bold-Start Bullet Point': generating a list where exactly the first 2-5 words of every single item are bolded, followed by a colon and a plain-text explanation. AI also rarely uses italics for subtle intonation or ALL CAPS for raw excitement, as these violate its neutral alignment. This method parses the text to extract all instances of typographical formatting and analyzes their variance, density, and structural predictability. A text where emphasis is distributed with mechanical, metronomic regularity (e.g., exactly one bolded phrase per paragraph) strongly indicates the rigid formatting templates inherent to machine generation.",
+  "useCase": "核查博客文章、流水线营销软文和“干货分享”，在这些重灾区中，排版往往感觉“精致得过于虚假”且规律极度可预测，完全丧失了人类排版的天然粗糙感和随性。",
+  "strengths": "• 抓获“毛坯房”文本的神器：对付那些未经精修、直接从 ChatGPT 或 Claude 里复制粘贴出来的原样文本有奇效，因为它们默认极度依赖 Markdown 来显得条理清晰。\n• 降维打击：它是直接跳出词汇本身、在更高维度的“视觉排版逻辑”上进行定罪的探测器，传统那些数词频的 AI 探针连它的尾灯都看不到。\n• 铁证如山：非常容易向最终用户解释定罪理由——毕竟，“只加粗前几个词然后冒号”这种恶心的排版早就被全网群嘲为 AI 写作的陈词滥调（Cliché）了。",
+  "limitations": "• 极其容易被物理毁灭：只要无良造假者在粘贴时随手按一个“清除格式（粘贴为纯文本）”，抹掉所有的 Markdown 星号，探针当场变成瞎子。\n• 会对某些被迫遵守公司严格的排版军规、或者在写极度结构化硬核文档（如：API 接口说明书、菜谱步骤）的人类产物产生误伤暴击。\n• 英雄无用武之地：在那些天生不支持富文本排版的场景下（如：普通的 SMS 短信、推特纯文本）纯属摆设。",
+  "parameters": "雷达切片: Markdown 裸句解析 & 强调符号跨度阵列分布\n定罪量表: 格式化词元排布的结构刻板规律度 (空间坐标分布方差)\n行刑判决: 0-100 排版强迫症 (节拍器式加粗频率) 定罪分数",
+  "accuracy": "中等至高 — 75-85%（在带有排版的富文本主场）。它像一台 X 光机，不看你衣服穿得漂不漂亮，只看你的骨架是不是 LLM 出厂默认的批量化模具。",
+  "references": [
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    },
+    {
+      "title": "Bhat, M. et al. (2020). How Formats Shape Text. NAACL.",
+      "url": "https://aclanthology.org/2020.naacl-main.123/"
+    }
+  ],
+  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Bhat, M. et al. (2020). How Formats Shape Text. NAACL."
 }

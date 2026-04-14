@@ -1,22 +1,22 @@
 {
-    "name": "语义冗余与废话侦测 (Redundancy Detection)",
-    "description": "清查文本中极其没营养的语义重复、车轱辘话以及循环论证。大语言模型（LLM）经常会患上一种叫做“内容死循环 (Content Looping)”的绝症——当它们为了满足用户凑字数的强制要求，或者因为注意力机制（Attention）由于上下文太长而丢失了叙事推进的抓手时，它们就会把同一个核心概念，换一拨同义词翻来覆去地说。最终导致生成出大量臃肿、啰嗦、且毫无信息量递进的废话段落。",
-    "algorithm": "语义重叠密度与循环概念雷达",
-    "mechanism": "算法会将每一句话里的概念内核提取出来，降维映射成语义的数学向量（Embeddings）。然后，它会严酷地计算同一个段落或上下文中，不同命题之间的“距离”或“重叠度”。一个正常写作的人类，每一句话通常都会推动情节或者逻辑往前走（高语义推力）。而 AI 生成的文本，常常会写出一句跟上一句概念重合度高达 80-90% 的废话，仅仅在表面上玩弄了一些同义词替换的障眼法。该系统还会精准锁定那些 AI 最爱用的经典“注水”句式，比如刚说完一个观点，马上强行加一句废话总结（“总而言之...”、“综上所述...”）。",
-    "useCase": "专杀那些 AI 被下达了“给我写满 1000 字”指令后，被迫疯狂注水、原地打转的长篇论文、企业公文和水军营销文案。",
-    "strengths": "• 即便人类作者在句子层级对 AI 的初稿进行了精细修改，只要没有重写逻辑骨架，该方法依然能像 X 光一样照出文本深处那种机械生成的重复性结构缺陷。\n• 与 GPT-4 和 Claude 等高级模型中普遍存在的“篇幅幻觉 (Hallucination of Length)”现象有着令人毛骨悚然的强相关性。",
-    "limitations": "• 可能会误伤那些为了达到修辞和洗脑效果而故意使用极其夸张的排比和重复的人类文本（比如某些狂热的政治演讲），或者纯粹就是人类写的毫无墨水、又臭又长的大空话。\n• 在字数极短的碎片文本中无法生效，因为篇幅短到 AI 还没来得及开始“原地转圈”。",
-    "parameters": "雷达切片: 句子级语义蕴涵与废话重叠率测算\n定罪量表: 命题逻辑向前推进比率 (PPR)\n行刑判决: 0-100 语义冗余 (车轱辘话) 死循环得分",
-    "accuracy": "中高威胁 — 准确率 75-80%。为了防止把“文笔极其烂且啰嗦的人类”冤枉成 AI，烈性建议将此结果与“词汇密度 (Lexical Density)”和“逻辑架构 (Argument Structure)”结合使用。",
-    "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
-        {
-            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-            "url": "https://arxiv.org/abs/2011.01314"
-        }
-    ],
-    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING."
+  "name": "语义冗余与废话侦测 (Redundancy Detection)",
+  "description": "清查文本中极其没营养的语义重复、车轱辘话以及循环论证。大语言模型（LLM）经常会患上一种叫做“内容死循环 (Content Looping)”的绝症——当它们为了满足用户凑字数的强制要求，或者因为注意力机制（Attention）由于上下文太长而丢失了叙事推进的抓手时，它们就会把同一个核心概念，换一拨同义词翻来覆去地说。最终导致生成出大量臃肿、啰嗦、且毫无信息量递进的废话段落。",
+  "algorithm": "语义重叠密度与循环概念雷达",
+  "mechanism": "The algorithm maps the conceptual propositions of each sentence into semantic embeddings. It then calculates the 'distance' or 'overlap' between propositions within the same paragraph or document. A human writer typically advances a narrative or argument with each sentence (high semantic progression). AI-generated text frequently produces sentences with 80-90% conceptual overlap with the preceding sentence, masked only by surface-level synonym swapping. The system also flags classic AI filler patterns like summarizing a point immediately after making it ('In summary...', 'Overall...').",
+  "useCase": "专杀那些 AI 被下达了“给我写满 1000 字”指令后，被迫疯狂注水、原地打转的长篇论文、企业公文和水军营销文案。",
+  "strengths": "• 即便人类作者在句子层级对 AI 的初稿进行了精细修改，只要没有重写逻辑骨架，该方法依然能像 X 光一样照出文本深处那种机械生成的重复性结构缺陷。\n• 与 GPT-4 和 Claude 等高级模型中普遍存在的“篇幅幻觉 (Hallucination of Length)”现象有着令人毛骨悚然的强相关性。",
+  "limitations": "• 可能会误伤那些为了达到修辞和洗脑效果而故意使用极其夸张的排比和重复的人类文本（比如某些狂热的政治演讲），或者纯粹就是人类写的毫无墨水、又臭又长的大空话。\n• 在字数极短的碎片文本中无法生效，因为篇幅短到 AI 还没来得及开始“原地转圈”。",
+  "parameters": "雷达切片: 句子级语义蕴涵与废话重叠率测算\n定罪量表: 命题逻辑向前推进比率 (PPR)\n行刑判决: 0-100 语义冗余 (车轱辘话) 死循环得分",
+  "accuracy": "中高威胁 — 准确率 75-80%。为了防止把“文笔极其烂且啰嗦的人类”冤枉成 AI，烈性建议将此结果与“词汇密度 (Lexical Density)”和“逻辑架构 (Argument Structure)”结合使用。",
+  "references": [
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    },
+    {
+      "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+      "url": "https://arxiv.org/abs/2011.01314"
+    }
+  ],
+  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "词汇奢华度与枯竭期分析 (Vocabulary Richness)",
-    "description": "通过衡量词汇量相对于文本长度的“有效扩张率”，来解剖文本的“词汇奢华度”。虽然最基础的词汇构成比（TTR）对长篇大论极不友好（文章越长得分越低的天然缺陷），但这套算法祭出了 Root TTR（吉罗指数）和 Yule's K（尤尔特征值），能在完全无视文章篇幅的情况下，精准评估词汇的“真实丰饶度”。大语言模型（LLM）被囚禁在森严的概率法则中，这让它们对冷僻词、极度具体或低概率词汇有着本能的厌恶和惩罚机制。其直接后果是：AI 生成的文本会以一种令人毛骨悚然的速度撞上“词汇枯竭期（Vocabulary plateau）”——在到达某个临界点后，它将彻底放弃引入新词，而是开始像拉磨的驴一样，无限次循环播放它那套安全、高频的核心基础词典。相比之下，人类创作者对于“词汇疲劳”有着高得多的耐受力，无论文章写到一万字还是十万字，人类总能持续不断地倾泻出新鲜的、高度贴合语境且完全无法被概率学预测的独特生词。",
-    "algorithm": "吉罗 Root TTR 与 尤尔 K 特征值 (Guiraud's Root TTR & Yule's K)",
-    "mechanism": "雷达会统计文中的总词数（Tokens）和去重后的独立词数（Types）。它没有采用低级的直接相除，而是计算 Root TTR（Types / √Tokens），强制画出一条能强行拉平长短文档差异的惩罚曲线。在做这件事的同时，它还会并行计算 Yule's K，用来测量“随便在文中抓瞎抽一个词，这个词竟然是个老油条（被重复使用过）”的统计学概率。如果 Root TTR 读数低得诡异，且 Yule's K 指示出一种极其严整、数学般丝滑的机械重复——这说明“作者”在极早的阶段就已经绝望地放弃了词汇的挣扎与创新——这便是 LLM 戴着概率学镣铐跳舞的最硬核罪证。",
-    "useCase": "这是针对超长篇距阵（如深海白皮书、万字电子书、深度论述文和学术文献）的终极审计核弹。它能一把撕下 AI 伪装的面具：AI 也许能在头几个自然段里装出人类般高谈阔论的辞藻，但只要把战线拉长到几千词，它的词汇库底裤就会被彻底扒光。",
-    "strengths": "• 在猎杀长篇 AI 生成文时展现出统治级的实力，因为文本的战线拖得越长，LLM 词汇储备匮乏的数学惨状就越是藏不住。\n• Root TTR 和 Yule's K 天生自带“长度免疫”的修正补丁，使得这套指标在面对几百字和几万字的文本时，都能输出稳如老狗的判决。",
-    "limitations": "• 会在极其死板的硬核技术文档（比如软件 API 手册、病理学报告）里血债惹错人（假阳性），因为这种人类文档必须像机器人一样无限重复精确术语，且使用同义词是被绝对封杀的。\n• 把这门大炮架在微型文本（如推文吐槽、短小精悍的带货文案）上是浪费表情，因为在算法逮到“词汇枯竭期”的马脚之前，文章已经提前完结了。",
-    "parameters": "雷达切片: 词汇拓荒率 与 语料回收(复读)概率\n定罪量表: 吉罗指数（Root TTR） & 尤尔 K 特征值\n行刑判决: 0-100 词汇枯竭期与语义贫困得分",
-    "accuracy": "中级至高级破甲 — 在长篇文本上的狙击精度在 76-85% 之间。这是计算文体学（Computational stylometry）界的一根定海神针。当前的 AI 模型，除非冒着胡言乱语（幻觉）或者逻辑断裂的必死风险，否则绝无可能在算法层面上完美伪装出人类级别的 Root TTR 扩张率。",
-    "references": [
-        {
-            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        }
-    ],
-    "source": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+  "name": "词汇奢华度与枯竭期分析 (Vocabulary Richness)",
+  "description": "通过衡量词汇量相对于文本长度的“有效扩张率”，来解剖文本的“词汇奢华度”。虽然最基础的词汇构成比（TTR）对长篇大论极不友好（文章越长得分越低的天然缺陷），但这套算法祭出了 Root TTR（吉罗指数）和 Yule's K（尤尔特征值），能在完全无视文章篇幅的情况下，精准评估词汇的“真实丰饶度”。大语言模型（LLM）被囚禁在森严的概率法则中，这让它们对冷僻词、极度具体或低概率词汇有着本能的厌恶和惩罚机制。其直接后果是：AI 生成的文本会以一种令人毛骨悚然的速度撞上“词汇枯竭期（Vocabulary plateau）”——在到达某个临界点后，它将彻底放弃引入新词，而是开始像拉磨的驴一样，无限次循环播放它那套安全、高频的核心基础词典。相比之下，人类创作者对于“词汇疲劳”有着高得多的耐受力，无论文章写到一万字还是十万字，人类总能持续不断地倾泻出新鲜的、高度贴合语境且完全无法被概率学预测的独特生词。",
+  "algorithm": "吉罗 Root TTR 与 尤尔 K 特征值 (Guiraud's Root TTR & Yule's K)",
+  "mechanism": "The scanner maps the total number of words (tokens) against the number of unique words (types). Instead of a simple division, it calculates the Root TTR (Types / √Tokens), forcing a curve that levels the playing field for longer documents. It simultaneously calculates Yule's K to measure the statistical probability of a randomly drawn word being a repetition of a previously used word. If the Root TTR score is unnaturally low and Yule's K indicates severe, mathematically smooth repetition—meaning the author gave up on finding unique vocabulary far too early—it is a critical indicator of an LLM's probability-constrained text generation.",
+  "useCase": "这是针对超长篇距阵（如深海白皮书、万字电子书、深度论述文和学术文献）的终极审计核弹。它能一把撕下 AI 伪装的面具：AI 也许能在头几个自然段里装出人类般高谈阔论的辞藻，但只要把战线拉长到几千词，它的词汇库底裤就会被彻底扒光。",
+  "strengths": "• 在猎杀长篇 AI 生成文时展现出统治级的实力，因为文本的战线拖得越长，LLM 词汇储备匮乏的数学惨状就越是藏不住。\n• Root TTR 和 Yule's K 天生自带“长度免疫”的修正补丁，使得这套指标在面对几百字和几万字的文本时，都能输出稳如老狗的判决。",
+  "limitations": "• 会在极其死板的硬核技术文档（比如软件 API 手册、病理学报告）里血债惹错人（假阳性），因为这种人类文档必须像机器人一样无限重复精确术语，且使用同义词是被绝对封杀的。\n• 把这门大炮架在微型文本（如推文吐槽、短小精悍的带货文案）上是浪费表情，因为在算法逮到“词汇枯竭期”的马脚之前，文章已经提前完结了。",
+  "parameters": "雷达切片: 词汇拓荒率 与 语料回收(复读)概率\n定罪量表: 吉罗指数（Root TTR） & 尤尔 K 特征值\n行刑判决: 0-100 词汇枯竭期与语义贫困得分",
+  "accuracy": "中级至高级破甲 — 在长篇文本上的狙击精度在 76-85% 之间。这是计算文体学（Computational stylometry）界的一根定海神针。当前的 AI 模型，除非冒着胡言乱语（幻觉）或者逻辑断裂的必死风险，否则绝无可能在算法层面上完美伪装出人类级别的 Root TTR 扩张率。",
+  "references": [
+    {
+      "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+      "url": "https://doi.org/10.2307/2280090"
+    },
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    }
+  ],
+  "source": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

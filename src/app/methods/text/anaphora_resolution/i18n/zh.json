@@ -1,18 +1,18 @@
 {
-    "name": "回指与代词消解 (Anaphora Resolution)",
-    "description": "评估文本中刚性重复名词与自然使用代词（回指）进行共指的频率差异。",
-    "algorithm": "共指依赖分析器",
-    "mechanism": "该方法研究文本如何处理回指（Anaphora）——即使用代词（如‘它’、‘他’、‘他们’）来指代前文确立的名词。人类由于认知的连贯性，在潜意识中极度依赖回指来保持上下文的流畅并避免冗余的啰嗦。然而，大型语言模型（LLM）（由于其自注意力机制的固有特性以及强调绝对清晰、无歧义的RLHF安全训练）经常表现出强烈的‘回指逃避症’。在统计学上，它们极度倾向于机械地重复核心名词（例如：‘公司宣布...’、‘公司声明...’、‘公司的目标是...’），而不是使用代词。通过追踪明示名词共指与代词回指的比例，该系统无情曝光了机器生成文本中那种过度谨慎、像说明书一样的僵硬骨架。",
-    "useCase": "专门用于检测那些为了追求句子级别的绝对清晰与中立，而刻意避开人类自然代词表达方式的 AI 机器文本。",
-    "strengths": "• 直接瞄准 Transformer 模型底层自注意力机制的死穴（即为了保留上下文而给明确名词赋予极高权重）。\n• 在处理叙事、信息说明和长篇摘要文本时极其有效。\n• 这个特征极为隐蔽，普通的‘模仿人类语气’的提示词（Prompt）如果不彻底打乱文本的连贯性，根本无法绕过此监测。",
-    "limitations": "• 容易在识别由人类撰写的、本来就刻意避免任何歧义的法律合同、极其正式的公文或学术论文时产生误判（False positives）。\n• 后端技术极度吃力，需要挂载非常庞大且复杂的 NLP 共指消解模型（Coreference Resolution）才能精准映射实体。\n• 如果遇到段落过短、根本无法形成共指链条的短语，该算法性能会呈断崖式下跌。",
-    "parameters": "分析类型: 句法共指追踪探测\n衡量指标: 刚性名词与代词更替比例\n输出判定: 0-100 代词逃避僵硬指数",
-    "accuracy": "中上水准 — 76-82%。在识别‘官方八股文风格’或者过度正式的 AI 摘要时是一把尖刀。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
+  "name": "回指与代词消解 (Anaphora Resolution)",
+  "description": "评估文本中刚性重复名词与自然使用代词（回指）进行共指的频率差异。",
+  "algorithm": "共指依赖分析器",
+  "mechanism": "This method studies how a text handles anaphora—the use of pronouns (e.g., 'it', 'they', 'she') to refer back to previously established nouns. Humans unconsciously rely heavily on anaphora because our cognitive context smoothly carries the reference forward, preventing redundant wordiness. However, LLMs (due to their self-attention mechanisms and reinforced safety training focused on absolute, unambiguous clarity) often exhibit 'anaphora avoidance'. They have a statistically higher tendency to explicitly repeat the core noun ('The company announced...', 'The company stated...', 'The company\\'s goal...') instead of using pronouns. By tracking the ratio of explicit coreferences to anaphoric pronouns, this system exposes the overly-cautious structural scaffolding typical of machine generation.",
+  "useCase": "专门用于检测那些为了追求句子级别的绝对清晰与中立，而刻意避开人类自然代词表达方式的 AI 机器文本。",
+  "strengths": "• 直接瞄准 Transformer 模型底层自注意力机制的死穴（即为了保留上下文而给明确名词赋予极高权重）。\n• 在处理叙事、信息说明和长篇摘要文本时极其有效。\n• 这个特征极为隐蔽，普通的‘模仿人类语气’的提示词（Prompt）如果不彻底打乱文本的连贯性，根本无法绕过此监测。",
+  "limitations": "• 容易在识别由人类撰写的、本来就刻意避免任何歧义的法律合同、极其正式的公文或学术论文时产生误判（False positives）。\n• 后端技术极度吃力，需要挂载非常庞大且复杂的 NLP 共指消解模型（Coreference Resolution）才能精准映射实体。\n• 如果遇到段落过短、根本无法形成共指链条的短语，该算法性能会呈断崖式下跌。",
+  "parameters": "分析类型: 句法共指追踪探测\n衡量指标: 刚性名词与代词更替比例\n输出判定: 0-100 代词逃避僵硬指数",
+  "accuracy": "中上水准 — 76-82%。在识别‘官方八股文风格’或者过度正式的 AI 摘要时是一把尖刀。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
 }

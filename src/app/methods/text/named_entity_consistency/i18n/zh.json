@@ -1,26 +1,26 @@
 {
-    "name": "专有名词一致性 (Named Entity Consistency)",
-    "description": "评估文中专有名词（人物、组织、地点、专业术语）在全文跨度内的系统稳定性和上下文逻辑连贯性。虽然 AI 可以在开篇极其装模作样地引入一个复杂的实体，但当文章拉长时，它们会迅速暴露出“长期记忆”缺失的绝症，导致产生灾难性的“实体漂移（Entity drift）”——在文章的后半段，这个专有名词的身份、特征、或者人际关系会偷偷地发生扭曲甚至完全自相矛盾。",
-    "algorithm": "跨文档实体共指消解与世界观属性核验",
-    "mechanism": "系统首先召唤重型的命名实体识别（NER）技术，把文章里所有带头脸的实体（比如“史密斯博士”、“全球重工”、“X协议”）强制抓取并建立索引。接着，它在整篇文章的骨架上编织一张局部的知识图谱，把这些实体在每一句话里做了什么动作、被什么形容词修饰、扮演了什么剧情角色，全部钉死在这张网上。最后，算法开始像冷酷的审计员一样，全页通缉 AI 的“幻觉穿帮（Hallucinatory contradictions）”——即 AI “忘了吃药”、导致前后设定崩塌的车祸现场。比如：第二章明确写了这个人被枪杀了，第五章却又说他在接受警方采访；或者在开头信誓旦旦地说 A 公司成立于 1990 年，结果到了结尾又胡诌这家公司参与了 1980 年的某场商战。一个精神正常的人类作家，脑子里会始终维持一个极其完整的逻辑沙盘，哪怕写了几万字也不会把主角的祖籍写窜。但大语言模型（LLM）的灵魂里只有算力滑动的“上下文窗口”和“下一个词概率拟合”，它们根本没有“工作记忆”，它们永远只会为了蒙混过眼下这句话的局部流畅度，而毫不犹豫地出卖整篇文章的宏观设定。",
-    "useCase": "这是用来对任何长篇生成内容（长篇学术报告、硬核企业传记、详实的研报、甚至 AI 强行扩写的小说）进行“满门抄斩”的终极武器。只要字数足够长，AI 在抛接多个事实参数和剧情人物时必然会因为内存不足而当场炸机。",
-    "strengths": "• 它的屠刀直接命中了当前所有自回归语言模型在基因深处的死穴：“机器幻觉”和“超长上下文失忆”。\n• 在生擒 AI 一本正经胡说八道的“假新闻”、“捏造的商业案例”和“乱接引用的学术烂文”时，具有核弹级的破坏力。\n• 这种指控无法被洗白。系统直接甩出判决书（例如：“你在第 12 行说 A 实体是 X，但在第 84 行又说它是 Y，自己解释吧”）。",
-    "limitations": "• 为了建构这套严密的记忆图谱，并在句子之间拉网进行从句关系倒查，算力消耗会非常庞大。\n• 极有可能会误伤那些人类故意写的实验性文学（比如主打精神分裂和非线性叙事的晦涩小说、不可靠的意识流叙事者），或者仅仅是那个人类作者脑子蠢、没做校对导致的文章穿帮。\n• 如果那是一篇字数少得可怜的超级短文，AI 甚至还没来得及忘词文章就结束了，这个雷达自然也扫不出任何“记忆漂移”。",
-    "parameters": "雷达切片: NER 全量强制提取与上下文图神经网络 (GNN) 建构\n定罪量表: 实体间对偶属性冲突与时空世界观逻辑崩塌\n行刑判决: 0-100 世界观逻辑连贯性 (AI 脑裂幻觉暴雷率) 审判分数",
-    "accuracy": "极高 — 在 1,000 字以上的长文中拥有 82-89% 的惊人识别率。它鄙视单纯的词频统计游戏，直接从宏观的逻辑自洽性降维打击 AI 制假，是目前地表最强健的语义级打假指标之一。",
-    "references": [
-        {
-            "title": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.",
-            "url": "https://doi.org/10.1145/3571730"
-        },
-        {
-            "title": "Manakul, P. et al. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs. EMNLP.",
-            "url": "https://arxiv.org/abs/2303.08896"
-        },
-        {
-            "title": "Min, S. et al. (2023). FActScore: Fine-grained Atomic Evaluation of Factual Precision. EMNLP.",
-            "url": "https://arxiv.org/abs/2305.14251"
-        }
-    ],
-    "source": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.; Manakul, P. et al. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs. EMNLP.; Min, S. et al. (2023). FActScore: Fine-grained Atomic Evaluation of Factual Precision. EMNLP."
+  "name": "专有名词一致性 (Named Entity Consistency)",
+  "description": "评估文中专有名词（人物、组织、地点、专业术语）在全文跨度内的系统稳定性和上下文逻辑连贯性。虽然 AI 可以在开篇极其装模作样地引入一个复杂的实体，但当文章拉长时，它们会迅速暴露出“长期记忆”缺失的绝症，导致产生灾难性的“实体漂移（Entity drift）”——在文章的后半段，这个专有名词的身份、特征、或者人际关系会偷偷地发生扭曲甚至完全自相矛盾。",
+  "algorithm": "跨文档实体共指消解与世界观属性核验",
+  "mechanism": "The system utilizes advanced Named Entity Recognition (NER) to extract and index all distinct entities (e.g., 'Dr. Smith', 'GlobalCorp', 'Protocol X'). It then builds a localized knowledge graph connecting these entities to their associated verbs, adjectives, and contextual roles across the entire document. The algorithm scans for 'hallucinatory contradictions'—instances where the AI forgets the established constraints of an entity. For example, indicating that a person died in chapter two but quoting them in chapter five, or stating a company was founded in 1990 but later describing its involvement in a 1980s event. Human writers maintain a coherent internal mental model of the entities they discuss, ensuring logical continuity even in long texts. LLMs, governed by sliding context windows and probabilistic next-token generation, lack true working memory, often prioritizing immediate localized fluency over macroscopic entity consistency.",
+  "useCase": "这是用来对任何长篇生成内容（长篇学术报告、硬核企业传记、详实的研报、甚至 AI 强行扩写的小说）进行“满门抄斩”的终极武器。只要字数足够长，AI 在抛接多个事实参数和剧情人物时必然会因为内存不足而当场炸机。",
+  "strengths": "• 它的屠刀直接命中了当前所有自回归语言模型在基因深处的死穴：“机器幻觉”和“超长上下文失忆”。\n• 在生擒 AI 一本正经胡说八道的“假新闻”、“捏造的商业案例”和“乱接引用的学术烂文”时，具有核弹级的破坏力。\n• 这种指控无法被洗白。系统直接甩出判决书（例如：“你在第 12 行说 A 实体是 X，但在第 84 行又说它是 Y，自己解释吧”）。",
+  "limitations": "• 为了建构这套严密的记忆图谱，并在句子之间拉网进行从句关系倒查，算力消耗会非常庞大。\n• 极有可能会误伤那些人类故意写的实验性文学（比如主打精神分裂和非线性叙事的晦涩小说、不可靠的意识流叙事者），或者仅仅是那个人类作者脑子蠢、没做校对导致的文章穿帮。\n• 如果那是一篇字数少得可怜的超级短文，AI 甚至还没来得及忘词文章就结束了，这个雷达自然也扫不出任何“记忆漂移”。",
+  "parameters": "雷达切片: NER 全量强制提取与上下文图神经网络 (GNN) 建构\n定罪量表: 实体间对偶属性冲突与时空世界观逻辑崩塌\n行刑判决: 0-100 世界观逻辑连贯性 (AI 脑裂幻觉暴雷率) 审判分数",
+  "accuracy": "极高 — 在 1,000 字以上的长文中拥有 82-89% 的惊人识别率。它鄙视单纯的词频统计游戏，直接从宏观的逻辑自洽性降维打击 AI 制假，是目前地表最强健的语义级打假指标之一。",
+  "references": [
+    {
+      "title": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.",
+      "url": "https://doi.org/10.1145/3571730"
+    },
+    {
+      "title": "Manakul, P. et al. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs. EMNLP.",
+      "url": "https://arxiv.org/abs/2303.08896"
+    },
+    {
+      "title": "Min, S. et al. (2023). FActScore: Fine-grained Atomic Evaluation of Factual Precision. EMNLP.",
+      "url": "https://arxiv.org/abs/2305.14251"
+    }
+  ],
+  "source": "Ji, Z. et al. (2023). Survey of Hallucination in Natural Language Generation. ACM Computing Surveys.; Manakul, P. et al. (2023). SelfCheckGPT: Zero-Resource Black-Box Hallucination Detection for Generative LLMs. EMNLP.; Min, S. et al. (2023). FActScore: Fine-grained Atomic Evaluation of Factual Precision. EMNLP."
 }

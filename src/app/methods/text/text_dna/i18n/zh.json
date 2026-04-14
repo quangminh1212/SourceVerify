@@ -1,22 +1,22 @@
 {
-    "name": "句法 DNA 隐形水印 (Syntactic DNA Watermarking)",
-    "description": "旨在用显微镜发掘并在物理层面上证实那些在 AI 文本生成时被植入的、人类肉眼绝对不可见的密码学或统计学“水印（Watermarks）”。当今众多顶尖的商业大语言模型（LLM）会采取诸如“红绿名单词库深层强硬分割（Green-Red List Partitioning, Kirchenbauer等, 2023）”等黑科技，将一套数学签名强行烙印在它们的输出中。在生成的毫秒间，模型庞大的词汇表会根据上一个被吐出单词的哈希值（Hash），被伪随机地暴力撕裂为“绿色”（系统强迫增加选中概率）和“红色”（系统降权惩罚）两种代币（Token）。人类作家在挥洒笔墨时是绝对自由的，根本不可能受这种潜藏概率枷锁的奴役。因此，只要算法能够通过逆向工程剖析这些 Token 序列中的疯狂统计学偏见，就能斩钉截铁地把 AI 作者钉在耻辱柱上。",
-    "algorithm": "Token 词库哈希分割法与统计学偏置暴力逆向",
-    "mechanism": "该扫荡引擎会将文本逐个 Token 进行肢解，试图强行重构出那个当年被 AI 用来分割词汇表的伪随机哈希函数。它会极其冷血地计算在特定窗口内，连续命中“绿色”Token 的统计学频次。对于一篇清白无辜、没有被污染过的人类文本，它内部那些碰巧符合哈希算法“绿色”和“红色”名单的 Token，自然会呈现出大概 50/50 的五五开均匀分布。但如果文本中“绿色”Token 的占比在数学概率上出现了极其夸张的、根本无法用常理跨越的峰值，这就直接构成了机器生成无可辩驳的密码学铁证（Fingerprint）。",
-    "useCase": "这是针对那些严格遵守 AI 安全透明标准的、并且暗中打上了隐形数字水印的商业巨兽（如 GPT-4 等）级 LLM 的终极审判武器。没有任何狡辩的余地。",
-    "strengths": "• 只要探针掌握了那个源头 AI 模型嵌入水印的底牌（特定的哈希算法），它下达的死亡判决的准确率无限逼近 100%（误杀率无限趋近于零！）。\n• 它的生命力极其顽强：它那统计学层面上的数字“DNA”早就在整篇战线中生根发芽，就算人类编辑进行了轻度洗稿、疯狂替换同义词、甚至是用对抗性工具强行重写，也无法洗掉这串基因烙印。",
-    "limitations": "• 如果肇事 AI 是一个完全开源的野路子模型、被严重阉割量化过、或者压根就没打算遵守规矩去开启打水印协议，那么这个探针将彻底变成一个瞎子，毫无建树。\n• 强行审判的底线：必须提供一块绝对够长（通常至少需要 50 个 Token 的弹药）的文本尸块，才有足够的子弹去撑起数学阈值，证明这一切绝非巧合。",
-    "parameters": "雷达切片: 密码学级 Token 词网哈希逆向校验\n定罪量表: 绿名单 Token 的病态偏置率及概率极化方差\n行刑判决: 0-100 密码学水认证确凿度得分",
-    "accuracy": "一击必杀 — 只要源文本带有已知数字水印，单枪匹马就能干出 >99% 的绝对精确率。即便没扫出水印，它也会安全休眠，绝对不随便咬伤无辜平民（零误杀）。",
-    "references": [
-        {
-            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
-            "url": "https://arxiv.org/abs/2301.10226"
-        },
-        {
-            "title": "Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
-            "url": "https://arxiv.org/abs/2303.11156"
-        }
-    ],
-    "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv."
+  "name": "句法 DNA 隐形水印 (Syntactic DNA Watermarking)",
+  "description": "旨在用显微镜发掘并在物理层面上证实那些在 AI 文本生成时被植入的、人类肉眼绝对不可见的密码学或统计学“水印（Watermarks）”。当今众多顶尖的商业大语言模型（LLM）会采取诸如“红绿名单词库深层强硬分割（Green-Red List Partitioning, Kirchenbauer等, 2023）”等黑科技，将一套数学签名强行烙印在它们的输出中。在生成的毫秒间，模型庞大的词汇表会根据上一个被吐出单词的哈希值（Hash），被伪随机地暴力撕裂为“绿色”（系统强迫增加选中概率）和“红色”（系统降权惩罚）两种代币（Token）。人类作家在挥洒笔墨时是绝对自由的，根本不可能受这种潜藏概率枷锁的奴役。因此，只要算法能够通过逆向工程剖析这些 Token 序列中的疯狂统计学偏见，就能斩钉截铁地把 AI 作者钉在耻辱柱上。",
+  "algorithm": "Token 词库哈希分割法与统计学偏置暴力逆向",
+  "mechanism": "The algorithm processes the text token by token, attempting to reconstruct the pseudo-random hashing function that may have been used by an AI to partition its vocabulary. It calculates the statistical frequency of consecutive 'green' tokens over a specific window. A standard, unwatermarked human text will naturally exhibit a roughly 50/50 distribution of pseudo-randomly hashed 'green' and 'red' tokens. A mathematically significant overrepresentation of 'green' tokens constitutes an undeniable cryptographic fingerprint of machine generation.",
+  "useCase": "这是针对那些严格遵守 AI 安全透明标准的、并且暗中打上了隐形数字水印的商业巨兽（如 GPT-4 等）级 LLM 的终极审判武器。没有任何狡辩的余地。",
+  "strengths": "• 只要探针掌握了那个源头 AI 模型嵌入水印的底牌（特定的哈希算法），它下达的死亡判决的准确率无限逼近 100%（误杀率无限趋近于零！）。\n• 它的生命力极其顽强：它那统计学层面上的数字“DNA”早就在整篇战线中生根发芽，就算人类编辑进行了轻度洗稿、疯狂替换同义词、甚至是用对抗性工具强行重写，也无法洗掉这串基因烙印。",
+  "limitations": "• 如果肇事 AI 是一个完全开源的野路子模型、被严重阉割量化过、或者压根就没打算遵守规矩去开启打水印协议，那么这个探针将彻底变成一个瞎子，毫无建树。\n• 强行审判的底线：必须提供一块绝对够长（通常至少需要 50 个 Token 的弹药）的文本尸块，才有足够的子弹去撑起数学阈值，证明这一切绝非巧合。",
+  "parameters": "雷达切片: 密码学级 Token 词网哈希逆向校验\n定罪量表: 绿名单 Token 的病态偏置率及概率极化方差\n行刑判决: 0-100 密码学水认证确凿度得分",
+  "accuracy": "一击必杀 — 只要源文本带有已知数字水印，单枪匹马就能干出 >99% 的绝对精确率。即便没扫出水印，它也会安全休眠，绝对不随便咬伤无辜平民（零误杀）。",
+  "references": [
+    {
+      "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+      "url": "https://arxiv.org/abs/2301.10226"
+    },
+    {
+      "title": "Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
+      "url": "https://arxiv.org/abs/2303.11156"
+    }
+  ],
+  "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv."
 }

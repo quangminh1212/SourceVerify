@@ -1,22 +1,22 @@
 {
-    "name": "Video Color Balance",
-    "description": "Analyzes color balance consistency",
-    "algorithm": "Video Color Balance — 像素级空间分析",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Analyzes color balance consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through 视频 color balance analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Video Color Balance",
+  "description": "Analyzes color balance consistency",
+  "algorithm": "Video Color Balance — 像素级空间分析",
+  "mechanism": "This method analyzes video color balance for forensic detection:\n\n1. **WhiteBalance估计**: The illuminant color temperature is estimated per frame using white point detection, gray world assumption, and highlight analysis. The estimated white balance should be consistent across the frame and stable over time.\n\n2. **人脸-BackgroundWhiteBalance比较**: The effective white balance of the face and background should match (same illumination). The method compares white point estimates from face and background. Deepfake face insertion may introduce a face rendered under different white balance — warmer or cooler color temperature than the environment.\n\n3. **颜色通道Balance**: The RGB channel balance (relative mean values) is tracked across frames. Natural video shows stable channel balance within scenes. Deepfake generation may produce subtle channel imbalances, particularly visible in neutral-colored face regions where white balance errors become apparent.\n\n4. **颜色Cast检测**: The method detects unwanted color casts (systematic color shift) in the face compared to the surrounding area. Even sophisticated deepfakes may impart subtle color casts from the training data or generator's learned bias, producing faces with slightly different color bias than the scene.\n\n5. **时间颜色Balance稳定性**: Color balance should vary slowly with lighting changes. The method tracks color balance stability — high-frequency color balance fluctuations in the face region (while background remains stable) indicate per-frame independent color rendering in the deepfake generation process.",
+  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through 视频 color balance analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

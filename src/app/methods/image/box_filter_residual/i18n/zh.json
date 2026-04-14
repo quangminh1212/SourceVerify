@@ -1,22 +1,22 @@
 {
-    "name": "盒式滤波器残差分析",
-    "description": "评估由线性盒式滤波器提取的残余噪声，以检测大面积的图像平滑现象。AI 生成模型通常会应用激进的内部去噪和插值步骤，相对真实的相机传感器噪声，会留下统计学上异常平滑的纹理。",
-    "algorithm": "空间域残差提取与去噪分析",
-    "mechanism": "该算法对图像应用简单的空间盒式滤波器（移动平均），并从原图中减去它，以分离高频残差信号（噪声）。在真实图像中，这种残差表现出特征性的自然传感器噪声特性。在 AI 合成或过度润色的图像中，残差包含绝对零方差的“死区”，这是模型过度平滑的结果，其中还散布着结构边界的伪影。",
-    "parameters": "滤波器类型：3x3或5x5盒式滤波器，运算：原图 - 滤波后的图像，分析：残余噪声的方差",
-    "accuracy": "中高 (75-85%) - 对于未压缩或干净压缩的图像非常稳健有效。",
-    "source": "Fridrich & Kodovsky (2012) 关于隐写分析的富模型 (Rich Models)",
-    "useCase": "检测 AI 生成的数字艺术作品、识别激进的降噪滤波器、以及辨识全局的图像平滑操作。",
-    "references": [
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ],
-    "strengths": "• 极其快速且轻量级的空间域运算与计算。\n• 充分利用了为噪声提取而建立的成熟隐写分析技术 (SRM)。\n• 在识别非真实感的合成平滑和模糊处理方面非常出色。\n• 较少受语义内容影响，纯粹聚焦于局部纹理变化。",
-    "limitations": "• 在严重 JPEG 压缩或主动降采样后，准确率会显著降低。\n• 带有高 ISO 噪点（颗粒感）的 AI 图像或后期加入自然胶片颗粒的图像可以轻易逃过检测。\n• 很难区分 AI 生成图像与配备标准现代智能手机降噪滤波器的算法修改。\n• 需要未压缩的图像输入（例如 PNG、TIF）以获取最佳的取证信号保存。"
+  "name": "盒式滤波器残差分析",
+  "description": "评估由线性盒式滤波器提取的残余噪声，以检测大面积的图像平滑现象。AI 生成模型通常会应用激进的内部去噪和插值步骤，相对真实的相机传感器噪声，会留下统计学上异常平滑的纹理。",
+  "algorithm": "空间域残差提取与去噪分析",
+  "mechanism": "The algorithm applies a simple spatial box filter (moving average) to the image and subtracts it from the original to isolate the high-frequency residual signal (noise). In authentic images, this residual exhibits characteristic natural sensor noise traits. In AI-synthesized or heavily retouched images, the residual contains 'dead zones' of absolute zero variance where the model applied excessive smoothing, interspersed with structural boundary artifacts.",
+  "parameters": "滤波器类型：3x3或5x5盒式滤波器，运算：原图 - 滤波后的图像，分析：残余噪声的方差",
+  "accuracy": "中高 (75-85%) - 对于未压缩或干净压缩的图像非常稳健有效。",
+  "source": "Fridrich & Kodovsky (2012) 关于隐写分析的富模型 (Rich Models)",
+  "useCase": "检测 AI 生成的数字艺术作品、识别激进的降噪滤波器、以及辨识全局的图像平滑操作。",
+  "references": [
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ],
+  "strengths": "• 极其快速且轻量级的空间域运算与计算。\n• 充分利用了为噪声提取而建立的成熟隐写分析技术 (SRM)。\n• 在识别非真实感的合成平滑和模糊处理方面非常出色。\n• 较少受语义内容影响，纯粹聚焦于局部纹理变化。",
+  "limitations": "• 在严重 JPEG 压缩或主动降采样后，准确率会显著降低。\n• 带有高 ISO 噪点（颗粒感）的 AI 图像或后期加入自然胶片颗粒的图像可以轻易逃过检测。\n• 很难区分 AI 生成图像与配备标准现代智能手机降噪滤波器的算法修改。\n• 需要未压缩的图像输入（例如 PNG、TIF）以获取最佳的取证信号保存。"
 }

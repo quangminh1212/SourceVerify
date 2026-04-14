@@ -1,22 +1,22 @@
 {
-    "name": "否定结构降维 (Negation Pattern)",
-    "description": "拆解文章表达否认、矛盾或缺失的手段（例如“不”、“从未”、“非-”、“无-”）。AI 模型极度沉迷于最简单、直接的分析型否定（“不是”、“没有”），并极其抗拒生成人类作家常用的那种为了修辞张力而存在的复杂否定、双重否定或是隐晦的词缀否定。",
-    "algorithm": "句法与词法级否定偏态分布检索",
-    "mechanism": "该算法会像语法解剖刀一样切开文本，找出所有的否定实例，并把它们扔进三个桶里：分析型否定（直白地使用“不”或“没有”）、词法型否定（使用带有否定意味的词缀，如“无-”、“非-”、“未-”）以及内生型否定（自带负面语义权重的动词，如“拒绝”、“否认”、“失败”）。大语言模型（LLM）的底层统计算法是被训练来“最大化信息清晰度”且“绝对避免逻辑歧义”的。因此，它们在写作时会本能地龟缩在统计学上最安全、最平庸的否定形式里：极其单调的分析型否定（例如，它只会写“这并不容易”，而极少会用“这绝非易事”或者“这充满艰辛”）。AI 像躲避瘟疫一样避免使用双重否定（“未尝不可”）或者长距离的辖域否定（否定词隔了十万八千里去修饰后面的从句），因为这会在它的算力底层引发严重的神经过载和预测不确定性。相反，人类作家在行文时会自然地铺开一张极其丰富的否定光谱，经常用复杂的词汇前缀或天生带刺的负面动词，来传递那种带有讽刺或回旋余地的微妙反差。如果一篇文章像小学生一样满篇只有干瘪的“不/没有”，这强烈暴露了这是一台为了追求“数学安全”而牺牲文体色彩的 AI 机器。",
-    "useCase": "这是用来给具有煽动性的说理散文、高阶文献综述和深度社论进行“照妖”的绝佳抓手。它能把人类笔下那种充满隐喻、欲扬先抑的复杂矛盾体，和 AI 笔下那种直推直就、干瘪枯燥的机械拒绝清晰地剥离开来。",
-    "strengths": "• 精准打击了自回归模型的一个底层统计基因病——讽刺的是，目前主流的 RLHF（人类反馈强化学习）为了追求模型输出的“清晰度”，反而让 AI 的这种否定句降维症变得更加无药可救。\n• 无论文章长短，杀伤力都很惊人。因为只要讲话，就不可避免地需要用到“否定”这块语法基石。\n• 极难通过那些粗暴的 Prompt 提示词来强行规避它，因为一旦强制命令 AI “多用双重否定”，它立马就会写出极其扭曲、连人都看不懂的智障病句。",
-    "limitations": "• 容易在下面这些情况频发假阳性误伤：由外语初学者写出的磕巴文字，或者追求极致直白的说明书手册——它们的主人本来也就只能或者只被允许使用最基础的“不”。\n• 如果撞上了一个极简主义（比如海明威那种刀削斧劈的极简句式）的人类作家，雷达的准度会下降。\n• 当文章体裁被死命令限制必须使用“简明英文/中文（Plain language）”时，人机难辨。",
-    "parameters": "雷达切片: 句法依赖树状图解析与否定辖域 (Scope) 追踪定位\n定罪量表: 简陋分析型否定 与 高阶词法/内生型否定 的病态悬殊比\n行刑判决: 0-100 词汇否定降维 (统计学求生欲) 审判分数",
-    "accuracy": "中高维打击 — 维持在 72-80% 的命中率。当它被投放到学术、创意或辩论类文本（这些领域天然就要求写作者动用复杂否定）的战场上时，这把刀最锋利。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+  "name": "否定结构降维 (Negation Pattern)",
+  "description": "拆解文章表达否认、矛盾或缺失的手段（例如“不”、“从未”、“非-”、“无-”）。AI 模型极度沉迷于最简单、直接的分析型否定（“不是”、“没有”），并极其抗拒生成人类作家常用的那种为了修辞张力而存在的复杂否定、双重否定或是隐晦的词缀否定。",
+  "algorithm": "句法与词法级否定偏态分布检索",
+  "mechanism": "This method parses the text to identify all instances of negation, mapping them into three categories: analytic (explicitly using 'not' or 'no'), morphological (using prefixes/suffixes like 'un-', 'im-', '-less'), and inherent (words carrying negative semantic weight like 'deny', 'refuse', 'fail'). Large Language Models (LLMs) are statistically trained to maximize clarity and avoid logical ambiguity. Consequently, they predominantly rely on the safest, most statistically common form of negation: simple analytic negation (e.g., 'It is not easy' rather than 'It is uneasy' or 'It is far from simple'). AI consistently avoids double negations ('not uncommon') or complex scope negation where the negative marker applies to a distant clause, as these increase computational uncertainty during generation. Human writers naturally employ a rich spectrum of negations, often using morphological prefixes or inherent negative verbs to convey subtle degrees of contradiction or irony. An unnatural over-reliance on simple 'not/no' constructs strongly indicates an AI prioritizing safe, explicit statistical generation over stylistic variance.",
+  "useCase": "这是用来给具有煽动性的说理散文、高阶文献综述和深度社论进行“照妖”的绝佳抓手。它能把人类笔下那种充满隐喻、欲扬先抑的复杂矛盾体，和 AI 笔下那种直推直就、干瘪枯燥的机械拒绝清晰地剥离开来。",
+  "strengths": "• 精准打击了自回归模型的一个底层统计基因病——讽刺的是，目前主流的 RLHF（人类反馈强化学习）为了追求模型输出的“清晰度”，反而让 AI 的这种否定句降维症变得更加无药可救。\n• 无论文章长短，杀伤力都很惊人。因为只要讲话，就不可避免地需要用到“否定”这块语法基石。\n• 极难通过那些粗暴的 Prompt 提示词来强行规避它，因为一旦强制命令 AI “多用双重否定”，它立马就会写出极其扭曲、连人都看不懂的智障病句。",
+  "limitations": "• 容易在下面这些情况频发假阳性误伤：由外语初学者写出的磕巴文字，或者追求极致直白的说明书手册——它们的主人本来也就只能或者只被允许使用最基础的“不”。\n• 如果撞上了一个极简主义（比如海明威那种刀削斧劈的极简句式）的人类作家，雷达的准度会下降。\n• 当文章体裁被死命令限制必须使用“简明英文/中文（Plain language）”时，人机难辨。",
+  "parameters": "雷达切片: 句法依赖树状图解析与否定辖域 (Scope) 追踪定位\n定罪量表: 简陋分析型否定 与 高阶词法/内生型否定 的病态悬殊比\n行刑判决: 0-100 词汇否定降维 (统计学求生欲) 审判分数",
+  "accuracy": "中高维打击 — 维持在 72-80% 的命中率。当它被投放到学术、创意或辩论类文本（这些领域天然就要求写作者动用复杂否定）的战场上时，这把刀最锋利。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Steerable Pyramid Decomposition",
-    "description": "Applies steerable pyramid for orientation-selective sub-band analysis — detects AI texture synthesis artifacts (Simoncelli & Freeman, 1995).",
-    "algorithm": "Steerable Pyramid Decomposition分析算法",
-    "mechanism": "Steerable Pyramid Decomposition系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Steerable Pyramid Decomposition",
+  "description": "Applies steerable pyramid for orientation-selective sub-band analysis — detects AI texture synthesis artifacts (Simoncelli & Freeman, 1995).",
+  "algorithm": "Steerable Pyramid Decomposition分析算法",
+  "mechanism": "This method applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **PyramidConstruction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **SubbandStatistics提取**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce characteristic heavy-tailed distributions in oriented subbands.\n\n3. **Cross-Scale相位分析**: Phase relationships between coefficients at adjacent scales reveal edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. AI-generated images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **方向Energy分析**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while AI generation artifacts often produce anomalous peaks or gaps in the orientation energy function.\n\n5. **纹理Synthesis检测**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). AI-generated textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

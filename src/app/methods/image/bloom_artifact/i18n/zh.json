@@ -1,22 +1,22 @@
 {
-    "name": "光学泛光伪影分析",
-    "description": "检查高对比度光源周围的亮度溢出。生成式 AI 模型通常会合成缺乏物理上精确的点扩散函数 (PSF) 和真实相机镜头产生的指数衰减特征的人造“泛光 (bloom)”和漏光效果。",
-    "algorithm": "亮度阈值化与指数衰减建模",
-    "mechanism": "分离过度曝光区域（亮度 > 阈值），并分析周围的光扩散梯度（点扩散函数）。在物理摄影中，泛光遵循由玻璃散射和传感器溢出引起的、可预测的指数衰减模式。AI 模型通常只是将这些光晕“绘制”成简单的平面渐变，这不符合标准物理散射模型，从而产生异常的衰减率和不自然的色彩通道截断。",
-    "parameters": "亮度阈值：> 95%，空间度量：径向指数衰减率，特征：点扩散函数 (PSF) 异常",
-    "accuracy": "中等 (65-75%) - 对于夜景或高亮度合成图像非常有效。",
-    "source": "Farid (2009) 关于照明与光学物理取证的研究",
-    "useCase": "检测合成光源，识别虚假的高光反射，发现高对比度场景中数字叠加的视觉特效。",
-    "references": [
-        {
-            "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
-            "url": "https://doi.org/10.1109/MSP.2008.931079"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ],
-    "strengths": "• 与光学传感器和玻璃镜头的物理极限紧密相连。\n• 提供关于照明和场景一致性的高度可解释的数据。\n• 不严重依赖深度学习分类器来进行光学异常检测。\n• 对合成数字艺术和过度业余的后期处理异常敏感。",
-    "limitations": "• 对缺乏明亮高光或可见光源的平光图像无效。\n• 具备光线追踪功能的高端 CGI 渲染引擎可以物理上准确地模拟泛光。\n• 极端的 HDR 色调映射可能会改变自然的衰减曲线，导致误报。\n• 如果图像是通过脏污、潮湿的镜头拍摄的，则极易出现判断错误。"
+  "name": "光学泛光伪影分析",
+  "description": "检查高对比度光源周围的亮度溢出。生成式 AI 模型通常会合成缺乏物理上精确的点扩散函数 (PSF) 和真实相机镜头产生的指数衰减特征的人造“泛光 (bloom)”和漏光效果。",
+  "algorithm": "亮度阈值化与指数衰减建模",
+  "mechanism": "Isolates overexposed regions (luminance > threshold) and analyzes the surrounding gradient of light diffusion (the point spread function). In physical photography, bloom follows a predictable exponential decay pattern caused by glass imperfect scattering and sensor bleeding. AI models usually simply 'paint' these halos as flat gradients that fail standard physical scattering models, yielding anomalous decay rates and unnatural color channel clipping.",
+  "parameters": "亮度阈值：> 95%，空间度量：径向指数衰减率，特征：点扩散函数 (PSF) 异常",
+  "accuracy": "中等 (65-75%) - 对于夜景或高亮度合成图像非常有效。",
+  "source": "Farid (2009) 关于照明与光学物理取证的研究",
+  "useCase": "检测合成光源，识别虚假的高光反射，发现高对比度场景中数字叠加的视觉特效。",
+  "references": [
+    {
+      "title": "Farid, H. (2009). Image Forgery Detection. IEEE Signal Processing Magazine.",
+      "url": "https://doi.org/10.1109/MSP.2008.931079"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ],
+  "strengths": "• 与光学传感器和玻璃镜头的物理极限紧密相连。\n• 提供关于照明和场景一致性的高度可解释的数据。\n• 不严重依赖深度学习分类器来进行光学异常检测。\n• 对合成数字艺术和过度业余的后期处理异常敏感。",
+  "limitations": "• 对缺乏明亮高光或可见光源的平光图像无效。\n• 具备光线追踪功能的高端 CGI 渲染引擎可以物理上准确地模拟泛光。\n• 极端的 HDR 色调映射可能会改变自然的衰减曲线，导致误报。\n• 如果图像是通过脏污、潮湿的镜头拍摄的，则极易出现判断错误。"
 }

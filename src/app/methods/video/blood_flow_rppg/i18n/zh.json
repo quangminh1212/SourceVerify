@@ -1,22 +1,22 @@
 {
-    "name": "Blood Flow rPPG",
-    "description": "Detects remote photoplethysmography signals",
-    "algorithm": "Blood Flow rPPG — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Detects remote photoplethysmography signals. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: sensor\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through blood flow rppg analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Qi, H. et al. (2020). DeepRhythm: Exposing DeepFakes with Attentional Visual Heartbeat Rhythms. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413707"
-        },
-        {
-            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos using Biological Signals. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2020.3009287"
-        }
-    ]
+  "name": "Blood Flow rPPG",
+  "description": "Detects remote photoplethysmography signals",
+  "algorithm": "Blood Flow rPPG — Sensor/Physical Model Analyzer",
+  "mechanism": "This method detects deepfakes using remote photoplethysmography (rPPG) following Qi et al. (2020) and Ciftci et al. (2020):\n\n1. **皮肤区域检测**: Face regions with visible skin are identified and tracked: forehead, cheeks, and chin areas where subcutaneous blood flow produces measurable color changes. These regions of interest (ROIs) are stabilized across frames to compensate for head motion.\n\n2. **Pulse信号提取**: Subtle color variations caused by cardiac blood flow are extracted from the green channel (highest hemoglobin absorption sensitivity). Using chrominance-based methods (CHROM) or plane-orthogonal-to-skin (POS), the pulse signal is separated from motion artifacts and illumination changes.\n\n3. **HeartRate估计**: The pulse signal's power spectral density is computed via FFT. Authentic video of living humans shows a clear spectral peak at the cardiac frequency (typically 0.75-2.5 Hz / 45-150 BPM). Deepfake videos — which don't simulate subcutaneous blood flow — lack this physiological signal or produce it only weakly and inconsistently.\n\n4. **空间相干性验证**: The pulse signals from multiple facial ROIs should be temporally synchronized (blood flow reaches face regions with minor delays). The method checks cross-correlation between ROI pulse signals — per Ciftci et al. (2020), authentic faces show high inter-ROI coherence while deepfake faces show low spatial coherence of whatever pseudo-pulse signal may be present.\n\n5. **PhysiologicalPlausibility评分**: The extracted vital signs are evaluated for physiological plausibility: heart rate within normal range, heart rate variability following expected HRV patterns, pulse amplitude proportional to skin tone, and consistent signal across the recording duration. Deepfakes fail multiple physiological criteria, yielding high detection scores.",
+  "parameters": "分析类型: sensor\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through blood flow rppg analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Qi, H. et al. (2020). DeepRhythm: Exposing DeepFakes with Attentional Visual Heartbeat Rhythms. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413707"
+    },
+    {
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos using Biological Signals. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287"
+    }
+  ]
 }

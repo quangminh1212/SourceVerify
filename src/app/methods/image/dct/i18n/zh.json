@@ -1,22 +1,22 @@
 {
-    "name": "DCT 块伪影分析",
-    "description": "分析 离散余弦变换 block boundaries from JPEG压缩. Real camera JPEGs have natural block 伪影, while AI images lack or have uniform compression fingerprints.",
-    "algorithm": "DCT Block Artifact Analysis",
-    "mechanism": "分析 8x8 DCT block boundary 伪影 and quantization 模式 from JPEG压缩. AI images may lack or show inconsistent JPEG 伪影.",
-    "parameters": "块大小: 8x8, Analysis: block boundary discontinuity, 量化表 estimation",
-    "accuracy": "中等 - 65-80%, dependent on image format history",
-    "source": "Fan and de Queiroz (2003), IEEE ICIP; Bianchi et al. (2012)",
-    "useCase": "Detecting JPEG压缩 history 不一致 in AI生成的 images",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/ICIP.2003.1247434",
-            "title": "Fan, Z. & de Queiroz, R.L. (2003). Identification of Bitmap Compression History. IEEE ICIP."
-        },
-        {
-            "url": "https://doi.org/10.1109/TIFS.2012.2187516",
-            "title": "Bianchi, T. & Piva, A. (2012). Image Forgery Localization via Block-Grained Analysis. IEEE TIFS."
-        }
-    ],
-    "strengths": "• Direct 分析 of JPEG 压缩伪影\n• Can reveal compression history\n• Well-understood mathematical basis\n• Effective for detecting re-compression",
-    "limitations": "• Only applicable to JPEG format\n• Non-JPEG AI images won't show DCT 伪影\n• Multiple re-compressions complicate 分析\n• Low quality images have less reliable 模式"
+  "name": "DCT 块伪影分析",
+  "description": "分析 离散余弦变换 block boundaries from JPEG压缩. Real camera JPEGs have natural block 伪影, while AI images lack or have uniform compression fingerprints.",
+  "algorithm": "DCT Block Artifact Analysis",
+  "mechanism": "The algorithm slices open the visual skin to directly harvest the hidden Discrete Cosine Transform (DCT) Coefficient tables buried in the file architecture. In regions containing synthetic objects (or spliced from another stream), the 8x8 spatial grid is punctured, out-of-phase, or carrying a quantization table wildly alien to the host background. This scanner targets the 8x8 block boundaries, measures peak blocking energy, and hunts for nauseatingly misaligned structural phase-shifts—the ultimate smoking gun of splicing crime.",
+  "parameters": "块大小: 8x8, Analysis: block boundary discontinuity, 量化表 estimation",
+  "accuracy": "中等 - 65-80%, dependent on image format history",
+  "source": "Fan and de Queiroz (2003), IEEE ICIP; Bianchi et al. (2012)",
+  "useCase": "Detecting JPEG压缩 history 不一致 in AI生成的 images",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/ICIP.2003.1247434",
+      "title": "Fan, Z. & de Queiroz, R.L. (2003). Identification of Bitmap Compression History. IEEE ICIP."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIFS.2012.2187516",
+      "title": "Bianchi, T. & Piva, A. (2012). Image Forgery Localization via Block-Grained Analysis. IEEE TIFS."
+    }
+  ],
+  "strengths": "• Direct 分析 of JPEG 压缩伪影\n• Can reveal compression history\n• Well-understood mathematical basis\n• Effective for detecting re-compression",
+  "limitations": "• Only applicable to JPEG format\n• Non-JPEG AI images won't show DCT 伪影\n• Multiple re-compressions complicate 分析\n• Low quality images have less reliable 模式"
 }

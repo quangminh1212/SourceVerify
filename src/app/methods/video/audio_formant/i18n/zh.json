@@ -1,12 +1,12 @@
 {
-    "name": "Audio Formant Analysis",
-    "description": "Analyzes speech formant frequencies (F1-F4) — voice synthesis often produces unnatural formant transitions.",
-    "algorithm": "Audio Formant Analysis分析算法",
-    "mechanism": "Audio Formant Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Audio Formant Analysis",
+  "description": "Analyzes speech formant frequencies (F1-F4) — voice synthesis often produces unnatural formant transitions.",
+  "algorithm": "Audio Formant Analysis分析算法",
+  "mechanism": "This method analyzes speech formant structure for audio deepfake detection following Chetty & Wagner (2006):\n\n1. **共振峰提取**: Speech segments are analyzed using Linear Predictive Coding (LPC) to extract formant frequencies F1-F4 and their bandwidths. Formants are the resonant frequencies of the vocal tract, determined by physical anatomy — tongue position, jaw opening, and vocal tract length.\n\n2. **共振峰Trajectory分析**: Temporal trajectories of formant frequencies are tracked across phoneme transitions. Natural speech shows smooth, physiologically constrained formant transitions governed by articulatory dynamics. AI-generated speech may exhibit unnaturally abrupt formant shifts or overly smooth trajectories lacking natural micro-variations.\n\n3. **Speaker-Specific共振峰建模**: Each speaker has characteristic formant ranges determined by vocal tract geometry. The method builds a speaker-specific formant model and checks consistency — deepfake audio may inadvertently blend formant characteristics from source and target speakers, creating acoustically impossible vocal tract configurations.\n\n4. **共振峰Bandwidth分析**: Natural formant bandwidths reflect the damping properties of the vocal tract. AI synthesis often produces formants with unnatural bandwidth patterns — either too narrow (over-resonant) or too uniform across frequency bands, lacking the frequency-dependent damping of real vocal tracts.\n\n5. **Harmonic-to-共振峰Ratio**: The relationship between harmonic series and formant peaks is analyzed. In natural speech, harmonics interact with formant resonances in predictable ways governed by source-filter theory. Synthetic speech may show anomalous harmonic-formant relationships indicating generated rather than physical sound production.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

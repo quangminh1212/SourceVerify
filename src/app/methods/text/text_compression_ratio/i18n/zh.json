@@ -1,22 +1,22 @@
 {
-    "name": "多重算法降维压缩率 (Compression Ratio)",
-    "description": "巧妙借用计算机底层的数据压缩算法（如 zlib、gzip 或 LZ77），来物理级测量文本的内禀信息密度、数据冗余度以及结构可预测性。由于大语言模型（LLM）的算力本质是基于概率分布的 Token 预测，它们拉出的文本必然天生带有极高的句法规则性、词汇级别的干瘪重复，以及极其容易被捕捉的 n-gram 序列。相反，人类的灵魂书写天生就是混沌而无序的，充满了罕见词汇的突然爆发、参差不齐的格式断层，以及极高的信息熵（Information Entropy）。最终的物理结果就是：AI 生成的文本在被压缩时，效率高得惊人（压缩后的文件体积对比原始体积小得离谱），而人类写的东西则很难被高效压缩。",
-    "algorithm": "多引擎 LZ77/DEFLATE 压缩率断层分析",
-    "mechanism": "引擎会直接吞噬原始输入文本，并使用标准的无损数据压缩算法对其进行极端暴力的编码压缩。随后，它会冷酷地计算压缩率（压缩后体积 / 原始体积）。极低的压缩率意味着这篇文本充满了无脑的废话冗余和高度可预测的结构——这是工业级机器生成的铁证。不仅如此，系统还会释放一个“滑动窗口（Sliding window）”探针（例如以 200-500 个字符为步长），去切片扫描文本局部的可压缩性。如果在不同的窗口切片之间，压缩率出现了剧烈且诡异的震荡，这通常直接暴露了一篇“弗兰肯斯坦（尸块缝合）”式的文本，意味着在这篇文档中，人类的心血与 AI 的工业水文被无耻地拼接在了一起。",
-    "useCase": "作为一道语言无关（Language-agnostic）、无需任何预训练的超光速初筛防线，它在面对需要扫荡海量文本的战役中（尤其是学术界严打代写和计算机教育环境）展现出了惊人的破坏力。",
-    "strengths": "• 绝对的无监督且无视模型差异（Model-agnostic）；它完全不需要消耗任何神经网训练数据就能直接开火。\n• 执行速度快到令人发指（完全可以在纯客户端毫秒级完成计算）。\n• 它死死抓住了信息论中最底层的物理属性，这偏偏是 AI 从数学维度上几乎根本无法伪装的死穴。",
-    "limitations": "• 面对少于 200 个单词的超短文本时，由于压缩算法根本没足够的粮草去建立字典，它的探测威力会发生断崖式暴跌。\n• 当遇到人类亲手撰写的、天生就带有海量特定术语重复的硬核技术文档、冰冷法条或代码手册时，压缩率也会很高，容易引发友军误伤（False positives）。",
-    "parameters": "雷达切片: 香农信息熵 & LZ77 底层信息密度\n定罪量表: 全局与滑动窗口压缩率的剧烈震荡方差\n行刑判决: 0-100 文本可压缩性 (工业算法预测性) 确诊分值",
-    "accuracy": "中高段位 — 在大于 500 字的文本上单兵作战时，拥有 75-82% 的命中率。它在多维度交叉火力分析网中，作为第一道“过筛子”的极速先锋时，表现最为华丽。",
-    "references": [
-        {
-            "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
-            "url": "https://ieeexplore.ieee.org/document/10418933"
-        },
-        {
-            "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",
-            "url": "https://arxiv.org/abs/2305.09859"
-        }
-    ],
-    "source": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.; Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL."
+  "name": "多重算法降维压缩率 (Compression Ratio)",
+  "description": "巧妙借用计算机底层的数据压缩算法（如 zlib、gzip 或 LZ77），来物理级测量文本的内禀信息密度、数据冗余度以及结构可预测性。由于大语言模型（LLM）的算力本质是基于概率分布的 Token 预测，它们拉出的文本必然天生带有极高的句法规则性、词汇级别的干瘪重复，以及极其容易被捕捉的 n-gram 序列。相反，人类的灵魂书写天生就是混沌而无序的，充满了罕见词汇的突然爆发、参差不齐的格式断层，以及极高的信息熵（Information Entropy）。最终的物理结果就是：AI 生成的文本在被压缩时，效率高得惊人（压缩后的文件体积对比原始体积小得离谱），而人类写的东西则很难被高效压缩。",
+  "algorithm": "多引擎 LZ77/DEFLATE 压缩率断层分析",
+  "mechanism": "The algorithm takes the raw input text and encodes it using standard lossless compression algorithms. It then calculates the Compression Ratio (Compressed Size / Original Size). A low ratio indicates high redundancy and structural predictability—a strong indicator of machine generation. Furthermore, the system employs a sliding window technique (e.g., 200-500 characters) to analyze local compressibility segments. Wild variances in compressibility across different windows often signal a 'Frankenstein' text, indicating mixed human and AI authorship within the same document.",
+  "useCase": "作为一道语言无关（Language-agnostic）、无需任何预训练的超光速初筛防线，它在面对需要扫荡海量文本的战役中（尤其是学术界严打代写和计算机教育环境）展现出了惊人的破坏力。",
+  "strengths": "• 绝对的无监督且无视模型差异（Model-agnostic）；它完全不需要消耗任何神经网训练数据就能直接开火。\n• 执行速度快到令人发指（完全可以在纯客户端毫秒级完成计算）。\n• 它死死抓住了信息论中最底层的物理属性，这偏偏是 AI 从数学维度上几乎根本无法伪装的死穴。",
+  "limitations": "• 面对少于 200 个单词的超短文本时，由于压缩算法根本没足够的粮草去建立字典，它的探测威力会发生断崖式暴跌。\n• 当遇到人类亲手撰写的、天生就带有海量特定术语重复的硬核技术文档、冰冷法条或代码手册时，压缩率也会很高，容易引发友军误伤（False positives）。",
+  "parameters": "雷达切片: 香农信息熵 & LZ77 底层信息密度\n定罪量表: 全局与滑动窗口压缩率的剧烈震荡方差\n行刑判决: 0-100 文本可压缩性 (工业算法预测性) 确诊分值",
+  "accuracy": "中高段位 — 在大于 500 字的文本上单兵作战时，拥有 75-82% 的命中率。它在多维度交叉火力分析网中，作为第一道“过筛子”的极速先锋时，表现最为华丽。",
+  "references": [
+    {
+      "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
+      "url": "https://ieeexplore.ieee.org/document/10418933"
+    },
+    {
+      "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",
+      "url": "https://arxiv.org/abs/2305.09859"
+    }
+  ],
+  "source": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.; Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "SSIM Map Analysis",
-    "description": "Computes local SSIM structural similarity maps to detect region-level quality inconsistencies (Wang et al., 2004).",
-    "algorithm": "SSIM Map Analysis分析算法",
-    "mechanism": "SSIM Map Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "SSIM Map Analysis",
+  "description": "Computes local SSIM structural similarity maps to detect region-level quality inconsistencies (Wang et al., 2004).",
+  "algorithm": "SSIM Map Analysis分析算法",
+  "mechanism": "This method applies the Structural Similarity Index (SSIM) framework by Wang et al. (2004) for forensic quality analysis:\n\n1. **局部Statistics计算**: For each local window w (typically 11×11 Gaussian), three components are computed: luminance μ, contrast σ, and structure σ_xy. These capture perceptually relevant image properties following the human visual system model.\n\n2. **SSIMComponent分解**: The SSIM index between reference and test patches decomposes as: SSIM(x,y) = l(x,y)^α · c(x,y)^β · s(x,y)^γ, where l = (2μₓμᵧ+C₁)/(μₓ²+μᵧ²+C₁), c = (2σₓσᵧ+C₂)/(σₓ²+σᵧ²+C₂), s = (σₓᵧ+C₃)/(σₓσᵧ+C₃).\n\n3. **Self-SimilarityMapConstruction**: For forensic analysis without a reference image, local self-similarity is computed by comparing each patch against its neighboring regions. The resulting SSIM map reveals spatial consistency of image quality — genuine images show smooth, physically coherent quality variation.\n\n4. **QualityDiscontinuity检测**: Abrupt changes in local SSIM indicate potential manipulation boundaries — where inserted or AI-generated regions meet authentic image content. These discontinuities arise from differences in compression artifacts, noise levels, or rendering quality.\n\n5. **统计Profiling**: The distribution of local SSIM values is analyzed. Natural images exhibit characteristic SSIM distributions governed by content complexity. AI-generated images often show abnormally uniform local quality (lacking the natural variation from optics, sensor, and compression) or suspicious quality boundaries absent in untampered photographs.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

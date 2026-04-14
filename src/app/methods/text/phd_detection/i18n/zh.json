@@ -1,22 +1,22 @@
 {
-    "name": "PHD (代理模型与人类论证) 黑盒探测",
-    "description": "这是一种极其精密的零样本（Zero-shot）侦测框架，它通过联用一个“代理（Proxy）”语言模型和“人类论证（Human Demonstration）”基线底盘来审判文本。因为当下的商业 AI 巨头（如 GPT-4 或 Claude 3）都是把自己的内部词元概率捂得死死的“黑盒”，这个战术选择另辟蹊径：我们用一个开源的、可被我们掌控的“小号代理模型”去逆向估算机器当年是怎么生成这段文字的，然后把这种估算结果和被证实的人类真实写作特征池进行惨烈的对撞。",
-    "algorithm": "代理估算概率曲率与真实人类偏误对齐",
-    "mechanism": "该算法会强行把嫌疑文本塞进一个我们全权掌控的开源代理模型（比如 Llama-3 或 Mistral）里进行扫描。代理模型会像过安检一样，逐字测算如果让“它”来写，生成这些词的概率有多高。与此同时，系统会将这些由代理榨取出的概率数据，狠狠砸向一个名为“人类论证”的硬核数据库——里面全都是被证实的人类创作样本，充满了意义的跳跃、市井的俚语、和极不稳定的预测概率。如果嫌疑文本的概率分布和代理模型心里的“最优解生成路径”完美贴合（呈现出一条丝滑、稳定且大概率的“机器抛物线”），这篇文本就会被直接判死刑，打上 AI 生成的烙印。如果文本的走向像疯狗一样狂野，剧烈偏离代理模型的预测，反而和人类论证数据库里那种混乱无序的方差高度共鸣，它就会被豁免为人类作品。这种近乎流氓的战术之所以能成功，是因为它基于一个残酷的共识：即使各大厂商的大模型再怎么藏着掖着，它们底层的数学架构和梯度偏好（Gradient preferences）在本质上是穿同一条裤子的。",
-    "useCase": "这是用来对付那些闭源的、充满垄断气息的“黑盒”模型（像 OpenAI 的 GPT-4o 或 Google 的 Gemini）的核武器。因为这些厂家把内部数据藏得严严实实，传统那种慢条斯理的精确困惑度分析在这里根本连门都进不去。",
-    "strengths": "• 拥有极恐怖的“跨敌作战”能力：它根本不需要拿生成这篇文本的那个“原装 AI 模型”来做任何训练。\n• 典型的“四两拨千斤”：用免费的开源代理模型，打瘸估值千亿的闭源商业黑盒。\n• 极大地减少了冤假错案。因为它判案的锚点不是悬在空中的纯统计学理论，而是那些带有泥土气息的人类真实论证数据。",
-    "limitations": "• 和数几个 n-gram 词频的低级算法相比，它在算力上是在烧钱，因为它要把几十万字塞进一个活生生的神经网络（代理模型）里跑一圈。\n• 存在“智商压制”风险。如果你的开源代理模型是个智障，而生成文本的闭源黑盒是个绝顶天才，这种概率上的共鸣就会当场断裂，导致雷达失效。\n• 面对人类工程师亲手写出的那种极度刻板、严谨得像机器说明书一样的技术文档时，雷达会陷入自我怀疑，因为太像 AI 了。",
-    "parameters": "雷达切片: 压榨代理 LLM 进行逆向词元概率估算\n定罪量表: 代理最优曲线拟合度 对撼 人类论证基准线\n行刑判决: 0-100 黑盒破解 (代理模型推演塑料度) 审判分数",
-    "accuracy": "地对空高精狙击 — 在严酷的黑盒作战环境中能维持 85-95% 的拦截率。这是目前人类对抗现代垄断型闭源 AI 模型时，手中握着的最强硬的零样本反制机制之一。",
-    "references": [
-        {
-            "title": "Bao, J. et al. (2024). POGER: Proxy-Guided Efficient Re-sampling for Black-box AI-Generated Text Detection. IJCAI.",
-            "url": "https://arxiv.org/abs/2311.12933"
-        },
-        {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        }
-    ],
-    "source": "Bao, J. et al. (2024). POGER: Proxy-Guided Efficient Re-sampling for Black-box AI-Generated Text Detection. IJCAI.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+  "name": "PHD (代理模型与人类论证) 黑盒探测",
+  "description": "这是一种极其精密的零样本（Zero-shot）侦测框架，它通过联用一个“代理（Proxy）”语言模型和“人类论证（Human Demonstration）”基线底盘来审判文本。因为当下的商业 AI 巨头（如 GPT-4 或 Claude 3）都是把自己的内部词元概率捂得死死的“黑盒”，这个战术选择另辟蹊径：我们用一个开源的、可被我们掌控的“小号代理模型”去逆向估算机器当年是怎么生成这段文字的，然后把这种估算结果和被证实的人类真实写作特征池进行惨烈的对撞。",
+  "algorithm": "代理估算概率曲率与真实人类偏误对齐",
+  "mechanism": "The algorithm employs an accessible, open-weights Proxy Model (like Llama-3 or Mistral) to analyze the target text. The Proxy Model reads the text and calculates the probability of each word having been generated sequentially. Simultaneously, the system compares these proxy-derived probabilities against a robust dataset of 'Human Demonstrations'—verified human writing samples featuring high semantic variance, colloquial nuances, and uneven predictabilities. If the text's probability distribution aligns neatly with the Proxy Model's optimized generation path (showing a smooth, high-probability 'machine curve'), the text is classified as AI-generated. If the text deviates wildly from the proxy model's predictions and aligns closer to the chaotic variance of the human demonstration dataset, it is classified as human. This method bypasses the need for direct access to the original AI's source code by assuming all advanced language models share fundamentally similar mathematical architectures and gradient preferences.",
+  "useCase": "这是用来对付那些闭源的、充满垄断气息的“黑盒”模型（像 OpenAI 的 GPT-4o 或 Google 的 Gemini）的核武器。因为这些厂家把内部数据藏得严严实实，传统那种慢条斯理的精确困惑度分析在这里根本连门都进不去。",
+  "strengths": "• 拥有极恐怖的“跨敌作战”能力：它根本不需要拿生成这篇文本的那个“原装 AI 模型”来做任何训练。\n• 典型的“四两拨千斤”：用免费的开源代理模型，打瘸估值千亿的闭源商业黑盒。\n• 极大地减少了冤假错案。因为它判案的锚点不是悬在空中的纯统计学理论，而是那些带有泥土气息的人类真实论证数据。",
+  "limitations": "• 和数几个 n-gram 词频的低级算法相比，它在算力上是在烧钱，因为它要把几十万字塞进一个活生生的神经网络（代理模型）里跑一圈。\n• 存在“智商压制”风险。如果你的开源代理模型是个智障，而生成文本的闭源黑盒是个绝顶天才，这种概率上的共鸣就会当场断裂，导致雷达失效。\n• 面对人类工程师亲手写出的那种极度刻板、严谨得像机器说明书一样的技术文档时，雷达会陷入自我怀疑，因为太像 AI 了。",
+  "parameters": "雷达切片: 压榨代理 LLM 进行逆向词元概率估算\n定罪量表: 代理最优曲线拟合度 对撼 人类论证基准线\n行刑判决: 0-100 黑盒破解 (代理模型推演塑料度) 审判分数",
+  "accuracy": "地对空高精狙击 — 在严酷的黑盒作战环境中能维持 85-95% 的拦截率。这是目前人类对抗现代垄断型闭源 AI 模型时，手中握着的最强硬的零样本反制机制之一。",
+  "references": [
+    {
+      "title": "Bao, J. et al. (2024). POGER: Proxy-Guided Efficient Re-sampling for Black-box AI-Generated Text Detection. IJCAI.",
+      "url": "https://arxiv.org/abs/2311.12933"
+    },
+    {
+      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+      "url": "https://arxiv.org/abs/2301.11305"
+    }
+  ],
+  "source": "Bao, J. et al. (2024). POGER: Proxy-Guided Efficient Re-sampling for Black-box AI-Generated Text Detection. IJCAI.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "耳部细节一致性分析",
-    "description": "比较左右耳部细节一致性以检测深度伪造",
-    "algorithm": "耳部细节一致性 — 像素级空间分析",
-    "mechanism": "该方法分析视频帧以检测深度伪造和AI生成内容:\n\n1. **帧提取**: 从视频流中提取关键帧进行分析。\n\n2. **特征分析**: 比较左右耳部细节一致性。逐帧计算相关的视觉和时间特征。\n\n3. **时间一致性检查**: 在连续帧之间追踪特征以检测不一致性。\n\n4. **模式匹配**: 将结果与已知的深度伪造伪影模式进行比较。\n\n5. **分数计算**: 计算反映AI操纵可能性的置信度分数 (0-100)。",
-    "parameters": "分析类型: 像素\n媒体: 视频\n输入: 在关键时间间隔提取的视频帧\n输出: 置信度分数 (0-100)\n帧采样: 自适应 (1-5 fps，取决于方法)\n时间窗口: 帧序列滑动窗口",
-    "accuracy": "中到高 — 70-88% 独立准确率。与其他视频取证方法结合使用时最为有效。性能取决于视频质量、分辨率和压缩级别。",
-    "source": "视频取证和深度伪造检测研究。基于计算机视觉和时间信号分析方法。",
-    "useCase": "通过耳部细节一致性分析检测深度伪造和AI生成视频。该方法检查AI系统难以完美复制的时间和空间特征，为视频真实性评估提供证据。",
-    "strengths": "• 捕获单帧分析遗漏的时间伪影\n• 支持标准视频格式\n• 对常见深度伪造技术有效\n• 可与其他视频取证方法结合使用\n• 基于成熟的计算机视觉研究",
-    "limitations": "• 性能受视频压缩和分辨率影响\n• 某些方法需要足够的帧数进行时间分析\n• 有效性因深度伪造生成技术而异\n• 最好作为综合多方法管线的一部分使用\n• 对经过大量编辑的真实视频可能产生误报",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "耳部细节一致性分析",
+  "description": "比较左右耳部细节一致性以检测深度伪造",
+  "algorithm": "耳部细节一致性 — 像素级空间分析",
+  "mechanism": "This method analyzes ear anatomical detail for deepfake detection:\n\n1. **Ear区域提取**: Ears are detected and segmented using facial landmark extensions and ear-specific detectors. The ear region includes the helix, antihelix, tragus, antitragus, concha, and lobule — each with distinctive anatomical structure that serves as a biometric identifier.\n\n2. **AnatomicalDetail评估**: Fine ear structures are analyzed: cartilaginous ridges (helix curvature, antihelix branching), skin texture, and vascular patterns. Real ears exhibit high-frequency anatomical detail with complex 3D surface geometry. AI-generated ears typically show simplified anatomy — missing the intricate folds or producing physically impossible ear structures.\n\n3. **Bilateral对称性验证**: Left and right ears of the same person share characteristic family resemblance while showing natural asymmetry. The method compares both ears for anatomical consistency — deepfakes may produce ears with inconsistent morphology between sides, or ears that don't match the identity of the generated face.\n\n4. **时间Ear稳定性**: Ear anatomy is rigid (cartilage doesn't deform) and should remain geometrically stable across frames regardless of head motion. The method tracks ear detail consistency — deepfake generators may produce temporally inconsistent ear rendering with fluctuating detail levels, especially when the ear is near the face-swap boundary.\n\n5. **Ear-人脸Identity相干性**: Ear morphology is correlated with face shape and ethnicity. The method checks whether ear characteristics are plausible for the depicted face. Deepfakes that swap faces but not ears (or generate ears independently) may produce biometrically inconsistent ear-face combinations.",
+  "parameters": "分析类型: 像素\n媒体: 视频\n输入: 在关键时间间隔提取的视频帧\n输出: 置信度分数 (0-100)\n帧采样: 自适应 (1-5 fps，取决于方法)\n时间窗口: 帧序列滑动窗口",
+  "accuracy": "中到高 — 70-88% 独立准确率。与其他视频取证方法结合使用时最为有效。性能取决于视频质量、分辨率和压缩级别。",
+  "source": "视频取证和深度伪造检测研究。基于计算机视觉和时间信号分析方法。",
+  "useCase": "通过耳部细节一致性分析检测深度伪造和AI生成视频。该方法检查AI系统难以完美复制的时间和空间特征，为视频真实性评估提供证据。",
+  "strengths": "• 捕获单帧分析遗漏的时间伪影\n• 支持标准视频格式\n• 对常见深度伪造技术有效\n• 可与其他视频取证方法结合使用\n• 基于成熟的计算机视觉研究",
+  "limitations": "• 性能受视频压缩和分辨率影响\n• 某些方法需要足够的帧数进行时间分析\n• 有效性因深度伪造生成技术而异\n• 最好作为综合多方法管线的一部分使用\n• 对经过大量编辑的真实视频可能产生误报",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

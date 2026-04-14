@@ -1,18 +1,18 @@
 {
-    "name": "块伪影网格分析",
-    "description": "分析局部 JPEG 块边界伪影，以检测表明图像被篡改的不一致压缩网格。当区域拼接到来自不同压缩源时，其底层的 8x8 宏块对齐将无法同步。",
-    "algorithm": "块伪影网格 (BAG) 提取与相位一致性分析",
-    "mechanism": "JPEG 压缩本质上会将图像分割成结构化的 8x8 像素块，由于量化，在其边界处产生明显的相位特征。该算法测量跨边界梯度以映射块的可见性。在原始图像中，该网格是连续且周期性的。拼接或局部 AI 生成修复会破坏这种周期性对齐，导致 BAG 中出现可检测的相移或局部褪色。",
-    "parameters": "网格尺寸：8x8 DCT 宏块，网格检测：跨边界梯度图，空间度量：相位对齐 / 网格周期性",
-    "accuracy": "高 (80-92%) - 对于在高度压缩的源中定位块级拼接和复制移动伪造具有极高的精度。",
-    "source": "Fan & de Queiroz (2003) 位图压缩历史与 BAG 检测",
-    "useCase": "通过映射 JPEG 压缩网格的不一致性来定位被操作的区域，识别复合拼接，并检测未压缩的合成覆盖层。",
-    "references": [
-        {
-            "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
-            "url": "https://doi.org/10.1109/TIP.2003.812757"
-        }
-    ],
-    "strengths": "• 深深扎根于 JPEG 压缩标准的基本原理结构中。\n• 能够为被篡改区域提供高分辨率的空间定位。\n• 提供高度的数学可解释性，无需极度依赖复杂的 AI 模型。\n• 针对结合不同压缩历史的复合伪造图像极其有效。",
-    "limitations": "• 对原生无损格式（如 PNG、RAW）或纯粹的未压缩数据无效。\n• 过于激进的二次全局 JPEG 压缩可能会掩盖原始的网格相移。\n• 极小的操作区域（小于一个 8x8 宏块）可能会逃避检测。\n• 在自然破坏边界梯度的过度嘈杂或纹理繁重的区域存在局限性。"
+  "name": "块伪影网格分析",
+  "description": "分析局部 JPEG 块边界伪影，以检测表明图像被篡改的不一致压缩网格。当区域拼接到来自不同压缩源时，其底层的 8x8 宏块对齐将无法同步。",
+  "algorithm": "块伪影网格 (BAG) 提取与相位一致性分析",
+  "mechanism": "JPEG compression inherently segments an image into structural 8x8 pixel blocks, creating distinct phase signatures at their boundaries due to quantization. The algorithm measures cross-boundary gradients to map block visibility. In a pristine image, this grid is continuous and periodic. Splicing or localized generative inpainting breaks this periodic alignment, causing detectable phase shifts or localized fading in the BAG.",
+  "parameters": "网格尺寸：8x8 DCT 宏块，网格检测：跨边界梯度图，空间度量：相位对齐 / 网格周期性",
+  "accuracy": "高 (80-92%) - 对于在高度压缩的源中定位块级拼接和复制移动伪造具有极高的精度。",
+  "source": "Fan & de Queiroz (2003) 位图压缩历史与 BAG 检测",
+  "useCase": "通过映射 JPEG 压缩网格的不一致性来定位被操作的区域，识别复合拼接，并检测未压缩的合成覆盖层。",
+  "references": [
+    {
+      "title": "Fan, Z. & de Queiroz, R. (2003). Identification of Bitmap Compression History: JPEG Detection and Quantizer Estimation. IEEE TIP.",
+      "url": "https://doi.org/10.1109/TIP.2003.812757"
+    }
+  ],
+  "strengths": "• 深深扎根于 JPEG 压缩标准的基本原理结构中。\n• 能够为被篡改区域提供高分辨率的空间定位。\n• 提供高度的数学可解释性，无需极度依赖复杂的 AI 模型。\n• 针对结合不同压缩历史的复合伪造图像极其有效。",
+  "limitations": "• 对原生无损格式（如 PNG、RAW）或纯粹的未压缩数据无效。\n• 过于激进的二次全局 JPEG 压缩可能会掩盖原始的网格相移。\n• 极小的操作区域（小于一个 8x8 宏块）可能会逃避检测。\n• 在自然破坏边界梯度的过度嘈杂或纹理繁重的区域存在局限性。"
 }

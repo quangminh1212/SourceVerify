@@ -1,22 +1,22 @@
 {
-    "name": "缩略语回避病态分析 (Contraction Avoidance)",
-    "description": "专门针对英语等西方语言，通过测量助动词的“完整拼写形态（Full Form）”与“缩略形态（Contraction，如 do not 与 don't）”的频率比例，来侦测那种为了装权威而端着架子的虚假正式感。",
-    "algorithm": "词汇拘谨度与形态学展开比率测算",
-    "mechanism": "所有的大语言模型（LLM）在出厂时都经过了极其严苛的价值对齐（Alignment，如 RLHF）洗脑，这导致它们的出厂默认设置总是带着一种“极其礼貌、死板且喜欢端着”的官方发言人语气（以防嘴欠惹祸）。这种训练的直接副作用是，它们在统计学上患上了严重的“形态展开强迫症”：它们总是习惯于把字写得非常圆满（'cannot', 'do not', 'it is', 'they are'），而极度排斥使用人类在日常交流中随口蹦出来的自然缩略语（'can't', 'don't', 'it's', 'they're'）。即便是在写专业文章，人类为了保持文字的呼吸感和阅读节奏，也会本能地掺杂缩写。尽管本探针对不具备此类缩略语形态的亚洲语言（如中文、日文、韩文）无效，但它在英语检测中是一招致命的杀手锏。本探针会扫描文本，暴力统计可以被缩写却偏偏被拉长的“助动词/代词对”的比例。如果在原本应该是随性、轻松或讲故事的语境中，缩略语出现了严重的断崖式缺失，这就直接暴露了一个试图扮演老学究的机器人。",
-    "useCase": "用于拆穿那些试图伪装成个人知心日记、轻松闲聊邮件、趣味博文的 AI 文本——因为在这个随意松弛的语境下，AI 那种一板一眼、全程无缩写的播音腔会把它直接出卖。",
-    "strengths": "• 在处理那些用户要求“写得口语化一点”但 AI 依然改不掉其骨子里的官方腔调的提示词（Prompt）时，效果奇佳。\n• 计算速度犹如闪电，它只依赖于极其轻量、结果绝对确定的正则表达式（Regex）和硬编码的词汇映射，对服务器零负担。\n• 只要防作弊系统不提示，一般的生成器或者初级玩家根本意识不到 AI 还有这种暴露缩略语缺陷的毛病。",
-    "limitations": "• 容易误伤友军：如果用来扫描极其庄严肃穆的人类公文，例如顶级学术毕业论文、国际商业合同、或是严丝合缝的官方财报（这些文本本身就严禁使用缩略语），探针会全盘误报。\n• 明显的语言壁垒：它对中文、日文、韩文等完全没有这种词形缩写规则的语种彻底无效，这使得它只能作为针对英文和欧洲语言的专属武器。\n• 能够被轻易越狱：只要老练的提示词工程师在输入框里吼一句：“给我狠狠地用缩略语（use plenty of contractions）”，这套防御就会瞬间崩溃。",
-    "parameters": "雷达切片: 词汇正则匹配暴破 & 词法形态学还原率\n定罪量表: 完整装腔作势拼字数 vs 理论可缩写机会数\n行刑判决: 0-100 行文死板程度 (缩略语严重缺乏) 指数",
-    "accuracy": "中等侦测力 — 65-75%。这把武器的杀伤力极其依赖预期语境（如果是论文，它就废了；如果是博客，它就是屠龙刀）。它非常适合作为极为硬核的副武器，辅助“词汇罕见度”和“句子长度方差”进行综合绞杀。",
-    "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        }
-    ],
-    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+  "name": "缩略语回避病态分析 (Contraction Avoidance)",
+  "description": "专门针对英语等西方语言，通过测量助动词的“完整拼写形态（Full Form）”与“缩略形态（Contraction，如 do not 与 don't）”的频率比例，来侦测那种为了装权威而端着架子的虚假正式感。",
+  "algorithm": "词汇拘谨度与形态学展开比率测算",
+  "mechanism": "Large Language Models inherently default to a polite, formal, and authoritative tone, an artifact of their alignment training (e.g., RLHF) designed to prevent them from sounding overly colloquial or unprofessional. As a direct consequence, they exhibit a strong statistical bias toward morphological expansion—spelling out words fully ('cannot', 'do not', 'it is', 'they are') rather than using natural human contractions ('can't', 'don't', 'it's', 'they're'). Human writers, even in relatively professional contexts, naturally blend contractions into their writing to maintain rhythmic flow and conversational readability. This method computes the ratio of uncontracted verb/pronoun pairings to their contracted alternatives within a text. A severe deficit in contractions, especially in contexts intended to be casual, persuasive, or narrative, strongly correlates with synthetic generation.",
+  "useCase": "用于拆穿那些试图伪装成个人知心日记、轻松闲聊邮件、趣味博文的 AI 文本——因为在这个随意松弛的语境下，AI 那种一板一眼、全程无缩写的播音腔会把它直接出卖。",
+  "strengths": "• 在处理那些用户要求“写得口语化一点”但 AI 依然改不掉其骨子里的官方腔调的提示词（Prompt）时，效果奇佳。\n• 计算速度犹如闪电，它只依赖于极其轻量、结果绝对确定的正则表达式（Regex）和硬编码的词汇映射，对服务器零负担。\n• 只要防作弊系统不提示，一般的生成器或者初级玩家根本意识不到 AI 还有这种暴露缩略语缺陷的毛病。",
+  "limitations": "• 容易误伤友军：如果用来扫描极其庄严肃穆的人类公文，例如顶级学术毕业论文、国际商业合同、或是严丝合缝的官方财报（这些文本本身就严禁使用缩略语），探针会全盘误报。\n• 明显的语言壁垒：它对中文、日文、韩文等完全没有这种词形缩写规则的语种彻底无效，这使得它只能作为针对英文和欧洲语言的专属武器。\n• 能够被轻易越狱：只要老练的提示词工程师在输入框里吼一句：“给我狠狠地用缩略语（use plenty of contractions）”，这套防御就会瞬间崩溃。",
+  "parameters": "雷达切片: 词汇正则匹配暴破 & 词法形态学还原率\n定罪量表: 完整装腔作势拼字数 vs 理论可缩写机会数\n行刑判决: 0-100 行文死板程度 (缩略语严重缺乏) 指数",
+  "accuracy": "中等侦测力 — 65-75%。这把武器的杀伤力极其依赖预期语境（如果是论文，它就废了；如果是博客，它就是屠龙刀）。它非常适合作为极为硬核的副武器，辅助“词汇罕见度”和“句子长度方差”进行综合绞杀。",
+  "references": [
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    },
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    }
+  ],
+  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

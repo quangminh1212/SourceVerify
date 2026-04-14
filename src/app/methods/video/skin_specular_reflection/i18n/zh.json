@@ -1,12 +1,12 @@
 {
-    "name": "Skin Specular Reflection",
-    "description": "Analyzes skin specular reflection patterns — AI-generated skin often has unrealistic specular highlights.",
-    "algorithm": "Skin Specular Reflection分析算法",
-    "mechanism": "Skin Specular Reflection系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Skin Specular Reflection",
+  "description": "Analyzes skin specular reflection patterns — AI-generated skin often has unrealistic specular highlights.",
+  "algorithm": "Skin Specular Reflection分析算法",
+  "mechanism": "This method analyzes skin specular reflection for deepfake detection:\n\n1. **SpecularComponent提取**: The specular (glossy) component of skin reflectance is separated from the diffuse (matte) component using dichromatic reflection model decomposition. Specular highlights appear where skin surface is oriented to reflect light directly toward the camera.\n\n2. **SpecularHighlight分布**: The spatial distribution of skin specular highlights should follow the face's 3D geometry and illumination. The method checks highlight positions against expected locations — forehead center, nose bridge and tip, cheekbone apexes. AI generators may produce specular highlights at incorrect locations or with wrong intensity distributions.\n\n3. **物理SpecularModel**: Skin specular reflection follows the Torrance-Sparrow (microfacet) BRDF model with characteristic roughness parameters. The method measures specular highlight shape and falloff, comparing against physical skin reflectance models. Generated highlights may show non-physical profiles — too sharp, too broad, or incorrect Fresnel behavior.\n\n4. **时间SpecularDynamics**: As the head moves, specular highlights should slide across the face following the changing reflection geometry. The method tracks highlight positions relative to landmarks — highlights should move according to the rotation of the surface normal relative to the light direction. Incorrect highlight dynamics indicate AI generation.\n\n5. **Sweat/OilPhysics**: Facial skin specularity varies with surface moisture — oily regions (forehead, nose) are more specular. This distribution should be consistent across frames and follow physiological patterns. AI generators typically don't model skin moisture variation, producing uniform or incorrectly distributed specularity.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

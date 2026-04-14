@@ -1,22 +1,22 @@
 {
-    "name": "刻板过渡词与语篇框架标记侦测 (Discourse Markers)",
-    "description": "分析语篇标记（如“此外”、“而且”、“因此”）的频率、多样性和结构性分布位置。AI 极度依赖一套狭窄、八股文式的正式过渡词库，像缝纫机一样把段落机械地拼接在一起。",
-    "algorithm": "语篇连词提取与 Jensen-Shannon 散度测算",
-    "mechanism": "大型语言模型（LLM）被深度优化以生成结构稳固、逻辑严密且易于全人类阅读的文本。这种优化的一个巨大副作用是对显性衔接手段——特别是极其正式的语篇标记词的病态依赖。在进行观点转换或段落过渡时，AI 模型会以一种极为失调的比例偏爱生硬的、甚至略带学术腔调的词汇：“此外（Additionally）”、“而且（Furthermore）”、“不仅如此（Moreover）”、“然而（However）”，以及臭名昭著的“总而言之（In conclusion）”。并且，它们有着极度刻板的强迫症：几乎永远把这些过渡词死死地钉在句子的最开头（句首位置）。相比之下，人类作者的过渡策略要丰富且灵动得多；我们经常把过渡词优雅地藏在句子中间（句中位置），或者干脆不写任何标志词，完全依靠上下文内在的逻辑暗流来推动思考。本探针内置了一个包含 150+ 语篇连词的重型雷达词典，同时追踪这些词在单句中的爆发频率及其落格位置分布。随后，它调用 Jensen-Shannon 散度算法，将该文本的轮廓与纯人类真实写作的基线大数据库进行硬碰硬的碰撞对比。如果一篇文章的骨架是靠着满篇复读机的“首先”、“其次”、“此外”和“最后”生硬撑起来的，这无疑是 AI 工业流水线产品的铁证。",
-    "useCase": "专治八股文式的各类报告、水军软文和假冒论文，在这些文章中，段落之间的转折和承接让人感到极其僵硬、做作或过度“拿腔拿调”（这些词被网友戏称为“AI 味起手式”）。",
-    "strengths": "• 能够一针见血地扒掉 LLM 默认最爱使用的“总-分-总（五段论）”八股文底裤。\n• 捕捉的是超越单一词汇的高频宏观文本组织架构（Organization patterns）规律。\n• 极其直观，容易给用户解释定罪理由，因为像“Furthermore（此外）”这种词已经被全球公认为识别 AI 写作的热门梗（Meme）。",
-    "limitations": "• 严重死锁于文本的具体语种和题材（例如：顶刊的人类学术论文本身就会比普通博客用更多的正式连词，容易引发误报）。\n• 防御壁垒较薄：只要狡猾的提示词工程师直接下令“禁止使用此外、首先、总而言之等过渡词”，探针威力就会迅速衰减。\n• 极其依赖人工投喂：必须为各个语种分别极其精细地梳理、定制和维护一套专属的语篇标记分类字典。",
-    "parameters": "雷达切片: 坐标抽取 (句首/句中/句尾) & 衔接标记符词典全息映射\n定罪量表: 归一化连词密爆频率 & 偏离人类基线之 Jensen-Shannon 散度\n行刑判决: 0-100 衔接僵死度 (八股文连贯框架) 定罪分数",
-    "accuracy": "中等到高爆破率 — 75-85%。像是一把极度敏锐的手术刀，切开 AI 伪装的表皮，直接暴露出它为了模拟人类逻辑流而强行搭建的丑陋算法脚手架。",
-    "references": [
-        {
-            "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
-            "url": "https://arxiv.org/abs/2303.03697"
-        },
-        {
-            "title": "Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman.",
-            "url": "https://doi.org/10.4324/9781315836010"
-        }
-    ],
-    "source": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.; Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman."
+  "name": "刻板过渡词与语篇框架标记侦测 (Discourse Markers)",
+  "description": "分析语篇标记（如“此外”、“而且”、“因此”）的频率、多样性和结构性分布位置。AI 极度依赖一套狭窄、八股文式的正式过渡词库，像缝纫机一样把段落机械地拼接在一起。",
+  "algorithm": "语篇连词提取与 Jensen-Shannon 散度测算",
+  "mechanism": "Large Language Models are optimized to produce text that is structurally sound, logical, and easy to follow. A major side effect of this optimization is the over-reliance on explicit cohesive devices—specifically, formal discourse markers. When transitioning between ideas or paragraphs, AI models disproportionately favor a rigid, almost academic vocabulary: 'Additionally', 'Furthermore', 'Moreover', 'However', and famously, 'In conclusion'. They also tend to place these markers exclusively at the very beginning of sentences (sentence-initial position). Human writers, by contrast, use a much wider variety of transitional strategies, frequently embedding markers in the middle of sentences (sentence-medial) or relying on implicit logical flow without needing a signpost word for every new thought. This method scans the text against a comprehensive lexicon of 150+ discourse markers, tracking both their frequency per sentence and their positional distribution. It then uses Jensen-Shannon divergence to compare this profile against known baselines for human writing. A text that is rigidly held together by a repetitive scaffold of 'Firstly', 'Secondly', 'Furthermore', and 'Finally' exhibits a strong AI signature.",
+  "useCase": "专治八股文式的各类报告、水军软文和假冒论文，在这些文章中，段落之间的转折和承接让人感到极其僵硬、做作或过度“拿腔拿调”（这些词被网友戏称为“AI 味起手式”）。",
+  "strengths": "• 能够一针见血地扒掉 LLM 默认最爱使用的“总-分-总（五段论）”八股文底裤。\n• 捕捉的是超越单一词汇的高频宏观文本组织架构（Organization patterns）规律。\n• 极其直观，容易给用户解释定罪理由，因为像“Furthermore（此外）”这种词已经被全球公认为识别 AI 写作的热门梗（Meme）。",
+  "limitations": "• 严重死锁于文本的具体语种和题材（例如：顶刊的人类学术论文本身就会比普通博客用更多的正式连词，容易引发误报）。\n• 防御壁垒较薄：只要狡猾的提示词工程师直接下令“禁止使用此外、首先、总而言之等过渡词”，探针威力就会迅速衰减。\n• 极其依赖人工投喂：必须为各个语种分别极其精细地梳理、定制和维护一套专属的语篇标记分类字典。",
+  "parameters": "雷达切片: 坐标抽取 (句首/句中/句尾) & 衔接标记符词典全息映射\n定罪量表: 归一化连词密爆频率 & 偏离人类基线之 Jensen-Shannon 散度\n行刑判决: 0-100 衔接僵死度 (八股文连贯框架) 定罪分数",
+  "accuracy": "中等到高爆破率 — 75-85%。像是一把极度敏锐的手术刀，切开 AI 伪装的表皮，直接暴露出它为了模拟人类逻辑流而强行搭建的丑陋算法脚手架。",
+  "references": [
+    {
+      "title": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.",
+      "url": "https://arxiv.org/abs/2303.03697"
+    },
+    {
+      "title": "Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman.",
+      "url": "https://doi.org/10.4324/9781315836010"
+    }
+  ],
+  "source": "Kumarage, T. et al. (2023). Stylometric Detection of AI-Generated Text in Twitter Timelines. arXiv.; Halliday, M. A. K. & Hasan, R. (1976). Cohesion in English. Longman."
 }

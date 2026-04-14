@@ -1,12 +1,12 @@
 {
-    "name": "Wavelet Packet Decomposition",
-    "description": "Applies full wavelet packet decomposition for fine-grained sub-band energy analysis (Coifman & Wickerhauser, 1992).",
-    "algorithm": "Wavelet Packet Decomposition分析算法",
-    "mechanism": "Wavelet Packet Decomposition系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Wavelet Packet Decomposition",
+  "description": "Applies full wavelet packet decomposition for fine-grained sub-band energy analysis (Coifman & Wickerhauser, 1992).",
+  "algorithm": "Wavelet Packet Decomposition分析算法",
+  "mechanism": "This method applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **Full小波PacketTree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **BestBasisSelection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than AI-generated ones.\n\n3. **SubbandEnergy分布**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce anomalous energy in specific subbands — GAN grid artifacts appear as energy peaks at characteristic spatial frequencies.\n\n4. **Inter-Subband相关性分析**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. AI-generated images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **系数分布Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where AI generators struggle to reproduce correct statistics — are quantified for forensic scoring.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

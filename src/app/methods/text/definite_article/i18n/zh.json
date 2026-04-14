@@ -1,22 +1,22 @@
 {
-    "name": "定冠词与限定词过度特指滥用 (Definite Article)",
-    "description": "分析定冠词（如英文的 'the'）或限定词（该、此、这）的频率和结构分布。AI 模型为了追求“变态级”的绝对清晰，会毫无节制地用限定词锚定名词；而人类在拥有共享语境时，会自然地把它们省略掉。",
-    "algorithm": "限定词密度与语用学必然性测算",
-    "mechanism": "大型语言模型（LLM）的骨子里被硬编码了一种底层渴望：尽可能消除一切歧义，确保其吐出的每一个字都能被全宇宙精准理解。这种狂热在语法上造成了一个致命的副作用——它们在统计算法上极其偏爱用定冠词或指示代词把名词死死地锚定住（例如：在英文中疯狂使用 'the process', 'the data'；在中文中疯狂使用 '该系统', '此项研究'）。相比之下，人类的交流极度依赖“语用学省略（Pragmatic omission）”——当读者或听众已经心领神会时，我们会在潜意识里毫不留情地砍掉这些多余的限定词（例如直接说“数据显示……”而不是“该数据显示……”）。本探针会像扫雷仪一样，计算全篇定冠词/限定词与名词短语总数的绝对密度比。随后，它会对照语法模型，交叉验证这些限定词到底是不是真的“非加不可”。如果一篇文章暴露出对定冠词/限定词病态的依赖——即不管上下文有没有必要，几乎每一个名词前都被生硬地焊死了一个限定词——这就构成了对算法那套为了消灭一切误读而设计的“安全牌（Safe-path）”文风的铁板钉钉的指控。",
-    "useCase": "专治企业公关稿、冷冰冰的技术说明书以及各种装腔作势的说理长文——在这些重灾区中，AI 对于“把话说明白”的走火入魔，最终会化作满屏幕生硬得令人作呕的“the”（及其等价物）大轰炸。",
-    "strengths": "• 当 AI 试图在“信息提供”或“解释性”的提示词下疯狂假装权威时，此探针的杀伤力能够达到顶峰。\n• 令提示词工程师（Prompt Engineers）绝望的黑洞：人类在写提示词时根本不可能精算自己到底用了百分之几的冠词，因此几乎无法被越狱。\n• 在最深层的底层词性（Low-level grammar）上运作，它直接无视了初级的同义词替换伪装战术。",
-    "limitations": "• 容易误伤友军：在某些本身就极其八股文、刻板死硬的人类文本当中（例如：法务合同、重型专利申请书、严格格式的学术作八股文），人类也会被迫写得像机器一样冗杂，导致天然的高误报率。\n• 威力被语种严重死锁：在英语、法语和西班牙语等强制要求冠词的语种中它是死神；但在俄语或日语等压根没有定冠词的语种中它直接哑火（中文则需要降级到指示代词测算）。\n• 极度依赖军用级别的词性标注（POS tagging）系统，否则根本无法在千军万马的词汇中准确逮住那些限定词。",
-    "parameters": "雷达切片: 底层词性 (POS) 标记提取 & 限定词-名词冗余倒挂比 (Determiner-to-Noun Ratio)\n定罪量表: 冠词/限定词铺场密度 vs 人类语境省略黄金阈值\n行刑判决: 0-100 过度特指 (过度清晰偏执狂) 定罪分数",
-    "accuracy": "中等到极速击杀 — 70-80%（在适用语种内）。当它与其他句法骨架分析探针组合使用时，它就是一道极其隐蔽、但一旦咬住就绝不松口的机器底色心理学标记印记。",
-    "references": [
-        {
-            "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.",
-            "url": "https://www.pearson.com/"
-        },
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-            "url": "https://arxiv.org/abs/1906.04043"
-        }
-    ],
-    "source": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.; Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL."
+  "name": "定冠词与限定词过度特指滥用 (Definite Article)",
+  "description": "分析定冠词（如英文的 'the'）或限定词（该、此、这）的频率和结构分布。AI 模型为了追求“变态级”的绝对清晰，会毫无节制地用限定词锚定名词；而人类在拥有共享语境时，会自然地把它们省略掉。",
+  "algorithm": "限定词密度与语用学必然性测算",
+  "mechanism": "Large Language Models are fundamentally optimized to minimize ambiguity and ensure that their outputs are universally comprehensible. As a grammatical consequence, they exhibit a strong statistical bias toward explicitly anchoring nouns with definite articles (e.g., 'the process', 'the data', 'the implementation'). In contrast, human communication relies heavily on 'pragmatic omission'—we routinely drop definite articles when the context is implicitly understood by the listener or reader (e.g., writing 'Data shows...' instead of 'The data shows...'). This method calculates the density of definite articles relative to the total noun phrases in the text. It then cross-references this density with the grammatical necessity of each article. A text that displays a pathologically high dependency on definite articles—where almost every noun is explicitly anchored regardless of context—is a strong indicator of algorithmic 'safe-path' writing designed to eliminate all possible misinterpretations.",
+  "useCase": "专治企业公关稿、冷冰冰的技术说明书以及各种装腔作势的说理长文——在这些重灾区中，AI 对于“把话说明白”的走火入魔，最终会化作满屏幕生硬得令人作呕的“the”（及其等价物）大轰炸。",
+  "strengths": "• 当 AI 试图在“信息提供”或“解释性”的提示词下疯狂假装权威时，此探针的杀伤力能够达到顶峰。\n• 令提示词工程师（Prompt Engineers）绝望的黑洞：人类在写提示词时根本不可能精算自己到底用了百分之几的冠词，因此几乎无法被越狱。\n• 在最深层的底层词性（Low-level grammar）上运作，它直接无视了初级的同义词替换伪装战术。",
+  "limitations": "• 容易误伤友军：在某些本身就极其八股文、刻板死硬的人类文本当中（例如：法务合同、重型专利申请书、严格格式的学术作八股文），人类也会被迫写得像机器一样冗杂，导致天然的高误报率。\n• 威力被语种严重死锁：在英语、法语和西班牙语等强制要求冠词的语种中它是死神；但在俄语或日语等压根没有定冠词的语种中它直接哑火（中文则需要降级到指示代词测算）。\n• 极度依赖军用级别的词性标注（POS tagging）系统，否则根本无法在千军万马的词汇中准确逮住那些限定词。",
+  "parameters": "雷达切片: 底层词性 (POS) 标记提取 & 限定词-名词冗余倒挂比 (Determiner-to-Noun Ratio)\n定罪量表: 冠词/限定词铺场密度 vs 人类语境省略黄金阈值\n行刑判决: 0-100 过度特指 (过度清晰偏执狂) 定罪分数",
+  "accuracy": "中等到极速击杀 — 70-80%（在适用语种内）。当它与其他句法骨架分析探针组合使用时，它就是一道极其隐蔽、但一旦咬住就绝不松口的机器底色心理学标记印记。",
+  "references": [
+    {
+      "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.",
+      "url": "https://www.pearson.com/"
+    },
+    {
+      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+      "url": "https://arxiv.org/abs/1906.04043"
+    }
+  ],
+  "source": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.; Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "对称关联连词病态分析 (Conjunction Pair)",
-    "description": "暴力破解成对出现的关联连词（如“不仅……而且……”、“要么……要么……”），并测重分析它们极其诡异的、完美无瑕的句法对称性。",
-    "algorithm": "句法平行对称度与关联词对穿透提取",
-    "mechanism": "大语言模型（LLM）被极其严酷地训练，要求其吐出的每一个字都必须在语法上完美无瑕。这种病态的完美主义最显著的标志之一，就是疯狂滥用正式的书面语关联连词，比如“不仅 [X] 而且 [Y]”、“既不 [X] 也不 [Y]”或者“无论是 [X] 还是 [Y]”。最致命的暴露点在于，AI 在执行这些句式时，会保持一种令人毛骨悚然的、数学般完美的句法对称性——它会绝对确保“不仅”后面的语法结构（比如偏正短语）与“而且”后面的语法结构一模一样。相反，如果没有经过严格的学术或专业文字编辑，普通人类在写作时不仅极少使用这些极其正式的词对，而且就算用了，也极其容易犯下“排比结构不对称”的语法错误（例如：“不仅是个动词……而且也是个名词”）。本探针会强行摘除这些关联词对，并计算它们的密度以及内部的排比对称度。当文本中极其高频地出现这种毫无瑕疵、天衣无缝的关联排比结构时，这就直接指控该文本是由一台“为了追求教科书般的语法正确，而彻底放弃了人类自然语言的随性感”的机器自动生成的。",
-    "useCase": "专杀那些为了装腔作势、假装权威，而疯狂堆砌教科书般完美的排比关联语法的工业化散文、营销软文以及死板的学术水文。",
-    "strengths": "• 在面对那些试图对概念进行正式比较或聚合的“说服性”或“分析性”AI 指令生成物时，具有一枪爆头级别的致命效果。\n• 评估的是深层次的句法对称骨架，因此它对市面上的任何“伪原创洗稿软件（Word Spinner）”或同义词替换工具完全免疫。\n• 该探针极其聪明地利用了“人类的粗心大意”：排比不对称错误在人类身上随处可见，但在现代的 LLM 中几乎已经绝迹，这就是完美的区分点。",
-    "limitations": "• 容易误伤友军（False positives）：如果审判对象是经过人类编辑团队逐字精修的文本（如已出版的新闻报道、严谨的商业法律合同或顶级学术论文），可能会疯狂报错。\n• 在面对极短的文本碎片或日常灌水对话时完全失效，因为这种环境下无论是人类还是 AI 都不会去用排比关联词。\n• 存在被越狱的盲区：如果用户直接在指令中拿枪指着 AI 说：“给我用口语化语气写，顺便故意犯点语法错误”，这把锁就会被轻易撬开。",
-    "parameters": "雷达切片: 关联连词暴破提取 & 依存句法树解析\n定罪量表: 关联词对密度 & 极致句法排比度\n行刑判决: 0-100 教科书式八股文结缔指数 (Correlative Formalism Score)",
-    "accuracy": "中等偏高致命性 — 70-85%。对于 AI 批量生成的 B2B 商业营销文案、带节奏的说服性小作文或死板的分析对比文具有极强的杀伤力。对休闲类或小说类文本无效。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+  "name": "对称关联连词病态分析 (Conjunction Pair)",
+  "description": "暴力破解成对出现的关联连词（如“不仅……而且……”、“要么……要么……”），并测重分析它们极其诡异的、完美无瑕的句法对称性。",
+  "algorithm": "句法平行对称度与关联词对穿透提取",
+  "mechanism": "Large Language Models are rigorously trained to output grammatically flawless text. One of the hallmarks of this perfectionism is the aggressive use of formal correlative conjunctions, such as 'not only [X] but also [Y]', 'neither [X] nor [Y]', or 'both [X] and [Y]'. Crucially, the AI executes these pairings with mathematically perfect syntactic symmetry—ensuring that the grammatical structure immediately following 'not only' perfectly matches the structure following 'but also'. Human writers, outside of strict academic or professional editing, use these formal pairs less frequently and often commit parallel structure errors when they do (e.g., 'not only verbs... but also nouns'). This method extracts these correlative pairs and calculates their density and internal parallel symmetry. A high frequency of flawless correlative structures points to an algorithmic generator prioritizing textbook grammar over natural variance.",
+  "useCase": "专杀那些为了装腔作势、假装权威，而疯狂堆砌教科书般完美的排比关联语法的工业化散文、营销软文以及死板的学术水文。",
+  "strengths": "• 在面对那些试图对概念进行正式比较或聚合的“说服性”或“分析性”AI 指令生成物时，具有一枪爆头级别的致命效果。\n• 评估的是深层次的句法对称骨架，因此它对市面上的任何“伪原创洗稿软件（Word Spinner）”或同义词替换工具完全免疫。\n• 该探针极其聪明地利用了“人类的粗心大意”：排比不对称错误在人类身上随处可见，但在现代的 LLM 中几乎已经绝迹，这就是完美的区分点。",
+  "limitations": "• 容易误伤友军（False positives）：如果审判对象是经过人类编辑团队逐字精修的文本（如已出版的新闻报道、严谨的商业法律合同或顶级学术论文），可能会疯狂报错。\n• 在面对极短的文本碎片或日常灌水对话时完全失效，因为这种环境下无论是人类还是 AI 都不会去用排比关联词。\n• 存在被越狱的盲区：如果用户直接在指令中拿枪指着 AI 说：“给我用口语化语气写，顺便故意犯点语法错误”，这把锁就会被轻易撬开。",
+  "parameters": "雷达切片: 关联连词暴破提取 & 依存句法树解析\n定罪量表: 关联词对密度 & 极致句法排比度\n行刑判决: 0-100 教科书式八股文结缔指数 (Correlative Formalism Score)",
+  "accuracy": "中等偏高致命性 — 70-85%。对于 AI 批量生成的 B2B 商业营销文案、带节奏的说服性小作文或死板的分析对比文具有极强的杀伤力。对休闲类或小说类文本无效。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Hu Moment Invariants",
-    "description": "Computes Hu's seven moment invariants to detect shape and rotation anomalies in AI content (Hu, 1962).",
-    "algorithm": "Hu Moment Invariants分析算法",
-    "mechanism": "Hu Moment Invariants系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Hu Moment Invariants",
+  "description": "Computes Hu's seven moment invariants to detect shape and rotation anomalies in AI content (Hu, 1962).",
+  "algorithm": "Hu Moment Invariants分析算法",
+  "mechanism": "This method computes Hu's (1962) moment invariants and extended affine moment invariants for forgery detection:\n\n1. **几何Moment计算**: Raw geometric moments mₚᵧ = ΣΣ xᵖyᵧI(x,y) are computed over image blocks. Central moments μₚᵧ are derived by shifting to the centroid, providing translation invariance.\n\n2. **HuMomentInvariant提取**: The seven Hu invariants (φ₁ through φ₇) are calculated from normalized central moments. These are invariant to translation, rotation, and scaling — properties that enable detection of copy-move forgery where copied regions may be geometrically transformed.\n\n3. **块-wiseInvariant映射**: The image is divided into overlapping blocks and moment invariants are computed per block. Blocks with similar invariant vectors but different spatial locations suggest copy-move manipulation.\n\n4. **AffineMomentInvariants(AMI)**: Extended invariants following Flusser et al. (2009) capture affine-invariant features, detecting copies that have undergone shearing or non-uniform scaling beyond simple rotation.\n\n5. **一致性分析**: Moment invariant distributions across the image are analyzed for statistical anomalies. Natural images show smooth spatial variation in moment features, while AI-generated images may exhibit unnatural uniformity or discontinuities at generation boundaries. The final score quantifies deviation from expected natural moment statistics.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Total Variation Norm Analysis",
-    "description": "Measures total variation norm to detect unnatural smoothness or excessive regularity in AI-generated images (Rudin et al., 1992).",
-    "algorithm": "Total Variation Norm Analysis分析算法",
-    "mechanism": "Total Variation Norm Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Total Variation Norm Analysis",
+  "description": "Measures total variation norm to detect unnatural smoothness or excessive regularity in AI-generated images (Rudin et al., 1992).",
+  "algorithm": "Total Variation Norm Analysis分析算法",
+  "mechanism": "This method applies Total Variation (TV) analysis following Rudin, Osher & Fatemi (1992) for forensic image assessment:\n\n1. **TotalVariation计算**: The isotropic TV of the image I is computed as TV(I) = Σ√(|∂I/∂x|² + |∂I/∂y|²), measuring the total amount of spatial variation. This L¹ norm of the gradient penalizes oscillations while preserving edges — making it sensitive to the difference between natural and synthetic image characteristics.\n\n2. **局部TV映射**: A spatial map of local TV values computed in sliding windows reveals the distribution of image complexity. Natural images show physically coherent TV variation — smooth regions (low TV), edges (moderate TV), and textures (high TV) arranged in semantically meaningful patterns.\n\n3. **TVRegularity分析**: The ratio of TV to image energy (TV/‖I‖₂) provides a normalized smoothness measure. AI-generated images often exhibit characteristic TV profiles: diffusion models tend toward overly smooth interiors with sharp boundaries, while GANs may produce micro-oscillations elevating TV in supposedly smooth regions.\n\n4. **AnisotropicTV分解**: The directional components TV_x and TV_y are analyzed separately. Natural images show orientation-dependent TV variation correlated with scene geometry. AI-generated images may exhibit isotropic TV even in scenes that should show strong directional bias (e.g., architectural images).\n\n5. **ChambolleProjection分析**: Using Chambolle's (2004) dual formulation, the TV-minimizing reconstruction is computed. The difference between the original and TV-denoised image isolates the texture/noise component. Analysis of this component reveals whether the fine-scale structure follows natural sensor noise statistics or exhibits AI generation artifacts.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

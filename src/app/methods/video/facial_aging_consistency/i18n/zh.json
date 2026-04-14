@@ -1,12 +1,12 @@
 {
-    "name": "Facial Aging Consistency",
-    "description": "Analyzes consistency of aging features (wrinkles, spots, skin texture) across face — AI often has inconsistent aging.",
-    "algorithm": "Facial Aging Consistency分析算法",
-    "mechanism": "Facial Aging Consistency系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Facial Aging Consistency",
+  "description": "Analyzes consistency of aging features (wrinkles, spots, skin texture) across face — AI often has inconsistent aging.",
+  "algorithm": "Facial Aging Consistency分析算法",
+  "mechanism": "This method checks facial aging consistency for deepfake detection:\n\n1. **AgeMarker检测**: Facial aging markers are detected per frame: wrinkle density and depth (crow's feet, forehead lines, nasolabial folds), skin texture changes (reduced elasticity, increased roughness), skin laxity (jowling, under-eye bags), and pigmentation changes.\n\n2. **Age一致性验证**: All aging markers should indicate a consistent age range. The method checks whether wrinkle density, skin texture, and facial volume are mutually consistent. Deepfakes that swap faces between individuals of different ages may produce inconsistent aging cues — young skin texture with deep wrinkles, or aged skin with juvenile facial volume.\n\n3. **RegionalAge相干性**: Different facial regions should show coherent aging. The method verifies that forehead wrinkles, crow's feet, nasolabial folds, and neck skin show the same approximate aging level. AI generation may produce faces with regionally inconsistent aging — perfectly smooth forehead with aged eye areas.\n\n4. **时间Aging稳定性**: Aging markers are static structures that don't change between video frames. Wrinkle positions and depths should remain constant. The method tracks aging markers across frames — deepfake generators may produce temporally inconsistent wrinkles that appear, disappear, or shift position as the face is re-generated each frame.\n\n5. **Context-人脸Age匹配**: If the surrounding context provides age cues (body, hands, clothing style), the method checks whether the face age is consistent with these contextual indicators. Face-swapping an young face onto an older body creates detectable age inconsistencies between face and body.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

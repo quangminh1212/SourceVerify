@@ -1,22 +1,22 @@
 {
-    "name": "虚假对白拟合侦测 (Dialogue Pattern)",
-    "description": "深入解析小说或剧本中对话的结构节奏和句法完整性，剥离出人类那种充满破碎感的有机对话与 AI 那种宛如“机器打乒乓球”般死板的台词生成。",
-    "algorithm": "对话话语权轮换机制与句法碎片化测算",
-    "mechanism": "真实的人类对话是极其混乱且破碎的。人们经常互相抢话、打断，满嘴都是不合语法的句子碎片、大量的省略语和代词（“那个”、“这边”），并且重度依赖彼此的眼神、背景故事等非语言线索，经常半句话没说完对方就懂了。然而，大型语言模型（LLM）从娘胎里就被设计成一台只会吐出逻辑完整、闭环句法的打字机。当被强制要求写两个人物聊天时，AI 会不由自主地写出一种尴尬的“乒乓球对话”：两个角色完美地交替说话，每个人发言时都像在朗诵新闻稿，句子长且语法毫无瑕疵，毫无保留地把自己的内心情感用长篇大论全翻译出来，并且无懈可击地回应上一个人的每一个论点。没有抢话、没有语无伦次的停顿、没有被吞掉的半截话，而且病态地恐惧任何语意上的模棱两可。本 NLP 探针会强行提取所有的引号对话框，将其拆解并扫描从句长度、语法闭环度和依存句法树。如果一段台词里出现了高得不正常的长难句，且完全没有任何对话缝补（如结巴、自我纠正、语无伦次），这绝对是一场由机器在背后一人分饰两角演出的可悲皮影戏。",
-    "useCase": "专治网文创作、剧本杀剧本、小说以及个人故事分享——在这里，AI 笔下的人物不像有血有肉的活人，而像一群在开严肃学术研讨会的智能音箱。",
-    "strengths": "• 对所有的白嫖型提示词（Prompt）拥有降维打击能力：因为要把 AI 逼到能够长时间稳定伪装出带有“人类破碎感”的真实对白，需要极为庞杂的约束性指令，普通人根本做不到。\n• 使用硬核的句型拓扑树分析，而不是简单的词汇穷举，所以那些“找同义词替换”的低级洗稿软件在它面前形同废纸。\n• 它是大IP小说筛查和影视剧本洗稿监测领域的绝对神兵利器。",
-    "limitations": "• 容易误伤那类原本就极其文绉绉的复古大戏（比如莎士比亚戏剧、话剧以及苏格拉底式的哲学论战体），因为那里的人类确实也在长篇大论。\n• 前提极其苛刻：如果文章里压根没有对话（没有双引号或剧本格式），这个雷达就彻底变成了瞎子。\n• 必须“养肥了再杀”：需要文本提供足够字数的连续对白（比如至少5-10个回合），才能从统计学上钉死它的“乒乓球”定型模式。",
-    "parameters": "雷达切片: 引号语言块暴力破拆 & 虚拟语气依存文法树测算\n定罪量表: 对话残缺感率 vs 发言回合制机械度绝对方差\n行刑判决: 0-100 虚假对白合成 (播音员聊天症候群) 宣判指数",
-    "accuracy": "极高精度狙杀 — 80-90%（在网文与虚构文学领域）。由于大模型本质上是一个没有七情六欲的硅基生命，它永远无法体会人类聊天时的那种混乱与拉扯，这使得该探针成为了文学打假领域的定海神针。",
-    "references": [
-        {
-            "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.",
-            "url": "https://www.pearson.com/"
-        },
-        {
-            "title": "Clark, H. H. (1996). Using Language. Cambridge University Press.",
-            "url": "https://doi.org/10.1017/CBO9780511620539"
-        }
-    ],
-    "source": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.; Clark, H. H. (1996). Using Language. Cambridge University Press."
+  "name": "虚假对白拟合侦测 (Dialogue Pattern)",
+  "description": "深入解析小说或剧本中对话的结构节奏和句法完整性，剥离出人类那种充满破碎感的有机对话与 AI 那种宛如“机器打乒乓球”般死板的台词生成。",
+  "algorithm": "对话话语权轮换机制与句法碎片化测算",
+  "mechanism": "Authentic human dialogue is messy. People interrupt each other, speak in grammatically broken fragments, use implicit references ('deixis'), and frequently leave thoughts unfinished, relying heavily on shared context and non-verbal cues. Large Language Models, however, are fundamentally designed to generate complete, parsed, and self-contained logical statements. When tasked with writing dialogue, AI typically produces 'tennis match' conversations: perfectly alternating turns where each speaker delivers a grammatically flawless, multi-clause sentence that explicitly states their internal thoughts and perfectly addresses the previous speaker's point. There is zero conversational overlap, no syntactic fragmentation, and a pathological avoidance of ambiguity. This NLP method analyzes the structure of quotation blocks, measuring the length, syntactic completeness, and dependency trees of the spoken lines. An abnormally high rate of complete sentences, coupled with an absence of conversational repairs (stuttering, self-correction) and fragments, strongly flags the dialogue as a machine-generated simulation.",
+  "useCase": "专治网文创作、剧本杀剧本、小说以及个人故事分享——在这里，AI 笔下的人物不像有血有肉的活人，而像一群在开严肃学术研讨会的智能音箱。",
+  "strengths": "• 对所有的白嫖型提示词（Prompt）拥有降维打击能力：因为要把 AI 逼到能够长时间稳定伪装出带有“人类破碎感”的真实对白，需要极为庞杂的约束性指令，普通人根本做不到。\n• 使用硬核的句型拓扑树分析，而不是简单的词汇穷举，所以那些“找同义词替换”的低级洗稿软件在它面前形同废纸。\n• 它是大IP小说筛查和影视剧本洗稿监测领域的绝对神兵利器。",
+  "limitations": "• 容易误伤那类原本就极其文绉绉的复古大戏（比如莎士比亚戏剧、话剧以及苏格拉底式的哲学论战体），因为那里的人类确实也在长篇大论。\n• 前提极其苛刻：如果文章里压根没有对话（没有双引号或剧本格式），这个雷达就彻底变成了瞎子。\n• 必须“养肥了再杀”：需要文本提供足够字数的连续对白（比如至少5-10个回合），才能从统计学上钉死它的“乒乓球”定型模式。",
+  "parameters": "雷达切片: 引号语言块暴力破拆 & 虚拟语气依存文法树测算\n定罪量表: 对话残缺感率 vs 发言回合制机械度绝对方差\n行刑判决: 0-100 虚假对白合成 (播音员聊天症候群) 宣判指数",
+  "accuracy": "极高精度狙杀 — 80-90%（在网文与虚构文学领域）。由于大模型本质上是一个没有七情六欲的硅基生命，它永远无法体会人类聊天时的那种混乱与拉扯，这使得该探针成为了文学打假领域的定海神针。",
+  "references": [
+    {
+      "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.",
+      "url": "https://www.pearson.com/"
+    },
+    {
+      "title": "Clark, H. H. (1996). Using Language. Cambridge University Press.",
+      "url": "https://doi.org/10.1017/CBO9780511620539"
+    }
+  ],
+  "source": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson Education.; Clark, H. H. (1996). Using Language. Cambridge University Press."
 }

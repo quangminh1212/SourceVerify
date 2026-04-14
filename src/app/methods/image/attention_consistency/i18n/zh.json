@@ -1,22 +1,22 @@
 {
-    "name": "注意力图一致性 (Attention Map Consistency)",
-    "description": "分析图像中视觉细节、锐度和局部对比度的空间分布，以检测 AI 生成图像特有的非自然注意力分配模式。在真实照片中，细节分布遵循可预测的光学物理规律：焦点平面内的区域清晰锐利，焦点外的区域根据景深均匀模糊。AI 生成的图像方面却系统性地违反此原则，在某些区域倾注不成比例的高细节（例如：人像照中超级锐利的眼睛），而同一景深的相邻区域却展现出无法解释的柔和或过度平滑——这正是生成器在合成过程中'注意力'分布不均的标志性痕迹。",
-    "algorithm": "多尺度空间注意力分布分析",
-    "mechanism": "算法计算三张独立的地图：局部锐度图（基于拉普拉斯方差）、局部对比度图（基于滑动窗口内的标准差）和细节密度图（基于高频能量）。这三张地图随后在多个尺度（精细、中等、粗糙）上被分析，以构建跨尺度相关矩阵。在真实图像中，三张地图紧密相关——锐利区域同时也是高对比度和细节丰富的区域。AI 图像则频繁显示去相关现象：某个区域可能很锐利但缺乏精细纹理细节，或者具有高对比度但内部渐变不自然地光滑。系统会标记这些跨尺度去相关异常。",
-    "useCase": "检测 AI 生成的人像照、产品照和建筑照片，在这些场景中，视觉注意力的非自然分布会创造出微妙但可感知的'恐怖谷'效应。",
-    "strengths": "• 捕捉能够在压缩和缩放中存活的高级语义伪影。\n• 适用于所有主流生成方法（GAN、扩散模型、VAE）。\n• 多尺度分析提供了对局部扰动的鲁棒性。\n• 生成可供视觉检查的可解释注意力图。",
-    "limitations": "• 需要足够的图像复杂度；在刻意极简或简单场景构图上可能表现不佳。\n• 艺术性后期处理（重度暗角、径向模糊效果）可能自然地导致注意力图去相关。\n• 性能在一定程度上取决于特定 AI 生成模型的架构。",
-    "parameters": "雷达切片: 多尺度锐度/对比度/细节密度图\n定罪量表: 跨尺度相关矩阵、去相关异常指数\n行刑判决: 0-100 注意力不一致得分",
-    "accuracy": "中至高 — 在多样化的图像类型上达到 78-90% 的精度。在人像和产品摄影上最为强悍，在抽象艺术或高度风格化的图像上最为薄弱。",
-    "references": [
-        {
-            "title": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.",
-            "url": "https://arxiv.org/abs/2103.02406"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ],
-    "source": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.; Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR."
+  "name": "注意力图一致性 (Attention Map Consistency)",
+  "description": "分析图像中视觉细节、锐度和局部对比度的空间分布，以检测 AI 生成图像特有的非自然注意力分配模式。在真实照片中，细节分布遵循可预测的光学物理规律：焦点平面内的区域清晰锐利，焦点外的区域根据景深均匀模糊。AI 生成的图像方面却系统性地违反此原则，在某些区域倾注不成比例的高细节（例如：人像照中超级锐利的眼睛），而同一景深的相邻区域却展现出无法解释的柔和或过度平滑——这正是生成器在合成过程中'注意力'分布不均的标志性痕迹。",
+  "algorithm": "多尺度空间注意力分布分析",
+  "mechanism": "The algorithm computes three separate maps: a local sharpness map (via Laplacian variance), a local contrast map (via standard deviation in sliding windows), and a detail density map (via high-frequency energy). These three maps are then analyzed at multiple scales (fine, medium, coarse) to construct a cross-scale correlation matrix. In authentic images, the three maps are tightly correlated—sharp areas are also high-contrast and detail-rich. AI images frequently show decorrelation: an area might be sharp but lack fine texture detail, or have high contrast but unnaturally smooth internal gradients. The system flags these cross-scale decorrelation anomalies.",
+  "useCase": "检测 AI 生成的人像照、产品照和建筑照片，在这些场景中，视觉注意力的非自然分布会创造出微妙但可感知的'恐怖谷'效应。",
+  "strengths": "• 捕捉能够在压缩和缩放中存活的高级语义伪影。\n• 适用于所有主流生成方法（GAN、扩散模型、VAE）。\n• 多尺度分析提供了对局部扰动的鲁棒性。\n• 生成可供视觉检查的可解释注意力图。",
+  "limitations": "• 需要足够的图像复杂度；在刻意极简或简单场景构图上可能表现不佳。\n• 艺术性后期处理（重度暗角、径向模糊效果）可能自然地导致注意力图去相关。\n• 性能在一定程度上取决于特定 AI 生成模型的架构。",
+  "parameters": "雷达切片: 多尺度锐度/对比度/细节密度图\n定罪量表: 跨尺度相关矩阵、去相关异常指数\n行刑判决: 0-100 注意力不一致得分",
+  "accuracy": "中至高 — 在多样化的图像类型上达到 78-90% 的精度。在人像和产品摄影上最为强悍，在抽象艺术或高度风格化的图像上最为薄弱。",
+  "references": [
+    {
+      "title": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.",
+      "url": "https://arxiv.org/abs/2103.02406"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ],
+  "source": "Zhao, T. et al. (2021). Multi-Attentional Deepfake Detection. CVPR.; Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR."
 }

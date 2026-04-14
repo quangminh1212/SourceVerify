@@ -1,12 +1,12 @@
 {
-    "name": "Video Spectral Coherence",
-    "description": "Measures spectral coherence between consecutive frames — AI-generated videos show distinct spectral jumps.",
-    "algorithm": "Video Spectral Coherence分析算法",
-    "mechanism": "Video Spectral Coherence系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Video Spectral Coherence",
+  "description": "Measures spectral coherence between consecutive frames — AI-generated videos show distinct spectral jumps.",
+  "algorithm": "Video Spectral Coherence分析算法",
+  "mechanism": "This method analyzes spectral coherence across video frame regions for deepfake detection:\n\n1. **Regional频谱分析**: The spatial frequency spectrum is computed independently for multiple regions: face, background, clothing, hair. Each region's spectral characteristic — spectral slope, cutoff frequency, spectral peaks — is measured.\n\n2. **Cross-区域频谱相干性**: All regions captured through the same optical system should show coherent spectral characteristics — same noise spectrum, same spectral cutoff (determined by the lens MTF), same compression artifacts. The method checks cross-region spectral coherence. Deepfake composites show spectral incoherence between generated face and captured background.\n\n3. **频谱噪声Floor匹配**: The spectral noise floor (high-frequency baseline noise level) should be uniform across the frame. The method compares noise floors between regions — different noise floors indicate content from different imaging/generation pipelines.\n\n4. **频谱Transition分析**: At region boundaries (face-background border), the spectral transition should be smooth. The method analyzes spectral characteristics across boundaries — abrupt spectral changes at the face border (changing noise spectrum, changing spectral slope) indicate compositing.\n\n5. **时间频谱相干性**: The spectral relationship between regions should remain stable over time. The method tracks inter-region spectral ratios — temporal variation in the face-to-background spectral ratio indicates the face content varies independently from the background, consistent with deepfake generation.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

@@ -1,18 +1,18 @@
 {
-    "name": "盲图像质量评估 (BRISQUE)",
-    "description": "通过计算空间域统计数据，在没有参考图像的情况下评估图像的自然度。与真实的自然场景相比，AI 生成的图像或被操纵的区域通常在其局部归一化的亮度系数中表现出统计学偏差。",
-    "algorithm": "盲/无参考图像空间质量评估器 (BRISQUE)",
-    "mechanism": "该算法计算减去均值的对比度归一化 (MSCN) 系数，以消除局部亮度变化的影响。在原始未经篡改的摄影图像中，MSCN 系数可靠地服从广义高斯分布 (GGD)。该方法提取 36 个统计特征（形状、方差、空间相关性），并使用预训练的支持向量回归器 (SVR) 来对不自然畸变的严重程度进行评分，这些畸变包括 AI 放大、合成模糊和压缩残留伪影。",
-    "parameters": "特征：36 维 MSCN 参数，补丁大小：7x7/9x9，分布拟合：非对称广义高斯分布 (AGGD)，分类器：SVR",
-    "accuracy": "中等 (70-80%) - 作为针对不自然噪声、过度平滑或模糊的通用异常检测器非常有效。",
-    "source": "Mittal, A. et al. (2012) - 空间域中的无参考图像质量评估",
-    "useCase": "基于全局统计特征的不自然性，标记出经过严重处理、AI 放大或数字合成生成的内容。",
-    "references": [
-        {
-            "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP.",
-            "url": "https://doi.org/10.1109/TIP.2012.2214050"
-        }
-    ],
-    "strengths": "• 完全在空间域内独立运行操作，不需要准备任何原始未经改动的参考图像。\n• 计算处理非常高效快捷，并且与人类视觉感知质量的客观测量指标密切直接关联。\n• 具备同时洞察并检测出多种不自然的畸变、数字降噪以及生成式噪点的能力。\n• 在微小的块状补丁层面上也能全速稳健运行，实现对局部的画质受损区及拼接缝隙边界进行可视化映射。",
-    "limitations": "• 来自拥有最先进模型的高质量 AI 生成图像可能完美还原和模仿自然存在的 MSCN 统计数据规律，导致其检测失效。\n• 经常会对计算机屏幕截图插图及纯数字绘制原生艺术作品产生错误的警报（假阳性）。\n• 系统无法指出图像经历了何种类别及具体手段的篡改，只能反馈有一般性空间扭曲事实和粗细度的存在。\n• 需进行极其严格精细的领域指向性数据校准，从而避免在测试非照片材质类别输入时发生大面积误判连带错误。"
+  "name": "盲图像质量评估 (BRISQUE)",
+  "description": "通过计算空间域统计数据，在没有参考图像的情况下评估图像的自然度。与真实的自然场景相比，AI 生成的图像或被操纵的区域通常在其局部归一化的亮度系数中表现出统计学偏差。",
+  "algorithm": "盲/无参考图像空间质量评估器 (BRISQUE)",
+  "mechanism": "The algorithm calculates Mean Subtracted Contrast Normalized (MSCN) coefficients to normalize local luminance variations. In authentic photographic images, MSCN coefficients reliably follow a Generalized Gaussian Distribution (GGD). The method extracts 36 statistical features (shape, variance, spatial correlation) and uses a pre-trained Support Vector Regressor (SVR) to score the severity of unnatural distortions, including AI upscaling, synthesis blur, and compression artifacts.",
+  "parameters": "特征：36 维 MSCN 参数，补丁大小：7x7/9x9，分布拟合：非对称广义高斯分布 (AGGD)，分类器：SVR",
+  "accuracy": "中等 (70-80%) - 作为针对不自然噪声、过度平滑或模糊的通用异常检测器非常有效。",
+  "source": "Mittal, A. et al. (2012) - 空间域中的无参考图像质量评估",
+  "useCase": "基于全局统计特征的不自然性，标记出经过严重处理、AI 放大或数字合成生成的内容。",
+  "references": [
+    {
+      "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP.",
+      "url": "https://doi.org/10.1109/TIP.2012.2214050"
+    }
+  ],
+  "strengths": "• 完全在空间域内独立运行操作，不需要准备任何原始未经改动的参考图像。\n• 计算处理非常高效快捷，并且与人类视觉感知质量的客观测量指标密切直接关联。\n• 具备同时洞察并检测出多种不自然的畸变、数字降噪以及生成式噪点的能力。\n• 在微小的块状补丁层面上也能全速稳健运行，实现对局部的画质受损区及拼接缝隙边界进行可视化映射。",
+  "limitations": "• 来自拥有最先进模型的高质量 AI 生成图像可能完美还原和模仿自然存在的 MSCN 统计数据规律，导致其检测失效。\n• 经常会对计算机屏幕截图插图及纯数字绘制原生艺术作品产生错误的警报（假阳性）。\n• 系统无法指出图像经历了何种类别及具体手段的篡改，只能反馈有一般性空间扭曲事实和粗细度的存在。\n• 需进行极其严格精细的领域指向性数据校准，从而避免在测试非照片材质类别输入时发生大面积误判连带错误。"
 }

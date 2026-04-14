@@ -1,22 +1,22 @@
 {
-    "name": "连词密度与意合句型缺失 (Conjunction Density)",
-    "description": "通过测量并列连词和从属连词在总词数中所占的超高比例，来揪出那种逻辑连接词泛滥、如同机器电焊出来的“超链接”式工业合成文本。",
-    "algorithm": "句法粘合度层析与连词占比计算",
-    "mechanism": "为了保证绝对的逻辑连贯性和阅读门槛的下限，大语言模型（LLM）被强行注入了病态的优化指令。为了做到“把话嚼碎了喂给读者”，它们患上了严重的连词依赖症，疯狂地使用显性的逻辑连接词（“并且”、“但是”、“因为”、“虽然”、“然而”）来把每一个分句死死地焊在一起。它们几乎从不相信读者有能力通过上下文的潜台词来完成逻辑跳跃。然而，真正的人类在写作时，尤其是在使用中文这类充满灵性的语言时，会大量使用“意合（Parataxis）”——即不依赖连接词，仅靠句意本身来暗示逻辑关系（比如：“天雨路滑，小心驾驶”而不是“因为天雨路滑，所以要小心驾驶”）。本探针会扫描文本的词性标注（POS）拓扑结构，精确测量连词与总词数的严格比率。如果检测到异常畸高的连词密度，这就直接暴露了 AI 那种“不把逻辑关节说破就浑身难受”的机械化“超链接”本能，这种本能最终会生产出那种表面上丝滑无比、但读起来毫无灵魂甚至令人窒息的工业糖精般的人造散文。",
-    "useCase": "专门捕获那些极其流畅但假得发紫的文章、小作文和故事：在这些文本中，AI 像个啰嗦的老婆婆一样，过度解释每一个分句之间的因果转折关系，而绝不允许出现自然人类叙事中那种留白的破碎感。",
-    "strengths": "• 能够以高精度捕捉到那种人类读者凭直觉能感受到“这文笔看着怪怪的、太丝滑了”，却又很难用语言准确描述的“人造塑料感”。\n• 完全免疫低级的“同义词替换（洗稿）”战术，因为该探针打击的不是词汇本身，而是文本底层维持句子不散架的“句法胶水”。\n• 计算架构极其轻量，仅依赖浅层词性标注（POS tagging），速度快到可以直接在前端浏览器里裸奔运行。",
-    "limitations": "• 容易误伤友军（False positives）：当目标文本是人类起草的硬核技术说明书、严谨的法律条文或官方指导手册时（这些八股文本身就明文规定必须把逻辑连接词写全），探针会疯狂误报。\n• 雷达盲区：在极短的文本片段中，连词数量的统计学方差毫无意义，探测器会直接失灵。\n• 存在被越狱的风险：如果遇到驯兽大师极度苛刻的指令——“全程使用短句，不准用任何连词，给我写得破碎一点”，该防线会被瞬间撕裂。",
-    "parameters": "雷达切片: 词性（POS）图谱扫描 & 句法电焊节点计数\n定罪量表: 连词-词汇率 (每 100 词的连词密度)\n行刑判决: 0-100 句法超链接感染度 (连词泛滥) 指数",
-    "accuracy": "中高致命性 — 75-85%。这是一把绝佳的副武器，当它与“句子长度方差（Sentence Length Variance）”和“过渡词标记分析”组成联合绞杀阵型时，杀伤力将呈指数级飙升。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+  "name": "连词密度与意合句型缺失 (Conjunction Density)",
+  "description": "通过测量并列连词和从属连词在总词数中所占的超高比例，来揪出那种逻辑连接词泛滥、如同机器电焊出来的“超链接”式工业合成文本。",
+  "algorithm": "句法粘合度层析与连词占比计算",
+  "mechanism": "Large Language Models are explicitly optimized for logical cohesion and readability. To ensure maximum clarity, they obsessively link clauses using explicit conjunctions ('and', 'but', 'because', 'although', 'while'). They rarely trust the reader to infer relationships between sentences. Human writers, however, frequently employ 'parataxis'—the technique of placing clauses side by side without connecting words (e.g., 'It was raining. We stayed inside.')—relying on context and implicit logical leaps. This method parses the Parts-Of-Speech (POS) tags of the text to calculate the strict ratio of conjunctions to total words. An abnormally high conjunction density indicates a 'hyper-connective' AI that is algorithmically incapable of leaving logical joints unarticulated, resulting in overly smooth, synthetically flowing prose.",
+  "useCase": "专门捕获那些极其流畅但假得发紫的文章、小作文和故事：在这些文本中，AI 像个啰嗦的老婆婆一样，过度解释每一个分句之间的因果转折关系，而绝不允许出现自然人类叙事中那种留白的破碎感。",
+  "strengths": "• 能够以高精度捕捉到那种人类读者凭直觉能感受到“这文笔看着怪怪的、太丝滑了”，却又很难用语言准确描述的“人造塑料感”。\n• 完全免疫低级的“同义词替换（洗稿）”战术，因为该探针打击的不是词汇本身，而是文本底层维持句子不散架的“句法胶水”。\n• 计算架构极其轻量，仅依赖浅层词性标注（POS tagging），速度快到可以直接在前端浏览器里裸奔运行。",
+  "limitations": "• 容易误伤友军（False positives）：当目标文本是人类起草的硬核技术说明书、严谨的法律条文或官方指导手册时（这些八股文本身就明文规定必须把逻辑连接词写全），探针会疯狂误报。\n• 雷达盲区：在极短的文本片段中，连词数量的统计学方差毫无意义，探测器会直接失灵。\n• 存在被越狱的风险：如果遇到驯兽大师极度苛刻的指令——“全程使用短句，不准用任何连词，给我写得破碎一点”，该防线会被瞬间撕裂。",
+  "parameters": "雷达切片: 词性（POS）图谱扫描 & 句法电焊节点计数\n定罪量表: 连词-词汇率 (每 100 词的连词密度)\n行刑判决: 0-100 句法超链接感染度 (连词泛滥) 指数",
+  "accuracy": "中高致命性 — 75-85%。这是一把绝佳的副武器，当它与“句子长度方差（Sentence Length Variance）”和“过渡词标记分析”组成联合绞杀阵型时，杀伤力将呈指数级飙升。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

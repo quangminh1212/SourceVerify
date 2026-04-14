@@ -1,12 +1,12 @@
 {
-    "name": "SVD Decomposition Analysis",
-    "description": "Applies Singular Value Decomposition to detect rank-deficiency patterns typical of AI-generated images, based on eigenvalue distribution anomalies.",
-    "algorithm": "SVD Decomposition Analysis分析算法",
-    "mechanism": "SVD Decomposition Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "SVD Decomposition Analysis",
+  "description": "Applies Singular Value Decomposition to detect rank-deficiency patterns typical of AI-generated images, based on eigenvalue distribution anomalies.",
+  "algorithm": "SVD Decomposition Analysis分析算法",
+  "mechanism": "This method applies Singular Value Decomposition (SVD) analysis for forensic image authentication:\n\n1. **块-wiseSVD计算**: The image is partitioned into blocks, and for each block matrix A ∈ ℝᵐˣⁿ, the SVD A = UΣVᵀ is computed. The singular values σ₁ ≥ σ₂ ≥ ... ≥ σᵣ capture the energy distribution across orthogonal rank-1 components following Eckart & Young (1936).\n\n2. **SingularValue频谱分析**: The decay profile of singular values is analyzed. Natural image blocks exhibit characteristic decay patterns — smooth regions decay rapidly (low effective rank), while textured regions show gradual decay. AI-generated images often produce anomalous decay profiles with unexpected rank distributions.\n\n3. **EffectiveRank映射**: The effective rank ρ(A) = exp(H(σ̃)), where H is the Shannon entropy of normalized singular values σ̃ᵢ = σᵢ/Σσⱼ, provides a continuous measure of block complexity. A spatial map of effective rank reveals regions with unnatural complexity — either over-smoothed (low rank) or artificially textured.\n\n4. **PrincipalComponentResidual分析**: After retaining the top-k singular components (capturing structural content), the residual R = A − UₖΣₖVₖᵀ contains noise, texture detail, and potential artifacts. The statistical properties of this residual differ systematically between natural photographs (sensor noise characteristics) and AI-generated images.\n\n5. **Forensic评分**: The spatial distribution of SVD statistics (effective rank, spectral decay rate, residual statistics) is analyzed for consistency. Manipulated or AI-generated regions show characteristic SVD signatures — truncated singular value spectra, abnormal rank distributions, or residuals lacking genuine sensor noise characteristics.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

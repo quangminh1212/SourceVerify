@@ -1,22 +1,22 @@
 {
-    "name": "轮廓平滑度与边缘几何伪影分析",
-    "description": "如同拿着手术刀般，死死切割并评估高对比度边缘和物体轮廓在数学层面的平滑度与几何连续性。真正的物理相机镜头，由于焦平面限制与大气的必然衍射干扰，在沿着物理边缘处一定会自然产生那种极其微弱且连续的“光学衰减模糊（Optical roll-off）”。然而，生成式AI模型，特别是那些基于扩散架构（Diffusion）的流水线怪物，它们在处理多个物体交错叠加的语义边界渲染时经常会陷入“脑死”般的挣扎。其结果就是：它们生成的轮廓要么是数学上“过于完美”、锋利到完全违背物理光学的假锐化边缘；要么走向另一个灾难性的极端——在原本应该极其平滑连贯的物理曲线上，出现诡异的小面积剧烈锯齿、宛如烂泥般的“融化伪影（Melting artifacts）”以及极其错乱的断层梯度阶梯。",
-    "algorithm": "亚像素级 Canny/Sobel 边缘追踪与梯度方差猎杀",
-    "mechanism": "该算法会以亚像素级别的极高精度，冷血地将画面中所有物体的边界如同剥洋葱一样单独抽离出来。随后，它顺着这些被剥离出来的轮廓线，一路追踪计算其梯度的绝对强度以及方向洋流。该系统专门盯着AI经常会暴露出来的两大病态畸形疯狂报警：第一种是“超自然锐化（Hyper-sharpness）”——一条边缘线居然在没有任何自然光学模糊过渡（Anti-aliasing）的情况下，极其强硬且突兀地只用仅仅1个像素就瞬间从被摄物体劈成了背景；第二种是“微震颤/融化烂泥（Micro-jitter / Melting）”——一条本该连贯优美的圆润曲线边缘，竟毫无逻辑地突然崩碎成了断层错位的马赛克像素块，或者是胡乱涂抹的糊状脏污。这绝对是AI潜伏解码器在试图强行解析复杂的几何层叠穿插时走向了计算崩溃所留下的无可辩驳的铁证罪名。",
-    "parameters": "剃刀测算模型: Canny/Sobel 亚像素级超精度寻边, 侦办特性库: 梯度强度断崖方差, 微小震颤(Micro-jitter)发病频率, 光学圆润衰减曲线连贯性",
-    "accuracy": "极高统治力 (80-92%) - 堪称数字法医界的王牌狙击手，是当前整个行业为了极其暴力地撕下面具、猎杀扩散模型生成伪影时最常被依赖、最稳如泰山的核心基石标签。",
-    "source": "前人 Canny 寻边法 (1986) 携手 Wang 教授阵营 (2020) - 卷积神经网络(CNN)/扩散架构生成的虚幻图像 对决 纯正的光学几何法则边界限制",
-    "useCase": "这套算法的存在，就犹如部署了一架自带X光显微镜的“算法审讯机”，粗暴地强行翻找那些微小到肉眼看不清的连结处“烂泥融化”或是根本不可能存在的切割玻璃般的“致命超锐利（Hyper-sharp）”边缘，立刻将伪造品从真实相机的镜头记录中无情地揪出来当众处决。",
-    "references": [
-        {
-            "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ],
-    "strengths": "• 打击面极其宽广且刀刀致命；无论是前几年横行霸道的老旧经典 CNN 深度伪造（GAN），还是当今号称能以假乱真、精细度爆炸的现代潜伏扩散巨兽（Stable Diffusion, Midjourney V5/V6版本），在这套算法面前统统有着不可思议的超高命中率。\n• 对抗主动规避打击（伪装）的能力强到令人绝望。哪怕骗子极其恶毒地将AI图片给压成了满是马赛克的JPEG烂图，或者是恶意压缩了尺寸，AI那骨子里根深蒂固的“烂泥融化”边缘几何缺陷也如同胎记一样被死死地钉在底层结构里，根本无法逃脱探测。\n• 像毒蛇一样直接咬在了AI解码器最致命的系统性命门上：因为这些AI在底层训练逻辑中，为了哄骗人类眼睛，总是把宏观质感拼接（Pattern matching）的优先级提到了最高，却不得已彻底舍弃了对严格的微观实体边缘几何连续性的逻辑约束。",
-    "limitations": "• 会疯狂吞噬算力并让主板冒烟；如果你要在一张动辄 4K、8K 分辨率的高清大布上执行亚像素级的追踪和梯度矢量微积分运算，那就准备好看着你的CPU被榨干每一滴性能，以及漫长难熬的读条等待。\n• 极其容易爆发出严重的“滥杀无辜（False positive 误报）”，尤其当面对那些由画师纯手绘出炉的高级精修数字插画（Digital Art）、超干净的矢量图稿输出（SVG），或者完全是用传统计算机图形学建模硬凑出来的 3D 渲染图（CGI）时，因为这些艺术作品天生就带着跟AI一模一样的“锋利如刀、查无光学模糊（non-optical）”的边缘死症。\n• 当一张真实的神级抓拍照片里充斥着极其夸张的极速运动模糊轨迹（Motion blur），或者是那种被奶油般极其浓郁润滑的巨大光斑虚化背景（极浅景深 Bokeh）完全吃掉溶解了的边缘，会让寻边器瞬间瞎掉，逼迫算法在这些重灾区域直接扔白毛巾放弃追踪。"
+  "name": "轮廓平滑度与边缘几何伪影分析",
+  "description": "如同拿着手术刀般，死死切割并评估高对比度边缘和物体轮廓在数学层面的平滑度与几何连续性。真正的物理相机镜头，由于焦平面限制与大气的必然衍射干扰，在沿着物理边缘处一定会自然产生那种极其微弱且连续的“光学衰减模糊（Optical roll-off）”。然而，生成式AI模型，特别是那些基于扩散架构（Diffusion）的流水线怪物，它们在处理多个物体交错叠加的语义边界渲染时经常会陷入“脑死”般的挣扎。其结果就是：它们生成的轮廓要么是数学上“过于完美”、锋利到完全违背物理光学的假锐化边缘；要么走向另一个灾难性的极端——在原本应该极其平滑连贯的物理曲线上，出现诡异的小面积剧烈锯齿、宛如烂泥般的“融化伪影（Melting artifacts）”以及极其错乱的断层梯度阶梯。",
+  "algorithm": "亚像素级 Canny/Sobel 边缘追踪与梯度方差猎杀",
+  "mechanism": "The algorithm isolates object boundaries using sub-pixel precision edge tracing. It then mathematically tracks the gradient magnitude and directional flow along the entire length of these extracted contours. The algorithm flags two specific AI-indicative anomalies: 1) 'Hyper-sharpness'—where a focal edge boundary transitions from object to background instantaneously across a single pixel without any natural optical resolving limits; and 2) 'Micro-jitter' (or Melting)—where a continuously curved edge inexplicably shatters into disjointed, staggered pixel blocks or illogical blurry smudges, ruthlessly exposing the latent decoder's absolute failure to resolve complex, overlapping geometric boundaries.",
+  "parameters": "剃刀测算模型: Canny/Sobel 亚像素级超精度寻边, 侦办特性库: 梯度强度断崖方差, 微小震颤(Micro-jitter)发病频率, 光学圆润衰减曲线连贯性",
+  "accuracy": "极高统治力 (80-92%) - 堪称数字法医界的王牌狙击手，是当前整个行业为了极其暴力地撕下面具、猎杀扩散模型生成伪影时最常被依赖、最稳如泰山的核心基石标签。",
+  "source": "前人 Canny 寻边法 (1986) 携手 Wang 教授阵营 (2020) - 卷积神经网络(CNN)/扩散架构生成的虚幻图像 对决 纯正的光学几何法则边界限制",
+  "useCase": "这套算法的存在，就犹如部署了一架自带X光显微镜的“算法审讯机”，粗暴地强行翻找那些微小到肉眼看不清的连结处“烂泥融化”或是根本不可能存在的切割玻璃般的“致命超锐利（Hyper-sharp）”边缘，立刻将伪造品从真实相机的镜头记录中无情地揪出来当众处决。",
+  "references": [
+    {
+      "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ],
+  "strengths": "• 打击面极其宽广且刀刀致命；无论是前几年横行霸道的老旧经典 CNN 深度伪造（GAN），还是当今号称能以假乱真、精细度爆炸的现代潜伏扩散巨兽（Stable Diffusion, Midjourney V5/V6版本），在这套算法面前统统有着不可思议的超高命中率。\n• 对抗主动规避打击（伪装）的能力强到令人绝望。哪怕骗子极其恶毒地将AI图片给压成了满是马赛克的JPEG烂图，或者是恶意压缩了尺寸，AI那骨子里根深蒂固的“烂泥融化”边缘几何缺陷也如同胎记一样被死死地钉在底层结构里，根本无法逃脱探测。\n• 像毒蛇一样直接咬在了AI解码器最致命的系统性命门上：因为这些AI在底层训练逻辑中，为了哄骗人类眼睛，总是把宏观质感拼接（Pattern matching）的优先级提到了最高，却不得已彻底舍弃了对严格的微观实体边缘几何连续性的逻辑约束。",
+  "limitations": "• 会疯狂吞噬算力并让主板冒烟；如果你要在一张动辄 4K、8K 分辨率的高清大布上执行亚像素级的追踪和梯度矢量微积分运算，那就准备好看着你的CPU被榨干每一滴性能，以及漫长难熬的读条等待。\n• 极其容易爆发出严重的“滥杀无辜（False positive 误报）”，尤其当面对那些由画师纯手绘出炉的高级精修数字插画（Digital Art）、超干净的矢量图稿输出（SVG），或者完全是用传统计算机图形学建模硬凑出来的 3D 渲染图（CGI）时，因为这些艺术作品天生就带着跟AI一模一样的“锋利如刀、查无光学模糊（non-optical）”的边缘死症。\n• 当一张真实的神级抓拍照片里充斥着极其夸张的极速运动模糊轨迹（Motion blur），或者是那种被奶油般极其浓郁润滑的巨大光斑虚化背景（极浅景深 Bokeh）完全吃掉溶解了的边缘，会让寻边器瞬间瞎掉，逼迫算法在这些重灾区域直接扔白毛巾放弃追踪。"
 }

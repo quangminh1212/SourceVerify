@@ -1,22 +1,22 @@
 {
-    "name": "本福特定律分析",
-    "description": "根据本福特定律评估离散余弦变换 (DCT) 系数最高有效数字的分布。自然图像通常符合这种对数概率分布，而 AI 生成的图像或被操纵的区域通常表现出统计上的显著偏差。",
-    "algorithm": "广义本福特定律拟合优度检验",
-    "mechanism": "从整个图像的 8x8 DCT 块中提取 AC 系数，并计算其首个有效数字（1-9）的直方图。然后使用卡方 (χ²) 拟合优度检验或 Kullback-Leibler 散度，将经验分布与理论上的本福特定律分布 (P(d) = log10(1 + 1/d)) 进行比较。AI 合成和渲染过程通常会内在地破坏这种自然的统计规律。",
-    "parameters": "变换：8x8 DCT，目标块：AC 系数，统计距离：卡方 (χ²) / Kullback-Leibler 散度",
-    "accuracy": "中等 (70-80%) - 与其他频域取证方法结合使用时最为有效。",
-    "source": "Perez-Gonzalez et al. (2007) JPEG 系数的广义本福特定律",
-    "useCase": "图像来源的统计验证、双重 JPEG 压缩检测以及合成生成痕迹识别。",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TIFS.2007.903852",
-            "title": "Fu, D. et al. (2007). Generalized Benford's Law for JPEG Coefficients. IEEE TIFS."
-        },
-        {
-            "url": "https://doi.org/10.1109/ICIP.2007.4379254",
-            "title": "Perez-Gonzalez, F. et al. (2007). Benford's Law in Image Forensics. IEEE ICIP."
-        }
-    ],
-    "strengths": "• 建立在自然发生、稳健的统计现象基础之上。\n• 主要在 DCT 域中进行计算效率高的操作。\n• 对重新压缩或块级拼接等重复性操作高度敏感。\n• 运作独立于图像的语义或概念内容。",
-    "limitations": "• 在具有极端纹理、绝对平坦或严重噪声的图像中容易出现误报。\n• 激进的量化和高 JPEG 压缩率可能会覆盖或掩盖合成偏差。\n• 对于最先进的 GAN 和高级扩散模型，其独立准确性较低。\n• 需要足够大的图像尺寸才能达到统计置信度。"
+  "name": "本福特定律分析",
+  "description": "根据本福特定律评估离散余弦变换 (DCT) 系数最高有效数字的分布。自然图像通常符合这种对数概率分布，而 AI 生成的图像或被操纵的区域通常表现出统计上的显著偏差。",
+  "algorithm": "广义本福特定律拟合优度检验",
+  "mechanism": "Extracts AC coefficients from 8x8 DCT blocks across the image and computes a histogram of their first significant digits (1-9). The empirical distribution is then compared against the theoretical Benford's Law distribution (P(d) = log10(1 + 1/d)) using the Chi-Square (χ²) goodness-of-fit test or Kullback-Leibler divergence. AI synthesis and rendering processes often inherently disrupt this natural statistical regularity.",
+  "parameters": "变换：8x8 DCT，目标块：AC 系数，统计距离：卡方 (χ²) / Kullback-Leibler 散度",
+  "accuracy": "中等 (70-80%) - 与其他频域取证方法结合使用时最为有效。",
+  "source": "Perez-Gonzalez et al. (2007) JPEG 系数的广义本福特定律",
+  "useCase": "图像来源的统计验证、双重 JPEG 压缩检测以及合成生成痕迹识别。",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TIFS.2007.903852",
+      "title": "Fu, D. et al. (2007). Generalized Benford's Law for JPEG Coefficients. IEEE TIFS."
+    },
+    {
+      "url": "https://doi.org/10.1109/ICIP.2007.4379254",
+      "title": "Perez-Gonzalez, F. et al. (2007). Benford's Law in Image Forensics. IEEE ICIP."
+    }
+  ],
+  "strengths": "• 建立在自然发生、稳健的统计现象基础之上。\n• 主要在 DCT 域中进行计算效率高的操作。\n• 对重新压缩或块级拼接等重复性操作高度敏感。\n• 运作独立于图像的语义或概念内容。",
+  "limitations": "• 在具有极端纹理、绝对平坦或严重噪声的图像中容易出现误报。\n• 激进的量化和高 JPEG 压缩率可能会覆盖或掩盖合成偏差。\n• 对于最先进的 GAN 和高级扩散模型，其独立准确性较低。\n• 需要足够大的图像尺寸才能达到统计置信度。"
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Intra-frame Prediction Analysis",
-    "description": "Examines H.264/H.265 intra-frame prediction mode distributions — deepfake re-encoding alters prediction patterns.",
-    "algorithm": "Intra-frame Prediction Analysis分析算法",
-    "mechanism": "Intra-frame Prediction Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Intra-frame Prediction Analysis",
+  "description": "Examines H.264/H.265 intra-frame prediction mode distributions — deepfake re-encoding alters prediction patterns.",
+  "algorithm": "Intra-frame Prediction Analysis分析算法",
+  "mechanism": "This method analyzes H.264/H.265 intra-prediction patterns for video forensic detection:\n\n1. **Intra-PredictionMode提取**: For I-frames and intra-blocks in P/B-frames, the selected intra-prediction modes are extracted from the bitstream (9 modes in H.264, 35+ in H.265: DC, planar, and angular predictions). These mode decisions are influenced by local image content.\n\n2. **Mode分布分析**: The statistical distribution of intra-prediction modes across the frame is analyzed. Natural video produces characteristic mode distributions — predominantly DC/planar in smooth regions, angular modes following edge orientations. Manipulated or AI-generated content may show anomalous mode distributions inconsistent with the visual content.\n\n3. **Mode-Content一致性**: The selected mode should match the actual image content direction. At a horizontal edge, a horizontal prediction mode should be selected. The method checks mode-content alignment — content inserted from a different encoding may show suboptimal mode selections (modes chosen for the original content, not the replaced content).\n\n4. **PredictionResidual分析**: The intra-prediction residual (actual − predicted) encodes what the prediction couldn't capture. Residual statistics differ between original content (well-predicted, small residuals) and replaced content (poorly predicted by modes chosen for different content, larger residuals). The method detects anomalous residual distributions.\n\n5. **Re-EncodingSignature检测**: Double-encoded video (original + manipulation + re-encoding) shows characteristic intra-prediction artifacts: the second encoder's mode decisions partially align with the first encoder's block structure, creating detectable periodicity in prediction residuals.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

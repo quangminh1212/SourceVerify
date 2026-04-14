@@ -1,22 +1,22 @@
 {
-    "name": "指代网络密度 (Referential Density)",
-    "description": "侦测文本中用于回指前文实体（Entity）的指代词（例如代词、“这/那/这些”等指示代词、以及同义替换词）的出现频率和复杂度。人类在写作时，一旦上下文语境确立，为了保持行文流畅并避免像复读机一样叫同一个名字，会自然地交织出极其复杂的指代链条。而 AI 语言模型由于根本不存在真正的“人类认知工作记忆 (Working Memory)”，它们为了防止逻辑跑偏或者测算概率时翻车，往往会选择最怂的“安全策略”：要么极其死板地滥用最基础的代词，要么就像个笨拙的 AI 客服一样，一遍又一遍地把死长死长的专有名词完整地重复写出来。",
-    "algorithm": "共指消解与实体投影网络",
-    "mechanism": "无论文本有多长，算法会像鹰眼一样锁定所有命名实体和核心名词。接着，它会拉出一条条“共指链（Coreference Chains）”——追踪这些实体在后文中每一次被呼唤的方式。系统会算出“指代密度得分”：即 代词/指示词/同义词 的数量与 那个名字被原封不动重复的数量 的比值。人类的文章往往指代密度极高，而且手法花哨（针对同一件事，人类会交替使用“那个野心勃勃的项目”、“它”、“这项伟大的事业”）。而 AI 产出的文本，为了保持它那点可怜的概率学上的安全性，指代密度曲线通常惨不忍睹，只会像个没有感情的念稿机器一样把那个词重复到底（例如：“这家公司认为... 这家公司还表示... 最终这家公司...”）。",
-    "useCase": "在撕开长篇叙事论述、深度报道和说明性文本的面具时极度致命。它能一眼看穿 LLM 刻在骨子里的那种“生硬、极度缺乏安全感、且过分直白明确”的非人类机械文风。",
-    "strengths": "• 它抓取的是基于人类大脑深层认知的语言学特征。那些只会在表面玩弄提示词（Prompt）或者用低级洗稿软件改同义词的手法，根本无法伪造出这种人类特有的指代直觉。\n• 文本越长，人类的大脑就越会自然地向“代词化”倾斜，此时该雷达的杀伤力就会呈几何级数暴增。",
-    "limitations": "• 如果文本是极度严谨的硬核技术手册或者法律合同，由于人类律师本身就被死板地训练成“哪怕重复念一万遍全称，也绝对不用代词以防出现法律歧义”，此时雷达会严重误判。\n• 在短篇碎纸屑一样的文本里，连实体都没几个，根本拉不出一条像样的指代链条。",
-    "parameters": "雷达切片: NLP 共指消解链条硬提取\n定罪量表: 变花样回指次数 与 呆板的专有名词直接重复次数 之比\n行刑判决: 0-100 文本指代重度僵硬 (AI 求稳直呼其名) 确诊分数",
-    "accuracy": "中高威胁 — 准确率 75-82%。虽然不建议用来单独判死刑，但如果将它与“词汇多样性 (Lexical Diversity)”和“代词行为画像 (Pronoun Patterns)”联合绞杀，它将构成不可辩驳的闭环旁证。",
-    "references": [
-        {
-            "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
-            "url": "https://arxiv.org/abs/2003.10555"
-        },
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        }
-    ],
-    "source": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
+  "name": "指代网络密度 (Referential Density)",
+  "description": "侦测文本中用于回指前文实体（Entity）的指代词（例如代词、“这/那/这些”等指示代词、以及同义替换词）的出现频率和复杂度。人类在写作时，一旦上下文语境确立，为了保持行文流畅并避免像复读机一样叫同一个名字，会自然地交织出极其复杂的指代链条。而 AI 语言模型由于根本不存在真正的“人类认知工作记忆 (Working Memory)”，它们为了防止逻辑跑偏或者测算概率时翻车，往往会选择最怂的“安全策略”：要么极其死板地滥用最基础的代词，要么就像个笨拙的 AI 客服一样，一遍又一遍地把死长死长的专有名词完整地重复写出来。",
+  "algorithm": "共指消解与实体投影网络",
+  "mechanism": "The algorithm identifies all named entities and tracking nouns within the text. It then maps the coreference chains—how these entities are referred to subsequently. The system calculates the 'Referential Density Score': the ratio of pronouns/demonstratives/synonyms to explicit noun repetitions. Human writing demonstrates high referential density and varied anaphora (using 'the ambitious project', 'it', 'this endeavor' for the same subject). AI text often exhibits a flat density profile, repeatedly using the explicit noun (e.g., 'The company... The company... The company...') to maintain probabilistic safety.",
+  "useCase": "在撕开长篇叙事论述、深度报道和说明性文本的面具时极度致命。它能一眼看穿 LLM 刻在骨子里的那种“生硬、极度缺乏安全感、且过分直白明确”的非人类机械文风。",
+  "strengths": "• 它抓取的是基于人类大脑深层认知的语言学特征。那些只会在表面玩弄提示词（Prompt）或者用低级洗稿软件改同义词的手法，根本无法伪造出这种人类特有的指代直觉。\n• 文本越长，人类的大脑就越会自然地向“代词化”倾斜，此时该雷达的杀伤力就会呈几何级数暴增。",
+  "limitations": "• 如果文本是极度严谨的硬核技术手册或者法律合同，由于人类律师本身就被死板地训练成“哪怕重复念一万遍全称，也绝对不用代词以防出现法律歧义”，此时雷达会严重误判。\n• 在短篇碎纸屑一样的文本里，连实体都没几个，根本拉不出一条像样的指代链条。",
+  "parameters": "雷达切片: NLP 共指消解链条硬提取\n定罪量表: 变花样回指次数 与 呆板的专有名词直接重复次数 之比\n行刑判决: 0-100 文本指代重度僵硬 (AI 求稳直呼其名) 确诊分数",
+  "accuracy": "中高威胁 — 准确率 75-82%。虽然不建议用来单独判死刑，但如果将它与“词汇多样性 (Lexical Diversity)”和“代词行为画像 (Pronoun Patterns)”联合绞杀，它将构成不可辩驳的闭环旁证。",
+  "references": [
+    {
+      "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
+      "url": "https://arxiv.org/abs/2003.10555"
+    },
+    {
+      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/"
+    }
+  ],
+  "source": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
 }

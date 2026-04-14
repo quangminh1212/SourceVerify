@@ -1,22 +1,22 @@
 {
-    "name": "字粒常态熵 (Normalized Word Entropy)",
-    "description": "计算被压缩在每一个独立单词中的平均统计学不可预测性（信息熵）。AI 模型生成文本时永远躲在一个绝对安全的、被高度优化的概率阈值内，导致其“单词信息熵”永远可悲地低于人类的正常写作水平。",
-    "algorithm": "词元级归一化信息熵测算 (基于 Kirchenbauer 2023 原理)",
-    "mechanism": "在自然语言处理的法医学中，一个词基于其前置上下文所产生的“惊吓值（Surprise value）”被量化为信息熵。人类作者在键盘上经常会发生神经跳跃：选用出人意料的刁钻形容词、极度罕见的同义词，或者思维直接在一个句子里跃迁到全新的概念，这种跳跃在数学上表现为“单词极高熵值”。而大型语言模型（LLM）的生存逻辑截然相反：它们是一台为了追求“极致流畅与极致讨好（Helpfulness）”而设计的保守概率引擎——永远只选择“统计学上最稳妥、绝不出错”的下一个字粒。就算你把它的“温度（Temperature）”拉满，LLM 的底层架构依然会极其严厉地惩罚那些绝对罕见或不可预测的神经质词汇组合。本探针会在后台挂载一个大型参照语言模型，逐字逆向评估目标文本中每一个词在那个位置出现的统计学概率，计算其负对数似然（Negative log-likelihood，即熵值），最后除以总词数进行归一化平均。如果得出的“字粒平均熵”低得令人发指且极其稳定，这说明整篇文章完全是踩着算法划定的“高概率安全红毯”拼凑出来的，毫无创造性的灵魂，从而坐实其 AI 产物的身份。",
-    "useCase": "核查议论文、创意写作和深度新闻报道，用数学手段甄别其词汇的选择究竟是展示出了“人类心智的不可预测性”，还是暴露出“机器引擎的统计学苟且”。",
-    "strengths": "• 学术血统极其高贵，底层逻辑直接脱胎于目前全球最顶尖的 AI 水印（Watermarking）和零样本检测（Kirchenbauer/Mitchell）的核心黑科技。\n• 对付诸如 QuillBot 之类的“洗稿/伪原创”机器有奇效，因为这些小偷工具的本质，依然只能用高概率的同义词去替换高概率的词元，根本无法洗高文章的信息熵。\n• 扒光了所有自回归（Autoregressive）LLM 的内裤——也就是它们“绝对不可能在不破坏语法流畅度的前提下，真正给理论语言模型制造出惊吓”的机制诅咒。",
-    "limitations": "• 算力极其烧钱：为了逆向测算基础词元概率，必须在后台跑一个庞大的参考语言模型（如 GPT-2 甚至 BERT），导致分析耗时和资源占用成倍飙升。\n• 极其容易误伤两类人类文章：写给幼儿园小朋友看的识字读物（词汇自然极度简单可测），以及像八股文一样刻板的法律条文/官方公文（被人类自己阉割了信息熵）。\n• 面对极短的小作文（几十个字）会因为算不出具有统计学意义的均值而被迫宕机。",
-    "parameters": "雷达切片: 自回归模型负对数似然算力压榨\n定罪量表: 词元平均信息熵均值 (比特/词)\n行刑判决: 0-100 词汇安全苟且度 (算法龟缩指数) 定罪分数",
-    "accuracy": "高爆头率 — 80-88%（在 200 词以上的长文战线中）。这是目前狙击机器文本最硬核、最具有科学威慑力的数据指标之一。",
-    "references": [
-        {
-            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
-            "url": "https://arxiv.org/abs/2301.10226"
-        },
-        {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        }
-    ],
-    "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+  "name": "字粒常态熵 (Normalized Word Entropy)",
+  "description": "计算被压缩在每一个独立单词中的平均统计学不可预测性（信息熵）。AI 模型生成文本时永远躲在一个绝对安全的、被高度优化的概率阈值内，导致其“单词信息熵”永远可悲地低于人类的正常写作水平。",
+  "algorithm": "词元级归一化信息熵测算 (基于 Kirchenbauer 2023 原理)",
+  "mechanism": "In natural language processing, the 'surprise value' of a word given its preceding context is measured as Information Entropy. Human writers frequently take creative leaps, selecting unexpected adjectives, rare synonyms, or jumping to entirely new concepts, which mathematically results in high entropy per word. Large Language Models operate differently: they are probability engines designed to select the 'most statistically likely' next token to ensure maximum fluency and helpfulness. Even when temperature settings are raised, the foundational architecture of LLMs heavily penalizes extremely rare or unpredictable token sequences. This method uses an underlying language model to estimate the probability of every single word in the text, computes the negative log-likelihood (entropy), and then normalizes this value across the total word count. If the resulting 'average entropy per word' is exceptionally low and consistent, it proves the text was constructed using a mathematically safe, high-probability algorithmic path, exposing its artificial origin.",
+  "useCase": "核查议论文、创意写作和深度新闻报道，用数学手段甄别其词汇的选择究竟是展示出了“人类心智的不可预测性”，还是暴露出“机器引擎的统计学苟且”。",
+  "strengths": "• 学术血统极其高贵，底层逻辑直接脱胎于目前全球最顶尖的 AI 水印（Watermarking）和零样本检测（Kirchenbauer/Mitchell）的核心黑科技。\n• 对付诸如 QuillBot 之类的“洗稿/伪原创”机器有奇效，因为这些小偷工具的本质，依然只能用高概率的同义词去替换高概率的词元，根本无法洗高文章的信息熵。\n• 扒光了所有自回归（Autoregressive）LLM 的内裤——也就是它们“绝对不可能在不破坏语法流畅度的前提下，真正给理论语言模型制造出惊吓”的机制诅咒。",
+  "limitations": "• 算力极其烧钱：为了逆向测算基础词元概率，必须在后台跑一个庞大的参考语言模型（如 GPT-2 甚至 BERT），导致分析耗时和资源占用成倍飙升。\n• 极其容易误伤两类人类文章：写给幼儿园小朋友看的识字读物（词汇自然极度简单可测），以及像八股文一样刻板的法律条文/官方公文（被人类自己阉割了信息熵）。\n• 面对极短的小作文（几十个字）会因为算不出具有统计学意义的均值而被迫宕机。",
+  "parameters": "雷达切片: 自回归模型负对数似然算力压榨\n定罪量表: 词元平均信息熵均值 (比特/词)\n行刑判决: 0-100 词汇安全苟且度 (算法龟缩指数) 定罪分数",
+  "accuracy": "高爆头率 — 80-88%（在 200 词以上的长文战线中）。这是目前狙击机器文本最硬核、最具有科学威慑力的数据指标之一。",
+  "references": [
+    {
+      "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+      "url": "https://arxiv.org/abs/2301.10226"
+    },
+    {
+      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+      "url": "https://arxiv.org/abs/2301.11305"
+    }
+  ],
+  "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

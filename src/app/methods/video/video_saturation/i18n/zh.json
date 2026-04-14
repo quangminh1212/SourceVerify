@@ -1,22 +1,22 @@
 {
-    "name": "Video Saturation",
-    "description": "Analyzes 视频 saturation distribution",
-    "algorithm": "Video Saturation — 像素级空间分析",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Analyzes 视频 saturation distribution. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through 视频 saturation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Video Saturation",
+  "description": "Analyzes 视频 saturation distribution",
+  "algorithm": "Video Saturation — 像素级空间分析",
+  "mechanism": "This method analyzes video saturation for forensic detection:\n\n1. **Saturation测量**: Color saturation is measured per frame in HSV and Lab color spaces. Per-region saturation statistics (mean, variance, distribution shape) capture the color vibrancy characteristics.\n\n2. **人脸-BackgroundSaturation比较**: Saturation levels of the face and background should be consistent (same camera, same color grading). The method compares saturation statistics — deepfake faces may show different saturation characteristics from the generation model's output color space mapping.\n\n3. **皮肤ToneSaturation**: Human skin follows specific saturation ranges dependent on skin type (Fitzpatrick scale). The method checks whether face skin saturation falls within plausible physiological ranges. AI generators may produce oversaturated or undersaturated skin inconsistent with natural skin tones.\n\n4. **时间Saturation稳定性**: Saturation should vary smoothly over time, consistent with illumination changes. The method tracks saturation stability — high-frequency saturation fluctuations in the face (while background remains stable) indicate per-frame rendering inconsistency from deepfake generation.\n\n5. **Saturation-LuminanceRelationship**: In natural images, saturation and luminance show specific relationships (Hunt effect — saturation appears higher at higher luminance). The method checks whether the saturation-luminance relationship follows natural perception models. AI generators may produce content with incorrect saturation-luminance coupling.",
+  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through 视频 saturation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

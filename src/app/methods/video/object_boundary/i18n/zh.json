@@ -1,22 +1,22 @@
 {
-    "name": "Object Boundary",
-    "description": "Analyzes object boundary consistency",
-    "algorithm": "Object Boundary — 像素级空间分析",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Analyzes object boundary consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through object boundary analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Object Boundary",
+  "description": "Analyzes object boundary consistency",
+  "algorithm": "Object Boundary — 像素级空间分析",
+  "mechanism": "This method analyzes object boundary quality in video for deepfake detection:\n\n1. **边界检测&分类**: Object boundaries are detected using edge detection and semantic segmentation. Boundaries are classified: person-background boundaries, clothing-skin boundaries, face feature boundaries (eyes, nose, mouth), and hair-background boundaries.\n\n2. **边界Quality评估**: The quality of each boundary is measured: sharpness, smoothness, sub-pixel anti-aliasing. Natural boundaries have consistent quality across the frame (same optical system). Deepfake composites may show different boundary quality between generated face regions and original footage.\n\n3. **Person-Background边界分析**: The boundary between the person and background is particularly informative. In authentic video, this boundary shows consistent optical properties. In composited deepfakes, the person-background boundary may show: matting artifacts (alpha channel errors), fringing, or resolution mismatches.\n\n4. **时间边界稳定性**: Object boundaries should be temporally stable and move smoothly. The method tracks boundary positions and quality across frames. AI-generated boundaries may exhibit sub-pixel jitter, temporal instability, or motion artifacts not present in authentically captured boundaries.\n\n5. **边界频率分析**: The spatial frequency content at object boundaries encodes the imaging pipeline's optical characteristics. The method analyzes boundary frequency profiles — different capture/generation pipelines produce different boundary frequency signatures. Mismatched boundary profiles between face and background indicate compositing.",
+  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through object boundary analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

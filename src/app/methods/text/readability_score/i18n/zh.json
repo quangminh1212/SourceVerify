@@ -1,22 +1,22 @@
 {
-    "name": "可读性剧烈波动分析 (Readability Variance)",
-    "description": "侦测文本在不同段落区间内，可读性得分（如 Flesch-Kincaid、Gunning Fog 指数）的波动剧烈程度。AI 语言模型在出厂时就被阉割了，它们被强制训练去生成绝对一致、“安全”且通俗易懂的散文。因此，它们吐出的文字从头到尾都保持着一种死板、极度机械化的可读性水位。然而，血肉之躯的作者天然自带巨大的“认知波动”——他们会根据情绪起伏、逻辑流向或叙事需要，把简单粗暴的短句和晦涩难懂的复杂论述疯狂揉捏在一起。",
-    "algorithm": "分段可读性方差与结构熵追踪",
-    "mechanism": "算法会将文本切割成滑动窗口或是结构化模块（如自然段）。它会给每个块计算出经典的可读性指标，并沿着文本的流向，追踪这些分数的方差、标准差以及结构熵。一篇真正人类写的文章，它的心电图通常会爆飞出“可读性尖峰”（即：前一段还在用极度专业的术语把你绕晕，下一段突然用最通俗的大白话给出一句总结）。而 AI 文本，因为始终被套着 Top-p 和 Temperature（温度采样）的枷锁——生怕因为上下句难度跨度太大而“吓倒”用户——所以它总是顽固地画出一条平庸、没有任何数学波澜的死尸级可读性直线。",
-    "useCase": "这是针对长篇学术论文、深度报告和商业软文的照妖镜。它专门猎杀那种“表面上看起来数学逻辑完美，但读起来让人觉得由于缺乏呼吸节奏而产生严重认知疲劳”的异样平滑感。",
-    "strengths": "• 它不靠那种玄学的黑盒神经网络，而是结结实实地踩在统治语言学界几十年的经典公式（Flesch-Kincaid, Coleman-Liau）上，结论铁证如山，极具解释力。\n• 对付那种“人类写糙图初稿，再用 AI 全局‘润色’或‘专业化重写’”的高级作弊手段有奇效，因为洗稿过程抹平了原有的行文粗糙感。",
-    "limitations": "• 在面对极短的碎片化文本（比如推特、短评）时彻底瘫痪，因为根本没有足够的字数来计算所谓的“段落方差”。\n• 当面对极端严谨的人类高精尖技术手册或者被八股文格式锁死的纯学术论文时，由于规定要求文风强迫症般地统一，有可能会引起误伤。",
-    "parameters": "雷达切片: 滑动窗口暴力分块 与 经典语言学公式扫射\n定罪量表: 连贯可读性指数的标准差测算 (方差心电图曲线)\n行刑判决: 0-100 文本呼吸僵硬度 (算法级死水均一性) 分数",
-    "accuracy": "中高威胁 — 在字数超过 300 的文档上，准确率通常稳定在 75-85%。它与“句长方差（Sentence Length Variance）”组成双打，是审查文章“呼吸节奏”的黄金搭档。",
-    "references": [
-        {
-            "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
-            "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
-        },
-        {
-            "title": "Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI.",
-            "url": "https://doi.org/10.1609/aaai.v37i11.26501"
-        }
-    ],
-    "source": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.; Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI."
+  "name": "可读性剧烈波动分析 (Readability Variance)",
+  "description": "侦测文本在不同段落区间内，可读性得分（如 Flesch-Kincaid、Gunning Fog 指数）的波动剧烈程度。AI 语言模型在出厂时就被阉割了，它们被强制训练去生成绝对一致、“安全”且通俗易懂的散文。因此，它们吐出的文字从头到尾都保持着一种死板、极度机械化的可读性水位。然而，血肉之躯的作者天然自带巨大的“认知波动”——他们会根据情绪起伏、逻辑流向或叙事需要，把简单粗暴的短句和晦涩难懂的复杂论述疯狂揉捏在一起。",
+  "algorithm": "分段可读性方差与结构熵追踪",
+  "mechanism": "The algorithm divides the text into sliding windows or structural segments (e.g., paragraphs). It calculates established readability metrics for each segment and tracks the variance, standard deviation, and structural entropy across the sequence. A human-authored article typically shows 'readability spikes' (e.g., a highly technical paragraph followed by a simple concluding sentence). AI text, constrained by top-p and temperature sampling designed to avoid 'confusing' the user, generates a stubbornly flat readability curve with minimal mathematical deviation.",
+  "useCase": "这是针对长篇学术论文、深度报告和商业软文的照妖镜。它专门猎杀那种“表面上看起来数学逻辑完美，但读起来让人觉得由于缺乏呼吸节奏而产生严重认知疲劳”的异样平滑感。",
+  "strengths": "• 它不靠那种玄学的黑盒神经网络，而是结结实实地踩在统治语言学界几十年的经典公式（Flesch-Kincaid, Coleman-Liau）上，结论铁证如山，极具解释力。\n• 对付那种“人类写糙图初稿，再用 AI 全局‘润色’或‘专业化重写’”的高级作弊手段有奇效，因为洗稿过程抹平了原有的行文粗糙感。",
+  "limitations": "• 在面对极短的碎片化文本（比如推特、短评）时彻底瘫痪，因为根本没有足够的字数来计算所谓的“段落方差”。\n• 当面对极端严谨的人类高精尖技术手册或者被八股文格式锁死的纯学术论文时，由于规定要求文风强迫症般地统一，有可能会引起误伤。",
+  "parameters": "雷达切片: 滑动窗口暴力分块 与 经典语言学公式扫射\n定罪量表: 连贯可读性指数的标准差测算 (方差心电图曲线)\n行刑判决: 0-100 文本呼吸僵硬度 (算法级死水均一性) 分数",
+  "accuracy": "中高威胁 — 在字数超过 300 的文档上，准确率通常稳定在 75-85%。它与“句长方差（Sentence Length Variance）”组成双打，是审查文章“呼吸节奏”的黄金搭档。",
+  "references": [
+    {
+      "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
+      "url": "https://doi.org/10.18653/v1/2020.acl-main.164"
+    },
+    {
+      "title": "Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI.",
+      "url": "https://doi.org/10.1609/aaai.v37i11.26501"
+    }
+  ],
+  "source": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.; Dugan, L. et al. (2023). Real or Fake Text?: Investigating Human Ability to Detect Boundaries Between Human-Written and Machine-Generated Text. AAAI."
 }

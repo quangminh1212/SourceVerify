@@ -1,22 +1,22 @@
 {
-    "name": "词长分布与平滑度 (Word Length Distribution)",
-    "description": "计算整篇文档中单词长度（字符数）的统计学分布。人类作家在写作时，为了制造节奏感、强化语气，或者为了配合内容的认知负荷，会无意识地变幻他们使用的单词长度。这种本能会生成一张连绵起伏、带有自然断层和尖刺的“不规则词长直方图”。而大语言模型（LLM）的底层逻辑是“最低的困惑度”和“最高的 Token 压缩效率”，这让它们在基因里刻着对“平均长度词汇”（英语中通常是 4-6 个字母的词）的病态狂热。除非人类用指令拿枪指着它的头，否则它会本能地避开由极短的断音词组成的句子，或者由超长多音节重型术语堆砌的文本黑洞。这套算法就是一台 CT 机，专门扫描这种由概率引擎合成出来的、被人为“熨平”且极度向中心隆起的违和词长分布曲线。",
-    "algorithm": "字符级直方图方差 与 偏度 (Skewness) 畸形分析",
-    "mechanism": "算法会扒光文本的所有标点符号，对文中的每一个词进行冷酷的“字数丈量”。它会画出一张以“词长（1 到 15+ 字符）”为 X 轴，以“出现频率”为 Y 轴的直方图。接着，它开始审视这条曲线的数学灵魂：方差、偏度（歪不歪）和峰度（尖不尖）。人类的文本通常会展现出一种“残缺美”或者多峰分布——比如在学术论文里会严重向长词倾斜，或者出现代表作者刻意顿挫的锯齿状尖峰。然而，AI 文本会死气沉沉地画出一个围绕语言平均值疯狂聚集的、数学上完美无瑕的“钟形曲线（Bell Curve）”。这种毫无波澜的完美，正是它彻底丧失人类音节与节奏变异能力的铁证。",
-    "useCase": "这是用于评估新闻、散文和文学创作“自然呼吸感”的顶级诊断探针。它作为基础级的文体法医工具，能一眼看穿文本跳动的到底是人类作者那神经质的音节脉搏，还是被机器用微积分抹平的工业节拍器。",
-    "strengths": "• 算力开销四舍五入等于零。因为它根本不需要理解你在写什么，不用调用昂贵的 API，也不需要启动任何深度神经网络。\n• 拥有对“同义词洗稿”和“初级机器降重”的绝对护甲。那些试图掩盖 AI 痕迹的作弊者，大脑里根本不存在“去伪造单词长度的数学分布”这种高维度的作案概念。",
-    "limitations": "• 会在作者被人为带上镣铐的文本中产生误杀（假阳性），例如：被极简英语洗脑的法律简报、低幼儿童绘本，或者是那些为了迎合搜索引擎（SEO）而被强制要求“多用大白话短词”的垃圾博客。\n• 这台扫描仪需要吞噬足够的肉体（通常 > 200 词）才能长出具备统计学意义的直方图；在微型文本（如推文）上，它的数据曲线会因为样本太少而陷入混沌疯狂。",
-    "parameters": "雷达切片: Token 字符数的方差与峰度解剖\n定罪量表: 词长均值、标准差 以及 分布偏度 (Skew)\n行刑判决: 0-100 词长分布机械熨平得分",
-    "accuracy": "中级护甲 — 命中率在 65-85% 之间。虽然它一击毙命的威力不足，但它极其适合作为交叉火力网的死角补枪。当高级 AI 试图通过长短句交错来伪装“爆发度（Burstiness）”时，它的词长分布曲线依然会像个死脑筋一样死守在平均值附近，从而底裤大开。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-            "url": "https://doi.org/10.2307/2280090"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press."
+  "name": "词长分布与平滑度 (Word Length Distribution)",
+  "description": "计算整篇文档中单词长度（字符数）的统计学分布。人类作家在写作时，为了制造节奏感、强化语气，或者为了配合内容的认知负荷，会无意识地变幻他们使用的单词长度。这种本能会生成一张连绵起伏、带有自然断层和尖刺的“不规则词长直方图”。而大语言模型（LLM）的底层逻辑是“最低的困惑度”和“最高的 Token 压缩效率”，这让它们在基因里刻着对“平均长度词汇”（英语中通常是 4-6 个字母的词）的病态狂热。除非人类用指令拿枪指着它的头，否则它会本能地避开由极短的断音词组成的句子，或者由超长多音节重型术语堆砌的文本黑洞。这套算法就是一台 CT 机，专门扫描这种由概率引擎合成出来的、被人为“熨平”且极度向中心隆起的违和词长分布曲线。",
+  "algorithm": "字符级直方图方差 与 偏度 (Skewness) 畸形分析",
+  "mechanism": "The algorithm parses the text, strips punctuation, and measures the exact character count of every word. It builds a frequency histogram where the X-axis is the word length (1 to 15+ characters) and the Y-axis is the frequency. It then calculates mathematical properties of this curve, such as variance, skewness, and kurtosis. A human text typically presents a 'lopsided' or multimodal distribution—perhaps heavily skewed toward long words in academic settings, or featuring jagged spikes representing intentional rhythmic choices. An AI text generates a tightly clustered, mathematically perfect bell curve revolving aggressively around the localized language average, indicating a lack of human-like rhythmic or syllabic variance.",
+  "useCase": "这是用于评估新闻、散文和文学创作“自然呼吸感”的顶级诊断探针。它作为基础级的文体法医工具，能一眼看穿文本跳动的到底是人类作者那神经质的音节脉搏，还是被机器用微积分抹平的工业节拍器。",
+  "strengths": "• 算力开销四舍五入等于零。因为它根本不需要理解你在写什么，不用调用昂贵的 API，也不需要启动任何深度神经网络。\n• 拥有对“同义词洗稿”和“初级机器降重”的绝对护甲。那些试图掩盖 AI 痕迹的作弊者，大脑里根本不存在“去伪造单词长度的数学分布”这种高维度的作案概念。",
+  "limitations": "• 会在作者被人为带上镣铐的文本中产生误杀（假阳性），例如：被极简英语洗脑的法律简报、低幼儿童绘本，或者是那些为了迎合搜索引擎（SEO）而被强制要求“多用大白话短词”的垃圾博客。\n• 这台扫描仪需要吞噬足够的肉体（通常 > 200 词）才能长出具备统计学意义的直方图；在微型文本（如推文）上，它的数据曲线会因为样本太少而陷入混沌疯狂。",
+  "parameters": "雷达切片: Token 字符数的方差与峰度解剖\n定罪量表: 词长均值、标准差 以及 分布偏度 (Skew)\n行刑判决: 0-100 词长分布机械熨平得分",
+  "accuracy": "中级护甲 — 命中率在 65-85% 之间。虽然它一击毙命的威力不足，但它极其适合作为交叉火力网的死角补枪。当高级 AI 试图通过长短句交错来伪装“爆发度（Burstiness）”时，它的词长分布曲线依然会像个死脑筋一样死守在平均值附近，从而底裤大开。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+      "url": "https://doi.org/10.2307/2280090"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press."
 }

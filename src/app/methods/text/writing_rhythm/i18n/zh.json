@@ -1,22 +1,22 @@
 {
-    "name": "写作节奏与韵律 (Writing Rhythm & Cadence)",
-    "description": "通过测量句子长度、句法复杂度和行文节奏的连续序列变化，来分析文本中如同节拍器般死板的规律性。人类作者天生就拥有一种不规则的、富有呼吸感的行文韵律——他们会将短促、有力的句子与冗长、蔓延、复杂的句子交织在一起，以制造张力、提供强调或在观点之间过渡。然而，生成式 AI 模型受制于“寻找数学阻力最小路径”的优化函数，会输出一种高度规则化、“节拍器式”的死板节奏。它们默认采用一种平稳、中速的节奏，几乎不偏离可预测的结构规律。本引擎专门用于检测那些潜伏在看似高度风格化的 LLM 输出底层的虚假单调性。",
-    "algorithm": "连续行文节奏与音节能量的自相关分析",
-    "mechanism": "该算法将整篇文档视为一个时间序列信号 (Time-series signal)。它测量每个句子的“能量”（通过字符长度、音节数和句法树深度来计算），并将其按时间顺序映射出来。然后，它应用自相关函数 (Autocorrelation function) 来检测重复的间隔或周期性模式。人类作家会生成一个充满噪音、非周期性的信号，伴随着不可预测的峰值和停顿（例如：在一个极其复杂的长段落之后，突然跟一个只有两个字的短句）。相反，由于 AI 文本陷入了可预测的生成循环，始终保持着机器人般等距的节拍器跳动，因此它会产生一个高度相关的、周期性起伏的平滑波形。",
-    "useCase": "评估长篇内容（如求职信、叙事结构文章和创意写作）的绝对刚需工具。因为“节奏的单调性”是机器最难通过后天微调来故意掩盖的文体特征之一，所以该指标能对那些“平淡无味、如同白开水”的生成式输出进行最深刻的底纹核查。",
-    "strengths": "• 它的扫描逻辑彻底脱离了“孤立的词汇”，而是分析整个文档的“流动”，这使得它对简单的“同义词替换（洗稿）”攻击免疫。\n• 这种数学规律性凌驾于任何具体语言的语法结构之上，使其能够作为跨语言的通用检测雷达。",
-    "limitations": "• 过短的输入（例如：单个段落或推文）缺乏建立节奏基线所必需的连续数据点，会使自相关分析直接失效。\n• 那些被刻意设计成高度统一、格式死板的文本——如法律合同、正式的 API 文档或生硬的列表——会触发误报（假阳性）。",
-    "parameters": "雷达切片: 连续能量自相关性投影\n定罪量表: 韵律方差、周期波形平滑度 以及 跨句子连贯熵\n行刑判决: 0-100 节奏机读单调性 (Rhythmic Monotony) 评分",
-    "accuracy": "中至高 — 享有 75-85% 的准确度。它在短文本上的威力会大打折扣，但一旦面对超过 500 字的论文或长文，就会展现出致命的杀伤力。当它与“爆发度（Burstiness，即句子长度的方差）”指标结合使用时，能提供几乎是铁证如山的机器生成特征签名。",
-    "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
-            "url": "https://doi.org/10.1145/3132039"
-        }
-    ],
-    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys."
+  "name": "写作节奏与韵律 (Writing Rhythm & Cadence)",
+  "description": "通过测量句子长度、句法复杂度和行文节奏的连续序列变化，来分析文本中如同节拍器般死板的规律性。人类作者天生就拥有一种不规则的、富有呼吸感的行文韵律——他们会将短促、有力的句子与冗长、蔓延、复杂的句子交织在一起，以制造张力、提供强调或在观点之间过渡。然而，生成式 AI 模型受制于“寻找数学阻力最小路径”的优化函数，会输出一种高度规则化、“节拍器式”的死板节奏。它们默认采用一种平稳、中速的节奏，几乎不偏离可预测的结构规律。本引擎专门用于检测那些潜伏在看似高度风格化的 LLM 输出底层的虚假单调性。",
+  "algorithm": "连续行文节奏与音节能量的自相关分析",
+  "mechanism": "The algorithm treats the document as a time-series signal. It measures the 'energy' of each sentence—calculated via character length, syllable count, and syntactic depth—and maps it sequentially. It then applies an autocorrelation function to detect repeating intervals or periodic patterns. A human author will generate a noisy, aperiodic signal with unpredictable spikes and lulls (e.g., highly complex paragraphs followed by a sudden two-word sentence). AI text, conversely, produces a highly correlated, periodic waveform because it falls into predictable generative loops, maintaining a robotic, evenly-spaced metronomic beat.",
+  "useCase": "评估长篇内容（如求职信、叙事结构文章和创意写作）的绝对刚需工具。因为“节奏的单调性”是机器最难通过后天微调来故意掩盖的文体特征之一，所以该指标能对那些“平淡无味、如同白开水”的生成式输出进行最深刻的底纹核查。",
+  "strengths": "• 它的扫描逻辑彻底脱离了“孤立的词汇”，而是分析整个文档的“流动”，这使得它对简单的“同义词替换（洗稿）”攻击免疫。\n• 这种数学规律性凌驾于任何具体语言的语法结构之上，使其能够作为跨语言的通用检测雷达。",
+  "limitations": "• 过短的输入（例如：单个段落或推文）缺乏建立节奏基线所必需的连续数据点，会使自相关分析直接失效。\n• 那些被刻意设计成高度统一、格式死板的文本——如法律合同、正式的 API 文档或生硬的列表——会触发误报（假阳性）。",
+  "parameters": "雷达切片: 连续能量自相关性投影\n定罪量表: 韵律方差、周期波形平滑度 以及 跨句子连贯熵\n行刑判决: 0-100 节奏机读单调性 (Rhythmic Monotony) 评分",
+  "accuracy": "中至高 — 享有 75-85% 的准确度。它在短文本上的威力会大打折扣，但一旦面对超过 500 字的论文或长文，就会展现出致命的杀伤力。当它与“爆发度（Burstiness，即句子长度的方差）”指标结合使用时，能提供几乎是铁证如山的机器生成特征签名。",
+  "references": [
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+    },
+    {
+      "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
+      "url": "https://doi.org/10.1145/3132039"
+    }
+  ],
+  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys."
 }

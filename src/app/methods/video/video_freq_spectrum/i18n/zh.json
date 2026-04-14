@@ -1,22 +1,22 @@
 {
-    "name": "Video Frequency Spectrum",
-    "description": "Analyzes 频率 spectrum of 视频 frames",
-    "algorithm": "Video Frequency Spectrum — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Analyzes 频率 spectrum of 视频 frames. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: 频率\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through 视频 频率 spectrum analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Video Frequency Spectrum",
+  "description": "Analyzes 频率 spectrum of 视频 frames",
+  "algorithm": "Video Frequency Spectrum — Frequency Domain Analyzer",
+  "mechanism": "This method analyzes the video frequency spectrum for forensic detection:\n\n1. **2D空间频率分析**: Per-frame 2D FFT reveals the spatial frequency spectrum. The method analyzes the overall spectral shape, spectral peaks, and spectral symmetry. Natural images follow approximately 1/f spectral decay.\n\n2. **频谱异常检测**: AI generators produce characteristic spectral anomalies: (a) GAN checkerboard peaks at upsampling stride frequencies, (b) diffusion model spectral gaps at certain frequency bands, (c) autoencoder spectral truncation at the bottleneck resolution. The method detects these architecture-specific spectral signatures.\n\n3. **人脸-Background频谱比较**: The spatial frequency spectrum of face regions and background should be consistent (same imaging pipeline). The method compares spectral shapes — generated faces may show different spectral characteristics (different noise spectrum, different high-frequency falloff, or additional spectral peaks from generation artifacts).\n\n4. **时间频谱稳定性**: The spatial frequency spectrum should be temporally stable for static content. The method tracks spectral stability — deepfake generation may produce temporally varying spectral content as the generator's output fluctuates frame-to-frame.\n\n5. **3DSpatio-时间频谱**: The combined spatial-temporal frequency spectrum (3D FFT over x, y, t) reveals motion structure. Natural motion produces characteristic spatio-temporal spectral planes. AI-generated motion may show different spectral structure — particularly at the temporal frequency boundaries of the generation model.",
+  "parameters": "分析类型: 频率\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through 视频 频率 spectrum analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "微观局部重复 (Micro Repetition)",
-    "description": "显微镜式地扫描文章，寻找在极短的字数跨度内，特定句法结构、修饰短语或冷门词汇是否出现了异常、密集地“回收再利用”。人类作家通常对“刚刚用过的词”有着本能的文体洁癖，会立刻在润色时删减掉这种尴尬的重复；但 AI 模型极其容易陷入局部的“自回归死循环”，在区区几句话里，把同一个词或完全相同的短语机械地咀嚼好几遍。",
-    "algorithm": "滑动窗口 N-Gram 频移与自回归循环检测",
-    "mechanism": "该算法采用“滑动窗口”模式（例如，锁定 50 到 100 个词的间距）像扫描仪一样扫过文章，只为抓捕“微观重复”。AI 生成文章的底层逻辑是基于统计概率，一个 Token 接着一个 Token 地往外蹦。当机器刚刚不小心选中了一个长难词或短语后，这个词会立刻进入它大脑的“短期上下文窗口”，导致在接下来的几句话里，这个词再次被选中的概率被人为地畸形拉高了。这种神经病一样的连锁反应会导致“自回归循环（Autoregressive loops）”——AI 开始无意识地给自己刚刚吐出的口水造回音（例如，在同一个段落里狂用三次“至关重要”，或者连续两个句子的开头都是“值得注意的是”）。雷达会在这些狭窄的偷窥窗口内，精准定罪那种完全一致的字符串匹配、词根的魔怔重复（如“决定”、“各项决定”、“正在决定”）以及句式结构的死板回音。一个心智正常的人类作家，天生带有一种对“未经意图的短距重复”的生理厌恶，会本能地去翻找同义词、使用代词或者彻底把句子倒装。密集爆发这种“微观重复”，是机器代笔在缺乏人类主观“清醒编辑与文体羞耻感”时留下的经典案发现场。",
-    "useCase": "这是彻查学生论文、流水线自动化博客和 AI 强行生成的所谓“创意文学”的神器。在这种场景下，AI 根本没有“文体记忆”，它甚至记不住自己三秒前刚刚用过这个极其惹眼的词。",
-    "strengths": "• 直接把刀插进了 AI 自回归生成（Autoregressive）天然存在的基因缺陷里；只要没有人类在后期手工替它擦屁股，目前的 LLM 几乎不可能靠自己压制住这种毛病。\n• 完全依赖于文本内部的自我逻辑咬合度运作，根本不需要向外部大模型发请求或联网查资源。\n• 对那种 AI 为了凑字数、偷偷摸摸把自己上一段的废话翻新后再嚼一遍的“摸鱼式生成”具有极强的穿透识别力。",
-    "limitations": "• 会被人类故意玩弄的修辞手法误伤（例如运用排比和反复的政客激情演讲、现代诗歌），或者在那些为了极致严谨而不允许使用同义词的硬核文档中（例如医疗器械说明、处方药剂量指导）引发极其尴尬的假阳性。\n• 如果这篇 AI 文章在发布前被人为精细地洗过一遍（人类天然会把这些刺眼的重复词修剪掉），这项指标的威力就会暴跌。\n• 对于篇幅极短的文本，因为连构建“重复因果链”的字数基础都不够，无法形成达到统计学定罪标准的模型。",
-    "parameters": "雷达切片: 基于滑动窗口的短距 N-Gram 阵列与词根寻迹\n定罪量表: 词汇/句法自我回音的爆发频率与死亡间距\n行刑判决: 0-100 局部魔怔重复 (自动回归回音) 审判分数",
-    "accuracy": "中高维打击 — 拥有 76-83% 的惊人识别率。它是鉴定“纯天然生肉（未被人工润色的 AI 原文）”的极品试剂，但如果文本经历过人类的深度抛光，它的效力就会被打散。",
-    "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        }
-    ],
-    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+  "name": "微观局部重复 (Micro Repetition)",
+  "description": "显微镜式地扫描文章，寻找在极短的字数跨度内，特定句法结构、修饰短语或冷门词汇是否出现了异常、密集地“回收再利用”。人类作家通常对“刚刚用过的词”有着本能的文体洁癖，会立刻在润色时删减掉这种尴尬的重复；但 AI 模型极其容易陷入局部的“自回归死循环”，在区区几句话里，把同一个词或完全相同的短语机械地咀嚼好几遍。",
+  "algorithm": "滑动窗口 N-Gram 频移与自回归循环检测",
+  "mechanism": "This algorithm scans the text using a sliding window approach (e.g., 50 to 100 words), searching for 'micro-repetitions'. AI models generate text token by token based on statistical probability. When a specific token or short N-gram is selected, its probability of being selected again in the immediate vicinity often artificially spikes because it enters the model's short-term context window. This phenomenon leads to 'autoregressive loops' where the AI unintentionally echoes its own recent output (e.g., using the word 'crucial' three times in a single paragraph, or starting two consecutive sentences with 'It is important to note'). The system identifies exact string matching, lemma repetition (e.g., 'decide', 'decisions', 'deciding'), and structural echoing within these tight windows. Human writers typically possess an innate stylistic aversion to immediate, unintended repetition and will organically rely on synonyms, pronouns, or sentence restructuring. A high density of micro-repetitions suggests a lack of conscious editorial oversight characteristic of machine generation.",
+  "useCase": "这是彻查学生论文、流水线自动化博客和 AI 强行生成的所谓“创意文学”的神器。在这种场景下，AI 根本没有“文体记忆”，它甚至记不住自己三秒前刚刚用过这个极其惹眼的词。",
+  "strengths": "• 直接把刀插进了 AI 自回归生成（Autoregressive）天然存在的基因缺陷里；只要没有人类在后期手工替它擦屁股，目前的 LLM 几乎不可能靠自己压制住这种毛病。\n• 完全依赖于文本内部的自我逻辑咬合度运作，根本不需要向外部大模型发请求或联网查资源。\n• 对那种 AI 为了凑字数、偷偷摸摸把自己上一段的废话翻新后再嚼一遍的“摸鱼式生成”具有极强的穿透识别力。",
+  "limitations": "• 会被人类故意玩弄的修辞手法误伤（例如运用排比和反复的政客激情演讲、现代诗歌），或者在那些为了极致严谨而不允许使用同义词的硬核文档中（例如医疗器械说明、处方药剂量指导）引发极其尴尬的假阳性。\n• 如果这篇 AI 文章在发布前被人为精细地洗过一遍（人类天然会把这些刺眼的重复词修剪掉），这项指标的威力就会暴跌。\n• 对于篇幅极短的文本，因为连构建“重复因果链”的字数基础都不够，无法形成达到统计学定罪标准的模型。",
+  "parameters": "雷达切片: 基于滑动窗口的短距 N-Gram 阵列与词根寻迹\n定罪量表: 词汇/句法自我回音的爆发频率与死亡间距\n行刑判决: 0-100 局部魔怔重复 (自动回归回音) 审判分数",
+  "accuracy": "中高维打击 — 拥有 76-83% 的惊人识别率。它是鉴定“纯天然生肉（未被人工润色的 AI 原文）”的极品试剂，但如果文本经历过人类的深度抛光，它的效力就会被打散。",
+  "references": [
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    },
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    }
+  ],
+  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

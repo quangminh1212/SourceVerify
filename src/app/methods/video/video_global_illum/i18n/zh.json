@@ -1,22 +1,22 @@
 {
-    "name": "Video Global Illumination",
-    "description": "Analyzes global illumination consistency",
-    "algorithm": "Video Global Illumination — 像素级空间分析",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Analyzes global illumination consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through 视频 global illumination analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Video Global Illumination",
+  "description": "Analyzes global illumination consistency",
+  "algorithm": "Video Global Illumination — 像素级空间分析",
+  "mechanism": "This method analyzes global illumination consistency for video deepfake detection:\n\n1. **光照Environment估计**: The scene's illumination environment is estimated per frame from multiple cues: shadow directions and intensities, specular highlights, ambient illumination level, and color temperature. This builds a per-frame lighting model.\n\n2. **人脸-Scene光照Agreement**: The illumination on the face should be consistent with the estimated scene illumination. The method compares: (a) light direction on the face vs. scene shadows, (b) ambient-to-direct illumination ratio on face vs. scene, (c) color temperature of face illumination vs. scene. Deepfakes generated under different lighting won't match the scene.\n\n3. **Inter-Object光照一致性**: All objects in the scene (including the face) should show consistent illumination from the same light sources. The method checks illumination consistency across multiple objects — if the face shows different lighting than a nearby object at similar distance from the light source, manipulation is indicated.\n\n4. **全局光照Effects**: Natural scenes show secondary illumination effects: color bleeding (colored surfaces tint nearby surfaces), ambient occlusion (corners and crevices are darker), and environmental reflections. The method checks whether these global illumination effects are present and consistent between the face and scene. AI generators often don't model these subtle inter-object light interactions.\n\n5. **时间光照相干性**: Scene illumination should change smoothly and affect all objects simultaneously. The method tracks illumination parameters over time — face illumination should correlate with scene illumination changes. Independent illumination variation on the face indicates it was generated separately from the scene.",
+  "parameters": "分析类型: 像素\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through 视频 global illumination analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

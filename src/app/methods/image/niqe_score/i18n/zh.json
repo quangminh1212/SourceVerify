@@ -1,12 +1,12 @@
 {
-    "name": "NIQE Quality Score",
-    "description": "Computes Natural Image Quality Evaluator blind quality score — AI images often score differently from natural photos (Mittal et al., 2013).",
-    "algorithm": "NIQE Quality Score分析算法",
-    "mechanism": "NIQE Quality Score系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "NIQE Quality Score",
+  "description": "Computes Natural Image Quality Evaluator blind quality score — AI images often score differently from natural photos (Mittal et al., 2013).",
+  "algorithm": "NIQE Quality Score分析算法",
+  "mechanism": "This method implements the Natural Image Quality Evaluator (NIQE) by Mittal et al. (2013) for blind quality assessment:\n\n1. **NSSFeature提取**: The image is decomposed into normalized luminance coefficients using mean-subtracted contrast-normalized (MSCN) coefficients: Î(x,y) = (I(x,y) − μ(x,y))/(σ(x,y) + C). These MSCN coefficients of natural images follow a unit Gaussian distribution.\n\n2. **GeneralizedGaussian分布(GGD)Fitting**: MSCN coefficient distributions are fit to a GGD parameterized by shape (α) and variance (σ²). Additionally, pairwise products of adjacent MSCN coefficients are modeled using an asymmetric GGD (AGGD) in four directions (horizontal, vertical, and two diagonals).\n\n3. **MultivariateGaussian(MVG)Model**: The extracted NSS features (GGD shape, variance, AGGD parameters) form a feature vector. A pristine MVG model (μₙ, Σₙ) is pre-computed from a corpus of natural undistorted images.\n\n4. **QualityDistance计算**: The NIQE score is computed as the Mahalanobis-like distance: D = √((μ₁−μ₂)ᵀ((Σ₁+Σ₂)/2)⁻¹(μ₁−μ₂)) between the test image's feature distribution (μ₁, Σ₁) and the pristine model (μ₂, Σ₂). Lower scores indicate more natural-looking images.\n\n5. **ForensicApplication**: AI-generated images often deviate from natural scene statistics (NSS) captured by NIQE. While visually plausible, synthetic images exhibit subtle violations of NSS regularity — particularly in local contrast normalization and adjacent coefficient dependencies — yielding elevated NIQE scores that serve as a generation indicator.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

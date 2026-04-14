@@ -1,12 +1,12 @@
 {
-    "name": "Multiscale Entropy Analysis",
-    "description": "Computes sample entropy at multiple time scales to detect complexity differences between real and AI images (Costa et al., 2002).",
-    "algorithm": "Multiscale Entropy Analysis分析算法",
-    "mechanism": "Multiscale Entropy Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Multiscale Entropy Analysis",
+  "description": "Computes sample entropy at multiple time scales to detect complexity differences between real and AI images (Costa et al., 2002).",
+  "algorithm": "Multiscale Entropy Analysis分析算法",
+  "mechanism": "This method applies Costa et al.'s (2002) Multiscale Entropy (MSE) framework to quantify image complexity across scales:\n\n1. **Coarse-Graining**: The image signal is coarse-grained at multiple temporal scales τ by averaging non-overlapping windows of length τ: yⱼ(τ) = (1/τ)Σᵢ₌₍ⱼ₋₁₎τ₊₁ʲᵗ xᵢ. This creates a family of representations capturing structure at different resolutions.\n\n2. **SampleEntropy计算**: At each scale τ, sample entropy SampEn(m, r, N) is calculated — measuring the negative natural logarithm of the conditional probability that sequences similar for m points remain similar for m+1 points within tolerance r. This quantifies irregularity without requiring stationarity.\n\n3. **MSECurveConstruction**: The entropy values across scales form the MSE curve. Natural images exhibit a characteristic MSE profile: high entropy at fine scales (sensor noise, texture detail) with controlled decay at coarse scales reflecting structured content.\n\n4. **ComplexityIndex计算**: The area under the MSE curve (Complexity Index, CI) provides a single measure of multi-scale complexity. AI-generated images typically show abnormal MSE profiles — either excessively smooth (low MSE across all scales) or with artificial periodicity absent in natural images.\n\n5. **异常检测**: The MSE curve shape is compared against reference distributions from natural images. Deviations indicate synthetic generation — diffusion models often produce overly regular fine-scale structure, while GANs may show characteristic entropy dips at specific scales corresponding to generator architecture artifacts.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

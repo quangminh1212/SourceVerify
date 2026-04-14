@@ -1,12 +1,12 @@
 {
-    "name": "Log-Gabor Filter Analysis",
-    "description": "Applies log-Gabor filters for improved frequency selectivity over standard Gabor — captures AI generation signatures (Field, 1987).",
-    "algorithm": "Log-Gabor Filter Analysis分析算法",
-    "mechanism": "Log-Gabor Filter Analysis系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Log-Gabor Filter Analysis",
+  "description": "Applies log-Gabor filters for improved frequency selectivity over standard Gabor — captures AI generation signatures (Field, 1987).",
+  "algorithm": "Log-Gabor Filter Analysis分析算法",
+  "mechanism": "This method applies Log-Gabor filters following Field's (1987) framework for analyzing image frequency structure:\n\n1. **Log-GaborBankConstruction**: A bank of Log-Gabor filters is constructed in the frequency domain with logarithmic spacing. Unlike standard Gabor filters, Log-Gabor filters have zero DC component, no bandwidth limitation, and their transfer function is Gaussian on a logarithmic frequency scale: G(f) = exp(−(log(f/f₀))²/(2(log(σ/f₀))²)).\n\n2. **Multi-方向Filtering**: The filter bank spans multiple orientations (typically 6-8) and scales (4-6 octaves), providing comprehensive coverage of the 2D frequency plane. Each filter isolates a specific frequency band and orientation.\n\n3. **ResponseEnergy映射**: The local energy response is computed as E(x,y) = √(even²(x,y) + odd²(x,y)), where even and odd components are the real and imaginary parts of the filter response. This captures local frequency content independent of phase.\n\n4. **NaturalImageStatistics比较**: Response statistics are compared to the known 1/f amplitude spectrum of natural images. AI-generated images exhibit characteristic deviations — GANs often show spectral peaks at grid frequencies, while diffusion models may underrepresent certain frequency bands.\n\n5. **异常评分**: The deviation from expected natural image frequency statistics across all filter responses is aggregated into a forensic score indicating the likelihood of AI generation.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }

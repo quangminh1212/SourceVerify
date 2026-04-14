@@ -1,22 +1,22 @@
 {
-    "name": "Audio Spectral Analysis",
-    "description": "Analyzes audio spectral characteristics",
-    "algorithm": "Audio Spectral Analysis — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes 视频 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 视频 stream for analysis.\n\n2. **Feature Analysis**: Analyzes audio spectral characteristics. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **分数计算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析类型: 频率\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 视频 through audio spectral analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
-    "references": [
-        {
-            "title": "Chen, T. et al. (2020). Generalization of Audio Deepfake Detection. Odyssey.",
-            "url": "https://arxiv.org/abs/2010.11317"
-        },
-        {
-            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413700"
-        }
-    ]
+  "name": "Audio Spectral Analysis",
+  "description": "Analyzes audio spectral characteristics",
+  "algorithm": "Audio Spectral Analysis — Frequency Domain Analyzer",
+  "mechanism": "This method performs spectral analysis of audio signals for detecting AI-generated speech following Chen et al. (2020):\n\n1. **Short-Time傅里叶变换(STFT)**: The audio signal is windowed and transformed to produce a spectrogram. The time-frequency representation reveals the full spectral content of the speech signal, including harmonics, formants, and noise components.\n\n2. **频谱Envelope分析**: The spectral envelope (smoothed magnitude spectrum) is extracted per frame using cepstral methods. Natural speech exhibits specific spectral envelope shapes determined by vocal tract resonances. AI vocoders (WaveNet, HiFi-GAN) may produce spectral envelopes with subtle artifacts — missing spectral detail above certain frequencies or unnatural smoothness in spectral transitions.\n\n3. **High-频率Content评估**: Frequencies above 8 kHz are particularly informative for deepfake detection. Natural speech contains aperiodic high-frequency energy from fricatives and aspiration noise with specific spectral characteristics. Many AI voice synthesis systems produce truncated or artificially shaped high-frequency content, revealing the synthesis methodology.\n\n4. **Mel-频率分析**: The spectrum is analyzed on the mel scale to capture perceptually relevant features. Mel-frequency cepstral coefficients (MFCCs) and their delta/delta-delta derivatives are computed. AI-generated speech often shows statistical anomalies in MFCC distributions — particularly in higher-order coefficients capturing spectral detail.\n\n5. **频谱Flux&Continuity**: Frame-to-frame spectral changes (spectral flux) are measured. Natural speech shows characteristic flux patterns during phoneme transitions. AI-generated speech may exhibit unnaturally smooth spectral evolution or micro-discontinuities between vocoder frames, serving as detection indicators.",
+  "parameters": "分析类型: 频率\n媒体: 视频\n输入: Video frames extracted at key intervals\n输出: 置信度分数 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中到高 — 70-88% 独立准确率. Most effective when combined with other 视频 forensic methods. Performance depends on 视频 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 视频 through audio spectral analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 视频 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 视频 formats\n• Effective against common deepfake techniques\n• Can be combined with other 视频 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 视频 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 视频",
+  "references": [
+    {
+      "title": "Chen, T. et al. (2020). Generalization of Audio Deepfake Detection. Odyssey.",
+      "url": "https://arxiv.org/abs/2010.11317"
+    },
+    {
+      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413700"
+    }
+  ]
 }

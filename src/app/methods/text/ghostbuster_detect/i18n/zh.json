@@ -1,12 +1,12 @@
 {
-    "name": "Ghostbuster Detection",
-    "description": "Applies Ghostbuster method combining multiple weak signals — structured search over feature combinations (Verma et al., 2023).",
-    "algorithm": "Ghostbuster Detection分析算法",
-    "mechanism": "Ghostbuster Detection系统分析特定信号模式，以区分AI生成内容和真实媒体。",
-    "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
-    "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
-    "source": "基于数字取证和AI内容检测的同行评审研究。",
-    "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
-    "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
-    "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
+  "name": "Ghostbuster Detection",
+  "description": "Applies Ghostbuster method combining multiple weak signals — structured search over feature combinations (Verma et al., 2023).",
+  "algorithm": "Ghostbuster Detection分析算法",
+  "mechanism": "The Ghostbuster Detection method implements the technique from Verma et al. (2023) for detecting AI-generated text using structured search over weaker language models:\n\n1. **Feature向量Construction**: The input text is processed through a series of weaker, unstructured language models (e.g., unigram, bigram, trigram models and a small GPT-like model). For each token, the probability assigned by each model is computed, yielding per-token probability vectors from multiple model perspectives.\n\n2. **Document-LevelFeatureAggregation**: Token-level probabilities are aggregated into document-level features using selected functions: mean, variance, and quantile statistics of log-probabilities from each model. This creates a compact feature vector capturing the distributional characteristics of the text through multiple linguistic lenses.\n\n3. **StructuredSearchoverFeatureCombinations**: A structured search selects the most discriminative combination of features and models. Rather than relying on a single powerful model, Ghostbuster combines signals from multiple weaker models — exploiting the observation that AI-generated text exhibits characteristic probability patterns across different model architectures.\n\n4. **Linear分类**: The selected feature vector is fed into a trained logistic regression classifier. The linear model ensures interpretability and robustness — avoiding overfitting to specific generator architectures. The decision boundary separates human-written text (which shows variable probability across models) from AI-generated text (which tends to be uniformly probable across models).\n\n5. **Confidence评分**: The classifier output probability provides a confidence score. Texts near the decision boundary are flagged as uncertain, while those with strong signals from multiple feature dimensions receive high-confidence predictions. The method generalizes across different AI generators without requiring per-model training.",
+  "parameters": "分析类型：自动统计\\n分数范围：0（真实）到100（AI生成）",
+  "accuracy": "中到高 — 根据输入质量，准确率为70-85%。",
+  "source": "基于数字取证和AI内容检测的同行评审研究。",
+  "useCase": "作为多信号分析管道的一部分，用于检测AI生成的内容。",
+  "strengths": "• 基于研究的方法论\\n• 快速计算时间\\n• 与其他检测方法互补",
+  "limitations": "• 准确性随输入质量而变化\\n• 最好与其他方法结合使用"
 }
