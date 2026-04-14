@@ -1,12 +1,12 @@
 {
     "name": "Phân Tích Mật Độ Cạnh Canny",
-    "description": "Đo lường mật độ cạnh và các biến đổi cấu trúc tần số cao trong không gian bằng thuật toán Canny. Các mô hình tạo sinh AI thường tạo ra các đường nét phẳng lì bất thường hoặc các cạnh tổng hợp quá sắc nhọn, phá vỡ mật độ viền cạnh thống kê tự nhiên vốn có trong các bức ảnh chụp ngoài đời thực.",
+    "description": "Đo lường mật độ cạnh và các biến đổi cấu trúc tần số cao trong không gian ảnh bằng thuật toán Canny. Các mô hình tạo sinh AI thường tạo ra các đường nét phẳng bất thường hoặc cạnh tổng hợp quá sắc nhọn, phá vỡ phân bố mật độ cạnh thống kê tự nhiên vốn có trong ảnh chụp thực tế.",
     "algorithm": "Đo Lường Mật Độ và Cấu Hình Cạnh Ngưỡng Kép",
-    "mechanism": "Thuật toán áp dụng phương pháp loại bỏ không cực đại (non-maximum suppression) và xác định ngưỡng trễ kép (hysteresis) để trích xuất bản đồ các đường viền ảnh kỹ thuật số, rồi tính toán mật độ cục bộ và toàn cục của những ranh giới này. Ảnh thật tự nhiên có các phân bố đường cạnh phức tạp, phân mảnh phụ thuộc nhiều vào ánh sáng và cấu tạo bề mặt vật lý. Ngược lại, những bức ảnh do AI tổng hợp—bị ràng buộc bởi thao tác giải mã không gian vi mô và làm mịn chập chội—thường hiển thị mật độ đồng nhất. Chúng sẽ để lại các điểm hội tụ 'sắc nét cường điệu' và bao quanh bởi những khu vực trống rỗng, được làm phẳng bất thường và thiếu đi vi liên kết cấu trúc thật.",
-    "parameters": "Bộ phát hiện: Hạt nhân Gradient Canny, Ngưỡng độ nhạy: Trễ thích ứng (T_low, T_high), Thang đo: Nồng độ cạnh không gian",
-    "accuracy": "Trung bình (70-80%) - Rất hiệu quả trong việc phanh phui sự làm mịn phi thực tế, nhưng cũng rất dễ bị nhiễu do nén chất lượng.",
-    "source": "Canny (1986) / Farid (2016) - Pháp Y Đường Nét Không Gian Máy Tính",
-    "useCase": "Nhận diện những bức tranh số tạo bởi AI, vạch trần các thao tác làm mịn quá tay bị lạm dụng, và phơi bày những giới hạn đường viền phẳng nhẵn phi vật lý.",
+    "mechanism": "Thuật toán áp dụng phương pháp loại bỏ không cực đại (non-maximum suppression) và xác định ngưỡng trễ kép (hysteresis) để trích xuất bản đồ đường viền, sau đó tính toán mật độ cục bộ và toàn cục. Ảnh thật có phân bố đường cạnh phức tạp, phân mảnh tự nhiên theo đặc tính ánh sáng và cấu trúc bề mặt vật lý. Ngược lại, ảnh AI — bị ràng buộc bởi quá trình giải mã không gian ẩn và làm mịn tích chập — thường hiển thị mật độ đồng nhất bất thường, với các vùng sắc nét cường điệu bao quanh bởi các khu vực được làm phẳng thiếu vi cấu trúc tự nhiên.",
+    "parameters": "Bộ phát hiện: Hạt nhân Gradient Canny, Ngưỡng độ nhạy: Trễ thích ứng (T_low, T_high), Thang đo: Mật độ cạnh không gian",
+    "accuracy": "Trung bình (70-80%) — Hiệu quả trong việc phát hiện hiện tượng làm mịn phi thực tế, tuy nhiên dễ bị ảnh hưởng bởi nén JPEG chất lượng thấp.",
+    "source": "Canny (1986) / Farid (2016) — Pháp y đường nét không gian trong xử lý ảnh số",
+    "useCase": "Nhận diện ảnh AI tạo sinh thông qua phân tích phân bố đường cạnh, phát hiện hiện tượng làm mịn quá mức và các giới hạn về đường viền phi vật lý.",
     "references": [
         {
             "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
@@ -17,6 +17,6 @@
             "url": "https://mitpress.mit.edu/9780262537523/photo-forensics/"
         }
     ],
-    "strengths": "• Tính toán trực tiếp trên miền không gian vô cùng gọn nhẹ hình ảnh với tốc độ chớp nhoáng, tốn ít tài nguyên.\n• Làm nổi bật các điểm yếu bị đồng nhất hóa cấu trúc do kết quả vay mượn của mô hình tạo sinh giải mã không gian ẩn.\n• Dễ dàng phân tích cho cả ảnh màu lẫn ảnh đen trắng mà không gặp rào cản cảnh vật lộn xộn.\n• Có sự miễn dịch tương đối vững vàng trước các chỉnh sửa màu sắc thông thường hoặc việc kéo dải sáng tổng quan.",
-    "limitations": "• Độ uy tín và tính pháp y suy sụp chóng mặt mỗi khi bức ảnh bị bóp méo qua thuật toán nén JPEG quá mạnh tay.\n• Thao tác làm mờ, xóa phông quang học quang học (bokeh) mượt mà đến từ ống kính hi-end máy thật cũng vô tình sở hữu các điểm rỗng cạnh trơn y hệt.\n• Sẽ gặp rắc rối và trầy trật khi phải phân biệt rạch ròi giữa AI tạo sinh (Stable Diffusion) với các công nghệ thuật toán quét nhiễu tàn bạo trên camera flagship smartphone hiện nay.\n• Thường tự bẫy chính mình (dương tính giả) đối với những khung hình được phơi trần ngoài tự nhiên yên tĩnh (vd: bầu trời không mây, bức tường phẳng trong nhà)."
+    "strengths": "• Tính toán trực tiếp trên miền không gian ảnh, tốc độ xử lý nhanh với yêu cầu tài nguyên thấp.\n• Làm nổi bật hiệu quả hiện tượng đồng nhất hóa cấu trúc do giải mã không gian ẩn của mô hình tạo sinh.\n• Áp dụng được cho cả ảnh màu lẫn ảnh đen trắng.\n• Có tính kháng nhiễu tương đối tốt trước các thao tác chỉnh màu hoặc điều chỉnh dải sáng thông thường.",
+    "limitations": "• Độ tin cậy giảm đáng kể khi ảnh bị nén JPEG ở mức chất lượng thấp.\n• Hiệu ứng xóa phông quang học (bokeh) từ ống kính cao cấp tạo ra các vùng thiếu cạnh tương tự ảnh AI.\n• Khó phân biệt giữa ảnh AI tạo sinh (Stable Diffusion) và ảnh qua xử lý khử nhiễu mạnh trên camera smartphone hiện đại.\n• Tỷ lệ dương tính giả đáng kể đối với các cảnh có bề mặt đơn giản tự nhiên (bầu trời quang, tường phẳng)."
 }

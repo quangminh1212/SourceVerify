@@ -1,12 +1,12 @@
 {
-    "name": "Phân Tích Quang Sai Sắc Sai (Chromatic Aberration)",
-    "description": "Phát hiện hiện tượng viền màu (quang sai sắc) tại các đường viền có độ tương phản cao. Ống kính máy ảnh thực tế luôn chật vật để hội tụ hoàn hảo mọi bước sóng ánh sáng về cùng một mặt phẳng tiêu cự, sinh ra sự trượt màu quang học tuân theo các trục xuyên tâm. Trái lại, AI khi tạo ảnh hoàn toàn không có ống kính vật lý, nên chúng hoặc là mượt mà không có lỗi quang học này, hoặc cố tình vẽ thêm những quầng sáng màu phi logic, vi phạm vật lý.",
-    "algorithm": "Tương Quan Pha Xuyên Tâm & Mô Hình Biến Dạng Ống Kính",
-    "mechanism": "Thuật toán thu thập và đo lường sự sai lệch cấp độ vi điểm (sub-pixel) giữa ba kênh màu Đỏ, Xanh lá, và Xanh dương. Trong các bức ảnh chụp thật, sự trượt màu này tăng dần một cách có tổ chức khi càng đi về phía rìa ảnh, tuân thủ nghiêm ngặt các công thức quang học xuyên tâm (như mô hình Brown-Conrady). Khi AI sinh ảnh, nó trực tiếp tô màu điểm ảnh mà làm lơ luôn môn vật lý quang học. Hậu quả là, ảnh AI thường có chỉ số sắc sai bằng 0, hoặc nếu bị ép học 'stylized' cho giống ảnh cũ, nó sẽ bôi các viền màu ngẫu nhiên một cách lộn xộn, mất gốc tâm quang học, hoặc trượt pha theo kiểu phản vật lý (ví dụ: kênh Xanh lá trượt đi xa hơn cả Đỏ và Xanh dương).",
-    "parameters": "Cặp kênh: R-G, R-B, G-B, Đo lường: Độ trượt cạnh sub-pixel / Tương quan pha, Mô hình: Khớp tâm quang học toán học",
-    "accuracy": "Khá đến Cao (75-85%) - Là bảo chứng thép cho tính chân thực nếu bức ảnh tuân thủ chặt chẽ vật lý quang học. Hơi đuối lý nếu ảnh bị crop hoặc chụp bằng ống kính siêu cao cấp đắt tiền.",
-    "source": "Johnson và Farid (2006) - Vạch Trần Ảnh Giả Mạo Thông Qua Sắc Sai",
-    "useCase": "Phát hiện ảnh do AI sinh ra dựa vào sự vắng bóng của định luật quang học, hoặc tóm gọn hiện trường cắt ghép nơi mà các thông số sắc sai bỗng nhiên mất đồng bộ tâm quang học tại khu vực bị chỉnh sửa.",
+    "name": "Phân Tích Quang Sai Sắc Thể (Chromatic Aberration)",
+    "description": "Phương pháp phát hiện hiện tượng viền màu (quang sai sắc thể) tại các đường viền có độ tương phản cao. Ống kính máy ảnh thực tế không thể hội tụ hoàn hảo mọi bước sóng ánh sáng về cùng mặt phẳng tiêu cự, tạo ra hiện tượng trượt màu quang học theo mô hình xuyên tâm. Các mô hình AI không có ống kính vật lý nên thường tạo ra ảnh hoàn toàn không có quang sai, hoặc thêm viền màu phi logic không tuân theo mô hình quang học.",
+    "algorithm": "Tương Quan Pha Xuyên Tâm và Mô Hình Biến Dạng Ống Kính",
+    "mechanism": "Thuật toán đo lường sự sai lệch vi điểm (sub-pixel) giữa ba kênh màu R, G, B. Trong ảnh chụp thật, sự trượt màu tăng dần theo khoảng cách từ tâm ảnh ra rìa, tuân theo các công thức quang học xuyên tâm (mô hình Brown-Conrady). Khi AI tạo ảnh, quá trình render trực tiếp pixel mà bỏ qua mô phỏng quang học, dẫn đến chỉ số quang sai bằng 0 hoặc phân bố viền màu ngẫu nhiên không nhất quán với tâm quang học — ví dụ kênh G trượt xa hơn R và B, vi phạm quy luật tán sắc vật lý.",
+    "parameters": "Cặp kênh phân tích: R-G, R-B, G-B, Chỉ số đo: Độ trượt cạnh sub-pixel / Tương quan pha, Mô hình: Khớp tâm quang học toán học",
+    "accuracy": "Khá đến cao (75-85%) — Độ tin cậy cao khi ảnh tuân thủ mô hình quang học, giảm hiệu quả với ảnh bị crop hoặc chụp bằng ống kính cao cấp.",
+    "source": "Johnson & Farid (2006) — Phát hiện ảnh giả mạo thông qua phân tích quang sai sắc thể",
+    "useCase": "Phát hiện ảnh AI tạo sinh dựa trên sự vắng mặt của đặc tính quang học vật lý, hoặc xác định vùng cắt ghép thông qua sự mất đồng bộ tâm quang sai tại khu vực bị chỉnh sửa.",
     "references": [
         {
             "title": "Johnson, M.K. & Farid, H. (2006). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMS.",
@@ -17,6 +17,6 @@
             "url": "https://doi.org/10.1007/s11263-010-0403-1"
         }
     ],
-    "strengths": "• Bám rễ sâu vào bản chất vật lý quang học ống kính, một thứ mà bộ não toán học của thế hệ AI hiện tại quá lười để giả lập do tiêu tốn quá nhiều tài nguyên tính toán.\n• Khắc tinh của những bức ảnh AI nét căng độ phân giải cao, nhìn thì như siêu thực nhưng lại sạch bong không hề có sai số quang học nào.\n• Cực kỳ hiệu quả khi bắt lỗi ảnh cắt ghép 'Frankenstein' (splicing), vì nếu lấy hai chi tiết từ hai ảnh khác nhau đắp vào, chúng sẽ có hai tâm quang sai đánh lộn với nhau.",
-    "limitations": "• Các ống kính prime chuyên dụng giá trên trời (như Apochromatic) có khả năng tự triệt tiêu rũ bỏ rắc rối quang sai, việc quá hoàn hảo này có thể khiến phần mềm lầm tưởng đó là ảnh AI.\n• Lập tức bị phế võ công nếu ảnh bị cắt cúp (crop) nhỏ, bởi vì việc crop sẽ làm lệch và giấu mất tâm quang học gốc, khiến thuật toán bị mù phương hướng.\n• Các công cụ khử viền màu tự động trong Lightroom hay Camera Raw chỉ với một click chuột là đã có thể quét sạch toàn bộ bằng chứng pháp y quý giá này."
+    "strengths": "• Dựa trên bản chất vật lý quang học ống kính — đặc tính mà các mô hình AI hiện tại không mô phỏng do chi phí tính toán cao.\n• Hiệu quả cao với ảnh AI độ phân giải cao có chất lượng thị giác tốt nhưng thiếu hoàn toàn sai số quang học đặc trưng.\n• Đặc biệt hữu ích trong phát hiện ảnh cắt ghép (splicing), vì hai vùng ảnh từ nguồn khác nhau sẽ có tâm quang sai không trùng khớp.",
+    "limitations": "• Ống kính apochromatic cao cấp có khả năng triệt tiêu quang sai gần hoàn toàn, có thể gây dương tính giả (nhầm ảnh thật thành ảnh AI).\n• Hiệu quả giảm mạnh khi ảnh bị crop, vì mất tâm quang học gốc khiến thuật toán mất điểm quy chiếu.\n• Các công cụ khử viền màu tự động trong Lightroom hoặc Camera Raw có thể loại bỏ bằng chứng quang sai."
 }

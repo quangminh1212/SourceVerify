@@ -1,12 +1,12 @@
 {
-    "name": "Nhận Diện Bất Thường Giảm Lấy Mẫu Sắc Độ (Chroma Subsampling)",
-    "description": "Phát hiện các điểm lỗi cấu trúc và sự lệch pha trong dấu vết giảm lấy mẫu sắc độ do quá trình nén ảnh để lại. Ảnh gốc từ máy ảnh khi lưu sang JPEG sẽ trải qua một đợt giảm mẫu sắc độ (như 4:2:2 hay 4:2:0) đồng nhất mang tính toàn cầu để tiết kiệm dung lượng. Tuy nhiên, AI khi vẽ lại ảnh (in-painting) hoặc các thao tác cắt ghép thường sẽ phá nát sự đồng nhất này, tạo ra các lưới giảm mẫu xung đột lẫn nhau.",
-    "algorithm": "Năng Lượng Băng Tần & Căn Chỉnh Lưới Giảm Lấy Mẫu",
-    "mechanism": "Thuật toán cô lập kênh độ sáng (Y) và sắc độ (Cb, Cr) rồi ném chúng vào miền tần số. Nó phác xạ lại độ phân giải không gian của các kênh màu để bóc tách cấu trúc lưới giảm mẫu cốt lõi. Ở ảnh gốc từ camera, lưới này là đồng nhất tuyệt đối. Nhưng khi AI vẽ đè lên một vùng, khu vực đó sẽ lập tức phơi bày sự lệch pha tần số màu hoặc sai tỷ lệ lấy mẫu (ví dụ: một ốc đảo dữ liệu màu 4:4:4 bỗng chễm chệ nổi lềnh bềnh giữa một đại dương 4:2:0), ngay lập tức tố cáo hành vi giả mạo.",
-    "parameters": "Hệ màu: YCbCr, Miền phân tích: DCT/FFT, Mục tiêu: Lệch lưới 8x8/16x16, Thước đo: Tỷ lệ năng lượng",
-    "accuracy": "Khá Tốt tới Cao (75-90%) - Công cụ pháp y vô cùng lỳ lợm và chuẩn xác để định vị chính xác tọa độ bị ghép hoặc bị AI tô vẽ đè lên.",
-    "source": "Farid (2009) - Vạch Trần Ảnh Giả Mạo Từ Bóng Ma JPEG",
-    "useCase": "Chỉ điểm những lỗ hổng cấu trúc cục bộ hớ hênh do AI in-painting để lại, và làm rõ xem một vùng ảnh cụ thể có phải là con lai được ghép từ các nguồn nén gộp khác nhau hay không.",
+    "name": "Phát Hiện Bất Thường Giảm Lấy Mẫu Sắc Độ (Chroma Subsampling)",
+    "description": "Phương pháp phát hiện các điểm bất nhất trong cấu trúc giảm lấy mẫu sắc độ do quá trình nén ảnh tạo ra. Khi ảnh gốc từ máy ảnh được lưu sang định dạng JPEG, quá trình giảm lấy mẫu sắc độ (4:2:2 hoặc 4:2:0) được áp dụng đồng nhất trên toàn bộ ảnh. Tuy nhiên, các thao tác AI in-painting hoặc cắt ghép thường phá vỡ sự đồng nhất này, tạo ra các vùng có lưới giảm mẫu xung đột.",
+    "algorithm": "Phân Tích Năng Lượng Băng Tần và Căn Chỉnh Lưới Giảm Lấy Mẫu",
+    "mechanism": "Thuật toán tách kênh độ sáng (Y) và kênh sắc độ (Cb, Cr) rồi chuyển sang miền tần số. Hệ thống phân tích cấu trúc lưới giảm mẫu bằng cách đánh giá độ phân giải không gian của các kênh màu. Trong ảnh gốc từ camera, lưới giảm mẫu là đồng nhất trên toàn bộ ảnh. Khi AI tạo hoặc chỉnh sửa một vùng, khu vực đó sẽ có cấu trúc lấy mẫu khác biệt — ví dụ vùng dữ liệu 4:4:4 nằm giữa vùng nền 4:2:0 — cho thấy sự can thiệp cục bộ.",
+    "parameters": "Hệ màu: YCbCr, Miền phân tích: DCT/FFT, Mục tiêu: Lệch lưới 8x8/16x16, Chỉ số đo: Tỷ lệ năng lượng",
+    "accuracy": "Khá tốt đến cao (75-90%) — Công cụ pháp y chính xác để định vị vùng bị ghép hoặc bị AI in-painting.",
+    "source": "Farid (2009) — Phát hiện ảnh giả mạo từ dấu vết nén JPEG",
+    "useCase": "Xác định các vùng cục bộ bị AI in-painting hoặc ghép từ nguồn nén khác nhau, dựa trên sự không nhất quán của cấu trúc giảm mẫu sắc độ.",
     "references": [
         {
             "title": "Farid, H. (2009). Exposing digital forgeries from JPEG ghosts. IEEE TIFS.",
@@ -17,6 +17,6 @@
             "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
         }
     ],
-    "strengths": "• Nhắm thẳng vào vệt hằn cơ học vô hình (lưới nén) mà bọn AI sinh ảnh và cả thợ sửa ảnh người thật gần như không bao giờ biết cách làm giả cho khớp.\n• Có biệt tài định vị cực kỳ chính xác tọa độ của vùng bị can thiệp cục bộ (như khi hoán đổi một khuôn mặt do AI vẽ vào cơ thể người thật).\n• Hoạt động rất vững vàng trên các định dạng JPEG phổ thông.",
-    "limitations": "• Trở thành đống sắt vụn vô dụng nếu ảnh chưa từng bị nén (ví dụ định dạng PNG hay RAW) vì lấy đâu ra lưới giảm mẫu để mà soi.\n• Khả năng nén lại cực bạo lực của các mạng xã hội sẽ ủi phẳng và cào nhẵn mọi dị thường cục bộ, vĩnh viễn phi tang chứng cứ.\n• Hoàn toàn vô hiệu đối với ảnh trắng đen vì làm gì có kênh sắc độ."
+    "strengths": "• Nhắm vào dấu vết cơ học ẩn (lưới nén) mà cả AI tạo sinh và người chỉnh sửa thường không biết cách tái tạo chính xác.\n• Có khả năng định vị chính xác tọa độ vùng bị can thiệp cục bộ (ví dụ: khuôn mặt AI ghép vào ảnh người thật).\n• Hoạt động ổn định trên các định dạng JPEG phổ thông.",
+    "limitations": "• Không áp dụng được nếu ảnh chưa qua nén (định dạng PNG hoặc RAW) vì không tồn tại lưới giảm mẫu.\n• Quá trình nén lại mạnh của mạng xã hội có thể xóa sạch các dấu vết bất thường cục bộ.\n• Không hiệu quả với ảnh đơn sắc hoặc trắng đen do thiếu kênh sắc độ."
 }
