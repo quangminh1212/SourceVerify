@@ -1,18 +1,18 @@
 {
-    "name": "Bàn Cân Dốc Ánh Sáng (Gradient Space)",
-    "description": "Thước đo sự suy giảm và bùng nổ của quang học lượng tử. Ánh sáng trong ảnh (dù tối hay chói lóa) không bao giờ lan tỏa theo 1 cách giật cục nếu tính theo phương diện Gradient (sự dốc đứng của chênh lệch màu). AI thì lại cực dở trong khoản làm mượt bước sóng sáng tối này: Chúng thường tạo ra những gờ dốc khựng lại đột ngột ở giữa má người hay một cái mũi chông chênh sáp nhựa dẻo dẻo. Súng bắn tỉa này chuyên rà soát các đường Gradient đứt gãy để chém vỡ ảnh fake.",
-    "algorithm": "Đo Lường Biên Độ Đứt Gãy Dốc Không Gian Ảnh (Spatial Gradient Continuity)",
-    "mechanism": "Nó đo lường tốc độ thay đổi của màu sắc. Từ màu trắng của tường sang màu đen của áo, đạo hàm ánh sáng vọt lên cao (Gradient cực đại). Cái bẫy ở đây là: mép ảnh dán ghép thì Gradient luôn sắt như lưỡi dao cạo. Ngược lại, những vùng ở giữa do AI Gen ra thì lại phẳng lì, không có tí sóng âm Gradient lăn tăn nào của hạt Noise vật lý. Cân bằng này nếu bị nát bét (nhọn hoắt ở viền, lì lợm ở lòng) thì sẽ kích hoạt ngay án tử cho máy chém.",
-    "parameters": "Công thức: Đạo Hàm Bậc 1 Không Gian (First-order derivative), Bộ Đếm: Gradient Magnitude Filter",
-    "accuracy": "Cực Xoáy (70-79%) - Đóng vai trò lựu đạn nổ chậm, moi ruột đám tay mơ ghép ảnh cẩu thả không thèm tạo Blur quang học ở chân khung hình.",
-    "source": "Lưu Trữ Chênh Lệch Dốc Sáng Sinh Học Điểm Ảnh Số",
-    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí dùng công cụ làm mượt (Eraser) tẩy lẹm mẹ nó vào vật thể. Tại ngay chỗ tẩy đó, Gradient vỡ nát tanh bành khỏi phải chối.",
+    "name": "Phân Tích Không Gian Gradient (Gradient Space)",
+    "description": "Phương pháp đo lường tính liên tục của gradient cường độ sáng trong ảnh. Trong ảnh quang học tự nhiên, sự chuyển tiếp cường độ sáng (gradient) biến thiên mượt mà theo quy luật vật lý. AI thường tạo ra các vùng có gradient đứt gãy bất thường — gờ dốc đột ngột ở giữa bề mặt hoặc vùng phẳng lì thiếu vi nhiễu quang học. Phương pháp này phát hiện sự bất nhất quán gradient để xác định vùng bị chỉnh sửa hoặc tổng hợp.",
+    "algorithm": "Đo Lường Tính Liên Tục Gradient Không Gian (Spatial Gradient Continuity)",
+    "mechanism": "Thuật toán tính đạo hàm bậc nhất không gian (first-order spatial derivative) để đo tốc độ thay đổi cường độ sáng giữa các pixel liền kề. Tại ranh giới các vật thể tự nhiên, gradient có biên độ phù hợp với đặc tính quang học (nhiễu xạ, chiều sâu trường ảnh). Ngược lại, cạnh viền của vùng ghép chèn thường có gradient sắc nét bất thường, trong khi vùng bên trong do AI tạo ra lại thiếu vi nhiễu gradient tự nhiên. Sự mất cân bằng giữa gradient cạnh viền và gradient nội vùng là chỉ báo của thao tác chỉnh sửa.",
+    "parameters": "Đạo hàm: Bậc 1 không gian (First-order derivative), Bộ lọc: Gradient Magnitude Filter",
+    "accuracy": "Trung bình đến cao (70–79%) — Hiệu quả trong phát hiện các thao tác ghép chèn thiếu xử lý chuyển tiếp quang học (feathering/blending) tại vùng biên.",
+    "source": "Barni, M., et al. (2010). Forensic Analysis of Digital Images: Spatial Contrast and Inconsistency.",
+    "useCase": "Phát hiện các vùng chỉnh sửa cục bộ, đặc biệt nơi công cụ xóa (Eraser) hoặc làm mượt (Blur) đã được sử dụng — tại các vùng này, gradient bị đứt gãy rõ rệt so với vùng liền kề.",
     "references": [
         {
             "title": "Barni, M., et al. (2010). Forensic analysis of digital images: Spatial contrast and inconsistency.",
             "url": ""
         }
     ],
-    "strengths": "• Tuyệt đỉnh không khoan nhượng: Siêu tốc độ, cực kỳ mượt mà khi xử lý. Ngốn cực ít RAM nhưng moi ra được mảng kết dị hợm đứt bóng.\n• Có thể vạch mặt những tấm ảnh lấy nét sai bét nhè. Nền phía sau phải mờ thì lại nét hơn vật thể đứng gần.",
-    "limitations": "• Chó săn sẽ húc đầu vào tường (False Positive nặng nề) khi bức ảnh nén quá mạnh (JPEG Quality 10). Mọi gợn sóng Gradient biến thành những cục lego nhảm nhí vì thuật toán nén đã tàn sát hết.\n• Cực kì hay rú chuông nhầm khi gặp ảnh dán màng lọc làm nét vội (Sharpen Filters)."
+    "strengths": "• Tốc độ xử lý nhanh, tiêu thụ ít bộ nhớ, phù hợp cho phân tích diện rộng.\n• Có khả năng phát hiện sự mâu thuẫn về chiều sâu lấy nét: nền phía sau nét hơn vật thể phía trước — dấu hiệu của ghép chèn.",
+    "limitations": "• Tỷ lệ dương tính giả cao khi ảnh bị nén JPEG ở mức chất lượng rất thấp (Quality ≤ 10), vì nhiễu nén phá vỡ tính liên tục gradient tự nhiên.\n• Dễ nhầm lẫn khi gặp ảnh áp dụng bộ lọc làm nét (Sharpen Filters) nhân tạo."
 }

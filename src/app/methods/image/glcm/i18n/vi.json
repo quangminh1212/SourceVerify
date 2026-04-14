@@ -1,18 +1,18 @@
 {
-    "name": "Bảng Chỉ Mục Đồng Xuất (GLCM Texture Matrix)",
-    "description": "Cỗ máy đếm dơi nhịp đôi. Giữa một vạn pixel, nếu 2 pixel hàng xóm cách nhau 1 pixel cùng màu sáng, chúng sẽ được cộng vô một cuốn sổ. Tự nhiên thì cái việc 'A đứng cạnh B' nó diễn ra theo một luật thống kê mượt mà (bầu trời mây khấp khểnh xịn, da mặt nhám thật). Bọn AI hoặc Photoshop tô cọ làm mượt thì hay khiến cuốn sổ này nảy số cực dị... Mượt như cái đĩa bay, hoàn toàn vắng bóng mấy cặp số lẻ tẻ gai cạnh.",
-    "algorithm": "Đo Độ Lệch Grey-Level Co-occurrence Matrix (Thuật Toán GLCM)",
-    "mechanism": "Trải tấm ảnh ra chiếu. Khảo sát một cặp 2 điểm ảnh cách nhau góc D và Distance r. GLCM lập hàng chục cuốn sổ chứa độ Tương Phản (Contrast), Năng lượng (Energy), Độ Đồng Nhất (Homogeneity) của cặp đó. AI dốt kết cấu vi mô, vẽ cái áo nhưng sợi lông áo luôn mượt láng hoặc lặp lại rập khuôn (Texture Clone), làm cho độ Đồng Nhất tăng đột biến, Khác Biệt rớt thẳng xuống đáy. Radar bắt ngay cái mùi đồ nhựa (Plastic look) nồng nặc đó.",
-    "parameters": "Không Gian Chứa: Ma trận GLCM Cấp xám, Vector Đo: Năng lượng, Tương phản, Entropy, Đồng nhất",
-    "accuracy": "Tinh Nhuệ (78-86%) - Sát thủ thầm lặng nuốt trọn mấy tay mơ dùng trò Copy-Move dán lá cây lặp đi lặp lại hay xóa nốt ruồi trên da.",
-    "source": "Haralick et al. (1973) - Textural Features for Image Classification",
-    "useCase": "Giáng đòn phá án trực diện vào các bản ghép nhảm nhí nơi con dao của phần mềm làm đẹp (Retouching) cắt ngọt vào da thịt... dẹp sạch lỗ chân lông, làm ma trận GLCM cứng đơ vô vị.",
+    "name": "Ma Trận Đồng Xuất Hiện Mức Xám (GLCM Texture Matrix)",
+    "description": "Phương pháp phân tích kết cấu ảnh dựa trên ma trận đồng xuất hiện mức xám (Grey-Level Co-occurrence Matrix — GLCM). GLCM thống kê tần suất các cặp pixel có cường độ sáng nhất định xuất hiện ở khoảng cách và hướng cụ thể. Trong ảnh tự nhiên, phân bố đồng xuất hiện tuân theo quy luật thống kê mượt mà. Ảnh AI hoặc ảnh được làm mượt (retouching) thường phá vỡ phân bố này — tạo ra kết cấu đồng nhất bất thường, thiếu sự đa dạng vi mô của bề mặt tự nhiên.",
+    "algorithm": "Phân Tích Độ Lệch Ma Trận GLCM (Grey-Level Co-occurrence Matrix)",
+    "mechanism": "Thuật toán xây dựng ma trận GLCM bằng cách khảo sát các cặp pixel ở khoảng cách D và hướng góc xác định. Từ ma trận này, các đặc trưng thống kê được trích xuất: Tương phản (Contrast), Năng lượng (Energy), Đồng nhất (Homogeneity), Entropy. Ảnh AI thường có kết cấu vi mô lặp lại hoặc quá mượt, dẫn đến Đồng nhất tăng đột biến và Tương phản giảm bất thường — đặc trưng của bề mặt tổng hợp nhân tạo.",
+    "parameters": "Ma trận: GLCM mức xám, Đặc trưng: Năng lượng, Tương phản, Entropy, Đồng nhất",
+    "accuracy": "Cao (78–86%) — Hiệu quả trong phát hiện các thao tác Copy-Move lặp lại họa tiết hoặc retouching làm mượt bề mặt da.",
+    "source": "Haralick, R.M., et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
+    "useCase": "Phát hiện các thao tác retouching làm mượt bề mặt (xóa lỗ chân lông, làm mịn da) hoặc Copy-Move lặp lại họa tiết — các thao tác này làm biến dạng đáng kể ma trận GLCM so với kết cấu tự nhiên.",
     "references": [
         {
             "title": "Haralick, R. M., et al. (1973). Textural features for image classification. IEEE TSMC.",
             "url": "https://ieeexplore.ieee.org/document/4309314"
         }
     ],
-    "strengths": "• Bất khả chiến bại với mọi trò đổi màu hay tẩy tông của hacker vì ma trận soi mụn nhọt dưới cấp độ điểm 'Tối-Sáng' liên kết cặp, vô nhiễm với việc chỉnh hệ màu.\n• Giết lầm còn hơn bỏ sót mấy tên ăn cắp họa tiết hoa văn quấn quanh quần áo AI... AI vẽ rập khuôn, GLCM rú báo động Fake luôn.",
-    "limitations": "• Nhát kiếm đành gãy mũi nếu bức ảnh tự nhiên bẩm sinh là một tấm lụa satin đỏ bóng loáng. Sự chênh lệch cặp là thấp, radar sẽ báo động mù quáng.\n• Phế võ công và trở thành đống sắt vụn cực kỳ chậm chạp mất thời gian, nếu tính đa khoảng cách và góc quay trên tấm hình khổng lồ 4K."
+    "strengths": "• Bất biến với các thay đổi hệ màu và điều chỉnh tông màu, vì GLCM phân tích ở cấp độ cặp pixel mức xám.\n• Phát hiện hiệu quả các họa tiết lặp lại rập khuôn do AI tạo ra — đặc trưng không xuất hiện trong kết cấu tự nhiên.",
+    "limitations": "• Dễ tạo dương tính giả đối với ảnh có bề mặt đồng nhất tự nhiên (vải satin, kim loại bóng), vì phương sai cặp pixel thấp tương tự ảnh AI.\n• Tốc độ xử lý giảm đáng kể khi tính toán đa khoảng cách và đa hướng trên ảnh độ phân giải cao (4K trở lên)."
 }

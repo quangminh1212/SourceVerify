@@ -1,18 +1,18 @@
 {
-    "name": "Radar Nhiễu Loạn Tổng Thể (Local Entropy)",
-    "description": "Máy đo lực hấp dẫn thông tin. Bức ảnh quang học luôn mang trong mình một khối lượng thông tin (Entropy) thay đổi hữu cơ mượt mà: Bãi cỏ thì hỗn loạn, bầu trời thì tĩnh lặng. Ngược lại, bọn AI tạo sinh (như Midjourney) hoặc dán ghép Photoshop thường cày nát sự cân bằng này. Chúng để lại những bãi rác điểm ảnh lộn xộn, hay ngược lại - những hố đen phẳng lì ngột ngạt vì bị làm mượt quá mức. Cỗ máy này đo lường sự ngộp thở đó.",
-    "algorithm": "Phân Tích Bất Thường Dòng Chảy Nhiễu Loạn (Shannon Entropy Variance)",
-    "mechanism": "Quét một cửa sổ kính lúp qua từng millimet vuông, tính toán xem lượng thông tin chứa trong đó có đi sát với luồng vật lý học không. Cắt một khuôn mặt AI chèn vào hình thật? Radar sẽ lập tức tru tréo khi vùng mặt có lượng Entropy nhạt tuếch chết chóc, trong khi viền tóc và background liền kề lại bùng nổ dữ liệu hỗn loạn. Sự chênh lệch Entropy đứt gãy giữa 2 vùng sát nhau chính là án tử.",
-    "parameters": "Phương trình Shannon, Cửa sổ Window: 9x9/15x15 pixel, Thước đo Histogram cục bộ",
-    "accuracy": "Tốt (75-84%) - Rất bạo chúa trong việc truy tìm các cục sạn (nhờn nhợt hoặc rác rưởi) do AI GANs hắt xì ra trong quá trình sinh ảnh.",
-    "source": "Lưu Trữ Nhiệt Động Lực Học Điểm Ảnh Số & Lưới Pháp Y",
-    "useCase": "Giáng đòn đánh giá tổng lực vào những vùng ảnh trơn láng một cách đáng nghi ngờ, chứng minh chúng hoàn toàn là nhựa tổng hợp thay vì vật chất tự nhiên.",
+    "name": "Phân Tích Entropy Cục Bộ (Local Entropy)",
+    "description": "Phương pháp đo lường mức độ thông tin (entropy) cục bộ trên toàn bộ bề mặt ảnh. Ảnh chụp quang học tự nhiên có phân bố entropy biến thiên mượt mà và hữu cơ: các vùng có kết cấu phức tạp (cỏ, lá cây) có entropy cao, trong khi các vùng đồng nhất (bầu trời, tường) có entropy thấp. Ảnh do AI tạo sinh hoặc ảnh bị ghép chèn thường phá vỡ sự cân bằng này — tạo ra các vùng phẳng lì bất thường (do làm mượt quá mức) hoặc các vùng nhiễu bất thường.",
+    "algorithm": "Phân Tích Bất Thường Phương Sai Entropy Shannon (Shannon Entropy Variance)",
+    "mechanism": "Thuật toán sử dụng cửa sổ trượt (sliding window) quét qua từng vùng ảnh, tính toán entropy Shannon cục bộ dựa trên biểu đồ histogram của vùng đó. Khi một vùng ảnh được chèn từ nguồn khác (ví dụ: khuôn mặt AI), vùng đó thường có entropy thấp bất thường so với vùng liền kề có kết cấu phong phú. Sự chênh lệch entropy đột ngột giữa hai vùng liền kề là chỉ báo quan trọng của thao tác chỉnh sửa.",
+    "parameters": "Phương trình Shannon, Kích thước cửa sổ: 9×9 đến 15×15 pixel, Phân tích histogram cục bộ",
+    "accuracy": "Tốt (75–84%) — Hiệu quả trong phát hiện các vùng ảnh có kết cấu bất thường do AI tạo ra hoặc do thao tác làm mượt cục bộ.",
+    "source": "Fridrich, J., et al. (2001). Detection of Copy-Move Forgery in Digital Images. DFRWS.",
+    "useCase": "Đánh giá tính tự nhiên của kết cấu bề mặt ảnh, phát hiện các vùng trơn láng hoặc nhiễu bất thường — dấu hiệu của nội dung do AI tổng hợp hoặc chỉnh sửa cục bộ.",
     "references": [
         {
             "title": "Fridrich, J., et al. (2001). Detection of copy-move forgery in digital images. DFRWS.",
             "url": "http://www.ws.binghamton.edu/fridrich/Research/copymove.pdf"
         }
     ],
-    "strengths": "• Không quan tâm ảnh bị đảo ngược hay xoay ngang ngửa. Dòng chảy Entropy không phụ thuộc góc độ, nên hacker không thể xài trò xoay ảnh trốn tội.\n• Siêu tốc độ và trừng phạt lỗi cấu trúc diện rộng của bọn AI một cách chính xác tàn bạo.",
-    "limitations": "• Hoàn toàn vô hiệu hóa nếu đối mặt với một bức tường trắng toát hay bầu trời đêm đen đặc nguyên bản chụp từ máy xịn, nơi mức Entropy cực thấp bẩm sinh dễ gây án oan.\n• Gây loạn nếu bức hình bị ném qua nhiễu hạt khổng lồ (Heavy Grain) làm chỉ số Entropy của toàn bộ ảnh căng cực đỉnh 1 cách nhân tạo."
+    "strengths": "• Bất biến với phép xoay và lật ảnh: phân bố entropy không phụ thuộc vào hướng của ảnh, nên các thao tác biến đổi hình học không ảnh hưởng đến kết quả.\n• Tốc độ xử lý nhanh, phát hiện hiệu quả các lỗi cấu trúc diện rộng đặc trưng của ảnh AI.",
+    "limitations": "• Dễ tạo dương tính giả đối với ảnh gốc có các vùng đồng nhất tự nhiên (tường trắng, bầu trời đêm), vì entropy cực thấp bẩm sinh của các vùng này giống với đặc trưng của ảnh AI.\n• Hiệu quả giảm khi ảnh có nhiễu hạt (grain) cường độ cao, làm tăng entropy toàn cục lên mức đồng nhất và che lấp các bất thường cục bộ."
 }
