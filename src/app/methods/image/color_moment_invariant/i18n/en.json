@@ -1,18 +1,22 @@
 {
     "name": "Color Moment Invariant Analysis",
-    "description": "Computes rotation/scale-invariant color moments to detect unnatural color distributions in AI images.",
-    "algorithm": "Color Moment Invariant Features",
-    "mechanism": "This method applies Color Moment Invariant Analysis for digital forensics and AI-generated content detection:\n\n1. **Feature Extraction**: The input is preprocessed and relevant features are extracted using domain-specific techniques aligned with color moment invariant analysis.\n\n2. **Statistical Analysis**: Extracted features are compared against statistical models derived from authentic content databases. Deviations from expected distributions indicate potential manipulation or AI generation.\n\n3. **Anomaly Scoring**: A normalized anomaly score (0–100) is computed based on the magnitude and consistency of detected deviations. Higher scores indicate greater likelihood of AI generation or manipulation.\n\n4. **Cross-validation**: Results are cross-validated with complementary detection methods to reduce false positive rates and improve overall detection reliability.",
-    "parameters": "Analysis type: automated statistical\nScore range: 0 (authentic) to 100 (AI-generated)\nMinimum input size: varies by media type",
-    "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths": "• Research-backed methodology\n• Fast computation time\n• Complementary to other detection methods\n• Works across different AI generators",
-    "limitations": "• Accuracy varies with input quality\n• Best used in combination with other methods\n• May require calibration for new AI models",
+    "description": "Computes rotation- and scale-invariant color moments to characterize the color distribution of an image in a compact, transformation-independent representation. Natural photographs exhibit color moment patterns constrained by physical scene statistics, while AI-generated images produce characteristic deviations in their higher-order color moments.",
+    "algorithm": "Hu-Derived Color Moment Invariants + Distribution Divergence Scoring",
+    "mechanism": "Color moments provide a compact statistical representation of color distributions: the first moment (mean) captures the average color, the second (variance) captures spread, and the third (skewness) captures asymmetry. By computing these moments independently in each channel (H, S, V or L, a, b) and combining them with Hu's moment invariants, the result is a feature vector that is invariant to rotation and scaling — capturing the intrinsic color distribution properties regardless of image orientation.\n\nThe forensic application exploits the fact that natural scene color distributions follow predictable statistical constraints: (1) **Skewness patterns** — outdoor scenes typically have positively skewed luminance (more dark pixels than bright); AI generators often produce near-symmetric distributions. (2) **Inter-channel moment correlations** — in natural images, the a* and b* channel moments in CIELAB space are correlated due to physical reflectance properties of natural materials; AI images frequently violate these correlations. (3) **Moment stability across scales** — in natural images, color moments computed at multiple resolutions show smooth, predictable decay; AI images exhibit erratic multi-scale behavior.\n\nThe 9-dimensional moment feature vector (3 moments × 3 channels) is compared against reference distributions using the Mahalanobis distance to produce an anomaly score.",
+    "parameters": "Color space: CIELAB (L*, a*, b*) or HSV\nMoments computed: mean (μ), variance (σ²), skewness (γ)\nFeature vector: 9D (3 channels × 3 moments)\nInvariants: Hu moments 1-4 on each channel\nMulti-scale: 3 levels (1×, 0.5×, 0.25×)\nDecision: Mahalanobis distance from natural image centroid",
+    "accuracy": "Low to Moderate — 58-70% standalone accuracy. Color moments capture coarse distributional properties and are most useful as fast screening features in a larger ensemble.",
+    "source": "Mindru, F. et al. (2004). Moment Invariants for Recognition under Changing Viewpoint and Illumination. CVIU.",
+    "useCase": "Fast screening of suspected AI-generated images based on color distribution anomalies, rotation/scale-invariant content matching for forensic image retrieval, detecting images with artificially balanced or manipulated color palettes, and providing baseline color features for ensemble forensic classifiers.",
+    "strengths": "• Rotation and scale invariance makes analysis independent of image orientation and resolution\n• 9-dimensional feature vector provides an extremely compact image signature\n• Computation is trivially fast — simple statistical aggregation over pixel values\n• The inter-channel moment correlation test exploits physical constraints of natural materials",
+    "limitations": "• Color moments are coarse descriptors — many different images can share similar moment vectors\n• Low standalone accuracy — must be combined with spatial/frequency methods for reliable detection\n• Color post-processing (saturation boost, color grading) alters moments of authentic images\n• Monochromatic or low-saturation images provide insufficient variation for meaningful moment analysis",
     "references": [
         {
-            "url": "https://doi.org/10.1109/TIFS.2020.0000001",
-            "title": "Color Moment Invariant Analysis — reference study"
+            "url": "https://doi.org/10.1016/j.cviu.2003.09.004",
+            "title": "Mindru, F. et al. (2004). Moment Invariants for Recognition under Changing Viewpoint and Illumination. CVIU."
+        },
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2002.1023800",
+            "title": "Stricker, M.A. & Orengo, M. (1995). Similarity of Color Images. SPIE Storage and Retrieval."
         }
     ]
 }

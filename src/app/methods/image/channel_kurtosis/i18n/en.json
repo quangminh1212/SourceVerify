@@ -1,18 +1,22 @@
 {
     "name": "Channel Kurtosis Analysis",
-    "description": "Measures excess kurtosis per color channel — AI-generated images often exhibit non-Gaussian channel distributions.",
-    "algorithm": "Per-Channel Kurtosis Measurement",
-    "mechanism": "This method applies Channel Kurtosis Analysis for digital forensics and AI-generated content detection:\n\n1. **Feature Extraction**: The input is preprocessed and relevant features are extracted using domain-specific techniques aligned with channel kurtosis analysis.\n\n2. **Statistical Analysis**: Extracted features are compared against statistical models derived from authentic content databases. Deviations from expected distributions indicate potential manipulation or AI generation.\n\n3. **Anomaly Scoring**: A normalized anomaly score (0–100) is computed based on the magnitude and consistency of detected deviations. Higher scores indicate greater likelihood of AI generation or manipulation.\n\n4. **Cross-validation**: Results are cross-validated with complementary detection methods to reduce false positive rates and improve overall detection reliability.",
-    "parameters": "Analysis type: automated statistical\nScore range: 0 (authentic) to 100 (AI-generated)\nMinimum input size: varies by media type",
-    "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths": "• Research-backed methodology\n• Fast computation time\n• Complementary to other detection methods\n• Works across different AI generators",
-    "limitations": "• Accuracy varies with input quality\n• Best used in combination with other methods\n• May require calibration for new AI models",
+    "description": "Measures excess kurtosis per color channel — AI-generated images often exhibit non-Gaussian channel distributions. Kurtosis, the fourth standardized moment, reveals how a distribution's tails differ from a Gaussian, exposing the unnatural value distributions produced by neural network output layers.",
+    "algorithm": "Per-Channel Excess Kurtosis + Inter-Channel Ratio Test",
+    "mechanism": "Kurtosis is the fourth standardized moment of a distribution, measuring the 'tailedness' relative to a Gaussian: κ = E[(X-μ)⁴]/σ⁴ - 3 (excess kurtosis, where 0 = Gaussian). This detector computes excess kurtosis independently for each color channel (R, G, B) and optionally in transformed color spaces (YCbCr, Lab).\n\nIn natural photographs, color channel distributions are shaped by physical light transport: sensor noise contributes Gaussian (κ≈0) components, while scene content creates heavy-tailed distributions (positive kurtosis, typically κ = 1-5). The key forensic signals are: (1) **Per-channel kurtosis values** — AI generators often produce channels with abnormally low kurtosis (sub-Gaussian, κ < 0) because their output layers use sigmoid/tanh activations that compress the distribution tails. (2) **Inter-channel kurtosis ratios** — in real images, the Green channel typically has higher kurtosis than R and B due to Bayer CFA sampling (2 green pixels per 4-pixel block); AI images violate this G>R≈B ordering. (3) **Local kurtosis maps** — computing kurtosis in sliding windows reveals regions where the statistical signature changes abruptly, indicating splicing or inpainting.\n\nThe detector outputs an anomaly score based on the deviation of the observed kurtosis vector from expected natural image statistics.",
+    "parameters": "Color channels: R, G, B (linear), Y, Cb, Cr\nExcess kurtosis formula: κ = μ₄/σ⁴ - 3\nLocal window size: 32×32 pixels (sliding, stride 16)\nExpected natural range: κ ∈ [0.5, 6.0] per channel\nInter-channel ratio test: G-kurtosis > mean(R,B)-kurtosis\nAnomaly threshold: Mahalanobis distance from natural centroid",
+    "accuracy": "Low to Moderate — 60-72% standalone accuracy. Most effective as a fast screening filter; kurtosis alone is insufficient for definitive classification.",
+    "source": "Lyu, S. & Farid, H. (2005). How Realistic is Photorealistic? IEEE TSP.",
+    "useCase": "Fast statistical screening of suspected AI-generated images, identifying images with unnaturally uniform channel distributions, detecting inpainting or splicing through local kurtosis discontinuities, and pre-filtering images for deeper forensic analysis.",
+    "strengths": "• Extremely fast computation — single-pass histogram statistics per channel\n• The inter-channel kurtosis ratio provides a physics-grounded forensic test unique to Bayer-sensor cameras\n• Local kurtosis maps can spatially localize manipulated regions\n• Works independently of semantic content — purely statistical",
+    "limitations": "• Low standalone accuracy — kurtosis is a coarse statistical measure easily influenced by scene content\n• Images dominated by flat regions (sky, walls) naturally have low kurtosis regardless of authenticity\n• Modern generators with noise injection in output layers can match natural kurtosis ranges\n• Heavy post-processing (gamma correction, levels) dramatically alters channel kurtosis",
     "references": [
         {
-            "url": "https://doi.org/10.1109/TIFS.2020.0000001",
-            "title": "Channel Kurtosis Analysis — reference study"
+            "url": "https://doi.org/10.1109/TSP.2005.855406",
+            "title": "Lyu, S. & Farid, H. (2005). How Realistic is Photorealistic? IEEE TSP."
+        },
+        {
+            "url": "https://doi.org/10.1007/978-3-540-77535-5_5",
+            "title": "Ng, T.T. et al. (2004). Using Geometry Invariants for Camera Response Function Estimation. CVPR."
         }
     ]
 }

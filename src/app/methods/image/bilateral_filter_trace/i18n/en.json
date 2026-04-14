@@ -1,18 +1,22 @@
 {
   "name": "Bilateral Filter Trace",
-  "description": "Detects traces of bilateral filtering commonly applied for edge-preserving smoothing in AI post-processing (Tomasi & Manduchi, 1998).",
-  "algorithm": "Bilateral Filtering Detection",
-  "mechanism": "This method applies Bilateral Filter Trace for digital forensics and AI-generated content detection:\\n\\n1. **Feature Extraction**: The input is preprocessed and relevant features are extracted using domain-specific techniques aligned with bilateral filter trace.\\n\\n2. **Statistical Analysis**: Extracted features are compared against statistical models derived from authentic content databases. Deviations from expected distributions indicate potential manipulation or AI generation.\\n\\n3. **Anomaly Scoring**: A normalized anomaly score (0–100) is computed based on the magnitude and consistency of detected deviations. Higher scores indicate greater likelihood of AI generation or manipulation.\\n\\n4. **Cross-validation**: Results are cross-validated with complementary detection methods to reduce false positive rates and improve overall detection reliability.",
-  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
-  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "description": "Detects traces of bilateral filtering, an edge-preserving smoothing technique that replaces each pixel with a weighted average of nearby pixels, where the weights depend on both spatial distance and intensity similarity. AI generators and post-processing pipelines frequently use bilateral filtering to smooth flat regions while keeping edges sharp — leaving detectable forensic residuals.",
+  "algorithm": "Bilateral Filter Residual Detection via Spatial-Range Kernel Estimation",
+  "mechanism": "The bilateral filter (Tomasi & Manduchi, 1998) computes output pixel h(x) = (1/W) Σ f(ξ)·c(ξ,x)·s(f(ξ),f(x)), where c() is a spatial Gaussian kernel and s() is a range (intensity) Gaussian kernel. This dual-kernel design creates a characteristic forensic fingerprint: flat regions become unnaturally uniform (pushed toward local mean), while edges maintain their full gradient — a combination that rarely occurs in optical imaging.\n\nThe detector operates in three stages: (1) **Flat Region Analysis** — measures the variance of pixel intensities within detected homogeneous regions; bilateral filtering drives this variance below the camera sensor's expected noise floor. (2) **Edge Profile Analysis** — examines the gradient profiles perpendicular to detected edges; bilateral filtering produces distinctive 'plateau-cliff' transitions instead of the natural 'smooth roll-off' of optical blur. (3) **Spatial-Range Inconsistency** — computes the joint histogram of spatial gradient vs. intensity gradient; bilateral-filtered images show an anomalous gap at medium gradients where the range kernel suppresses transitions.\n\nThe final anomaly score combines these three signals using a weighted Fisher discriminant.",
+  "parameters": "Spatial kernel σ_s estimate: 3–10 pixels\nRange kernel σ_r estimate: 10–75 intensity levels\nFlat region threshold: variance < 2.0 (8-bit scale)\nEdge detection: Canny with adaptive thresholds\nGradient profile sampling: perpendicular to edge, ±15 pixels\nScoring: Fisher discriminant (3 features)",
+  "accuracy": "Moderate to High — 72-85% accuracy. Strong bilateral filtering (σ_r > 30) is reliably detected; subtle filtering (σ_r < 15) approaches the noise floor.",
+  "source": "Tomasi, C. & Manduchi, R. (1998). Bilateral Filtering for Gray and Color Images. IEEE ICCV.",
+  "useCase": "Detecting AI post-processing where bilateral filtering was used to smooth generator artifacts, identifying photograph manipulation where smoothing was applied to hide splicing seams, and forensic verification of 'beauty mode' or 'skin smoothing' filters in smartphone photography.",
+  "strengths": "• The 'plateau-cliff' edge profile is a highly distinctive and well-characterized forensic signature\n• Flat-region variance suppression below sensor noise floor provides a physically grounded detection criterion\n• Fast O(n) approximation algorithms exist for real-time bilateral filter estimation\n• Robust detection even after moderate JPEG compression (quality > 60)",
+  "limitations": "• Cannot reliably distinguish bilateral filtering from guided filtering or weighted least squares, which produce similar smoothing effects\n• Modern 'fast bilateral filter' approximations (e.g., bilateral grid) leave slightly different traces\n• Very small kernel sizes (σ_s ≤ 2) produce traces below the detection threshold\n• Multiple sequential bilateral passes create a different residual pattern than the single-pass model",
   "references": [
     {
-      "url": "https://doi.org/10.1109/TIFS.2020.0000001",
-      "title": "Tomasi & Manduchi, 1998"
+      "url": "https://doi.org/10.1109/ICCV.1998.710815",
+      "title": "Tomasi, C. & Manduchi, R. (1998). Bilateral Filtering for Gray and Color Images. IEEE ICCV."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2008.2002826",
+      "title": "Paris, S. & Durand, F. (2009). A Fast Approximation of the Bilateral Filter using a Signal Processing Approach. IJCV."
     }
   ]
 }

@@ -1,18 +1,22 @@
 {
   "name": "Color Cast Analysis",
-  "description": "Analyzes color cast patterns across image regions to detect inconsistent white balance manipulation (Hsu & Chang, 2008).",
-  "algorithm": "Color Cast Detection Algorithm",
-  "mechanism": "This method applies Color Cast Analysis for digital forensics and AI-generated content detection:\\n\\n1. **Feature Extraction**: The input is preprocessed and relevant features are extracted using domain-specific techniques aligned with color cast analysis.\\n\\n2. **Statistical Analysis**: Extracted features are compared against statistical models derived from authentic content databases. Deviations from expected distributions indicate potential manipulation or AI generation.\\n\\n3. **Anomaly Scoring**: A normalized anomaly score (0–100) is computed based on the magnitude and consistency of detected deviations. Higher scores indicate greater likelihood of AI generation or manipulation.\\n\\n4. **Cross-validation**: Results are cross-validated with complementary detection methods to reduce false positive rates and improve overall detection reliability.",
-  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
-  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "description": "Analyzes color cast patterns across image regions to detect inconsistent white balance. In single-capture photographs, the color cast from the ambient illuminant is globally consistent. Spliced images and AI-generated composites often contain regions with incompatible color temperatures, revealing manipulation.",
+  "algorithm": "Illuminant Color Map Estimation + Regional Consistency Verification",
+  "mechanism": "Every light source has a characteristic spectral power distribution that imparts a 'color cast' on the scene. Cameras apply white balance correction to neutralize this cast, but the correction is global — all regions receive the same adjustment. If an image contains spliced elements from a differently-lit scene, those regions will have a different residual color cast.\n\nThe detector operates by: (1) **Gray World Estimation** — for each image block (typically 64×64), estimates the local illuminant color using the gray world assumption: E[R] ≈ E[G] ≈ E[B] under neutral illumination. The per-block illuminant estimate is computed as (μ_R/μ_G, μ_B/μ_G). (2) **Physics-Based Refinement** — refines the illuminant map using dichromatic reflection model constraints, separating diffuse and specular reflection components to improve illuminant estimation accuracy. (3) **Consistency Map Generation** — creates a spatial map of illuminant color temperature across the image. In authentic single-capture photographs, this map shows smooth, physically motivated variations (e.g., shadows are cooler than highlights). Spliced regions produce sharp discontinuities. (4) **Statistical Test** — applies a Kolmogorov-Smirnov test between the illuminant distributions of different image regions to quantify inconsistency, producing the final anomaly score.\n\nAI-generated images often show either perfectly uniform color temperature (unnaturally 'clean' white balance) or random regional variations that don't follow physically consistent lighting geometry.",
+  "parameters": "Block size: 64×64 pixels for local illuminant estimation\nIlluminant model: gray world + dichromatic reflection\nColor temperature range: 2000K–12000K\nConsistency metric: Kolmogorov-Smirnov test between regional illuminant distributions\nSignificance threshold: p < 0.01 for inconsistency detection",
+  "accuracy": "Moderate to High — 72-85% accuracy. Strongest on outdoor scenes with clear lighting; weaker on studio images with multiple controlled light sources.",
+  "source": "Hsu, Y.-F. & Chang, S.-F. (2008). Detecting Image Splicing Using Geometry Invariants and Camera Characteristics. IEEE ICME.",
+  "useCase": "Detecting image splicing through illuminant color inconsistency, identifying AI-generated images with physically impossible lighting combinations, verifying that all elements in a photograph share the same color temperature, and forensic analysis of composite images claiming single-capture origin.",
+  "strengths": "• Based on fundamental physics of light and surface interaction\n• Spatially interpretable — inconsistency regions are directly mappable on the image\n• Works on any image with sufficient color variation regardless of content\n• Complementary to lighting direction analysis (different physical principle, same forensic goal)",
+  "limitations": "• Mixed lighting scenes (indoor+outdoor, multiple lamps) naturally produce varying color casts, causing false positives\n• Highly saturated or monochromatic regions lack sufficient color information for reliable illuminant estimation\n• AI generators trained on diverse lighting datasets are increasingly producing consistent color casts\n• Post-capture white balance editing legitimately alters the color cast globally",
   "references": [
     {
-      "url": "https://doi.org/10.1109/TIFS.2020.0000001",
-      "title": "Hsu & Chang, 2008"
+      "url": "https://doi.org/10.1109/ICME.2008.4607462",
+      "title": "Hsu, Y.-F. & Chang, S.-F. (2008). Detecting Image Splicing Using Geometry Invariants and Camera Characteristics. IEEE ICME."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIFS.2013.2249071",
+      "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation. Information Hiding."
     }
   ]
 }

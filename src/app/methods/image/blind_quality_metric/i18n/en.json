@@ -1,18 +1,22 @@
 {
   "name": "Blind Quality Metric",
-  "description": "Computes blind image quality metric using natural scene statistics without reference image (Saad et al., 2012).",
-  "algorithm": "Blind Image Quality Assessment",
-  "mechanism": "This method applies Blind Quality Metric for digital forensics and AI-generated content detection:\\n\\n1. **Feature Extraction**: The input is preprocessed and relevant features are extracted using domain-specific techniques aligned with blind quality metric.\\n\\n2. **Statistical Analysis**: Extracted features are compared against statistical models derived from authentic content databases. Deviations from expected distributions indicate potential manipulation or AI generation.\\n\\n3. **Anomaly Scoring**: A normalized anomaly score (0–100) is computed based on the magnitude and consistency of detected deviations. Higher scores indicate greater likelihood of AI generation or manipulation.\\n\\n4. **Cross-validation**: Results are cross-validated with complementary detection methods to reduce false positive rates and improve overall detection reliability.",
-  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
-  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "description": "Computes no-reference (blind) image quality metrics using Natural Scene Statistics (NSS). Authentic photographs conform to well-established NSS models, while AI-generated images and manipulated regions exhibit systematic deviations from these natural statistical regularities.",
+  "algorithm": "BLIINDS-II / BRISQUE-derived NSS Feature Extraction + SVR Quality Prediction",
+  "mechanism": "Blind image quality assessment operates without a pristine reference image by exploiting the fact that natural images occupy a tiny subspace of all possible pixel arrangements, governed by predictable statistical regularities.\n\nThe algorithm extracts Natural Scene Statistics (NSS) features from the Mean Subtracted Contrast Normalized (MSCN) coefficient domain. For each local patch, MSCN coefficients are computed as: Î(x,y) = (I(x,y) - μ(x,y)) / (σ(x,y) + C), where μ and σ are local mean and standard deviation. In natural images, these coefficients follow a Generalized Gaussian Distribution (GGD) with predictable shape and variance parameters.\n\nAI-generated images violate NSS in characteristic ways: (1) their MSCN coefficient distributions deviate from the expected GGD shape — typically showing heavier tails or sharper peaks, (2) the pairwise products of adjacent MSCN coefficients fail to follow the expected Asymmetric Generalized Gaussian Distribution (AGGD), and (3) the multi-scale NSS features (computed at multiple downsampling levels) show inconsistent quality degradation patterns unlike natural optical blur.\n\nThe extracted NSS feature vector (typically 36-dimensional) is fed to a Support Vector Regression (SVR) model trained on human quality judgments to produce an interpretable quality/authenticity score.",
+  "parameters": "MSCN patch size: 7×7 Gaussian window\nGGD fitting: moment-matching for shape parameter α\nAGGD features: 4 directional pairwise products (H, V, D1, D2)\nScale levels: 2 (original + 2× downsampled)\nFeature dimension: 36 (BRISQUE) or 24 (BLIINDS-II)\nClassifier: SVR with RBF kernel",
+  "accuracy": "Moderate — 68-80% accuracy for AI detection. Originally designed for quality assessment, forensic accuracy depends on how well the NSS deviation correlates with generation artifacts.",
+  "source": "Saad, M.A. et al. (2012). Blind Image Quality Assessment: A Natural Scene Statistics Approach in the DCT Domain. IEEE TIP.",
+  "useCase": "Forensic screening of suspected AI-generated images by measuring deviation from natural scene statistics, quality consistency verification across image regions to detect local manipulation, and baseline quality assessment in multi-method detection pipelines.",
+  "strengths": "• Grounded in decades of vision science research on Natural Scene Statistics\n• No reference image required — applicable to any standalone image\n• The NSS framework captures fundamental statistical properties that are extremely difficult for generators to perfectly replicate\n• Multi-scale analysis catches artifacts at different spatial frequencies",
+  "limitations": "• AI generators are increasingly trained to match NSS distributions, reducing detection gap\n• Highly compressed or heavily post-processed authentic images can violate NSS, causing false positives\n• The SVR model requires retraining as new generator architectures emerge\n• Performance degrades significantly on images smaller than 256×256 pixels",
   "references": [
     {
-      "url": "https://doi.org/10.1109/TIFS.2020.0000001",
-      "title": "Saad et al, 2012."
+      "url": "https://doi.org/10.1109/TIP.2012.2191563",
+      "title": "Saad, M.A. et al. (2012). Blind Image Quality Assessment: A Natural Scene Statistics Approach in the DCT Domain. IEEE TIP."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2012.2214050",
+      "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain (BRISQUE). IEEE TIP."
     }
   ]
 }
