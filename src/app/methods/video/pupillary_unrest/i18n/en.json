@@ -1,22 +1,22 @@
 {
-    "name":  "Pupillary Unrest Index",
-    "description":  "Measures pupillary unrest (hippus) — natural pupil oscillations absent in AI-generated faces.",
-    "algorithm":  "Pupillary Unrest Index Analysis Algorithm",
-    "mechanism":  "The Pupillary Unrest Index system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TPAMI.2020.3009287",
-                           "title":  "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
-                       },
-                       {
-                           "url":  "https://arxiv.org/abs/1811.00656",
-                           "title":  "Li, Y. \u0026 Lyu, S. (2019). Exposing DeepFake Videos By Detecting Face Warping Artifacts. CVPR Workshop."
-                       }
-                   ]
+  "name": "Pupillary Unrest Index",
+  "description": "Measures pupillary unrest (hippus) — natural pupil oscillations absent in AI-generated faces.",
+  "algorithm": "Pupillary Unrest Index Analysis Algorithm",
+  "mechanism": "This method analyzes pupillary unrest (hippus) for deepfake detection:\n\n1. **Pupil Size Measurement**: Pupil diameter is measured per frame using iris-pupil boundary detection and ellipse fitting. High-resolution tracking captures the temporal signal of pupil diameter changes.\n\n2. **Hippus Detection**: Pupillary unrest (hippus) is the continuous, involuntary oscillation of pupil diameter at frequencies of 0.5-2 Hz with amplitude of 0.2-0.5mm. This is a normal physiological phenomenon reflecting sympathetic-parasympathetic nervous system interplay. The method checks for the presence and characteristics of hippus.\n\n3. **Pupillary Light Reflex**: When illumination changes, pupils should constrict (light increase) or dilate (light decrease) with characteristic latency (~200ms) and dynamics (rapid constriction, slower dilation). The method checks for correct pupillary light reflex dynamics. Deepfakes typically don't model this physiological response.\n\n4. **Bilateral Pupil Coordination**: Both pupils should show consensual response — constricting/dilating together with minimal difference (≤0.5mm). The method checks bilateral pupil size correlation. AI generators may produce independent pupil sizes between left and right eyes, violating the consensual pupil response.\n\n5. **Cognitive Pupil Response**: Cognitive effort and emotional arousal produce small pupil dilations (0.1-0.5mm above baseline). The method analyzes whether pupil size correlates with speech content complexity and emotional context. Deepfake pupils that don't respond to cognitive demands lack this natural physiological signal.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+    },
+    {
+      "url": "https://arxiv.org/abs/1811.00656",
+      "title": "Li, Y. & Lyu, S. (2019). Exposing DeepFake Videos By Detecting Face Warping Artifacts. CVPR Workshop."
+    }
+  ]
 }

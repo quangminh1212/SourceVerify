@@ -1,22 +1,22 @@
 {
-    "name": "Hot Pixel Detection",
-    "description": "Detects hot/dead pixel patterns absent in AI images",
-    "algorithm": "Hot Pixel Detection — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes physical camera/sensor characteristics:\n\n1. **Sensor Model**: Expected sensor characteristics are modeled based on camera physics.\n\n2. **Feature Extraction**: Detects hot/dead pixel patterns absent in AI images. Physical artifacts from real camera sensors are analyzed.\n\n3. **Authenticity Check**: Presence or absence of expected sensor patterns is evaluated.\n\n4. **AI Comparison**: Results are compared against known AI generation patterns.\n\n5. **Confidence Score**: A score reflecting the likelihood of authentic sensor origin is computed.",
-    "parameters": "Analysis type: sensor\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through hot pixel detection analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2006.873602"
-        },
-        {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
-        }
-    ]
+  "name": "Hot Pixel Detection",
+  "description": "Detects hot/dead pixel patterns absent in AI images",
+  "algorithm": "Hot Pixel Detection — Sensor/Physical Model Analyzer",
+  "mechanism": "Hot pixel detection exploits the unique photo-response non-uniformity (PRNU) of camera sensors:\n\n1. **Dark Current Mapping**: The method identifies pixels with abnormally high dark current values — defective sensor elements (\"hot pixels\") that produce elevated signal even without light exposure. These form a camera-specific fingerprint per Lukas et al. (2006).\n\n2. **Spatial Pattern Analysis**: Hot pixel locations are mapped across the image. Real camera images exhibit consistent hot pixel patterns determined by the specific sensor hardware. AI-generated images lack these physical sensor defects entirely.\n\n3. **Fixed Pattern Noise (FPN) Extraction**: The fixed-pattern noise component is separated from the image signal. Genuine photographs contain deterministic FPN arising from manufacturing variations in photodiodes, while synthetic images show statistically uniform or artificially modeled noise.\n\n4. **Temporal Stability Verification**: In authentic images, hot pixels appear at fixed spatial locations with intensity dependent on exposure time and sensor temperature (following Arrhenius behavior). The method checks whether detected anomalies conform to these physical constraints.\n\n5. **Authenticity Scoring**: A confidence score is computed based on the density, spatial distribution, and intensity characteristics of detected hot pixels. Absence of genuine hot pixel signatures or presence of statistically implausible patterns indicates AI generation.",
+  "parameters": "Analysis type: sensor\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through hot pixel detection analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2006.873602"
+    },
+    {
+      "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2007.916285"
+    }
+  ]
 }

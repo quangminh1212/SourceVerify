@@ -1,22 +1,22 @@
 {
-    "name": "Video Grain",
-    "description": "Characterizes film grain particle size, spatial frequency distribution, and temporal persistence to distinguish authentic photographic grain from procedurally generated or absent noise in AI video.",
-    "algorithm": "Video Grain — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes film grain pattern. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: sensor\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through video grain analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Video Grain",
+  "description": "Characterizes film grain particle size, spatial frequency distribution, and temporal persistence to distinguish authentic photographic grain from procedurally generated or absent noise in AI video.",
+  "algorithm": "Video Grain — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes video grain (film grain / sensor noise) for forensic detection:\n\n1. **Grain Pattern Extraction**: The fine-grained noise/grain pattern is extracted by separating the high-frequency stochastic component from image structure using adaptive filtering. The grain's spatial and statistical characteristics are measured.\n\n2. **Grain Model Analysis**: The grain model (size, intensity, spatial frequency content, color characteristics) is identified. Camera sensor noise has specific properties: (a) Gaussian-Poisson distribution, (b) sensor-dependent spatial correlation, (c) color-dependent characteristics (more noise in blue channel). The method checks if the grain follows a physical sensor noise model.\n\n3. **Grain Spatial Homogeneity**: Camera grain should be spatially homogeneous (uniform sensor produces uniform noise). The method checks grain homogeneity across the frame — different grain characteristics in the face vs. background indicate compositing of content from different sources.\n\n4. **Grain Temporal Behavior**: Camera grain is temporally random (uncorrelated between frames) and should renew completely each frame. The method checks temporal grain independence. AI-generated grain may show temporal correlations — persistent grain patterns across frames or correlated grain changes.\n\n5. **Grain-Signal Interaction**: Real camera grain is multiplicative (signal-dependent) — brighter regions show more shot noise. The method checks grain-signal dependency. AI generators often add additive noise (signal-independent) or no noise at all, producing an unrealistic grain-signal relationship detectable as a forensic indicator.",
+  "parameters": "Analysis type: sensor\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through video grain analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

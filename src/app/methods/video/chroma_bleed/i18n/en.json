@@ -1,22 +1,22 @@
 {
-    "name": "Chroma Bleed",
-    "description": "Measures color channel misalignment at high-contrast edges where AI-generated video exhibits unnatural chroma spreading absent from optically captured footage with proper Bayer demosaicing.",
-    "algorithm": "Chroma Bleed — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects chroma bleed artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through chroma bleed analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Chroma Bleed",
+  "description": "Measures color channel misalignment at high-contrast edges where AI-generated video exhibits unnatural chroma spreading absent from optically captured footage with proper Bayer demosaicing.",
+  "algorithm": "Chroma Bleed — Pixel-Level Spatial Analysis",
+  "mechanism": "This method detects chroma bleeding artifacts for video forensic analysis:\n\n1. **Chroma Subsampling Analysis**: Video codecs (H.264/H.265) use chroma subsampling (4:2:0, 4:2:2) where chrominance has lower resolution than luminance. The method analyzes whether chroma-luma relationships follow the expected subsampling pattern. Manipulated or AI-generated regions may exhibit chroma bleeding inconsistent with the video's declared subsampling scheme.\n\n2. **Color Channel Edge Alignment**: At sharp edges, the luma (Y) channel shows a precise boundary while chroma channels (Cb, Cr) show slightly broader edges due to subsampling. The method measures the spatial offset between luminance and chrominance edges. Natural video shows consistent chroma spread matching the codec's subsampling. Deepfake insertion may produce regions with different chroma edge characteristics.\n\n3. **Cross-Channel Correlation**: In authentic video, chroma bleeding patterns are consistent across the entire frame (same codec pipeline). The method computes local cross-channel correlations and flags regions where chroma-luma relationships differ from the frame average — indicating content from a different encoding pipeline.\n\n4. **Temporal Chroma Stability**: Chroma bleeding characteristics should remain temporally consistent. The method tracks chroma-luma edge relationships across frames. AI-generated content may produce temporally varying chroma artifacts as the generator independently renders chrominance without modeling the encoding pipeline's subsampling behavior.\n\n5. **Re-Encoding Detection**: Double-encoded video (original + manipulation + re-encoding) produces characteristic double-chroma-bleeding artifacts. The method detects these compound artifacts by analyzing the spectral signature of chroma bleeding, which differs between single-pass and multi-pass encoding chains.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through chroma bleed analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

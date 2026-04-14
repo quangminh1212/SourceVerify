@@ -1,22 +1,22 @@
 {
-    "name": "Scene Geometry Consistency",
-    "description": "Validates perspective projection consistency, vanishing point alignment, and planar surface parallelism across frames to reveal geometrically impossible scene structures in AI-synthesized video.",
-    "algorithm": "Scene Geometry Consistency — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes 3D scene geometry consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through scene geometry consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Scene Geometry Consistency",
+  "description": "Validates perspective projection consistency, vanishing point alignment, and planar surface parallelism across frames to reveal geometrically impossible scene structures in AI-synthesized video.",
+  "algorithm": "Scene Geometry Consistency — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes scene geometry consistency for deepfake detection:\n\n1. **3D Scene Reconstruction**: From video frames, approximate 3D scene geometry is estimated using structure-from-motion, depth estimation, and perspective cues. The spatial layout — room dimensions, furniture positions, wall angles — is reconstructed.\n\n2. **Geometric Consistency Verification**: The estimated scene geometry should remain consistent across all frames. The method tracks 3D reconstruction consistency — deformations, scale changes, or geometric shifts indicate manipulation where inserted content doesn't match the scene's 3D structure.\n\n3. **Person-Scene Perspective Match**: The person (particularly face scale and perspective distortion) should be consistent with their position in the 3D scene. Face size should scale correctly with estimated distance from camera. Deepfake composites may show faces at incorrect apparent distances — face scale inconsistent with scene geometry.\n\n4. **Shadow-Geometry Agreement**: Shadows in the scene should be consistent with the 3D geometry and estimated illumination. Ground shadows, cast shadows, and attached shadows should all agree with a single light model and the scene geometry. Manipulated scenes may show shadow-geometry conflicts.\n\n5. **Camera Motion-Scene Geometry Coherence**: As the camera moves, the relative motion of objects at different depths (motion parallax) should be consistent with the scene geometry. The method analyzes motion parallax patterns — composited elements at wrong estimated depths produce incorrect parallax, revealing manipulation.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through scene geometry consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

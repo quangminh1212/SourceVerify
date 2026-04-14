@@ -1,22 +1,22 @@
 {
-    "name": "Temporal Color Histogram",
-    "description": "Tracks color histogram changes over time",
-    "algorithm": "Temporal Color Histogram — Statistical Pattern Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Tracks color histogram changes over time. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: statistical\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through temporal color histogram analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Temporal Color Histogram",
+  "description": "Tracks color histogram changes over time",
+  "algorithm": "Temporal Color Histogram — Statistical Pattern Analyzer",
+  "mechanism": "This method analyzes temporal color histogram evolution for deepfake detection:\n\n1. **Regional Color Histograms**: Per-frame color histograms are computed for multiple regions: face, skin, hair, background, and clothing. Histograms use perceptually uniform color bins (Lab color space) for meaningful color comparison.\n\n2. **Histogram Temporal Smoothness**: The evolution of color histograms over time should be smooth. The method measures frame-to-frame histogram distance (EMD, chi-squared) and detects anomalous spikes. Deepfake generation may produce frame-to-frame color distribution jumps as the generator's color output varies.\n\n3. **Inter-Region Histogram Correlation**: Color changes in different regions should be correlated (same illumination affects all regions similarly). The method checks temporal correlation between regional histograms. Low face-background histogram correlation indicates the face color evolves independently from scene lighting — a deepfake signature.\n\n4. **Histogram Shape Analysis**: The shape of color histograms encodes content characteristics. The method tracks histogram shape metrics (modes, spread, skewness) over time. Authentic video maintains consistent histogram shapes within the same scene. Deepfake generation may produce fluctuating histogram shapes.\n\n5. **Long-Range Histogram Consistency**: The method compares histograms between frames separated by longer intervals. Scenes with stable lighting should show consistent histograms regardless of temporal distance. Systematic histogram drift without lighting change indicates gradual color shift from AI generation artifacts.",
+  "parameters": "Analysis type: statistical\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through temporal color histogram analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

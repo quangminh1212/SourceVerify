@@ -1,22 +1,22 @@
 {
-    "name": "Frame Edge Energy",
-    "description": "Computes Sobel-based edge energy maps per frame and tracks their temporal evolution to reveal the characteristic high-frequency instability of frame-by-frame neural video generation.",
-    "algorithm": "Frame Edge Energy — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes frame edge energy distribution. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through frame edge energy analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Frame Edge Energy",
+  "description": "Computes Sobel-based edge energy maps per frame and tracks their temporal evolution to reveal the characteristic high-frequency instability of frame-by-frame neural video generation.",
+  "algorithm": "Frame Edge Energy — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes frame-level edge energy distribution for video deepfake detection:\n\n1. **Edge Energy Computation**: Per frame, edge energy is computed using Sobel/Canny operators: E_edge = Σ(|∇I|²) over the frame. The spatial distribution of edge energy is mapped, revealing where visual detail and boundaries are concentrated.\n\n2. **Face-Background Edge Energy Ratio**: In authentic video, the edge energy density in face regions vs. background follows a consistent ratio determined by the imaging pipeline. Deepfake composites may show different edge energy characteristics between the generated face (from one rendering pipeline) and the original background.\n\n3. **Temporal Edge Energy Analysis**: Total frame edge energy is tracked over time. Natural video shows smooth edge energy variation corresponding to motion and scene changes. Deepfake generation may produce frame-to-frame edge energy fluctuations — particularly in face regions where the generator's ability to reproduce edge detail varies with head pose and expression.\n\n4. **Edge Frequency Distribution**: The distribution of edge magnitudes per frame is analyzed. Natural edge magnitude distributions follow power-law statistics. AI-generated content may produce different edge magnitude distributions — often lacking the heavy tail of strong edges or showing excess medium-strength edges from the generator's activation functions.\n\n5. **Multi-Directional Edge Energy**: Edge energy is decomposed by direction (horizontal, vertical, diagonal). Natural scenes show direction-dependent edge energy distributions (buildings have strong horizontal/vertical edges). AI-generated content may show unnatural directional edge energy, particularly checkerboard-like patterns from transposed convolution artifacts in the generator.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through frame edge energy analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

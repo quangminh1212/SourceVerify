@@ -1,22 +1,22 @@
 {
-    "name":  "Run Length Matrix Analysis",
-    "description":  "Computes gray-level run-length matrix features for texture characterization — detects AI smoothing artifacts (Galloway, 1975).",
-    "algorithm":  "Run Length Matrix Analysis Analysis Algorithm",
-    "mechanism":  "The Run Length Matrix Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1016/S0146-664X(75)80008-6",
-                           "title":  "Galloway, M.M. (1975). Texture Analysis Using Gray Level Run Lengths. Computer Graphics and Image Processing."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/83.725367",
-                           "title":  "Tang, X. (1998). Texture Information in Run-Length Matrices. IEEE TIP."
-                       }
-                   ]
+  "name": "Run Length Matrix Analysis",
+  "description": "Computes gray-level run-length matrix features for texture characterization — detects AI smoothing artifacts (Galloway, 1975).",
+  "algorithm": "Run Length Matrix Analysis Analysis Algorithm",
+  "mechanism": "This method applies Galloway's (1975) Gray Level Run Length Matrix (GLRLM) for texture-based forensic analysis:\n\n1. **Run Length Encoding**: For each direction θ (0°, 45°, 90°, 135°), the image is scanned to identify runs — consecutive pixels with the same gray level. The GLRLM R(i,j|θ) counts the number of runs with gray level i and length j in direction θ.\n\n2. **Feature Extraction**: Standard GLRLM features are computed:\n   - Short Run Emphasis (SRE): Measures fine texture density\n   - Long Run Emphasis (LRE): Quantifies coarse texture presence\n   - Gray Level Non-Uniformity (GLN): Measures gray level distribution uniformity\n   - Run Length Non-Uniformity (RLN): Quantifies run length distribution uniformity\n   - Run Percentage (RP): Ratio of runs to total pixel count\n\n3. **Directional Consistency Analysis**: Natural images show smooth, physically motivated directional variation in GLRLM features. AI-generated images often exhibit either excessive directional uniformity (over-smoothed textures) or implausible directional discontinuities at generation boundaries.\n\n4. **Higher-Order Statistics**: Following Tang (1998), higher-order run length features including Low/High Gray Level Run Emphasis (LGRE/HGRE) capture subtle gray level-run length correlations that differ between natural and synthetic textures.\n\n5. **Forensic Scoring**: GLRLM feature vectors from image blocks are compared against natural image texture statistics. AI-generated images typically produce anomalous short-run-to-long-run ratios and unnatural gray level uniformity patterns, yielding elevated detection scores.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1016/S0146-664X(75)80008-6",
+      "title": "Galloway, M.M. (1975). Texture Analysis Using Gray Level Run Lengths. Computer Graphics and Image Processing."
+    },
+    {
+      "url": "https://doi.org/10.1109/83.725367",
+      "title": "Tang, X. (1998). Texture Information in Run-Length Matrices. IEEE TIP."
+    }
+  ]
 }

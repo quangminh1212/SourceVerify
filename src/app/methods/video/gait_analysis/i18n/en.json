@@ -1,22 +1,22 @@
 {
-    "name": "Gait Analysis",
-    "description": "Extracts body pose sequences and analyzes walking cycle biomechanics to identify physically implausible gait patterns that AI body synthesis models fail to replicate accurately.",
-    "algorithm": "Gait Analysis — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes walking gait naturalness. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through gait analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Gait Analysis",
+  "description": "Extracts body pose sequences and analyzes walking cycle biomechanics to identify physically implausible gait patterns that AI body synthesis models fail to replicate accurately.",
+  "algorithm": "Gait Analysis — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes gait (walking) patterns for deepfake detection:\n\n1. **Pose Sequence Extraction**: Full-body pose estimation tracks joint positions (ankles, knees, hips, shoulders, head) across frames during walking motion. The gait cycle is decomposed into phases: stance (foot on ground), swing (foot in air), heel strike, and toe-off.\n\n2. **Gait Biomechanical Analysis**: Human gait follows predictable biomechanical patterns: (a) periodic joint angle trajectories, (b) characteristic ground reaction force profiles, (c) coordinated upper-lower body motion (arm swing opposing leg swing). The method verifies these biomechanical constraints. AI-generated walking may violate gait physics.\n\n3. **Individual Gait Signature**: Each person has a characteristic gait determined by body proportions, musculoskeletal dynamics, and habitual patterns. Gait features (stride length/frequency ratio, knee flexion amplitude, hip sway) form an individual signature. Face-swap deepfakes may show mismatched gait-face identity.\n\n4. **Temporal Regularity Analysis**: Gait is quasi-periodic with characteristic cycle duration (1-1.2s at normal speed). The method analyzes gait cycle regularity via autocorrelation. AI-generated walking motion may show irregular periodicity, missing the subtle natural variations in gait timing.\n\n5. **Physical Constraint Scoring**: The method checks multiple physical constraints simultaneously: center of mass trajectory follows ballistic parabola during swing phase, ground contact produces consistent foot placement, joint angles remain within anatomical limits. Violations indicate AI generation that hasn't properly modeled multi-body dynamics.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through gait analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name":  "Sparse Representation Analysis",
-    "description":  "Uses sparse coding and dictionary learning to detect representation anomalies in AI images (Wright et al., 2009).",
-    "algorithm":  "Sparse Representation Analysis Analysis Algorithm",
-    "mechanism":  "The Sparse Representation Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TPAMI.2008.79",
-                           "title":  "Wright, J. et al. (2009). Robust Face Recognition via Sparse Representation. IEEE TPAMI."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TIP.2006.881969",
-                           "title":  "Elad, M. \u0026 Aharon, M. (2006). Image Denoising via Sparse and Redundant Representations. IEEE TIP."
-                       }
-                   ]
+  "name": "Sparse Representation Analysis",
+  "description": "Uses sparse coding and dictionary learning to detect representation anomalies in AI images (Wright et al., 2009).",
+  "algorithm": "Sparse Representation Analysis Analysis Algorithm",
+  "mechanism": "This method applies sparse representation theory following Wright et al. (2009) and Elad & Aharon (2006) for forensic analysis:\n\n1. **Dictionary Learning**: A redundant dictionary D ∈ ℝⁿˣᴷ (K >> n, overcomplete) is learned from natural image patches via K-SVD algorithm. Each atom captures a characteristic local structure (edge, texture, smooth region) found in authentic images.\n\n2. **Sparse Coding**: For each image patch y, the sparsest representation α is found via: min‖α‖₀ s.t. ‖y − Dα‖₂ ≤ ε. In practice, OMP (Orthogonal Matching Pursuit) or LASSO provides an approximate solution. Natural image patches admit highly sparse representations (few active atoms).\n\n3. **Representation Residual Analysis**: The residual r = ‖y − Dα‖₂ measures how well each patch fits the natural image dictionary. Authentic image patches yield low residuals, while AI-generated patches — containing artifacts outside the natural image manifold — produce elevated residuals.\n\n4. **Sparsity Map Construction**: A spatial map of sparsity levels (‖α‖₀) and residuals across the image reveals regions inconsistent with natural image statistics. Manipulated or AI-generated regions typically require more dictionary atoms (lower sparsity) yet still produce higher residuals.\n\n5. **Anomaly Scoring**: The joint distribution of sparsity and residuals across all patches is compared to the expected distribution for natural images. Systematic deviations — particularly elevated residuals in textured regions that should be well-represented by the learned dictionary — indicate synthetic generation.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2008.79",
+      "title": "Wright, J. et al. (2009). Robust Face Recognition via Sparse Representation. IEEE TPAMI."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2006.881969",
+      "title": "Elad, M. & Aharon, M. (2006). Image Denoising via Sparse and Redundant Representations. IEEE TIP."
+    }
+  ]
 }

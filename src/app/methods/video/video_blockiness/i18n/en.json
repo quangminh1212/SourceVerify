@@ -1,22 +1,22 @@
 {
-    "name": "Video Blockiness",
-    "description": "Quantifies DCT block boundary discontinuities and measures their spatial distribution to distinguish authentic codec compression artifacts from the irregular blockiness patterns of neural video generators.",
-    "algorithm": "Video Blockiness — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes video compression blockiness. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: frequency\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through video blockiness analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Video Blockiness",
+  "description": "Quantifies DCT block boundary discontinuities and measures their spatial distribution to distinguish authentic codec compression artifacts from the irregular blockiness patterns of neural video generators.",
+  "algorithm": "Video Blockiness — Frequency Domain Analyzer",
+  "mechanism": "This method analyzes video blockiness artifacts for forensic detection:\n\n1. **Block Boundary Detection**: Block coding boundaries (typically 8×8 or 16×16 pixels for H.264/H.265) are detected by measuring intensity discontinuities at these regular intervals. The strength of block boundaries quantifies blockiness.\n\n2. **Blockiness Distribution Analysis**: The spatial distribution of blockiness across the frame is analyzed. Natural single-encoded video shows blockiness correlated with content complexity and QP allocation. Re-encoded video (after manipulation) may show double-blockiness patterns or blockiness distribution inconsistent with the current QP map.\n\n3. **Face-Background Blockiness Comparison**: Blockiness characteristics should be consistent across the frame from a single encoding pass. The method compares blockiness in face regions vs. background. Deepfakes compositing a separately encoded/generated face may show different blockiness characteristics between face and background.\n\n4. **Temporal Blockiness Pattern**: Blockiness varies naturally with frame type (I-frames show different blockiness than P/B-frames). The method analyzes temporal blockiness patterns — they should follow the GOP structure predictably. Anomalous temporal blockiness patterns indicate manipulation or re-encoding.\n\n5. **Block Misalignment Detection**: If video has been cropped, resized, or reframed (common in deepfake processing), the coding block grid may be misaligned with the original grid, creating \"grid shift\" detectable as double block boundaries at offset positions at the grid misalignment.",
+  "parameters": "Analysis type: frequency\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through video blockiness analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

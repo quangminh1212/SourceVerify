@@ -1,22 +1,22 @@
 {
-    "name":  "Temporal Face Embedding Drift",
-    "description":  "Tracks face embedding vector drift over time — deepfakes show larger embedding variance than real faces.",
-    "algorithm":  "Temporal Face Embedding Drift Analysis Algorithm",
-    "mechanism":  "The Temporal Face Embedding Drift system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/ICCV48922.2021.01480",
-                           "title":  "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/ICCV.2019.00009",
-                           "title":  "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV."
-                       }
-                   ]
+  "name": "Temporal Face Embedding Drift",
+  "description": "Tracks face embedding vector drift over time — deepfakes show larger embedding variance than real faces.",
+  "algorithm": "Temporal Face Embedding Drift Analysis Algorithm",
+  "mechanism": "This method analyzes temporal face embedding drift for deepfake detection:\n\n1. **Face Embedding Extraction**: A face recognition embedding vector is computed per frame using a pre-trained face recognition network. The embedding captures identity-discriminative features in a high-dimensional space.\n\n2. **Embedding Trajectory Analysis**: The face embedding trajectory through the embedding space is tracked over time. In authentic video, the embedding remains near a fixed point (same identity) with small perturbations from expression, pose, and illumination changes.\n\n3. **Drift Detection**: The method detects systematic embedding drift — gradual movement of the embedding centroid over time. In authentic video, the centroid is stationary. Deepfake generators may produce slowly drifting identity characteristics as the model's latent space traversal creates gradual identity shifts.\n\n4. **Embedding Variance Analysis**: The variance of embeddings across frames is analyzed. Authentic video shows low variance (consistent identity). Deepfakes may show elevated variance — the generated face may fluctuate in identity space, sometimes closer to the source identity, sometimes to the target identity, creating detectable identity instability.\n\n5. **Embedding-Pose Correlation**: Embedding should be pose-invariant for a fixed identity (good face recognition models achieve this). The method checks whether embedding changes correlate with head pose — deepfake quality may be pose-dependent (better at frontal, worse at profile), causing embedding to shift with pose in ways that don't occur with authentic faces.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/ICCV48922.2021.01480",
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV."
+    },
+    {
+      "url": "https://doi.org/10.1109/ICCV.2019.00009",
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV."
+    }
+  ]
 }

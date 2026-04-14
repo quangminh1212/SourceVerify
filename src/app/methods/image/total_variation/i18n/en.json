@@ -1,22 +1,22 @@
 {
-    "name":  "Total Variation Norm Analysis",
-    "description":  "Measures total variation norm to detect unnatural smoothness or excessive regularity in AI-generated images (Rudin et al., 1992).",
-    "algorithm":  "Total Variation Norm Analysis Analysis Algorithm",
-    "mechanism":  "The Total Variation Norm Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1016/0167-2789(92)90242-F",
-                           "title":  "Rudin, L.I. et al. (1992). Nonlinear Total Variation Based Noise Removal Algorithms. Physica D."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1023/B:JMIV.0000011325.36760.1e",
-                           "title":  "Chambolle, A. (2004). An Algorithm for Total Variation Minimization and Applications. JMIV."
-                       }
-                   ]
+  "name": "Total Variation Norm Analysis",
+  "description": "Measures total variation norm to detect unnatural smoothness or excessive regularity in AI-generated images (Rudin et al., 1992).",
+  "algorithm": "Total Variation Norm Analysis Analysis Algorithm",
+  "mechanism": "This method applies Total Variation (TV) analysis following Rudin, Osher & Fatemi (1992) for forensic image assessment:\n\n1. **Total Variation Computation**: The isotropic TV of the image I is computed as TV(I) = Σ√(|∂I/∂x|² + |∂I/∂y|²), measuring the total amount of spatial variation. This L¹ norm of the gradient penalizes oscillations while preserving edges — making it sensitive to the difference between natural and synthetic image characteristics.\n\n2. **Local TV Mapping**: A spatial map of local TV values computed in sliding windows reveals the distribution of image complexity. Natural images show physically coherent TV variation — smooth regions (low TV), edges (moderate TV), and textures (high TV) arranged in semantically meaningful patterns.\n\n3. **TV Regularity Analysis**: The ratio of TV to image energy (TV/‖I‖₂) provides a normalized smoothness measure. AI-generated images often exhibit characteristic TV profiles: diffusion models tend toward overly smooth interiors with sharp boundaries, while GANs may produce micro-oscillations elevating TV in supposedly smooth regions.\n\n4. **Anisotropic TV Decomposition**: The directional components TV_x and TV_y are analyzed separately. Natural images show orientation-dependent TV variation correlated with scene geometry. AI-generated images may exhibit isotropic TV even in scenes that should show strong directional bias (e.g., architectural images).\n\n5. **Chambolle Projection Analysis**: Using Chambolle's (2004) dual formulation, the TV-minimizing reconstruction is computed. The difference between the original and TV-denoised image isolates the texture/noise component. Analysis of this component reveals whether the fine-scale structure follows natural sensor noise statistics or exhibits AI generation artifacts.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1016/0167-2789(92)90242-F",
+      "title": "Rudin, L.I. et al. (1992). Nonlinear Total Variation Based Noise Removal Algorithms. Physica D."
+    },
+    {
+      "url": "https://doi.org/10.1023/B:JMIV.0000011325.36760.1e",
+      "title": "Chambolle, A. (2004). An Algorithm for Total Variation Minimization and Applications. JMIV."
+    }
+  ]
 }

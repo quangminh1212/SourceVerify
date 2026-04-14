@@ -1,22 +1,22 @@
 {
-    "name": "Eye Reflection Consistency",
-    "description": "Analyzes catchlight and eye reflection patterns",
-    "algorithm": "Eye Reflection Consistency — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes catchlight and eye reflection patterns. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through eye reflection consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Eye Reflection Consistency",
+  "description": "Analyzes catchlight and eye reflection patterns",
+  "algorithm": "Eye Reflection Consistency — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes eye reflections (corneal specular highlights) for deepfake detection:\n\n1. **Specular Highlight Detection**: Corneal reflections (Purkinje images) are detected in each eye per frame. These bright spots on the curved corneal surface reflect the ambient light environment — creating miniature images of light sources visible in high-resolution video.\n\n2. **Bilateral Reflection Consistency**: Both eyes of the same person should show consistent specular reflections — same light sources, similar positions adjusted for inter-ocular distance, and consistent highlight shapes. Deepfake generators often produce eyes independently, creating reflection inconsistencies (different number of highlights, different positions, different shapes between left and right eyes).\n\n3. **Physical Reflection Modeling**: Corneal reflections should be physically consistent with the scene illumination: (a) positions determined by light source locations via reflection geometry, (b) shapes following corneal curvature, (c) brightness proportional to light source intensity. The method verifies these physical constraints. AI-generated reflections may violate geometric reflection laws.\n\n4. **Temporal Reflection Tracking**: As the head moves, corneal reflections should shift smoothly according to the changing viewing angle. The method tracks reflection positions across frames — they should follow smooth trajectories consistent with rigid body motion. Deepfakes may produce reflections that jump erratically or remain stationary during head movement.\n\n5. **Environment Consistency Cross-Check**: Corneal reflections provide information about the scene environment. The method cross-checks reflections between both eyes and against visible scene lighting. Inconsistencies between reflected and visible light sources indicate manipulation or generation artifacts.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through eye reflection consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

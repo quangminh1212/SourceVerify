@@ -1,22 +1,22 @@
 {
-    "name":  "Hu Moment Invariants",
-    "description":  "Computes Hu\u0027s seven moment invariants to detect shape and rotation anomalies in AI content (Hu, 1962).",
-    "algorithm":  "Hu Moment Invariants Analysis Algorithm",
-    "mechanism":  "The Hu Moment Invariants system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TIT.1962.1057692",
-                           "title":  "Hu, M.K. (1962). Visual Pattern Recognition by Moment Invariants. IRE Trans. Information Theory."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1002/9780470684757",
-                           "title":  "Flusser, J. et al. (2009). Moments and Moment Invariants in Pattern Recognition. Wiley."
-                       }
-                   ]
+  "name": "Hu Moment Invariants",
+  "description": "Computes Hu's seven moment invariants to detect shape and rotation anomalies in AI content (Hu, 1962).",
+  "algorithm": "Hu Moment Invariants Analysis Algorithm",
+  "mechanism": "This method computes Hu's (1962) moment invariants and extended affine moment invariants for forgery detection:\n\n1. **Geometric Moment Computation**: Raw geometric moments mₚᵧ = ΣΣ xᵖyᵧI(x,y) are computed over image blocks. Central moments μₚᵧ are derived by shifting to the centroid, providing translation invariance.\n\n2. **Hu Moment Invariant Extraction**: The seven Hu invariants (φ₁ through φ₇) are calculated from normalized central moments. These are invariant to translation, rotation, and scaling — properties that enable detection of copy-move forgery where copied regions may be geometrically transformed.\n\n3. **Block-wise Invariant Mapping**: The image is divided into overlapping blocks and moment invariants are computed per block. Blocks with similar invariant vectors but different spatial locations suggest copy-move manipulation.\n\n4. **Affine Moment Invariants (AMI)**: Extended invariants following Flusser et al. (2009) capture affine-invariant features, detecting copies that have undergone shearing or non-uniform scaling beyond simple rotation.\n\n5. **Consistency Analysis**: Moment invariant distributions across the image are analyzed for statistical anomalies. Natural images show smooth spatial variation in moment features, while AI-generated images may exhibit unnatural uniformity or discontinuities at generation boundaries. The final score quantifies deviation from expected natural moment statistics.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TIT.1962.1057692",
+      "title": "Hu, M.K. (1962). Visual Pattern Recognition by Moment Invariants. IRE Trans. Information Theory."
+    },
+    {
+      "url": "https://doi.org/10.1002/9780470684757",
+      "title": "Flusser, J. et al. (2009). Moments and Moment Invariants in Pattern Recognition. Wiley."
+    }
+  ]
 }

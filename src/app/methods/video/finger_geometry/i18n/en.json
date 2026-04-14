@@ -1,22 +1,22 @@
 {
-    "name": "Finger Geometry",
-    "description": "Validates finger proportions, joint articulation angles, and digit count against anatomical constraints, targeting a persistent failure mode of diffusion and GAN-based human body synthesis.",
-    "algorithm": "Finger Geometry — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes finger count and geometry. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through finger geometry analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Finger Geometry",
+  "description": "Validates finger proportions, joint articulation angles, and digit count against anatomical constraints, targeting a persistent failure mode of diffusion and GAN-based human body synthesis.",
+  "algorithm": "Finger Geometry — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes finger and hand geometry for deepfake detection:\n\n1. **Hand & Finger Detection**: Hands are detected and finger landmarks (finger tips, joints, palm points) are tracked per frame. The geometric model captures finger lengths, joint angles, inter-finger spacing, and hand proportions.\n\n2. **Anatomical Constraint Verification**: Finger geometry must obey anatomical constraints: (a) fingers can only bend at joints in specific directions, (b) joint angles have limited ranges, (c) finger proportions follow characteristic ratios (golden ratio relationships). The method checks whether detected hand geometry satisfies these constraints. AI generators notoriously produce extra fingers, impossible joint angles, or disproportionate fingers.\n\n3. **Finger Count Verification**: The correct number of fingers (5 per hand) is verified. AI generators — particularly diffusion models — frequently generate incorrect finger counts (4 or 6 fingers), fused fingers, or bifurcated fingers. This simple check remains one of the most reliable AI generation indicators.\n\n4. **Temporal Geometry Stability**: Hand geometry should be temporally consistent during smooth motions. The method tracks finger length ratios and joint angles across frames. AI generators may produce hands that change proportions, lose/gain fingers, or show impossible geometric transformations between frames.\n\n5. **Hand-Face Scale Consistency**: When hands are visible near the face, their relative proportions should be anatomically correct. The method verifies hand-face size ratios against anthropometric data. AI generators may produce hands that are disproportionately large or small relative to the face, indicating generation rather than capture.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through finger geometry analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

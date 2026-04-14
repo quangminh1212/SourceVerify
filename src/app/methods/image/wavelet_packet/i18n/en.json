@@ -1,22 +1,22 @@
 {
-    "name":  "Wavelet Packet Decomposition",
-    "description":  "Applies full wavelet packet decomposition for fine-grained sub-band energy analysis (Coifman \u0026 Wickerhauser, 1992).",
-    "algorithm":  "Wavelet Packet Decomposition Analysis Algorithm",
-    "mechanism":  "The Wavelet Packet Decomposition system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/18.119732",
-                           "title":  "Coifman, R.R. \u0026 Wickerhauser, M.V. (1992). Entropy-Based Algorithms for Best Basis Selection. IEEE TIT."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/83.862633",
-                           "title":  "Chang, S.G. et al. (2000). Adaptive Wavelet Thresholding for Image Denoising. IEEE TIP."
-                       }
-                   ]
+  "name": "Wavelet Packet Decomposition",
+  "description": "Applies full wavelet packet decomposition for fine-grained sub-band energy analysis (Coifman & Wickerhauser, 1992).",
+  "algorithm": "Wavelet Packet Decomposition Analysis Algorithm",
+  "mechanism": "This method applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **Full Wavelet Packet Tree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **Best Basis Selection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than AI-generated ones.\n\n3. **Subband Energy Distribution**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce anomalous energy in specific subbands — GAN grid artifacts appear as energy peaks at characteristic spatial frequencies.\n\n4. **Inter-Subband Correlation Analysis**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. AI-generated images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **Coefficient Distribution Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where AI generators struggle to reproduce correct statistics — are quantified for forensic scoring.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/18.119732",
+      "title": "Coifman, R.R. & Wickerhauser, M.V. (1992). Entropy-Based Algorithms for Best Basis Selection. IEEE TIT."
+    },
+    {
+      "url": "https://doi.org/10.1109/83.862633",
+      "title": "Chang, S.G. et al. (2000). Adaptive Wavelet Thresholding for Image Denoising. IEEE TIP."
+    }
+  ]
 }

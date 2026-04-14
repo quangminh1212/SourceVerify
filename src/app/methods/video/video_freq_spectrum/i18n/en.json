@@ -1,22 +1,22 @@
 {
-    "name": "Video Frequency Spectrum",
-    "description": "Analyzes frequency spectrum of video frames",
-    "algorithm": "Video Frequency Spectrum — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes frequency spectrum of video frames. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: frequency\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through video frequency spectrum analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Video Frequency Spectrum",
+  "description": "Analyzes frequency spectrum of video frames",
+  "algorithm": "Video Frequency Spectrum — Frequency Domain Analyzer",
+  "mechanism": "This method analyzes the video frequency spectrum for forensic detection:\n\n1. **2D Spatial Frequency Analysis**: Per-frame 2D FFT reveals the spatial frequency spectrum. The method analyzes the overall spectral shape, spectral peaks, and spectral symmetry. Natural images follow approximately 1/f spectral decay.\n\n2. **Spectral Anomaly Detection**: AI generators produce characteristic spectral anomalies: (a) GAN checkerboard peaks at upsampling stride frequencies, (b) diffusion model spectral gaps at certain frequency bands, (c) autoencoder spectral truncation at the bottleneck resolution. The method detects these architecture-specific spectral signatures.\n\n3. **Face-Background Spectral Comparison**: The spatial frequency spectrum of face regions and background should be consistent (same imaging pipeline). The method compares spectral shapes — generated faces may show different spectral characteristics (different noise spectrum, different high-frequency falloff, or additional spectral peaks from generation artifacts).\n\n4. **Temporal Spectral Stability**: The spatial frequency spectrum should be temporally stable for static content. The method tracks spectral stability — deepfake generation may produce temporally varying spectral content as the generator's output fluctuates frame-to-frame.\n\n5. **3D Spatio-Temporal Spectrum**: The combined spatial-temporal frequency spectrum (3D FFT over x, y, t) reveals motion structure. Natural motion produces characteristic spatio-temporal spectral planes. AI-generated motion may show different spectral structure — particularly at the temporal frequency boundaries of the generation model.",
+  "parameters": "Analysis type: frequency\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through video frequency spectrum analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

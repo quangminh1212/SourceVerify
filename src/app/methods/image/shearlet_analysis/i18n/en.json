@@ -1,22 +1,22 @@
 {
-    "name":  "Shearlet Transform Analysis",
-    "description":  "Uses shearlet transform for multi-directional analysis — superior to wavelets for anisotropic features (Kutyniok et al., 2012).",
-    "algorithm":  "Shearlet Transform Analysis Analysis Algorithm",
-    "mechanism":  "The Shearlet Transform Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1007/978-0-8176-8316-0",
-                           "title":  "Kutyniok, G. \u0026 Labate, D. (2012). Shearlets: Multiscale Analysis for Multivariate Data. Birkhauser."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1137/060649781",
-                           "title":  "Guo, K. \u0026 Labate, D. (2007). Optimally Sparse Multidimensional Representation Using Shearlets. SIAM J. Math. Anal."
-                       }
-                   ]
+  "name": "Shearlet Transform Analysis",
+  "description": "Uses shearlet transform for multi-directional analysis — superior to wavelets for anisotropic features (Kutyniok et al., 2012).",
+  "algorithm": "Shearlet Transform Analysis Analysis Algorithm",
+  "mechanism": "This method applies the Shearlet Transform following Kutyniok & Labate (2012) for directional multi-scale forensic analysis:\n\n1. **Shearlet System Construction**: A shearlet system is constructed using parabolic scaling matrices Aₐ = diag(a, √a) and shear matrices Sₛ. The shearlet ψₐ,ₛ,ₜ(x) = a⁻³/⁴ψ(Sₛ⁻¹Aₐ⁻¹(x−t)) provides near-optimal sparse representation of images with edges along curves.\n\n2. **Directional Decomposition**: Unlike wavelets, shearlets capture directional information via the shear parameter, enabling anisotropic analysis across multiple orientations at each scale. This is particularly effective for detecting edge artifacts in AI-generated images that exhibit unnatural directional properties.\n\n3. **Phase Congruency Analysis**: Shearlet-domain phase congruency measures the coherence of frequency components at edge locations. Natural edges show high phase congruency across scales, while AI-generated boundaries may show inconsistent phase relationships.\n\n4. **Sparsity Profiling**: The shearlet representation sparsity (measured by ℓ¹/ℓ² ratio) is analyzed per block. Natural images achieve near-optimal sparsity in the shearlet domain due to the geometric regularity of natural edges. AI artifacts — ringing, grid patterns, texture discontinuities — reduce sparsity in characteristic ways.\n\n5. **Edge Regularity Assessment**: The decay rate of shearlet coefficients across scales at detected edges is measured. Natural edges follow predictable decay patterns governed by Hölder regularity, while AI-generated edges often show anomalous coefficient decay indicating synthetic generation.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/978-0-8176-8316-0",
+      "title": "Kutyniok, G. & Labate, D. (2012). Shearlets: Multiscale Analysis for Multivariate Data. Birkhauser."
+    },
+    {
+      "url": "https://doi.org/10.1137/060649781",
+      "title": "Guo, K. & Labate, D. (2007). Optimally Sparse Multidimensional Representation Using Shearlets. SIAM J. Math. Anal."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Inter-Frame Blend",
-    "description": "Identifies ghosting and alpha-interpolation artifacts between consecutive frames caused by temporal blending in video deepfake pipelines that lack proper motion-compensated frame synthesis.",
-    "algorithm": "Inter-Frame Blend — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects inter-frame blending artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through inter-frame blend analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        }
-    ]
+  "name": "Inter-Frame Blend",
+  "description": "Identifies ghosting and alpha-interpolation artifacts between consecutive frames caused by temporal blending in video deepfake pipelines that lack proper motion-compensated frame synthesis.",
+  "algorithm": "Inter-Frame Blend — Pixel-Level Spatial Analysis",
+  "mechanism": "This method detects inter-frame blending artifacts for video deepfake detection:\n\n1. **Frame Blend Detection**: The method identifies frames that appear to be blends of adjacent frames — visible as ghosting, double-exposure effects, or unnatural motion blur. Frame blending can result from frame rate conversion in the deepfake pipeline or temporal smoothing applied to reduce generation flicker.\n\n2. **Motion Blur Analysis**: Natural motion blur follows object motion trajectories with blur direction and magnitude consistent with the object's velocity. The method analyzes blur characteristics — artificially blended frames show non-directional or multi-directional blur inconsistent with any single motion trajectory.\n\n3. **Alpha Blending Residual Detection**: Frame blending typically uses alpha compositing: I_blend = α·I_t + (1−α)·I_{t+1}. This creates characteristic intermediate pixel values detectable via distribution analysis. The method detects frames with bimodal pixel value distributions indicating blend composition.\n\n4. **Temporal Derivative Analysis**: The temporal derivative (frame difference) signal is analyzed. Natural video shows smooth temporal derivatives with abrupt changes only at scene cuts. Blended frames produce characteristic low-derivative frames (blending reduces temporal contrast) surrounded by normal-derivative frames.\n\n5. **Blend Pattern Scoring**: The temporal pattern of detected blend artifacts is analyzed. Periodic blending (every N frames) indicates frame rate conversion. Random blending may indicate temporal smoothing to cover generation artifacts. The pattern and frequency of blending provide forensic clues about the manipulation pipeline used.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through inter-frame blend analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name":  "Background Object Physics",
-    "description":  "Validates physics consistency of background objects (shadows, reflections, perspective) across frames.",
-    "algorithm":  "Background Object Physics Analysis Algorithm",
-    "mechanism":  "The Background Object Physics system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://mitpress.mit.edu/9780262534079/photo-forensics/",
-                           "title":  "Farid, H. (2016). Photo Forensics. MIT Press."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1145/1288869.1288876",
-                           "title":  "Johnson, M.K. \u0026 Farid, H. (2007). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMSEC."
-                       }
-                   ]
+  "name": "Background Object Physics",
+  "description": "Validates physics consistency of background objects (shadows, reflections, perspective) across frames.",
+  "algorithm": "Background Object Physics Analysis Algorithm",
+  "mechanism": "This method verifies physical plausibility of background objects in video for deepfake and manipulation detection following Farid (2016):\n\n1. **Object Detection & Tracking**: Background objects (furniture, walls, windows, vehicles) are detected and tracked across frames. Their positions, orientations, and visible surfaces are monitored for physical consistency throughout the video sequence.\n\n2. **Perspective Consistency Verification**: Object geometry is analyzed for correct linear perspective. Parallel edges should converge at consistent vanishing points across all background objects. Manipulated videos may introduce objects with inconsistent perspective geometry or perspective that shifts inconsistently with camera motion.\n\n3. **Lighting & Shadow Physics**: Shadow directions, ambient occlusion, and specular highlights on background objects are verified for mutual consistency and agreement with the primary light source direction. Composited backgrounds or AI-generated scenes may produce physically impossible shadow configurations.\n\n4. **Temporal Physical Coherence**: Background objects must obey physical laws — rigid objects maintain shape, occluded objects remain consistent when revealed, and object motion follows Newtonian mechanics. AI-generated backgrounds may produce objects that subtly deform, disappear/reappear inconsistently, or move in physically impossible ways.\n\n5. **Chromatic Aberration & Lens Effects**: Real camera lenses produce consistent chromatic aberration and distortion across the entire field of view. Background objects should exhibit the same optical characteristics as foreground subjects. Composited or generated backgrounds may show inconsistent lens effects, serving as manipulation indicators per Johnson & Farid (2007).",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://mitpress.mit.edu/9780262534079/photo-forensics/",
+      "title": "Farid, H. (2016). Photo Forensics. MIT Press."
+    },
+    {
+      "url": "https://doi.org/10.1145/1288869.1288876",
+      "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries Through Chromatic Aberration. ACM MMSEC."
+    }
+  ]
 }

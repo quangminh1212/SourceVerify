@@ -1,22 +1,22 @@
 {
-    "name": "Color Histogram Shift",
-    "description": "Detects face vs background color histogram shift",
-    "algorithm": "Color Histogram Shift — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects face vs background color histogram shift. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through color histogram shift analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Color Histogram Shift",
+  "description": "Detects face vs background color histogram shift",
+  "algorithm": "Color Histogram Shift — Pixel-Level Spatial Analysis",
+  "mechanism": "This method detects temporal color histogram shifts for video deepfake detection following Zheng et al. (2021):\n\n1. **Per-Frame Color Histogram Computation**: For each frame, color histograms are computed in multiple color spaces (RGB, HSV, Lab) across face and background regions separately. Histograms capture the overall color distribution with bin resolution tuned to detect subtle shifts.\n\n2. **Inter-Frame Histogram Comparison**: Consecutive frame histograms are compared using Earth Mover's Distance (EMD), chi-squared distance, and Bhattacharyya distance. Natural video shows smooth, gradual histogram evolution. Deepfakes may produce frame-to-frame color distribution jumps, especially when the face generator's color model differs from the source video.\n\n3. **Face-Background Color Coherence**: The color histogram relationship between face regions and background is analyzed per frame. In authentic video, face and background share the same white balance and color grading. Deepfake face insertion may introduce subtle color distribution mismatches — the generated face may have different color temperature or saturation characteristics than the background.\n\n4. **Temporal Color Stability Analysis**: Long-term color histogram trends are tracked. Natural illumination changes produce smooth, physically motivated color shifts (gradual, affecting all regions similarly). Deepfakes may produce oscillating or jerky color histogram changes as the generator struggles to maintain consistent color rendering across frames.\n\n5. **Histogram Anomaly Scoring**: Statistical tests detect frames with significant color histogram deviations from temporal neighbors. The score combines inter-frame stability, face-background coherence, and long-term trend analysis, quantifying the likelihood of color manipulation or AI generation artifacts.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through color histogram shift analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

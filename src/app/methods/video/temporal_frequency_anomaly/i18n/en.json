@@ -1,22 +1,22 @@
 {
-    "name":  "Temporal Frequency Anomaly",
-    "description":  "Detects anomalous temporal frequency signatures in video — AI generation creates distinctive temporal spectral patterns.",
-    "algorithm":  "Temporal Frequency Anomaly Analysis Algorithm",
-    "mechanism":  "The Temporal Frequency Anomaly system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/AVSS.2018.8639163",
-                           "title":  "Guera, D. \u0026 Delp, E.J. (2018). Deepfake Video Detection Using Recurrent Neural Networks. AVSS."
-                       },
-                       {
-                           "url":  "https://arxiv.org/abs/1905.00582",
-                           "title":  "Sabir, E. et al. (2019). Recurrent Convolutional Strategies for Face Manipulation Detection. CVPR Workshop."
-                       }
-                   ]
+  "name": "Temporal Frequency Anomaly",
+  "description": "Detects anomalous temporal frequency signatures in video — AI generation creates distinctive temporal spectral patterns.",
+  "algorithm": "Temporal Frequency Anomaly Analysis Algorithm",
+  "mechanism": "This method detects temporal frequency anomalies for video deepfake detection:\n\n1. **Temporal Signal Extraction**: Per-pixel or per-region temporal signals are extracted — tracking intensity, color, and texture over time. These signals capture the temporal dynamics at each spatial location.\n\n2. **Temporal Frequency Decomposition**: Temporal signals are analyzed via FFT to obtain per-location temporal frequency spectra. This reveals the frequency components of temporal variation: scene motion (~0-5 Hz), lighting changes (~0-1 Hz), and potential generation artifacts.\n\n3. **Anomaly Detection in Temporal Spectra**: Natural video temporal spectra are dominated by low frequencies (slow scene changes) with rapid falloff at higher frequencies. The method detects anomalous spectral components: (a) energy at incommensurate frequencies with no physical source, (b) spectral peaks at the video generator's characteristic temporal frequencies, (c) unexpected harmonics from repetitive generation patterns.\n\n4. **Spatial Mapping of Temporal Anomalies**: The detected temporal frequency anomalies are mapped spatially. Anomalies concentrated in face regions (but absent in background) strongly indicate face-specific generation artifacts. The spatial distribution of temporal anomalies reveals the extent and boundaries of generated content.\n\n5. **Cross-Frequency Coherence**: In natural video, temporal frequency components at different spatial frequencies are coherently related (same physical motion produces correlated temporal variations at all spatial frequencies). The method checks cross-frequency coherence — AI generation may produce temporally incoherent variations at different spatial scales.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/AVSS.2018.8639163",
+      "title": "Guera, D. & Delp, E.J. (2018). Deepfake Video Detection Using Recurrent Neural Networks. AVSS."
+    },
+    {
+      "url": "https://arxiv.org/abs/1905.00582",
+      "title": "Sabir, E. et al. (2019). Recurrent Convolutional Strategies for Face Manipulation Detection. CVPR Workshop."
+    }
+  ]
 }

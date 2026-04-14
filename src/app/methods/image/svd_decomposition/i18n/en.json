@@ -1,22 +1,22 @@
 {
-    "name":  "SVD Decomposition Analysis",
-    "description":  "Applies Singular Value Decomposition to detect rank-deficiency patterns typical of AI-generated images, based on eigenvalue distribution anomalies.",
-    "algorithm":  "SVD Decomposition Analysis Analysis Algorithm",
-    "mechanism":  "The SVD Decomposition Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1007/BF02288367",
-                           "title":  "Eckart, C. \u0026 Young, G. (1936). The Approximation of One Matrix by Another of Lower Rank. Psychometrika."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TIFS.2015.2390999",
-                           "title":  "Liu, H. et al. (2015). Image Forgery Localization via Integrating Tampering Possibility Maps. IEEE TIFS."
-                       }
-                   ]
+  "name": "SVD Decomposition Analysis",
+  "description": "Applies Singular Value Decomposition to detect rank-deficiency patterns typical of AI-generated images, based on eigenvalue distribution anomalies.",
+  "algorithm": "SVD Decomposition Analysis Analysis Algorithm",
+  "mechanism": "This method applies Singular Value Decomposition (SVD) analysis for forensic image authentication:\n\n1. **Block-wise SVD Computation**: The image is partitioned into blocks, and for each block matrix A ∈ ℝᵐˣⁿ, the SVD A = UΣVᵀ is computed. The singular values σ₁ ≥ σ₂ ≥ ... ≥ σᵣ capture the energy distribution across orthogonal rank-1 components following Eckart & Young (1936).\n\n2. **Singular Value Spectrum Analysis**: The decay profile of singular values is analyzed. Natural image blocks exhibit characteristic decay patterns — smooth regions decay rapidly (low effective rank), while textured regions show gradual decay. AI-generated images often produce anomalous decay profiles with unexpected rank distributions.\n\n3. **Effective Rank Mapping**: The effective rank ρ(A) = exp(H(σ̃)), where H is the Shannon entropy of normalized singular values σ̃ᵢ = σᵢ/Σσⱼ, provides a continuous measure of block complexity. A spatial map of effective rank reveals regions with unnatural complexity — either over-smoothed (low rank) or artificially textured.\n\n4. **Principal Component Residual Analysis**: After retaining the top-k singular components (capturing structural content), the residual R = A − UₖΣₖVₖᵀ contains noise, texture detail, and potential artifacts. The statistical properties of this residual differ systematically between natural photographs (sensor noise characteristics) and AI-generated images.\n\n5. **Forensic Scoring**: The spatial distribution of SVD statistics (effective rank, spectral decay rate, residual statistics) is analyzed for consistency. Manipulated or AI-generated regions show characteristic SVD signatures — truncated singular value spectra, abnormal rank distributions, or residuals lacking genuine sensor noise characteristics.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/BF02288367",
+      "title": "Eckart, C. & Young, G. (1936). The Approximation of One Matrix by Another of Lower Rank. Psychometrika."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIFS.2015.2390999",
+      "title": "Liu, H. et al. (2015). Image Forgery Localization via Integrating Tampering Possibility Maps. IEEE TIFS."
+    }
+  ]
 }

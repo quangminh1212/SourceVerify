@@ -1,22 +1,22 @@
 {
-    "name":  "Facial Action Timing Analysis",
-    "description":  "Analyzes onset, apex, and offset timing of facial action units (AUs) — AI expressions have unnatural temporal dynamics.",
-    "algorithm":  "Facial Action Timing Analysis Analysis Algorithm",
-    "mechanism":  "The Facial Action Timing Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://www.paulekman.com/facial-action-coding-system/",
-                           "title":  "Ekman, P. \u0026 Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/CVPR42600.2020.00505",
-                           "title":  "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR."
-                       }
-                   ]
+  "name": "Facial Action Timing Analysis",
+  "description": "Analyzes onset, apex, and offset timing of facial action units (AUs) — AI expressions have unnatural temporal dynamics.",
+  "algorithm": "Facial Action Timing Analysis Analysis Algorithm",
+  "mechanism": "This method analyzes the temporal dynamics of facial action units for deepfake detection:\n\n1. **Action Unit Temporal Profiling**: Each FACS action unit activation is profiled over time, measuring onset velocity (rate of muscle contraction initiation), peak intensity, sustain duration, and offset velocity. Natural facial actions follow stereotyped temporal profiles governed by neuromuscular physiology.\n\n2. **Timing Regularity Analysis**: Natural facial actions show specific timing distributions — spontaneous smiles onset in ~0.5s, reflexive blinks in ~0.1s, surprise reactions in ~0.25s. The method checks whether detected AU timing falls within physiologically valid ranges. AI-generated facial actions may show unrealistic timing — too fast, too slow, or uniformly timed.\n\n3. **Inter-AU Temporal Coordination**: When multiple AUs activate together (e.g., smile = AU6 + AU12), their relative timing follows biomechanical constraints — zygomatic major contracts before orbicularis oculi. The method checks inter-AU timing relationships. Deepfakes may produce simultaneous AU activation lacking natural temporal offsets.\n\n4. **Action-Reaction Timing**: In conversation, facial actions follow a temporal structure: reaction expressions appear after the triggering event with characteristic delays (200-500ms for emotional reactions). The method evaluates whether expression timing is contextually appropriate. AI-generated faces may show incorrect action-reaction timing.\n\n5. **Temporal Symmetry Assessment**: Natural facial actions show slight bilateral temporal asymmetry — the dominant side activates marginally earlier. The method measures left-right onset timing differences. Perfect bilateral temporal symmetry or excessive asymmetry indicates AI generation artifacts.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://www.paulekman.com/facial-action-coding-system/",
+      "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
+    },
+    {
+      "url": "https://doi.org/10.1109/CVPR42600.2020.00505",
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR."
+    }
+  ]
 }

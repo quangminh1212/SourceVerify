@@ -1,22 +1,22 @@
 {
-    "name":  "Video Spectral Coherence",
-    "description":  "Measures spectral coherence between consecutive frames — AI-generated videos show distinct spectral jumps.",
-    "algorithm":  "Video Spectral Coherence Analysis Algorithm",
-    "mechanism":  "The Video Spectral Coherence system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://proceedings.mlr.press/v119/frank20a.html",
-                           "title":  "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/CVPR42600.2020.00791",
-                           "title":  "Durall, R. et al. (2020). Watch Your Up-Convolution: CNN Based Generative Deep Neural Networks Are Failing to Reproduce Spectral Distributions. CVPR."
-                       }
-                   ]
+  "name": "Video Spectral Coherence",
+  "description": "Measures spectral coherence between consecutive frames — AI-generated videos show distinct spectral jumps.",
+  "algorithm": "Video Spectral Coherence Analysis Algorithm",
+  "mechanism": "This method analyzes spectral coherence across video frame regions for deepfake detection:\n\n1. **Regional Spectral Analysis**: The spatial frequency spectrum is computed independently for multiple regions: face, background, clothing, hair. Each region's spectral characteristic — spectral slope, cutoff frequency, spectral peaks — is measured.\n\n2. **Cross-Region Spectral Coherence**: All regions captured through the same optical system should show coherent spectral characteristics — same noise spectrum, same spectral cutoff (determined by the lens MTF), same compression artifacts. The method checks cross-region spectral coherence. Deepfake composites show spectral incoherence between generated face and captured background.\n\n3. **Spectral Noise Floor Matching**: The spectral noise floor (high-frequency baseline noise level) should be uniform across the frame. The method compares noise floors between regions — different noise floors indicate content from different imaging/generation pipelines.\n\n4. **Spectral Transition Analysis**: At region boundaries (face-background border), the spectral transition should be smooth. The method analyzes spectral characteristics across boundaries — abrupt spectral changes at the face border (changing noise spectrum, changing spectral slope) indicate compositing.\n\n5. **Temporal Spectral Coherence**: The spectral relationship between regions should remain stable over time. The method tracks inter-region spectral ratios — temporal variation in the face-to-background spectral ratio indicates the face content varies independently from the background, consistent with deepfake generation.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://proceedings.mlr.press/v119/frank20a.html",
+      "title": "Frank, J. et al. (2020). Leveraging Frequency Analysis for Deep Fake Image Recognition. ICML."
+    },
+    {
+      "url": "https://doi.org/10.1109/CVPR42600.2020.00791",
+      "title": "Durall, R. et al. (2020). Watch Your Up-Convolution: CNN Based Generative Deep Neural Networks Are Failing to Reproduce Spectral Distributions. CVPR."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name":  "NIQE Quality Score",
-    "description":  "Computes Natural Image Quality Evaluator blind quality score — AI images often score differently from natural photos (Mittal et al., 2013).",
-    "algorithm":  "NIQE Quality Score Analysis Algorithm",
-    "mechanism":  "The NIQE Quality Score system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/LSP.2012.2227726",
-                           "title":  "Mittal, A. et al. (2013). Making a Completely Blind Image Quality Analyzer. IEEE Signal Processing Letters."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TIP.2012.2214050",
-                           "title":  "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP."
-                       }
-                   ]
+  "name": "NIQE Quality Score",
+  "description": "Computes Natural Image Quality Evaluator blind quality score — AI images often score differently from natural photos (Mittal et al., 2013).",
+  "algorithm": "NIQE Quality Score Analysis Algorithm",
+  "mechanism": "This method implements the Natural Image Quality Evaluator (NIQE) by Mittal et al. (2013) for blind quality assessment:\n\n1. **NSS Feature Extraction**: The image is decomposed into normalized luminance coefficients using mean-subtracted contrast-normalized (MSCN) coefficients: Î(x,y) = (I(x,y) − μ(x,y))/(σ(x,y) + C). These MSCN coefficients of natural images follow a unit Gaussian distribution.\n\n2. **Generalized Gaussian Distribution (GGD) Fitting**: MSCN coefficient distributions are fit to a GGD parameterized by shape (α) and variance (σ²). Additionally, pairwise products of adjacent MSCN coefficients are modeled using an asymmetric GGD (AGGD) in four directions (horizontal, vertical, and two diagonals).\n\n3. **Multivariate Gaussian (MVG) Model**: The extracted NSS features (GGD shape, variance, AGGD parameters) form a feature vector. A pristine MVG model (μₙ, Σₙ) is pre-computed from a corpus of natural undistorted images.\n\n4. **Quality Distance Computation**: The NIQE score is computed as the Mahalanobis-like distance: D = √((μ₁−μ₂)ᵀ((Σ₁+Σ₂)/2)⁻¹(μ₁−μ₂)) between the test image's feature distribution (μ₁, Σ₁) and the pristine model (μ₂, Σ₂). Lower scores indicate more natural-looking images.\n\n5. **Forensic Application**: AI-generated images often deviate from natural scene statistics (NSS) captured by NIQE. While visually plausible, synthetic images exhibit subtle violations of NSS regularity — particularly in local contrast normalization and adjacent coefficient dependencies — yielding elevated NIQE scores that serve as a generation indicator.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/LSP.2012.2227726",
+      "title": "Mittal, A. et al. (2013). Making a Completely Blind Image Quality Analyzer. IEEE Signal Processing Letters."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2012.2214050",
+      "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name":  "Phoneme-Viseme Mapping",
-    "description":  "Validates phoneme-to-viseme correspondence — deepfakes often fail to correctly map audio phonemes to lip shapes.",
-    "algorithm":  "Phoneme-Viseme Mapping Analysis Algorithm",
-    "mechanism":  "The Phoneme-Viseme Mapping system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/CVPRW50498.2020.00338",
-                           "title":  "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/CVPR46437.2021.00579",
-                           "title":  "Haliassos, A. et al. (2021). Lips Don\u0027t Lie: A Generalisable and Robust Approach to Face Forgery Detection. CVPR."
-                       }
-                   ]
+  "name": "Phoneme-Viseme Mapping",
+  "description": "Validates phoneme-to-viseme correspondence — deepfakes often fail to correctly map audio phonemes to lip shapes.",
+  "algorithm": "Phoneme-Viseme Mapping Analysis Algorithm",
+  "mechanism": "This method creates and analyzes phoneme-to-viseme mapping for deepfake detection:\n\n1. **Comprehensive Viseme Mapping**: A many-to-one mapping from phonemes to visemes is established and verified per video. Multiple phonemes map to the same viseme (e.g., /p/, /b/, /m/ all produce bilabial closure). The method checks that phonemes with the same target viseme actually produce the same visual appearance.\n\n2. **Viseme Cluster Analysis**: For each viseme category, all instances across the video are collected and analyzed for consistency. The visual appearance of the same viseme should be consistent throughout the video. High intra-viseme variance suggests AI generation where the lip model doesn't consistently reproduce the same visual targets.\n\n3. **Speaker-Specific Viseme Model**: Each speaker has characteristic viseme shapes determined by their dental/skeletal structure and speaking habits. The method builds a per-speaker viseme model and checks temporal consistency. Deepfakes may show inconsistent viseme shapes as the generator doesn't maintain a stable articulatory model.\n\n4. **Transition Trajectory Analysis**: Viseme-to-viseme transitions follow curved trajectories through the lip configuration space, determined by articulatory dynamics. The method analyzes transition trajectories for physical plausibility — AI-generated transitions may take shorter (unnatural shortcuts) or longer (meandering) paths than anatomically possible.\n\n5. **Viseme Duration Distribution**: Each viseme has a characteristic duration distribution dependent on the phonemic context and speaking rate. The method checks whether viseme durations follow expected distributions. AI lip generation may produce visemes with incorrect or implausibly uniform durations.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
+      "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
+    },
+    {
+      "url": "https://doi.org/10.1109/CVPR46437.2021.00579",
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach to Face Forgery Detection. CVPR."
+    }
+  ]
 }

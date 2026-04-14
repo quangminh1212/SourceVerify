@@ -1,22 +1,22 @@
 {
-    "name": "Skin Pore Simulation",
-    "description": "Detects simulated pore patterns vs real pores",
-    "algorithm": "Skin Pore Simulation — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects simulated pore patterns vs real pores. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through skin pore simulation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Skin Pore Simulation",
+  "description": "Detects simulated pore patterns vs real pores",
+  "algorithm": "Skin Pore Simulation — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes skin pore similarity patterns for deepfake detection:\n\n1. **Pore Pattern Extraction**: Skin pore patterns are extracted from high-resolution facial regions using local morphological operators. Pore centers are localized and characterized by size, depth (estimated from shadow), and spacing.\n\n2. **Intra-Frame Pore Consistency**: Within each frame, pore characteristics should vary systematically across the face (larger on nose, medium on cheeks, smaller on forehead). The method checks for anatomically correct pore distribution. AI generators may produce spatially uniform pore patterns or incorrect regional variation.\n\n3. **Inter-Frame Pore Stability**: Pore patterns should remain identical across frames (pores are fixed skin structures). The method computes pore pattern similarity between frames using point matching. High inter-frame pore pattern variation indicates AI generation where pore texture is generated independently per frame.\n\n4. **Pore Resolution Assessment**: Pore visibility depends on resolution and should be consistent across the face at the same camera distance. The method checks whether pore resolution matches the video's spatial resolution. AI-generated faces may show resolution-inconsistent pore rendering — visible pores in some regions but smooth skin in others at the same scale.\n\n5. **Synthetic Pore Pattern Detection**: AI-generated pore patterns may show statistical regularities absent in natural skin: (a) too-perfect hexagonal spacing (crystalline pattern), (b) exact repetition of pore patches (texture tiling), (c) pore patterns that don't respond to skin stretching during expression. These markers are quantified for scoring.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through skin pore simulation analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }

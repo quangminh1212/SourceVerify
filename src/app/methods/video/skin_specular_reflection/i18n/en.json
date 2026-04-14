@@ -1,22 +1,22 @@
 {
-    "name":  "Skin Specular Reflection",
-    "description":  "Analyzes skin specular reflection patterns — AI-generated skin often has unrealistic specular highlights.",
-    "algorithm":  "Skin Specular Reflection Analysis Algorithm",
-    "mechanism":  "The Skin Specular Reflection system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TPAMI.2020.3009287",
-                           "title":  "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/WIFS47025.2019.9035099",
-                           "title":  "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WIFS."
-                       }
-                   ]
+  "name": "Skin Specular Reflection",
+  "description": "Analyzes skin specular reflection patterns — AI-generated skin often has unrealistic specular highlights.",
+  "algorithm": "Skin Specular Reflection Analysis Algorithm",
+  "mechanism": "This method analyzes skin specular reflection for deepfake detection:\n\n1. **Specular Component Extraction**: The specular (glossy) component of skin reflectance is separated from the diffuse (matte) component using dichromatic reflection model decomposition. Specular highlights appear where skin surface is oriented to reflect light directly toward the camera.\n\n2. **Specular Highlight Distribution**: The spatial distribution of skin specular highlights should follow the face's 3D geometry and illumination. The method checks highlight positions against expected locations — forehead center, nose bridge and tip, cheekbone apexes. AI generators may produce specular highlights at incorrect locations or with wrong intensity distributions.\n\n3. **Physical Specular Model**: Skin specular reflection follows the Torrance-Sparrow (microfacet) BRDF model with characteristic roughness parameters. The method measures specular highlight shape and falloff, comparing against physical skin reflectance models. Generated highlights may show non-physical profiles — too sharp, too broad, or incorrect Fresnel behavior.\n\n4. **Temporal Specular Dynamics**: As the head moves, specular highlights should slide across the face following the changing reflection geometry. The method tracks highlight positions relative to landmarks — highlights should move according to the rotation of the surface normal relative to the light direction. Incorrect highlight dynamics indicate AI generation.\n\n5. **Sweat/Oil Physics**: Facial skin specularity varies with surface moisture — oily regions (forehead, nose) are more specular. This distribution should be consistent across frames and follow physiological patterns. AI generators typically don't model skin moisture variation, producing uniform or incorrectly distributed specularity.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+    },
+    {
+      "url": "https://doi.org/10.1109/WIFS47025.2019.9035099",
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WIFS."
+    }
+  ]
 }

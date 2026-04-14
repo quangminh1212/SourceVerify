@@ -1,22 +1,22 @@
 {
-    "name":  "Scene Cut Anomaly Detection",
-    "description":  "Detects anomalous scene cut patterns and unnatural transition points in manipulated videos.",
-    "algorithm":  "Scene Cut Anomaly Detection Analysis Algorithm",
-    "mechanism":  "The Scene Cut Anomaly Detection system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TMM.2005.861777",
-                           "title":  "Rasheed, Z. \u0026 Shah, M. (2005). Detection and Representation of Scenes in Videos. IEEE TMM."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1145/2733373.2806316",
-                           "title":  "Baraldi, L. et al. (2015). A Deep Siamese Network for Scene Detection in Broadcast Videos. ACM MM."
-                       }
-                   ]
+  "name": "Scene Cut Anomaly Detection",
+  "description": "Detects anomalous scene cut patterns and unnatural transition points in manipulated videos.",
+  "algorithm": "Scene Cut Anomaly Detection Analysis Algorithm",
+  "mechanism": "This method detects scene cut anomalies for video forensic analysis:\n\n1. **Scene Cut Detection**: Scene cuts (hard cuts, dissolves, fades, wipes) are detected by analyzing inter-frame similarity metrics — histogram differences, pixel MSE, and structural similarity. Cut locations are identified and classified by type.\n\n2. **Cut Point Content Analysis**: The content immediately before and after each cut is analyzed for consistency. Manipulated videos may contain cuts specifically placed to hide temporal discontinuities from deepfake insertion — cuts at moments where generation artifacts would be most visible.\n\n3. **Cut Frequency Analysis**: The temporal distribution of cuts is analyzed. Normal video editing follows content-driven patterns (cuts at speech pauses, action changes). Anomalous cut frequency — particularly rapid cuts correlating with challenging deepfake scenarios (profile views, extreme expressions) — may indicate editing to conceal generation failures.\n\n4. **Cross-Cut Consistency**: Content properties (lighting, color balance, noise level) should be consistent across cuts within the same scene. The method checks for property discontinuities at cuts that might indicate different source material. Face properties changing at cut points (subtle identity shifts, quality changes) suggest manipulation.\n\n5. **Cut-Compression Alignment**: In properly encoded video, scene cuts should align with I-frame positions. Misalignment between detected cuts and I-frames may indicate post-manipulation re-encoding without proper scene detection, a forensic trace of manipulation processing.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TMM.2005.861777",
+      "title": "Rasheed, Z. & Shah, M. (2005). Detection and Representation of Scenes in Videos. IEEE TMM."
+    },
+    {
+      "url": "https://doi.org/10.1145/2733373.2806316",
+      "title": "Baraldi, L. et al. (2015). A Deep Siamese Network for Scene Detection in Broadcast Videos. ACM MM."
+    }
+  ]
 }

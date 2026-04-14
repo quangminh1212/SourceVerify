@@ -1,22 +1,22 @@
 {
-    "name":  "SSIM Map Analysis",
-    "description":  "Computes local SSIM structural similarity maps to detect region-level quality inconsistencies (Wang et al., 2004).",
-    "algorithm":  "SSIM Map Analysis Analysis Algorithm",
-    "mechanism":  "The SSIM Map Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TIP.2003.819861",
-                           "title":  "Wang, Z. et al. (2004). Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE TIP."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/MSP.2008.930649",
-                           "title":  "Wang, Z. \u0026 Bovik, A.C. (2009). Mean Squared Error: Love It or Leave It? IEEE Signal Processing Magazine."
-                       }
-                   ]
+  "name": "SSIM Map Analysis",
+  "description": "Computes local SSIM structural similarity maps to detect region-level quality inconsistencies (Wang et al., 2004).",
+  "algorithm": "SSIM Map Analysis Analysis Algorithm",
+  "mechanism": "This method applies the Structural Similarity Index (SSIM) framework by Wang et al. (2004) for forensic quality analysis:\n\n1. **Local Statistics Computation**: For each local window w (typically 11×11 Gaussian), three components are computed: luminance μ, contrast σ, and structure σ_xy. These capture perceptually relevant image properties following the human visual system model.\n\n2. **SSIM Component Decomposition**: The SSIM index between reference and test patches decomposes as: SSIM(x,y) = l(x,y)^α · c(x,y)^β · s(x,y)^γ, where l = (2μₓμᵧ+C₁)/(μₓ²+μᵧ²+C₁), c = (2σₓσᵧ+C₂)/(σₓ²+σᵧ²+C₂), s = (σₓᵧ+C₃)/(σₓσᵧ+C₃).\n\n3. **Self-Similarity Map Construction**: For forensic analysis without a reference image, local self-similarity is computed by comparing each patch against its neighboring regions. The resulting SSIM map reveals spatial consistency of image quality — genuine images show smooth, physically coherent quality variation.\n\n4. **Quality Discontinuity Detection**: Abrupt changes in local SSIM indicate potential manipulation boundaries — where inserted or AI-generated regions meet authentic image content. These discontinuities arise from differences in compression artifacts, noise levels, or rendering quality.\n\n5. **Statistical Profiling**: The distribution of local SSIM values is analyzed. Natural images exhibit characteristic SSIM distributions governed by content complexity. AI-generated images often show abnormally uniform local quality (lacking the natural variation from optics, sensor, and compression) or suspicious quality boundaries absent in untampered photographs.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TIP.2003.819861",
+      "title": "Wang, Z. et al. (2004). Image Quality Assessment: From Error Visibility to Structural Similarity. IEEE TIP."
+    },
+    {
+      "url": "https://doi.org/10.1109/MSP.2008.930649",
+      "title": "Wang, Z. & Bovik, A.C. (2009). Mean Squared Error: Love It or Leave It? IEEE Signal Processing Magazine."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Audio Noise Floor",
-    "description": "Analyzes audio noise floor patterns to detect synthetic artifacts, anomalies, and characteristic signatures of generative AI models.",
-    "algorithm": "Audio Noise Floor — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes audio noise floor patterns. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: sensor\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through audio noise floor analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Chen, T. et al. (2020). Generalization of Audio Deepfake Detection. Odyssey.",
-            "url": "https://arxiv.org/abs/2010.11317"
-        },
-        {
-            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413700"
-        }
-    ]
+  "name": "Audio Noise Floor",
+  "description": "Analyzes audio noise floor patterns to detect synthetic artifacts, anomalies, and characteristic signatures of generative AI models.",
+  "algorithm": "Audio Noise Floor — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes the audio noise floor characteristics for deepfake detection following Chen et al. (2020):\n\n1. **Noise Floor Estimation**: The background noise level is estimated across frequency bands using minimum statistics or MMSE-based methods. Real audio recordings contain characteristic noise profiles shaped by microphone electronics, room acoustics, and environmental sounds with specific spectral coloring.\n\n2. **Spectral Noise Profile Analysis**: The noise floor spectrum is compared against expected characteristics for genuine recordings. Real microphones produce noise with predictable spectral shape (often pink/brownian). AI-generated audio typically produces either unnaturally clean signals (absence of environmental noise) or artificially added noise with incorrect spectral characteristics.\n\n3. **Temporal Noise Consistency**: The noise floor is tracked across the recording duration. In authentic recordings, ambient noise varies naturally with room dynamics but maintains consistent spectral character. Deepfake audio may show noise floor discontinuities at splice points or unnatural noise stationarity across the entire clip.\n\n4. **Noise-Signal Correlation Analysis**: In real recordings, background noise acoustically interacts with the speech signal via room reverberation. The method checks whether noise-signal correlations follow physical room acoustic models. Synthesized speech overlaid on separately generated or copied noise lacks these natural cross-correlations.\n\n5. **Quantization Noise Assessment**: The quantization noise pattern is examined for codec consistency. Re-encoded deepfake audio shows double-quantization artifacts in the noise floor — subtle but detectable statistical irregularities in the least significant bits that differ from single-pass recording chains.",
+  "parameters": "Analysis type: sensor\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through audio noise floor analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Chen, T. et al. (2020). Generalization of Audio Deepfake Detection. Odyssey.",
+      "url": "https://arxiv.org/abs/2010.11317"
+    },
+    {
+      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413700"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name":  "Audio Formant Analysis",
-    "description":  "Analyzes speech formant frequencies (F1-F4) — voice synthesis often produces unnatural formant transitions.",
-    "algorithm":  "Audio Formant Analysis Analysis Algorithm",
-    "mechanism":  "The Audio Formant Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1007/11613107_12",
-                           "title":  "Chetty, G. \u0026 Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1007/978-3-642-36806-6",
-                           "title":  "Schuller, B. et al. (2013). Computational Paralinguistics. Springer."
-                       }
-                   ]
+  "name": "Audio Formant Analysis",
+  "description": "Analyzes speech formant frequencies (F1-F4) — voice synthesis often produces unnatural formant transitions.",
+  "algorithm": "Audio Formant Analysis Analysis Algorithm",
+  "mechanism": "This method analyzes speech formant structure for audio deepfake detection following Chetty & Wagner (2006):\n\n1. **Formant Extraction**: Speech segments are analyzed using Linear Predictive Coding (LPC) to extract formant frequencies F1-F4 and their bandwidths. Formants are the resonant frequencies of the vocal tract, determined by physical anatomy — tongue position, jaw opening, and vocal tract length.\n\n2. **Formant Trajectory Analysis**: Temporal trajectories of formant frequencies are tracked across phoneme transitions. Natural speech shows smooth, physiologically constrained formant transitions governed by articulatory dynamics. AI-generated speech may exhibit unnaturally abrupt formant shifts or overly smooth trajectories lacking natural micro-variations.\n\n3. **Speaker-Specific Formant Modeling**: Each speaker has characteristic formant ranges determined by vocal tract geometry. The method builds a speaker-specific formant model and checks consistency — deepfake audio may inadvertently blend formant characteristics from source and target speakers, creating acoustically impossible vocal tract configurations.\n\n4. **Formant Bandwidth Analysis**: Natural formant bandwidths reflect the damping properties of the vocal tract. AI synthesis often produces formants with unnatural bandwidth patterns — either too narrow (over-resonant) or too uniform across frequency bands, lacking the frequency-dependent damping of real vocal tracts.\n\n5. **Harmonic-to-Formant Ratio**: The relationship between harmonic series and formant peaks is analyzed. In natural speech, harmonics interact with formant resonances in predictable ways governed by source-filter theory. Synthetic speech may show anomalous harmonic-formant relationships indicating generated rather than physical sound production.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/11613107_12",
+      "title": "Chetty, G. & Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
+    },
+    {
+      "url": "https://doi.org/10.1007/978-3-642-36806-6",
+      "title": "Schuller, B. et al. (2013). Computational Paralinguistics. Springer."
+    }
+  ]
 }

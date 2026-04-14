@@ -1,22 +1,22 @@
 {
-    "name": "Pixel Repetition",
-    "description": "Analyzes pixel pattern repetition in frame",
-    "algorithm": "Pixel Repetition — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes pixel pattern repetition in frame. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through pixel repetition analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Pixel Repetition",
+  "description": "Analyzes pixel pattern repetition in frame",
+  "algorithm": "Pixel Repetition — Pixel-Level Spatial Analysis",
+  "mechanism": "This method detects pixel-level repetition patterns in video for deepfake detection:\n\n1. **Spatial Repetition Detection**: The method searches for exact or near-exact pixel pattern repetitions within each frame. Copy-paste manipulation and some AI generators produce repeated pixel patterns (tiled textures from the generator's feature map).\n\n2. **Generator Architecture Artifact Detection**: GAN generators using transposed convolution upsampling can produce characteristic periodic pixel patterns (\"checkerboard artifacts\") at the generator's stride frequency. The method detects these periodic spatial repetitions in the frequency domain using spectral analysis.\n\n3. **Temporal Pixel Repetition**: The method checks for repeated pixel patterns across frames — exact pixel-level repetition between non-adjacent frames indicates artificial frame generation or copying. Natural video never produces exact pixel-level repetition between distinct frames.\n\n4. **Patch Similarity Analysis**: Local patches are compared using normalized cross-correlation. Unusually high similarity between distant patches (beyond what natural texture would produce) indicates AI generation where the generator's limited diversity manifests as repeated micro-patterns.\n\n5. **Repetition-Scale Analysis**: Repetition is analyzed at multiple spatial scales. Natural textures can show repetition at macro scales (wallpaper, fabric patterns) but not at micro scales. AI-generated content may show micro-scale repetition invisible to human inspection but detectable statistically.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through pixel repetition analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

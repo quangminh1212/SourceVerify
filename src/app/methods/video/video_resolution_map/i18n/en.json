@@ -1,22 +1,22 @@
 {
-    "name": "Video Resolution Map",
-    "description": "Maps resolution consistency across frame",
-    "algorithm": "Video Resolution Map — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Maps resolution consistency across frame. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through video resolution map analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Video Resolution Map",
+  "description": "Maps resolution consistency across frame",
+  "algorithm": "Video Resolution Map — Pixel-Level Spatial Analysis",
+  "mechanism": "This method creates resolution maps for video deepfake detection:\n\n1. **Local Resolution Estimation**: Effective spatial resolution is estimated locally using edge sharpness analysis, modulation transfer function (MTF) estimation, and texture detail measurements. This creates a per-region resolution map revealing where the image is effectively sharp vs. degraded.\n\n2. **Resolution Consistency Check**: Resolution across the frame should follow the camera's optical characteristics: uniform within the depth of field, decreasing with distance from the focal plane, potentially soft at frame corners (lens vignetting). The method checks for consistency. Deepfakes may show a face with different effective resolution than the background.\n\n3. **Resolution Boundary Detection**: The method detects boundaries between regions of different effective resolution. Abrupt resolution changes not corresponding to depth boundaries indicate compositing — where a generated face (at the generator's output resolution) meets original footage (at the camera's capture resolution).\n\n4. **Upsampling/Downsampling Detection**: The method detects evidence of resolution changes — interpolation artifacts from upsampling (ringing, aliasing) or detail loss from downsampling. These artifacts indicate the content has been resized, consistent with deepfake pipelines that generate at one resolution and resize to match the target video.\n\n5. **Temporal Resolution Stability**: Effective resolution should remain stable across frames for static content. The method tracks resolution maps over time — deepfake generation may produce temporally varying effective resolution as the generator's output detail fluctuates frame-to-frame.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through video resolution map analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

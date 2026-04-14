@@ -1,22 +1,22 @@
 {
-    "name":  "B-Frame Consistency Analysis",
-    "description":  "Analyzes bidirectional frame consistency — deepfake injection disrupts natural B-frame interpolation patterns.",
-    "algorithm":  "B-Frame Consistency Analysis Analysis Algorithm",
-    "mechanism":  "The B-Frame Consistency Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TCSVT.2012.2221191",
-                           "title":  "Sullivan, G.J. et al. (2012). Overview of the High Efficiency Video Coding (HEVC) Standard. IEEE TCSVT."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TIFS.2012.2209832",
-                           "title":  "Stamm, M.C. et al. (2012). Anti-Forensics of JPEG Compression. IEEE TIFS."
-                       }
-                   ]
+  "name": "B-Frame Consistency Analysis",
+  "description": "Analyzes bidirectional frame consistency — deepfake injection disrupts natural B-frame interpolation patterns.",
+  "algorithm": "B-Frame Consistency Analysis Analysis Algorithm",
+  "mechanism": "This method analyzes B-frame prediction patterns in video compression for forensic authentication following Sullivan et al. (2012):\n\n1. **GOP Structure Analysis**: The Group of Pictures (GOP) structure is parsed to identify I-frames (intra-coded), P-frames (predictive), and B-frames (bidirectional predictive). The expected B-frame pattern depends on codec configuration and is consistent in unmanipulated video.\n\n2. **Bi-Directional Prediction Residual**: B-frames use both forward and backward temporal prediction. The prediction residuals are analyzed — in authentic video, B-frame residuals are typically smaller than P-frame residuals due to the advantage of bidirectional prediction. Manipulated regions produce anomalous residual patterns where inserted content disrupts the predicted motion trajectory.\n\n3. **Motion Vector Consistency**: B-frame motion vectors point both forward and backward in time. The method checks whether forward and backward motion vectors are physically consistent — they should describe complementary views of the same motion. Deepfake insertion creates motion vector inconsistencies where forward and backward predictions disagree abnormally.\n\n4. **Quantization Parameter Tracking**: Per Stamm et al. (2012), the quantization parameters (QP) assigned to B-frames follow predictable patterns relative to reference frames. Double-encoding artifacts from video manipulation alter these QP patterns, creating detectable statistical anomalies in the B-frame quantization structure.\n\n5. **Temporal Dependency Graph Verification**: The reference frame dependencies of B-frames are verified for consistency. Inserted or replaced frames disrupt the expected temporal dependency chain, producing frames that reference incorrect temporal contexts — detectable through prediction error analysis.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
+      "title": "Sullivan, G.J. et al. (2012). Overview of the High Efficiency Video Coding (HEVC) Standard. IEEE TCSVT."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIFS.2012.2209832",
+      "title": "Stamm, M.C. et al. (2012). Anti-Forensics of JPEG Compression. IEEE TIFS."
+    }
+  ]
 }

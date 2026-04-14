@@ -1,22 +1,22 @@
 {
-    "name": "Nose Geometry",
-    "description": "Analyzes nose 3D consistency and geometry",
-    "algorithm": "Nose Geometry — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes nose 3D consistency and geometry. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through nose geometry analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        }
-    ]
+  "name": "Nose Geometry",
+  "description": "Analyzes nose 3D consistency and geometry",
+  "algorithm": "Nose Geometry — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes nose geometry for deepfake detection:\n\n1. **Nose Landmark Tracking**: Detailed nose landmarks — bridge, tip, alae (wings), nostrils, columella, nasion (bridge root) — are tracked per frame. These landmarks define the nose's 3D geometry projected into 2D.\n\n2. **Geometric Proportion Analysis**: Nose proportions should follow anatomical constraints: bridge width vs. alar width, nostril size relative to nose length, tip protrusion relative to bridge height. The method checks whether proportions remain within normal human ranges and are consistent across frames. Deepfakes may produce floating proportions.\n\n3. **3D Shape Consistency**: The nose is a prominent 3D structure that should show consistent self-occlusion and shading as head pose changes. The method verifies that nose appearance changes (nostril visibility, bridge shadow, tip highlight) are geometrically consistent with the estimated head pose. AI generators may produce incorrect nose shading at certain poses.\n\n4. **Nose-Face Integration**: The nose must integrate seamlessly with surrounding facial features — nasolabial folds connect nose to cheeks, bridge connects to brow ridge, and skin texture continues smoothly. The method checks for boundary artifacts around the nose perimeter. Face-swap blending may be visible at nose boundaries.\n\n5. **Temporal Shape Stability**: Nose cartilage provides a rigid structure — nose geometry shouldn't change between frames (only viewing angle changes). The method tracks nose proportions over time. Frame-to-frame variation in nose proportions indicates AI generation where the nose is independently rendered each frame.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through nose geometry analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name":  "Gaze Vergence Analysis",
-    "description":  "Analyzes binocular vergence (convergence/divergence) of eye gaze — deepfakes often fail at correct vergence.",
-    "algorithm":  "Gaze Vergence Analysis Analysis Algorithm",
-    "mechanism":  "The Gaze Vergence Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/CVPR.2015.7299081",
-                           "title":  "Zhang, X. et al. (2015). Appearance-Based Gaze Estimation in the Wild. CVPR."
-                       },
-                       {
-                           "url":  "http://dlib.net/",
-                           "title":  "Dlib (2019). Eye Aspect Ratio for Blink Detection. Dlib C++ Library."
-                       }
-                   ]
+  "name": "Gaze Vergence Analysis",
+  "description": "Analyzes binocular vergence (convergence/divergence) of eye gaze — deepfakes often fail at correct vergence.",
+  "algorithm": "Gaze Vergence Analysis Analysis Algorithm",
+  "mechanism": "This method analyzes binocular gaze vergence for deepfake detection:\n\n1. **Binocular Gaze Estimation**: Independent gaze vectors for left and right eyes are estimated per frame from iris position, pupil contour, and corneal reflection analysis. The vergence angle (angle between left and right gaze vectors) is computed.\n\n2. **Vergence-Distance Consistency**: Gaze vergence angle should be inversely proportional to fixation distance (eyes converge more for near objects). The method checks whether the measured vergence angle is consistent with the likely fixation target distance estimated from scene context. Deepfakes may produce vergence inconsistent with target distance.\n\n3. **Vergence Dynamics**: When shifting gaze between near and far targets, vergence changes follow specific dynamics: vergence movements are slow (compared to saccades), smooth, and coordinated between eyes. The method analyzes vergence change dynamics — deepfakes may produce instantaneous vergence changes or non-conjugate eye movements.\n\n4. **Vergence-Accommodation Coupling**: In real vision, vergence is coupled with pupil size changes (near response triad: convergence + accommodation + pupil constriction). The method checks for this physiological coupling. Deepfakes typically don't model the vergence-pupil coupling, producing convergent gaze without corresponding pupil constriction.\n\n5. **Temporal Vergence Stability**: During stable fixation, vergence shows micro-fluctuations (fixation disparity) within a narrow range. The method analyzes vergence stability — too-stable vergence (no disparity fluctuations) or excessive instability (divergent episodes) indicate AI generation.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/CVPR.2015.7299081",
+      "title": "Zhang, X. et al. (2015). Appearance-Based Gaze Estimation in the Wild. CVPR."
+    },
+    {
+      "url": "http://dlib.net/",
+      "title": "Dlib (2019). Eye Aspect Ratio for Blink Detection. Dlib C++ Library."
+    }
+  ]
 }

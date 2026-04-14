@@ -1,22 +1,22 @@
 {
-    "name":  "Intra-frame Prediction Analysis",
-    "description":  "Examines H.264/H.265 intra-frame prediction mode distributions — deepfake re-encoding alters prediction patterns.",
-    "algorithm":  "Intra-frame Prediction Analysis Analysis Algorithm",
-    "mechanism":  "The Intra-frame Prediction Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TCSVT.2003.815165",
-                           "title":  "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TCSVT.2012.2221191",
-                           "title":  "Sullivan, G.J. et al. (2012). Overview of HEVC Standard. IEEE TCSVT."
-                       }
-                   ]
+  "name": "Intra-frame Prediction Analysis",
+  "description": "Examines H.264/H.265 intra-frame prediction mode distributions — deepfake re-encoding alters prediction patterns.",
+  "algorithm": "Intra-frame Prediction Analysis Analysis Algorithm",
+  "mechanism": "This method analyzes H.264/H.265 intra-prediction patterns for video forensic detection:\n\n1. **Intra-Prediction Mode Extraction**: For I-frames and intra-blocks in P/B-frames, the selected intra-prediction modes are extracted from the bitstream (9 modes in H.264, 35+ in H.265: DC, planar, and angular predictions). These mode decisions are influenced by local image content.\n\n2. **Mode Distribution Analysis**: The statistical distribution of intra-prediction modes across the frame is analyzed. Natural video produces characteristic mode distributions — predominantly DC/planar in smooth regions, angular modes following edge orientations. Manipulated or AI-generated content may show anomalous mode distributions inconsistent with the visual content.\n\n3. **Mode-Content Consistency**: The selected mode should match the actual image content direction. At a horizontal edge, a horizontal prediction mode should be selected. The method checks mode-content alignment — content inserted from a different encoding may show suboptimal mode selections (modes chosen for the original content, not the replaced content).\n\n4. **Prediction Residual Analysis**: The intra-prediction residual (actual − predicted) encodes what the prediction couldn't capture. Residual statistics differ between original content (well-predicted, small residuals) and replaced content (poorly predicted by modes chosen for different content, larger residuals). The method detects anomalous residual distributions.\n\n5. **Re-Encoding Signature Detection**: Double-encoded video (original + manipulation + re-encoding) shows characteristic intra-prediction artifacts: the second encoder's mode decisions partially align with the first encoder's block structure, creating detectable periodicity in prediction residuals.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TCSVT.2003.815165",
+      "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
+    },
+    {
+      "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
+      "title": "Sullivan, G.J. et al. (2012). Overview of HEVC Standard. IEEE TCSVT."
+    }
+  ]
 }

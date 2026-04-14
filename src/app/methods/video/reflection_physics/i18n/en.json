@@ -1,22 +1,22 @@
 {
-    "name": "Reflection Physics",
-    "description": "Analyzes reflection physical consistency",
-    "algorithm": "Reflection Physics — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes reflection physical consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through reflection physics analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Reflection Physics",
+  "description": "Analyzes reflection physical consistency",
+  "algorithm": "Reflection Physics — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes reflection physical consistency for deepfake detection:\n\n1. **Reflection Detection**: Reflective surfaces in the scene are identified — mirrors, glass, glossy surfaces, water, metallic objects. Reflected content (particularly face reflections) is detected and extracted from these surfaces.\n\n2. **Reflection Geometry Verification**: Reflections should follow the laws of optics — the reflected image is positioned according to the geometry of the reflective surface. The method checks whether face reflections are geometrically consistent with the face position and surface orientation. Deepfakes that only modify the direct view of the face may leave original reflections unmodified, creating geometry mismatches.\n\n3. **Reflection-Source Identity Matching**: If the face is visible both directly and in a reflection, both views should show the same identity, expression, and appearance. The method cross-checks reflection identity against the direct face view — face-swap deepfakes that don't modify all reflections create detectable identity disagreements.\n\n4. **Specular Highlight Physics**: Specular reflections on shiny surfaces (glasses, jewelry, skin highlights) should follow Fresnel equations — intensity and position depend on the angle between light source, surface, and camera. The method verifies specular highlight physics. AI generators may produce specular highlights with incorrect angular behavior.\n\n5. **Temporal Reflection Consistency**: As objects move, reflections should change according to optics (mirror law, Snell's law for refraction). The method tracks reflection dynamics — reflections should move smoothly and consistently with source object motion. Deepfake reflections may show temporal artifacts or fail to update with face motion.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through reflection physics analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

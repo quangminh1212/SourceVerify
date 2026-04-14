@@ -1,22 +1,22 @@
 {
-    "name":  "Video Denoising Trace",
-    "description":  "Detects traces of denoising applied to deepfake videos to mask generation artifacts.",
-    "algorithm":  "Video Denoising Trace Analysis Algorithm",
-    "mechanism":  "The Video Denoising Trace system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1109/TIFS.2007.916285",
-                           "title":  "Chen, C. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1109/TIP.2007.901238",
-                           "title":  "Dabov, K. et al. (2007). Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering. IEEE TIP."
-                       }
-                   ]
+  "name": "Video Denoising Trace",
+  "description": "Detects traces of denoising applied to deepfake videos to mask generation artifacts.",
+  "algorithm": "Video Denoising Trace Analysis Algorithm",
+  "mechanism": "This method detects denoising traces for video forensic analysis:\n\n1. **Noise Level Estimation**: The noise level and noise model of the video are estimated per frame. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **Denoising Signature Detection**: Denoising algorithms leave characteristic signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from neural network denoising). The method identifies these signatures.\n\n3. **Selective Denoising Detection**: The method checks whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising-Resolution Consistency**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). The method checks whether denoised regions show consistent effective resolution with non-denoised regions. Resolution mismatches reveal processing different regions with different denoising parameters.\n\n5. **Multi-Pass Denoising Detection**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. The method detects evidence of multiple denoising steps, consistent with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TIFS.2007.916285",
+      "title": "Chen, C. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2007.901238",
+      "title": "Dabov, K. et al. (2007). Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering. IEEE TIP."
+    }
+  ]
 }

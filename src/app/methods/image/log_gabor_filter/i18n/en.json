@@ -1,22 +1,22 @@
 {
-    "name":  "Log-Gabor Filter Analysis",
-    "description":  "Applies log-Gabor filters for improved frequency selectivity over standard Gabor — captures AI generation signatures (Field, 1987).",
-    "algorithm":  "Log-Gabor Filter Analysis Analysis Algorithm",
-    "mechanism":  "The Log-Gabor Filter Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1364/JOSAA.4.002379",
-                           "title":  "Field, D.J. (1987). Relations Between the Statistics of Natural Images and the Response Properties of Cortical Cells. JOSA A."
-                       },
-                       {
-                           "url":  "https://www.peterkovesi.com/papers/phasecong.pdf",
-                           "title":  "Kovesi, P. (1999). Image Features from Phase Congruency. Videre."
-                       }
-                   ]
+  "name": "Log-Gabor Filter Analysis",
+  "description": "Applies log-Gabor filters for improved frequency selectivity over standard Gabor — captures AI generation signatures (Field, 1987).",
+  "algorithm": "Log-Gabor Filter Analysis Analysis Algorithm",
+  "mechanism": "This method applies Log-Gabor filters following Field's (1987) framework for analyzing image frequency structure:\n\n1. **Log-Gabor Bank Construction**: A bank of Log-Gabor filters is constructed in the frequency domain with logarithmic spacing. Unlike standard Gabor filters, Log-Gabor filters have zero DC component, no bandwidth limitation, and their transfer function is Gaussian on a logarithmic frequency scale: G(f) = exp(−(log(f/f₀))²/(2(log(σ/f₀))²)).\n\n2. **Multi-Orientation Filtering**: The filter bank spans multiple orientations (typically 6-8) and scales (4-6 octaves), providing comprehensive coverage of the 2D frequency plane. Each filter isolates a specific frequency band and orientation.\n\n3. **Response Energy Mapping**: The local energy response is computed as E(x,y) = √(even²(x,y) + odd²(x,y)), where even and odd components are the real and imaginary parts of the filter response. This captures local frequency content independent of phase.\n\n4. **Natural Image Statistics Comparison**: Response statistics are compared to the known 1/f amplitude spectrum of natural images. AI-generated images exhibit characteristic deviations — GANs often show spectral peaks at grid frequencies, while diffusion models may underrepresent certain frequency bands.\n\n5. **Anomaly Scoring**: The deviation from expected natural image frequency statistics across all filter responses is aggregated into a forensic score indicating the likelihood of AI generation.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1364/JOSAA.4.002379",
+      "title": "Field, D.J. (1987). Relations Between the Statistics of Natural Images and the Response Properties of Cortical Cells. JOSA A."
+    },
+    {
+      "url": "https://www.peterkovesi.com/papers/phasecong.pdf",
+      "title": "Kovesi, P. (1999). Image Features from Phase Congruency. Videre."
+    }
+  ]
 }

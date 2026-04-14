@@ -1,22 +1,22 @@
 {
-    "name":  "Hand Finger Count Analysis",
-    "description":  "Counts fingers and validates hand anatomy — AI frequently generates incorrect finger counts (Nightingale \u0026 Farid, 2022).",
-    "algorithm":  "Hand Finger Count Analysis Analysis Algorithm",
-    "mechanism":  "The Hand Finger Count Analysis system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1145/2993148.2993165",
-                           "title":  "Barsoum, E. et al. (2016). Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label Distribution. ACM ICMI."
-                       },
-                       {
-                           "url":  "https://arxiv.org/abs/2006.10214",
-                           "title":  "Zhang, F. et al. (2020). MediaPipe Hands: On-device Real-time Hand Tracking. CVPR Workshop."
-                       }
-                   ]
+  "name": "Hand Finger Count Analysis",
+  "description": "Counts fingers and validates hand anatomy — AI frequently generates incorrect finger counts (Nightingale & Farid, 2022).",
+  "algorithm": "Hand Finger Count Analysis Analysis Algorithm",
+  "mechanism": "This method verifies hand and finger count accuracy for AI generation detection:\n\n1. **Hand Detection & Segmentation**: Hands are detected in each frame using object detection and precisely segmented. The hand mask isolates the palm and each finger for independent analysis.\n\n2. **Finger Counting**: Each detected hand is analyzed for the number of distinct fingers. Using skeleton estimation and topology analysis, the method counts finger-like protrusions from the palm. Correct count is 5 (4 fingers + 1 thumb) per hand. AI generators (especially diffusion models) frequently produce 4, 6, or 7 fingers, making this one of the most reliable AI detection signals.\n\n3. **Finger Anatomy Verification**: Beyond counting, each finger's anatomy is checked: correct number of joints (3 for fingers, 2 for thumb), plausible length ratios (ring ≈ index > middle > pinky > thumb), and proper attachment to the palm. AI generators may produce extra joints, impossible length ratios, or fingers merging/splitting.\n\n4. **Bilateral Hand Consistency**: When both hands are visible, they should be mirror-consistent with the same finger count and proportions. The method checks bilateral hand agreement — AI generators may produce different finger counts on left and right hands.\n\n5. **Temporal Finger Tracking**: Finger count and geometry should remain consistent across frames. The method tracks finger topology over time — AI generators may produce different finger counts in different frames for the same hand, or show fingers appearing/disappearing during motion.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1145/2993148.2993165",
+      "title": "Barsoum, E. et al. (2016). Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label Distribution. ACM ICMI."
+    },
+    {
+      "url": "https://arxiv.org/abs/2006.10214",
+      "title": "Zhang, F. et al. (2020). MediaPipe Hands: On-device Real-time Hand Tracking. CVPR Workshop."
+    }
+  ]
 }

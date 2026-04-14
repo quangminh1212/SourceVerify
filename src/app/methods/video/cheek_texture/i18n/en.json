@@ -1,22 +1,22 @@
 {
-    "name": "Cheek Texture",
-    "description": "Examines sub-pixel skin pore distributions and micro-texture regularity on cheek surfaces using Face X-ray boundary analysis to reveal blending artifacts left by face-swapping networks.",
-    "algorithm": "Cheek Texture — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes cheek skin texture patterns. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through cheek texture analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Cheek Texture",
+  "description": "Examines sub-pixel skin pore distributions and micro-texture regularity on cheek surfaces using Face X-ray boundary analysis to reveal blending artifacts left by face-swapping networks.",
+  "algorithm": "Cheek Texture — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes cheek skin texture patterns across video frames for deepfake detection:\n\n1. **Cheek Region Extraction**: Using facial landmarks, the cheek regions (below the zygomatic bone, lateral to the nose, above the jawline) are precisely segmented per frame. The regions are geometrically normalized to compensate for head pose variations, enabling consistent texture comparison across frames.\n\n2. **Micro-Texture Analysis**: High-frequency texture features — pores, fine wrinkles, skin grain, and sebaceous patterns — are extracted using Gabor filters and Local Binary Pattern (LBP) descriptors. Real human cheek skin exhibits a characteristic multi-scale texture hierarchy determined by dermatological structure.\n\n3. **Texture Temporal Consistency**: The micro-texture signature of cheek regions is tracked across consecutive frames. In authentic video, skin micro-texture remains stable (pores don't move or disappear between frames). Deepfake generators often produce inconsistent frame-to-frame micro-texture — pores may appear, disappear, or shift position as the generator independently synthesizes each frame.\n\n4. **Skin Rendering Quality Assessment**: The statistical properties of cheek texture (histogram of oriented gradients, spatial frequency distribution) are compared against natural skin models. AI-generated cheeks tend to be either over-smoothed (lacking natural pore detail) or show artificial texture patterns with repetitive structures uncommon in real skin.\n\n5. **Illumination-Independent Texture Scoring**: Texture features are computed in illumination-invariant color spaces to separate genuine texture from illumination effects. The final score quantifies the deviation of cheek texture from expected natural skin characteristics and its temporal stability across frames.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through cheek texture analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }

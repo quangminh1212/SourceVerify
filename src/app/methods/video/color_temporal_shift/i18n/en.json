@@ -1,22 +1,22 @@
 {
-    "name": "Color Temporal Shift",
-    "description": "Analyzes color drift patterns across spatial regions to detect AI generation artifacts",
-    "algorithm": "Color Temporal Shift — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes color drift patterns across spatial regions to detect AI generation artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through color temporal shift analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Color Temporal Shift",
+  "description": "Analyzes color drift patterns across spatial regions to detect AI generation artifacts",
+  "algorithm": "Color Temporal Shift — Pixel-Level Spatial Analysis",
+  "mechanism": "This method detects temporal color shifts in video for deepfake detection following Zheng et al. (2021):\n\n1. **Color Channel Signal Extraction**: Per-frame mean values of R, G, B channels (and derived Lab, HSV values) are extracted separately for face and background regions. These form temporal color signals tracking the color evolution of each region over time.\n\n2. **Drift Rate Analysis**: The rate of color change across frames is computed. Natural video shows either stable colors (controlled lighting) or smooth drifts (changing daylight). Deepfakes may introduce subtle but detectable frame-to-frame color oscillations as the generator independently determines color for each frame.\n\n3. **Face-Background Color Coupling**: In authentic video, face and background color signals are physically coupled — both respond to the same illumination changes. The method measures temporal correlation between face and background color channels. Low correlation indicates the face is generated independently, lacking physical illumination coupling with the background.\n\n4. **Color Temperature Consistency**: The correlated color temperature (CCT) of illumination is estimated per frame from color channel ratios. Natural lighting produces consistent CCT across all scene regions. Deepfake faces may be rendered with different effective color temperature than the background, creating detectable inter-region CCT disagreement.\n\n5. **Spectral Analysis of Color Signals**: The temporal color signals are analyzed via FFT. Natural color variation shows specific spectral characteristics (low-frequency illumination changes, camera AGC periodicity). AI-generated color variation may show different spectral signatures — higher-frequency fluctuations from frame-independent rendering or aliased patterns from the generation process.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through color temporal shift analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

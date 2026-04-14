@@ -1,22 +1,22 @@
 {
-    "name": "Ear Detail Consistency",
-    "description": "Compares left-right ear detail consistency",
-    "algorithm": "Ear Detail Consistency — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Compares left-right ear detail consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through ear detail consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Ear Detail Consistency",
+  "description": "Compares left-right ear detail consistency",
+  "algorithm": "Ear Detail Consistency — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes ear anatomical detail for deepfake detection:\n\n1. **Ear Region Extraction**: Ears are detected and segmented using facial landmark extensions and ear-specific detectors. The ear region includes the helix, antihelix, tragus, antitragus, concha, and lobule — each with distinctive anatomical structure that serves as a biometric identifier.\n\n2. **Anatomical Detail Assessment**: Fine ear structures are analyzed: cartilaginous ridges (helix curvature, antihelix branching), skin texture, and vascular patterns. Real ears exhibit high-frequency anatomical detail with complex 3D surface geometry. AI-generated ears typically show simplified anatomy — missing the intricate folds or producing physically impossible ear structures.\n\n3. **Bilateral Symmetry Verification**: Left and right ears of the same person share characteristic family resemblance while showing natural asymmetry. The method compares both ears for anatomical consistency — deepfakes may produce ears with inconsistent morphology between sides, or ears that don't match the identity of the generated face.\n\n4. **Temporal Ear Stability**: Ear anatomy is rigid (cartilage doesn't deform) and should remain geometrically stable across frames regardless of head motion. The method tracks ear detail consistency — deepfake generators may produce temporally inconsistent ear rendering with fluctuating detail levels, especially when the ear is near the face-swap boundary.\n\n5. **Ear-Face Identity Coherence**: Ear morphology is correlated with face shape and ethnicity. The method checks whether ear characteristics are plausible for the depicted face. Deepfakes that swap faces but not ears (or generate ears independently) may produce biometrically inconsistent ear-face combinations.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through ear detail consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

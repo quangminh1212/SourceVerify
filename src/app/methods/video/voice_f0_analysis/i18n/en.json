@@ -1,22 +1,22 @@
 {
-    "name":  "Voice Fundamental Frequency",
-    "description":  "Analyzes voice F0 (fundamental frequency) patterns — voice cloning often has unnatural F0 contours.",
-    "algorithm":  "Voice Fundamental Frequency Analysis Algorithm",
-    "mechanism":  "The Voice Fundamental Frequency system analyzes specific signal patterns to distinguish AI-generated content from authentic media.\\n\\n1. **Feature Extraction**: Extracts relevant features from input data.\\n2. **Statistical Analysis**: Computes statistical measures and compares against known baselines.\\n3. **Score Computation**: Generates a confidence score based on detected anomalies.",
-    "parameters":  "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
-    "accuracy":  "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
-    "source":  "Based on peer-reviewed research in digital forensics and AI content detection.",
-    "useCase":  "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
-    "strengths":  "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
-    "limitations":  "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
-    "references":  [
-                       {
-                           "url":  "https://doi.org/10.1007/11613107_12",
-                           "title":  "Chetty, G. \u0026 Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
-                       },
-                       {
-                           "url":  "https://doi.org/10.1145/3394171.3413570",
-                           "title":  "Mittal, T. et al. (2020). Emotions Don\u0027t Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM."
-                       }
-                   ]
+  "name": "Voice Fundamental Frequency",
+  "description": "Analyzes voice F0 (fundamental frequency) patterns — voice cloning often has unnatural F0 contours.",
+  "algorithm": "Voice Fundamental Frequency Analysis Algorithm",
+  "mechanism": "This method analyzes voice fundamental frequency (F0) for deepfake detection:\n\n1. **F0 Extraction**: The fundamental frequency (pitch) of the voice is extracted per frame using autocorrelation, cepstral, or YIN algorithm. F0 corresponds to the vocal fold vibration rate, typically 85-180 Hz for males and 165-255 Hz for females.\n\n2. **F0 Contour Analysis**: The temporal F0 contour (pitch track) is analyzed for naturalness. Natural speech shows characteristic F0 patterns: (a) declination (gradual F0 decrease across utterances), (b) prosodic contours (rises for questions, falls for statements), (c) micro-prosody (F0 perturbations at phoneme boundaries). AI voice synthesis may produce F0 contours with incorrect prosodic patterns or missing micro-prosodic detail.\n\n3. **F0 Range and Variability**: Each speaker has a characteristic F0 range and variability. The method checks whether F0 statistics (mean, standard deviation, range) fall within physiologically plausible values for the apparent speaker. AI-generated voices may show either unnaturally constrained (monotone) or excessive F0 variability.\n\n4. **Jitter and Shimmer**: Natural voice shows slight cycle-to-cycle F0 variation (jitter, typically <1%) and amplitude variation (shimmer, typically <3%). These micro-perturbations reflect the biomechanics of vocal fold vibration. AI voice synthesis may produce either too-perfect (zero jitter/shimmer) or incorrectly modeled perturbation patterns.\n\n5. **F0-Visual Correlation**: Voice F0 should correlate with visible physical effort — higher pitch may correspond with increased tension visible in the neck muscles. The method checks audio-visual F0 correspondence. Deepfakes combining generated audio with generated video may show poor F0-visual correlation.",
+  "parameters": "Analysis type: automated statistical\\nScore range: 0 (authentic) to 100 (AI-generated)\\nMinimum input size: varies by media type",
+  "accuracy": "Moderate to High — 70-85% accuracy depending on input quality and method combination.",
+  "source": "Based on peer-reviewed research in digital forensics and AI content detection.",
+  "useCase": "Used as part of multi-signal analysis pipeline to detect AI-generated content.",
+  "strengths": "• Research-backed methodology\\n• Fast computation time\\n• Complementary to other detection methods\\n• Works across different AI generators",
+  "limitations": "• Accuracy varies with input quality\\n• Best used in combination with other methods\\n• May require calibration for new AI models",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/11613107_12",
+      "title": "Chetty, G. & Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
+    },
+    {
+      "url": "https://doi.org/10.1145/3394171.3413570",
+      "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM."
+    }
+  ]
 }

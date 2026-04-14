@@ -1,22 +1,22 @@
 {
-    "name": "Face X-Ray Boundary",
-    "description": "Detects blending boundaries using Face X-Ray technique (Li et al., 2020)",
-    "algorithm": "Face X-Ray Boundary — Pixel-Level Spatial Analysis",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects blending boundaries using Face X-Ray technique (Li et al., 2020). Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Score Computation**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through face x-ray boundary analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Face X-Ray Boundary",
+  "description": "Detects blending boundaries using Face X-Ray technique (Li et al., 2020)",
+  "algorithm": "Face X-Ray Boundary — Pixel-Level Spatial Analysis",
+  "mechanism": "This method implements the Face X-ray technique from Li et al. (2020) for general face forgery detection:\n\n1. **Blending Boundary Hypothesis**: Face X-ray is based on the key insight that most face manipulation methods share a common step — blending a modified face region onto a background. This blending creates a detectable boundary even when the face modification itself is imperceptible. The method targets this universal blending step rather than specific manipulation artifacts.\n\n2. **Gray-Scale Blending Map Estimation**: For each pixel, the method estimates whether it belongs to a blending boundary. The \"face X-ray\" is computed as a map B(x) indicating the probability that pixel x is at a face blending boundary. This is estimated using the observation that blended regions show HR (high-resolution) content from the face source mixed with LR (low-resolution) content from the background at boundaries.\n\n3. **Multi-Scale Boundary Detection**: The face X-ray is computed at multiple scales to detect blending at different resolutions. Blending boundaries may be sharp (simple alpha compositing) or smooth (Poisson blending, feathered masks), requiring multi-scale analysis for robust detection.\n\n4. **Cross-Color-Space Analysis**: The blending boundary signature is analyzed in multiple color spaces (RGB, YCbCr, HSV). Different color channels may show blending artifacts with varying intensity — YCbCr chrominance channels are particularly sensitive to blending artifacts that are invisible in luminance.\n\n5. **Temporal X-ray Consistency**: The face X-ray map is computed per frame and tracked temporally. A persistent blending boundary at consistent facial locations across frames provides strong evidence of face manipulation. The temporal stability of the X-ray signal increases detection confidence and reduces false positives from compression artifacts or natural skin boundaries.",
+  "parameters": "Analysis type: pixel\nMedia: video\nInput: Video frames extracted at key intervals\nOutput: Confidence score (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderate to High — 70-88% standalone accuracy. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through face x-ray boundary analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard video formats\n• Effective against common deepfake techniques\n• Can be combined with other video forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by video compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic video",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }
