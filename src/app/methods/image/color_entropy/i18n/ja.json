@@ -1,22 +1,22 @@
 {
-  "name": "カラーエントロピー（情報密度）解析",
-  "description": "画像の色分布内のグローバルおよびローカルな熱力学的「ランダム性」（情報エントロピー）を測定します。現実世界の環境を捉える本物のカメラは、カオスな光の反射、大気の散乱、センサーの不完全さによって引き起こされる、高エントロピーの色の微小な変化の巨大なスペクトルを本質的に捉えます。生成AIモデルは、デコードプロセス中に出力カラーパレットを大幅に最適化することが多く、その結果、色が数学的にきれいにクラスタリングされすぎ、真のカオスな生物学的変動に欠ける、不自然に崩壊した低エントロピー状態になります。",
-  "algorithm": "カラーヒストグラム上のシャノンエントロピー計算",
-  "mechanism": "The algorithm calculates the Shannon entropy across the color histogram. It assesses how 'unpredictable' the pixel colors are. In a genuine photograph, even a seemingly flat blue sky contains thousands of micro-variations of blue (high entropy) due to photon shot noise and atmospheric dust. An AI-generated sky, however, may be mathematically simplified by the restricted latent decoder into just a few dozen smooth mathematical blue increments (low entropy). The algorithm acts like a Geiger counter, measuring this lack of informational chaos across the entire RGB spectrum.",
-  "parameters": "色空間: RGB/HSV, ヒストグラムビン: チャネルごとに256, 指標: シャノンエントロピースコア（bits/pixel）, 評価: グローバル vs. ローカルパッチ",
-  "accuracy": "中程度〜高（65-75%） - 手抜きのAIジェネレーターは簡単に捕まえますが、人工的なノイズを注入してアルゴリズムのエントロピーを積極的に高める高品質の拡散モデルに対しては、その信頼性は急落します。",
-  "source": "Shannon (1948) / Gonzalez & Woods - デジタルフォレンジックにおける情報理論",
-  "useCase": "画像が物理世界のカオスな情報的複雑さを欠いていることを数学的に証明することにより、AI生成の超滑らかで無菌な「デジタルプラスチック」のルックを検出します。",
-  "references": [
-    {
-      "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
-      "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
-    },
-    {
-      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. Pearson.",
-      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-    }
-  ],
-  "strengths": "• 人間が直感的に感知できても証明するのに苦労する「AIの無菌性」の要因を定量化します。\n• 非常に数学的に堅牢です。画像ファイルの絶対的な情報容量の制限を直接測定します。\n• 基本的なヒストグラム配列を悪用することで、グローバルかつ超高速の計算速度で動作します。",
-  "limitations": "• 後処理ステップとして「フィルムグレイン」や「ガウスノイズ」を明示的に追加する最新のAIツールに対して致命的に脆弱です。これによりエントロピー指標が即座に跳ね上がり、検出器を完全に騙します。\n• 完全に平らな白い紙の背景に対するミニマリストのスタジオ写真や、深宇宙の天体写真など、本質的に低エントロピーの被写体の本物の写真を検査する場合、非常に欠陥があります。\n• 本物の高エントロピーをブロック状の低エントロピー量子化状態に数学的に崩壊させる、極端なJPEG圧縮によって誤ってトリガーされる可能性があります。"
+    "name": "カラーエントロピー（情報密度）解析",
+    "description": "画像の色分布内のグローバルおよびローカルな熱力学的「ランダム性」（情報エントロピー）を測定します。現実世界の環境を捉える本物のカメラは、カオスな光の反射、大気の散乱、センサーの不完全さによって引き起こされる、高エントロピーの色の微小な変化の巨大なスペクトルを本質的に捉えます。生成AIモデルは、デコードプロセス中に出力カラーパレットを大幅に最適化することが多く、その結果、色が数学的にきれいにクラスタリングされすぎ、真のカオスな生物学的変動に欠ける、不自然に崩壊した低エントロピー状態になります。",
+    "algorithm": "カラーヒストグラム上のシャノンエントロピー計算",
+    "mechanism": "アルゴリズムはカラーヒストグラム全体のシャノンエントロピーを計算します。ピクセル色がどれほど「予測不能」かを評価します。本物の写真では、一見平坦な青い空でさえ、光子ショットノイズと大気中の塵により数千の微小な青のバリエーション（高エントロピー）を含みます。しかしAI生成の空は制限された潜在デコーダーによって数十の滑らかな数学的な青のインクリメントのみに数学的に簡略化される可能性があります（低エントロピー）。アルゴリズムはガイガーカウンターのように機能し、RGB スペクトル全体にわたるこの情報的カオスの欠如を測定します。",
+    "parameters": "色空間: RGB/HSV, ヒストグラムビン: チャネルごとに256, 指標: シャノンエントロピースコア（bits/pixel）, 評価: グローバル vs. ローカルパッチ",
+    "accuracy": "中程度〜高（65-75%） - 手抜きのAIジェネレーターは簡単に捕まえますが、人工的なノイズを注入してアルゴリズムのエントロピーを積極的に高める高品質の拡散モデルに対しては、その信頼性は急落します。",
+    "source": "Shannon (1948) / Gonzalez & Woods - デジタルフォレンジックにおける情報理論",
+    "useCase": "画像が物理世界のカオスな情報的複雑さを欠いていることを数学的に証明することにより、AI生成の超滑らかで無菌な「デジタルプラスチック」のルックを検出します。",
+    "references": [
+        {
+            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. Pearson.",
+            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+        }
+    ],
+    "strengths": "• 人間が直感的に感知できても証明するのに苦労する「AIの無菌性」の要因を定量化します。\n• 非常に数学的に堅牢です。画像ファイルの絶対的な情報容量の制限を直接測定します。\n• 基本的なヒストグラム配列を悪用することで、グローバルかつ超高速の計算速度で動作します。",
+    "limitations": "• 後処理ステップとして「フィルムグレイン」や「ガウスノイズ」を明示的に追加する最新のAIツールに対して致命的に脆弱です。これによりエントロピー指標が即座に跳ね上がり、検出器を完全に騙します。\n• 完全に平らな白い紙の背景に対するミニマリストのスタジオ写真や、深宇宙の天体写真など、本質的に低エントロピーの被写体の本物の写真を検査する場合、非常に欠陥があります。\n• 本物の高エントロピーをブロック状の低エントロピー量子化状態に数学的に崩壊させる、極端なJPEG圧縮によって誤ってトリガーされる可能性があります。"
 }

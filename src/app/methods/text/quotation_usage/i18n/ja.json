@@ -1,22 +1,22 @@
 {
-  "name": "引用符と帰属の使用 (Quotation Usage)",
-  "description": "引用符の頻度、文脈、および構造的な適用を分析します。大規模言語モデルは、非常に特定の目的で引用符を頻繁に乱用します。俗語や慣用句から自らを遠ざけるために「スケアクオート（強調・皮肉の引用符）」を使用したり、学術的な厳密さをシミュレートするために一般的すぎるフレーズを引用符で囲んだり、議論を裏付けるために完全にフォーマットされた存在しない引用を頻繁に発明（幻覚）したりします。",
-  "algorithm": "正書法に基づく帰属および「スケアクオート」分析",
-  "mechanism": "The algorithm extracts all text enclosed in single or double quotation marks and evaluates the surrounding context. It calculates the 'Scare Quote Ratio' (quotes around single, non-technical colloquial words) and the 'Attribution Density' (frequency of quotes tied to named entities). AI models, constrained by safety and neutrality alignments, are extremely hesitant to use informal language natively; if forced, they will almost always wrap slang or idioms in quotes to signal that the tone is borrowed, not inherent. Furthermore, when generating explanatory text, AI often over-quotes basic concepts to appear authoritative, whereas humans reserve quotes for direct speech or highly specific definitions.",
-  "useCase": "AIが「非公式な」言葉を臨床的に隔離する傾向や、正確な会話文字列を幻覚する傾向が、その非人間的な起源を裏切るような、エッセイ、オピニオン記事、文献レビューの監査に非常に効果的です。",
-  "strengths": "• 慣用句を自然に使用することを拒否する「慎重なAI」ペルソナの検出に優れています。\n• 「固有表現の整合性」と組み合わせることで強力な法医学的証拠を提供し、幻覚の引用を簡単にフラグ付けします。",
-  "limitations": "• 純粋なジャーナリズムの文章、引用が多い学術論文、または会話の多いクリエイティブライティングでは誤検知が発生しやすくなります。\n• ユーザーがAIにすべての引用符を削除するように明示的に指示した場合は、回避される可能性があります。",
-  "parameters": "解析: 正書法の境界抽出と文脈的なNLP解析\n評価基準: 意味論的隔離（「スケアクオート」）の頻度と帰属の密度\n出力結果: 0-100 引用の予測可能性（人為的フォーマット）スコア",
-  "accuracy": "中程度 — 単独での精度は65-80%。疑わしいほど「無菌」に感じられる正式なエッセイや学術的な文章を分析する際の、強力な二次指標となります。",
-  "references": [
-    {
-      "title": "Bhattacharjee, A. et al. (2024). LLMs as Hallucination Generators: A Comprehensive Study. arXiv.",
-      "url": "https://arxiv.org/abs/2402.14660"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Bhattacharjee, A. et al. (2024). LLMs as Hallucination Generators: A Comprehensive Study. arXiv.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "引用符と帰属の使用 (Quotation Usage)",
+    "description": "引用符の頻度、文脈、および構造的な適用を分析します。大規模言語モデルは、非常に特定の目的で引用符を頻繁に乱用します。俗語や慣用句から自らを遠ざけるために「スケアクオート（強調・皮肉の引用符）」を使用したり、学術的な厳密さをシミュレートするために一般的すぎるフレーズを引用符で囲んだり、議論を裏付けるために完全にフォーマットされた存在しない引用を頻繁に発明（幻覚）したりします。",
+    "algorithm": "正書法に基づく帰属および「スケアクオート」分析",
+    "mechanism": "アルゴリズムはシングルまたはダブルクォーテーションマークで囲まれた全てのテキストを抽出し、周囲のコンテキストを評価します。「恐怖引用比率」（単一の非技術的口語語の周りの引用）と「帰属密度」（固有名詞に結びつけられた引用の頻度）を計算します。安全性と中立性のアライメントに制約されたAIモデルは、非公式言語をネイティブに使うことに非常に躊躇します；強制された場合、スラングやイディオムをほぼ常に引用で囲んでトーンが借用されたものであり固有のものではないことを示します。さらに、説明テキストを生成する際、AIはしばしば権威的に見えるよう基本概念を過度に引用しますが、人間は直接話法や高度に特定の定義のために引用を保留します。",
+    "useCase": "AIが「非公式な」言葉を臨床的に隔離する傾向や、正確な会話文字列を幻覚する傾向が、その非人間的な起源を裏切るような、エッセイ、オピニオン記事、文献レビューの監査に非常に効果的です。",
+    "strengths": "• 慣用句を自然に使用することを拒否する「慎重なAI」ペルソナの検出に優れています。\n• 「固有表現の整合性」と組み合わせることで強力な法医学的証拠を提供し、幻覚の引用を簡単にフラグ付けします。",
+    "limitations": "• 純粋なジャーナリズムの文章、引用が多い学術論文、または会話の多いクリエイティブライティングでは誤検知が発生しやすくなります。\n• ユーザーがAIにすべての引用符を削除するように明示的に指示した場合は、回避される可能性があります。",
+    "parameters": "解析: 正書法の境界抽出と文脈的なNLP解析\n評価基準: 意味論的隔離（「スケアクオート」）の頻度と帰属の密度\n出力結果: 0-100 引用の予測可能性（人為的フォーマット）スコア",
+    "accuracy": "中程度 — 単独での精度は65-80%。疑わしいほど「無菌」に感じられる正式なエッセイや学術的な文章を分析する際の、強力な二次指標となります。",
+    "references": [
+        {
+            "title": "Bhattacharjee, A. et al. (2024). LLMs as Hallucination Generators: A Comprehensive Study. arXiv.",
+            "url": "https://arxiv.org/abs/2402.14660"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Bhattacharjee, A. et al. (2024). LLMs as Hallucination Generators: A Comprehensive Study. arXiv.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

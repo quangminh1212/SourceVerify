@@ -1,12 +1,22 @@
 {
-  "name": "Facial Action Timing Analysis",
-  "description": "Analyzes onset, apex, and offset timing of facial action units (AUs) — AI expressions have unnatural temporal dynamics.",
-  "algorithm": "Facial Action Timing Analysis分析アルゴリズム",
-  "mechanism": "This method analyzes the temporal dynamics of facial action units for deepfake detection:\n\n1. **ActionUnit時間的Profiling**: Each FACS action unit activation is profiled over time, measuring onset velocity (rate of muscle contraction initiation), peak intensity, sustain duration, and offset velocity. Natural facial actions follow stereotyped temporal profiles governed by neuromuscular physiology.\n\n2. **TimingRegularity分析**: Natural facial actions show specific timing distributions — spontaneous smiles onset in ~0.5s, reflexive blinks in ~0.1s, surprise reactions in ~0.25s. The method checks whether detected AU timing falls within physiologically valid ranges. AI-generated facial actions may show unrealistic timing — too fast, too slow, or uniformly timed.\n\n3. **Inter-AU時間的Coordination**: When multiple AUs activate together (e.g., smile = AU6 + AU12), their relative timing follows biomechanical constraints — zygomatic major contracts before orbicularis oculi. The method checks inter-AU timing relationships. Deepfakes may produce simultaneous AU activation lacking natural temporal offsets.\n\n4. **Action-ReactionTiming**: In conversation, facial actions follow a temporal structure: reaction expressions appear after the triggering event with characteristic delays (200-500ms for emotional reactions). The method evaluates whether expression timing is contextually appropriate. AI-generated faces may show incorrect action-reaction timing.\n\n5. **時間的対称性評価**: Natural facial actions show slight bilateral temporal asymmetry — the dominant side activates marginally earlier. The method measures left-right onset timing differences. Perfect bilateral temporal symmetry or excessive asymmetry indicates AI generation artifacts.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "顔面動作タイミング解析",
+    "description": "Analyzes onset, apex, and offset timing of facial action units (AUs) — AI expressions have unnatural temporal dynamics.",
+    "algorithm": "Facial Action Timing Analysis分析アルゴリズム",
+    "mechanism": "This method analyzes the temporal dynamics of facial action units for deepfake detection:\n\n1. **ActionUnit時間的Profiling**: Each FACS action unit activation is profiled over time, measuring onset velocity (rate of muscle contraction initiation), peak intensity, sustain duration, and offset velocity. Natural facial actions follow stereotyped temporal profiles governed by neuromuscular physiology.\n\n2. **TimingRegularity分析**: Natural facial actions show specific timing distributions — spontaneous smiles onset in ~0.5s, reflexive blinks in ~0.1s, surprise reactions in ~0.25s. The method checks whether detected AU timing falls within physiologically valid ranges. AI-generated facial actions may show unrealistic timing — too fast, too slow, or uniformly timed.\n\n3. **Inter-AU時間的Coordination**: When multiple AUs activate together (e.g., smile = AU6 + AU12), their relative timing follows biomechanical constraints — zygomatic major contracts before orbicularis oculi. The method checks inter-AU timing relationships. Deepfakes may produce simultaneous AU activation lacking natural temporal offsets.\n\n4. **Action-ReactionTiming**: In conversation, facial actions follow a temporal structure: reaction expressions appear after the triggering event with characteristic delays (200-500ms for emotional reactions). The method evaluates whether expression timing is contextually appropriate. AI-generated faces may show incorrect action-reaction timing.\n\n5. **時間的対称性評価**: Natural facial actions show slight bilateral temporal asymmetry — the dominant side activates marginally earlier. The method measures left-right onset timing differences. Perfect bilateral temporal symmetry or excessive asymmetry indicates AI generation artifacts.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://www.paulekman.com/facial-action-coding-system/",
+            "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
+        },
+        {
+            "url": "https://doi.org/10.1109/CVPR42600.2020.00505",
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR."
+        }
+    ]
 }

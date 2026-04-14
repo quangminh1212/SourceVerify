@@ -1,22 +1,22 @@
 {
-  "name": "修飾語の密度 (Qualifier Density)",
-  "description": "形容詞または動詞を修飾するために使用される修飾語（例：「非常に」、「かなり」、「いくらか」、「ほとんど」、「おそらく」、「典型的には」、「一般的に」）の頻度を分析します。中立的で、安全で、学術的に適応するようにRLHF（人間からのフィードバックを用いた強化学習）によって大きく条件付けられている大規模言語モデルは、修飾語の慢性的な過剰使用に悩まされています。これらは、主張を和らげたり、断言を避けたりするためにこれらの言葉を習慣的に使用し、自信に満ちた人間の文章と比較して、緩和的な言語の密度が著しく高くなります。",
-  "algorithm": "ヘッジング（ぼかし言葉）と緩和修飾語の分析",
-  "mechanism": "The algorithm parses the text using a part-of-speech (POS) tagger to identify adverbs, specific adjectives, and auxiliary verb phrases acting as qualifiers. It calculates the 'Qualifier/Word Ratio' and cross-references it against the 'Absolute Claim Index' (the frequency of definitive statements). AI-generated texts consistently exhibit an unnaturally high qualifier density (a pathological need to say 'it is *generally* considered' or 'this *can* be seen as *somewhat* beneficial') because definitive statements carry a higher mathematical penalty during safety fine-tuning. The system flags texts where the density of these softening words mathematically eclipses natural human rhetorical limits.",
-  "useCase": "人間のライターが通常、強力で緩和されていない断言を使用するのに対し、AIが人為的な躊躇を導入する、説得力のあるエッセイ、ジャーナリズム、意見記事、およびマーケティングコピーの監査に非常に効果的です。",
-  "strengths": "• 複雑で積極的なプロンプトなしではAIが完全にオフにすることがほぼ不可能な、最新のLLMの安全性アライメントの条件付け（RLHF）を直接攻撃します。\n• 異なるLLMアーキテクチャ（GPT、Claude、Gemini）でも同様の安全性トレーニングパラダイムを共有しているため、非常に堅牢です。",
-  "limitations": "• 広範な修飾とヘッジングが必須の専門的基準である、科学論文、法的免責事項、または学術文献レビューにおいて誤検知が発生しやすくなります。\n• 短いテキスト（100単語未満）には、信頼できる密度のベースラインを確立するのに十分なデータポイントが含まれていない場合があります。",
-  "parameters": "解析: 語彙的修飾語の抽出とヘッジング（ぼかし言葉）の検出\n評価基準: 100語あたりの緩和修飾語の頻度\n出力結果: 0-100 修飾語の過負荷（人為的な躊躇）スコア",
-  "accuracy": "高 — 説得力のあるテキストや意見のテキストでは80-88%の精度。ヘッジングが自然な正式な科学的文脈では精度が低下します。",
-  "references": [
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "修飾語の密度 (Qualifier Density)",
+    "description": "形容詞または動詞を修飾するために使用される修飾語（例：「非常に」、「かなり」、「いくらか」、「ほとんど」、「おそらく」、「典型的には」、「一般的に」）の頻度を分析します。中立的で、安全で、学術的に適応するようにRLHF（人間からのフィードバックを用いた強化学習）によって大きく条件付けられている大規模言語モデルは、修飾語の慢性的な過剰使用に悩まされています。これらは、主張を和らげたり、断言を避けたりするためにこれらの言葉を習慣的に使用し、自信に満ちた人間の文章と比較して、緩和的な言語の密度が著しく高くなります。",
+    "algorithm": "ヘッジング（ぼかし言葉）と緩和修飾語の分析",
+    "mechanism": "アルゴリズムは品詞（POS）タガーを使用してテキストを解析し、限定子として機能する副詞、特定の形容詞、助動詞句を識別します。「限定子/語比率」を計算し、「絶対的主張指標」（断定的声明の頻度）と相互参照します。AI生成テキストは不自然に高い限定子密度を一貫して示します（「一般的に考えられている」や「これはある程度有益と見なすことができる」と言う病的な必要性）断定的声明が安全性微調整中により高い数学的ペナルティを運ぶからです。システムはこれらの軟化語の密度が自然な人間の修辞的限界を数学的に凌駕するテキストにフラグを立てます。",
+    "useCase": "人間のライターが通常、強力で緩和されていない断言を使用するのに対し、AIが人為的な躊躇を導入する、説得力のあるエッセイ、ジャーナリズム、意見記事、およびマーケティングコピーの監査に非常に効果的です。",
+    "strengths": "• 複雑で積極的なプロンプトなしではAIが完全にオフにすることがほぼ不可能な、最新のLLMの安全性アライメントの条件付け（RLHF）を直接攻撃します。\n• 異なるLLMアーキテクチャ（GPT、Claude、Gemini）でも同様の安全性トレーニングパラダイムを共有しているため、非常に堅牢です。",
+    "limitations": "• 広範な修飾とヘッジングが必須の専門的基準である、科学論文、法的免責事項、または学術文献レビューにおいて誤検知が発生しやすくなります。\n• 短いテキスト（100単語未満）には、信頼できる密度のベースラインを確立するのに十分なデータポイントが含まれていない場合があります。",
+    "parameters": "解析: 語彙的修飾語の抽出とヘッジング（ぼかし言葉）の検出\n評価基準: 100語あたりの緩和修飾語の頻度\n出力結果: 0-100 修飾語の過負荷（人為的な躊躇）スコア",
+    "accuracy": "高 — 説得力のあるテキストや意見のテキストでは80-88%の精度。ヘッジングが自然な正式な科学的文脈では精度が低下します。",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

@@ -1,22 +1,22 @@
 {
-  "name": "参照密度分析 (Referential Density)",
-  "description": "前に言及されたエンティティ（実体）を指すために使用される参照表現（代名詞、「これ/それ/これら」などの指示詞、および同義語）の頻度と複雑さを分析します。人間は、コンテキストが確立された後、流れを維持し、反復的な命名を避けるために、複雑な参照チェーンを自然に使用します。真の認知的ワーキングメモリを持たないAI言語モデルは、基本的な代名詞に過度に依存するか、コンテキストのドリフト（文脈のズレ）を防ぐために完全な固有名詞を不器用に何度も再記述することによって、「安全策をとる」ことがよくあります。",
-  "algorithm": "共参照解決とエンティティマッピング",
-  "mechanism": "The algorithm identifies all named entities and tracking nouns within the text. It then maps the coreference chains—how these entities are referred to subsequently. The system calculates the 'Referential Density Score': the ratio of pronouns/demonstratives/synonyms to explicit noun repetitions. Human writing demonstrates high referential density and varied anaphora (using 'the ambitious project', 'it', 'this endeavor' for the same subject). AI text often exhibits a flat density profile, repeatedly using the explicit noun (e.g., 'The company... The company... The company...') to maintain probabilistic safety.",
-  "useCase": "物語構造、長文記事、説明文を分析して、LLMに特徴的な機械的で過度に明示的な執筆スタイルを検出するのに効果的です。",
-  "strengths": "• プロンプトエンジニアリングや基本的な単語の言い換えツールでは、説得力を持って偽造することが非常に困難な、深い認知言語学的特徴を捉えます。\n• 人間のワーキングメモリが自然に代名詞の使用に移行する、長いテキストで非常に効果的です。",
-  "limitations": "• あらゆる法的曖昧さを避けるために、正式な名詞を繰り返すように人間が明示的に訓練されている、高度な技術文書や法的文書では効果が低くなります。\n• 短いテキストには、意味のある参照ベースラインを形成するのに十分なエンティティや後続の節が含まれていません。",
-  "parameters": "解析: NLP共参照チェーンの抽出\n評価基準: 明示的な名詞の再記述に対する前方照応的参照の比率\n出力結果: 0-100 参照の硬直性（AIの明示的な命名）スコア",
-  "accuracy": "中〜高 — 75-82%の精度。語彙の多様性（Lexical Diversity）および代名詞の使用パターン（Pronoun Usage Patterns）と組み合わせることで、強力な二次指標となります。",
-  "references": [
-    {
-      "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
-      "url": "https://arxiv.org/abs/2003.10555"
-    },
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    }
-  ],
-  "source": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
+    "name": "参照密度分析 (Referential Density)",
+    "description": "前に言及されたエンティティ（実体）を指すために使用される参照表現（代名詞、「これ/それ/これら」などの指示詞、および同義語）の頻度と複雑さを分析します。人間は、コンテキストが確立された後、流れを維持し、反復的な命名を避けるために、複雑な参照チェーンを自然に使用します。真の認知的ワーキングメモリを持たないAI言語モデルは、基本的な代名詞に過度に依存するか、コンテキストのドリフト（文脈のズレ）を防ぐために完全な固有名詞を不器用に何度も再記述することによって、「安全策をとる」ことがよくあります。",
+    "algorithm": "共参照解決とエンティティマッピング",
+    "mechanism": "アルゴリズムはテキスト内の全ての固有名詞と追跡名詞を識別します。次にこれらのエンティティが後にどのように参照されるか—共参照連鎖—をマッピングします。システムは「参照密度スコア」を計算します：代名詞/指示詞/同義語と明示的名詞反復の比率。人間の文章は高い参照密度と多様な照応を示します（同じ主題に対して「野心的なプロジェクト」「それ」「この取り組み」を使う）。AIテキストはしばしばフラットな密度プロファイルを示し、確率的安全性を維持するために明示的名詞を繰り返し使用します（例：「会社は…会社は…会社は…」）。",
+    "useCase": "物語構造、長文記事、説明文を分析して、LLMに特徴的な機械的で過度に明示的な執筆スタイルを検出するのに効果的です。",
+    "strengths": "• プロンプトエンジニアリングや基本的な単語の言い換えツールでは、説得力を持って偽造することが非常に困難な、深い認知言語学的特徴を捉えます。\n• 人間のワーキングメモリが自然に代名詞の使用に移行する、長いテキストで非常に効果的です。",
+    "limitations": "• あらゆる法的曖昧さを避けるために、正式な名詞を繰り返すように人間が明示的に訓練されている、高度な技術文書や法的文書では効果が低くなります。\n• 短いテキストには、意味のある参照ベースラインを形成するのに十分なエンティティや後続の節が含まれていません。",
+    "parameters": "解析: NLP共参照チェーンの抽出\n評価基準: 明示的な名詞の再記述に対する前方照応的参照の比率\n出力結果: 0-100 参照の硬直性（AIの明示的な命名）スコア",
+    "accuracy": "中〜高 — 75-82%の精度。語彙の多様性（Lexical Diversity）および代名詞の使用パターン（Pronoun Usage Patterns）と組み合わせることで、強力な二次指標となります。",
+    "references": [
+        {
+            "title": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.",
+            "url": "https://arxiv.org/abs/2003.10555"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ],
+    "source": "Clark, K. et al. (2020). Electra: Pre-training Text Encoders as Discriminators Rather Than Generators. ICLR.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
 }

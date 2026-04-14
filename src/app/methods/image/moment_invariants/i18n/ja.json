@@ -1,12 +1,22 @@
 {
-  "name": "Hu Moment Invariants",
-  "description": "Computes Hu's seven moment invariants to detect shape and rotation anomalies in AI content (Hu, 1962).",
-  "algorithm": "Hu Moment Invariants分析アルゴリズム",
-  "mechanism": "この手法は computes Hu's (1962) moment invariants and extended affine moment invariants for forgery detection:\n\n1. **幾何学的Moment計算**: Raw geometric moments mₚᵧ = ΣΣ xᵖyᵧI(x,y) are computed over image blocks. Central moments μₚᵧ are derived by shifting to the centroid, providing translation invariance.\n\n2. **HuMomentInvariant抽出**: The seven Hu invariants (φ₁ through φ₇) are calculated from normalized central moments. These are invariant to translation, rotation, and scaling — properties that enable detection of copy-move forgery where copied regions may be geometrically transformed.\n\n3. **ブロック-wiseInvariantマッピング**: The image is divided into overlapping blocks and moment invariants are computed per block. Blocks with similar invariant vectors but different spatial locations suggest copy-move manipulation.\n\n4. **AffineMomentInvariants(AMI)**: Extended invariants following Flusser et al. (2009) capture affine-invariant features, detecting copies that have undergone shearing or non-uniform scaling beyond simple rotation.\n\n5. **一貫性分析**: Moment invariant distributions across the image are analyzed for statistical anomalies. Natural images show smooth spatial variation in moment features, while AI生成の images may exhibit unnatural uniformity or discontinuities at generation boundaries. The final score quantifies deviation from expected natural moment statistics.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "Huモーメント不変量解析",
+    "description": "Computes Hu's seven moment invariants to detect shape and rotation anomalies in AI content (Hu, 1962).",
+    "algorithm": "Hu Moment Invariants分析アルゴリズム",
+    "mechanism": "この手法は computes Hu's (1962) moment invariants and extended affine moment invariants for forgery detection:\n\n1. **幾何学的Moment計算**: Raw geometric moments mₚᵧ = ΣΣ xᵖyᵧI(x,y) are computed over image blocks. Central moments μₚᵧ are derived by shifting to the centroid, providing translation invariance.\n\n2. **HuMomentInvariant抽出**: The seven Hu invariants (φ₁ through φ₇) are calculated from normalized central moments. These are invariant to translation, rotation, and scaling — properties that enable detection of copy-move forgery where copied regions may be geometrically transformed.\n\n3. **ブロック-wiseInvariantマッピング**: The image is divided into overlapping blocks and moment invariants are computed per block. Blocks with similar invariant vectors but different spatial locations suggest copy-move manipulation.\n\n4. **AffineMomentInvariants(AMI)**: Extended invariants following Flusser et al. (2009) capture affine-invariant features, detecting copies that have undergone shearing or non-uniform scaling beyond simple rotation.\n\n5. **一貫性分析**: Moment invariant distributions across the image are analyzed for statistical anomalies. Natural images show smooth spatial variation in moment features, while AI生成の images may exhibit unnatural uniformity or discontinuities at generation boundaries. The final score quantifies deviation from expected natural moment statistics.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TIT.1962.1057692",
+            "title": "Hu, M.K. (1962). Visual Pattern Recognition by Moment Invariants. IRE Trans. Information Theory."
+        },
+        {
+            "url": "https://doi.org/10.1002/9780470684757",
+            "title": "Flusser, J. et al. (2009). Moments and Moment Invariants in Pattern Recognition. Wiley."
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "Forehead Texture",
-  "description": "Analyzes forehead micro-pattern and テキストure",
-  "algorithm": "Forehead Texture — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes forehead skin texture for deepfake detection:\n\n1. **Forehead領域抽出**: The forehead region is segmented per frame — bounded by hairline, eyebrows, and temples. This region is geometrically normalized to compensate for head tilt and provide consistent texture analysis across frames.\n\n2. **Multi-Scaleテクスチャ分析**: Forehead texture is analyzed at multiple scales: macro (expression wrinkles, vein visibility), meso (pores, fine wrinkles), and micro (skin grain, peach fuzz). Natural foreheads exhibit characteristic texture at each scale. AI-generated foreheads often show texture quality that drops off at finer scales.\n\n3. **Expression-テクスチャ相関**: Forehead texture changes predictably with expressions — horizontal wrinkles appear with brow raising (frontalis contraction), vertical wrinkles with brow furrowing (corrugator contraction). The method verifies that texture changes correlate correctly with detected expressions. Deepfakes may show expression without corresponding wrinkle formation.\n\n4. **Sweat/SebumIndicator分析**: Real foreheads show subtle specular highlights from skin oils/perspiration, with characteristic spatial distribution. The method detects these physiological indicators — AI generators typically don't model skin surface moisture, producing either uniformly matte or uniformly shiny foreheads.\n\n5. **時間的テクスチャ安定性**: Fine forehead texture (pore positions, stable wrinkles) should remain fixed across frames. The method tracks micro-texture consistency — frame-to-frame variations in pore patterns or shifting wrinkle positions indicate per-frame independent rendering by AI generators.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through forehead テキストure analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/1912.13458"
-    }
-  ]
+    "name": "額テクスチャ解析",
+    "description": "Analyzes forehead micro-pattern and テキストure",
+    "algorithm": "Forehead Texture — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes forehead skin texture for deepfake detection:\n\n1. **Forehead領域抽出**: The forehead region is segmented per frame — bounded by hairline, eyebrows, and temples. This region is geometrically normalized to compensate for head tilt and provide consistent texture analysis across frames.\n\n2. **Multi-Scaleテクスチャ分析**: Forehead texture is analyzed at multiple scales: macro (expression wrinkles, vein visibility), meso (pores, fine wrinkles), and micro (skin grain, peach fuzz). Natural foreheads exhibit characteristic texture at each scale. AI-generated foreheads often show texture quality that drops off at finer scales.\n\n3. **Expression-テクスチャ相関**: Forehead texture changes predictably with expressions — horizontal wrinkles appear with brow raising (frontalis contraction), vertical wrinkles with brow furrowing (corrugator contraction). The method verifies that texture changes correlate correctly with detected expressions. Deepfakes may show expression without corresponding wrinkle formation.\n\n4. **Sweat/SebumIndicator分析**: Real foreheads show subtle specular highlights from skin oils/perspiration, with characteristic spatial distribution. The method detects these physiological indicators — AI generators typically don't model skin surface moisture, producing either uniformly matte or uniformly shiny foreheads.\n\n5. **時間的テクスチャ安定性**: Fine forehead texture (pore positions, stable wrinkles) should remain fixed across frames. The method tracks micro-texture consistency — frame-to-frame variations in pore patterns or shifting wrinkle positions indicate per-frame independent rendering by AI generators.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through forehead テキストure analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/1912.13458"
+        }
+    ]
 }

@@ -1,12 +1,22 @@
 {
-  "name": "因果推論のタギングと抽出",
-  "description": "テキスト内の因果推論チェーンの論理的な深さと構造的な真正性を評価します。",
-  "algorithm": "語彙・統語的因果関係アナライザー",
-  "mechanism": "This method reconstructs the lexico-syntactic tree to identify and tag specific constructions of causation (e.g., explicit markers like 'because', 'therefore', alongside implicit verbal causatives). LLMs frequently generate plausible-sounding text where causal links are syntactically valid but logically superficial, relying on templated transitional adverbs. By analyzing the density, diversity, and structural complexity of the extracted causal arguments against empirical human baselines established by researchers like Dunietz and Girju, the algorithm flags content that over-relies on 'fake' explanatory depth.",
-  "parameters": "解析: 統語ツリーマイニング\n指標: 因果リンク密度と深さ\n出力: 0-100 論理的均質性スコア",
-  "accuracy": "高 — 議論的なテキストにおいて78-85%。AI固有の「自信に満ちているが中身がない」トーンの識別において非常に有効です。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "真の推論のつながりがなく、接続詞の装飾に大きく依存している疑似論理的なAIエッセイのピンポイント特定。",
-  "strengths": "• 自己回帰パラメータ生成に内在する論理的な浅さを直接的に暴露します。\n• 単純な同義語の置き換え（スピニング）に強い耐性があります。\n• 因果関係のための確立されたNLPテキストマイニングの手法に強く基づいています。",
-  "limitations": "• 深い依存関係の構文解析を必要とするため、計算量が多くなります。\n• 本来の人間のマーケティングコピーや説得力のあるエッセイでも、論理構造が不十分な場合は誤ってフラグが立てられる可能性があります。\n• 特定の言語のマーカー辞書への依存度が高いです。"
+    "name": "因果推論のタギングと抽出",
+    "description": "テキスト内の因果推論チェーンの論理的な深さと構造的な真正性を評価します。",
+    "algorithm": "語彙・統語的因果関係アナライザー",
+    "mechanism": "この手法は語彙・構文ツリーを再構築して因果関係の特定の構成を識別・タグ付けします（例：「なぜなら」「したがって」などの明示的標識と暗黙的動詞因果関係）。LLMは因果関係が構文的に有効だが論理的に薄い、もっともらしく聞こえるテキストを頻繁に生成し、テンプレート化された遷移副詞に依存します。DunietzやGirjuのような研究者によって確立された経験的人間ベースラインに対して、抽出された因果論証の密度、多様性、構造的複雑性を分析することで、アルゴリズムは「偽の」説明的深さに過度に依存するコンテンツにフラグを立てます。",
+    "parameters": "解析: 統語ツリーマイニング\n指標: 因果リンク密度と深さ\n出力: 0-100 論理的均質性スコア",
+    "accuracy": "高 — 議論的なテキストにおいて78-85%。AI固有の「自信に満ちているが中身がない」トーンの識別において非常に有効です。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "真の推論のつながりがなく、接続詞の装飾に大きく依存している疑似論理的なAIエッセイのピンポイント特定。",
+    "strengths": "• 自己回帰パラメータ生成に内在する論理的な浅さを直接的に暴露します。\n• 単純な同義語の置き換え（スピニング）に強い耐性があります。\n• 因果関係のための確立されたNLPテキストマイニングの手法に強く基づいています。",
+    "limitations": "• 深い依存関係の構文解析を必要とするため、計算量が多くなります。\n• 本来の人間のマーケティングコピーや説得力のあるエッセイでも、論理構造が不十分な場合は誤ってフラグが立てられる可能性があります。\n• 特定の言語のマーカー辞書への依存度が高いです。",
+    "references": [
+        {
+            "url": "https://doi.org/10.18653/v1/W17-0903",
+            "title": "Dunietz, J. et al. (2017). Automatically Tagging Constructions of Causation. ACL Workshop."
+        },
+        {
+            "url": "https://www.aaai.org/Papers/FLAIRS/2002/FLAIRS02-071.pdf",
+            "title": "Girju, R. et al. (2002). Text Mining for Causal Relations. FLAIRS Conference."
+        }
+    ]
 }

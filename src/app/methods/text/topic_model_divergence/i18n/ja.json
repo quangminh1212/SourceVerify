@@ -1,22 +1,22 @@
 {
-  "name": "トピックモデルのダイバージェンス（発散） (Topic Model Divergence)",
-  "description": "高度なトピックモデリングを使用して、テキスト内の根底にあるテーマの統計的分布を分析します。生成AIモデルは多くの場合、多様なドメインにわたる情報を合成し、不自然に滑らかで数学的に完璧なトピック分布をもたらします。逆に、人間の書く文章は通常「塊（lumpy）」であり、いくつかの支配的なコアテーマに大きく偏っており、ギザギザで非対称な推移を示します。このメソッドは、テキストから抽出されたトピック分布と、人間が作成したコーパスに見られると予想される自然に非対称な分布との間のダイバージェンス（違い、発散）を測定します。",
-  "algorithm": "潜在的ディリクレ配分法 (LDA) とカルバック・ライブラー情報量 (KL Divergence)",
-  "mechanism": "The system processes the text using a probabilistic topic model, such as Latent Dirichlet Allocation (LDA), which maps words to hidden thematic topics. It calculates the probability distribution of these topics across the entire document. Next, it employs Kullback-Leibler (KL) Divergence to measure how much this specific topic distribution deviates from empirical human baselines. A text exhibiting a suspiciously uniform, low-variance topic mixture—indicating a mechanism trying to 'cover all bases' with statistical evenness—yields a high artificiality score.",
-  "useCase": "不自然なトピックの「滑らかさ」が統計的に明らかになる長文の包括的なドキュメント（例：ホワイトペーパー、長編エッセイ、文献レビュー）の監査に非常に効果的です。",
-  "strengths": "• テーマのレベルで根本的な構造異常を検出するため、表面レベルの言い換えや類義語の置き換えに対して高い耐性があります。\n• 確立された査読済みの数学的フレームワーク（LDAとKL情報量）を活用します。",
-  "limitations": "• LDAが信頼性の高いトピック分布を正常に抽出して安定させるには、十分なテキストの長さ（理想的には500語以上）が必要です。\n• 完全にバランスの取れた学際的なカバレッジを意図的に追求する、高度に構造化された百科事典的な人間のテキストにフラグを立てる可能性があります。",
-  "parameters": "解析: 確率的トピック抽出 (LDA)\n評価基準: 人間のベースラインからのカルバック・ライブラー (KL) ダイバージェンス\n出力結果: 0-100 テーマの人工性スコア",
-  "accuracy": "中〜高 — 70-85%の精度。その有効性はドキュメントの長さに比例して直線的に拡大し、単語レベルの統計チェックの構造的な補完として展開するのが最適です。",
-  "references": [
-    {
-      "title": "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR.",
-      "url": "https://jmlr.org/papers/v3/blei03a.html"
-    },
-    {
-      "title": "Kullback, S. & Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics.",
-      "url": "https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full"
-    }
-  ],
-  "source": "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR.; Kullback, S. & Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics."
+    "name": "トピックモデルのダイバージェンス（発散） (Topic Model Divergence)",
+    "description": "高度なトピックモデリングを使用して、テキスト内の根底にあるテーマの統計的分布を分析します。生成AIモデルは多くの場合、多様なドメインにわたる情報を合成し、不自然に滑らかで数学的に完璧なトピック分布をもたらします。逆に、人間の書く文章は通常「塊（lumpy）」であり、いくつかの支配的なコアテーマに大きく偏っており、ギザギザで非対称な推移を示します。このメソッドは、テキストから抽出されたトピック分布と、人間が作成したコーパスに見られると予想される自然に非対称な分布との間のダイバージェンス（違い、発散）を測定します。",
+    "algorithm": "潜在的ディリクレ配分法 (LDA) とカルバック・ライブラー情報量 (KL Divergence)",
+    "mechanism": "システムは潜在ディリクレ配分法（LDA）のような確率的トピックモデルを使用してテキストを処理し、語を隠されたテーマ的トピックにマッピングします。文書全体にわたるこれらのトピックの確率分布を計算します。次にカルバック-ライブラー（KL）発散を使用して、この特定のトピック分布が経験的人間ベースラインからどれだけ逸脱するかを測定します。統計的均一さで「全ての基盤をカバー」しようとするメカニズムを示す、疑わしいほど均一で低分散なトピック混合物を示すテキストは高い人工性スコアを生みます。",
+    "useCase": "不自然なトピックの「滑らかさ」が統計的に明らかになる長文の包括的なドキュメント（例：ホワイトペーパー、長編エッセイ、文献レビュー）の監査に非常に効果的です。",
+    "strengths": "• テーマのレベルで根本的な構造異常を検出するため、表面レベルの言い換えや類義語の置き換えに対して高い耐性があります。\n• 確立された査読済みの数学的フレームワーク（LDAとKL情報量）を活用します。",
+    "limitations": "• LDAが信頼性の高いトピック分布を正常に抽出して安定させるには、十分なテキストの長さ（理想的には500語以上）が必要です。\n• 完全にバランスの取れた学際的なカバレッジを意図的に追求する、高度に構造化された百科事典的な人間のテキストにフラグを立てる可能性があります。",
+    "parameters": "解析: 確率的トピック抽出 (LDA)\n評価基準: 人間のベースラインからのカルバック・ライブラー (KL) ダイバージェンス\n出力結果: 0-100 テーマの人工性スコア",
+    "accuracy": "中〜高 — 70-85%の精度。その有効性はドキュメントの長さに比例して直線的に拡大し、単語レベルの統計チェックの構造的な補完として展開するのが最適です。",
+    "references": [
+        {
+            "title": "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR.",
+            "url": "https://jmlr.org/papers/v3/blei03a.html"
+        },
+        {
+            "title": "Kullback, S. & Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics.",
+            "url": "https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-22/issue-1/On-Information-and-Sufficiency/10.1214/aoms/1177729694.full"
+        }
+    ],
+    "source": "Blei, D.M. et al. (2003). Latent Dirichlet Allocation. JMLR.; Kullback, S. & Leibler, R.A. (1951). On Information and Sufficiency. Annals of Mathematical Statistics."
 }

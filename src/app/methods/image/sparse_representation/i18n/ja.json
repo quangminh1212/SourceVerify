@@ -1,12 +1,22 @@
 {
-  "name": "Sparse Representation Analysis",
-  "description": "Uses sparse coding and dictionary learning to detect representation anomalies in AI images (Wright et al., 2009).",
-  "algorithm": "Sparse Representation Analysis分析アルゴリズム",
-  "mechanism": "この手法は applies sparse representation theory following Wright et al. (2009) and Elad & Aharon (2006) フォレンジック分析のため:\n\n1. **DictionaryLearning**: A redundant dictionary D ∈ ℝⁿˣᴷ (K >> n, overcomplete) is learned from natural image patches via K-SVD algorithm. Each atom captures a characteristic local structure (edge, texture, smooth region) found in authentic images.\n\n2. **SparseCoding**: For each image patch y, the sparsest representation α is found via: min‖α‖₀ s.t. ‖y − Dα‖₂ ≤ ε. In practice, OMP (Orthogonal Matching Pursuit) or LASSO provides an approximate solution. Natural image patches admit highly sparse representations (few active atoms).\n\n3. **RepresentationResidual分析**: The residual r = ‖y − Dα‖₂ measures how well each patch fits the natural image dictionary. Authentic image patches yield low residuals, while AI生成の patches — containing artifacts outside the natural image manifold — produce elevated residuals.\n\n4. **SparsityMapConstruction**: A spatial map of sparsity levels (‖α‖₀) and residuals across the image reveals regions 一貫性のない with natural image statistics. Manipulated or AI生成の regions 通常 require more dictionary atoms (lower sparsity) yet still produce higher residuals.\n\n5. **異常スコアリング**: The joint distribution of sparsity and residuals across all patches is compared to the expected distribution for natural images. Systematic deviations — particularly elevated residuals in textured regions that should be well-represented by the learned dictionary — indicate synthetic generation.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "スパース表現解析",
+    "description": "Uses sparse coding and dictionary learning to detect representation anomalies in AI images (Wright et al., 2009).",
+    "algorithm": "Sparse Representation Analysis分析アルゴリズム",
+    "mechanism": "この手法は applies sparse representation theory following Wright et al. (2009) and Elad & Aharon (2006) フォレンジック分析のため:\n\n1. **DictionaryLearning**: A redundant dictionary D ∈ ℝⁿˣᴷ (K >> n, overcomplete) is learned from natural image patches via K-SVD algorithm. Each atom captures a characteristic local structure (edge, texture, smooth region) found in authentic images.\n\n2. **SparseCoding**: For each image patch y, the sparsest representation α is found via: min‖α‖₀ s.t. ‖y − Dα‖₂ ≤ ε. In practice, OMP (Orthogonal Matching Pursuit) or LASSO provides an approximate solution. Natural image patches admit highly sparse representations (few active atoms).\n\n3. **RepresentationResidual分析**: The residual r = ‖y − Dα‖₂ measures how well each patch fits the natural image dictionary. Authentic image patches yield low residuals, while AI生成の patches — containing artifacts outside the natural image manifold — produce elevated residuals.\n\n4. **SparsityMapConstruction**: A spatial map of sparsity levels (‖α‖₀) and residuals across the image reveals regions 一貫性のない with natural image statistics. Manipulated or AI生成の regions 通常 require more dictionary atoms (lower sparsity) yet still produce higher residuals.\n\n5. **異常スコアリング**: The joint distribution of sparsity and residuals across all patches is compared to the expected distribution for natural images. Systematic deviations — particularly elevated residuals in textured regions that should be well-represented by the learned dictionary — indicate synthetic generation.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2008.79",
+            "title": "Wright, J. et al. (2009). Robust Face Recognition via Sparse Representation. IEEE TPAMI."
+        },
+        {
+            "url": "https://doi.org/10.1109/TIP.2006.881969",
+            "title": "Elad, M. & Aharon, M. (2006). Image Denoising via Sparse and Redundant Representations. IEEE TIP."
+        }
+    ]
 }

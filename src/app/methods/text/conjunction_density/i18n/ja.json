@@ -1,22 +1,22 @@
 {
-  "name": "接続詞密度と並列（Parataxis）の欠如",
-  "description": "過渡に接続された合成的な文章を検出するために、総単語数に対する等位接続詞および従属接続詞の頻度を測定します。",
-  "algorithm": "構文的連鎖プロファイリングおよび接続詞比率計算",
-  "mechanism": "Large Language Models are explicitly optimized for logical cohesion and readability. To ensure maximum clarity, they obsessively link clauses using explicit conjunctions ('and', 'but', 'because', 'although', 'while'). They rarely trust the reader to infer relationships between sentences. Human writers, however, frequently employ 'parataxis'—the technique of placing clauses side by side without connecting words (e.g., 'It was raining. We stayed inside.')—relying on context and implicit logical leaps. This method parses the Parts-Of-Speech (POS) tags of the text to calculate the strict ratio of conjunctions to total words. An abnormally high conjunction density indicates a 'hyper-connective' AI that is algorithmically incapable of leaving logical joints unarticulated, resulting in overly smooth, synthetically flowing prose.",
-  "useCase": "AIが自然な物語の断片化（フラグメンテーション）を許容するのではなく、節間の関係を過剰に説明している、人工的に流動的な記事、エッセイ、およびストーリーの特定。",
-  "strengths": "• 人間が言語化するのに苦労するものの、直感的に感じ取るAIテキストの「不自然なほど滑らかすぎる」感覚を捉えるのに非常に効果的です。\n• テキストの根本的な構文的な接着剤をターゲットにするため、単純な語彙の置き換え（シノニム・スワッピング）に対して堅牢です。\n• 軽量な品詞（POS）タギングに依存しているため、高速で計算コストがかかりません。",
-  "limitations": "• 明示的な論理的接続が厳密に要求される、高度に専門的、法的、または指示的な人間のテキストを分析する場合、誤検知の影響を受けやすくなります。\n• 接続詞の分散が統計的に無意味な非常に短いテキストでは、パフォーマンスが低下します。\n• 熟練したプロンプターは、「ぶつ切りで断片化された文」または「接続詞省略（asyndeton）」を明示的に要求することで、これを回避できます。",
-  "parameters": "解析: 品詞（POS）タグ・カウントおよび構文的連鎖\n評価基準: 接続詞と単語の比率（100単語あたりの密度）\n出力結果: 0-100 超接続性（接続詞の乱用）スコア",
-  "accuracy": "中〜高 — 75-85%。文長の分散や移行マーカーの分析と並行して、サポート指標として機能する場合に最も効果的です。",
-  "references": [
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    },
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    }
-  ],
-  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+    "name": "接続詞密度と並列（Parataxis）の欠如",
+    "description": "過渡に接続された合成的な文章を検出するために、総単語数に対する等位接続詞および従属接続詞の頻度を測定します。",
+    "algorithm": "構文的連鎖プロファイリングおよび接続詞比率計算",
+    "mechanism": "LLMは論理的結束性と可読性のために明示的に最適化されています。最大の明瞭性を確保するために、明示的な接続詞を使って節を執拗に連結します（「そして」「しかし」「なぜなら」「〜にもかかわらず」「〜しながら」）。読者が文間の関係を推論することを滅多に信頼しません。しかし人間のライターは頻繁に「並列法」—接続語なしで節を並べて配置する技法（例：「雨が降っていた。私たちは中にいた。」）—を用い、文脈と暗黙的な論理的飛躍に依存します。この手法はテキストの品詞（POS）タグを解析して、接続詞と総語数の厳密な比率を計算します。異常に高い接続詞密度は、論理的接合部を未表現のまま残すことがアルゴリズム的に不可能な「超接続的」AIを示し、過度に滑らかで合成的に流れる散文をもたらします。",
+    "useCase": "AIが自然な物語の断片化（フラグメンテーション）を許容するのではなく、節間の関係を過剰に説明している、人工的に流動的な記事、エッセイ、およびストーリーの特定。",
+    "strengths": "• 人間が言語化するのに苦労するものの、直感的に感じ取るAIテキストの「不自然なほど滑らかすぎる」感覚を捉えるのに非常に効果的です。\n• テキストの根本的な構文的な接着剤をターゲットにするため、単純な語彙の置き換え（シノニム・スワッピング）に対して堅牢です。\n• 軽量な品詞（POS）タギングに依存しているため、高速で計算コストがかかりません。",
+    "limitations": "• 明示的な論理的接続が厳密に要求される、高度に専門的、法的、または指示的な人間のテキストを分析する場合、誤検知の影響を受けやすくなります。\n• 接続詞の分散が統計的に無意味な非常に短いテキストでは、パフォーマンスが低下します。\n• 熟練したプロンプターは、「ぶつ切りで断片化された文」または「接続詞省略（asyndeton）」を明示的に要求することで、これを回避できます。",
+    "parameters": "解析: 品詞（POS）タグ・カウントおよび構文的連鎖\n評価基準: 接続詞と単語の比率（100単語あたりの密度）\n出力結果: 0-100 超接続性（接続詞の乱用）スコア",
+    "accuracy": "中〜高 — 75-85%。文長の分散や移行マーカーの分析と並行して、サポート指標として機能する場合に最も効果的です。",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ],
+    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

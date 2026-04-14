@@ -1,22 +1,22 @@
 {
-  "useCase": "画像改ざんの検出 through re-saving, quality 操作, and spliced regions with different compression histories",
-  "mechanism": "It butchers the entire DCT pixel grid to erect a frequency histogram charting compression coefficients. On an authentic, untouched camera export (Single Compression), this graph paints a perfectly smooth, bell-shaped decay curve. The exact instant an image is re-opened and re-crushed (Double Compression at clashing Quality levels), the graph's mathematics spontaneously mutates into violent, periodic 'Comb Teeth' (Peaks) and 'Death Voids' (Zeros). If this scanner detects even a fraction of this jagged comb architecture, it issues an immediate prosecution of forgery.",
-  "accuracy": "高 - 82-92% for images with detectable double compression",
-  "name": "二重JPEG圧縮検出",
-  "source": "Lukáš & Fridrich (2003) - Estimation of Primary Quantization Matrix in Double-Compressed JPEG Images, DFRWS",
-  "algorithm": "DCT Coefficient Histogram Periodicity Analysis",
-  "parameters": "ブロックサイズ: 8x8 DCT, Quality range: 50-99, Analysis: ヒストグラム periodicity via DFT, Detection 閾値: 適応型",
-  "description": "検出します traces of double JPEG圧縮 を分析することで DCT 係数 ヒストグラムs. Tampering often involves re-saving, creating detectable periodic パターン in DCT domain.",
-  "references": [
-    {
-      "title": "Lukáš, J. & Fridrich, J. (2003). Estimation of Primary Quantization Matrix in Double-Compressed JPEG Images. DFRWS.",
-      "url": "https://doi.org/10.1016/S1742-2876(03)00007-4"
-    },
-    {
-      "title": "Bianchi, T. & Piva, A. (2012). Image Forgery Localization via Block-Grained Analysis of JPEG Artifacts. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2012.2187516"
-    }
-  ],
-  "strengths": "• 再保存されたJPEGの検出に非常に信頼性が高い\n• 元の圧縮品質を推定可能\n• 改ざん領域を特定\n• 確立された数学的基盤",
-  "limitations": "• Only works on JPEG format images\n• Ineffective when both compressions use same quality\n• Cannot detect single-compressed AI images\n• Requires sufficient image size for 統計的 信頼性"
+    "useCase": "画像改ざんの検出 through re-saving, quality 操作, and spliced regions with different compression histories",
+    "mechanism": "DCTピクセルグリッド全体を処理して圧縮係数をチャート化する周波数ヒストグラムを構築します。オリジナルで手つかずのカメラ出力（単一圧縮）では、このグラフは完全に滑らかな鐘形減衰曲線を描きます。画像が再び開かれ、衝突する品質レベルで再圧縮（二重圧縮）された瞬間、グラフの数学は激しく周期的な「櫛歯」（ピーク）と「死の空虚」（ゼロ）に自発的に変異します。このスキャナーがこのギザギザの櫛構造の一部でも検出すると、偽造に対する即座の起訴を発行します。",
+    "accuracy": "高 - 82-92% for images with detectable double compression",
+    "name": "二重JPEG圧縮検出",
+    "source": "Lukáš & Fridrich (2003) - Estimation of Primary Quantization Matrix in Double-Compressed JPEG Images, DFRWS",
+    "algorithm": "DCT Coefficient Histogram Periodicity Analysis",
+    "parameters": "ブロックサイズ: 8x8 DCT, Quality range: 50-99, Analysis: ヒストグラム periodicity via DFT, Detection 閾値: 適応型",
+    "description": "検出します traces of double JPEG圧縮 を分析することで DCT 係数 ヒストグラムs. Tampering often involves re-saving, creating detectable periodic パターン in DCT domain.",
+    "references": [
+        {
+            "title": "Lukáš, J. & Fridrich, J. (2003). Estimation of Primary Quantization Matrix in Double-Compressed JPEG Images. DFRWS.",
+            "url": "https://doi.org/10.1016/S1742-2876(03)00007-4"
+        },
+        {
+            "title": "Bianchi, T. & Piva, A. (2012). Image Forgery Localization via Block-Grained Analysis of JPEG Artifacts. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2012.2187516"
+        }
+    ],
+    "strengths": "• 再保存されたJPEGの検出に非常に信頼性が高い\n• 元の圧縮品質を推定可能\n• 改ざん領域を特定\n• 確立された数学的基盤",
+    "limitations": "• Only works on JPEG format images\n• Ineffective when both compressions use same quality\n• Cannot detect single-compressed AI images\n• Requires sufficient image size for 統計的 信頼性"
 }

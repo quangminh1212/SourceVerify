@@ -1,22 +1,22 @@
 {
-  "name": "キュリー（Curie）均一性検出（文長CV）",
-  "description": "文長の変動係数（CV）を計算し、機械生成に特有の不自然な構造的均一性を数学的に暴き出します。",
-  "algorithm": "文長変動係数（CV）プロファイリング",
-  "mechanism": "The 'Curie' detection profile focuses on a fundamental byproduct of autoregressive text generation: structural homogenization. Large Language Models continuously balance attention weights to produce text that flows smoothly and minimizes immediate perplexity. A mathematical consequence of this safe pathfinding is that the lengths of generated sentences converge violently toward a narrow median. By calculating the Coefficient of Variation (CV)—the standard deviation of sentence lengths divided by the mean—this method quantifies the textual rhythm. Human writers instinctively mix ultra-short, punchy sentences with long, sprawling, multi-clause explanations to manipulate pacing and emphasis, resulting in a high CV. In contrast, AI generators inevitably slip into a hypnotic rhythm of medium-length sentences, lacking both the extreme brevity and extreme length found in natural human thought processes. A pathologically low sentence length CV strongly indicates synthetic smoothing.",
-  "useCase": "中程度の長さのAIの文の執拗で催眠的なペース配分が、人間の物語のリズムの欠如を裏切っている、エッセイ、報告書、および長編の散文の分析。",
-  "strengths": "• 計算上は軽量でありながら非常に致命的（効果的）です。複雑なニューラルネットワークではなく、基本的な数学を使用します。\n• 根本的な訓練（トレーニング）そのものが構文の平均化を強制するため、基本的なAIジェネレーターが自然にこれを克服するのは極めて困難です。\n• 言語に依存せず、定義された文の境界の句読点を使用するあらゆる言語で完全に機能します。",
-  "limitations": "• 統計的に意味のある標準偏差と平均を計算するには、かなりのテキスト断片（最低10〜15文）が必要です。\n• 絶対的な一貫性のために設計された、高度に規制された定型化された人間の文章（例えば、技術マニュアルや簡略化された児童書など）では誤検知が発生する可能性があります。\n• プロンプト・エンジニアは、文長を変化させるように明示的に要求する（例：「3単語の文と30単語の文を混ぜて使え」）ことで、これを回避することができます。",
-  "parameters": "解析: 文の境界のトークン化および統計的プロファイリング\n評価基準: 変動係数（標準偏差 / 平均文長）\n出力結果: 0-100 構造の均質化（リズムの欠如）スコア",
-  "accuracy": "高 — 75-85%。特に、GPT-3.5やClaudeのようなモデルからのフィルタリングされていない、デフォルト温度（default-temperature）の出力に対して壊滅的な効果を発揮します。",
-  "references": [
-    {
-      "title": "Sadasivan, V. S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
-      "url": "https://arxiv.org/abs/2303.11156"
-    },
-    {
-      "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
-      "url": "https://arxiv.org/abs/1911.00650"
-    }
-  ],
-  "source": "Sadasivan, V. S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.; Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL."
+    "name": "キュリー（Curie）均一性検出（文長CV）",
+    "description": "文長の変動係数（CV）を計算し、機械生成に特有の不自然な構造的均一性を数学的に暴き出します。",
+    "algorithm": "文長変動係数（CV）プロファイリング",
+    "mechanism": "「Curie」検出プロファイルは自己回帰テキスト生成の基本的な副産物に焦点を当てます：構造的均質化。LLMは注意の重みを継続的にバランスさせてスムーズに流れ、即座のパープレキシティを最小化するテキストを生成します。この安全な経路探索の数学的帰結は、生成された文の長さが狭い中央値に向かって激しく収束することです。変動係数（CV）—文長の標準偏差を平均で割ったもの—を計算することで、この手法はテキスト的リズムを定量化します。人間のライターは本能的に超短いパンチの効いた文と長く広がる多節の説明を混ぜてペーシングと強調を操作し、高いCVをもたらします。対照的に、AIジェネレーターは必然的に中程度の長さの文の催眠的リズムに陥り、自然な人間の思考プロセスに見られる極端な簡潔さと極端な長さの両方を欠きます。病的に低い文長CVは合成的スムージングを強く示します。",
+    "useCase": "中程度の長さのAIの文の執拗で催眠的なペース配分が、人間の物語のリズムの欠如を裏切っている、エッセイ、報告書、および長編の散文の分析。",
+    "strengths": "• 計算上は軽量でありながら非常に致命的（効果的）です。複雑なニューラルネットワークではなく、基本的な数学を使用します。\n• 根本的な訓練（トレーニング）そのものが構文の平均化を強制するため、基本的なAIジェネレーターが自然にこれを克服するのは極めて困難です。\n• 言語に依存せず、定義された文の境界の句読点を使用するあらゆる言語で完全に機能します。",
+    "limitations": "• 統計的に意味のある標準偏差と平均を計算するには、かなりのテキスト断片（最低10〜15文）が必要です。\n• 絶対的な一貫性のために設計された、高度に規制された定型化された人間の文章（例えば、技術マニュアルや簡略化された児童書など）では誤検知が発生する可能性があります。\n• プロンプト・エンジニアは、文長を変化させるように明示的に要求する（例：「3単語の文と30単語の文を混ぜて使え」）ことで、これを回避することができます。",
+    "parameters": "解析: 文の境界のトークン化および統計的プロファイリング\n評価基準: 変動係数（標準偏差 / 平均文長）\n出力結果: 0-100 構造の均質化（リズムの欠如）スコア",
+    "accuracy": "高 — 75-85%。特に、GPT-3.5やClaudeのようなモデルからのフィルタリングされていない、デフォルト温度（default-temperature）の出力に対して壊滅的な効果を発揮します。",
+    "references": [
+        {
+            "title": "Sadasivan, V. S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
+            "url": "https://arxiv.org/abs/2303.11156"
+        },
+        {
+            "title": "Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL.",
+            "url": "https://arxiv.org/abs/1911.00650"
+        }
+    ],
+    "source": "Sadasivan, V. S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.; Ippolito, D. et al. (2020). Automatic Detection of Generated Text is Easiest when Humans are Fooled. ACL."
 }

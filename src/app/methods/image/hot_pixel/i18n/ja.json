@@ -1,22 +1,22 @@
 {
-  "name": "Hot Pixel Detection",
-  "description": "Detects hot/dead ピクセル patterns absent in AI 画像s",
-  "algorithm": "Hot Pixel Detection — Sensor/Physical Model Analyzer",
-  "mechanism": "Hot pixel detection exploits the unique photo-response non-uniformity (PRNU) of camera sensors:\n\n1. **DarkCurrentマッピング**: 本手法は identifies pixels with abnormally high dark current values — defective sensor elements (\"hot pixels\") that produce elevated signal even without light exposure. These form a camera-specific fingerprint per Lukas et al. (2006).\n\n2. **空間的パターン分析**: Hot pixel locations are mapped across the image. Real camera images exhibit 一貫した hot pixel patterns determined by the specific sensor hardware. AI生成の images lack these physical sensor defects entirely.\n\n3. **Fixedパターンノイズ(FPN)抽出**: The fixed-pattern noise component is separated from the image signal. Genuine photographs contain deterministic FPN arising from manufacturing variations in photodiodes, while synthetic images show statistically uniform or artificially modeled noise.\n\n4. **時間的安定性検証**: In authentic images, hot pixels appear at fixed spatial locations with intensity dependent on exposure time and sensor temperature (following Arrhenius behavior). 本手法は checks whether detected anomalies conform to these physical constraints.\n\n5. **Authenticityスコアリング**: A confidence score is computed based on the density, spatial distribution, and intensity characteristics of detected hot pixels. Absence of genuine hot pixel signatures or presence of statistically implausible patterns indicates AI generation.",
-  "parameters": "分析タイプ: sensor\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-  "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-  "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-  "useCase": "以下の分析によるAI生成または改ざん画像の検出： hot ピクセル detection 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-  "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-  "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
-  "references": [
-    {
-      "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2006.873602"
-    },
-    {
-      "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2007.916285"
-    }
-  ]
+    "name": "ホットピクセル検出",
+    "description": "Detects hot/dead ピクセル patterns absent in AI 画像s",
+    "algorithm": "Hot Pixel Detection — Sensor/Physical Model Analyzer",
+    "mechanism": "Hot pixel detection exploits the unique photo-response non-uniformity (PRNU) of camera sensors:\n\n1. **DarkCurrentマッピング**: 本手法は identifies pixels with abnormally high dark current values — defective sensor elements (\"hot pixels\") that produce elevated signal even without light exposure. These form a camera-specific fingerprint per Lukas et al. (2006).\n\n2. **空間的パターン分析**: Hot pixel locations are mapped across the image. Real camera images exhibit 一貫した hot pixel patterns determined by the specific sensor hardware. AI生成の images lack these physical sensor defects entirely.\n\n3. **Fixedパターンノイズ(FPN)抽出**: The fixed-pattern noise component is separated from the image signal. Genuine photographs contain deterministic FPN arising from manufacturing variations in photodiodes, while synthetic images show statistically uniform or artificially modeled noise.\n\n4. **時間的安定性検証**: In authentic images, hot pixels appear at fixed spatial locations with intensity dependent on exposure time and sensor temperature (following Arrhenius behavior). 本手法は checks whether detected anomalies conform to these physical constraints.\n\n5. **Authenticityスコアリング**: A confidence score is computed based on the density, spatial distribution, and intensity characteristics of detected hot pixels. Absence of genuine hot pixel signatures or presence of statistically implausible patterns indicates AI generation.",
+    "parameters": "分析タイプ: sensor\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
+    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
+    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
+    "useCase": "以下の分析によるAI生成または改ざん画像の検出： hot ピクセル detection 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
+    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
+    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+    "references": [
+        {
+            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2006.873602"
+        },
+        {
+            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.916285"
+        }
+    ]
 }

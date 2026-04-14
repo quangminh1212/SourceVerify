@@ -1,12 +1,22 @@
 {
-  "name": "Video Denoising Trace",
-  "description": "Detects traces of denoising applied to deepfake videos to mask generation artifacts.",
-  "algorithm": "Video Denoising Trace分析アルゴリズム",
-  "mechanism": "This method detects denoising traces for video forensic analysis:\n\n1. **ノイズLevel推定**: The noise level and noise model of the video are estimated per frame. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **DenoisingSignature検出**: Denoising algorithms leave characteristic signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from neural network denoising). The method identifies these signatures.\n\n3. **SelectiveDenoising検出**: The method checks whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising-解像度一貫性**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). The method checks whether denoised regions show consistent effective resolution with non-denoised regions. Resolution mismatches reveal processing different regions with different denoising parameters.\n\n5. **Multi-PassDenoising検出**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. The method detects evidence of multiple denoising steps, consistent with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "映像ノイズ除去トレース解析",
+    "description": "Detects traces of denoising applied to deepfake videos to mask generation artifacts.",
+    "algorithm": "Video Denoising Trace分析アルゴリズム",
+    "mechanism": "This method detects denoising traces for video forensic analysis:\n\n1. **ノイズLevel推定**: The noise level and noise model of the video are estimated per frame. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **DenoisingSignature検出**: Denoising algorithms leave characteristic signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from neural network denoising). The method identifies these signatures.\n\n3. **SelectiveDenoising検出**: The method checks whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising-解像度一貫性**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). The method checks whether denoised regions show consistent effective resolution with non-denoised regions. Resolution mismatches reveal processing different regions with different denoising parameters.\n\n5. **Multi-PassDenoising検出**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. The method detects evidence of multiple denoising steps, consistent with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TIFS.2007.916285",
+            "title": "Chen, C. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS."
+        },
+        {
+            "url": "https://doi.org/10.1109/TIP.2007.901238",
+            "title": "Dabov, K. et al. (2007). Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering. IEEE TIP."
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "平均係り受け深さ（MDD）",
-  "description": "文法的な構文解析木において、文の主な動詞（ルート）とそれに従属する単語との間の平均的な「距離（深さ）」を分析することにより、文の構造的複雑さを測定します。AIモデルは一般的に、構文エラーを最小限に抑えるために、より浅くより単純な係り受け構造を持つ文を生成しますが、人間は自然と、非常に変化に富んだ深い入れ子構造を持つ文を構築します。",
-  "algorithm": "構文的係り受け木の深さ分析",
-  "mechanism": "This method utilizes a Natural Language Processing (NLP) dependency parser to map the grammatical structure of every sentence in the text. It identifies the 'root' of the sentence (usually the main verb) and builds a syntactic tree detailing how subjects, objects, and modifiers depend on each other. The 'Dependency Depth' is the number of grammatical links between the root and the most distant dependent word. The algorithm calculates the Mean Dependency Depth (MDD) across all sentences. Because LLMs operate via autoregressive next-token prediction, keeping track of deeply nested, long-distance grammatical dependencies (e.g., a subject separated from its verb by three relative clauses) requires significant 'attention' computation and risks breaking grammar. Consequently, model alignment heavily favors generating text with flat, straightforward syntactic trees (low MDD). Human writers, especially in formal or academic settings, organically write with deeper syntactic embedding, holding complex structures in their working memory. If a long, supposedly sophisticated text exhibits an unnaturally shallow Mean Dependency Depth bordering on simplistic syntax, it is strongly flagged as machine-generated.",
-  "useCase": "長文の小論文、文学作品、技術論文を評価し、文法的な複雑さが、人間が書いたと期待される知的な深さと一致しているかどうかを判断するために不可欠です。",
-  "strengths": "• 基本的なプロンプトエンジニアリングに対して非常に強い耐性があります。AIに「もっと複雑に書け」と指示しても、内部の構文解析木を根本的に深くするのではなく、形容詞や珍しい語彙を追加する結果に終わることがほとんどです。\n• 表面的な語彙ではなく深い構造的文法を分析するため、同義語を置き換えるボットに対して完全に免疫があります。\n• ターゲット言語の正確な係り受け構文解析器が存在する場合、言語に依存しない概念です。",
-  "limitations": "• すべての文に対して完全な係り受け構文解析木を生成することはリソースを大量に消費するため、計算コストが極めて高くなります。\n• 短いテキスト（150語未満）では、統計的に有意なMDDのベースラインを確立するのに十分な文が提供されない場合があります。\n• 本質的に単純であることを意図したテキスト（例：児童書、箇条書きの指示、短文の電子メール）は、自然とMDDが低くなり、誤検知を引き起こす可能性があります。",
-  "parameters": "解析: 文ごとのNLP係り受け構文木解析\n評価基準: ルートから終端ノードまでの平均パス長\n出力結果: 0-100 構文的平坦性（アルゴリズムの単純さ）スコア",
-  "accuracy": "高 — 複雑なテキストまたは学術的なテキストで78-86%の精度。構造的な安全性と予測可能な文法に対するAIの核心的なアーキテクチャ上の好みを暴露します。",
-  "references": [
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    },
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    }
-  ],
-  "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
+    "name": "平均係り受け深さ（MDD）",
+    "description": "文法的な構文解析木において、文の主な動詞（ルート）とそれに従属する単語との間の平均的な「距離（深さ）」を分析することにより、文の構造的複雑さを測定します。AIモデルは一般的に、構文エラーを最小限に抑えるために、より浅くより単純な係り受け構造を持つ文を生成しますが、人間は自然と、非常に変化に富んだ深い入れ子構造を持つ文を構築します。",
+    "algorithm": "構文的係り受け木の深さ分析",
+    "mechanism": "この手法は自然言語処理（NLP）依存構文解析器を利用してテキスト内の全ての文の文法構造をマッピングします。文の「根」（通常は主動詞）を識別し、主語、目的語、修飾語がどのように互いに依存するかを詳述する構文ツリーを構築します。「依存深度」は根と最も遠い依存語間の文法リンクの数です。アルゴリズムは全ての文にわたる平均依存深度（MDD）を計算します。LLMは自己回帰的next-token予測で動作するため、深く入れ子になった長距離の文法的依存関係（例：3つの関係節で動詞から分離された主語）の追跡には重要な「注意」計算が必要で、文法を破るリスクがあります。その結果、モデルアライメントはフラットで単純な構文ツリー（低MDD）を持つテキストの生成を強く好みます。人間のライター、特に公式的または学術的設定では、ワーキングメモリに複雑な構造を保持しながらより深い構文的埋め込みで有機的に書きます。長く一見巧みなテキストが単純な構文に近い不自然に浅い平均依存深度を示す場合、機械生成として強くフラグされます。",
+    "useCase": "長文の小論文、文学作品、技術論文を評価し、文法的な複雑さが、人間が書いたと期待される知的な深さと一致しているかどうかを判断するために不可欠です。",
+    "strengths": "• 基本的なプロンプトエンジニアリングに対して非常に強い耐性があります。AIに「もっと複雑に書け」と指示しても、内部の構文解析木を根本的に深くするのではなく、形容詞や珍しい語彙を追加する結果に終わることがほとんどです。\n• 表面的な語彙ではなく深い構造的文法を分析するため、同義語を置き換えるボットに対して完全に免疫があります。\n• ターゲット言語の正確な係り受け構文解析器が存在する場合、言語に依存しない概念です。",
+    "limitations": "• すべての文に対して完全な係り受け構文解析木を生成することはリソースを大量に消費するため、計算コストが極めて高くなります。\n• 短いテキスト（150語未満）では、統計的に有意なMDDのベースラインを確立するのに十分な文が提供されない場合があります。\n• 本質的に単純であることを意図したテキスト（例：児童書、箇条書きの指示、短文の電子メール）は、自然とMDDが低くなり、誤検知を引き起こす可能性があります。",
+    "parameters": "解析: 文ごとのNLP係り受け構文木解析\n評価基準: ルートから終端ノードまでの平均パス長\n出力結果: 0-100 構文的平坦性（アルゴリズムの単純さ）スコア",
+    "accuracy": "高 — 複雑なテキストまたは学術的なテキストで78-86%の精度。構造的な安全性と予測可能な文法に対するAIの核心的なアーキテクチャ上の好みを暴露します。",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        }
+    ],
+    "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
 }

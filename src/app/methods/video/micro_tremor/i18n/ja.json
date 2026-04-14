@@ -1,12 +1,22 @@
 {
-  "name": "Micro-Tremor Detection",
-  "description": "Detects physiological micro-tremor in facial muscles — absent in AI-generated faces (Jain et al., 2022).",
-  "algorithm": "Micro-Tremor Detection分析アルゴリズム",
-  "mechanism": "This method analyzes physiological micro-tremor for deepfake detection:\n\n1. **Micro-動き抽出**: Sub-pixel facial motion is extracted using phase-based video motion magnification or dense optical flow. The signals of interest are involuntary physiological tremors — oscillatory motions at frequencies above voluntary control (4-12 Hz).\n\n2. **PhysiologicalTremor検出**: All living humans exhibit physiological tremor (8-12 Hz) caused by motor unit firing and stretch reflex oscillation. The method searches for this characteristic frequency in facial motion signals. Deepfake videos generated without physiological modeling lack this biological signal.\n\n3. **空間的Tremorコヒーレンス**: Physiological tremor affects the entire body coherently — all facial points should show correlated tremor at similar frequencies. The method checks spatial coherence of detected high-frequency motion. AI generation may produce spatially incoherent micro-motion (independent per-region noise) rather than the coherent biological tremor.\n\n4. **Tremor周波数安定性**: Physiological tremor frequency is relatively stable for an individual over short periods but varies naturally within the 8-12 Hz band. The method analyzes tremor frequency stability — completely stable frequency (single spectral line) or no detectable tremor peak both indicate non-biological origin.\n\n5. **TremorAmplitude評価**: Physiological tremor amplitude is typically 50-200 μm (sub-pixel in most video). The method uses motion magnification to assess whether the detected tremor amplitude falls within physiological ranges. Absent tremor, excessive tremor, or tremor with wrong spectral shape indicates deepfake generation.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "マイクロ振戦検出",
+    "description": "Detects physiological micro-tremor in facial muscles — absent in AI-generated faces (Jain et al., 2022).",
+    "algorithm": "Micro-Tremor Detection分析アルゴリズム",
+    "mechanism": "This method analyzes physiological micro-tremor for deepfake detection:\n\n1. **Micro-動き抽出**: Sub-pixel facial motion is extracted using phase-based video motion magnification or dense optical flow. The signals of interest are involuntary physiological tremors — oscillatory motions at frequencies above voluntary control (4-12 Hz).\n\n2. **PhysiologicalTremor検出**: All living humans exhibit physiological tremor (8-12 Hz) caused by motor unit firing and stretch reflex oscillation. The method searches for this characteristic frequency in facial motion signals. Deepfake videos generated without physiological modeling lack this biological signal.\n\n3. **空間的Tremorコヒーレンス**: Physiological tremor affects the entire body coherently — all facial points should show correlated tremor at similar frequencies. The method checks spatial coherence of detected high-frequency motion. AI generation may produce spatially incoherent micro-motion (independent per-region noise) rather than the coherent biological tremor.\n\n4. **Tremor周波数安定性**: Physiological tremor frequency is relatively stable for an individual over short periods but varies naturally within the 8-12 Hz band. The method analyzes tremor frequency stability — completely stable frequency (single spectral line) or no detectable tremor peak both indicate non-biological origin.\n\n5. **TremorAmplitude評価**: Physiological tremor amplitude is typically 50-200 μm (sub-pixel in most video). The method uses motion magnification to assess whether the detected tremor amplitude falls within physiological ranges. Absent tremor, excessive tremor, or tremor with wrong spectral shape indicates deepfake generation.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
+            "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
+        },
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+        }
+    ]
 }

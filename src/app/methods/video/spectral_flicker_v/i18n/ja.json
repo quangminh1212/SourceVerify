@@ -1,22 +1,22 @@
 {
-  "name": "Spectral Flicker",
-  "description": "Detects spectral flicker patterns",
-  "algorithm": "Spectral Flicker — Frequency Domain Analyzer",
-  "mechanism": "This method detects spectral flicker artifacts for video deepfake detection:\n\n1. **周波数-Domain時間的分析**: The spatial frequency spectrum is computed per frame, and frame-to-frame spectral changes are quantified. Spectral flicker is defined as temporal oscillation in the energy of specific spatial frequency bands that doesn't correspond to scene content changes.\n\n2. **Band-SpecificFlicker検出**: Different spatial frequency bands are monitored independently. The method detects oscillating energy in specific bands — GANs may produce characteristic flicker at their architecture-specific frequencies (related to upsampling layers), while diffusion models may show flicker in mid-frequency bands during denoising step transitions.\n\n3. **FlickerPeriodicity分析**: The temporal periodicity of detected spectral flicker is analyzed via autocorrelation. Periodic flicker (at regular intervals) indicates systematic generation artifacts. Natural spectral variation is aperiodic (random scene changes) or very low frequency (illumination changes).\n\n4. **Flicker空間的Localization**: Spectral flicker is analyzed per image region. The method maps flicker intensity across the frame — flicker concentrated in face regions but absent in background strongly indicates face generation artifacts. Whole-frame flicker may indicate post-processing artifacts.\n\n5. **Flicker周波数スコアリング**: The detected flicker is scored based on: (a) temporal frequency of flicker (physiologically irrelevant frequencies indicate artifacts), (b) spatial frequency bands affected, (c) spatial localization to face region, (d) periodicity strength. High scores indicate AI generation.",
-  "parameters": "分析タイプ: 周波数\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through spectral flicker analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    }
-  ]
+    "name": "スペクトルフリッカー解析",
+    "description": "Detects spectral flicker patterns",
+    "algorithm": "Spectral Flicker — Frequency Domain Analyzer",
+    "mechanism": "This method detects spectral flicker artifacts for video deepfake detection:\n\n1. **周波数-Domain時間的分析**: The spatial frequency spectrum is computed per frame, and frame-to-frame spectral changes are quantified. Spectral flicker is defined as temporal oscillation in the energy of specific spatial frequency bands that doesn't correspond to scene content changes.\n\n2. **Band-SpecificFlicker検出**: Different spatial frequency bands are monitored independently. The method detects oscillating energy in specific bands — GANs may produce characteristic flicker at their architecture-specific frequencies (related to upsampling layers), while diffusion models may show flicker in mid-frequency bands during denoising step transitions.\n\n3. **FlickerPeriodicity分析**: The temporal periodicity of detected spectral flicker is analyzed via autocorrelation. Periodic flicker (at regular intervals) indicates systematic generation artifacts. Natural spectral variation is aperiodic (random scene changes) or very low frequency (illumination changes).\n\n4. **Flicker空間的Localization**: Spectral flicker is analyzed per image region. The method maps flicker intensity across the frame — flicker concentrated in face regions but absent in background strongly indicates face generation artifacts. Whole-frame flicker may indicate post-processing artifacts.\n\n5. **Flicker周波数スコアリング**: The detected flicker is scored based on: (a) temporal frequency of flicker (physiologically irrelevant frequencies indicate artifacts), (b) spatial frequency bands affected, (c) spatial localization to face region, (d) periodicity strength. High scores indicate AI generation.",
+    "parameters": "分析タイプ: 周波数\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through spectral flicker analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        }
+    ]
 }

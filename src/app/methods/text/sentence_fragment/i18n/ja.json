@@ -1,22 +1,22 @@
 {
-  "name": "文の断片化（不完全な文）の検出 (Sentence Fragment)",
-  "description": "テキストを分析して、意図的な文の断片（Sentence Fragment：主節、主語、または定形動詞を欠く文）の存在がないかを調べます。大規模言語モデルは、文法的に不完全な文を生成するとトレーニング中に重いペナルティを受けるため、教科書に準拠した完璧な「主語-動詞-目的語」の構造の文をほぼ独占的に出力します。人間の書き手は、特に創造的、説得的、または会話的な文脈において、文体的な強調、鋭いペース配分、または感情的なインパクトを与えるために、意図的な文の断片を頻繁に展開します（例：「Not exactly.（正確には違う。）」、「A complete disaster.（完全な大惨事だ。）」、「Because why not?（なぜって、いいじゃないか。）」）。",
-  "algorithm": "ヘッドレス構文ツリーの依存関係解析",
-  "mechanism": "The algorithm parses the syntactic structure of every sentence using a dependency parser. It specifically hunts for sentences that fail to resolve to a 'ROOT' verb or lack a foundational subject-predicate relationship (headless syntax trees). If a document contains zero or near-zero fragments across a large volume of text, it strongly indicates the rigid grammatical compliance typical of an AI model. Conversely, the presence of well-placed, intentional fragments heavily weights the text toward human authorship.",
-  "useCase": "ブログ、論説記事（op-eds）、マーケティングコピー、および人間の著者が修辞的な効果（レトリック）のために多様で非標準的な句読点や断片化された構文を自然に使用するクリエイティブ・ライティングの監査に非常に効果的です。",
-  "strengths": "• AIモデルは、非常に具体的で不自然なプロンプトがない限り、意図的に断片的な文を生成することはないため、人間の文章を特定する（誤検出を減らす）のに優れています。\n• 断片的な文章が標準となっている最新のデジタルコミュニケーションスタイル（電子メール、ソーシャルメディア）でうまく機能します。",
-  "limitations": "• 人間もこれらの領域では文の断片化を厳格に避けるため、非常に形式的な学術テキストや法律テキストではほとんどシグナルを提供しません。\n• 非常に短いテキストでは、偶然にフラグメントが含まれない場合があり、その場合、この指標は統計的に無意味になります。",
-  "parameters": "解析: 構文の依存関係解析とルート（根）動詞の抽出\n評価基準: 文法的に不完全な文の頻度\n出力結果: 0-100 厳格な文法遵守（人工的・不自然さ）スコア",
-  "accuracy": "中 — 68-75%の精度。その主な価値は「人間の指標（human-indicator）」としてのものです。フラグメントの存在は強く人間を暗示しますが、存在しないからといってAIとは限りません。",
-  "references": [
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://aclanthology.org/2020.emnlp-main.673/"
-    },
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    }
-  ],
-  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
+    "name": "文の断片化（不完全な文）の検出 (Sentence Fragment)",
+    "description": "テキストを分析して、意図的な文の断片（Sentence Fragment：主節、主語、または定形動詞を欠く文）の存在がないかを調べます。大規模言語モデルは、文法的に不完全な文を生成するとトレーニング中に重いペナルティを受けるため、教科書に準拠した完璧な「主語-動詞-目的語」の構造の文をほぼ独占的に出力します。人間の書き手は、特に創造的、説得的、または会話的な文脈において、文体的な強調、鋭いペース配分、または感情的なインパクトを与えるために、意図的な文の断片を頻繁に展開します（例：「Not exactly.（正確には違う。）」、「A complete disaster.（完全な大惨事だ。）」、「Because why not?（なぜって、いいじゃないか。）」）。",
+    "algorithm": "ヘッドレス構文ツリーの依存関係解析",
+    "mechanism": "アルゴリズムは依存構文解析器を使用して全ての文の構文構造を解析します。「ROOT」動詞に解決できなかったり、基礎的な主語-述語関係を欠く文（ヘッドレス構文ツリー）を特に探します。大量のテキストにわたってゼロまたはゼロに近い断片を含む文書は、AIモデルに典型的な厳格な文法遵守を強く示します。逆に、適切に配置された意図的な断片の存在はテキストを人間の著作に大きく重み付けします。",
+    "useCase": "ブログ、論説記事（op-eds）、マーケティングコピー、および人間の著者が修辞的な効果（レトリック）のために多様で非標準的な句読点や断片化された構文を自然に使用するクリエイティブ・ライティングの監査に非常に効果的です。",
+    "strengths": "• AIモデルは、非常に具体的で不自然なプロンプトがない限り、意図的に断片的な文を生成することはないため、人間の文章を特定する（誤検出を減らす）のに優れています。\n• 断片的な文章が標準となっている最新のデジタルコミュニケーションスタイル（電子メール、ソーシャルメディア）でうまく機能します。",
+    "limitations": "• 人間もこれらの領域では文の断片化を厳格に避けるため、非常に形式的な学術テキストや法律テキストではほとんどシグナルを提供しません。\n• 非常に短いテキストでは、偶然にフラグメントが含まれない場合があり、その場合、この指標は統計的に無意味になります。",
+    "parameters": "解析: 構文の依存関係解析とルート（根）動詞の抽出\n評価基準: 文法的に不完全な文の頻度\n出力結果: 0-100 厳格な文法遵守（人工的・不自然さ）スコア",
+    "accuracy": "中 — 68-75%の精度。その主な価値は「人間の指標（human-indicator）」としてのものです。フラグメントの存在は強く人間を暗示しますが、存在しないからといってAIとは限りません。",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://aclanthology.org/2020.emnlp-main.673/"
+        },
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        }
+    ],
+    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
 }

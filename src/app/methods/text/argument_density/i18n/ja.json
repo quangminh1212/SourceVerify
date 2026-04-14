@@ -1,18 +1,18 @@
 {
-  "name": "議論密度（アーギュメント・デンシティ）スコア",
-  "description": "テキストから抽出された重複しない異なる主張や前提の数と、全体の単語数（物理的な長さ）との比率を測定します。",
-  "algorithm": "議論的命題（プロポジション）抽出器",
-  "mechanism": "This method evaluates the informational efficiency of a text. When instructed to generate long texts, LLMs frequently engage in 'argumentative padding'—producing verbose paragraphs that eloquently circle around a single main point without introducing any novel claims, evidence, or nuance. They do this to meet length constraints without risking hallucination or breaking safety guardrails. By extracting the absolute number of distinct argumentative propositions (claims, premises, backing) and computing their ratio to the physical length of the text, this method yields an 'argument density score.' Exceptionally high word counts paired with a mathematically low number of distinct propositions strongly indicate the syntactic fluff typical of an AI attempting to hit a word count, whereas human experts instinctively write with much denser informational efficiency.",
-  "useCase": "非常に説得力があるように聞こえるが、人間の専門家特有の実際の「実質的な主張の階層的な積み重ね」が欠如している、冗長なAI生成のエッセイ、論説、およびレポートの検出。",
-  "strengths": "• LLMの根本的な「ハルシネーション回避」による水増し行動を直接ターゲットにします。\n• 大学のエッセイや自動生成ジャーナリズムなど、長文コンテンツの分析において例外的に効果的です。\n• 特定の語彙の選択とは無関係に動作するため、従来の「書き直し（リライト）」プロンプトで簡単に回避することはできません。",
-  "limitations": "• 「文字数稼ぎ」を実践していることで悪名高い人間の書き手（例：苦労している学生）を評価する際に、誤検知（フォールス・ポジティブ）を引き起こしやすいです。\n• 詩、ミニマリストの小説、またはマーケティングスローガンなど、もともと情報がまばらな（スパースな）ジャンルでは全く無効です。\n• 言い換えられた同一の主張を「異なるもの」として数えないようにするために、非常に正確な命題解析ロジックが必要です。",
-  "parameters": "解析: 言語学的命題（プロポジション）の抽出\n評価基準: 1000トークンあたりの異なる意味的（セマンティック）主張の数\n出力結果: 0-100 情報水増し（パディング）スコア",
-  "accuracy": "中〜高 — 75-84%。エッセイ、論説（オピニオン記事）、および分析的な記事で非常に高い精度。",
-  "references": [
-    {
-      "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",
-      "url": "https://doi.org/10.1162/COLI_a_00295"
-    }
-  ],
-  "source": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics."
+    "name": "議論密度（アーギュメント・デンシティ）スコア",
+    "description": "テキストから抽出された重複しない異なる主張や前提の数と、全体の単語数（物理的な長さ）との比率を測定します。",
+    "algorithm": "議論的命題（プロポジション）抽出器",
+    "mechanism": "この手法はテキストの情報効率を評価します。長いテキストの生成を指示されると、LLMは頻繁に「議論的パディング」に従事します—新しい主張、証拠、またはニュアンスを一切導入することなく、単一の主要ポイントの周りを雄弁に回る冗長な段落を生成します。幻覚を起こしたり安全ガードレールを破ったりするリスクなしに長さの制約を満たすためにこれを行います。異なる議論的命題（主張、前提、裏付け）の絶対数を抽出し、テキストの物理的長さに対するその比率を計算することで、この手法は「議論密度スコア」を算出します。例外的に高い語数と数学的に低い数の異なる命題の組み合わせは、AIが語数を稼ごうとする際の典型的な構文的水増しを強く示します。一方、人間の専門家はより密度の高い情報効率で本能的に書きます。",
+    "useCase": "非常に説得力があるように聞こえるが、人間の専門家特有の実際の「実質的な主張の階層的な積み重ね」が欠如している、冗長なAI生成のエッセイ、論説、およびレポートの検出。",
+    "strengths": "• LLMの根本的な「ハルシネーション回避」による水増し行動を直接ターゲットにします。\n• 大学のエッセイや自動生成ジャーナリズムなど、長文コンテンツの分析において例外的に効果的です。\n• 特定の語彙の選択とは無関係に動作するため、従来の「書き直し（リライト）」プロンプトで簡単に回避することはできません。",
+    "limitations": "• 「文字数稼ぎ」を実践していることで悪名高い人間の書き手（例：苦労している学生）を評価する際に、誤検知（フォールス・ポジティブ）を引き起こしやすいです。\n• 詩、ミニマリストの小説、またはマーケティングスローガンなど、もともと情報がまばらな（スパースな）ジャンルでは全く無効です。\n• 言い換えられた同一の主張を「異なるもの」として数えないようにするために、非常に正確な命題解析ロジックが必要です。",
+    "parameters": "解析: 言語学的命題（プロポジション）の抽出\n評価基準: 1000トークンあたりの異なる意味的（セマンティック）主張の数\n出力結果: 0-100 情報水増し（パディング）スコア",
+    "accuracy": "中〜高 — 75-84%。エッセイ、論説（オピニオン記事）、および分析的な記事で非常に高い精度。",
+    "references": [
+        {
+            "title": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics.",
+            "url": "https://doi.org/10.1162/COLI_a_00295"
+        }
+    ],
+    "source": "Stab, C. & Gurevych, I. (2017). Parsing Argumentation Structures in Persuasive Essays. Computational Linguistics."
 }

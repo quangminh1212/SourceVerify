@@ -1,22 +1,22 @@
 {
-  "name": "Clothing Edge Blend",
-  "description": "Analyzes clothing edge blending quality",
-  "algorithm": "Clothing Edge Blend — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes clothing-body edge blending for deepfake detection following Rossler et al. (2019):\n\n1. **Clothing境界検出**: The boundary between clothing and body/face regions is detected per frame using semantic segmentation. Clothing edges (collar-neck junction, sleeve-arm boundary, neckline) are extracted and parameterized.\n\n2. **エッジBlendZone分析**: In authentic video, clothing-body boundaries show physically correct transitions — fabric partially occluding skin, compression of fabric at pressure points, natural draping creating soft shadows. The method measures the blend zone width, gradient profile, and shadow consistency at clothing boundaries.\n\n3. **顔-Swap境界検出**: Face-swap deepfakes must blend the generated face with the original body/clothing. The method specifically examines the collar-neck-jawline junction where this blending occurs. Artifacts include: unnatural alpha blending gradients, color temperature discontinuities, and resolution mismatches between generated face and original clothing.\n\n4. **時間的エッジコヒーレンス**: Clothing-body edges should move coherently with body motion. The method tracks edge positions across frames and measures temporal consistency. Deepfake artifacts may cause clothing edges to flicker, teleport, or exhibit motion decoupled from the body's physical movement.\n\n5. **Occlusion一貫性**: Natural clothing creates consistent occlusion patterns — a collar always covers the same neck region from a given angle. The method checks whether occlusion relationships between clothing and body remain physically consistent across frames and head pose changes. Deepfakes may produce impossible occlusion states where generated face regions incorrectly overlap with original clothing.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through clothing edge blend analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "衣服エッジブレンド解析",
+    "description": "Analyzes clothing edge blending quality",
+    "algorithm": "Clothing Edge Blend — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes clothing-body edge blending for deepfake detection following Rossler et al. (2019):\n\n1. **Clothing境界検出**: The boundary between clothing and body/face regions is detected per frame using semantic segmentation. Clothing edges (collar-neck junction, sleeve-arm boundary, neckline) are extracted and parameterized.\n\n2. **エッジBlendZone分析**: In authentic video, clothing-body boundaries show physically correct transitions — fabric partially occluding skin, compression of fabric at pressure points, natural draping creating soft shadows. The method measures the blend zone width, gradient profile, and shadow consistency at clothing boundaries.\n\n3. **顔-Swap境界検出**: Face-swap deepfakes must blend the generated face with the original body/clothing. The method specifically examines the collar-neck-jawline junction where this blending occurs. Artifacts include: unnatural alpha blending gradients, color temperature discontinuities, and resolution mismatches between generated face and original clothing.\n\n4. **時間的エッジコヒーレンス**: Clothing-body edges should move coherently with body motion. The method tracks edge positions across frames and measures temporal consistency. Deepfake artifacts may cause clothing edges to flicker, teleport, or exhibit motion decoupled from the body's physical movement.\n\n5. **Occlusion一貫性**: Natural clothing creates consistent occlusion patterns — a collar always covers the same neck region from a given angle. The method checks whether occlusion relationships between clothing and body remain physically consistent across frames and head pose changes. Deepfakes may produce impossible occlusion states where generated face regions incorrectly overlap with original clothing.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through clothing edge blend analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

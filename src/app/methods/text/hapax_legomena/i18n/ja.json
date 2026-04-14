@@ -1,22 +1,22 @@
 {
-  "name": "一度しか出現しない単語の比率（ハパックス・レゴメナ）",
-  "description": "テキスト内に正確に一度だけ出現する単語（ハパックス・レゴメナ）の割合を計算します。人間は自然と非常に特異で珍しい語彙を文章に織り込みますが、AIモデルは確率的に集中したコア語彙をリサイクルする傾向があります。",
-  "algorithm": "単発出現の語彙密度分析",
-  "mechanism": "A 'Hapax Legomenon' (from Greek, meaning 'said only once') is a linguistic term for a word that occurs exactly one time within a specific text or corpus. In natural human writing, a surprisingly high percentage of the vocabulary consists of these single-occurrence words—unique adjectives, rare verbs, specialized nouns, or creative metaphors that the author uses once and never repeats. This happens because human memory is associative and vast, pulling from personal experiences and highly specific contextual framing. Large Language Models, however, operate on token probabilities. They heavily favor the 'safe curve' of the mathematical distribution, continuously drawing from a highly concentrated, heavily weighted core vocabulary. While an AI *can* generate rare words, it naturally avoids the sheer chaotic volume of unique, single-use words that humans organically produce. This algorithm tokenizes the document, builds a frequency map, and calculates the ratio of words appearing exactly once against the total word count. If the Hapax Legomena ratio is abnormally low, it indicates a sterile, highly recycled vocabulary typical of statistical text generation.",
-  "useCase": "人間の著者が自然に高度な語彙の豊かさを示す、クリエイティブライティング、文学、長編ジャーナリズム、個人的な物語を分析するのに非常に効果的です。",
-  "strengths": "• 人間の認知的な単語検索と、機械の確率計算の間の根本的な統計的差異（ジップの法則分布の異常）を捉えます。\n• AIが「単語を一度だけ使う」ように強制されると、人間の自然な特異性ではなく、支離滅裂で過度に複雑な専門用語（ジャーゴン）になることが多いため、自然さを装ってこのテストをスルーすることはAIにとって非常に困難です。\n• 長いテキストにおいて数学的に客観的であり、信頼性が非常に高いです。",
-  "limitations": "• ハパックス・レゴメナの統計曲線を安定させるには十分なテキスト長が必要なため、非常に短いテキスト（200語未満）では効果がありません。\n• キーワードを詰め込んだSEO記事や無味乾燥な技術マニュアルなど、語彙のばらつきが自然に少ないため、反復が多く下手な人間の文章を、AIが生成したものとしてフラグを立ててしまう可能性があります。\n• テキストの長さに敏感です。テキストの長さが無限に近づくにつれて、比率は自然に減少するため、動的な長さの正規化制約が必要です。",
-  "parameters": "解析: コーパス全体のトークン化と頻度マッピング\n評価基準: 単発出現トークンの絶対数 / 総ユニークトークン数\n出力結果: 0-100 語彙のリサイクル（ハパックス欠如）スコア",
-  "accuracy": "高 — 長文（500語以上）で82-89%。アルゴリズムによる語彙のリサイクルを示す、強力な数学的証明です。",
-  "references": [
-    {
-      "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-      "url": "https://doi.org/10.2307/2280090"
-    },
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    }
-  ],
-  "source": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.; Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
+    "name": "一度しか出現しない単語の比率（ハパックス・レゴメナ）",
+    "description": "テキスト内に正確に一度だけ出現する単語（ハパックス・レゴメナ）の割合を計算します。人間は自然と非常に特異で珍しい語彙を文章に織り込みますが、AIモデルは確率的に集中したコア語彙をリサイクルする傾向があります。",
+    "algorithm": "単発出現の語彙密度分析",
+    "mechanism": "「ハパックス・レゴメノン」（ギリシャ語で「一度だけ言われた」を意味する）は特定のテキストまたはコーパス内で正確に1回だけ出現する語の言語学的用語です。自然な人間の文章では、驚くべき高い割合の語彙がこれらの単一出現語から成ります—独自の形容詞、珍しい動詞、専門的名詞、または著者が一度使って二度と繰り返さない創造的メタファー。これは人間の記憶が連想的で広大であり、個人的経験と非常に特定の文脈的フレーミングから引き出すために起こります。しかしLLMはトークン確率に基づいて動作します。数学的分布の「安全カーブ」を重く好み、高度に集中し重み付けされたコア語彙から継続的に引き出します。AIは珍しい語を*生成できます*が、人間が有機的に生成する独自の単一使用語の純粋なカオス的量を自然に回避します。このアルゴリズムは文書をトークン化し、頻度マップを構築し、正確に1回出現する語の総語数に対する比率を計算します。ハパックス・レゴメノン比率が異常に低い場合、統計的テキスト生成に典型的な無菌的で高度にリサイクルされた語彙を示します。",
+    "useCase": "人間の著者が自然に高度な語彙の豊かさを示す、クリエイティブライティング、文学、長編ジャーナリズム、個人的な物語を分析するのに非常に効果的です。",
+    "strengths": "• 人間の認知的な単語検索と、機械の確率計算の間の根本的な統計的差異（ジップの法則分布の異常）を捉えます。\n• AIが「単語を一度だけ使う」ように強制されると、人間の自然な特異性ではなく、支離滅裂で過度に複雑な専門用語（ジャーゴン）になることが多いため、自然さを装ってこのテストをスルーすることはAIにとって非常に困難です。\n• 長いテキストにおいて数学的に客観的であり、信頼性が非常に高いです。",
+    "limitations": "• ハパックス・レゴメナの統計曲線を安定させるには十分なテキスト長が必要なため、非常に短いテキスト（200語未満）では効果がありません。\n• キーワードを詰め込んだSEO記事や無味乾燥な技術マニュアルなど、語彙のばらつきが自然に少ないため、反復が多く下手な人間の文章を、AIが生成したものとしてフラグを立ててしまう可能性があります。\n• テキストの長さに敏感です。テキストの長さが無限に近づくにつれて、比率は自然に減少するため、動的な長さの正規化制約が必要です。",
+    "parameters": "解析: コーパス全体のトークン化と頻度マッピング\n評価基準: 単発出現トークンの絶対数 / 総ユニークトークン数\n出力結果: 0-100 語彙のリサイクル（ハパックス欠如）スコア",
+    "accuracy": "高 — 長文（500語以上）で82-89%。アルゴリズムによる語彙のリサイクルを示す、強力な数学的証明です。",
+    "references": [
+        {
+            "title": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
+        },
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        }
+    ],
+    "source": "Yule, G.U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.; Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
 }

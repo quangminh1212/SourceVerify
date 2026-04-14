@@ -1,22 +1,22 @@
 {
-  "name": "代名詞使用パターンの分析 (Pronoun Usage Pattern)",
-  "description": "代名詞（人称、指示、関係）の分布と頻度を分析し、大規模言語モデルに特有の「心理的な距離感」と「不自然な中立性」を検出します。人間は一人称代名詞（「私」、「私の」、「私たち」）を使用して自分の経験に基づいて文章を書いたり、読者に直接語りかけたり（「あなた」）する傾向がありますが、AIは切り離された全知の視点をデフォルトとする傾向があり、非人称、三人称、および指示代名詞を過度に乱用します。",
-  "algorithm": "代名詞密度およびペルソナプロファイリング",
-  "mechanism": "The algorithm categorizes every pronoun in the text (first-person, second-person, third-person, demonstrative, relative, and indefinite). It computes specific psycho-linguistic ratios: the Self-Reference Index (how often the author places themselves in the text), the Direct Address Index (how often the reader is acknowledged), and the Impersonal Padding Index (the frequency of structures like 'It is important to note that...' or 'One must consider...'). By comparing these ratios against established baselines for specific writing genres (e.g., opinion pieces, narratives, or persuasive essays), the system identifies texts that suffer from the 'view from nowhere'—a highly sterile, risk-averse pronominal footprint unique to RLHF-trained AI models.",
-  "useCase": "本物の人間の心理的な存在感が期待される、大学入試のエッセイ、カバーレター、論説文、および個人的な物語の監査に非常に効果的です。",
-  "strengths": "• 代名詞の使用と人間の行動および認知状態を結びつける、何十年にもわたる確立された心理言語学の研究を活用しています。\n• 根本的に個人的であることが意図されているテキストにおいて、AIの「ゴーストライティング（代筆）」を検出する精度が非常に高いです。",
-  "limitations": "• 技術文書、法的契約書、科学研究論文など、自然に非人称的なテキストではパフォーマンスが大幅に低下します。\n• 高度なプロンプトエンジニアリング（「これを一人称の個人的な視点から書いてください」）によって、人工的な代名詞の分布が部分的に隠蔽される可能性があります。",
-  "parameters": "解析: POSタグ付け（代名詞の分類）および比率計算\n評価基準: 自己言及インデックス vs 非人称パディングインデックス\n出力結果: 0-100 代名詞の無菌性（人工性）スコア",
-  "accuracy": "やや高いから高 — 物語や意見のテキストでは75-85%の精度。技術的または正式な学術テキストでは精度が55%未満に低下します。",
-  "references": [
-    {
-      "title": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.",
-      "url": "https://doi.org/10.1016/j.jesp.2011.12.005"
-    },
-    {
-      "title": "Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access.",
-      "url": "https://doi.org/10.1109/ACCESS.2023.3341807"
-    }
-  ],
-  "source": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.; Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access."
+    "name": "代名詞使用パターンの分析 (Pronoun Usage Pattern)",
+    "description": "代名詞（人称、指示、関係）の分布と頻度を分析し、大規模言語モデルに特有の「心理的な距離感」と「不自然な中立性」を検出します。人間は一人称代名詞（「私」、「私の」、「私たち」）を使用して自分の経験に基づいて文章を書いたり、読者に直接語りかけたり（「あなた」）する傾向がありますが、AIは切り離された全知の視点をデフォルトとする傾向があり、非人称、三人称、および指示代名詞を過度に乱用します。",
+    "algorithm": "代名詞密度およびペルソナプロファイリング",
+    "mechanism": "アルゴリズムはテキスト内の全ての代名詞を分類します（一人称、二人称、三人称、指示、関係、不定）。特定の心理言語学的比率を計算します：自己参照指標（著者がテキスト内にどれほど頻繁に自分を配置するか）、直接呼びかけ指標（読者がどれほど頻繁に認知されるか）、非人称パディング指標（「重要なのは…」や「考慮すべきは…」のような構造の頻度）。これらの比率を特定の文章ジャンル（例：意見記事、ナラティブ、説得的エッセイ）の確立されたベースラインと比較することで、システムは「どこからの視点もない」—RLHF訓練されたAIモデルに独自の非常に無菌的でリスク回避的な代名詞的痕跡—に苦しむテキストを識別します。",
+    "useCase": "本物の人間の心理的な存在感が期待される、大学入試のエッセイ、カバーレター、論説文、および個人的な物語の監査に非常に効果的です。",
+    "strengths": "• 代名詞の使用と人間の行動および認知状態を結びつける、何十年にもわたる確立された心理言語学の研究を活用しています。\n• 根本的に個人的であることが意図されているテキストにおいて、AIの「ゴーストライティング（代筆）」を検出する精度が非常に高いです。",
+    "limitations": "• 技術文書、法的契約書、科学研究論文など、自然に非人称的なテキストではパフォーマンスが大幅に低下します。\n• 高度なプロンプトエンジニアリング（「これを一人称の個人的な視点から書いてください」）によって、人工的な代名詞の分布が部分的に隠蔽される可能性があります。",
+    "parameters": "解析: POSタグ付け（代名詞の分類）および比率計算\n評価基準: 自己言及インデックス vs 非人称パディングインデックス\n出力結果: 0-100 代名詞の無菌性（人工性）スコア",
+    "accuracy": "やや高いから高 — 物語や意見のテキストでは75-85%の精度。技術的または正式な学術テキストでは精度が55%未満に低下します。",
+    "references": [
+        {
+            "title": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.",
+            "url": "https://doi.org/10.1016/j.jesp.2011.12.005"
+        },
+        {
+            "title": "Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access.",
+            "url": "https://doi.org/10.1109/ACCESS.2023.3341807"
+        }
+    ],
+    "source": "Pennebaker, J. W. (2011). The Secret Life of Pronouns: What Our Words Say About Us. Bloomsbury Press.; Crothers, E. et al. (2023). Machine-Generated Text: A Comprehensive Survey of Threat Models and Detection Methods. IEEE Access."
 }

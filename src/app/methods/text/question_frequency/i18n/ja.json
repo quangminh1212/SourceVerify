@@ -1,22 +1,22 @@
 {
-  "name": "教育的クエリの頻度 (Question Frequency)",
-  "description": "会話や教育的なトーンをシミュレートするために使用される疑問文や疑問詞（例：「誰」、「何」、「どのように」、「なぜ」）の絶対的な頻度を測定します。指示に従うデータセットやチュートリアルで微調整されたパラメータ数の多い言語モデルは、「教訓的」（教師と生徒）なペルソナを想定する傾向があるという強いアルゴリズム上のバイアスを持っています。これらは、読者のエンゲージメントを人為的に刺激するため、あるいは純粋に次に生成される情報ブロックを設定するために、質問を慢性的に過剰に使用します。",
-  "algorithm": "疑問語の語彙およびクエリ比率分析",
-  "mechanism": "The algorithm counts interrogative pronouns, adverbs, and terminal question marks, calculating the ratio of query sentences to declarative sentences. During RLHF training, models are rewarded for being helpful, thorough, and engaging, which mathematically reinforces the 'Pedagogical Query Pattern'—where the AI asks a question ('How do we implement this?') entirely so it can immediately answer it. Human writers in professional contexts typically state facts or transition smoothly, whereas AI texts exhibit a high frequency of these self-contained 'Query-Answer' loops, elevating the interrogative frequency far beyond normal human baselines.",
-  "useCase": "AIの過度に親切で「教師のような」質問のトーンが、成熟した人間の文章と比較して人為的で恩着せがましく感じられる、解説記事、チュートリアル、企業のコミュニケーションの監査に非常に効果的です。",
-  "strengths": "• ほぼすべての商用LLMに組み込まれている、デフォルトの「親切なアシスタント」ペルソナを暴くのに優れています。\n• 堅牢なトークンカウントと文の分類に依存しているため、計算効率が非常に高いです。",
-  "limitations": "• 質問の頻度が高い形式が求められる、本物の教材、学習ガイド、インタラクティブなQ&A記事では、誤検知が発生しやすくなります。\n• ユーザーが「質問をせずに平叙文で書く」ようにAIに明示的にプロンプトした場合、簡単に回避されてしまいます。",
-  "parameters": "解析: 疑問トークンの抽出とクエリ/平叙文の比率\n評価基準: 100文あたりの質問の頻度\n出力結果: 0-100 教育的クエリ（会話シミュレーション）スコア",
-  "accuracy": "中〜高 — エッセイや記事で75-85%の精度。文の長さの分散と組み合わせると、AIの「会話のパディング（水増し）」の強力なシグナルを提供します。",
-  "references": [
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    },
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    }
-  ],
-  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+    "name": "教育的クエリの頻度 (Question Frequency)",
+    "description": "会話や教育的なトーンをシミュレートするために使用される疑問文や疑問詞（例：「誰」、「何」、「どのように」、「なぜ」）の絶対的な頻度を測定します。指示に従うデータセットやチュートリアルで微調整されたパラメータ数の多い言語モデルは、「教訓的」（教師と生徒）なペルソナを想定する傾向があるという強いアルゴリズム上のバイアスを持っています。これらは、読者のエンゲージメントを人為的に刺激するため、あるいは純粋に次に生成される情報ブロックを設定するために、質問を慢性的に過剰に使用します。",
+    "algorithm": "疑問語の語彙およびクエリ比率分析",
+    "mechanism": "アルゴリズムは疑問代名詞、副詞、文末の疑問符を数え、質問文と宣言文の比率を計算します。RLHF訓練中にモデルは有用で徹底的で魅力的であることに報酬を受け、「教育的問い合わせパターン」を数学的に強化します—AIが質問をする（「これをどのように実装しますか？」）のは完全にそれにすぐに答えるためです。専門的文脈の人間のライターは典型的に事実を述べるかスムーズに遷移しますが、AIテキストはこれらの自己完結的な「質問-回答」ループの高頻度を示し、疑問頻度を通常の人間のベースラインをはるかに超えて上昇させます。",
+    "useCase": "AIの過度に親切で「教師のような」質問のトーンが、成熟した人間の文章と比較して人為的で恩着せがましく感じられる、解説記事、チュートリアル、企業のコミュニケーションの監査に非常に効果的です。",
+    "strengths": "• ほぼすべての商用LLMに組み込まれている、デフォルトの「親切なアシスタント」ペルソナを暴くのに優れています。\n• 堅牢なトークンカウントと文の分類に依存しているため、計算効率が非常に高いです。",
+    "limitations": "• 質問の頻度が高い形式が求められる、本物の教材、学習ガイド、インタラクティブなQ&A記事では、誤検知が発生しやすくなります。\n• ユーザーが「質問をせずに平叙文で書く」ようにAIに明示的にプロンプトした場合、簡単に回避されてしまいます。",
+    "parameters": "解析: 疑問トークンの抽出とクエリ/平叙文の比率\n評価基準: 100文あたりの質問の頻度\n出力結果: 0-100 教育的クエリ（会話シミュレーション）スコア",
+    "accuracy": "中〜高 — エッセイや記事で75-85%の精度。文の長さの分散と組み合わせると、AIの「会話のパディング（水増し）」の強力なシグナルを提供します。",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ],
+    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

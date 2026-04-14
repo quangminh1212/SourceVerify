@@ -1,22 +1,22 @@
 {
-  "name": "教訓的（指示的）トーンの密度",
-  "description": "ステップバイステップの解説、講義風、または「親切なアシスタント」のようなトーンの存在を定量化します。LLMは超教訓的になるように微調整されており、単純な答えであっても頻繁に番号付きリスト、命令文、および見下したような結論へと整理します。",
-  "algorithm": "命令的構文の解析と教訓的マーカーの抽出",
-  "mechanism": "Because almost all modern LLMs undergo RLHF (Reinforcement Learning from Human Feedback) designed to make them 'helpful and harmless assistants', they have developed a chronic, inescapable habit of lecturing the user. When a human writes an email or an essay, the structure flows organically. When an AI writes the exact same content, it instinctively applies a didactic (teaching) framework. This manifests as a high density of imperative verbs ('First, consider...', 'Next, ensure that...'), bulleted or numbered list structures, patronizing transitional phrases ('It is important to remember that...'), and a forced, neatly wrapped conclusion ('In summary...'). This algorithm parses the syntax tree to count imperative verb phrases, extracts didactic sequence markers (firstly, secondly, finally), and measures the ratio of 'instructive' sentences to purely declarative ones. If a piece of writing—which is not supposed to be a user manual—suddenly morphs into a hyper-structured, step-by-step tutorial, the algorithm flags the unmistakable behavioral imprint of a fine-tuned AI assistant.",
-  "useCase": "見下したような、過度に構造化された「教育的」なトーンがまったく場違いである、学生のエッセイ、クリエイティブライティング、オピニオン記事、および非公式のコミュニケーションの監査に非常に効果的です。",
-  "strengths": "• モデルはトレーニング中に、きちんと構造化されたステップバイステップのガイダンスを提供することで大きな報酬を得るため、商用LLMの最も深いRLHFアライメントのバイアスを悪用します。\n• 単純な語彙だけでなく、根底にある構文構造（テキストの「フレームワーク」）を分析するため、単純な単語の置き換えに対して非常に高い耐性を持ちます。\n• 「エッセイを書いて」と頼まれたのに、代わりに「テーマを理解するためのガイド」を出力してしまうAIモデルを捕まえるのに非常に正確です。",
-  "limitations": "• 当然のことながら、人間が書いた本物の取扱説明書、レシピ、技術チュートリアル、および「ハウツー」記事では（これらは本質的に教訓的なトーンを必要とするため）、大規模な誤検知（偽陽性）を引き起こします。\n• ユーザーがAIに対して「リストを避け、教育的なトーンを使わずに創造的に書け」と明示的にプロンプトを出した場合、ある程度回避される可能性があります。\n• RLHFアシスタントの微調整を受けていない生の「ベース」モデルでは効果が低くなります。",
-  "parameters": "解析: 命令的構文と順序マーカーの密度\n評価基準: 全文に対する教訓的/指示的な文の比率\n出力結果: 0-100 アシスタントへの準拠（教訓的な無菌性）スコア",
-  "accuracy": "高 — 技術文書以外では80-88%。必死に「親切」であろうとするAIの、非常に信頼性の高い行動の指紋（フットプリント）を提供します。",
-  "references": [
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    },
-    {
-      "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-      "url": "https://arxiv.org/abs/2011.01314"
-    }
-  ],
-  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING."
+    "name": "教訓的（指示的）トーンの密度",
+    "description": "ステップバイステップの解説、講義風、または「親切なアシスタント」のようなトーンの存在を定量化します。LLMは超教訓的になるように微調整されており、単純な答えであっても頻繁に番号付きリスト、命令文、および見下したような結論へと整理します。",
+    "algorithm": "命令的構文の解析と教訓的マーカーの抽出",
+    "mechanism": "ほぼ全ての現代LLMは「有用で無害なアシスタント」にするために設計されたRLHFを経るため、ユーザーに講義する慢性的で逃れられない癖を発達させています。人間がメールやエッセイを書くとき、構造は有機的に流れます。AIが全く同じ内容を書くとき、本能的に教訓的（教育的）フレームワークを適用します。これは命令形動詞の高密度（「まず、検討してください…」「次に、確実にしてください…」）、箇条書きまたは番号リスト構造、恩着せがましい遷移フレーズ（「忘れてはならない重要なことは…」）、および強制的にきれいにまとめられた結論（「要約すると…」）として現れます。このアルゴリズムは構文ツリーを解析して命令形動詞句を数え、教訓的シーケンス標識（第一に、第二に、最後に）を抽出し、「指導的」文と純粋に宣言的な文の比率を測定します。ユーザーマニュアルであるはずのない文章が突然超構造化されたステップバイステップのチュートリアルに変容した場合、アルゴリズムは微調整されたAIアシスタントの紛れもない行動的刻印にフラグを立てます。",
+    "useCase": "見下したような、過度に構造化された「教育的」なトーンがまったく場違いである、学生のエッセイ、クリエイティブライティング、オピニオン記事、および非公式のコミュニケーションの監査に非常に効果的です。",
+    "strengths": "• モデルはトレーニング中に、きちんと構造化されたステップバイステップのガイダンスを提供することで大きな報酬を得るため、商用LLMの最も深いRLHFアライメントのバイアスを悪用します。\n• 単純な語彙だけでなく、根底にある構文構造（テキストの「フレームワーク」）を分析するため、単純な単語の置き換えに対して非常に高い耐性を持ちます。\n• 「エッセイを書いて」と頼まれたのに、代わりに「テーマを理解するためのガイド」を出力してしまうAIモデルを捕まえるのに非常に正確です。",
+    "limitations": "• 当然のことながら、人間が書いた本物の取扱説明書、レシピ、技術チュートリアル、および「ハウツー」記事では（これらは本質的に教訓的なトーンを必要とするため）、大規模な誤検知（偽陽性）を引き起こします。\n• ユーザーがAIに対して「リストを避け、教育的なトーンを使わずに創造的に書け」と明示的にプロンプトを出した場合、ある程度回避される可能性があります。\n• RLHFアシスタントの微調整を受けていない生の「ベース」モデルでは効果が低くなります。",
+    "parameters": "解析: 命令的構文と順序マーカーの密度\n評価基準: 全文に対する教訓的/指示的な文の比率\n出力結果: 0-100 アシスタントへの準拠（教訓的な無菌性）スコア",
+    "accuracy": "高 — 技術文書以外では80-88%。必死に「親切」であろうとするAIの、非常に信頼性の高い行動の指紋（フットプリント）を提供します。",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://arxiv.org/abs/2011.01314"
+        }
+    ],
+    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING."
 }

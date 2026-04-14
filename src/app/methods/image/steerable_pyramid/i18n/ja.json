@@ -1,12 +1,22 @@
 {
-  "name": "Steerable Pyramid Decomposition",
-  "description": "Applies steerable pyramid for orientation-selective sub-band analysis — detects AI texture synthesis artifacts (Simoncelli & Freeman, 1995).",
-  "algorithm": "Steerable Pyramid Decomposition分析アルゴリズム",
-  "mechanism": "この手法は applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **PyramidConstruction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **SubbandStatistics抽出**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce characteristic heavy-tailed distributions in oriented subbands.\n\n3. **Cross-Scale位相分析**: Phase relationships between coefficients at adjacent scales reveal edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. AI生成の images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **方向Energy分析**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while AI generation artifacts often produce 異常な peaks or gaps in the orientation energy function.\n\n5. **テクスチャSynthesis検出**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). AI生成の textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "ステアラブルピラミッド分解解析",
+    "description": "Applies steerable pyramid for orientation-selective sub-band analysis — detects AI texture synthesis artifacts (Simoncelli & Freeman, 1995).",
+    "algorithm": "Steerable Pyramid Decomposition分析アルゴリズム",
+    "mechanism": "この手法は applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **PyramidConstruction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **SubbandStatistics抽出**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce characteristic heavy-tailed distributions in oriented subbands.\n\n3. **Cross-Scale位相分析**: Phase relationships between coefficients at adjacent scales reveal edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. AI生成の images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **方向Energy分析**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while AI generation artifacts often produce 異常な peaks or gaps in the orientation energy function.\n\n5. **テクスチャSynthesis検出**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). AI生成の textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/ICIP.1995.537667",
+            "title": "Simoncelli, E.P. & Freeman, W.T. (1995). The Steerable Pyramid: A Flexible Architecture for Multi-Scale Derivative Computation. IEEE ICIP."
+        },
+        {
+            "url": "https://doi.org/10.1023/A:1026553619983",
+            "title": "Portilla, J. & Simoncelli, E.P. (2000). A Parametric Texture Model Based on Joint Statistics of Complex Wavelet Coefficients. IJCV."
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "輝度勾配解析",
-  "description": "滑らかな遷移における輝度勾配の空間的異常を解析します。AI生成モデルはしばしば局所的な照明の不一致を引き起こし、物理的な照明の制約に反する不可能な光の減衰や急激な勾配の変化をレンダリングします。",
-  "algorithm": "非線形勾配分散と照明の一貫性のマッピング",
-  "mechanism": "The algorithm calculates the first and second-order spatial derivatives of the image luminance channel to map brightness gradients. In natural images, luminance transitions on smooth surfaces (like walls or skin) follow predictable, continuous parametric curves dictated by the inverse-square law of light. AI-synthesized images often display 'gradient fractures'—micro-abrupt changes, irregular banding, or physically impossible shadows caused by the model's localized patch-based generation and lack of global 3D scene understanding.",
-  "parameters": "色空間: 輝度（Yチャネル）, 解析指標: 2次勾配分散, グローバルチェック: 照明の方向性",
-  "accuracy": "中（65-75%） - ポートレート、屋内のシーン、または柔らかなスタジオ照明が当てられた被写体で最も効果的です。",
-  "source": "Johnson & Farid (2007) 照明の制約によるデジタル偽造の暴露について",
-  "useCase": "合成された照明の減衰の検出、AI生成における物理的に不可能な物理的照明の特定、および複合的な画像操作の暴露。",
-  "references": [
-    {
-      "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
-      "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
-    },
-    {
-      "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
-      "url": "https://doi.org/10.1109/TIFS.2007.903848"
-    }
-  ],
-  "strengths": "• 現実世界の光の伝達と放射測定の基本的な物理学に深く根ざしている。\n• 意味論的な内容が物理的に完璧に見える高度な生成モデルを捉えるのに効果的。\n• アマチュアの写真編集では手動で修正するのが極めて困難な照明の不一致を明らかにする。\n• 勾配が十分に広ければ、圧縮されたインターネット画像であっても中程度の効果を維持する。",
-  "limitations": "• ベースライン解析のための滑らかな表面がない、テクスチャの多いシーン（葉、密集した群衆など）では効果がない。\n• 複数光源の局所照明が複雑に絡み合う本物の環境（コンサートステージなど）では、偽陽性が発生しやすい。\n• 過度なJPEG圧縮や標準的な8ビット深度変換によって引き起こされるカラーバンディングは、誤警報を引き起こす可能性がある。\n• 洗練された空間解析を必要とし、単一パスの周波数チェックと比較して計算に時間がかかる。"
+    "name": "輝度勾配解析",
+    "description": "滑らかな遷移における輝度勾配の空間的異常を解析します。AI生成モデルはしばしば局所的な照明の不一致を引き起こし、物理的な照明の制約に反する不可能な光の減衰や急激な勾配の変化をレンダリングします。",
+    "algorithm": "非線形勾配分散と照明の一貫性のマッピング",
+    "mechanism": "アルゴリズムは画像の輝度チャンネルの1次および2次空間微分を計算して明るさのグラディエントをマッピングします。自然画像では、壁や肌のような滑らかな表面の輝度遷移は光の逆二乗則に従う予測可能で連続的なパラメトリック曲線に従います。AI合成画像はしばしば「グラディエント破壊」を表示します—ミクロの急激な変化、不規則なバンディング、またはモデルの局所的パッチベース生成とグローバルな3Dシーン理解の欠如によって引き起こされる物理的に不可能な影。",
+    "parameters": "色空間: 輝度（Yチャネル）, 解析指標: 2次勾配分散, グローバルチェック: 照明の方向性",
+    "accuracy": "中（65-75%） - ポートレート、屋内のシーン、または柔らかなスタジオ照明が当てられた被写体で最も効果的です。",
+    "source": "Johnson & Farid (2007) 照明の制約によるデジタル偽造の暴露について",
+    "useCase": "合成された照明の減衰の検出、AI生成における物理的に不可能な物理的照明の特定、および複合的な画像操作の暴露。",
+    "references": [
+        {
+            "title": "Krawetz, N. (2007). A Picture's Worth... Digital Image Analysis and Forensics.",
+            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+        },
+        {
+            "title": "Johnson, M.K. & Farid, H. (2007). Exposing Digital Forgeries in Complex Lighting Environments. IEEE TIFS.",
+            "url": "https://doi.org/10.1109/TIFS.2007.903848"
+        }
+    ],
+    "strengths": "• 現実世界の光の伝達と放射測定の基本的な物理学に深く根ざしている。\n• 意味論的な内容が物理的に完璧に見える高度な生成モデルを捉えるのに効果的。\n• アマチュアの写真編集では手動で修正するのが極めて困難な照明の不一致を明らかにする。\n• 勾配が十分に広ければ、圧縮されたインターネット画像であっても中程度の効果を維持する。",
+    "limitations": "• ベースライン解析のための滑らかな表面がない、テクスチャの多いシーン（葉、密集した群衆など）では効果がない。\n• 複数光源の局所照明が複雑に絡み合う本物の環境（コンサートステージなど）では、偽陽性が発生しやすい。\n• 過度なJPEG圧縮や標準的な8ビット深度変換によって引き起こされるカラーバンディングは、誤警報を引き起こす可能性がある。\n• 洗練された空間解析を必要とし、単一パスの周波数チェックと比較して計算に時間がかかる。"
 }

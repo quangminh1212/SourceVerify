@@ -1,22 +1,22 @@
 {
-  "name": "語彙密度（内容語と機能語の比率）",
-  "description": "総単語数に対する「内容をもつ単語」（名詞、動詞、形容詞、副詞）の割合を測定します。AIが生成したテキストは、スムーズで確率の高い文法的移行を確保するために「接着剤」となる機能語に大きく依存するため、通常、専門家の人間が書いた文章よりも語彙密度が低くなります。",
-  "algorithm": "品詞（POS）タギングと内容語比率の計算",
-  "mechanism": "Lexical density is a fundamental computational linguistics metric dividing the number of 'content words' (which carry actual meaning) by the total number of words in a text. Expert human writers, particularly in academic or professional fields, tend to pack a high concentration of meaning into their sentences, resulting in a high lexical density (often above 50%). Large Language Models (LLMs), however, are optimized for probability and grammatical perfection rather than conciseness. To bridge concepts and maintain an authoritative, flowing tone, LLMs over-utilize 'function words'—articles (the, a), prepositions (in, on, concerning), conjunctions (and, however, furthermore), and pronouns. This creates a text that is syntactically beautiful but structurally diluted. The algorithm parses the text using a Part-of-Speech tagger, isolates all content words, and calculates the density percentage. If a seemingly sophisticated, long-form text registers an unusually low lexical density (indicating that it consists mostly of syntactical scaffolding rather than actual substance), it is flagged as characteristic of autoregressive padding.",
-  "useCase": "学術論文、専門的なレポート、エッセイの監査に非常に効果的です。日常的な口語表現では機能しない場合がありますが、高度な学術的ライティングを模倣しようとしながらも、それにふさわしい情報密度に達していないAIモデルを暴露することに成功します。",
-  "strengths": "• AIライティングの特徴である「華やかだが中身がない（flowery but empty）」性質を捉え、AIのテキストがなぜ不必要に長く感じられるのかを正確に定量化します。\n• 標準的なPOS（品詞）タギングのみを必要とするため、計算上軽量で高速です。\n• LLMは、文の首尾一貫性を壊すことなく機能文法の基礎となる確率分布を根本的に書き換えることはできないため、マイナーなプロンプトエンジニアリングに対して非常に高い耐性を持ちます。",
-  "limitations": "• 本質的に話し言葉の文字起こしに対しては高い誤検知率（偽陽性）を示します。話し言葉は、書き言葉よりも語彙密度が本質的に低いためです。\n• 分析対象の言語に大きく依存します。分析的言語（英語、ベトナム語など）は、総合的言語（ロシア語やフィンランド語など）よりもベースラインの密度が低いため、厳密な言語固有のキャリブレーション（調整）が必要です。\n• フィラーワード（つなぎ言葉）を削除する目的で人間が積極的にテキストを編集した場合、回避される可能性があります（ただし、通常は文書全体の書き直しが必要になります）。",
-  "parameters": "解析: 品詞（POS）ターゲットのフィルタリング\n評価基準: （総内容語数 / 総単語数） * 100\n出力結果: 0-100 語彙の希薄度（文法的かさ増し）スコア",
-  "accuracy": "高 — フォーマルおよび学術的なテキストで78-85%。LLMの生成物に固有の構造的な「水増し（fluff）」の信頼性の高い数学的測定を提供します。",
-  "references": [
-    {
-      "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
-      "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
-    },
-    {
-      "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
-      "url": "https://doi.org/10.1017/CBO9780511621024"
-    }
-  ],
-  "source": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.; Biber, D. (1988). Variation across speech and writing. Cambridge University Press."
+    "name": "語彙密度（内容語と機能語の比率）",
+    "description": "総単語数に対する「内容をもつ単語」（名詞、動詞、形容詞、副詞）の割合を測定します。AIが生成したテキストは、スムーズで確率の高い文法的移行を確保するために「接着剤」となる機能語に大きく依存するため、通常、専門家の人間が書いた文章よりも語彙密度が低くなります。",
+    "algorithm": "品詞（POS）タギングと内容語比率の計算",
+    "mechanism": "語彙密度は「内容語」（実際の意味を運ぶ）の数をテキスト内の総語数で割る基本的な計算言語学指標です。人間の専門家ライター、特に学術的または専門的分野では、文に高い意味の集中を詰め込む傾向があり、高い語彙密度（しばしば50%以上）をもたらします。しかしLLMは簡潔さよりも確率と文法的完璧さのために最適化されています。概念を橋渡しし権威的で流れるようなトーンを維持するために、LLMは「機能語」—冠詞（the、a）、前置詞（in、on、concerning）、接続詞（and、however、furthermore）、代名詞—を過剰に利用します。これは構文的に美しいが構造的に希釈されたテキストを生み出します。アルゴリズムは品詞タガーを使用してテキストを解析し、全ての内容語を分離して密度パーセンテージを計算します。一見巧みな長文テキストが異常に低い語彙密度を記録する場合（大部分が実質よりも構文的足場で構成されていることを示す）、自己回帰的パディングの特徴としてフラグされます。",
+    "useCase": "学術論文、専門的なレポート、エッセイの監査に非常に効果的です。日常的な口語表現では機能しない場合がありますが、高度な学術的ライティングを模倣しようとしながらも、それにふさわしい情報密度に達していないAIモデルを暴露することに成功します。",
+    "strengths": "• AIライティングの特徴である「華やかだが中身がない（flowery but empty）」性質を捉え、AIのテキストがなぜ不必要に長く感じられるのかを正確に定量化します。\n• 標準的なPOS（品詞）タギングのみを必要とするため、計算上軽量で高速です。\n• LLMは、文の首尾一貫性を壊すことなく機能文法の基礎となる確率分布を根本的に書き換えることはできないため、マイナーなプロンプトエンジニアリングに対して非常に高い耐性を持ちます。",
+    "limitations": "• 本質的に話し言葉の文字起こしに対しては高い誤検知率（偽陽性）を示します。話し言葉は、書き言葉よりも語彙密度が本質的に低いためです。\n• 分析対象の言語に大きく依存します。分析的言語（英語、ベトナム語など）は、総合的言語（ロシア語やフィンランド語など）よりもベースラインの密度が低いため、厳密な言語固有のキャリブレーション（調整）が必要です。\n• フィラーワード（つなぎ言葉）を削除する目的で人間が積極的にテキストを編集した場合、回避される可能性があります（ただし、通常は文書全体の書き直しが必要になります）。",
+    "parameters": "解析: 品詞（POS）ターゲットのフィルタリング\n評価基準: （総内容語数 / 総単語数） * 100\n出力結果: 0-100 語彙の希薄度（文法的かさ増し）スコア",
+    "accuracy": "高 — フォーマルおよび学術的なテキストで78-85%。LLMの生成物に固有の構造的な「水増し（fluff）」の信頼性の高い数学的測定を提供します。",
+    "references": [
+        {
+            "title": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.",
+            "url": "https://cir.nii.ac.jp/crid/1574211302824707840"
+        },
+        {
+            "title": "Biber, D. (1988). Variation across speech and writing. Cambridge University Press.",
+            "url": "https://doi.org/10.1017/CBO9780511621024"
+        }
+    ],
+    "source": "Ure, J. (1971). Lexical density and register differentiation. Applications of Linguistics.; Biber, D. (1988). Variation across speech and writing. Cambridge University Press."
 }

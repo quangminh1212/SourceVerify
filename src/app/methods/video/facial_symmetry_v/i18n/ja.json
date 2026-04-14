@@ -1,22 +1,22 @@
 {
-  "name": "Facial Symmetry (Video)",
-  "description": "Analyzes facial symmetry consistency in 動画",
-  "algorithm": "Facial Symmetry (Video) — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes facial symmetry patterns in video for deepfake detection:\n\n1. **BilateralFeature測定**: Corresponding bilateral facial features are measured: left/right eye size, eyebrow position, cheek contour, nasolabial fold depth, lip corner position. The asymmetry (difference between left and right) is quantified for each feature pair.\n\n2. **NaturalAsymmetryBaseline**: All human faces exhibit natural bilateral asymmetry — typically 2-5% difference between sides. The method establishes per-subject asymmetry characteristics and checks whether they fall within normal ranges. Deepfakes may produce unnaturally symmetric faces (≈0% asymmetry) or exaggerated asymmetry inconsistent with natural variation.\n\n3. **Pose-Adjusted対称性**: Apparent symmetry changes with head pose due to perspective projection. The method compensates for head pose to measure intrinsic facial symmetry. After correction, true facial asymmetry should remain constant regardless of viewing angle. Deepfakes may show pose-dependent symmetry changes indicating inconsistent 3D face modeling.\n\n4. **Dynamic対称性分析**: During expressions, bilateral symmetry changes predictably — genuine smiles may be slightly asymmetric, surprise is relatively symmetric. The method analyzes dynamic symmetry patterns during expression events. Deepfakes may produce symmetric expressions when natural ones should be asymmetric, or vice versa.\n\n5. **時間的対称性安定性**: The subject's baseline facial asymmetry should remain constant across the video (bone structure doesn't change). The method tracks symmetry metrics temporally. Frame-to-frame variations in facial asymmetry — caused by independent generation of left and right face halves — indicate AI generation artifacts.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through facial symmetry (動画) analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-      "url": "https://doi.org/10.1109/WACVW.2019.00020"
-    },
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    }
-  ]
+    "name": "顔の対称性 (映像) 解析",
+    "description": "Analyzes facial symmetry consistency in 動画",
+    "algorithm": "Facial Symmetry (Video) — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes facial symmetry patterns in video for deepfake detection:\n\n1. **BilateralFeature測定**: Corresponding bilateral facial features are measured: left/right eye size, eyebrow position, cheek contour, nasolabial fold depth, lip corner position. The asymmetry (difference between left and right) is quantified for each feature pair.\n\n2. **NaturalAsymmetryBaseline**: All human faces exhibit natural bilateral asymmetry — typically 2-5% difference between sides. The method establishes per-subject asymmetry characteristics and checks whether they fall within normal ranges. Deepfakes may produce unnaturally symmetric faces (≈0% asymmetry) or exaggerated asymmetry inconsistent with natural variation.\n\n3. **Pose-Adjusted対称性**: Apparent symmetry changes with head pose due to perspective projection. The method compensates for head pose to measure intrinsic facial symmetry. After correction, true facial asymmetry should remain constant regardless of viewing angle. Deepfakes may show pose-dependent symmetry changes indicating inconsistent 3D face modeling.\n\n4. **Dynamic対称性分析**: During expressions, bilateral symmetry changes predictably — genuine smiles may be slightly asymmetric, surprise is relatively symmetric. The method analyzes dynamic symmetry patterns during expression events. Deepfakes may produce symmetric expressions when natural ones should be asymmetric, or vice versa.\n\n5. **時間的対称性安定性**: The subject's baseline facial asymmetry should remain constant across the video (bone structure doesn't change). The method tracks symmetry metrics temporally. Frame-to-frame variations in facial asymmetry — caused by independent generation of left and right face halves — indicate AI generation artifacts.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through facial symmetry (動画) analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+            "url": "https://doi.org/10.1109/WACVW.2019.00020"
+        },
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        }
+    ]
 }

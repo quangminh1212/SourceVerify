@@ -1,22 +1,22 @@
 {
-  "name": "Face Skin Smoothness",
-  "description": "Analyzes excessive skin smoothness from AI generation",
-  "algorithm": "Face Skin Smoothness — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes facial skin smoothness for video deepfake detection:\n\n1. **肌領域Segmentation**: Facial skin regions are segmented per frame, separating skin from eyes, eyebrows, lips, and hair. The skin regions — forehead, cheeks, nose, chin — are analyzed independently for texture quality.\n\n2. **テクスチャ周波数分析**: High-frequency skin texture content is measured using local power spectral density. Natural skin contains multi-scale texture: pores (~0.5-1mm spacing), fine wrinkles, and skin grain. The method quantifies texture energy at these characteristic spatial frequencies. AI-generated skin often shows suppressed high-frequency texture — the over-smoothing artifact common in GAN-generated faces.\n\n3. **Smoothness勾配検出**: The method maps smoothness variation across the face. Natural faces show region-dependent smoothness: smoother on cheeks, more textured on the nose and forehead. Deepfake faces may show unnaturally uniform smoothness or incorrect smoothness distribution across facial regions.\n\n4. **肌DetailPreservation評価**: Fine skin details (individual pores, hair follicles, micro-wrinkles) are evaluated for rendering quality. These details help assess whether the skin texture is photographed (with characteristic sensor-captured detail) versus rendered (often lacking sub-pixel detail or showing repetitive synthetic patterns).\n\n5. **時間的肌テクスチャ安定性**: Natural skin texture is static — pores and micro-features remain in fixed positions frame-to-frame. The method tracks skin texture consistency over time. Deepfake generators may produce temporally varying skin texture where pore patterns shift, appear, or disappear between frames, creating detectable temporal texture instability.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through face skin smoothness analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "顔の皮膚滑らかさ解析",
+    "description": "Analyzes excessive skin smoothness from AI generation",
+    "algorithm": "Face Skin Smoothness — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes facial skin smoothness for video deepfake detection:\n\n1. **肌領域Segmentation**: Facial skin regions are segmented per frame, separating skin from eyes, eyebrows, lips, and hair. The skin regions — forehead, cheeks, nose, chin — are analyzed independently for texture quality.\n\n2. **テクスチャ周波数分析**: High-frequency skin texture content is measured using local power spectral density. Natural skin contains multi-scale texture: pores (~0.5-1mm spacing), fine wrinkles, and skin grain. The method quantifies texture energy at these characteristic spatial frequencies. AI-generated skin often shows suppressed high-frequency texture — the over-smoothing artifact common in GAN-generated faces.\n\n3. **Smoothness勾配検出**: The method maps smoothness variation across the face. Natural faces show region-dependent smoothness: smoother on cheeks, more textured on the nose and forehead. Deepfake faces may show unnaturally uniform smoothness or incorrect smoothness distribution across facial regions.\n\n4. **肌DetailPreservation評価**: Fine skin details (individual pores, hair follicles, micro-wrinkles) are evaluated for rendering quality. These details help assess whether the skin texture is photographed (with characteristic sensor-captured detail) versus rendered (often lacking sub-pixel detail or showing repetitive synthetic patterns).\n\n5. **時間的肌テクスチャ安定性**: Natural skin texture is static — pores and micro-features remain in fixed positions frame-to-frame. The method tracks skin texture consistency over time. Deepfake generators may produce temporally varying skin texture where pore patterns shift, appear, or disappear between frames, creating detectable temporal texture instability.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through face skin smoothness analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

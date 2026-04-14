@@ -1,18 +1,18 @@
 {
-  "name": "議論構造（アーギュメント・ストラクチャー）プロファイリング",
-  "description": "議論の枠組みにおける、談話の推移（トランジション）の不自然な硬直性、極端な予測可能性、および過剰な兆候（シグナリング）を分析します。",
-  "algorithm": "談話フローおよびトランジション・マッパー",
-  "mechanism": "This method evaluates the architectural rigidity of an argument. LLMs are ruthlessly fine-tuned via RLHF to be extremely structured, safe, and easily readable to the lowest common denominator. This training inevitably forces them into textbook-perfect 'five-paragraph essay' templates. They heavily and predictably telegraph their every move using explicit discourse markers ('Firstly', 'Furthermore', 'Moreover', 'In conclusion'). Authentic human discourse, especially from professionals and experts, is far more organic and chaotic—humans weave claims together, overlap evidence, defer conclusions, or use implicit logical transitions rather than constantly signposting every single shift in thought like a traffic cop. By mapping the topological sequence of claims and transitional markers, the system identifies the overly mechanical, predictable, and 'paint-by-numbers' scaffolding typical of AI generation.",
-  "useCase": "主張を繋ぎ合わせるために、反復的な推移の標識（「第一に...第二に...最後に...」）に依存する、教科書的に完璧で非常に硬直した議論エッセイの構造の検出。",
-  "strengths": "• LLMにとって事実上逃れることのできない、構造的なRLHFの安全性とフロー（流れ）のバイアスを直接ターゲットにします。\n• 自動化された「マニュアル通りの」エッセイや記事の生成を検出するのに信じられないほど効果的です。\n• 単純な同義語の置き換えによる回避テクニックに対して非常に強力な耐性があります（例：「第一に」を「最初に」に置き換えても構造的には何も変わりません）。",
-  "limitations": "• 厳格に構造化されたエッセイフォーマットを使用するように意図的に教育されている人間の書き手（例：高校生、TOEFL/IELTSの受験者）を評価する際に、誤検知（フォールス・ポジティブ）を引き起こしやすいです。\n• 論理的な推移が存在しない、架空の物語（小説）や詩的なテキストには完全に見当違いであり、適用できません。\n• 構造的パターンが現れない非常に短いテキスト（100語未満）では信頼性が低下します。",
-  "parameters": "解析: 談話トポロジー・マッピング\n評価基準: 推移マーカーの硬直性 vs 有機的な暗黙の推移\n出力結果: 0-100 構造的硬直性スコア",
-  "accuracy": "高 — 78-86%。プロンプトで細かく指示されていない標準的なLLMの出力（「〜についての論文を書いてください」）に対して特に強力。",
-  "references": [
-    {
-      "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson.",
-      "url": "https://www.routledge.com/Longman-Grammar-of-Spoken-and-Written-English/Biber-Johansson-Leech-Conrad-Finegan/p/book/9780582237254"
-    }
-  ],
-  "source": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson."
+    "name": "議論構造（アーギュメント・ストラクチャー）プロファイリング",
+    "description": "議論の枠組みにおける、談話の推移（トランジション）の不自然な硬直性、極端な予測可能性、および過剰な兆候（シグナリング）を分析します。",
+    "algorithm": "談話フローおよびトランジション・マッパー",
+    "mechanism": "この手法は議論のアーキテクチャ的硬直性を評価します。LLMはRLHFにより極めて構造化され、安全で、最も低い共通分母にとって容易に読めるよう徹底的に微調整されています。この訓練は必然的に教科書的に完璧な「五段落エッセイ」テンプレートに彼らを強制します。明示的な談話標識を使って全ての動きを重々しく予告します（「第一に」「さらに」「加えて」「結論として」）。本物の人間の談話、特に専門家や熟練者のそれは、はるかに有機的でカオス的です—人間は主張を織り交ぜ、証拠を重ね合わせ、結論を先送りし、交通整理員のように全ての思考の転換を常に案内するのではなく、暗黙の論理的遷移を使います。主張と遷移標識の位相的シーケンスをマッピングすることで、システムはAI生成に典型的な過度に機械的で予測可能な「塗り絵」的足場を識別します。",
+    "useCase": "主張を繋ぎ合わせるために、反復的な推移の標識（「第一に...第二に...最後に...」）に依存する、教科書的に完璧で非常に硬直した議論エッセイの構造の検出。",
+    "strengths": "• LLMにとって事実上逃れることのできない、構造的なRLHFの安全性とフロー（流れ）のバイアスを直接ターゲットにします。\n• 自動化された「マニュアル通りの」エッセイや記事の生成を検出するのに信じられないほど効果的です。\n• 単純な同義語の置き換えによる回避テクニックに対して非常に強力な耐性があります（例：「第一に」を「最初に」に置き換えても構造的には何も変わりません）。",
+    "limitations": "• 厳格に構造化されたエッセイフォーマットを使用するように意図的に教育されている人間の書き手（例：高校生、TOEFL/IELTSの受験者）を評価する際に、誤検知（フォールス・ポジティブ）を引き起こしやすいです。\n• 論理的な推移が存在しない、架空の物語（小説）や詩的なテキストには完全に見当違いであり、適用できません。\n• 構造的パターンが現れない非常に短いテキスト（100語未満）では信頼性が低下します。",
+    "parameters": "解析: 談話トポロジー・マッピング\n評価基準: 推移マーカーの硬直性 vs 有機的な暗黙の推移\n出力結果: 0-100 構造的硬直性スコア",
+    "accuracy": "高 — 78-86%。プロンプトで細かく指示されていない標準的なLLMの出力（「〜についての論文を書いてください」）に対して特に強力。",
+    "references": [
+        {
+            "title": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson.",
+            "url": "https://www.routledge.com/Longman-Grammar-of-Spoken-and-Written-English/Biber-Johansson-Leech-Conrad-Finegan/p/book/9780582237254"
+        }
+    ],
+    "source": "Biber, D. et al. (1999). Longman Grammar of Spoken and Written English. Pearson."
 }

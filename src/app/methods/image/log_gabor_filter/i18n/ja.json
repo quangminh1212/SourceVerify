@@ -1,12 +1,22 @@
 {
-  "name": "Log-Gabor Filter Analysis",
-  "description": "Applies log-Gabor filters for improved frequency selectivity over standard Gabor — captures AI generation signatures (Field, 1987).",
-  "algorithm": "Log-Gabor Filter Analysis分析アルゴリズム",
-  "mechanism": "この手法は applies Log-Gabor filters following Field's (1987) framework for analyzing image frequency structure:\n\n1. **Log-GaborBankConstruction**: A bank of Log-Gabor filters is constructed in the 周波数領域 with logarithmic spacing. Unlike standard Gabor filters, Log-Gabor filters have zero DC component, no bandwidth limitation, and their transfer function is Gaussian on a logarithmic frequency scale: G(f) = exp(−(log(f/f₀))²/(2(log(σ/f₀))²)).\n\n2. **Multi-方向Filtering**: The filter bank spans multiple orientations (通常 6-8) and scales (4-6 octaves), providing comprehensive coverage of the 2D frequency plane. Each filter isolates a specific frequency band and orientation.\n\n3. **ResponseEnergyマッピング**: The local energy response is computed as E(x,y) = √(even²(x,y) + odd²(x,y)), where even and odd components are the real and imaginary parts of the filter response. This captures local frequency content independent of phase.\n\n4. **NaturalImageStatistics比較**: Response statistics are compared to the known 1/f amplitude spectrum of natural images. AI生成の images exhibit characteristic deviations — GANs often show spectral peaks at grid frequencies, while diffusion models may underrepresent certain frequency bands.\n\n5. **異常スコアリング**: The deviation from expected natural image frequency statistics across all filter responses is aggregated into a forensic score indicating the likelihood of AI generation.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "対数ガボールフィルター解析",
+    "description": "Applies log-Gabor filters for improved frequency selectivity over standard Gabor — captures AI generation signatures (Field, 1987).",
+    "algorithm": "Log-Gabor Filter Analysis分析アルゴリズム",
+    "mechanism": "この手法は applies Log-Gabor filters following Field's (1987) framework for analyzing image frequency structure:\n\n1. **Log-GaborBankConstruction**: A bank of Log-Gabor filters is constructed in the 周波数領域 with logarithmic spacing. Unlike standard Gabor filters, Log-Gabor filters have zero DC component, no bandwidth limitation, and their transfer function is Gaussian on a logarithmic frequency scale: G(f) = exp(−(log(f/f₀))²/(2(log(σ/f₀))²)).\n\n2. **Multi-方向Filtering**: The filter bank spans multiple orientations (通常 6-8) and scales (4-6 octaves), providing comprehensive coverage of the 2D frequency plane. Each filter isolates a specific frequency band and orientation.\n\n3. **ResponseEnergyマッピング**: The local energy response is computed as E(x,y) = √(even²(x,y) + odd²(x,y)), where even and odd components are the real and imaginary parts of the filter response. This captures local frequency content independent of phase.\n\n4. **NaturalImageStatistics比較**: Response statistics are compared to the known 1/f amplitude spectrum of natural images. AI生成の images exhibit characteristic deviations — GANs often show spectral peaks at grid frequencies, while diffusion models may underrepresent certain frequency bands.\n\n5. **異常スコアリング**: The deviation from expected natural image frequency statistics across all filter responses is aggregated into a forensic score indicating the likelihood of AI generation.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1364/JOSAA.4.002379",
+            "title": "Field, D.J. (1987). Relations Between the Statistics of Natural Images and the Response Properties of Cortical Cells. JOSA A."
+        },
+        {
+            "url": "https://www.peterkovesi.com/papers/phasecong.pdf",
+            "title": "Kovesi, P. (1999). Image Features from Phase Congruency. Videre."
+        }
+    ]
 }

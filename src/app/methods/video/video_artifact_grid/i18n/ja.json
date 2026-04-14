@@ -1,22 +1,22 @@
 {
-  "name": "Video Artifact Grid",
-  "description": "Grid-based artifact detection",
-  "algorithm": "Video Artifact Grid — ピクセルレベル空間分析",
-  "mechanism": "This method detects grid-like artifacts for video deepfake detection:\n\n1. **Gridパターン検出**: The method searches for periodic grid-like artifacts in the spatial domain using autocorrelation and Fourier analysis. Grid artifacts appear as periodic intensity patterns at specific spatial frequencies — common artifacts from GAN generators using transposed convolution or pixel shuffle upsampling.\n\n2. **TransposedConvolutionアーティファクトIdentification**: When GANs use transposed convolution for upsampling, \"checkerboard artifacts\" appear at the stride frequency. The method specifically detects these stride-related grid patterns using frequency-domain analysis targeting the known artifact frequencies.\n\n3. **ブロックGrid検出**: Video compression creates 8×8 or 16×16 block boundaries. The method distinguishes between legitimate compression block grids and generation artifact grids by analyzing grid frequency, grid phase, and grid-content relationship. Generation grids are typically at different frequencies than compression grids.\n\n4. **空間的GridLocalization**: Detected grid artifacts are mapped spatially. Grid artifacts appearing only in face regions (not in background) strongly indicate face generation. The spatial extent of grid artifacts reveals the boundaries of generated content.\n\n5. **時間的Grid安定性**: Compression block grids are temporally stable (fixed grid phase). Generation grids may be temporally unstable — shifting phase between frames as the generator produces each frame independently. The method distinguishes stable (compression) from unstable (generation) grids for forensic classification.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through 動画 artifact grid analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    },
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    }
-  ]
+    "name": "映像アーティファクトグリッド解析",
+    "description": "Grid-based artifact detection",
+    "algorithm": "Video Artifact Grid — ピクセルレベル空間分析",
+    "mechanism": "This method detects grid-like artifacts for video deepfake detection:\n\n1. **Gridパターン検出**: The method searches for periodic grid-like artifacts in the spatial domain using autocorrelation and Fourier analysis. Grid artifacts appear as periodic intensity patterns at specific spatial frequencies — common artifacts from GAN generators using transposed convolution or pixel shuffle upsampling.\n\n2. **TransposedConvolutionアーティファクトIdentification**: When GANs use transposed convolution for upsampling, \"checkerboard artifacts\" appear at the stride frequency. The method specifically detects these stride-related grid patterns using frequency-domain analysis targeting the known artifact frequencies.\n\n3. **ブロックGrid検出**: Video compression creates 8×8 or 16×16 block boundaries. The method distinguishes between legitimate compression block grids and generation artifact grids by analyzing grid frequency, grid phase, and grid-content relationship. Generation grids are typically at different frequencies than compression grids.\n\n4. **空間的GridLocalization**: Detected grid artifacts are mapped spatially. Grid artifacts appearing only in face regions (not in background) strongly indicate face generation. The spatial extent of grid artifacts reveals the boundaries of generated content.\n\n5. **時間的Grid安定性**: Compression block grids are temporally stable (fixed grid phase). Generation grids may be temporally unstable — shifting phase between frames as the generator produces each frame independently. The method distinguishes stable (compression) from unstable (generation) grids for forensic classification.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through 動画 artifact grid analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        },
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        }
+    ]
 }

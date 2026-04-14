@@ -1,12 +1,22 @@
 {
-  "name": "Phoneme-Viseme Mapping",
-  "description": "Validates phoneme-to-viseme correspondence — deepfakes often fail to correctly map audio phonemes to lip shapes.",
-  "algorithm": "Phoneme-Viseme Mapping分析アルゴリズム",
-  "mechanism": "この手法は creates and analyzes phoneme-to-viseme mapping ディープフェイク検出のため:\n\n1. **包括的Visemeマッピング**: A many-to-one mapping from phonemes to visemes is established and verified per video. Multiple phonemes map to the same viseme (e.g., /p/, /b/, /m/ all produce bilabial closure). 本手法は checks that phonemes with the same target viseme actually produce the same visual appearance.\n\n2. **VisemeCluster分析**: For each viseme category, all instances across the video are collected and analyzed for consistency. The visual appearance of the same viseme should be 一貫した throughout the video. High intra-viseme variance suggests AI generation where the lip model doesn't consistently reproduce the same visual targets.\n\n3. **Speaker-SpecificVisemeModel**: Each speaker has characteristic viseme shapes determined by their dental/skeletal structure and speaking habits. 本手法は builds a per-speaker viseme model and checks temporal consistency. ディープフェイクは示す可能性がある 一貫性のない viseme shapes as the generator doesn't maintain a stable articulatory model.\n\n4. **TransitionTrajectory分析**: Viseme-to-viseme transitions follow curved trajectories through the lip configuration space, determined by articulatory dynamics. 本手法は analyzes transition trajectories for physical plausibility — AI生成の transitions may take shorter (unnatural shortcuts) or longer (meandering) paths than anatomically possible.\n\n5. **VisemeDuration分布**: Each viseme has a characteristic duration distribution dependent on the phonemic context and speaking rate. 本手法は checks whether viseme durations follow expected distributions. AI lip generation may produce visemes with incorrect or implausibly uniform durations.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "音素ビゼムマッピング解析",
+    "description": "Validates phoneme-to-viseme correspondence — deepfakes often fail to correctly map audio phonemes to lip shapes.",
+    "algorithm": "Phoneme-Viseme Mapping分析アルゴリズム",
+    "mechanism": "この手法は creates and analyzes phoneme-to-viseme mapping ディープフェイク検出のため:\n\n1. **包括的Visemeマッピング**: A many-to-one mapping from phonemes to visemes is established and verified per video. Multiple phonemes map to the same viseme (e.g., /p/, /b/, /m/ all produce bilabial closure). 本手法は checks that phonemes with the same target viseme actually produce the same visual appearance.\n\n2. **VisemeCluster分析**: For each viseme category, all instances across the video are collected and analyzed for consistency. The visual appearance of the same viseme should be 一貫した throughout the video. High intra-viseme variance suggests AI generation where the lip model doesn't consistently reproduce the same visual targets.\n\n3. **Speaker-SpecificVisemeModel**: Each speaker has characteristic viseme shapes determined by their dental/skeletal structure and speaking habits. 本手法は builds a per-speaker viseme model and checks temporal consistency. ディープフェイクは示す可能性がある 一貫性のない viseme shapes as the generator doesn't maintain a stable articulatory model.\n\n4. **TransitionTrajectory分析**: Viseme-to-viseme transitions follow curved trajectories through the lip configuration space, determined by articulatory dynamics. 本手法は analyzes transition trajectories for physical plausibility — AI生成の transitions may take shorter (unnatural shortcuts) or longer (meandering) paths than anatomically possible.\n\n5. **VisemeDuration分布**: Each viseme has a characteristic duration distribution dependent on the phonemic context and speaking rate. 本手法は checks whether viseme durations follow expected distributions. AI lip generation may produce visemes with incorrect or implausibly uniform durations.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
+            "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
+        },
+        {
+            "url": "https://doi.org/10.1109/CVPR46437.2021.00579",
+            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach to Face Forgery Detection. CVPR."
+        }
+    ]
 }

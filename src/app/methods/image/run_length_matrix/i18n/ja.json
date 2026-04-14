@@ -1,12 +1,22 @@
 {
-  "name": "Run Length Matrix Analysis",
-  "description": "Computes gray-level run-length matrix features for texture characterization — detects AI smoothing artifacts (Galloway, 1975).",
-  "algorithm": "Run Length Matrix Analysis分析アルゴリズム",
-  "mechanism": "この手法は applies Galloway's (1975) Gray Level Run Length Matrix (GLRLM) for texture-based forensic analysis:\n\n1. **RunLengthEncoding**: For each direction θ (0°, 45°, 90°, 135°), the image is scanned to identify runs — consecutive pixels with the same gray level. The GLRLM R(i,j|θ) counts the number of runs with gray level i and length j in direction θ.\n\n2. **特徴抽出**: Standard GLRLM features are computed: - Short Run Emphasis (SRE): Measures fine texture density - Long Run Emphasis (LRE): Quantifies coarse texture presence - Gray Level Non-Uniformity (GLN): Measures gray level distribution uniformity - Run Length Non-Uniformity (RLN): Quantifies run length distribution uniformity - Run Percentage (RP): Ratio of runs to total pixel count\n\n3. **Directional一貫性分析**: Natural images show smooth, physically motivated directional variation in GLRLM features. AI生成の images often exhibit either excessive directional uniformity (over-smoothed textures) or implausible directional discontinuities at generation boundaries.\n\n4. **Higher-OrderStatistics**: Following Tang (1998), higher-order run length features including Low/High Gray Level Run Emphasis (LGRE/HGRE) capture subtle gray level-run length correlations that differ between natural and synthetic textures.\n\n5. **Forensicスコアリング**: GLRLM feature vectors from image blocks are compared against natural image texture statistics. AI生成の images 通常 produce 異常な short-run-to-long-run ratios and unnatural gray level uniformity patterns, yielding elevated detection scores.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "ランレングスマトリクス解析",
+    "description": "Computes gray-level run-length matrix features for texture characterization — detects AI smoothing artifacts (Galloway, 1975).",
+    "algorithm": "Run Length Matrix Analysis分析アルゴリズム",
+    "mechanism": "この手法は applies Galloway's (1975) Gray Level Run Length Matrix (GLRLM) for texture-based forensic analysis:\n\n1. **RunLengthEncoding**: For each direction θ (0°, 45°, 90°, 135°), the image is scanned to identify runs — consecutive pixels with the same gray level. The GLRLM R(i,j|θ) counts the number of runs with gray level i and length j in direction θ.\n\n2. **特徴抽出**: Standard GLRLM features are computed: - Short Run Emphasis (SRE): Measures fine texture density - Long Run Emphasis (LRE): Quantifies coarse texture presence - Gray Level Non-Uniformity (GLN): Measures gray level distribution uniformity - Run Length Non-Uniformity (RLN): Quantifies run length distribution uniformity - Run Percentage (RP): Ratio of runs to total pixel count\n\n3. **Directional一貫性分析**: Natural images show smooth, physically motivated directional variation in GLRLM features. AI生成の images often exhibit either excessive directional uniformity (over-smoothed textures) or implausible directional discontinuities at generation boundaries.\n\n4. **Higher-OrderStatistics**: Following Tang (1998), higher-order run length features including Low/High Gray Level Run Emphasis (LGRE/HGRE) capture subtle gray level-run length correlations that differ between natural and synthetic textures.\n\n5. **Forensicスコアリング**: GLRLM feature vectors from image blocks are compared against natural image texture statistics. AI生成の images 通常 produce 異常な short-run-to-long-run ratios and unnatural gray level uniformity patterns, yielding elevated detection scores.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1016/S0146-664X(75)80008-6",
+            "title": "Galloway, M.M. (1975). Texture Analysis Using Gray Level Run Lengths. Computer Graphics and Image Processing."
+        },
+        {
+            "url": "https://doi.org/10.1109/83.725367",
+            "title": "Tang, X. (1998). Texture Information in Run-Length Matrices. IEEE TIP."
+        }
+    ]
 }

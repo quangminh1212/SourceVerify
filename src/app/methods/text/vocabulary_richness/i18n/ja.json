@@ -1,22 +1,22 @@
 {
-  "name": "語彙の豊富さ分析 (Vocabulary Richness)",
-  "description": "テキストの長さに応じて語彙がどれだけ効果的に拡張されるかを測定することにより、テキストの語彙の豊かさを分析します。基本的な異なり語数比（Type-Token Ratio: TTR）は長いテキストに厳しくペナルティを科しますが、このアルゴリズムはRoot TTR（Guiraudの指標）とYuleの特性Kを使用して、ドキュメントのサイズとは無関係に「豊かさ」を評価します。大規模言語モデル（LLM）は、あいまいで、非常に特異的、または確率の低い単語の使用を重く罰する厳密な確率パラメータの下で動作します。その結果、AIが生成したテキストはすぐに「語彙の停滞期（Vocabulary Plateau）」、つまり新しい単語の導入をやめて、安全で高確率のコア辞書を無限にループし始めるポイントに到達します。しかし、人間の書き手は語彙的疲労に対する閾値がはるかに高く、テキストがどれだけ長くなっても、新鮮で、文脈に特有の、予測不可能な単語を継続的に導入します。",
-  "algorithm": "Guiraud の Root TTR & Yule の K 特性",
-  "mechanism": "The scanner maps the total number of words (tokens) against the number of unique words (types). Instead of a simple division, it calculates the Root TTR (Types / √Tokens), forcing a curve that levels the playing field for longer documents. It simultaneously calculates Yule's K to measure the statistical probability of a randomly drawn word being a repetition of a previously used word. If the Root TTR score is unnaturally low and Yule's K indicates severe, mathematically smooth repetition—meaning the author gave up on finding unique vocabulary far too early—it is a critical indicator of an LLM's probability-constrained text generation.",
-  "useCase": "ホワイトペーパー、電子書籍、長編エッセイ、学術文献などの長編コンテンツの監査に非常に効果的です。数段落であれば雄弁な人間を模倣できても、数千語にわたって人間レベルの語彙の拡張を維持できないAIモデルを暴露します。",
-  "strengths": "• LLMの語彙不足はテキストが長くなるほど数学的に明白になるため、長文生成におけるAIの検出に非常に優れています。\n• Root TTRとYuleのKはドキュメントの長さをネイティブに補正するため、この指標はテキストサイズが大きく異なっても非常に安定しており堅牢です。",
-  "limitations": "• 正確な用語の明示的な繰り返しが必須で、同義語が禁止されている厳格な技術ライティング（ソフトウェアのドキュメント、医療レポートなど）では、誤検知（偽陽性）の影響を受けやすくなります。\n• 「語彙の停滞期」が統計的に証明される前にテキストが終了するため、マイクロテキスト（ツイートや短い製品の説明など）では効果がありません。",
-  "parameters": "解析: 語彙の拡張ペース & 反復確率\n評価基準: Guiraudの指標 (Root TTR) & Yuleの特性K\n出力結果: 0-100 語彙の停滞期と貧困性スコア",
-  "accuracy": "中〜高 — 長いテキストで76-85%の精度。計算文体論（Computational stylometry）における非常に信頼性の高い基礎的な指標です。現在のAIモデルは、幻覚（ハルシネーション）を起こしたり、意味的な一貫性を損なったりすることなく、人間レベルのRoot TTRを最適化することはできません。",
-  "references": [
-    {
-      "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-      "url": "https://doi.org/10.2307/2280090"
-    },
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    }
-  ],
-  "source": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+    "name": "語彙の豊富さ分析 (Vocabulary Richness)",
+    "description": "テキストの長さに応じて語彙がどれだけ効果的に拡張されるかを測定することにより、テキストの語彙の豊かさを分析します。基本的な異なり語数比（Type-Token Ratio: TTR）は長いテキストに厳しくペナルティを科しますが、このアルゴリズムはRoot TTR（Guiraudの指標）とYuleの特性Kを使用して、ドキュメントのサイズとは無関係に「豊かさ」を評価します。大規模言語モデル（LLM）は、あいまいで、非常に特異的、または確率の低い単語の使用を重く罰する厳密な確率パラメータの下で動作します。その結果、AIが生成したテキストはすぐに「語彙の停滞期（Vocabulary Plateau）」、つまり新しい単語の導入をやめて、安全で高確率のコア辞書を無限にループし始めるポイントに到達します。しかし、人間の書き手は語彙的疲労に対する閾値がはるかに高く、テキストがどれだけ長くなっても、新鮮で、文脈に特有の、予測不可能な単語を継続的に導入します。",
+    "algorithm": "Guiraud の Root TTR & Yule の K 特性",
+    "mechanism": "スキャナーは総語数（トークン）を独自語数（タイプ）に対してマッピングします。単純な除算の代わりに、Root TTR（Types / √Tokens）を計算し、長い文書の公平な場を作る曲線を強制します。同時にYuleのKを計算し、ランダムに引き出された語が以前に使用された語の反復である統計的確率を測定します。Root TTRスコアが不自然に低くYuleのKが深刻で数学的にスムーズな反復を示す場合—著者があまりにも早くユニークな語彙の探索を諦めたことを意味する—LLMの確率制約されたテキスト生成の重要な指標です。",
+    "useCase": "ホワイトペーパー、電子書籍、長編エッセイ、学術文献などの長編コンテンツの監査に非常に効果的です。数段落であれば雄弁な人間を模倣できても、数千語にわたって人間レベルの語彙の拡張を維持できないAIモデルを暴露します。",
+    "strengths": "• LLMの語彙不足はテキストが長くなるほど数学的に明白になるため、長文生成におけるAIの検出に非常に優れています。\n• Root TTRとYuleのKはドキュメントの長さをネイティブに補正するため、この指標はテキストサイズが大きく異なっても非常に安定しており堅牢です。",
+    "limitations": "• 正確な用語の明示的な繰り返しが必須で、同義語が禁止されている厳格な技術ライティング（ソフトウェアのドキュメント、医療レポートなど）では、誤検知（偽陽性）の影響を受けやすくなります。\n• 「語彙の停滞期」が統計的に証明される前にテキストが終了するため、マイクロテキスト（ツイートや短い製品の説明など）では効果がありません。",
+    "parameters": "解析: 語彙の拡張ペース & 反復確率\n評価基準: Guiraudの指標 (Root TTR) & Yuleの特性K\n出力結果: 0-100 語彙の停滞期と貧困性スコア",
+    "accuracy": "中〜高 — 長いテキストで76-85%の精度。計算文体論（Computational stylometry）における非常に信頼性の高い基礎的な指標です。現在のAIモデルは、幻覚（ハルシネーション）を起こしたり、意味的な一貫性を損なったりすることなく、人間レベルのRoot TTRを最適化することはできません。",
+    "references": [
+        {
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ],
+    "source": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

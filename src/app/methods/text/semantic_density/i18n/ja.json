@@ -1,22 +1,22 @@
 {
-  "name": "意味的情報密度分析 (Semantic Density)",
-  "description": "ドキュメント全体における情報分布の均一性を測定します。パープレキシティ（困惑度）を最小限に抑え、安定した予測損失を維持したいという欲求に基づいて駆動されるAIモデルは、情報（名前付きエンティティ、斬新な概念、複雑な形容詞など）を、まるでピーナッツバターを塗るように、非常に均一に分散させる傾向があります。人間の文章は、意味的密度が高い「爆発（バースト）」（複雑な新しいアイデアの導入）と、それに続く密度が低い期間（説明、振り返り、または例の提供）の間を自然に往復（振動）します。",
-  "algorithm": "スライディングウィンドウ情報エントロピーと密度の分散",
-  "mechanism": "The algorithm segments the text into sliding windows (e.g., 50-word chunks) and calculates the semantic density of each window. Density is quantified by the ratio of 'content words' (nouns, unique verbs, adjectives) to 'function words' (prepositions, conjunctions) and by the introduction rate of new vocabulary. It then measures the Coefficient of Variation (CV) of these density scores across the entire text. AI-generated text typically yields a very low CV (indicating unnatural uniformity), whereas human text yields a higher CV due to organic cognitive pacing.",
-  "useCase": "エッセイ、レポート、記事など、情報の流れのマクロ構造を統計的にマッピングできる長文コンテンツの分析に非常に効果的です。",
-  "strengths": "• 「人間のように振る舞う」ように指示（プロンプト）されたものの、人間のマクロ構造上のペース配分を模倣できていないAIテキストを捉えるのに優れています。\n• 単なる単語自体ではなく概念の構造的分布を測定するため、単純な単語レベルの同義語の置換に対して高い耐性があります。",
-  "limitations": "• 構造的変動パターンを確立するのに十分なデータがない非常に短いテキスト（ツイートや単一の段落など）では効果がありません。\n• 一定の、高密度の情報トーンを意図的に維持している高度な技術マニュアルや百科事典の項目（Wikipediaなど）にフラグを立てる可能性があります。",
-  "parameters": "解析: 適応型スライディングウィンドウ語彙プロファイリング\n評価基準: 意味論的エントロピーと密度の変動係数\n出力結果: 0-100 情報の均一性（AI特有の等間隔配置）スコア",
-  "accuracy": "中〜高 — 71-81%の単独精度。バースト性（Burstiness：構造的な文の長さの分散を測定するのに対し、こちらは概念的な分散を測定する）と組み合わせると、強力な識別器になります。",
-  "references": [
-    {
-      "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
-      "url": "https://arxiv.org/abs/2212.12672"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "意味的情報密度分析 (Semantic Density)",
+    "description": "ドキュメント全体における情報分布の均一性を測定します。パープレキシティ（困惑度）を最小限に抑え、安定した予測損失を維持したいという欲求に基づいて駆動されるAIモデルは、情報（名前付きエンティティ、斬新な概念、複雑な形容詞など）を、まるでピーナッツバターを塗るように、非常に均一に分散させる傾向があります。人間の文章は、意味的密度が高い「爆発（バースト）」（複雑な新しいアイデアの導入）と、それに続く密度が低い期間（説明、振り返り、または例の提供）の間を自然に往復（振動）します。",
+    "algorithm": "スライディングウィンドウ情報エントロピーと密度の分散",
+    "mechanism": "アルゴリズムはテキストをスライディングウィンドウ（例：50語のチャンク）にセグメント化し、各ウィンドウの意味的密度を計算します。密度は「内容語」（名詞、独自の動詞、形容詞）と「機能語」（前置詞、接続詞）の比率と新しい語彙の導入率によって定量化されます。次にテキスト全体のこれらの密度スコアの変動係数（CV）を測定します。AI生成テキストは典型的に非常に低いCV（不自然な均一性を示す）を生みますが、人間のテキストは有機的な認知ペーシングによりより高いCVを生みます。",
+    "useCase": "エッセイ、レポート、記事など、情報の流れのマクロ構造を統計的にマッピングできる長文コンテンツの分析に非常に効果的です。",
+    "strengths": "• 「人間のように振る舞う」ように指示（プロンプト）されたものの、人間のマクロ構造上のペース配分を模倣できていないAIテキストを捉えるのに優れています。\n• 単なる単語自体ではなく概念の構造的分布を測定するため、単純な単語レベルの同義語の置換に対して高い耐性があります。",
+    "limitations": "• 構造的変動パターンを確立するのに十分なデータがない非常に短いテキスト（ツイートや単一の段落など）では効果がありません。\n• 一定の、高密度の情報トーンを意図的に維持している高度な技術マニュアルや百科事典の項目（Wikipediaなど）にフラグを立てる可能性があります。",
+    "parameters": "解析: 適応型スライディングウィンドウ語彙プロファイリング\n評価基準: 意味論的エントロピーと密度の変動係数\n出力結果: 0-100 情報の均一性（AI特有の等間隔配置）スコア",
+    "accuracy": "中〜高 — 71-81%の単独精度。バースト性（Burstiness：構造的な文の長さの分散を測定するのに対し、こちらは概念的な分散を測定する）と組み合わせると、強力な識別器になります。",
+    "references": [
+        {
+            "title": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.",
+            "url": "https://arxiv.org/abs/2212.12672"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Dugan, L. et al. (2023). Real or Fake Text? Investigating Human Ability to Detect Boundaries of Human-Written and Machine-Generated Text.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

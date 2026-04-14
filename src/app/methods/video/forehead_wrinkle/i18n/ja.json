@@ -1,22 +1,22 @@
 {
-  "name": "Forehead Wrinkle",
-  "description": "Analyzes forehead wrinkle consistency",
-  "algorithm": "Forehead Wrinkle — ピクセルレベル空間分析",
-  "mechanism": "This method specifically analyzes forehead wrinkle dynamics for deepfake detection:\n\n1. **ForeheadWrinkle検出**: Horizontal forehead wrinkles are detected using oriented ridge detection filters. Each wrinkle is characterized: position (forehead height), depth (shadow contrast), length (ear-to-ear extent), and curvature (following frontal bone contour).\n\n2. **Frontalis-WrinkleBiomechanics**: Forehead wrinkles are produced by frontalis muscle contraction. The method verifies biomechanical correctness: (a) wrinkles should be roughly horizontal following frontalis fiber direction, (b) wrinkle spacing reflects the muscle's compartmentalized structure, (c) wrinkle depth should correlate with brow elevation magnitude. Deepfakes may produce wrinkles with incorrect orientation or depth.\n\n3. **DynamicWrinkleBehavior**: As the brow raises, wrinkles deepen and become more visible; as the brow relaxes, they flatten. The method tracks the temporal correlation between brow position (AU1/AU2) and wrinkle visibility. Low correlation indicates the face generator produces wrinkles independently of expression.\n\n4. **WrinkleパターンIndividual一貫性**: Each person has a characteristic forehead wrinkle pattern determined by muscle anatomy and skin elasticity. The method checks whether the wrinkle pattern remains consistent across frames. Deepfakes may produce varying wrinkle patterns frame-to-frame, especially when combining different source identities.\n\n5. **WrinkleRendering評価**: The 3D appearance of wrinkles (shadow on the upper edge, highlight on the lower edge in downward illumination) should be consistent with scene lighting. The method evaluates wrinkle rendering quality and lighting consistency. AI-generated wrinkles may show physically incorrect shadow patterns.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through forehead wrinkle analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-      "url": "https://arxiv.org/abs/2001.00179"
-    }
-  ]
+    "name": "額のシワ解析",
+    "description": "Analyzes forehead wrinkle consistency",
+    "algorithm": "Forehead Wrinkle — ピクセルレベル空間分析",
+    "mechanism": "This method specifically analyzes forehead wrinkle dynamics for deepfake detection:\n\n1. **ForeheadWrinkle検出**: Horizontal forehead wrinkles are detected using oriented ridge detection filters. Each wrinkle is characterized: position (forehead height), depth (shadow contrast), length (ear-to-ear extent), and curvature (following frontal bone contour).\n\n2. **Frontalis-WrinkleBiomechanics**: Forehead wrinkles are produced by frontalis muscle contraction. The method verifies biomechanical correctness: (a) wrinkles should be roughly horizontal following frontalis fiber direction, (b) wrinkle spacing reflects the muscle's compartmentalized structure, (c) wrinkle depth should correlate with brow elevation magnitude. Deepfakes may produce wrinkles with incorrect orientation or depth.\n\n3. **DynamicWrinkleBehavior**: As the brow raises, wrinkles deepen and become more visible; as the brow relaxes, they flatten. The method tracks the temporal correlation between brow position (AU1/AU2) and wrinkle visibility. Low correlation indicates the face generator produces wrinkles independently of expression.\n\n4. **WrinkleパターンIndividual一貫性**: Each person has a characteristic forehead wrinkle pattern determined by muscle anatomy and skin elasticity. The method checks whether the wrinkle pattern remains consistent across frames. Deepfakes may produce varying wrinkle patterns frame-to-frame, especially when combining different source identities.\n\n5. **WrinkleRendering評価**: The 3D appearance of wrinkles (shadow on the upper edge, highlight on the lower edge in downward illumination) should be consistent with scene lighting. The method evaluates wrinkle rendering quality and lighting consistency. AI-generated wrinkles may show physically incorrect shadow patterns.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through forehead wrinkle analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+            "url": "https://arxiv.org/abs/2001.00179"
+        }
+    ]
 }

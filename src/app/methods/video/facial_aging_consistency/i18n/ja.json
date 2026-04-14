@@ -1,12 +1,22 @@
 {
-  "name": "Facial Aging Consistency",
-  "description": "Analyzes consistency of aging features (wrinkles, spots, skin texture) across face — AI often has inconsistent aging.",
-  "algorithm": "Facial Aging Consistency分析アルゴリズム",
-  "mechanism": "この手法は checks facial aging consistency ディープフェイク検出のため:\n\n1. **AgeMarker検出**: Facial aging markers are detected フレームごとに: wrinkle density and depth (crow's feet, forehead lines, nasolabial folds), skin texture changes (reduced elasticity, increased roughness), skin laxity (jowling, under-eye bags), and pigmentation changes.\n\n2. **Age一貫性検証**: All aging markers should indicate a 一貫した age range. 本手法は checks whether wrinkle density, skin texture, and facial volume are mutually 一貫した. Deepfakes that swap faces between individuals of different ages may produce 一貫性のない aging cues — young skin texture with deep wrinkles, or aged skin with juvenile facial volume.\n\n3. **RegionalAgeコヒーレンス**: Different facial regions should show coherent aging. 本手法は verifies that forehead wrinkles, crow's feet, nasolabial folds, and neck skin show the same approximate aging level. AI generation may produce faces with regionally 一貫性のない aging — perfectly smooth forehead with aged eye areas.\n\n4. **時間的Aging安定性**: Aging markers are static structures that don't change between video frames. Wrinkle positions and depths should remain constant. 本手法は tracks aging markers フレーム間で — deepfake generators may produce temporally 一貫性のない wrinkles that appear, disappear, or shift position as the face is re-generated each frame.\n\n5. **Context-顔Ageマッチング**: If the surrounding context provides age cues (body, hands, clothing style), 本手法は checks whether the face age is 一貫した with these contextual indicators. Face-swapping an young face onto an older body creates detectable age inconsistencies between face and body.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "顔の加齢一貫性解析",
+    "description": "Analyzes consistency of aging features (wrinkles, spots, skin texture) across face — AI often has inconsistent aging.",
+    "algorithm": "Facial Aging Consistency分析アルゴリズム",
+    "mechanism": "この手法は checks facial aging consistency ディープフェイク検出のため:\n\n1. **AgeMarker検出**: Facial aging markers are detected フレームごとに: wrinkle density and depth (crow's feet, forehead lines, nasolabial folds), skin texture changes (reduced elasticity, increased roughness), skin laxity (jowling, under-eye bags), and pigmentation changes.\n\n2. **Age一貫性検証**: All aging markers should indicate a 一貫した age range. 本手法は checks whether wrinkle density, skin texture, and facial volume are mutually 一貫した. Deepfakes that swap faces between individuals of different ages may produce 一貫性のない aging cues — young skin texture with deep wrinkles, or aged skin with juvenile facial volume.\n\n3. **RegionalAgeコヒーレンス**: Different facial regions should show coherent aging. 本手法は verifies that forehead wrinkles, crow's feet, nasolabial folds, and neck skin show the same approximate aging level. AI generation may produce faces with regionally 一貫性のない aging — perfectly smooth forehead with aged eye areas.\n\n4. **時間的Aging安定性**: Aging markers are static structures that don't change between video frames. Wrinkle positions and depths should remain constant. 本手法は tracks aging markers フレーム間で — deepfake generators may produce temporally 一貫性のない wrinkles that appear, disappear, or shift position as the face is re-generated each frame.\n\n5. **Context-顔Ageマッチング**: If the surrounding context provides age cues (body, hands, clothing style), 本手法は checks whether the face age is 一貫した with these contextual indicators. Face-swapping an young face onto an older body creates detectable age inconsistencies between face and body.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TPAMI.2009.153",
+            "title": "Fu, Y. et al. (2010). Age Synthesis and Estimation via Faces: A Survey. IEEE TPAMI."
+        },
+        {
+            "url": "https://doi.org/10.1109/ICCV.2019.00009",
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV."
+        }
+    ]
 }

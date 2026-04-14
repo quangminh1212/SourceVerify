@@ -1,22 +1,22 @@
 {
-  "name": "エントロピー分布曲線",
-  "description": "テキスト全体にわたるトークン（単語）シーケンスの統計的な予測不可能性（エントロピー）を分析します。AIモデルは最適化された狭いエントロピー帯域内でテキストを生成しますが、人間の文章には予測不可能性の高低が不規則に突発（バースト）する特徴があります。",
-  "algorithm": "スライディング・ウィンドウ方式のトークン情報エントロピー分析",
-  "mechanism": "In Information Theory, 'entropy' measures the unpredictability of a sequence. Human writing is highly irregular: a writer might string together several highly predictable clichés (low entropy) followed immediately by a wildly creative, lexically dense metaphor or an obscure technical term (high entropy). This creates a jagged, volatile entropy distribution curve over the length of the document. Large Language Models, however, generate text by continuously picking the most statistically probable next token, modulated by a fixed 'Temperature' setting. Because they mathematically optimize for fluency and coherence at every step, the entropy (unpredictability) of AI text remains remarkably stable and uniform across the entire document. This method calculates the Shannon entropy using a sliding window across the text, mapping the statistical distribution and its variance. A text with an exceptionally smooth, uniform entropy distribution—lacking the extreme peaks (creative spikes) and deep valleys (cliché repetition) typical of human cognition—is mathematically proven to be algorithmically generated.",
-  "useCase": "統計的な分布パターンによって、AIの「機械的な滑らかさ」と人間の「不規則なリズム」を明確に分離できる、長文コンテンツ（エッセイ、記事、レポート）での使用に最適です。",
-  "strengths": "• 数学的に非常に客観的です。意味論的理解に依存しないため、完全に言語に依存せず、さまざまなトピックに対して堅牢（ロバスト）です。\n• 生成に使用された特定のLLMの根底にある数学的制約（Top-PやTemperatureなど）を効果的に暴き出します。\n• パス（回避）するのは困難です。人間が意識的にトークン確率を計算して操作することはできず、「予測不可能な文章を書いて」といった基本的なプロンプトではごまかせません。",
-  "limitations": "• 非常に短いテキスト（150単語未満）では機能しません。均一な分散を明らかにするための統計的な分布曲線を描くには、十分なサイズのサンプルが必要だからです。\n• 編集が重ねられたり、企業の委員会によって均質化されたり、大幅に言い換えパラフレーズされたりした人間の文章は、人為的に滑らかにされたエントロピーを示す可能性があります。\n• テキストの実際の意味は分析せず、その構成要素の統計的な「驚きの値（サプライズ・バリュー）」のみを分析します。",
-  "parameters": "解析: スライディング・ウィンドウによるシャノン・エントロピーおよび変動係数（CV）\n評価基準: エントロピー分布の標準偏差とベースライン平均の比較\n出力結果: 0-100 エントロピーの均一性（アルゴリズムの滑らかさ）スコア",
-  "accuracy": "高 — 中〜長文で78-86%。これは、機械生成されたトークンシーケンスの中で最も信頼性が高く、深く技術的なシグネチャ（特徴）の1つです。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "エントロピー分布曲線",
+    "description": "テキスト全体にわたるトークン（単語）シーケンスの統計的な予測不可能性（エントロピー）を分析します。AIモデルは最適化された狭いエントロピー帯域内でテキストを生成しますが、人間の文章には予測不可能性の高低が不規則に突発（バースト）する特徴があります。",
+    "algorithm": "スライディング・ウィンドウ方式のトークン情報エントロピー分析",
+    "mechanism": "情報理論において「エントロピー」はシーケンスの予測不能性を測定します。人間の文章は非常に不規則です：ライターは数個の非常に予測可能なクリシェ（低エントロピー）を連ねた後、即座に激しく創造的で、語彙的に密なメタファーや曖昧な技術用語（高エントロピー）を続けるかもしれません。これは文書の長さにわたってギザギザで変動の激しいエントロピー分布曲線を生み出します。しかしLLMは固定された「温度」設定により変調された、統計的に最も可能性の高い次のトークンを継続的に選択してテキストを生成します。全てのステップで流暢さと一貫性のために数学的に最適化するため、AIテキストのエントロピー（予測不能性）は文書全体で著しく安定し均一なままです。この手法はテキスト全体のスライディングウィンドウを使用してシャノンエントロピーを計算し、統計的分布とその分散をマッピングします。例外的にスムーズで均一なエントロピー分布を持つテキスト—人間の認知に典型的な極端なピーク（創造的スパイク）と深い谷（クリシェの反復）を欠く—はアルゴリズム的に生成されたことが数学的に証明されます。",
+    "useCase": "統計的な分布パターンによって、AIの「機械的な滑らかさ」と人間の「不規則なリズム」を明確に分離できる、長文コンテンツ（エッセイ、記事、レポート）での使用に最適です。",
+    "strengths": "• 数学的に非常に客観的です。意味論的理解に依存しないため、完全に言語に依存せず、さまざまなトピックに対して堅牢（ロバスト）です。\n• 生成に使用された特定のLLMの根底にある数学的制約（Top-PやTemperatureなど）を効果的に暴き出します。\n• パス（回避）するのは困難です。人間が意識的にトークン確率を計算して操作することはできず、「予測不可能な文章を書いて」といった基本的なプロンプトではごまかせません。",
+    "limitations": "• 非常に短いテキスト（150単語未満）では機能しません。均一な分散を明らかにするための統計的な分布曲線を描くには、十分なサイズのサンプルが必要だからです。\n• 編集が重ねられたり、企業の委員会によって均質化されたり、大幅に言い換えパラフレーズされたりした人間の文章は、人為的に滑らかにされたエントロピーを示す可能性があります。\n• テキストの実際の意味は分析せず、その構成要素の統計的な「驚きの値（サプライズ・バリュー）」のみを分析します。",
+    "parameters": "解析: スライディング・ウィンドウによるシャノン・エントロピーおよび変動係数（CV）\n評価基準: エントロピー分布の標準偏差とベースライン平均の比較\n出力結果: 0-100 エントロピーの均一性（アルゴリズムの滑らかさ）スコア",
+    "accuracy": "高 — 中〜長文で78-86%。これは、機械生成されたトークンシーケンスの中で最も信頼性が高く、深く技術的なシグネチャ（特徴）の1つです。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

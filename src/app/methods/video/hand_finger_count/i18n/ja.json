@@ -1,12 +1,22 @@
 {
-  "name": "Hand Finger Count Analysis",
-  "description": "Counts fingers and validates hand anatomy — AI frequently generates incorrect finger counts (Nightingale & Farid, 2022).",
-  "algorithm": "Hand Finger Count Analysis分析アルゴリズム",
-  "mechanism": "この手法は verifies hand and finger count accuracy for AI generation detection:\n\n1. **Hand検出&Segmentation**: Hands are detected in each frame using object detection and precisely segmented. The hand mask isolates the palm and each finger for independent analysis.\n\n2. **FingerCounting**: Each detected hand is analyzed for the number of distinct fingers. Using skeleton estimation and topology analysis, 本手法は counts finger-like protrusions from the palm. Correct count is 5 (4 fingers + 1 thumb) per hand. AIジェネレータ (especially diffusion models) frequently produce 4, 6, or 7 fingers, making this one of the most reliable AI detection signals.\n\n3. **FingerAnatomy検証**: Beyond counting, each finger's anatomy is checked: correct number of joints (3 for fingers, 2 for thumb), plausible length ratios (ring ≈ index > middle > pinky > thumb), and proper attachment to the palm. AIジェネレータ may produce extra joints, impossible length ratios, or fingers merging/splitting.\n\n4. **BilateralHand一貫性**: When both hands are visible, they should be mirror-一貫した with the same finger count and proportions. 本手法は checks bilateral hand agreement — AIジェネレータ may produce different finger counts on left and right hands.\n\n5. **時間的Fingerトラッキング**: Finger count and geometry should remain 一貫した フレーム間で. 本手法は tracks finger topology 時間経過とともに — AIジェネレータ may produce different finger counts in different frames for the same hand, or show fingers appearing/disappearing during motion.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "手の指カウント解析",
+    "description": "Counts fingers and validates hand anatomy — AI frequently generates incorrect finger counts (Nightingale & Farid, 2022).",
+    "algorithm": "Hand Finger Count Analysis分析アルゴリズム",
+    "mechanism": "この手法は verifies hand and finger count accuracy for AI generation detection:\n\n1. **Hand検出&Segmentation**: Hands are detected in each frame using object detection and precisely segmented. The hand mask isolates the palm and each finger for independent analysis.\n\n2. **FingerCounting**: Each detected hand is analyzed for the number of distinct fingers. Using skeleton estimation and topology analysis, 本手法は counts finger-like protrusions from the palm. Correct count is 5 (4 fingers + 1 thumb) per hand. AIジェネレータ (especially diffusion models) frequently produce 4, 6, or 7 fingers, making this one of the most reliable AI detection signals.\n\n3. **FingerAnatomy検証**: Beyond counting, each finger's anatomy is checked: correct number of joints (3 for fingers, 2 for thumb), plausible length ratios (ring ≈ index > middle > pinky > thumb), and proper attachment to the palm. AIジェネレータ may produce extra joints, impossible length ratios, or fingers merging/splitting.\n\n4. **BilateralHand一貫性**: When both hands are visible, they should be mirror-一貫した with the same finger count and proportions. 本手法は checks bilateral hand agreement — AIジェネレータ may produce different finger counts on left and right hands.\n\n5. **時間的Fingerトラッキング**: Finger count and geometry should remain 一貫した フレーム間で. 本手法は tracks finger topology 時間経過とともに — AIジェネレータ may produce different finger counts in different frames for the same hand, or show fingers appearing/disappearing during motion.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1145/2993148.2993165",
+            "title": "Barsoum, E. et al. (2016). Training Deep Networks for Facial Expression Recognition with Crowd-Sourced Label Distribution. ACM ICMI."
+        },
+        {
+            "url": "https://arxiv.org/abs/2006.10214",
+            "title": "Zhang, F. et al. (2020). MediaPipe Hands: On-device Real-time Hand Tracking. CVPR Workshop."
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "レジスターと形式性の分析 (Register & Formality Analysis)",
-  "description": "正式で、丁寧で、客観的な学術的または専門的な基準への準拠度を測定することにより、テキストの社会言語学的レジスター（使用域）を評価します。商用のAIモデル（ChatGPTやClaudeなど）は、「役立ち、無害で、誠実」であるように設計された厳格なRLHF（人間のフィードバックからの強化学習）を受けています。その結果、それらのデフォルトの出力は、揺るぎなく丁寧で、非常に形式的で、構造的に硬直したトーンになります。人間の文章は、専門的な文脈であっても、一時的にカジュアルな言い回し、表現力豊かな句読点、または口語的なイディオムに陥る「レジスター・シフト」を自然に示します。人為的で持続的かつ単一の高形式性スコアを維持するテキストは、機械生成の強い特徴です。",
-  "algorithm": "社会言語学的レジスターとトーンのプロファイリング",
-  "mechanism": "The analyzer utilizes a Part-of-Speech (POS) tagger and a specialized lexicon to scan for register markers. It penalizes the presence of contractions (e.g., 'don't', 'can't'), slang, idioms, expressive punctuation (e.g., '!!!'), and first/second-person pronouns which indicate an informal or conversational tone. It rewards complex prepositional phrases, passive voice structures, and objective, specialized vocabulary. The algorithm calculates the ratio of formal to informal markers and plots the variance of formality across paragraphs. A flat, consistently high formality trajectory with zero register variance strongly indicates the output of a safety-aligned LLM.",
-  "useCase": "ブログ記事、電子メール、ソーシャルメディアのコンテンツ、学生のエッセイの分析に特に効果的です。これらでは、自然な人間の文章が通常、会話型または混合レジスターのトーンを要求するためです。",
-  "strengths": "• ほぼ常にサニタイズされた正式なトーンをデフォルトとする、標準的な箱出しのLLMの生成に対して非常に効果的です。\n• 計算量が少なく、単純な語彙の照合とPOSタグ付けシーケンスに依存しています。",
-  "limitations": "• ユーザーがAIに「カジュアルに書く」、「スラングを使う」、または「ティーンエイジャーのように振る舞う」ように明示的にプロンプトを出すと、簡単にスプーフィング（なりすまし）されます。\n• 法的契約、査読済みの学術論文、企業の公式プレスリリースなど、形式性の高い人間のテキストで偽陽性（誤検知）が発生します。",
-  "parameters": "解析: 語彙および構文のレジスタースコアリング\n評価基準: 正式/非公式のマーカー比率とレジスターの分散\n出力結果: 0-100 形式性のモノリス・スコア",
-  "accuracy": "中 — カジュアルなドメインで65〜80%の精度。人間のテキストがAIの形式性をネイティブに模倣する学術的または法的な文脈では、信頼性が低くなります。パープレキシティなどのメトリクスと組み合わせて使用するのが最適です。",
-  "references": [
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+    "name": "レジスターと形式性の分析 (Register & Formality Analysis)",
+    "description": "正式で、丁寧で、客観的な学術的または専門的な基準への準拠度を測定することにより、テキストの社会言語学的レジスター（使用域）を評価します。商用のAIモデル（ChatGPTやClaudeなど）は、「役立ち、無害で、誠実」であるように設計された厳格なRLHF（人間のフィードバックからの強化学習）を受けています。その結果、それらのデフォルトの出力は、揺るぎなく丁寧で、非常に形式的で、構造的に硬直したトーンになります。人間の文章は、専門的な文脈であっても、一時的にカジュアルな言い回し、表現力豊かな句読点、または口語的なイディオムに陥る「レジスター・シフト」を自然に示します。人為的で持続的かつ単一の高形式性スコアを維持するテキストは、機械生成の強い特徴です。",
+    "algorithm": "社会言語学的レジスターとトーンのプロファイリング",
+    "mechanism": "分析器は品詞（POS）タガーと専門辞書を利用してレジスタ標識をスキャンします。短縮形（例：「don't」「can't」）、スラング、イディオム、表現的句読点（例：「!!!」）、一人称/二人称代名詞の存在にペナルティを課します。これらは非公式または会話的トーンを示します。複雑な前置詞句、受動態構造、客観的で専門的な語彙に報酬を与えます。アルゴリズムは公式的標識と非公式的標識の比率を計算し、段落間の公式性の分散をプロットします。ゼロのレジスタ分散でフラットで一貫して高い公式性軌跡は安全性整合LLMの出力を強く示します。",
+    "useCase": "ブログ記事、電子メール、ソーシャルメディアのコンテンツ、学生のエッセイの分析に特に効果的です。これらでは、自然な人間の文章が通常、会話型または混合レジスターのトーンを要求するためです。",
+    "strengths": "• ほぼ常にサニタイズされた正式なトーンをデフォルトとする、標準的な箱出しのLLMの生成に対して非常に効果的です。\n• 計算量が少なく、単純な語彙の照合とPOSタグ付けシーケンスに依存しています。",
+    "limitations": "• ユーザーがAIに「カジュアルに書く」、「スラングを使う」、または「ティーンエイジャーのように振る舞う」ように明示的にプロンプトを出すと、簡単にスプーフィング（なりすまし）されます。\n• 法的契約、査読済みの学術論文、企業の公式プレスリリースなど、形式性の高い人間のテキストで偽陽性（誤検知）が発生します。",
+    "parameters": "解析: 語彙および構文のレジスタースコアリング\n評価基準: 正式/非公式のマーカー比率とレジスターの分散\n出力結果: 0-100 形式性のモノリス・スコア",
+    "accuracy": "中 — カジュアルなドメインで65〜80%の精度。人間のテキストがAIの形式性をネイティブに模倣する学術的または法的な文脈では、信頼性が低くなります。パープレキシティなどのメトリクスと組み合わせて使用するのが最適です。",
+    "references": [
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

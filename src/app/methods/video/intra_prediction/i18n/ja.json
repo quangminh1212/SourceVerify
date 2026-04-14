@@ -1,12 +1,22 @@
 {
-  "name": "Intra-frame Prediction Analysis",
-  "description": "Examines H.264/H.265 intra-frame prediction mode distributions — deepfake re-encoding alters prediction patterns.",
-  "algorithm": "Intra-frame Prediction Analysis分析アルゴリズム",
-  "mechanism": "This method analyzes H.264/H.265 intra-prediction patterns for video forensic detection:\n\n1. **Intra-PredictionMode抽出**: For I-frames and intra-blocks in P/B-frames, the selected intra-prediction modes are extracted from the bitstream (9 modes in H.264, 35+ in H.265: DC, planar, and angular predictions). These mode decisions are influenced by local image content.\n\n2. **Mode分布分析**: The statistical distribution of intra-prediction modes across the frame is analyzed. Natural video produces characteristic mode distributions — predominantly DC/planar in smooth regions, angular modes following edge orientations. Manipulated or AI-generated content may show anomalous mode distributions inconsistent with the visual content.\n\n3. **Mode-Content一貫性**: The selected mode should match the actual image content direction. At a horizontal edge, a horizontal prediction mode should be selected. The method checks mode-content alignment — content inserted from a different encoding may show suboptimal mode selections (modes chosen for the original content, not the replaced content).\n\n4. **PredictionResidual分析**: The intra-prediction residual (actual − predicted) encodes what the prediction couldn't capture. Residual statistics differ between original content (well-predicted, small residuals) and replaced content (poorly predicted by modes chosen for different content, larger residuals). The method detects anomalous residual distributions.\n\n5. **Re-EncodingSignature検出**: Double-encoded video (original + manipulation + re-encoding) shows characteristic intra-prediction artifacts: the second encoder's mode decisions partially align with the first encoder's block structure, creating detectable periodicity in prediction residuals.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "フレーム内予測解析",
+    "description": "Examines H.264/H.265 intra-frame prediction mode distributions — deepfake re-encoding alters prediction patterns.",
+    "algorithm": "Intra-frame Prediction Analysis分析アルゴリズム",
+    "mechanism": "This method analyzes H.264/H.265 intra-prediction patterns for video forensic detection:\n\n1. **Intra-PredictionMode抽出**: For I-frames and intra-blocks in P/B-frames, the selected intra-prediction modes are extracted from the bitstream (9 modes in H.264, 35+ in H.265: DC, planar, and angular predictions). These mode decisions are influenced by local image content.\n\n2. **Mode分布分析**: The statistical distribution of intra-prediction modes across the frame is analyzed. Natural video produces characteristic mode distributions — predominantly DC/planar in smooth regions, angular modes following edge orientations. Manipulated or AI-generated content may show anomalous mode distributions inconsistent with the visual content.\n\n3. **Mode-Content一貫性**: The selected mode should match the actual image content direction. At a horizontal edge, a horizontal prediction mode should be selected. The method checks mode-content alignment — content inserted from a different encoding may show suboptimal mode selections (modes chosen for the original content, not the replaced content).\n\n4. **PredictionResidual分析**: The intra-prediction residual (actual − predicted) encodes what the prediction couldn't capture. Residual statistics differ between original content (well-predicted, small residuals) and replaced content (poorly predicted by modes chosen for different content, larger residuals). The method detects anomalous residual distributions.\n\n5. **Re-EncodingSignature検出**: Double-encoded video (original + manipulation + re-encoding) shows characteristic intra-prediction artifacts: the second encoder's mode decisions partially align with the first encoder's block structure, creating detectable periodicity in prediction residuals.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TCSVT.2003.815165",
+            "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
+        },
+        {
+            "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
+            "title": "Sullivan, G.J. et al. (2012). Overview of HEVC Standard. IEEE TCSVT."
+        }
+    ]
 }

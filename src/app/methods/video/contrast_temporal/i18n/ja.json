@@ -1,22 +1,22 @@
 {
-  "name": "Contrast Temporal",
-  "description": "Analyzes contrast temporal stability",
-  "algorithm": "Contrast Temporal — ピクセルレベル空間分析",
-  "mechanism": "This method detects temporal contrast anomalies for video deepfake detection:\n\n1. **ローカルContrastマッピング**: Per frame, local contrast (RMS contrast, Michelson contrast) is computed in sliding windows across the image. This creates a contrast map revealing spatial distribution of image contrast — bright/dark transitions, texture contrast, and edge strength.\n\n2. **時間的Contrast信号抽出**: The mean and distribution statistics of local contrast are tracked across frames. Natural video shows smooth contrast evolution governed by illumination changes and scene dynamics. The contrast temporal signal captures how overall and regional contrast varies over time.\n\n3. **顔-BackgroundContrastコヒーレンス**: Contrast characteristics of face regions and background are compared temporally. In authentic video, both regions respond identically to illumination changes. Deepfake face insertion may create contrast mismatches — the generated face may have different dynamic range or contrast characteristics than the background, detectable as divergent contrast temporal signals.\n\n4. **ContrastFlicker検出**: Frame-to-frame contrast variations are analyzed for abnormal flicker. Natural contrast changes are slow (illumination) or physically motivated (object motion). AI-generated video may produce micro-contrast fluctuations as the generator independently determines contrast per frame, creating a detectable temporal frequency signature.\n\n5. **ヒストグラム-BasedContrast分析**: Per-frame histograms are analyzed for dynamic range utilization across time. Natural video maintains consistent histogram shape evolution. Generated content may show abrupt histogram changes or unnatural histogram shapes (e.g., truncated dynamic range, bimodal distributions) indicating AI generation.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through contrast temporal analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    }
-  ]
+    "name": "コントラスト時間解析",
+    "description": "Analyzes contrast temporal stability",
+    "algorithm": "Contrast Temporal — ピクセルレベル空間分析",
+    "mechanism": "This method detects temporal contrast anomalies for video deepfake detection:\n\n1. **ローカルContrastマッピング**: Per frame, local contrast (RMS contrast, Michelson contrast) is computed in sliding windows across the image. This creates a contrast map revealing spatial distribution of image contrast — bright/dark transitions, texture contrast, and edge strength.\n\n2. **時間的Contrast信号抽出**: The mean and distribution statistics of local contrast are tracked across frames. Natural video shows smooth contrast evolution governed by illumination changes and scene dynamics. The contrast temporal signal captures how overall and regional contrast varies over time.\n\n3. **顔-BackgroundContrastコヒーレンス**: Contrast characteristics of face regions and background are compared temporally. In authentic video, both regions respond identically to illumination changes. Deepfake face insertion may create contrast mismatches — the generated face may have different dynamic range or contrast characteristics than the background, detectable as divergent contrast temporal signals.\n\n4. **ContrastFlicker検出**: Frame-to-frame contrast variations are analyzed for abnormal flicker. Natural contrast changes are slow (illumination) or physically motivated (object motion). AI-generated video may produce micro-contrast fluctuations as the generator independently determines contrast per frame, creating a detectable temporal frequency signature.\n\n5. **ヒストグラム-BasedContrast分析**: Per-frame histograms are analyzed for dynamic range utilization across time. Natural video maintains consistent histogram shape evolution. Generated content may show abrupt histogram changes or unnatural histogram shapes (e.g., truncated dynamic range, bimodal distributions) indicating AI generation.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through contrast temporal analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "修辞構造（論理展開）の深さプロファイリング",
-  "description": "談話関係の階層的な深さと複雑さを分析します。AIは平坦で連続的な論理（「浅い談話」）に依存しますが、人間の文章は複雑で深くネストされた（入れ子になった）議論を構築します。",
-  "algorithm": "修辞構造理論（RST）ツリーの深さ抽出",
-  "mechanism": "Rhetorical Structure Theory (RST) models text as a hierarchical tree of relational clauses (e.g., Elaboration, Contrast, Cause). Large Language Models generate text left-to-right, calculating the next most probable token based on the immediate context window. Consequently, AI struggles with macro-level architectural planning. When building an argument, AI tends to use 'flat' or 'shallow' discourse structures—creating a string of equally weighted points (List) or simple explanations (Elaboration) attached directly to the root topic. Every paragraph is a standalone silo. Humans, however, naturally construct deep, nested logical hierarchies. A human might nest a Condition inside a Concession, which is then used as Evidence for a broader Justification. This NLP method parses the text into an RST tree and calculates its maximum and average dependency depth. A text structured as a long, flat list of sequential claims lacks the deep cognitive architecture of human reasoning and is highly indicative of machine generation.",
-  "useCase": "論理的構造が、散文を装った単純な箇条書きのリストのように疑わしく感じられる、長文の議論、説得力のあるエッセイ、および意見記事の分析。",
-  "strengths": "• 自己回帰型LLMの根本的なアーキテクチャ上の弱点（トップダウンの計画性の欠如）を暴くのに非常に効果的です。\n• 人間がAIに対して「RSTツリーの深さを数学的に増やす」ように簡単に指示することはできないため、プロンプトエンジニアが回避するのは非常に困難です。\n• マクロな文書レベルで機能するため、単語レベルの同義語の置き換えに対して完全に免疫があります。",
-  "limitations": "• 計算コストが高い。大規模な文書で深いRSTツリーを解析するには、かなりの処理能力が必要です。\n• 取扱説明書、年代順の物語、またはリストなど、自然に「平坦」な人間の文章では誤検知が生じる可能性があります。\n• 深い階層構造が自然に形成されない、非常に短いテキスト（200語未満）では効果が低下します。",
-  "parameters": "解析: 修辞構造理論（RST）解析および文レベルのセグメンテーション\n評価基準: 談話ツリーの最大および平均の深さ（ルートからのトポロジカル距離）\n出力結果: 0-100 談話の浅さ（アーキテクチャの平坦性）スコア",
-  "accuracy": "高 — 議論的および分析的テキストで75-85%。次トークン予測アーキテクチャの核心的な限界をターゲットにした、合成テキスト生成の最も堅牢な構造的マーカーの1つです。",
-  "references": [
-    {
-      "title": "Mann, W.C. & Thompson, S.A. (1988). Rhetorical Structure Theory. Text.",
-      "url": "https://doi.org/10.1515/text.1.1988.8.3.243"
-    },
-    {
-      "title": "Ji, Y. & Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL.",
-      "url": "https://doi.org/10.3115/v1/P14-1002"
-    }
-  ],
-  "source": "Mann, W.C. & Thompson, S.A. (1988). Rhetorical Structure Theory. Text.; Ji, Y. & Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL."
+    "name": "修辞構造（論理展開）の深さプロファイリング",
+    "description": "談話関係の階層的な深さと複雑さを分析します。AIは平坦で連続的な論理（「浅い談話」）に依存しますが、人間の文章は複雑で深くネストされた（入れ子になった）議論を構築します。",
+    "algorithm": "修辞構造理論（RST）ツリーの深さ抽出",
+    "mechanism": "修辞構造理論（RST）はテキストを関係節の階層的ツリーとしてモデル化します（例：精緻化、対比、因果）。LLMは左から右にテキストを生成し、即座のコンテキストウィンドウに基づいて最も可能性の高い次のトークンを計算します。その結果、AIはマクロレベルのアーキテクチャ的計画に苦労します。議論を構築する際、AIは「フラット」または「浅い」談話構造を使う傾向があります—根本的なトピックに直接付けられた等しく重み付けされたポイント（リスト）や単純な説明（精緻化）の連なりを作成します。全ての段落は独立したサイロです。しかし人間は自然に深く入れ子になった論理的階層を構築します。人間は条件をコンセッションの中に入れ子にし、それはより広いジャスティフィケーションのエビデンスとして使われるかもしれません。このNLP手法はテキストをRSTツリーに解析し、最大および平均の依存深度を計算します。順次的主張の長くフラットなリストとして構造化されたテキストは人間の推論の深い認知的アーキテクチャを欠いており、機械生成を強く示します。",
+    "useCase": "論理的構造が、散文を装った単純な箇条書きのリストのように疑わしく感じられる、長文の議論、説得力のあるエッセイ、および意見記事の分析。",
+    "strengths": "• 自己回帰型LLMの根本的なアーキテクチャ上の弱点（トップダウンの計画性の欠如）を暴くのに非常に効果的です。\n• 人間がAIに対して「RSTツリーの深さを数学的に増やす」ように簡単に指示することはできないため、プロンプトエンジニアが回避するのは非常に困難です。\n• マクロな文書レベルで機能するため、単語レベルの同義語の置き換えに対して完全に免疫があります。",
+    "limitations": "• 計算コストが高い。大規模な文書で深いRSTツリーを解析するには、かなりの処理能力が必要です。\n• 取扱説明書、年代順の物語、またはリストなど、自然に「平坦」な人間の文章では誤検知が生じる可能性があります。\n• 深い階層構造が自然に形成されない、非常に短いテキスト（200語未満）では効果が低下します。",
+    "parameters": "解析: 修辞構造理論（RST）解析および文レベルのセグメンテーション\n評価基準: 談話ツリーの最大および平均の深さ（ルートからのトポロジカル距離）\n出力結果: 0-100 談話の浅さ（アーキテクチャの平坦性）スコア",
+    "accuracy": "高 — 議論的および分析的テキストで75-85%。次トークン予測アーキテクチャの核心的な限界をターゲットにした、合成テキスト生成の最も堅牢な構造的マーカーの1つです。",
+    "references": [
+        {
+            "title": "Mann, W.C. & Thompson, S.A. (1988). Rhetorical Structure Theory. Text.",
+            "url": "https://doi.org/10.1515/text.1.1988.8.3.243"
+        },
+        {
+            "title": "Ji, Y. & Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL.",
+            "url": "https://doi.org/10.3115/v1/P14-1002"
+        }
+    ],
+    "source": "Mann, W.C. & Thompson, S.A. (1988). Rhetorical Structure Theory. Text.; Ji, Y. & Eisenstein, J. (2014). Representation Learning for Text-level Discourse Parsing. ACL."
 }

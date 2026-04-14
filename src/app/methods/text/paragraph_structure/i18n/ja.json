@@ -1,22 +1,22 @@
 {
-  "name": "段落の構造（Paragraph Structure）",
-  "description": "段落の長さ、リズム、および内部構造を調べます。AIモデルは自然と、明確なトピックセンテンス、それを裏付ける証拠、および結論としての要約を中心に構成された、非常に均一で中程度の長さのテキストブロックをデフォルトとします。一方、人間のライターは、物語の流れを制御するために、非常に短くパンチの効いた段落と、長く蛇行する段落を頻繁に混在させます。",
-  "algorithm": "段落長の分散と内部移行の分析",
-  "mechanism": "This method isolates each paragraph and analyzes its word count, sentence count, and internal flow (the presence of standard topic and concluding sentences). Large Language Models (LLMs) are optimized for readability and structural safety. Consequently, they suffer from 'structural homogeneity'. When generating essays, blogs, or reports, an AI will almost always produce paragraphs of very similar lengths (e.g., consistently 4-6 sentences, 80-120 words). Furthermore, these paragraphs are rigidly formulaic: they begin with a transitional phrase ('Furthermore,', 'In addition,'), present a concept, and end with a micro-conclusion. This creates a visually 'blocky' and monotonous reading experience. Human writers are far more erratic. A human might write a massive ten-sentence paragraph exploring a complex idea, followed immediately by a single-sentence paragraph for dramatic emphasis. The system calculates a 'Paragraph Monotony Score' by determining the statistical variance in paragraph length and the repetition of rigid internal semantic structures across the entire document.",
-  "useCase": "エッセイ、ブログ記事、および記事を監査し、すべての段落の見た目と機能がまったく同じである「テキストの壁」のような単調さを特定するのに非常に効果的です。これは、ゼロショット（事前の指示なし）のAI生成の古典的な特徴です。",
-  "strengths": "• 個々の単語や文が人間によって書き直されたとしても残る、AIの文章の視覚的および構造的な「指紋」を検出します。\n• 標準的なテンプレートに大きく依存する、低コストな生成コンテンツ（SEOスパムや自動化された宿題など）を特定するのに優れています。",
-  "limitations": "• 科学的要約、標準化されたテストのエッセイ（TOEFL/IELTSなど）、または均一性が義務付けられている厳格な企業の要約など、高度に構造化されたフォーマルな文章を分析する場合、誤検知が発生しやすくなります。\n• 分散を確立できない非常に短いテキスト（3段落未満）では使用できません。\n• 段落の長さを劇的に変化させるようにAIに明示的に指示するプロンプトエンジニアリングによって回避される可能性があります。",
-  "parameters": "解析: 段落のセグメンテーション（区切り）と内部構造のマッピング\n評価基準: 単語/文の数の分散とトピックセンテンスの予測可能性\n出力結果: 0-100 構造的均質性（単調さ）スコア",
-  "accuracy": "中〜高 — 70-80%の精度。特に文の長さの分散（Sentence Length Variance）分析と組み合わせた場合、「怠惰な」AI生成の非常に強力な指標となります。",
-  "references": [
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    },
-    {
-      "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
-      "url": "https://arxiv.org/abs/2011.01314"
-    }
-  ],
-  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING."
+    "name": "段落の構造（Paragraph Structure）",
+    "description": "段落の長さ、リズム、および内部構造を調べます。AIモデルは自然と、明確なトピックセンテンス、それを裏付ける証拠、および結論としての要約を中心に構成された、非常に均一で中程度の長さのテキストブロックをデフォルトとします。一方、人間のライターは、物語の流れを制御するために、非常に短くパンチの効いた段落と、長く蛇行する段落を頻繁に混在させます。",
+    "algorithm": "段落長の分散と内部移行の分析",
+    "mechanism": "この手法は各段落を分離し、語数、文数、内部フロー（標準的なトピック文と結論文の存在）を分析します。LLMは可読性と構造的安全性のために最適化されています。その結果「構造的均質性」に苦しみます。エッセイ、ブログ、レポートを生成する際、AIはほとんど常に非常に似た長さの段落を生成します（例：一貫して4〜6文、80〜120語）。さらにこれらの段落は厳格に定型的です：遷移フレーズで始まり（「さらに」「加えて」）、概念を提示し、ミクロ結論で終わります。これは視覚的に「ブロック状」で単調な読書体験を生み出します。人間のライターははるかに不規則です。人間は複雑なアイデアを探求する巨大な10文の段落を書き、ドラマチックな強調のために即座に単一文の段落を続けるかもしれません。システムは段落長の統計的分散と文書全体の硬直的内部意味構造の反復を決定して「段落単調性スコア」を計算します。",
+    "useCase": "エッセイ、ブログ記事、および記事を監査し、すべての段落の見た目と機能がまったく同じである「テキストの壁」のような単調さを特定するのに非常に効果的です。これは、ゼロショット（事前の指示なし）のAI生成の古典的な特徴です。",
+    "strengths": "• 個々の単語や文が人間によって書き直されたとしても残る、AIの文章の視覚的および構造的な「指紋」を検出します。\n• 標準的なテンプレートに大きく依存する、低コストな生成コンテンツ（SEOスパムや自動化された宿題など）を特定するのに優れています。",
+    "limitations": "• 科学的要約、標準化されたテストのエッセイ（TOEFL/IELTSなど）、または均一性が義務付けられている厳格な企業の要約など、高度に構造化されたフォーマルな文章を分析する場合、誤検知が発生しやすくなります。\n• 分散を確立できない非常に短いテキスト（3段落未満）では使用できません。\n• 段落の長さを劇的に変化させるようにAIに明示的に指示するプロンプトエンジニアリングによって回避される可能性があります。",
+    "parameters": "解析: 段落のセグメンテーション（区切り）と内部構造のマッピング\n評価基準: 単語/文の数の分散とトピックセンテンスの予測可能性\n出力結果: 0-100 構造的均質性（単調さ）スコア",
+    "accuracy": "中〜高 — 70-80%の精度。特に文の長さの分散（Sentence Length Variance）分析と組み合わせた場合、「怠惰な」AI生成の非常に強力な指標となります。",
+    "references": [
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        },
+        {
+            "title": "Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING.",
+            "url": "https://arxiv.org/abs/2011.01314"
+        }
+    ],
+    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Jawahar, G. et al. (2020). Automatic Detection of Machine Generated Text: A Critical Survey. COLING."
 }

@@ -1,22 +1,22 @@
 {
-  "name": "Color Quantization",
-  "description": "Analyzes color quantization level",
-  "algorithm": "Color Quantization — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes color quantization patterns in video for forensic detection:\n\n1. **色Precision分析**: The effective number of distinct colors per frame is measured and compared to the expected color depth of the video format. Natural video captured at 8-bit depth shows characteristic color quantization patterns including smooth gradient banding. AI-generated content may exhibit different quantization characteristics — either smoother (floating-point internal representation posterized to 8-bit) or with artificial color clustering.\n\n2. **QuantizationStep検出**: Color channel histograms are analyzed for quantization artifacts — periodic gaps or peaks in the histogram indicate specific quantization step sizes. Double-quantization from re-encoding produces characteristic paired histogram features detectable via spectral analysis of the histogram signal.\n\n3. **空間的Quantization一貫性**: Quantization patterns should be spatially uniform (same encoding pipeline). The method compares quantization characteristics between face regions and background. Deepfake composites may show different quantization in the generated face (from the generator's output pipeline) versus the original background footage.\n\n4. **勾配Banding分析**: Smooth gradients in the image reveal quantization characteristics. Natural camera capture plus compression produces specific banding patterns. AI-generated gradients may show finer or coarser banding inconsistent with the declared bit depth and codec, revealing post-processing or generation artifacts.\n\n5. **時間的Quantizationトラッキング**: Color quantization characteristics are tracked across frames. Authentic video maintains consistent quantization throughout. AI-generated content may show varying quantization quality across frames, particularly in face regions where the generator's output precision may fluctuate.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through color quantization analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-      "url": "https://arxiv.org/abs/2001.06564"
-    },
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    }
-  ]
+    "name": "カラー量子化解析",
+    "description": "Analyzes color quantization level",
+    "algorithm": "Color Quantization — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes color quantization patterns in video for forensic detection:\n\n1. **色Precision分析**: The effective number of distinct colors per frame is measured and compared to the expected color depth of the video format. Natural video captured at 8-bit depth shows characteristic color quantization patterns including smooth gradient banding. AI-generated content may exhibit different quantization characteristics — either smoother (floating-point internal representation posterized to 8-bit) or with artificial color clustering.\n\n2. **QuantizationStep検出**: Color channel histograms are analyzed for quantization artifacts — periodic gaps or peaks in the histogram indicate specific quantization step sizes. Double-quantization from re-encoding produces characteristic paired histogram features detectable via spectral analysis of the histogram signal.\n\n3. **空間的Quantization一貫性**: Quantization patterns should be spatially uniform (same encoding pipeline). The method compares quantization characteristics between face regions and background. Deepfake composites may show different quantization in the generated face (from the generator's output pipeline) versus the original background footage.\n\n4. **勾配Banding分析**: Smooth gradients in the image reveal quantization characteristics. Natural camera capture plus compression produces specific banding patterns. AI-generated gradients may show finer or coarser banding inconsistent with the declared bit depth and codec, revealing post-processing or generation artifacts.\n\n5. **時間的Quantizationトラッキング**: Color quantization characteristics are tracked across frames. Authentic video maintains consistent quantization throughout. AI-generated content may show varying quantization quality across frames, particularly in face regions where the generator's output precision may fluctuate.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through color quantization analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+            "url": "https://arxiv.org/abs/2001.06564"
+        },
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        }
+    ]
 }

@@ -1,22 +1,22 @@
 {
-  "name": "単語頻度ランク (Word Frequency Rank / GLTR)",
-  "description": "ドキュメントで使用されているすべての単語の絶対頻度ランキングを、ベースラインコーパスと照らし合わせて調べます。大規模言語モデル（LLM）は、本質的に最も確率の高い次のトークンを選択するように設計された超高度なオートコンプリートエンジンです。その結果、AIが生成したテキストは、「トップ10」または「トップ100」の高頻度語によって圧倒的に支配されています。それは、真の語彙の外れ値（自然言語の頻度で1,000位または10,000位にランク付けされる単語）がほぼ完全に欠如している、数学的に滑らかで非常に予測可能な表面を作り出します。逆に、人間の書き手は常にZipf分布の「末尾（テールエンド）」に飛び込み、まれで非常に特異的な語彙を引き出します。このアルゴリズムは統計的な嘘発見器として機能し、高確率な単語の安全性に必死にしがみついているテキストを暴露します。",
-  "algorithm": "トークン確率分布とジップの法則の逸脱 (Token Probability Distribution & Zipf's Law Deviation)",
-  "mechanism": "This engine cross-references every word in the text against a massive baseline text corpus to determine its historical 'Frequency Rank'. Words are grouped into probability buckets (e.g., Top 10, Top 100, Top 1000, Rare). The algorithm then calculates the distributional entropy and statistical correlation against natural language Zipfian curves. A human text will display a healthy, jagged mix of common words punctuated by rare, low-probability terms. An AI text, however, will generate a histogram that is unnaturally slanted toward the 'Top 100' bucket, demonstrating a massive deficit in rank-probability variance and a failure to naturally deviate from Zipf's Law.",
-  "useCase": "高度なプロンプトエンジニアリングや温度（temperature）操作なしで生成された「プレーン」なAIテキストを検出するためのゴールドスタンダードです。著者が標準的なLLMの出力を独自の考えとして偽装しようとするニュース記事、ブログ投稿、学生のエッセイを監査するのに非常に効果的です。",
-  "strengths": "• 非常に高速で計算オーバーヘッドが低いため、優れた初回パスフィルタになります。\n• 言語生成の基本的な数学的原理に基づいて動作するため、ベースラインの頻度コーパスが存在する限り、言語に完全に依存しません。",
-  "limitations": "• 高度なプロンプトエンジニアリング（例：AIに「折衷的な語彙」を使用するように指示する）や、LLMの「温度」を最大に設定して、人工的に低確率のトークンを選択させることによって無効化される影響を受けやすくなります。\n• 短いテキストは、信頼できるランクと確率のヒストグラムを構築するのに十分なサンプルサイズを提供しません。",
-  "parameters": "解析: ベースラインコーパスに対するランク確率ヒストグラム\n評価基準: トークン・エントロピー、変動係数 (CV)、Top-K 分布\n出力結果: 0-100 高頻度語の偏り（バイアス）スコア",
-  "accuracy": "中〜高 — 72-82%の精度。単独のツールとしても強力ですが、意味的な一貫性（Semantic coherence）やバースト性（Burstiness）と照らし合わせると効果が倍増します。人間は完璧な一貫性を保ちながらまれな単語を自然に使用できますが、高温（High-temperature）のAIテキストは支離滅裂になるためです。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
-      "url": "https://arxiv.org/abs/1908.09203"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI."
+    "name": "単語頻度ランク (Word Frequency Rank / GLTR)",
+    "description": "ドキュメントで使用されているすべての単語の絶対頻度ランキングを、ベースラインコーパスと照らし合わせて調べます。大規模言語モデル（LLM）は、本質的に最も確率の高い次のトークンを選択するように設計された超高度なオートコンプリートエンジンです。その結果、AIが生成したテキストは、「トップ10」または「トップ100」の高頻度語によって圧倒的に支配されています。それは、真の語彙の外れ値（自然言語の頻度で1,000位または10,000位にランク付けされる単語）がほぼ完全に欠如している、数学的に滑らかで非常に予測可能な表面を作り出します。逆に、人間の書き手は常にZipf分布の「末尾（テールエンド）」に飛び込み、まれで非常に特異的な語彙を引き出します。このアルゴリズムは統計的な嘘発見器として機能し、高確率な単語の安全性に必死にしがみついているテキストを暴露します。",
+    "algorithm": "トークン確率分布とジップの法則の逸脱 (Token Probability Distribution & Zipf's Law Deviation)",
+    "mechanism": "このエンジンはテキスト内の全ての語を巨大なベースラインテキストコーパスと相互参照して歴史的「頻度ランク」を決定します。語は確率バケットにグループ化されます（例：Top 10、Top 100、Top 1000、Rare）。アルゴリズムは分布エントロピーと自然言語ジフの曲線に対する統計的相関を計算します。人間のテキストは一般的語に珍しい低確率用語が点在する健全でギザギザの混合を表示します。しかしAIテキストは「Top 100」バケットに不自然に偏ったヒストグラムを生成し、ランク確率分散の巨大な欠損とジフの法則からの自然な逸脱の失敗を示します。",
+    "useCase": "高度なプロンプトエンジニアリングや温度（temperature）操作なしで生成された「プレーン」なAIテキストを検出するためのゴールドスタンダードです。著者が標準的なLLMの出力を独自の考えとして偽装しようとするニュース記事、ブログ投稿、学生のエッセイを監査するのに非常に効果的です。",
+    "strengths": "• 非常に高速で計算オーバーヘッドが低いため、優れた初回パスフィルタになります。\n• 言語生成の基本的な数学的原理に基づいて動作するため、ベースラインの頻度コーパスが存在する限り、言語に完全に依存しません。",
+    "limitations": "• 高度なプロンプトエンジニアリング（例：AIに「折衷的な語彙」を使用するように指示する）や、LLMの「温度」を最大に設定して、人工的に低確率のトークンを選択させることによって無効化される影響を受けやすくなります。\n• 短いテキストは、信頼できるランクと確率のヒストグラムを構築するのに十分なサンプルサイズを提供しません。",
+    "parameters": "解析: ベースラインコーパスに対するランク確率ヒストグラム\n評価基準: トークン・エントロピー、変動係数 (CV)、Top-K 分布\n出力結果: 0-100 高頻度語の偏り（バイアス）スコア",
+    "accuracy": "中〜高 — 72-82%の精度。単独のツールとしても強力ですが、意味的な一貫性（Semantic coherence）やバースト性（Burstiness）と照らし合わせると効果が倍増します。人間は完璧な一貫性を保ちながらまれな単語を自然に使用できますが、高温（High-temperature）のAIテキストは支離滅裂になるためです。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI.",
+            "url": "https://arxiv.org/abs/1908.09203"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. OpenAI."
 }

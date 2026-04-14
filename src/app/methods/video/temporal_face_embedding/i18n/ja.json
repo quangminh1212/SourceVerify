@@ -1,12 +1,22 @@
 {
-  "name": "Temporal Face Embedding Drift",
-  "description": "Tracks face embedding vector drift over time — deepfakes show larger embedding variance than real faces.",
-  "algorithm": "Temporal Face Embedding Drift分析アルゴリズム",
-  "mechanism": "This method analyzes temporal face embedding drift for deepfake detection:\n\n1. **顔Embedding抽出**: A face recognition embedding vector is computed per frame using a pre-trained face recognition network. The embedding captures identity-discriminative features in a high-dimensional space.\n\n2. **EmbeddingTrajectory分析**: The face embedding trajectory through the embedding space is tracked over time. In authentic video, the embedding remains near a fixed point (same identity) with small perturbations from expression, pose, and illumination changes.\n\n3. **Drift検出**: The method detects systematic embedding drift — gradual movement of the embedding centroid over time. In authentic video, the centroid is stationary. Deepfake generators may produce slowly drifting identity characteristics as the model's latent space traversal creates gradual identity shifts.\n\n4. **Embedding分散分析**: The variance of embeddings across frames is analyzed. Authentic video shows low variance (consistent identity). Deepfakes may show elevated variance — the generated face may fluctuate in identity space, sometimes closer to the source identity, sometimes to the target identity, creating detectable identity instability.\n\n5. **Embedding-Pose相関**: Embedding should be pose-invariant for a fixed identity (good face recognition models achieve this). The method checks whether embedding changes correlate with head pose — deepfake quality may be pose-dependent (better at frontal, worse at profile), causing embedding to shift with pose in ways that don't occur with authentic faces.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "時間的顔埋め込みドリフト解析",
+    "description": "Tracks face embedding vector drift over time — deepfakes show larger embedding variance than real faces.",
+    "algorithm": "Temporal Face Embedding Drift分析アルゴリズム",
+    "mechanism": "This method analyzes temporal face embedding drift for deepfake detection:\n\n1. **顔Embedding抽出**: A face recognition embedding vector is computed per frame using a pre-trained face recognition network. The embedding captures identity-discriminative features in a high-dimensional space.\n\n2. **EmbeddingTrajectory分析**: The face embedding trajectory through the embedding space is tracked over time. In authentic video, the embedding remains near a fixed point (same identity) with small perturbations from expression, pose, and illumination changes.\n\n3. **Drift検出**: The method detects systematic embedding drift — gradual movement of the embedding centroid over time. In authentic video, the centroid is stationary. Deepfake generators may produce slowly drifting identity characteristics as the model's latent space traversal creates gradual identity shifts.\n\n4. **Embedding分散分析**: The variance of embeddings across frames is analyzed. Authentic video shows low variance (consistent identity). Deepfakes may show elevated variance — the generated face may fluctuate in identity space, sometimes closer to the source identity, sometimes to the target identity, creating detectable identity instability.\n\n5. **Embedding-Pose相関**: Embedding should be pose-invariant for a fixed identity (good face recognition models achieve this). The method checks whether embedding changes correlate with head pose — deepfake quality may be pose-dependent (better at frontal, worse at profile), causing embedding to shift with pose in ways that don't occur with authentic faces.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/ICCV48922.2021.01480",
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV."
+        },
+        {
+            "url": "https://doi.org/10.1109/ICCV.2019.00009",
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV."
+        }
+    ]
 }

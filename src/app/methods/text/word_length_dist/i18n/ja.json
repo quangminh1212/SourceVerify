@@ -1,22 +1,22 @@
 {
-  "name": "単語長分布 (Word Length Distribution)",
-  "description": "ドキュメント全体の単語の長さ（文字数）の統計的分布を計算します。人間の書き手は、リズムを作り出したり、ポイントを強調したり、主題の認知的負荷に適応したりするために、無意識のうちに単語の長さを変えます。その結果、自然な山と谷を持つ、特徴的でわずかに不規則な単語長のヒストグラムが生成されます。大規模言語モデル（LLM）は、パープレキシティ（驚き）を最小限に抑え、トークン効率を最大化するように設計されており、本質的に「平均的」な単語の長さ（英語では通常4〜6文字）を好みます。明示的に指示されない限り、非常に短くスタッカートのような単語の連続や、多音節の用語の過度に密集したクラスターを避けます。このアルゴリズムは、確率駆動型のテキスト生成に特有の、人工的に「滑らかにされ」、中央に大きく偏った単語長分布を検出します。",
-  "algorithm": "文字レベルのヒストグラム分散と歪度分析",
-  "mechanism": "The algorithm parses the text, strips punctuation, and measures the exact character count of every word. It builds a frequency histogram where the X-axis is the word length (1 to 15+ characters) and the Y-axis is the frequency. It then calculates mathematical properties of this curve, such as variance, skewness, and kurtosis. A human text typically presents a 'lopsided' or multimodal distribution—perhaps heavily skewed toward long words in academic settings, or featuring jagged spikes representing intentional rhythmic choices. An AI text generates a tightly clustered, mathematically perfect bell curve revolving aggressively around the localized language average, indicating a lack of human-like rhythmic or syllabic variance.",
-  "useCase": "記事、エッセイ、およびクリエイティブライティングの「自然な流れ」を評価するための診断性が非常に高いツールです。基礎的な文体検出器として機能し、テキストが人間の著者の不規則な特徴的な音節リズムを持っているか、機械の数学的に滑らかなペースを持っているかを明らかにします。",
-  "strengths": "• 意味の理解、API呼び出し、またはディープニューラルネットワークの解析を必要としないため、計算が非常に高速です。\n• 単純な同義語の交換や「言い換え」の攻撃に対して非常に堅牢です。AIテキストを巧みに隠そうとする作成者は、単語の長さの数学的分布に注意を払うことがほとんどないためです。",
-  "limitations": "• 著者が人工的に制約したテキスト、例えば「シンプルで短い単語」を意図的に義務付けるプレーンランゲージの法的要約、子供向けの本、またはSEO最適化されたブログ投稿などでは、誤検知（偽陽性）の影響を受けやすくなります。\n• 統計的に有意なヒストグラムを形成するには、かなりのテキストブロック（通常200単語以上）が必要です。マイクロテキストでは、分布曲線が混沌としすぎて分析できません。",
-  "parameters": "解析: トークン文字数の分散と尖度\n評価基準: 単語の平均長、標準偏差、分布の歪度\n出力結果: 0-100 分布平滑化（スムージング）スコア",
-  "accuracy": "中程度 — 65-85%の精度。単独では決定的ではありませんが、非常に信頼性の高い交差検証（cross-validation）指標です。AIが「バースト性（文章の長さの変動）」を偽装しようとしても、通常、単語の長さの分布は頑固なまでに中央に集中したままとなり、機械の出自を裏切ります。",
-  "references": [
-    {
-      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-      "url": "https://nlp.stanford.edu/fsnlp/"
-    },
-    {
-      "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
-      "url": "https://doi.org/10.2307/2280090"
-    }
-  ],
-  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press."
+    "name": "単語長分布 (Word Length Distribution)",
+    "description": "ドキュメント全体の単語の長さ（文字数）の統計的分布を計算します。人間の書き手は、リズムを作り出したり、ポイントを強調したり、主題の認知的負荷に適応したりするために、無意識のうちに単語の長さを変えます。その結果、自然な山と谷を持つ、特徴的でわずかに不規則な単語長のヒストグラムが生成されます。大規模言語モデル（LLM）は、パープレキシティ（驚き）を最小限に抑え、トークン効率を最大化するように設計されており、本質的に「平均的」な単語の長さ（英語では通常4〜6文字）を好みます。明示的に指示されない限り、非常に短くスタッカートのような単語の連続や、多音節の用語の過度に密集したクラスターを避けます。このアルゴリズムは、確率駆動型のテキスト生成に特有の、人工的に「滑らかにされ」、中央に大きく偏った単語長分布を検出します。",
+    "algorithm": "文字レベルのヒストグラム分散と歪度分析",
+    "mechanism": "アルゴリズムはテキストを解析し、句読点を除去し、全ての語の正確な文字数を測定します。X軸が語長（1〜15文字以上）、Y軸が頻度の頻度ヒストグラムを構築します。次にこの曲線の分散、歪度、尖度のような数学的性質を計算します。人間のテキストは典型的に「歪んだ」または多峰的分布を示します—学術的設定では長い語に大きく偏ったり、意図的なリズム的選択を表すギザギザのスパイクを特徴とするかもしれません。AIテキストはローカライズされた言語平均の周りに攻撃的に回転する緊密にクラスター化された数学的に完璧なベルカーブを生成し、人間のようなリズム的または音節的分散の欠如を示します。",
+    "useCase": "記事、エッセイ、およびクリエイティブライティングの「自然な流れ」を評価するための診断性が非常に高いツールです。基礎的な文体検出器として機能し、テキストが人間の著者の不規則な特徴的な音節リズムを持っているか、機械の数学的に滑らかなペースを持っているかを明らかにします。",
+    "strengths": "• 意味の理解、API呼び出し、またはディープニューラルネットワークの解析を必要としないため、計算が非常に高速です。\n• 単純な同義語の交換や「言い換え」の攻撃に対して非常に堅牢です。AIテキストを巧みに隠そうとする作成者は、単語の長さの数学的分布に注意を払うことがほとんどないためです。",
+    "limitations": "• 著者が人工的に制約したテキスト、例えば「シンプルで短い単語」を意図的に義務付けるプレーンランゲージの法的要約、子供向けの本、またはSEO最適化されたブログ投稿などでは、誤検知（偽陽性）の影響を受けやすくなります。\n• 統計的に有意なヒストグラムを形成するには、かなりのテキストブロック（通常200単語以上）が必要です。マイクロテキストでは、分布曲線が混沌としすぎて分析できません。",
+    "parameters": "解析: トークン文字数の分散と尖度\n評価基準: 単語の平均長、標準偏差、分布の歪度\n出力結果: 0-100 分布平滑化（スムージング）スコア",
+    "accuracy": "中程度 — 65-85%の精度。単独では決定的ではありませんが、非常に信頼性の高い交差検証（cross-validation）指標です。AIが「バースト性（文章の長さの変動）」を偽装しようとしても、通常、単語の長さの分布は頑固なまでに中央に集中したままとなり、機械の出自を裏切ります。",
+    "references": [
+        {
+            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+            "url": "https://nlp.stanford.edu/fsnlp/"
+        },
+        {
+            "title": "Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press.",
+            "url": "https://doi.org/10.2307/2280090"
+        }
+    ],
+    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Yule, G. U. (1944). The Statistical Study of Literary Vocabulary. Cambridge University Press."
 }

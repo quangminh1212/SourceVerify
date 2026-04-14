@@ -1,22 +1,22 @@
 {
-  "name": "時間的コヒーレンス (Temporal Coherence)",
-  "description": "時間的表現（例：日付、期間、「昨日」や「その後」などの相対的なマーカー）の論理的な一貫性と、ドキュメント全体での動詞の時制の推移を分析します。大規模言語モデルは局所的な文法には優れていますが、生成する出来事の真の内部的な時系列の根拠（グラウンディング）を欠いています。これはしばしば、長いテキストにおいて微妙な「時間的な幻覚（temporal hallucinations）」を引き起こします。つまり、段落間で不適切に動詞の時制をシフトさせたり、逆説的なタイムラインを作成したり、相対的な時間マーカーを誤って配置したり（例：未来形の動詞と一緒に「最近」を使用する）します。人間の書き手は自然に、物語の一貫した精神的なタイムラインを投影し、維持します。",
-  "algorithm": "時間的表現の抽出と時制チェーン分析",
-  "mechanism": "The algorithm extracts all temporal entities (DATE, TIME, DURATION, SET) and meticulously maps the verb tenses attached to them throughout the text. It constructs a temporal relation graph to check for logical consistency. If the system detects impossible sequences (e.g., an event occurring 'after' a point that was established as the chronological endpoint) or chaotic, unmotivated shifts between past, present, and future tenses, the text is flagged as lacking genuine chronological comprehension.",
-  "useCase": "厳密な時系列の正確さが要求される歴史的エッセイ、ニュース報道、伝記の要約、プロジェクトのタイムラインの監査に非常に効果的です。",
-  "strengths": "• 高度なプロンプトを使用してもAIモデルが克服するのに苦労する、世界モデリングの根本的な失敗を検出します。\n• 事実に基づく報告やローカライズされたタイムラインの生成において、AIの幻覚（ハルシネーション）をキャッチするのに優れています。",
-  "limitations": "• 正確な時間的グラフを構築するには計算が複雑です。\n• 非線形の物語やフラッシュバックを意図的に使用するクリエイティブな文章や前衛文学で誤検知（偽陽性）を引き起こす可能性があります。\n• 最新のLLM（GPT-4など）は、短距離の時間的推論を大幅に改善しています。",
-  "parameters": "解析: 時間的グラフの一貫性と動詞時制の追跡\n評価基準: 時系列の逆説と時制の不一致の発生率\n出力結果: 0-100 時間的不一致（タイムラインの幻覚）スコア",
-  "accuracy": "中程度 — 69-79%の精度。時間が直線的に流れる物語やニューステキストで最高のパフォーマンスを発揮します。抽象的な哲学的または理論的テキストでは効果が低くなります。",
-  "references": [
-    {
-      "title": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.",
-      "url": "https://doi.org/10.3115/1621474.1621488"
-    },
-    {
-      "title": "Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL.",
-      "url": "https://doi.org/10.18653/v1/N19-1112"
-    }
-  ],
-  "source": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.; Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL."
+    "name": "時間的コヒーレンス (Temporal Coherence)",
+    "description": "時間的表現（例：日付、期間、「昨日」や「その後」などの相対的なマーカー）の論理的な一貫性と、ドキュメント全体での動詞の時制の推移を分析します。大規模言語モデルは局所的な文法には優れていますが、生成する出来事の真の内部的な時系列の根拠（グラウンディング）を欠いています。これはしばしば、長いテキストにおいて微妙な「時間的な幻覚（temporal hallucinations）」を引き起こします。つまり、段落間で不適切に動詞の時制をシフトさせたり、逆説的なタイムラインを作成したり、相対的な時間マーカーを誤って配置したり（例：未来形の動詞と一緒に「最近」を使用する）します。人間の書き手は自然に、物語の一貫した精神的なタイムラインを投影し、維持します。",
+    "algorithm": "時間的表現の抽出と時制チェーン分析",
+    "mechanism": "アルゴリズムは全ての時間的エンティティ（日付、時刻、期間、セット）を抽出し、テキスト全体でそれらに付随する動詞時制を綿密にマッピングします。論理的一貫性をチェックするために時間的関係グラフを構築します。システムが不可能なシーケンス（例：時系列的終点として確立されたポイントの「後」にイベントが発生する）やカオス的で動機のない過去、現在、未来の時制間のシフトを検出すると、テキストは真の時系列的理解を欠くとしてフラグされます。",
+    "useCase": "厳密な時系列の正確さが要求される歴史的エッセイ、ニュース報道、伝記の要約、プロジェクトのタイムラインの監査に非常に効果的です。",
+    "strengths": "• 高度なプロンプトを使用してもAIモデルが克服するのに苦労する、世界モデリングの根本的な失敗を検出します。\n• 事実に基づく報告やローカライズされたタイムラインの生成において、AIの幻覚（ハルシネーション）をキャッチするのに優れています。",
+    "limitations": "• 正確な時間的グラフを構築するには計算が複雑です。\n• 非線形の物語やフラッシュバックを意図的に使用するクリエイティブな文章や前衛文学で誤検知（偽陽性）を引き起こす可能性があります。\n• 最新のLLM（GPT-4など）は、短距離の時間的推論を大幅に改善しています。",
+    "parameters": "解析: 時間的グラフの一貫性と動詞時制の追跡\n評価基準: 時系列の逆説と時制の不一致の発生率\n出力結果: 0-100 時間的不一致（タイムラインの幻覚）スコア",
+    "accuracy": "中程度 — 69-79%の精度。時間が直線的に流れる物語やニューステキストで最高のパフォーマンスを発揮します。抽象的な哲学的または理論的テキストでは効果が低くなります。",
+    "references": [
+        {
+            "title": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.",
+            "url": "https://doi.org/10.3115/1621474.1621488"
+        },
+        {
+            "title": "Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL.",
+            "url": "https://doi.org/10.18653/v1/N19-1112"
+        }
+    ],
+    "source": "Verhagen, M. et al. (2007). SemEval-2007 Task 15: TempEval Temporal Relation Identification. SemEval.; Ning, Q. et al. (2019). An Improved Neural Baseline for Temporal Relation Extraction. NAACL."
 }

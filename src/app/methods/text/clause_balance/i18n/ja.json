@@ -1,22 +1,22 @@
 {
-  "name": "節のバランスと対称性（クローズ・バランス）分析",
-  "description": "文中の独立節、従属節、および等位節の間の構造的な均衡（バランス）を計算します。",
-  "algorithm": "統語ツリー（シンタックス・ツリー）均衡スコアラー",
-  "mechanism": "Human writers naturally utilize a wildly fluctuating mix of clause types to express complex, shifting thoughts. This cognitive load often produces asymmetrical sentence structures—such as a short, punchy independent clause followed by a chaotic, trailing sequence of nested subordinate clauses. In stark contrast, Large Language Models (LLMs) are architecturally optimized for maximum readability, safety, and grammatical perfection. This RLHF conditioning forces them to produce sentences with unnatural, textbook-perfect clause symmetry and a hyper-predictable metronomic pacing. This method traverses the deep dependency parse tree of each sentence to compute the mathematical ratio and positioning of coordinate versus subordinate structures. It heavily penalizes text that adheres too rigidly to 'perfect' grammatical symmetry, a flaw extensively documented in neural text generation research.",
-  "useCase": "不自然なレベルの文法的な完璧さと「教科書のような対称性」を示し、本物の人間の会話や下書きのパターンが持つ、ギザギザとした有機的で構造的な非対称性を欠いている、高度に洗練されたマニュアル通りのAIテキストの検出。",
-  "strengths": "• 語彙や「トリガーワード」への過度の依存を完全に避け、純粋に根本的な文法構造（アーキテクチャ）に焦点を当てます。\n• RLHFで調整されたモデルにアグレッシブに組み込まれている「教科書的な完璧さ」と「中立性バイアス」を効果的に浮き彫りにします。\n• 普遍的依存関係（Universal Dependencies: UD）パーサーと一緒に展開された場合、言語に全く依存せずに機能します（言語非依存）。",
-  "limitations": "• プロの編集者、起草者、または節の対称性を人工的に強制する厳格なスタイルガイド（例：「プレーン・イングリッシュ」の義務化）によって書かれたテキストを分析する際に、誤検知（フォールス・ポジティブ）を引き起こしやすいです。\n• 構文ツリーをマッピングするために、非常に正確で計算コストの高い多言語依存関係パーサーを必要とします。\n• 複雑な節の構造が現れる余地のない、極端に短いテキスト（例：単一のツイートや見出し）では著しく効果が低下します。",
-  "parameters": "解析: 依存関係解析の対称性マッピング\n評価基準: 従属節/等位節の均衡比率\n出力結果: 0-100 構文的対称性の硬直スコア",
-  "accuracy": "中〜高 — 72-81%。語彙の「バースト性スコア」と並んで、裏付けとなる構造的シグナルとして使用された場合に並外れた効果を発揮します。",
-  "references": [
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    },
-    {
-      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-      "url": "https://arxiv.org/abs/2010.07091"
-    }
-  ],
-  "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
+    "name": "節のバランスと対称性（クローズ・バランス）分析",
+    "description": "文中の独立節、従属節、および等位節の間の構造的な均衡（バランス）を計算します。",
+    "algorithm": "統語ツリー（シンタックス・ツリー）均衡スコアラー",
+    "mechanism": "人間のライターは複雑で変化する思考を表現するために、激しく変動する節タイプの混合を自然に利用します。この認知的負荷はしばしば非対称な文構造を生み出します—例えば、短くパンチの効いた独立節の後に、入れ子になった従属節のカオス的で後続するシーケンスが続くような。対照的に、LLMは最大の可読性、安全性、文法的完璧さのためにアーキテクチャ的に最適化されています。このRLHF条件付けは、不自然な教科書的完璧な節の対称性と超予測可能なメトロノーム的ペーシングを持つ文を生成するよう強制します。この手法は各文の深い依存構文ツリーを走査して、等位構造と従属構造の数学的比率と位置を計算します。「完璧な」文法的対称性にあまりにも厳格に従うテキストに重いペナルティを課します。これは神経テキスト生成研究で広範に文書化された欠陥です。",
+    "useCase": "不自然なレベルの文法的な完璧さと「教科書のような対称性」を示し、本物の人間の会話や下書きのパターンが持つ、ギザギザとした有機的で構造的な非対称性を欠いている、高度に洗練されたマニュアル通りのAIテキストの検出。",
+    "strengths": "• 語彙や「トリガーワード」への過度の依存を完全に避け、純粋に根本的な文法構造（アーキテクチャ）に焦点を当てます。\n• RLHFで調整されたモデルにアグレッシブに組み込まれている「教科書的な完璧さ」と「中立性バイアス」を効果的に浮き彫りにします。\n• 普遍的依存関係（Universal Dependencies: UD）パーサーと一緒に展開された場合、言語に全く依存せずに機能します（言語非依存）。",
+    "limitations": "• プロの編集者、起草者、または節の対称性を人工的に強制する厳格なスタイルガイド（例：「プレーン・イングリッシュ」の義務化）によって書かれたテキストを分析する際に、誤検知（フォールス・ポジティブ）を引き起こしやすいです。\n• 構文ツリーをマッピングするために、非常に正確で計算コストの高い多言語依存関係パーサーを必要とします。\n• 複雑な節の構造が現れる余地のない、極端に短いテキスト（例：単一のツイートや見出し）では著しく効果が低下します。",
+    "parameters": "解析: 依存関係解析の対称性マッピング\n評価基準: 従属節/等位節の均衡比率\n出力結果: 0-100 構文的対称性の硬直スコア",
+    "accuracy": "中〜高 — 72-81%。語彙の「バースト性スコア」と並んで、裏付けとなる構造的シグナルとして使用された場合に並外れた効果を発揮します。",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+            "url": "https://arxiv.org/abs/2010.07091"
+        }
+    ],
+    "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP."
 }

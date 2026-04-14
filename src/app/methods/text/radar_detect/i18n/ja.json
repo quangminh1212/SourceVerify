@@ -1,22 +1,22 @@
 {
-  "name": "RADAR 敵対的検出 (RADAR Detection)",
-  "description": "RADAR（敵対的学習による堅牢なAIテキスト検出）フレームワークを適用します。標準的なAI検出器は、単純な言い換えツール（QuillBotなど）や回避プロンプト（「AI検出を回避するためにこれを書き直して」）によって簡単に打ち負かされます。RADARは、敵対的なループ内でAIパラフレーザー（言い換え器）と同時に検出器をトレーニングすることでこの問題を解決し、表面的な語彙や構文が回避ツールによってスクランブルされた後でも、機械生成テキストを特定できる、回復力の高いモデルを作成します。",
-  "algorithm": "敵対的パラフレーザー・検出器ネットワーク",
-  "mechanism": "RADAR employs a dual-model architecture based on min-max adversarial training. Model A (the Paraphraser) takes AI-generated text and attempts to rewrite it specifically to fool Model B (the Detector). Through continuous iterative training, the Detector learns the deep, invariant statistical signatures and structural artifacts of LLM generation that persist even after surface-level vocabulary and syntax have been scrambled by evasion tools. When analyzing new text, RADAR searches for these resilient core signatures rather than superficial token probabilities.",
-  "useCase": "ユーザーがソースのAIの痕跡を消去するために「ヒューマナイザー」ツール、プロンプト回避の戦術、または二次的なAIパラフレーザーを使用している可能性が高い、リスクの高い環境（学術的な誠実さ、法的分析など）に不可欠です。",
-  "strengths": "• 一般的な回避手法（同義語の交換、フォーマットの変更、QuillBotなど）に対する並外れた回復力。\n• 標準のゼロショット検出器（DetectGPTなど）と比較して、複雑な人間の文章での誤検知率が大幅に低くなります。",
-  "limitations": "• サーバー側のAPI実行を必要とする高い計算オーバーヘッド。\n• コアの構造的署名が破壊されるため、自動化された言い換えツールではなく人間によって根本的に書き直された場合、判断に苦しむ可能性があります。",
-  "parameters": "解析: 敵対的不変特徴の抽出\n評価基準: 回復力訓練済み対数尤度比\n出力結果: 0-100 RADAR 回避耐性信頼度スコア",
-  "accuracy": "高 — 85-92%の精度。特に、テキストが意図的に難読化されている「敵対的」なシナリオで他のモデルを圧倒します。",
-  "references": [
-    {
-      "title": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.",
-      "url": "https://arxiv.org/abs/2307.03838"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML."
+    "name": "RADAR 敵対的検出 (RADAR Detection)",
+    "description": "RADAR（敵対的学習による堅牢なAIテキスト検出）フレームワークを適用します。標準的なAI検出器は、単純な言い換えツール（QuillBotなど）や回避プロンプト（「AI検出を回避するためにこれを書き直して」）によって簡単に打ち負かされます。RADARは、敵対的なループ内でAIパラフレーザー（言い換え器）と同時に検出器をトレーニングすることでこの問題を解決し、表面的な語彙や構文が回避ツールによってスクランブルされた後でも、機械生成テキストを特定できる、回復力の高いモデルを作成します。",
+    "algorithm": "敵対的パラフレーザー・検出器ネットワーク",
+    "mechanism": "RADARはmin-max敵対的訓練に基づいたデュアルモデルアーキテクチャを採用します。モデルA（パラフレーザー）はAI生成テキストを取り、モデルB（ディテクター）を欺くために特定的に書き換えを試みます。継続的な反復訓練を通じて、ディテクターは表面レベルの語彙と構文が回避ツールによってスクランブルされた後でも持続するLLM生成の深く不変の統計的署名と構造的アーティファクトを学習します。新しいテキストを分析する際、RADARは表面的なトークン確率ではなくこれらの回復力のあるコア署名を検索します。",
+    "useCase": "ユーザーがソースのAIの痕跡を消去するために「ヒューマナイザー」ツール、プロンプト回避の戦術、または二次的なAIパラフレーザーを使用している可能性が高い、リスクの高い環境（学術的な誠実さ、法的分析など）に不可欠です。",
+    "strengths": "• 一般的な回避手法（同義語の交換、フォーマットの変更、QuillBotなど）に対する並外れた回復力。\n• 標準のゼロショット検出器（DetectGPTなど）と比較して、複雑な人間の文章での誤検知率が大幅に低くなります。",
+    "limitations": "• サーバー側のAPI実行を必要とする高い計算オーバーヘッド。\n• コアの構造的署名が破壊されるため、自動化された言い換えツールではなく人間によって根本的に書き直された場合、判断に苦しむ可能性があります。",
+    "parameters": "解析: 敵対的不変特徴の抽出\n評価基準: 回復力訓練済み対数尤度比\n出力結果: 0-100 RADAR 回避耐性信頼度スコア",
+    "accuracy": "高 — 85-92%の精度。特に、テキストが意図的に難読化されている「敵対的」なシナリオで他のモデルを圧倒します。",
+    "references": [
+        {
+            "title": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.",
+            "url": "https://arxiv.org/abs/2307.03838"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Hu, X. et al. (2024). RADAR: Robust AI-Text Detection via Adversarial Learning. NeurIPS.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML."
 }

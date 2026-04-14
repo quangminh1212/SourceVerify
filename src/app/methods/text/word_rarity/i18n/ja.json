@@ -1,22 +1,22 @@
 {
-  "name": "単語希少性スコア (Word Rarity Score)",
-  "description": "「まれな」または「古風な」語彙の頻度に基づいてドキュメントを評価します。大規模言語モデル（LLM）は、膨大なトレーニングデータセットに基づいて、トークンの最も確率の高いシーケンスを出力するように最適化されています。その結果、モデルは一般的で確率の高い単語を好み、現代の日常言語ではめったに使用されない語彙の外れ値（レアワード）を積極的に避ける傾向があります。しかし、人間の書き手は、文章に色彩、正確さ、または個人的な声（トーン）を加えるために、まれな単語、領域固有の単語、またはわずかに古風な単語を頻繁に使用します。このアルゴリズムは、これらの低確率な「ロングテール」単語の集中度を測定します。まれな単語の欠如は、生成AIに典型的な人工的な平滑化（スムージング）の強力な指標です。",
-  "algorithm": "語彙頻度テール分析 (Tulchinskii, 2023)",
-  "mechanism": "The algorithm cross-references every token in the text against a comprehensive frequency dictionary of the target language. Words are categorized into frequency bands. The system specifically scans for words that fall into the lowest probability percentiles (the 'long tail' of the Zipfian distribution). It then calculates a global 'Rarity Score' based on the density and distribution of these unusual terms. AI-generated text typically registers a disproportionately low Rarity Score, heavily localized around the top 5,000 most common words. Human text features periodic 'spikes' into the extreme tail end of the vocabulary distribution.",
-  "useCase": "人間の著者が通常、広範で専門的な語彙を利用する学術論文、クリエイティブライティング、文献レビュー、およびオピニオン記事の分析に非常に効果的です。明確な著者の声が欠如している「当たり障りのない」AIの書き込みを検出するのに特に役立ちます。",
-  "strengths": "• 人間の専門家のニュアンスのある語彙と、LLMの一般的で安全な単語の選択とを区別するのに優れています。\n• 複雑な語彙のパラメータチューニングを行わない、標準的なプロンプト生成に対して非常に効果的です。",
-  "limitations": "• ユーザーがAIに「まれな単語を使用する」「古風なスタイルで書く」または「高度な語彙を使用する」ように指示する、特定のプロンプトエンジニアリング技術に対して脆弱です。\n• 意図的に「平易な英語（Plain English）」で書かれたテキストや、厳密に標準化された単純な用語を必要とするドメイン（基本的な指示、児童文学など）では、誤検知が生じる可能性があります。",
-  "parameters": "解析: ロングテール語彙分布\n評価基準: 低頻度トークンの密度（出現率0.001%未満）\n出力結果: 0-100 語彙希少性と平滑化（スムージング）スコア",
-  "accuracy": "中〜高 — 70-85%の精度。「まれな単語」を使用するように指示されたAIは、構造を無視して不器用に単語を注入することが多く、希少性スコアを押し上げながら意味のコヒーレンス（一貫性）を破壊するため、バースト性などの構造的メトリクスと組み合わせると予測力が高くなります。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
-      "url": "https://arxiv.org/abs/2304.09880"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS."
+    "name": "単語希少性スコア (Word Rarity Score)",
+    "description": "「まれな」または「古風な」語彙の頻度に基づいてドキュメントを評価します。大規模言語モデル（LLM）は、膨大なトレーニングデータセットに基づいて、トークンの最も確率の高いシーケンスを出力するように最適化されています。その結果、モデルは一般的で確率の高い単語を好み、現代の日常言語ではめったに使用されない語彙の外れ値（レアワード）を積極的に避ける傾向があります。しかし、人間の書き手は、文章に色彩、正確さ、または個人的な声（トーン）を加えるために、まれな単語、領域固有の単語、またはわずかに古風な単語を頻繁に使用します。このアルゴリズムは、これらの低確率な「ロングテール」単語の集中度を測定します。まれな単語の欠如は、生成AIに典型的な人工的な平滑化（スムージング）の強力な指標です。",
+    "algorithm": "語彙頻度テール分析 (Tulchinskii, 2023)",
+    "mechanism": "アルゴリズムはテキスト内の全てのトークンをターゲット言語の包括的頻度辞書と相互参照します。語は頻度帯に分類されます。システムは最も低い確率パーセンタイル（ジフ分布の「ロングテール」）に該当する語を特にスキャンします。次にこれらの珍しい用語の密度と分布に基づいてグローバルな「希少性スコア」を計算します。AI生成テキストは典型的に上位5,000の最も一般的な語の周りに大幅にローカライズされた不均衡に低い希少性スコアを記録します。人間のテキストは語彙分布の極端なテール端への周期的な「スパイク」を特徴とします。",
+    "useCase": "人間の著者が通常、広範で専門的な語彙を利用する学術論文、クリエイティブライティング、文献レビュー、およびオピニオン記事の分析に非常に効果的です。明確な著者の声が欠如している「当たり障りのない」AIの書き込みを検出するのに特に役立ちます。",
+    "strengths": "• 人間の専門家のニュアンスのある語彙と、LLMの一般的で安全な単語の選択とを区別するのに優れています。\n• 複雑な語彙のパラメータチューニングを行わない、標準的なプロンプト生成に対して非常に効果的です。",
+    "limitations": "• ユーザーがAIに「まれな単語を使用する」「古風なスタイルで書く」または「高度な語彙を使用する」ように指示する、特定のプロンプトエンジニアリング技術に対して脆弱です。\n• 意図的に「平易な英語（Plain English）」で書かれたテキストや、厳密に標準化された単純な用語を必要とするドメイン（基本的な指示、児童文学など）では、誤検知が生じる可能性があります。",
+    "parameters": "解析: ロングテール語彙分布\n評価基準: 低頻度トークンの密度（出現率0.001%未満）\n出力結果: 0-100 語彙希少性と平滑化（スムージング）スコア",
+    "accuracy": "中〜高 — 70-85%の精度。「まれな単語」を使用するように指示されたAIは、構造を無視して不器用に単語を注入することが多く、希少性スコアを押し上げながら意味のコヒーレンス（一貫性）を破壊するため、バースト性などの構造的メトリクスと組み合わせると予測力が高くなります。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS.",
+            "url": "https://arxiv.org/abs/2304.09880"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations... NeurIPS."
 }

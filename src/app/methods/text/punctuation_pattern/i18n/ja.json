@@ -1,22 +1,22 @@
 {
-  "name": "句読点のリズムとパターン (Punctuation Pattern)",
-  "description": "句読点の頻度、多様性、および構造的な配置を分析し、大規模言語モデルに特有の非常に予測可能で均一なリズムを検出します。人間のライターは、ペース調整、感情、強調のために（例：ダッシュ、セミコロン、修辞的な疑問符など）創造的に句読点を使用することがよくありますが、AIモデルは構造的に安全で単調な句読点をデフォルトとし、標準的な句点と読点に大きく依存し、リストの生成にはコロンを過度に使用します。",
-  "algorithm": "構文境界および句読点エントロピー分析",
-  "mechanism": "The algorithm strips away all alphanumeric characters to analyze only the punctuation skeleton of the text. It calculates two primary metrics: 1) Punctuation Entropy (measuring the unpredictability of punctuation sequences) and 2) Transition Spacing (the uniform distance between punctuation marks). LLMs exhibit dangerously low punctuation entropy because they are penalized for grammatical risks during RLHF training. They produce a highly rhythmic 'comma-heavy, period-capped, colon-listing' structure. In contrast, human writing shows high variance in sentence length bounded by irregular, stylistic punctuation choices. The system maps these transition densities against known AI baselines to flag texts that possess an artificially steady typographic heartbeat.",
-  "useCase": "完全に均一で無菌状態の句読点のリズムが、人間の思考の連続性ではなく機械による生成を示しているカバーレター、企業のコミュニケーション、エッセイなどの監査に非常に効果的です。",
-  "strengths": "• 根底にある句読点の骨格は通常完全にそのまま残るため、同義語の置き換えや単純な言い換えに対して完全に免疫があります。\n• 深い意味解析と比較して、計算オーバーヘッドが非常に少なくて済みます。",
-  "limitations": "• 法的契約書、学術抄録、技術マニュアルなどの高度に規制された文章（本質的に均一で予測可能な句読点が求められるもの）を分析する場合、誤検知が発生しやすくなります。\n• 人間の編集者がAIのドラフトに手動で多様な句読点（ダッシュや感嘆符など）を挿入した場合、簡単に回避されてしまいます。",
-  "parameters": "解析: タイポグラフィの骨格抽出およびシーケンスエントロピー\n評価基準: 句読点の分散 vs 構造的な予測可能性\n出力結果: 0-100 句読点の予測可能性（人工性）スコア",
-  "accuracy": "中程度 — 70-80%の精度。決定的な単独の指標としてではなく、文の長さの分散や語彙密度と相乗的に使用するのが最適です。",
-  "references": [
-    {
-      "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
-      "url": "https://doi.org/10.1371/journal.pone.0244932"
-    },
-    {
-      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
-      "url": "https://arxiv.org/abs/2301.07597"
-    }
-  ],
-  "source": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv."
+    "name": "句読点のリズムとパターン (Punctuation Pattern)",
+    "description": "句読点の頻度、多様性、および構造的な配置を分析し、大規模言語モデルに特有の非常に予測可能で均一なリズムを検出します。人間のライターは、ペース調整、感情、強調のために（例：ダッシュ、セミコロン、修辞的な疑問符など）創造的に句読点を使用することがよくありますが、AIモデルは構造的に安全で単調な句読点をデフォルトとし、標準的な句点と読点に大きく依存し、リストの生成にはコロンを過度に使用します。",
+    "algorithm": "構文境界および句読点エントロピー分析",
+    "mechanism": "アルゴリズムは全ての英数字を除去してテキストの句読点スケルトンのみを分析します。2つの主要指標を計算します：1）句読点エントロピー（句読点シーケンスの予測不能性を測定する）と2）遷移間隔（句読点間の均一距離）。LLMはRLHF訓練中に文法的リスクにペナルティを受けるため、危険なほど低い句読点エントロピーを示します。非常にリズミカルな「コンマ重視、ピリオド封止、コロンリスト」構造を生成します。対照的に、人間の文章は不規則でスタイル的な句読点選択に囲まれた文長の高い分散を示します。システムはこれらの遷移密度を既知のAIベースラインに対してマッピングし、人工的に安定した活字の心拍を持つテキストにフラグを立てます。",
+    "useCase": "完全に均一で無菌状態の句読点のリズムが、人間の思考の連続性ではなく機械による生成を示しているカバーレター、企業のコミュニケーション、エッセイなどの監査に非常に効果的です。",
+    "strengths": "• 根底にある句読点の骨格は通常完全にそのまま残るため、同義語の置き換えや単純な言い換えに対して完全に免疫があります。\n• 深い意味解析と比較して、計算オーバーヘッドが非常に少なくて済みます。",
+    "limitations": "• 法的契約書、学術抄録、技術マニュアルなどの高度に規制された文章（本質的に均一で予測可能な句読点が求められるもの）を分析する場合、誤検知が発生しやすくなります。\n• 人間の編集者がAIのドラフトに手動で多様な句読点（ダッシュや感嘆符など）を挿入した場合、簡単に回避されてしまいます。",
+    "parameters": "解析: タイポグラフィの骨格抽出およびシーケンスエントロピー\n評価基準: 句読点の分散 vs 構造的な予測可能性\n出力結果: 0-100 句読点の予測可能性（人工性）スコア",
+    "accuracy": "中程度 — 70-80%の精度。決定的な単独の指標としてではなく、文の長さの分散や語彙密度と相乗的に使用するのが最適です。",
+    "references": [
+        {
+            "title": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.",
+            "url": "https://doi.org/10.1371/journal.pone.0244932"
+        },
+        {
+            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv.",
+            "url": "https://arxiv.org/abs/2301.07597"
+        }
+    ],
+    "source": "Fagni, T. et al. (2021). TweepFake: About detecting deepfake tweets. PLOS ONE.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. arXiv."
 }

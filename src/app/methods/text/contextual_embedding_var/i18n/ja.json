@@ -1,22 +1,22 @@
 {
-  "name": "文脈埋め込み（コンテキスト・エンベディング）の分散",
-  "description": "自己回帰AIモデルに特徴的な、文内での偏差の少なさを検出するために、文脈に沿った単語埋め込み（例：BERT）の分散を測定します。",
-  "algorithm": "Transformerエンベディング抽出およびベクトル分散プロファイリング",
-  "mechanism": "Autoregressive LLMs generate text by constantly predicting the most statistically probable next token based on the preceding context window. Because they are mathematically bound to maximize likelihood, the resulting sentences maintain a tight, highly predictable semantic trajectory. If you plot the contextual embeddings (vector representations) of the words in an AI-generated sentence, they cluster tightly together with very low variance from the running average. Human writers, conversely, do not operate via next-token prediction. They frequently pull from diverse cognitive schemas, introducing novel metaphors, sudden topic shifts, or stylistically surprising vocabulary in the middle of a sentence, which causes drastic spikes and high variance in the embedding vectors. This method calculates the mathematical variance of these contextual embeddings; an unnaturally smooth, low-variance trajectory strongly flags synthetic, probability-bound generation.",
-  "useCase": "Transformerモデルが認識する単語間の深い数学的関係を分析することにより、表面的な文法チェックをすり抜ける高品質な合成テキストの検出。",
-  "strengths": "• LLMテキスト生成における根本的な数学的メカニズム（確率分布）を分析するため、巧妙なプロンプトやパラメータの調整に対して極めて堅牢です。\n• トピック、ジャンル、または使用されている特定の語彙に関係なく、非常に効果的です。\n• 主観的な文体のルールではなく、絶対的な数学的ベクトル論理で動作します。",
-  "limitations": "• 計算コストが高いです。リアルタイムで文脈埋め込みを抽出するには、BERTやRoBERTaなどの重いエンコーダ・モデルをロードする必要があります。\n• 定型的な法的契約書や反復的な技術マニュアルなど、高度に定型化された人間のテキストで誤検知（フォールス・ポジティブ）を引き起こす可能性があります。\n• 統計的に有意な分散の数学的プロファイルを確立するには、少なくとも1段落の長さのテキストが必要です。",
-  "parameters": "解析: ベクトル・エンベディング抽出および最近傍距離\n評価基準: 文内文脈埋め込みの標準偏差\n出力結果: 0-100 合成トラジェクトリ（低分散）スコア",
-  "accuracy": "高 — 85-90%。利用可能な検出方法の中で最も学術的に厳密なものの1つです。類義語の交換などの単純な回避手法に対して高い復元力を持ちます。",
-  "references": [
-    {
-      "title": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.",
-      "url": "https://doi.org/10.18653/v1/N19-1423"
-    },
-    {
-      "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
-      "url": "https://arxiv.org/abs/2306.04723"
-    }
-  ],
-  "source": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS."
+    "name": "文脈埋め込み（コンテキスト・エンベディング）の分散",
+    "description": "自己回帰AIモデルに特徴的な、文内での偏差の少なさを検出するために、文脈に沿った単語埋め込み（例：BERT）の分散を測定します。",
+    "algorithm": "Transformerエンベディング抽出およびベクトル分散プロファイリング",
+    "mechanism": "自己回帰LLMは先行するコンテキストウィンドウに基づいて統計的に最も可能性の高い次のトークンを常に予測してテキストを生成します。尤度を最大化することに数学的に拘束されているため、結果として得られる文は緊密で高度に予測可能な意味的軌跡を維持します。AI生成文の語のコンテキスト埋め込み（ベクトル表現）をプロットすると、実行平均からの分散が非常に低い状態で密集します。人間のライターは逆に、next-token予測で動作しません。多様な認知スキーマから頻繁に引き出し、文の途中で斬新な比喩、突然のトピックシフト、またはスタイル的に驚くべき語彙を導入し、埋め込みベクトルに劇的なスパイクと高い分散を引き起こします。この手法はこれらのコンテキスト埋め込みの数学的分散を計算します；不自然に滑らかで低分散の軌跡は合成的で確率拘束的な生成を強くフラグします。",
+    "useCase": "Transformerモデルが認識する単語間の深い数学的関係を分析することにより、表面的な文法チェックをすり抜ける高品質な合成テキストの検出。",
+    "strengths": "• LLMテキスト生成における根本的な数学的メカニズム（確率分布）を分析するため、巧妙なプロンプトやパラメータの調整に対して極めて堅牢です。\n• トピック、ジャンル、または使用されている特定の語彙に関係なく、非常に効果的です。\n• 主観的な文体のルールではなく、絶対的な数学的ベクトル論理で動作します。",
+    "limitations": "• 計算コストが高いです。リアルタイムで文脈埋め込みを抽出するには、BERTやRoBERTaなどの重いエンコーダ・モデルをロードする必要があります。\n• 定型的な法的契約書や反復的な技術マニュアルなど、高度に定型化された人間のテキストで誤検知（フォールス・ポジティブ）を引き起こす可能性があります。\n• 統計的に有意な分散の数学的プロファイルを確立するには、少なくとも1段落の長さのテキストが必要です。",
+    "parameters": "解析: ベクトル・エンベディング抽出および最近傍距離\n評価基準: 文内文脈埋め込みの標準偏差\n出力結果: 0-100 合成トラジェクトリ（低分散）スコア",
+    "accuracy": "高 — 85-90%。利用可能な検出方法の中で最も学術的に厳密なものの1つです。類義語の交換などの単純な回避手法に対して高い復元力を持ちます。",
+    "references": [
+        {
+            "title": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.",
+            "url": "https://doi.org/10.18653/v1/N19-1423"
+        },
+        {
+            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS.",
+            "url": "https://arxiv.org/abs/2306.04723"
+        }
+    ],
+    "source": "Devlin, J. et al. (2019). BERT: Pre-training of Deep Bidirectional Transformers. NAACL.; Tulchinskii, E. et al. (2023). Intrinsic Dimension Estimation for Robust Detection of AI-Generated Texts. NeurIPS."
 }

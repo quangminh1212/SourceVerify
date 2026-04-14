@@ -1,22 +1,22 @@
 {
-  "name": "Tongue Consistency",
-  "description": "Analyzes tongue rendering consistency",
-  "algorithm": "Tongue Consistency — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes tongue rendering and consistency for deepfake detection:\n\n1. **Tongue検出**: The tongue is detected when visible during speech and expressions (tongue protrusions, licking lips, certain phoneme articulations like /l/, /t/, /d/). Tongue shape, color, and surface texture are characterized per frame.\n\n2. **TongueAnatomy検証**: Natural tongues have specific anatomical features: dorsal surface texture (papillae), central groove (median sulcus), smooth ventral surface, characteristic pink-red coloration. The method checks anatomical correctness. AI-generated tongues may show: incorrect color, missing texture, wrong shape, or physically impossible configurations.\n\n3. **Tongue-音素Coordination**: Tongue position should correspond to articulated phonemes — visible tongue tip for /l/, /th/, tongue retraction for /k/, /g/. The method checks whether tongue visibility and position correlate correctly with detected speech sounds. Deepfakes may show tongue positions inconsistent with the audio.\n\n4. **時間的Tongue安定性**: When the tongue is not actively moving (resting in closed mouth, sustained position during speech holds), its appearance should remain stable between frames. The method tracks tongue consistency — AI generation may produce flickering tongue texture or shape changes during supposedly static tongue positions.\n\n5. **Tongue-Teeth-唇Interaction**: During speech, tongue, teeth, and lips interact in coordinated, anatomically constrained ways. The method checks whether these interactions are physically plausible. Deepfakes may produce impossible interaction states — tongue passing through teeth or occupying impossible positions relative to the oral cavity.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through tongue consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/2012.07657"
-    },
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    }
-  ]
+    "name": "舌の一貫性解析",
+    "description": "Analyzes tongue rendering consistency",
+    "algorithm": "Tongue Consistency — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes tongue rendering and consistency for deepfake detection:\n\n1. **Tongue検出**: The tongue is detected when visible during speech and expressions (tongue protrusions, licking lips, certain phoneme articulations like /l/, /t/, /d/). Tongue shape, color, and surface texture are characterized per frame.\n\n2. **TongueAnatomy検証**: Natural tongues have specific anatomical features: dorsal surface texture (papillae), central groove (median sulcus), smooth ventral surface, characteristic pink-red coloration. The method checks anatomical correctness. AI-generated tongues may show: incorrect color, missing texture, wrong shape, or physically impossible configurations.\n\n3. **Tongue-音素Coordination**: Tongue position should correspond to articulated phonemes — visible tongue tip for /l/, /th/, tongue retraction for /k/, /g/. The method checks whether tongue visibility and position correlate correctly with detected speech sounds. Deepfakes may show tongue positions inconsistent with the audio.\n\n4. **時間的Tongue安定性**: When the tongue is not actively moving (resting in closed mouth, sustained position during speech holds), its appearance should remain stable between frames. The method tracks tongue consistency — AI generation may produce flickering tongue texture or shape changes during supposedly static tongue positions.\n\n5. **Tongue-Teeth-唇Interaction**: During speech, tongue, teeth, and lips interact in coordinated, anatomically constrained ways. The method checks whether these interactions are physically plausible. Deepfakes may produce impossible interaction states — tongue passing through teeth or occupying impossible positions relative to the oral cavity.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through tongue consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/2012.07657"
+        },
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        }
+    ]
 }

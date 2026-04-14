@@ -1,22 +1,22 @@
 {
-  "name": "Jawline Consistency",
-  "description": "Analyzes jaw boundary smoothness and consistency",
-  "algorithm": "Jawline Consistency — ピクセルレベル空間分析",
-  "mechanism": "This method analyzes jawline characteristics for video deepfake detection:\n\n1. **Jawline輪郭トラッキング**: The mandibular contour is tracked per frame using facial landmarks from chin point through jaw angles to ear attachment points. The contour is parameterized by curvature, angular measurements at the gonial angle, and chin shape.\n\n2. **顎-NeckTransition分析**: The boundary where the jaw meets the neck is a critical deepfake artifact zone. Natural jaw-neck transitions show anatomically correct tissue layering (skin, platysma muscle, subcutaneous fat). The method analyzes this transition for blending artifacts, color discontinuities, or unnatural sharp/smooth boundaries.\n\n3. **顎動きBiomechanics**: During speech, the mandible rotates on the temporomandibular joint with specific biomechanical constraints (hinge + sliding motion, maximum opening ~40mm). The method verifies that jaw motion during speech follows these constraints. Deepfakes may produce jaw motion that violates TMJ biomechanics.\n\n4. **Jawline対称性一貫性**: Mandibular asymmetry is a stable individual characteristic. The method tracks left-right jawline correspondence across frames — the asymmetry pattern should remain constant. Deepfakes may produce varying jaw asymmetry as the generator independently renders each frame.\n\n5. **Jawline解像度評価**: The jawline is often at the boundary of the face-swap region. The method compares rendering quality of the jawline itself versus adjacent regions — resolution drops, texture quality changes, or sharpness discontinuities at the jawline indicate the edge of a generated face region.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through jawline consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-      "url": "https://arxiv.org/abs/1901.08971"
-    },
-    {
-      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-      "url": "https://arxiv.org/abs/1912.13458"
-    }
-  ]
+    "name": "顎ライン一貫性解析",
+    "description": "Analyzes jaw boundary smoothness and consistency",
+    "algorithm": "Jawline Consistency — ピクセルレベル空間分析",
+    "mechanism": "This method analyzes jawline characteristics for video deepfake detection:\n\n1. **Jawline輪郭トラッキング**: The mandibular contour is tracked per frame using facial landmarks from chin point through jaw angles to ear attachment points. The contour is parameterized by curvature, angular measurements at the gonial angle, and chin shape.\n\n2. **顎-NeckTransition分析**: The boundary where the jaw meets the neck is a critical deepfake artifact zone. Natural jaw-neck transitions show anatomically correct tissue layering (skin, platysma muscle, subcutaneous fat). The method analyzes this transition for blending artifacts, color discontinuities, or unnatural sharp/smooth boundaries.\n\n3. **顎動きBiomechanics**: During speech, the mandible rotates on the temporomandibular joint with specific biomechanical constraints (hinge + sliding motion, maximum opening ~40mm). The method verifies that jaw motion during speech follows these constraints. Deepfakes may produce jaw motion that violates TMJ biomechanics.\n\n4. **Jawline対称性一貫性**: Mandibular asymmetry is a stable individual characteristic. The method tracks left-right jawline correspondence across frames — the asymmetry pattern should remain constant. Deepfakes may produce varying jaw asymmetry as the generator independently renders each frame.\n\n5. **Jawline解像度評価**: The jawline is often at the boundary of the face-swap region. The method compares rendering quality of the jawline itself versus adjacent regions — resolution drops, texture quality changes, or sharpness discontinuities at the jawline indicate the edge of a generated face region.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through jawline consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+            "url": "https://arxiv.org/abs/1901.08971"
+        },
+        {
+            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+            "url": "https://arxiv.org/abs/1912.13458"
+        }
+    ]
 }

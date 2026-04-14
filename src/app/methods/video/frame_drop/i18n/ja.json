@@ -1,22 +1,22 @@
 {
-  "name": "Frame Drop Detection",
-  "description": "Detects frame continuity breaks and drop patterns common in AI-generated 動画",
-  "algorithm": "Frame Drop Detection — ピクセルレベル空間分析",
-  "mechanism": "This method detects anomalous frame drops and timing irregularities for deepfake detection:\n\n1. **FrameTiming分析**: Presentation timestamps (PTS) and decode timestamps (DTS) are analyzed for timing regularity. Authentic video shows consistent frame intervals matching the declared frame rate (±encoder tolerance). Manipulated video may show timing anomalies from frame insertion, deletion, or re-timing.\n\n2. **光学的FlowFrameInterpolationCheck**: Inter-frame optical flow magnitude is analyzed. Dropped frames produce larger-than-expected optical flow between surviving frames (double the normal inter-frame motion). The method detects statistically anomalous flow magnitudes indicating missing frames.\n\n3. **時間的アーティファクト検出**: Frame drops produce specific visual artifacts: (a) motion judder (uneven motion appearance), (b) temporal aliasing (fast-moving objects show irregular positions), (c) audio-video desync accumulation. The method detects these artifacts as indicators of temporal manipulation.\n\n4. **SelectiveFrameDropパターン**: Natural frame drops (from capture issues) are typically random. Deepfake manipulation may show selective frame drops — specifically removing frames containing generation artifacts or temporal inconsistencies. The method analyzes frame drop patterns for non-random distributions correlated with content complexity or face presence.\n\n5. **Re-Timing検出**: Video that has been re-timed (frame rate converted) shows characteristic blend frames or frame selection patterns. The method detects re-timing signatures that may indicate the video has been processed through a deepfake pipeline that outputs at a different frame rate than the source.",
-  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-  "useCase": "Detection of deepfake and AI-generated 動画 through frame drop detection analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-  "references": [
-    {
-      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-      "url": "https://arxiv.org/abs/2108.06693"
-    },
-    {
-      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-    }
-  ]
+    "name": "フレームドロップ検出",
+    "description": "Detects frame continuity breaks and drop patterns common in AI-generated 動画",
+    "algorithm": "Frame Drop Detection — ピクセルレベル空間分析",
+    "mechanism": "This method detects anomalous frame drops and timing irregularities for deepfake detection:\n\n1. **FrameTiming分析**: Presentation timestamps (PTS) and decode timestamps (DTS) are analyzed for timing regularity. Authentic video shows consistent frame intervals matching the declared frame rate (±encoder tolerance). Manipulated video may show timing anomalies from frame insertion, deletion, or re-timing.\n\n2. **光学的FlowFrameInterpolationCheck**: Inter-frame optical flow magnitude is analyzed. Dropped frames produce larger-than-expected optical flow between surviving frames (double the normal inter-frame motion). The method detects statistically anomalous flow magnitudes indicating missing frames.\n\n3. **時間的アーティファクト検出**: Frame drops produce specific visual artifacts: (a) motion judder (uneven motion appearance), (b) temporal aliasing (fast-moving objects show irregular positions), (c) audio-video desync accumulation. The method detects these artifacts as indicators of temporal manipulation.\n\n4. **SelectiveFrameDropパターン**: Natural frame drops (from capture issues) are typically random. Deepfake manipulation may show selective frame drops — specifically removing frames containing generation artifacts or temporal inconsistencies. The method analyzes frame drop patterns for non-random distributions correlated with content complexity or face presence.\n\n5. **Re-Timing検出**: Video that has been re-timed (frame rate converted) shows characteristic blend frames or frame selection patterns. The method detects re-timing signatures that may indicate the video has been processed through a deepfake pipeline that outputs at a different frame rate than the source.",
+    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+    "useCase": "Detection of deepfake and AI-generated 動画 through frame drop detection analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+    "references": [
+        {
+            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+            "url": "https://arxiv.org/abs/2108.06693"
+        },
+        {
+            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+        }
+    ]
 }

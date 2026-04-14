@@ -1,12 +1,22 @@
 {
-  "name": "Wavelet Packet Decomposition",
-  "description": "Applies full wavelet packet decomposition for fine-grained sub-band energy analysis (Coifman & Wickerhauser, 1992).",
-  "algorithm": "Wavelet Packet Decomposition分析アルゴリズム",
-  "mechanism": "この手法は applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **FullウェーブレットPacketTree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **BestBasisSelection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than AI生成の ones.\n\n3. **SubbandEnergy分布**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce 異常な energy in specific subbands — GAN grid artifacts appear as energy peaks at characteristic spatial frequencies.\n\n4. **Inter-Subband相関分析**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. AI生成の images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **係数分布Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where AIジェネレータ struggle to reproduce correct statistics — are quantified for forensic scoring.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "ウェーブレットパケット分解解析",
+    "description": "Applies full wavelet packet decomposition for fine-grained sub-band energy analysis (Coifman & Wickerhauser, 1992).",
+    "algorithm": "Wavelet Packet Decomposition分析アルゴリズム",
+    "mechanism": "この手法は applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **FullウェーブレットPacketTree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **BestBasisSelection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than AI生成の ones.\n\n3. **SubbandEnergy分布**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce 異常な energy in specific subbands — GAN grid artifacts appear as energy peaks at characteristic spatial frequencies.\n\n4. **Inter-Subband相関分析**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. AI生成の images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **係数分布Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where AIジェネレータ struggle to reproduce correct statistics — are quantified for forensic scoring.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/18.119732",
+            "title": "Coifman, R.R. & Wickerhauser, M.V. (1992). Entropy-Based Algorithms for Best Basis Selection. IEEE TIT."
+        },
+        {
+            "url": "https://doi.org/10.1109/83.862633",
+            "title": "Chang, S.G. et al. (2000). Adaptive Wavelet Thresholding for Image Denoising. IEEE TIP."
+        }
+    ]
 }

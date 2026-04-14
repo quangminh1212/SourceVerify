@@ -1,22 +1,22 @@
 {
-  "name": "命題的情報密度（Information Density）",
-  "description": "具体的な意味的命題（事実、エンティティ、固有の主張）と総単語数の比率を測定します。AIモデルは頻繁に「語彙の肥大化」に苦しんでおり、冗長で構文的に複雑な文を生成しますが、実際の情報はごくわずかしか伝達しません。",
-  "algorithm": "意味的命題と語彙的パディングの比率計算",
-  "mechanism": "Human experts writing on a subject they understand typically exhibit high Information Density. They pack concrete nouns, specific verbs, and unique facts tightly together, minimizing filler words. Large Language Models, however, optimize for fluid, highly probable token sequences rather than factual efficiency. They frequently employ 'lexical padding': using 30 words to state a concept that requires only 8. This manifests as excessive transitional phrases ('It is important to understand that...'), redundant restatements of the premise, and complex grammatical structures wrapped around simple concepts. This algorithm strips away functional vocabulary, stop words, and known transitional templates. It then isolates the core semantic propositions (unique entities, actions, and distinct concepts) and divides them by the total sentence length. If a text consists of long, perfectly grammatical sentences but exhibits an abnormally low ratio of actual, distinct facts (high 'fluff' ratio), it strictly points to the mathematical padding behaviors inherent in autoregressive text generation.",
-  "useCase": "簡潔で事実に基づいた文章が求められるエッセイ、分析レポート、要約、ニュース記事の監査に非常に効果的です。",
-  "strengths": "• 「AIの無駄口（waffle）」を検出するのに優れています。モデルが文字数の要件を満たすよう求められたものの、十分な事実知識が欠如している場合、完璧に文法的だが意味的には空っぽのフィラーが生成されます。\n• 人間の認知効率とAIの確率平滑化の根本的な違いを捉えます。\n• 単純な同義語の交換による回避の試みに対して非常に堅牢です。",
-  "limitations": "• 哲学的な考察、意識の流れの執筆、政治演説など、カジュアルまたは本質的に冗長な人間の文章（これらは自然に情報密度が低い）にはあまり効果がありません。\n• 構文解析と品詞（POS）タグ付けが必要なため、単純な文字数カウントよりも計算負荷がわずかに高くなります。\n• プロンプトが明示的に単語数を制限した場合、非常に簡潔なAIの要約（「要約（TL;DR）」の箇条書きなど）を人間が書いたものとして誤って分類する可能性があります。",
-  "parameters": "解析: 命題/エンティティの抽出と構文のトリミング\n評価基準: 中核となる意味的トークン / 総トークン数（文ごとの平均）\n出力結果: 0-100 意味的肥大化（情報の希釈）スコア",
-  "accuracy": "高 — 情報提供および学術的なテキストで80-88%。これは、「安全で、冗長で、構造的に耳障りの良い」フィラーを生成するLLMの傾向を示す、非常に信頼性の高い指標です。",
-  "references": [
-    {
-      "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
-      "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "命題的情報密度（Information Density）",
+    "description": "具体的な意味的命題（事実、エンティティ、固有の主張）と総単語数の比率を測定します。AIモデルは頻繁に「語彙の肥大化」に苦しんでおり、冗長で構文的に複雑な文を生成しますが、実際の情報はごくわずかしか伝達しません。",
+    "algorithm": "意味的命題と語彙的パディングの比率計算",
+    "mechanism": "主題を理解する人間の専門家が書く場合、典型的に高い情報密度を示します。具体的名詞、特定の動詞、独自の事実を密に詰め、フィラーワードを最小化します。しかしLLMは事実効率よりも流動的で高確率のトークンシーケンスのために最適化します。「語彙的パディング」を頻繁に用います：8語で済む概念に30語を使います。これは過剰な遷移フレーズ（「理解することが重要なのは…」）、前提の冗長な再記述、単純な概念を包む複雑な文法構造として現れます。このアルゴリズムは機能的語彙、ストップワード、既知の遷移テンプレートを除去します。次にコアの意味的命題（独自のエンティティ、アクション、異なる概念）を分離し、総文長で割ります。長く完璧に文法的な文から成るテキストだが実際の異なる事実の比率が異常に低い場合（高い「水増し」比率）、自己回帰テキスト生成に固有の数学的パディング行動を厳密に指し示します。",
+    "useCase": "簡潔で事実に基づいた文章が求められるエッセイ、分析レポート、要約、ニュース記事の監査に非常に効果的です。",
+    "strengths": "• 「AIの無駄口（waffle）」を検出するのに優れています。モデルが文字数の要件を満たすよう求められたものの、十分な事実知識が欠如している場合、完璧に文法的だが意味的には空っぽのフィラーが生成されます。\n• 人間の認知効率とAIの確率平滑化の根本的な違いを捉えます。\n• 単純な同義語の交換による回避の試みに対して非常に堅牢です。",
+    "limitations": "• 哲学的な考察、意識の流れの執筆、政治演説など、カジュアルまたは本質的に冗長な人間の文章（これらは自然に情報密度が低い）にはあまり効果がありません。\n• 構文解析と品詞（POS）タグ付けが必要なため、単純な文字数カウントよりも計算負荷がわずかに高くなります。\n• プロンプトが明示的に単語数を制限した場合、非常に簡潔なAIの要約（「要約（TL;DR）」の箇条書きなど）を人間が書いたものとして誤って分類する可能性があります。",
+    "parameters": "解析: 命題/エンティティの抽出と構文のトリミング\n評価基準: 中核となる意味的トークン / 総トークン数（文ごとの平均）\n出力結果: 0-100 意味的肥大化（情報の希釈）スコア",
+    "accuracy": "高 — 情報提供および学術的なテキストで80-88%。これは、「安全で、冗長で、構造的に耳障りの良い」フィラーを生成するLLMの傾向を示す、非常に信頼性の高い指標です。",
+    "references": [
+        {
+            "title": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.",
+            "url": "https://doi.org/10.1002/j.1538-7305.1948.tb01338.x"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Shannon, C.E. (1948). A Mathematical Theory of Communication. Bell System Technical Journal.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

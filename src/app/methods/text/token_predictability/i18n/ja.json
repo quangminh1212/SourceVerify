@@ -1,22 +1,22 @@
 {
-  "name": "トークン予測可能性のランク付け (Token Predictability)",
-  "description": "先行する文脈に基づいて、AIモデルによって各単語が明示的に予測される可能性を評価します。GLTR（Giant Language Model Test Room, Gehrmann et al., 2019）およびゼロショット確率曲率（Mitchell et al., 2023）の原理を利用して、このメソッドはテキストの「予測可能性の等高線」をマッピングします。生成AIモデルは、統計的に最も可能性の高い次のトークンを継続的に選択することで機能します。結果として、AIが作成したテキストは、圧倒的に「トップ10」の予測可能性を持つ単語で構成されます。しかし、人間の書き手は、個人の語彙、感情、または文体的な特異性によって駆動され、統計的に最適ではない（確率の低い）単語を頻繁かつ予測不可能に選択します。",
-  "algorithm": "予測ランク分布と確率曲率",
-  "mechanism": "The algorithm processes the input text sequentially through an N-gram or lightweight proxy language model to calculate the conditional probability of every token given its preceding context. Each word is ranked based on its predictability: 'Top-10' (highly predictable), 'Top-100' (moderately predictable), or 'Tail' (unpredictable). The system analyzes the text's probability curvature—the density and distribution of these ranks. A text dominated almost entirely by 'Top-10' tokens with a smooth probability contour is highly indicative of auto-regressive machine generation. A text featuring frequent spikes into 'Tail' token territory signifies human authorship.",
-  "useCase": "語彙選択の正確な人為的な「滑らかさ」を視覚化して定量化することにより、短〜中程度の長さのドキュメント（ニュース記事、レポート、学生のエッセイ）を分析するのに非常に効果的です。",
-  "strengths": "• 予測可能な単語に対する根本的な統計的バイアスは強く残るため、テキストが基本的な言い換え（パラフレーズ）を受けた場合でも、AIによる生成を検出できることがよくあります。\n• ゼロショット検出機能。個別の分類モデルをトレーニングする必要はなく、代わりに純粋な統計分布に依存します。",
-  "limitations": "• 高度に標準化された定型的な言語（例：天気予報、法律の定型文、「予測可能な」単語が必須である単純な取扱説明書など）を使用する人間のテキストでの偽陽性（誤検知）の影響を受けやすいです。\n• トークンの確率を正確に推定するには、参照言語モデルまたは堅牢なN-gramデータベースが必要です。",
-  "parameters": "解析: 条件付きトークン確率のランク付け\n評価基準: Top-Kとテールトークンの選択密度\n出力結果: 0-100 自己回帰的な予測可能性スコア",
-  "accuracy": "高 — 82-88%の精度。編集されていない機械生成テキストを検出するための、最も信頼性が高く、学術的に堅牢なベースラインメカニズムの1つとして広く考えられています。",
-  "references": [
-    {
-      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
-      "url": "https://arxiv.org/abs/1906.04043"
-    },
-    {
-      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-      "url": "https://arxiv.org/abs/2301.11305"
-    }
-  ],
-  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+    "name": "トークン予測可能性のランク付け (Token Predictability)",
+    "description": "先行する文脈に基づいて、AIモデルによって各単語が明示的に予測される可能性を評価します。GLTR（Giant Language Model Test Room, Gehrmann et al., 2019）およびゼロショット確率曲率（Mitchell et al., 2023）の原理を利用して、このメソッドはテキストの「予測可能性の等高線」をマッピングします。生成AIモデルは、統計的に最も可能性の高い次のトークンを継続的に選択することで機能します。結果として、AIが作成したテキストは、圧倒的に「トップ10」の予測可能性を持つ単語で構成されます。しかし、人間の書き手は、個人の語彙、感情、または文体的な特異性によって駆動され、統計的に最適ではない（確率の低い）単語を頻繁かつ予測不可能に選択します。",
+    "algorithm": "予測ランク分布と確率曲率",
+    "mechanism": "アルゴリズムはN-gramまたは軽量プロキシ言語モデルを通じて入力テキストを順次処理し、先行コンテキストが与えられた全てのトークンの条件付き確率を計算します。各語はその予測可能性に基づいてランク付けされます：「Top-10」（非常に予測可能）、「Top-100」（中程度に予測可能）、または「Tail」（予測不能）。システムはテキストの確率曲率—これらのランクの密度と分布—を分析します。ほぼ完全に「Top-10」トークンに支配され、スムーズな確率輪郭を持つテキストは自己回帰的機械生成を強く示します。「Tail」トークン領域への頻繁なスパイクを特徴とするテキストは人間の著作を示します。",
+    "useCase": "語彙選択の正確な人為的な「滑らかさ」を視覚化して定量化することにより、短〜中程度の長さのドキュメント（ニュース記事、レポート、学生のエッセイ）を分析するのに非常に効果的です。",
+    "strengths": "• 予測可能な単語に対する根本的な統計的バイアスは強く残るため、テキストが基本的な言い換え（パラフレーズ）を受けた場合でも、AIによる生成を検出できることがよくあります。\n• ゼロショット検出機能。個別の分類モデルをトレーニングする必要はなく、代わりに純粋な統計分布に依存します。",
+    "limitations": "• 高度に標準化された定型的な言語（例：天気予報、法律の定型文、「予測可能な」単語が必須である単純な取扱説明書など）を使用する人間のテキストでの偽陽性（誤検知）の影響を受けやすいです。\n• トークンの確率を正確に推定するには、参照言語モデルまたは堅牢なN-gramデータベースが必要です。",
+    "parameters": "解析: 条件付きトークン確率のランク付け\n評価基準: Top-Kとテールトークンの選択密度\n出力結果: 0-100 自己回帰的な予測可能性スコア",
+    "accuracy": "高 — 82-88%の精度。編集されていない機械生成テキストを検出するための、最も信頼性が高く、学術的に堅牢なベースラインメカニズムの1つとして広く考えられています。",
+    "references": [
+        {
+            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.",
+            "url": "https://arxiv.org/abs/1906.04043"
+        },
+        {
+            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+            "url": "https://arxiv.org/abs/2301.11305"
+        }
+    ],
+    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

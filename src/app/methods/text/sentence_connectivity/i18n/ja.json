@@ -1,22 +1,22 @@
 {
-  "name": "文の結束性分析 (Sentence Connectivity)",
-  "description": "個々の文が文法的および意味的にどのようにつなぎ合わされているかを分析します。AI言語モデルはいかなる犠牲を払ってでも論理的な流れを確保するように設計されているため、重い「つなぎ言葉（transition words）」（「したがって（Therefore）」、「結果として（As a result）」など）や、直接的な語彙の繰り返しを通じて、ほぼすべての文が前の文を明示的に参照する「過剰接続（hyper-connected）」テキストになります。人間の書き手は多くの場合「暗黙の結びつき」を使用します。つまり、書き手は、重い文法的な橋渡しを必要とせずに、ある概念から次の概念へと飛躍できる読者の認知能力を信頼しているのです。",
-  "algorithm": "文間の依存関係の構文解析と結束性（コヒージョン）スコアリング",
-  "mechanism": "The system evaluates adjacent sentence pairs across the entire text. It looks for explicit cohesive devices (conjunctions, transitional adverbs, demonstrative pronouns like 'This' or 'These' referring to the previous sentence) and semantic overlap (repeating the same subject or verb). It calculates a 'Connectivity Density' score. AI-generated text typically scores abnormally high on this metric, displaying a mechanical, chain-link-fence structure where every sentence is tightly locked to the next. Human text is looser, featuring sentences that stand more independently.",
-  "useCase": "学術論文、エッセイ、技術資料など、AIが自ら生成した論点間の論理的関係を過剰に説明（オーバーエクスプレイン）する傾向があるドキュメントの評価に非常に効果的です。",
-  "strengths": "• AIテキストの「滑らかだが魂のない」感覚を検出するのに優れており、なぜテキストが不自然なほど完璧に構成されているように感じるのかを正確に診断します。\n• 特定の語彙ではなく構造的な結びつきを測定するため、単純な同義語の交換に対して高い耐性があります。",
-  "limitations": "• 明示的なチェーンリンク（連鎖的）接続が職業上の要件である、非常に厳格な法的契約、数学的証明、またはステップバイステップの技術ガイドを誤ってフラグ付けする可能性があります。",
-  "parameters": "解析: 文間の依存関係と共参照解析（Coreference Resolution）\n評価基準: 明示的な結束装置の密度と意味的重複\n出力結果: 0-100 接続の不自然さ（過剰接続）スコア",
-  "accuracy": "高 — 78-84%の精度。高い可読性と論理的コヒーレンス（一貫性）に最適化されたモデルによって生成されたテキストの、最も強力な指標の1つです。",
-  "references": [
-    {
-      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-      "url": "https://web.stanford.edu/~jurafsky/slp3/"
-    },
-    {
-      "title": "Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
-      "url": "https://direct.mit.edu/coli/article/34/1/1/2209/Modeling-Local-Coherence-An-Entity-Based-Approach"
-    }
-  ],
-  "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics."
+    "name": "文の結束性分析 (Sentence Connectivity)",
+    "description": "個々の文が文法的および意味的にどのようにつなぎ合わされているかを分析します。AI言語モデルはいかなる犠牲を払ってでも論理的な流れを確保するように設計されているため、重い「つなぎ言葉（transition words）」（「したがって（Therefore）」、「結果として（As a result）」など）や、直接的な語彙の繰り返しを通じて、ほぼすべての文が前の文を明示的に参照する「過剰接続（hyper-connected）」テキストになります。人間の書き手は多くの場合「暗黙の結びつき」を使用します。つまり、書き手は、重い文法的な橋渡しを必要とせずに、ある概念から次の概念へと飛躍できる読者の認知能力を信頼しているのです。",
+    "algorithm": "文間の依存関係の構文解析と結束性（コヒージョン）スコアリング",
+    "mechanism": "システムはテキスト全体の隣接する文ペアを評価します。明示的な結束装置（接続詞、遷移副詞、前の文を参照する「この」「これら」のような指示代名詞）と意味的オーバーラップ（同じ主語または動詞の繰り返し）を探します。「接続性密度」スコアを計算します。AI生成テキストは典型的にこの指標で異常に高いスコアを記録し、全ての文が次の文に緊密にロックされた機械的なチェーンリンクフェンス構造を表示します。人間のテキストはより緩やかで、文がより独立して立つ特徴があります。",
+    "useCase": "学術論文、エッセイ、技術資料など、AIが自ら生成した論点間の論理的関係を過剰に説明（オーバーエクスプレイン）する傾向があるドキュメントの評価に非常に効果的です。",
+    "strengths": "• AIテキストの「滑らかだが魂のない」感覚を検出するのに優れており、なぜテキストが不自然なほど完璧に構成されているように感じるのかを正確に診断します。\n• 特定の語彙ではなく構造的な結びつきを測定するため、単純な同義語の交換に対して高い耐性があります。",
+    "limitations": "• 明示的なチェーンリンク（連鎖的）接続が職業上の要件である、非常に厳格な法的契約、数学的証明、またはステップバイステップの技術ガイドを誤ってフラグ付けする可能性があります。",
+    "parameters": "解析: 文間の依存関係と共参照解析（Coreference Resolution）\n評価基準: 明示的な結束装置の密度と意味的重複\n出力結果: 0-100 接続の不自然さ（過剰接続）スコア",
+    "accuracy": "高 — 78-84%の精度。高い可読性と論理的コヒーレンス（一貫性）に最適化されたモデルによって生成されたテキストの、最も強力な指標の1つです。",
+    "references": [
+        {
+            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+            "url": "https://web.stanford.edu/~jurafsky/slp3/"
+        },
+        {
+            "title": "Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics.",
+            "url": "https://direct.mit.edu/coli/article/34/1/1/2209/Modeling-Local-Coherence-An-Entity-Based-Approach"
+        }
+    ],
+    "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Barzilay, R. & Lapata, M. (2008). Modeling Local Coherence: An Entity-Based Approach. Computational Linguistics."
 }

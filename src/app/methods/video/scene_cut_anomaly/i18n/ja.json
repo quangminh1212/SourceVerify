@@ -1,12 +1,22 @@
 {
-  "name": "Scene Cut Anomaly Detection",
-  "description": "Detects anomalous scene cut patterns and unnatural transition points in manipulated videos.",
-  "algorithm": "Scene Cut Anomaly Detection分析アルゴリズム",
-  "mechanism": "This method detects scene cut anomalies for video forensic analysis:\n\n1. **SceneCut検出**: Scene cuts (hard cuts, dissolves, fades, wipes) are detected by analyzing inter-frame similarity metrics — histogram differences, pixel MSE, and structural similarity. Cut locations are identified and classified by type.\n\n2. **CutPointContent分析**: The content immediately before and after each cut is analyzed for consistency. Manipulated videos may contain cuts specifically placed to hide temporal discontinuities from deepfake insertion — cuts at moments where generation artifacts would be most visible.\n\n3. **Cut周波数分析**: The temporal distribution of cuts is analyzed. Normal video editing follows content-driven patterns (cuts at speech pauses, action changes). Anomalous cut frequency — particularly rapid cuts correlating with challenging deepfake scenarios (profile views, extreme expressions) — may indicate editing to conceal generation failures.\n\n4. **Cross-Cut一貫性**: Content properties (lighting, color balance, noise level) should be consistent across cuts within the same scene. The method checks for property discontinuities at cuts that might indicate different source material. Face properties changing at cut points (subtle identity shifts, quality changes) suggest manipulation.\n\n5. **Cut-圧縮Alignment**: In properly encoded video, scene cuts should align with I-frame positions. Misalignment between detected cuts and I-frames may indicate post-manipulation re-encoding without proper scene detection, a forensic trace of manipulation processing.",
-  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+    "name": "シーンカット異常検出",
+    "description": "Detects anomalous scene cut patterns and unnatural transition points in manipulated videos.",
+    "algorithm": "Scene Cut Anomaly Detection分析アルゴリズム",
+    "mechanism": "This method detects scene cut anomalies for video forensic analysis:\n\n1. **SceneCut検出**: Scene cuts (hard cuts, dissolves, fades, wipes) are detected by analyzing inter-frame similarity metrics — histogram differences, pixel MSE, and structural similarity. Cut locations are identified and classified by type.\n\n2. **CutPointContent分析**: The content immediately before and after each cut is analyzed for consistency. Manipulated videos may contain cuts specifically placed to hide temporal discontinuities from deepfake insertion — cuts at moments where generation artifacts would be most visible.\n\n3. **Cut周波数分析**: The temporal distribution of cuts is analyzed. Normal video editing follows content-driven patterns (cuts at speech pauses, action changes). Anomalous cut frequency — particularly rapid cuts correlating with challenging deepfake scenarios (profile views, extreme expressions) — may indicate editing to conceal generation failures.\n\n4. **Cross-Cut一貫性**: Content properties (lighting, color balance, noise level) should be consistent across cuts within the same scene. The method checks for property discontinuities at cuts that might indicate different source material. Face properties changing at cut points (subtle identity shifts, quality changes) suggest manipulation.\n\n5. **Cut-圧縮Alignment**: In properly encoded video, scene cuts should align with I-frame positions. Misalignment between detected cuts and I-frames may indicate post-manipulation re-encoding without proper scene detection, a forensic trace of manipulation processing.",
+    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適",
+    "references": [
+        {
+            "url": "https://doi.org/10.1109/TMM.2005.861777",
+            "title": "Rasheed, Z. & Shah, M. (2005). Detection and Representation of Scenes in Videos. IEEE TMM."
+        },
+        {
+            "url": "https://doi.org/10.1145/2733373.2806316",
+            "title": "Baraldi, L. et al. (2015). A Deep Siamese Network for Scene Detection in Broadcast Videos. ACM MM."
+        }
+    ]
 }
