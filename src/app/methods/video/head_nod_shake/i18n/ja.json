@@ -1,12 +1,12 @@
 {
-    "name": "Head Nod/Shake Pattern",
-    "description": "Analyzes head nodding and shaking patterns for natural conversational synchronization — AI often desynchronizes.",
-    "algorithm": "Head Nod/Shake Pattern分析アルゴリズム",
-    "mechanism": "Head Nod/Shake Patternシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Head Nod/Shake Pattern",
+  "description": "Analyzes head nodding and shaking patterns for natural conversational synchronization — AI often desynchronizes.",
+  "algorithm": "Head Nod/Shake Pattern分析アルゴリズム",
+  "mechanism": "This method analyzes head gesture dynamics for deepfake detection:\n\n1. **HeadPoseトラッキング**: Head orientation (yaw, pitch, roll) is estimated per frame using facial landmark geometry or 3D head model fitting. Head pose signals are decomposed to identify gestural movements (nods = pitch oscillation, shakes = yaw oscillation).\n\n2. **GestureKinematics分析**: Natural head gestures follow specific kinematics: (a) nodding involves 10-20° pitch oscillation at 1-2 Hz, (b) shaking involves 15-30° yaw oscillation at 1-2.5 Hz, (c) gestures show smooth sinusoidal profiles with physiologically constrained velocity. The method checks whether detected gestures fall within natural kinematic parameters.\n\n3. **Gesture-発話相関**: Head gestures correlate with speech prosody — nods often coincide with stressed syllables, head movements accompany turn-taking in conversation. The method analyzes temporal correlation between head motion and speech intensity. Deepfakes may show gestures temporally decoupled from speech.\n\n4. **Neck-HeadCoordination**: Head rotation involves coupled neck and cervical spine motion with characteristic ranges — large yaw rotations involve torso contribution. The method verifies head-neck-shoulder coordination. Deepfake generators that only manipulate the face may produce head rotations that don't propagate correctly to neck and shoulders.\n\n5. **Inertial一貫性**: Head motion should show proper inertial dynamics — acceleration/deceleration following the mass and muscle force constraints of the head-neck system. The method analyzes the frequency content and jerk profile of head motion. AI-generated head movements may lack natural inertial characteristics.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

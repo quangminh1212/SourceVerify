@@ -1,22 +1,22 @@
 {
-    "name": "Linear Pattern Detection",
-    "description": "Detects unnatural linear patterns in 画像",
-    "algorithm": "Linear Pattern Detection — ピクセルレベル空間分析",
-    "mechanism": "この手法はピクセルレベルの空間分析を実行してAI生成のアーティファクトを検出します:\n\n1. **画像前処理**: 入力画像を読み込み、分析に適した色空間に変換します.\n\n2. **特徴抽出**: Detects unnatural linear patterns in 画像. アルゴリズムが画像グリッド全体から関連するピクセルレベルの特徴を抽出します.\n\n3. **パターン分析**: 抽出された特徴から統計的測定値を計算して不規則性を特定します.\n\n4. **異常検出**: 結果を本物のカメラ画像とAI生成画像のベースラインと比較します.\n\n5. **スコア計算**: 検出された異常の程度に基づいて信頼度スコア (0-100) を計算します.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： linear pattern detection 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
-    "references": [
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ]
+  "name": "Linear Pattern Detection",
+  "description": "Detects unnatural linear patterns in 画像",
+  "algorithm": "Linear Pattern Detection — ピクセルレベル空間分析",
+  "mechanism": "This method detects linear patterns for image forensic analysis using features inspired by Fridrich & Kodovsky (2012):\n\n1. **LinearStructure検出**: The image is analyzed for linear structures using directional filtering (oriented Gabor filters, Hough transform, or Radon transform). Lines, edges, and linear patterns are extracted with their orientation, length, and intensity.\n\n2. **LinearパターンRegularity分析**: The regularity and periodicity of linear patterns are analyzed. Natural images contain some linear structures (architecture, horizon lines) but AI-generated images may show: (a) excessive linear regularity, (b) line patterns from the generator's convolutional grid structure, (c) artificial straight lines where natural curves should exist.\n\n3. **方向ヒストグラム**: The distribution of linear pattern orientations is computed. Natural scenes show orientation distributions related to scene geometry (many horizontal/vertical lines in architectural scenes, random orientations in natural scenes). AI generators may produce orientation biases from their training data or architecture.\n\n4. **SubpixelLine分析**: Lines in authentic images, when analyzed at subpixel precision, show characteristics of the optical imaging process: anti-aliasing from the lens, CFA interpolation effects, edge softening. AI-generated lines may show different subpixel profiles — too sharp, too smooth, or with incorrect anti-aliasing patterns.\n\n5. **Linearコヒーレンススコアリング**: The overall coherence of linear patterns is scored. Anomalies include: linear patterns that don't follow perspective geometry, line segments that terminate abruptly without physical justification, and linear structures with non-physical optical characteristics. The score quantifies deviation from expected linear pattern statistics.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
+  "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
+  "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
+  "useCase": "以下の分析によるAI生成または改ざん画像の検出： linear pattern detection 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
+  "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
+  "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+  "references": [
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ]
 }

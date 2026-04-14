@@ -1,18 +1,18 @@
 {
-    "name": "照応（アナフォラ）解決",
-    "description": "共参照（同じものを指すこと）において、名詞の明示的な繰り返しと、代名詞（照応詞）の自然な使用の頻度を評価します。",
-    "algorithm": "共参照依存関係プロファイラ",
-    "mechanism": "この手法は、テキストが照応（アナフォラ：以前に確立された名詞を指し示すために「それ」「彼ら」「彼女」などの代名詞を使用すること）をどのように処理するかを研究します。人間は無意識のうちにアナフォラに大きく依存しています。なぜなら、人間の認知的文脈は参照をスムーズに引き継ぎ、冗長な言葉遊びを防ぐからです。しかし、LLM（自己注意機構と、絶対的で曖昧さのない明確さに焦点を当てた強化された安全訓練のため）は、しばしば「アナフォラの回避」を示します。それらは代名詞を使用する代わりに、コアとなる名詞を明示的に繰り返す（「その企業は発表した...」「その企業は述べた...」「その企業の目標は...」）傾向が統計的に高くなります。明示的な共参照と照応代名詞の比率を追跡することで、このシステムは機械生成特有の、過度に慎重な構造的足場を暴き出します。",
-    "useCase": "自然な人間の代名詞の使用を避け、絶対的なテキストレベルの明確さと中立性を優先するLLMによって生成されたテキストの検出。",
-    "strengths": "• 明示的な名詞を高く評価するTransformerモデルの根本的な自己注意（セルフアテンション）の性質をターゲットにします。\n• 物語、情報提供、要約テキストで非常に効果的です。\n• 非常に捉えにくいため、テキストの凝集性を壊さずに標準的なプロンプトでこれを回避することは不可能です。",
-    "limitations": "• 人間の書き手が意図的に曖昧さを避ける法律文書、非常にフォーマルな文書、または学術文書を起草する際の誤検知に弱いです。\n• 正確なエンティティマッピングには、重いNLP共参照解決モデルが必要です。\n• 共参照チェーンが形成できない非常に短いテキストでは、パフォーマンスが著しく低下します。",
-    "parameters": "解析: 統語的共参照トラッキング\n評価基準: 明示的名詞と代名詞の比率\n出力結果: 0-100 アナフォラ回避スコア",
-    "accuracy": "中〜高 — 76-82%。「企業スタイル」または過度にフォーマルなAIサマリーを特定するのに非常に効果的。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
+  "name": "照応（アナフォラ）解決",
+  "description": "共参照（同じものを指すこと）において、名詞の明示的な繰り返しと、代名詞（照応詞）の自然な使用の頻度を評価します。",
+  "algorithm": "共参照依存関係プロファイラ",
+  "mechanism": "This method studies how a text handles anaphora—the use of pronouns (e.g., 'it', 'they', 'she') to refer back to previously established nouns. Humans unconsciously rely heavily on anaphora because our cognitive context smoothly carries the reference forward, preventing redundant wordiness. However, LLMs (due to their self-attention mechanisms and reinforced safety training focused on absolute, unambiguous clarity) often exhibit 'anaphora avoidance'. They have a statistically higher tendency to explicitly repeat the core noun ('The company announced...', 'The company stated...', 'The company\\'s goal...') instead of using pronouns. By tracking the ratio of explicit coreferences to anaphoric pronouns, this system exposes the overly-cautious structural scaffolding typical of machine generation.",
+  "useCase": "自然な人間の代名詞の使用を避け、絶対的なテキストレベルの明確さと中立性を優先するLLMによって生成されたテキストの検出。",
+  "strengths": "• 明示的な名詞を高く評価するTransformerモデルの根本的な自己注意（セルフアテンション）の性質をターゲットにします。\n• 物語、情報提供、要約テキストで非常に効果的です。\n• 非常に捉えにくいため、テキストの凝集性を壊さずに標準的なプロンプトでこれを回避することは不可能です。",
+  "limitations": "• 人間の書き手が意図的に曖昧さを避ける法律文書、非常にフォーマルな文書、または学術文書を起草する際の誤検知に弱いです。\n• 正確なエンティティマッピングには、重いNLP共参照解決モデルが必要です。\n• 共参照チェーンが形成できない非常に短いテキストでは、パフォーマンスが著しく低下します。",
+  "parameters": "解析: 統語的共参照トラッキング\n評価基準: 明示的名詞と代名詞の比率\n出力結果: 0-100 アナフォラ回避スコア",
+  "accuracy": "中〜高 — 76-82%。「企業スタイル」または過度にフォーマルなAIサマリーを特定するのに非常に効果的。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press."
 }

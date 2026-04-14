@@ -1,22 +1,22 @@
 {
-    "name": "圧縮情報密度 (Compression Ratio)",
-    "description": "計算データ圧縮アルゴリズム（zlib、gzip、LZ77など）を利用して、テキストの固有の情報密度、冗長性、および構造的な予測可能性を測定します。大規模言語モデルは確率論的なトークン予測に基づいてテキストを生成するため、その出力は基本的に高い構文の規則性、語彙の繰り返し、および予測可能なn-gramシーケンスを特徴とします。人間の書き込みは自然とより混沌としており、珍しい語彙の急増、不規則なフォーマット、そしてより高い情報エントロピーを備えています。その結果、AIが生成したテキストは、人間が書いたテキストよりも大幅に効率的に圧縮されます（元のサイズに対してファイルサイズが小さくなります）。",
-    "algorithm": "マルチアルゴリズムLZ77/DEFLATE比率分析",
-    "mechanism": "アルゴリズムは生の入力テキストを受け取り、標準的なロスレス圧縮アルゴリズムを使用してエンコードします。次に、圧縮率（圧縮サイズ / 元のサイズ）を計算します。比率が低いことは、高い冗長性と構造的な予測可能性を示しており、機械生成の強力な指標となります。さらに、システムはスライディングウィンドウ手法（例：200〜500文字）を採用して、局所的な圧縮可能性セグメントを分析します。さまざまなウィンドウ間での圧縮可能性の激しい変動は、多くの場合「フランケンシュタイン」テキストを示唆しており、同じドキュメント内に人間とAIの著者が混在していることを示しています。",
-    "useCase": "膨大な量のテキストをスキャンするための、迅速で言語に依存しない教師なしフィルターとして非常に効果的であり、特に学術環境やコンピューター教育環境で役立ちます。",
-    "strengths": "• 完全に教師なしでモデルに依存しません。機能するためにニューラルネットワークのトレーニングデータは必要ありません。\n• 非常に高速な計算実行（クライアントサイド機能あり）。\n• AIが数学的に偽造するのが困難な、情報理論の基本的な特性を捉えます。",
-    "limitations": "• 圧縮アルゴリズムは辞書を構築するのに十分なデータを必要とするため、200語未満のテキストではパフォーマンスが大幅に低下します。\n• 特定の専門用語の自然な繰り返しが多い、人間によって書かれた技術的、法的、またはプログラミング関連のテキストは非常にうまく圧縮され、誤検知のリスクがあります。",
-    "parameters": "解析: シャノンエントロピーとLZ77情報密度\n評価基準: グローバルおよびスライディングウィンドウ圧縮率の分散\n出力結果: 0-100 圧縮可能性（アルゴリズムの予測可能性）スコア",
-    "accuracy": "中〜高 — 500語を超えるテキストで75-82%の単独精度。多層分析パイプラインにおける迅速な事前フィルターとして最適に機能します。",
-    "references": [
-        {
-            "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
-            "url": "https://ieeexplore.ieee.org/document/10418933"
-        },
-        {
-            "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",
-            "url": "https://arxiv.org/abs/2305.09859"
-        }
-    ],
-    "source": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.; Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL."
+  "name": "圧縮情報密度 (Compression Ratio)",
+  "description": "計算データ圧縮アルゴリズム（zlib、gzip、LZ77など）を利用して、テキストの固有の情報密度、冗長性、および構造的な予測可能性を測定します。大規模言語モデルは確率論的なトークン予測に基づいてテキストを生成するため、その出力は基本的に高い構文の規則性、語彙の繰り返し、および予測可能なn-gramシーケンスを特徴とします。人間の書き込みは自然とより混沌としており、珍しい語彙の急増、不規則なフォーマット、そしてより高い情報エントロピーを備えています。その結果、AIが生成したテキストは、人間が書いたテキストよりも大幅に効率的に圧縮されます（元のサイズに対してファイルサイズが小さくなります）。",
+  "algorithm": "マルチアルゴリズムLZ77/DEFLATE比率分析",
+  "mechanism": "The algorithm takes the raw input text and encodes it using standard lossless compression algorithms. It then calculates the Compression Ratio (Compressed Size / Original Size). A low ratio indicates high redundancy and structural predictability—a strong indicator of machine generation. Furthermore, the system employs a sliding window technique (e.g., 200-500 characters) to analyze local compressibility segments. Wild variances in compressibility across different windows often signal a 'Frankenstein' text, indicating mixed human and AI authorship within the same document.",
+  "useCase": "膨大な量のテキストをスキャンするための、迅速で言語に依存しない教師なしフィルターとして非常に効果的であり、特に学術環境やコンピューター教育環境で役立ちます。",
+  "strengths": "• 完全に教師なしでモデルに依存しません。機能するためにニューラルネットワークのトレーニングデータは必要ありません。\n• 非常に高速な計算実行（クライアントサイド機能あり）。\n• AIが数学的に偽造するのが困難な、情報理論の基本的な特性を捉えます。",
+  "limitations": "• 圧縮アルゴリズムは辞書を構築するのに十分なデータを必要とするため、200語未満のテキストではパフォーマンスが大幅に低下します。\n• 特定の専門用語の自然な繰り返しが多い、人間によって書かれた技術的、法的、またはプログラミング関連のテキストは非常にうまく圧縮され、誤検知のリスクがあります。",
+  "parameters": "解析: シャノンエントロピーとLZ77情報密度\n評価基準: グローバルおよびスライディングウィンドウ圧縮率の分散\n出力結果: 0-100 圧縮可能性（アルゴリズムの予測可能性）スコア",
+  "accuracy": "中〜高 — 500語を超えるテキストで75-82%の単独精度。多層分析パイプラインにおける迅速な事前フィルターとして最適に機能します。",
+  "references": [
+    {
+      "title": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.",
+      "url": "https://ieeexplore.ieee.org/document/10418933"
+    },
+    {
+      "title": "Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL.",
+      "url": "https://arxiv.org/abs/2305.09859"
+    }
+  ],
+  "source": "Jiang, Z. et al. (2024). Detecting LLM-Generated Text in Computing Education. IEEE Access.; Mireshghallah, F. et al. (2024). Smaller Language Models are Better Black-box Machine-Generated Text Detectors. EACL."
 }

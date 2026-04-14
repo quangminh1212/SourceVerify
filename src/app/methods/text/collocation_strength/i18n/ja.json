@@ -1,26 +1,26 @@
 {
-    "name": "語彙的連語（コロケーション）強度プロファイリング",
-    "description": "単語のペアリング（組み合わせ）の統計的確率（自己相互情報量：PMI）を分析して、安全で数学的に非常に確率の高いフレーズの組み合わせを特定します。",
-    "algorithm": "自己相互情報量（PMI）プロファイラー",
-    "mechanism": "ChurchとHanksの基礎的な計算言語学の研究に根ざしたこの手法は、膨大なベースライン・コーパスに対して、隣接する単語や近くにある単語ペアの自己相互情報量（PMI）を計算します。大規模言語モデルは、統計的に最も確率の高い次のトークンを自己回帰的に予測することによってテキストを生成します。この数学的な性質は、強くて一般的な連語（例えば、決まり文句、慣用的なチャンク、「tapestry of」や「vibrant landscape」などの予想される形容詞と名詞のペア）に強く依存するという、避けられない宿命を彼らに課します。対照的に、本物の人間の書き手は、統計的規範を破る、斬新で確率の低い連語、耳障りな連想、または創造的なメタファーを頻繁に発明します。テキストのn-gramの全体的なPMIスコアを集計することにより、この手法は、機械生成を示す数学的に「最も安全」で最も可能性の高いテキスト構成を効果的に特定します。",
-    "useCase": "斬新で創造的な、または数学的に予想外の単語のペアリング（組み合わせ）が完全に欠如していることを通じてAIの文章を特定し、決まり文句と「安全な」単語の連想に基づいて根本的に構築されたテキストを暴き出します。",
-    "strengths": "• 自己回帰的な次のトークン予測アルゴリズムのコアとなる機械的性質を深く搾取（エクスプロイト）します。\n• 包括的なトピック、ドメイン（分野）、または主題に関係なく、信じられないほど堅牢で効果的です。\n• コンパイル済みのPMIベースライン・テーブルが読み込まれていると仮定すれば、計算量は非常に軽量です。",
-    "limitations": "• 密度の高い学術的な文章や非常に形式化された法律の起草も、厳密で確立された高確率の連語に大きく依存しているため、深刻な誤検知（フォールス・ポジティブ）を引き起こす可能性があります。\n• サポートされているすべての言語について、膨大な最新のベースライン頻度コーパスを生成し、継続的に維持する必要があります。\n• クリエイティブなプロンプト・エンジニアリング（例：「シュルレアリスムのスタイルで書いて」）は、人工的にPMIを下げることでフィルターをときどき回避できる場合があります。",
-    "parameters": "解析: バイグラム/トライグラム PMIマッピング\n評価基準: 平均連語確率 vs 語彙の斬新性\n出力結果: 0-100 連語の予測可能性スコア",
-    "accuracy": "高 — 78-86%。AI生成テキストの最も堅牢で、深く基礎的な統計マーカーの１つです。",
-    "references": [
-        {
-            "title": "Church, K. W. & Hanks, P. (1990). Word Association Norms, Mutual Information, and Lexicography. Computational Linguistics.",
-            "url": "https://aclanthology.org/J90-1003/"
-        },
-        {
-            "title": "Evert, S. (2008). Corpora and Collocations. Corpus Linguistics: An International Handbook.",
-            "url": "https://doi.org/10.1515/9783110213881.2.1212"
-        },
-        {
-            "title": "Clark, E. et al. (2021). All That's 'Human' Is Not Gold: Evaluating Human Evaluation of Generated Text. ACL.",
-            "url": "https://doi.org/10.18653/v1/2021.acl-long.565"
-        }
-    ],
-    "source": "Church, K. W. & Hanks, P. (1990). Word Association Norms, Mutual Information, and Lexicography. Computational Linguistics.; Evert, S. (2008). Corpora and Collocations. Corpus Linguistics: An International Handbook.; Clark, E. et al. (2021). All That's 'Human' Is Not Gold: Evaluating Human Evaluation of Generated Text. ACL."
+  "name": "語彙的連語（コロケーション）強度プロファイリング",
+  "description": "単語のペアリング（組み合わせ）の統計的確率（自己相互情報量：PMI）を分析して、安全で数学的に非常に確率の高いフレーズの組み合わせを特定します。",
+  "algorithm": "自己相互情報量（PMI）プロファイラー",
+  "mechanism": "Rooted in the foundational computational linguistics work of Church & Hanks, this method calculates the Pointwise Mutual Information (PMI) of adjacent and nearby word pairs against massive baseline corpora. Large Language Models generate text by autoregressively predicting the most statistically probable next tokens. This mathematical nature inherently saddles them with a heavy, inescapable reliance on strong, common collocations (e.g., clichés, idiomatic chunks, expected adjective-noun pairs like 'tapestry of' or 'vibrant landscape'). In contrast, authentic human writers frequently invent novel, low-probability collocations, jarring associations, or creative metaphors that break statistical norms. By aggregating the overall PMI score of a text's n-grams, this method effectively identifies the mathematically 'safest' and most probable text configurations indicative of machine generation.",
+  "useCase": "斬新で創造的な、または数学的に予想外の単語のペアリング（組み合わせ）が完全に欠如していることを通じてAIの文章を特定し、決まり文句と「安全な」単語の連想に基づいて根本的に構築されたテキストを暴き出します。",
+  "strengths": "• 自己回帰的な次のトークン予測アルゴリズムのコアとなる機械的性質を深く搾取（エクスプロイト）します。\n• 包括的なトピック、ドメイン（分野）、または主題に関係なく、信じられないほど堅牢で効果的です。\n• コンパイル済みのPMIベースライン・テーブルが読み込まれていると仮定すれば、計算量は非常に軽量です。",
+  "limitations": "• 密度の高い学術的な文章や非常に形式化された法律の起草も、厳密で確立された高確率の連語に大きく依存しているため、深刻な誤検知（フォールス・ポジティブ）を引き起こす可能性があります。\n• サポートされているすべての言語について、膨大な最新のベースライン頻度コーパスを生成し、継続的に維持する必要があります。\n• クリエイティブなプロンプト・エンジニアリング（例：「シュルレアリスムのスタイルで書いて」）は、人工的にPMIを下げることでフィルターをときどき回避できる場合があります。",
+  "parameters": "解析: バイグラム/トライグラム PMIマッピング\n評価基準: 平均連語確率 vs 語彙の斬新性\n出力結果: 0-100 連語の予測可能性スコア",
+  "accuracy": "高 — 78-86%。AI生成テキストの最も堅牢で、深く基礎的な統計マーカーの１つです。",
+  "references": [
+    {
+      "title": "Church, K. W. & Hanks, P. (1990). Word Association Norms, Mutual Information, and Lexicography. Computational Linguistics.",
+      "url": "https://aclanthology.org/J90-1003/"
+    },
+    {
+      "title": "Evert, S. (2008). Corpora and Collocations. Corpus Linguistics: An International Handbook.",
+      "url": "https://doi.org/10.1515/9783110213881.2.1212"
+    },
+    {
+      "title": "Clark, E. et al. (2021). All That's 'Human' Is Not Gold: Evaluating Human Evaluation of Generated Text. ACL.",
+      "url": "https://doi.org/10.18653/v1/2021.acl-long.565"
+    }
+  ],
+  "source": "Church, K. W. & Hanks, P. (1990). Word Association Norms, Mutual Information, and Lexicography. Computational Linguistics.; Evert, S. (2008). Corpora and Collocations. Corpus Linguistics: An International Handbook.; Clark, E. et al. (2021). All That's 'Human' Is Not Gold: Evaluating Human Evaluation of Generated Text. ACL."
 }

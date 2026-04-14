@@ -1,22 +1,22 @@
 {
-    "name": "CFA（カラーフィルターアレイ）パターン検出",
-    "description": "実際のカメラセンサーによって本質的に残された、構造的なBayerカラーフィルターアレイのデモザイクアーティファクトを検索します。このアルゴリズムのフィンガープリントは、物理的な光学系とシリコンを通じて撮影された実際の写真の支配的な指標であり、AIによって完全に生成された画像、またはゼロから合成された画像には本来存在しません。",
-    "algorithm": "Bayer CFAデモザイクトレースおよび補間行列の検証",
-    "mechanism": "このアルゴリズムは、画像のカラーチャネル（主にグリーンチャネル）の2次元の周期的な自己相関を計算します。実際のデジタルカメラでは、光は物理的なベイヤーフィルターアレイを通過するため、センサーピクセルごとに取得される絶対的な色値は1つだけです。欠落している色は数学的に補間（「デモザイク」）され、画像全体に明確で測定可能な2x2の周期的な補間トレースが残ります。生成AIモデルは、物理的なセンサーグリッドをシミュレートすることなく、潜在的な数学的空間から完全に形成されたRGBピクセルを直接合成するため、この基本的なハードウェアのフィンガープリントが完全に欠落しています。",
-    "parameters": "解析: RGBチャネルの2Dスペクトル自己相関, 期待されるターゲット: 2x2周期的分散行列, 許容行列: 確率マッピング",
-    "accuracy": "高（80-92%） - 実際のハードウェアの起源を検出するための非常に強力なベースラインですが、極端なソーシャルメディアの圧縮によって劣化する可能性があります。",
-    "source": "PopescuおよびFarid (2005) - 測光CFAフォレンジック",
-    "useCase": "本物のカメラハードウェアの起源の検証、純粋なAI生成シーンの暴露、および有機的なCFAパターンの連続性が突然壊れるローカルな画像スプライシングの検出。",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TSP.2005.855406",
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries in Color Filter Array Interpolated Images. IEEE TSP."
-        },
-        {
-            "url": "https://doi.org/10.1109/ICIP.2009.5413963",
-            "title": "Dirik, A.E. & Memon, N. (2009). Image tamper detection based on demosaicing artifacts. IEEE ICIP."
-        }
-    ],
-    "strengths": "• 不変で基礎的な物理光学およびセンサー製造の物理学に深く根ざしている。\n• AIジェネレーターが意図的にシミュレートしたり、正確に偽造したりすることは計算上非常に困難である。\n• 本物の、未加工または軽く処理されたカメラ画像を解析する場合、偽陽性率が信じられないほど低い。\n• CFAの不連続性をマッピングすることにより、部分的にスプライス/Photoshopされた画像のどこで偽造が発生したかを確実に見つけることができる。",
-    "limitations": "• 一般的なCFAトレースの有無のみを確認でき、正確な特定のカメラモデルを識別することはできない。\n• 最新のスマートフォンのコンピュテーショナルフォトグラフィー（ナイトモード、HDRなど）では、真っ新なCFAパターンを不用意にマスクする破壊的なマルチフレームブレンディングが適用される。\n• 大規模な幾何学的なサイズ変更、大幅なダウンサンプリング、または強力なJPEG圧縮は、これらの繊細な微細な痕跡を永久に消し去る。\n• 従来のベイヤーアレイを持たない特殊なセンサー（Foveon X3やネイティブなLeicaモノクロームなど）で撮影された画像では、無効な結果を生成する。"
+  "name": "CFA（カラーフィルターアレイ）パターン検出",
+  "description": "実際のカメラセンサーによって本質的に残された、構造的なBayerカラーフィルターアレイのデモザイクアーティファクトを検索します。このアルゴリズムのフィンガープリントは、物理的な光学系とシリコンを通じて撮影された実際の写真の支配的な指標であり、AIによって完全に生成された画像、またはゼロから合成された画像には本来存在しません。",
+  "algorithm": "Bayer CFAデモザイクトレースおよび補間行列の検証",
+  "mechanism": "The algorithm calculates the 2D periodic autocorrelation of the image's color channels (primarily the green channel). In actual digital cameras, light passes through a physical Bayer filter array, meaning only one absolute color value is captured per sensor pixel. The missing colors are mathematically interpolated ('demosaiced'), leaving a distinct, measurable 2x2 periodic interpolation trace across the entire image. Because Generative AI models synthesize fully-formed RGB pixels directly from latent mathematical space without simulating a physical sensor grid, they completely lack this fundamental hardware fingerprint.",
+  "parameters": "解析: RGBチャネルの2Dスペクトル自己相関, 期待されるターゲット: 2x2周期的分散行列, 許容行列: 確率マッピング",
+  "accuracy": "高（80-92%） - 実際のハードウェアの起源を検出するための非常に強力なベースラインですが、極端なソーシャルメディアの圧縮によって劣化する可能性があります。",
+  "source": "PopescuおよびFarid (2005) - 測光CFAフォレンジック",
+  "useCase": "本物のカメラハードウェアの起源の検証、純粋なAI生成シーンの暴露、および有機的なCFAパターンの連続性が突然壊れるローカルな画像スプライシングの検出。",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TSP.2005.855406",
+      "title": "Popescu, A.C. & Farid, H. (2005). Exposing Digital Forgeries in Color Filter Array Interpolated Images. IEEE TSP."
+    },
+    {
+      "url": "https://doi.org/10.1109/ICIP.2009.5413963",
+      "title": "Dirik, A.E. & Memon, N. (2009). Image tamper detection based on demosaicing artifacts. IEEE ICIP."
+    }
+  ],
+  "strengths": "• 不変で基礎的な物理光学およびセンサー製造の物理学に深く根ざしている。\n• AIジェネレーターが意図的にシミュレートしたり、正確に偽造したりすることは計算上非常に困難である。\n• 本物の、未加工または軽く処理されたカメラ画像を解析する場合、偽陽性率が信じられないほど低い。\n• CFAの不連続性をマッピングすることにより、部分的にスプライス/Photoshopされた画像のどこで偽造が発生したかを確実に見つけることができる。",
+  "limitations": "• 一般的なCFAトレースの有無のみを確認でき、正確な特定のカメラモデルを識別することはできない。\n• 最新のスマートフォンのコンピュテーショナルフォトグラフィー（ナイトモード、HDRなど）では、真っ新なCFAパターンを不用意にマスクする破壊的なマルチフレームブレンディングが適用される。\n• 大規模な幾何学的なサイズ変更、大幅なダウンサンプリング、または強力なJPEG圧縮は、これらの繊細な微細な痕跡を永久に消し去る。\n• 従来のベイヤーアレイを持たない特殊なセンサー（Foveon X3やネイティブなLeicaモノクロームなど）で撮影された画像では、無効な結果を生成する。"
 }

@@ -1,12 +1,12 @@
 {
-    "name": "SSIM Map Analysis",
-    "description": "Computes local SSIM structural similarity maps to detect region-level quality inconsistencies (Wang et al., 2004).",
-    "algorithm": "SSIM Map Analysis分析アルゴリズム",
-    "mechanism": "SSIM Map Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "SSIM Map Analysis",
+  "description": "Computes local SSIM structural similarity maps to detect region-level quality inconsistencies (Wang et al., 2004).",
+  "algorithm": "SSIM Map Analysis分析アルゴリズム",
+  "mechanism": "この手法は applies the Structural Similarity Index (SSIM) framework by Wang et al. (2004) for forensic quality analysis:\n\n1. **ローカルStatistics計算**: For each local window w (通常 11×11 Gaussian), three components are computed: luminance μ, contrast σ, and structure σ_xy. These capture perceptually relevant image properties following the human visual system model.\n\n2. **SSIMComponent分解**: The SSIM index between reference and test patches decomposes as: SSIM(x,y) = l(x,y)^α · c(x,y)^β · s(x,y)^γ, where l = (2μₓμᵧ+C₁)/(μₓ²+μᵧ²+C₁), c = (2σₓσᵧ+C₂)/(σₓ²+σᵧ²+C₂), s = (σₓᵧ+C₃)/(σₓσᵧ+C₃).\n\n3. **Self-SimilarityMapConstruction**: フォレンジック分析のため without a reference image, local self-similarity is computed by comparing each patch against its neighboring regions. The resulting SSIM map reveals spatial consistency of image quality — genuine images show smooth, physically coherent quality variation.\n\n4. **QualityDiscontinuity検出**: Abrupt changes in local SSIM indicate potential manipulation boundaries — where inserted or AI生成の regions meet authentic image content. These discontinuities arise from differences in compression artifacts, noise levels, or rendering quality.\n\n5. **統計的Profiling**: The distribution of local SSIM values is analyzed. Natural images exhibit characteristic SSIM distributions governed by content complexity. AI生成の images often show abnormally uniform local quality (lacking the natural variation from optics, sensor, and compression) or suspicious quality boundaries absent in untampered photographs.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

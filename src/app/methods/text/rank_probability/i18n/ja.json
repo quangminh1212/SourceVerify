@@ -1,22 +1,22 @@
 {
-    "name": "トークンランク確率 (Rank Probability)",
-    "description": "モデルの語彙分布内における単語の統計的ランクを分析します。AI言語モデルは、シーケンス内で統計的に最も確率の高い次の単語（トークン）を予測することによって動作します。その結果、AIによって生成されたテキストは、特定のコンテキストにおいて「上位10」または「上位100」の高確率な単語に過度にインデックス付けされます。人間のライターは、はるかに広く、予測不可能な語彙分布から自然に引き出し、機械が低確率とスコア付けする「ロングテール」の単語を頻繁に選択します。",
-    "algorithm": "コンテキストトークンランクマトリックス分析",
-    "mechanism": "このメソッドは、参照言語モデルを通してテキストを処理し、先行するコンテキストに基づいてすべての単語の絶対的なランク付けを計算します。単語は確率の階層（例：トップ10、トップ100、トップ1000、>1000）に分類され、高ランクトークンと低ランクトークンの全体的な比率が計算されます。AIテキストは、トップ10/100語（GLTRの視覚化における「緑/黄色」ゾーン）の、人為的に滑らかで高密度な集中を示します。人間のテキストは、アルゴリズムのシーケンスを打ち破る、低確率で非常に具体的な単語（「赤/紫」ゾーン）の突然の急増によって特徴付けられます。",
-    "useCase": "正式なエッセイ、ニュース記事、専門的な執筆の分析に非常に効果的です。テキストの根底にある予測メカニズムを明らかにすることで、生成的起源の深い数学的証明を提供します。",
-    "strengths": "• すべての自己回帰言語モデルが数学的にどのように動作するかのコアアーキテクチャに根ざしています。\n• 基礎となる確率分布は人為的に滑らかなままであるため、単純な同義語の交換に対して非常に回復力があります。",
-    "limitations": "• テキストは重量級の参照言語モデルに対して評価される必要があるため、かなりの計算リソースが必要です。\n• 短いテキスト（100語未満）では、信頼性の高いランクの変動を計算するのに十分な大きさの統計サンプルが得られません。",
-    "parameters": "解析: 自己回帰トークン予測と絶対ランクの分類\n評価基準: 確率の階層（トップ10/100/1000）全体の分布密度\n出力結果: 0-100 アルゴリズムのランク予測可能性スコア",
-    "accuracy": "高 — 85-90%の精度。これは、生で編集されていないAIテキストを検出するための、最も信頼性が高く、数学的に根拠のある方法の1つです。",
-    "references": [
-        {
-            "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
-            "url": "https://doi.org/10.18653/v1/P19-3019"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
-            "url": "https://arxiv.org/abs/1908.09203"
-        }
-    ],
-    "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
+  "name": "トークンランク確率 (Rank Probability)",
+  "description": "モデルの語彙分布内における単語の統計的ランクを分析します。AI言語モデルは、シーケンス内で統計的に最も確率の高い次の単語（トークン）を予測することによって動作します。その結果、AIによって生成されたテキストは、特定のコンテキストにおいて「上位10」または「上位100」の高確率な単語に過度にインデックス付けされます。人間のライターは、はるかに広く、予測不可能な語彙分布から自然に引き出し、機械が低確率とスコア付けする「ロングテール」の単語を頻繁に選択します。",
+  "algorithm": "コンテキストトークンランクマトリックス分析",
+  "mechanism": "The method processes the text through a reference language model to calculate the absolute ranking of every word based on its preceding context. Words are categorized into probability tiers (e.g., Top 10, Top 100, Top 1000, >1000). The algorithm calculates the aggregate fraction of high-rank vs. low-rank tokens. AI text exhibits an artificially smooth, dense concentration of Top 10/100 words (the 'Green/Yellow' zones in GLTR visualizations). Human text is characterized by sudden spikes of low-probability, highly specific words (the 'Red/Purple' zones) that break the algorithmic sequence.",
+  "useCase": "正式なエッセイ、ニュース記事、専門的な執筆の分析に非常に効果的です。テキストの根底にある予測メカニズムを明らかにすることで、生成的起源の深い数学的証明を提供します。",
+  "strengths": "• すべての自己回帰言語モデルが数学的にどのように動作するかのコアアーキテクチャに根ざしています。\n• 基礎となる確率分布は人為的に滑らかなままであるため、単純な同義語の交換に対して非常に回復力があります。",
+  "limitations": "• テキストは重量級の参照言語モデルに対して評価される必要があるため、かなりの計算リソースが必要です。\n• 短いテキスト（100語未満）では、信頼性の高いランクの変動を計算するのに十分な大きさの統計サンプルが得られません。",
+  "parameters": "解析: 自己回帰トークン予測と絶対ランクの分類\n評価基準: 確率の階層（トップ10/100/1000）全体の分布密度\n出力結果: 0-100 アルゴリズムのランク予測可能性スコア",
+  "accuracy": "高 — 85-90%の精度。これは、生で編集されていないAIテキストを検出するための、最も信頼性が高く、数学的に根拠のある方法の1つです。",
+  "references": [
+    {
+      "title": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.",
+      "url": "https://doi.org/10.18653/v1/P19-3019"
+    },
+    {
+      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+      "url": "https://arxiv.org/abs/1908.09203"
+    }
+  ],
+  "source": "Gehrmann, S. et al. (2019). GLTR: Statistical Detection and Visualization of Generated Text. ACL Demo.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Lip Reading Accuracy Score",
-    "description": "Computes lip reading accuracy by comparing visual speech with audio — deepfakes often have mismatched lip movements.",
-    "algorithm": "Lip Reading Accuracy Score分析アルゴリズム",
-    "mechanism": "Lip Reading Accuracy Scoreシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Lip Reading Accuracy Score",
+  "description": "Computes lip reading accuracy by comparing visual speech with audio — deepfakes often have mismatched lip movements.",
+  "algorithm": "Lip Reading Accuracy Score分析アルゴリズム",
+  "mechanism": "This method performs lip reading analysis for audio-visual deepfake detection:\n\n1. **視覚的発話Feature抽出**: Lip region is cropped and normalized per frame, extracting visual speech features — lip shape (inner/outer contour), lip area, mouth opening, tongue visibility, and teeth exposure. These features encode the visual aspect of speech articulation (visemes).\n\n2. **VisemeSequenceDecoding**: The visual speech features are analyzed to determine which phonological units (visemes) are being articulated. Visemes are decoded from the lip motion sequence using temporal pattern recognition.\n\n3. **音声-視覚的Concordance**: Decoded visual phonemes are compared with phonemes derived from the audio speech signal. In authentic video, visual and audio phonemes should match — the lips should form shapes corresponding to the spoken sounds. Deepfakes with mismatched audio may show visual-audio phoneme disagreements per Chung & Zisserman (2017).\n\n4. **ArticulationQuality評価**: Natural speech articulation involves precisely coordinated lip, tongue, jaw, and cheek movements. The method evaluates articulation quality — whether lip shapes fully achieve the target viseme positions. Deepfake lip generation may produce under-articulated or over-simplified lip movements that approximate but don't fully achieve correct viseme shapes.\n\n5. **Coarticulation分析**: In natural speech, phoneme production is influenced by surrounding phonemes (coarticulation) — the lips begin transitioning to the next sound before completing the current one. The method checks for natural coarticulation effects. AI lip generation may produce discrete viseme transitions without the smooth blending of coarticulation.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

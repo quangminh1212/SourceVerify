@@ -1,18 +1,18 @@
 {
-    "name": "左右対称性解析",
-    "description": "画像内の不自然な左右対称性を検出し、定量化します。AI生成モデルは完全な鏡面対称に対する帰納的バイアスを示すことが多く、本物の写真では統計的に異常な構造的完全性を生み出します。",
-    "algorithm": "正規化相互相関による大域的対称性検出",
-    "mechanism": "幾何学的に反転した画像の半分（左右、上下）の間で、ピクセルレベルおよび構造的特徴の相関を計算します。このアルゴリズムは、特徴の対称的な配置を特定し、正規化相互相関（NCC）を使用して大域的な対称性スコアを計算します。異常に高い相関スコアは、合成生成バイアスまたはクローニング操作を示しています。",
-    "parameters": "比較指標: 正規化相互相関 (NCC), 特徴抽出: SIFT/SURFキーポイント, 変換: 水平/垂直反転",
-    "accuracy": "中（65-75%） - 自然界には完全な幾何学的対称性が欠けているシーン（例：人間の顔、風景）を分析する際に最も効果的です。",
-    "source": "Loy & Eklundh (2006) / Mader et al. (2017) 合成対称性バイアスについて",
-    "useCase": "生成モデルによって一般的に生み出される構造的完全性のアーティファクトの特定と、シーンの物理的妥当性の評価。",
-    "references": [
-        {
-            "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry and Symmetric Constellations of Features. ECCV.",
-            "url": "https://doi.org/10.1007/11744047_38"
-        }
-    ],
-    "strengths": "• 計算がシンプルで高速。\n• 多くの生成ネットワークに固有の、根本的な構造的バイアスを捉える。\n• 大規模なデータセット固有のトレーニングを必要とせずに機能する。\n• 周波数およびテクスチャ分析に対する効果的な補完指標。",
-    "limitations": "• 本来対称的なシーン（建築物、反射など）では偽陽性が発生する。\n• コンテキスト分析なしでは、単独での診断の信頼性が低い。\n• 生成モデルに非対称な構成を明示的に指示することで容易に回避できる。\n• 本物の写真におけるわずかな遠近法の歪みや、被写体の回転に非常に敏感。"
+  "name": "左右対称性解析",
+  "description": "画像内の不自然な左右対称性を検出し、定量化します。AI生成モデルは完全な鏡面対称に対する帰納的バイアスを示すことが多く、本物の写真では統計的に異常な構造的完全性を生み出します。",
+  "algorithm": "正規化相互相関による大域的対称性検出",
+  "mechanism": "Computes pixel-level and structural feature correlation between geometrically mirrored halves (left/right, top/bottom) of an image. The algorithm identifies symmetric constellations of features and calculates a global symmetry score using Normalized Cross-Correlation (NCC). Unusually peak correlation scores indicate synthetic generation biases or cloning manipulations.",
+  "parameters": "比較指標: 正規化相互相関 (NCC), 特徴抽出: SIFT/SURFキーポイント, 変換: 水平/垂直反転",
+  "accuracy": "中（65-75%） - 自然界には完全な幾何学的対称性が欠けているシーン（例：人間の顔、風景）を分析する際に最も効果的です。",
+  "source": "Loy & Eklundh (2006) / Mader et al. (2017) 合成対称性バイアスについて",
+  "useCase": "生成モデルによって一般的に生み出される構造的完全性のアーティファクトの特定と、シーンの物理的妥当性の評価。",
+  "references": [
+    {
+      "title": "Loy, G. & Eklundh, J.O. (2006). Detecting Symmetry and Symmetric Constellations of Features. ECCV.",
+      "url": "https://doi.org/10.1007/11744047_38"
+    }
+  ],
+  "strengths": "• 計算がシンプルで高速。\n• 多くの生成ネットワークに固有の、根本的な構造的バイアスを捉える。\n• 大規模なデータセット固有のトレーニングを必要とせずに機能する。\n• 周波数およびテクスチャ分析に対する効果的な補完指標。",
+  "limitations": "• 本来対称的なシーン（建築物、反射など）では偽陽性が発生する。\n• コンテキスト分析なしでは、単独での診断の信頼性が低い。\n• 生成モデルに非対称な構成を明示的に指示することで容易に回避できる。\n• 本物の写真におけるわずかな遠近法の歪みや、被写体の回転に非常に敏感。"
 }

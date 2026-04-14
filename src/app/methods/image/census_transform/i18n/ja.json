@@ -1,22 +1,22 @@
 {
-    "name": "センサス変換マイクロテクスチャ解析",
-    "description": "ノンパラメトリックな局所空間変換を適用して、マイクロテクスチャの一貫性を評価します。AI生成モデル（特に拡散ベースのフレームワーク）は、隣接するピクセル間の本物の高周波テクスチャ関係を合成できないことが多く、統計的に異常な局所バイナリパターンを作成します。",
-    "algorithm": "ノンパラメトリック局所バイナリピクセルセンサス変換",
-    "mechanism": "このアルゴリズムは、各ピクセルの強度をそのすぐ近くのピクセルと比較することにより、各ピクセル周辺の局所的な空間構造をマッピングし、均一な明るさのシフトに不変の局所的なマイクロテクスチャをカプセル化したビット文字列（センサスシグネチャ）を生成します。本物の画像では、マテリアルテクスチャや有機的なセンサーノイズなどの物理的な制約により、複雑で自然に分散したセンサスシグネチャが決定されます。逆に、AIによって生成された画像は、畳み込み画像合成に固有の一般化された平滑化とデコード操作により、厳密に制限された、または反復的な局所バイナリパターンの語彙を示します。",
-    "parameters": "検出ウィンドウ: 3x3または5x5の近傍, 特徴抽出: 局所バイナリシグネチャ, 評価: 領域内のハミング距離分散",
-    "accuracy": "中〜高（75-85%） - 古いGANに対しては非常に効果的であり、非圧縮画像の拡散モデルのアーティファクトを特定する能力が非常に高い。",
-    "source": "Zabih & Woodfill (1994) / Fridrich & Kodovsky (2012) - 高度なステガナリシスフォレンジック",
-    "useCase": "合成マイクロテクスチャの検出、高周波ピクセル関係のみからのAI生成の特定、および表面テクスチャの真正性の評価。",
-    "references": [
-        {
-            "title": "Zabih, R. & Woodfill, J. (1994). Non-parametric Local Transforms for Computing Visual Correspondence. ECCV.",
-            "url": "https://doi.org/10.1007/BFb0028345"
-        },
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        }
-    ],
-    "strengths": "• 全体的な照明の変化、明るさの調整、および基本的なカラーグレーディングの操作に対して非常に堅牢。\n• AI画像ジェネレーターに典型的な、不自然で「プラスチック」なマイクロテクスチャの検出と数学的な強調に優れている。\n• 非常に高速な実行機能を備えた、計算が簡単なブール論理に依存している。\n• マクロな意味的コンテキストによる混乱を避けるため、厳格にローカルなピクセルレベルで動作する。",
-    "limitations": "• フォレンジックの空間信号は、中程度の非可逆圧縮（標準のソーシャルメディアのJPEGなど）によって著しく劣化または永久に破壊される。\n• ベースラインとなるマイクロテクスチャを欠く、完全に滑らかでテクスチャのない表面では、スタンドアロンドのツールとして機能しない。\n• AIによる合成生成と、積極的な人工的アップスケーリングや強力なデジタルシャープニングアルゴリズムを分離することは非常に困難。\n• 非常に詳細で幾何学的に完璧な2Dパターン（高密度のグリッドやモアレなど）で、時折誤警報を引き起こすことがある。"
+  "name": "センサス変換マイクロテクスチャ解析",
+  "description": "ノンパラメトリックな局所空間変換を適用して、マイクロテクスチャの一貫性を評価します。AI生成モデル（特に拡散ベースのフレームワーク）は、隣接するピクセル間の本物の高周波テクスチャ関係を合成できないことが多く、統計的に異常な局所バイナリパターンを作成します。",
+  "algorithm": "ノンパラメトリック局所バイナリピクセルセンサス変換",
+  "mechanism": "The algorithm maps the local spatial structure around each pixel by comparing its intensity to its immediate neighborhood, generating a bit string (Census signature) that encapsulates the local micro-texture invariant to uniform brightness shifts. In authentic images, physical constraints like material texture and organic sensor noise dictate complex, naturally dispersed Census signatures. Conversely, AI-generated images display a severely restricted or repetitive vocabulary of local binary patterns due to the generalized smoothing and decoding operations inherent in convolutional image synthesis.",
+  "parameters": "検出ウィンドウ: 3x3または5x5の近傍, 特徴抽出: 局所バイナリシグネチャ, 評価: 領域内のハミング距離分散",
+  "accuracy": "中〜高（75-85%） - 古いGANに対しては非常に効果的であり、非圧縮画像の拡散モデルのアーティファクトを特定する能力が非常に高い。",
+  "source": "Zabih & Woodfill (1994) / Fridrich & Kodovsky (2012) - 高度なステガナリシスフォレンジック",
+  "useCase": "合成マイクロテクスチャの検出、高周波ピクセル関係のみからのAI生成の特定、および表面テクスチャの真正性の評価。",
+  "references": [
+    {
+      "title": "Zabih, R. & Woodfill, J. (1994). Non-parametric Local Transforms for Computing Visual Correspondence. ECCV.",
+      "url": "https://doi.org/10.1007/BFb0028345"
+    },
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    }
+  ],
+  "strengths": "• 全体的な照明の変化、明るさの調整、および基本的なカラーグレーディングの操作に対して非常に堅牢。\n• AI画像ジェネレーターに典型的な、不自然で「プラスチック」なマイクロテクスチャの検出と数学的な強調に優れている。\n• 非常に高速な実行機能を備えた、計算が簡単なブール論理に依存している。\n• マクロな意味的コンテキストによる混乱を避けるため、厳格にローカルなピクセルレベルで動作する。",
+  "limitations": "• フォレンジックの空間信号は、中程度の非可逆圧縮（標準のソーシャルメディアのJPEGなど）によって著しく劣化または永久に破壊される。\n• ベースラインとなるマイクロテクスチャを欠く、完全に滑らかでテクスチャのない表面では、スタンドアロンドのツールとして機能しない。\n• AIによる合成生成と、積極的な人工的アップスケーリングや強力なデジタルシャープニングアルゴリズムを分離することは非常に困難。\n• 非常に詳細で幾何学的に完璧な2Dパターン（高密度のグリッドやモアレなど）で、時折誤警報を引き起こすことがある。"
 }

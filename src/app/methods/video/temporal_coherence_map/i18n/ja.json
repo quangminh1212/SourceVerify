@@ -1,22 +1,22 @@
 {
-    "name": "Temporal Coherence Map",
-    "description": "Maps temporal coherence across frames",
-    "algorithm": "Temporal Coherence Map — ピクセルレベル空間分析",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Maps temporal coherence across frames. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through temporal coherence map analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        }
-    ]
+  "name": "Temporal Coherence Map",
+  "description": "Maps temporal coherence across frames",
+  "algorithm": "Temporal Coherence Map — ピクセルレベル空間分析",
+  "mechanism": "This method creates temporal coherence maps for deepfake detection:\n\n1. **FeatureトラッキングAcrossFrames**: Dense feature correspondences are established between consecutive frames using optical flow, and long-range correspondences across multiple frames using feature matching. This creates a spatio-temporal feature trajectory map.\n\n2. **ローカルコヒーレンス計算**: For each pixel, temporal coherence is computed as the consistency of its feature trajectory — smooth, physically plausible trajectories have high coherence, while erratic or discontinuous trajectories have low coherence. The coherence map reveals regions with temporal instability.\n\n3. **コヒーレンスMap空間的分析**: Natural video shows uniformly high coherence for static regions and physically motivated coherence patterns for moving objects. The method analyzes the coherence map for anomalous low-coherence regions — deepfake-generated areas often show reduced temporal coherence, particularly at face boundaries and in texture regions.\n\n4. **顔-Backgroundコヒーレンス比較**: The average coherence in face regions vs. background provides a diagnostic ratio. In authentic video, both show similar coherence levels. Deepfakes typically show lower coherence in the generated face (per-frame independent generation) compared to the naturally captured background.\n\n5. **コヒーレンス時間的Trends**: The per-frame average coherence is tracked over time. Natural video maintains high, stable coherence. Deepfake videos may show coherence drops correlated with challenging face poses, expressions, or lighting conditions where the generator produces more temporally inconsistent output.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through temporal coherence map analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    }
+  ]
 }

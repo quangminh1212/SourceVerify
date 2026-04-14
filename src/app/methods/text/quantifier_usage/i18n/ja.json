@@ -1,22 +1,22 @@
 {
-    "name": "数量詞の粒度プロファイル (Quantifier Granularity)",
-    "description": "数量詞（例：「多くの」、「いくつかの」、「少しの」、「すべての」、「いくつかの」、「ほとんどの」）の統計的分布と特殊性を分析します。大規模言語モデルは、正確な数値データやリスクのある絶対的な主張（「すべての専門家」、「誰も〜ない」）よりも、曖昧でコミットしない数量詞（「多くの専門家が同意する」、「いくつかの研究が示唆している」）をアルゴリズム的に強く好む傾向があります。この動作は、モデルがハルシネーション（幻覚）による詳細や簡単に反証可能な絶対的なステートメントを生成するのを防ぐように設計された、パープレキシティの最適化と安全性のガードレールに由来しています。",
-    "algorithm": "曖昧な数量詞と絶対的な数量詞の比率抽出",
-    "mechanism": "アナライザは、数量を示すすべての用語を抽出し、それらを2つのビンに分類します：「曖昧な数量詞」（いくつか、多数、さまざま）と「絶対的/正確な数量詞」（すべて、ゼロ、正確な数値）。これら2つのセット間の比率を計算します。AIモデルは基本的に、誤った絶対値を生成しないように（RLHFを介して）調整された確率エンジンであるため、数学的に安全で曖昧な数量詞の周りに出力を集中させます。人間のライターは通常、正確なデータで議論を固定するか、修辞的な効果のために絶対値を使用します。システムは、特定の値にコミットすることなく、曖昧な数量詞の疑わしく高く、変化のない密度を維持しているテキストにフラグを立てます。",
-    "useCase": "特定の数値を引用する分野の専門家である人間とは異なり、機械が「さまざまな要因」や「多くの場合」のような表現に大きく依存する研究概要、市場分析、学術エッセイなどの監査に非常に効果的です。",
-    "strengths": "• モデルが取得された特定のデータの欠如を幅広い数量詞の背後に隠す、AIの「ハルシネーション回避」戦術を暴くのに優れています。\n• 一般的な定量化は基本的な確率生成の中核的な機能であるため、異なる言語モデル間で非常に持続的です。",
-    "limitations": "• 幅広い一般化が文脈的に適切な社会学的または推測的な文章において、誤検知を引き起こしやすいです。\n• 人間のユーザーがテキストに偽の特定の数値を強制的に挿入するようにAIに強くプロンプトした場合、簡単に無効化されます。",
-    "parameters": "解析: 語彙抽出および特異性の分類\n評価基準: 曖昧な数量詞と絶対的な数量詞の比率\n出力結果: 0-100 曖昧な定量化（人為的な一般性）スコア",
-    "accuracy": "中程度 — 単独の精度は70-80%。文脈への依存度が高いため、語彙の特異性および証拠引用の分析と組み合わせる必要があります。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+  "name": "数量詞の粒度プロファイル (Quantifier Granularity)",
+  "description": "数量詞（例：「多くの」、「いくつかの」、「少しの」、「すべての」、「いくつかの」、「ほとんどの」）の統計的分布と特殊性を分析します。大規模言語モデルは、正確な数値データやリスクのある絶対的な主張（「すべての専門家」、「誰も〜ない」）よりも、曖昧でコミットしない数量詞（「多くの専門家が同意する」、「いくつかの研究が示唆している」）をアルゴリズム的に強く好む傾向があります。この動作は、モデルがハルシネーション（幻覚）による詳細や簡単に反証可能な絶対的なステートメントを生成するのを防ぐように設計された、パープレキシティの最適化と安全性のガードレールに由来しています。",
+  "algorithm": "曖昧な数量詞と絶対的な数量詞の比率抽出",
+  "mechanism": "The analyzer extracts all quantity-indicating terms and categorizes them into two bins: 'Fuzzy Quantifiers' (some, many, various) and 'Absolute/Precise Quantifiers' (all, zero, exact numbers). It calculates the ratio between these two sets. Because AI models are fundamentally probability engines tuned (via RLHF) to avoid generating false absolutes, they mathematically cluster their outputs around safe, fuzzy quantifiers. A human writer typically anchors arguments with precise data or uses absolutes for rhetorical effect. The system flags texts that maintain a suspiciously high, unvarying density of vague quantifiers without committing to specific values.",
+  "useCase": "特定の数値を引用する分野の専門家である人間とは異なり、機械が「さまざまな要因」や「多くの場合」のような表現に大きく依存する研究概要、市場分析、学術エッセイなどの監査に非常に効果的です。",
+  "strengths": "• モデルが取得された特定のデータの欠如を幅広い数量詞の背後に隠す、AIの「ハルシネーション回避」戦術を暴くのに優れています。\n• 一般的な定量化は基本的な確率生成の中核的な機能であるため、異なる言語モデル間で非常に持続的です。",
+  "limitations": "• 幅広い一般化が文脈的に適切な社会学的または推測的な文章において、誤検知を引き起こしやすいです。\n• 人間のユーザーがテキストに偽の特定の数値を強制的に挿入するようにAIに強くプロンプトした場合、簡単に無効化されます。",
+  "parameters": "解析: 語彙抽出および特異性の分類\n評価基準: 曖昧な数量詞と絶対的な数量詞の比率\n出力結果: 0-100 曖昧な定量化（人為的な一般性）スコア",
+  "accuracy": "中程度 — 単独の精度は70-80%。文脈への依存度が高いため、語彙の特異性および証拠引用の分析と組み合わせる必要があります。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

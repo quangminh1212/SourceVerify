@@ -1,12 +1,12 @@
 {
-    "name": "Temporal Frequency Anomaly",
-    "description": "Detects anomalous temporal frequency signatures in video — AI generation creates distinctive temporal spectral patterns.",
-    "algorithm": "Temporal Frequency Anomaly分析アルゴリズム",
-    "mechanism": "Temporal Frequency Anomalyシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Temporal Frequency Anomaly",
+  "description": "Detects anomalous temporal frequency signatures in video — AI generation creates distinctive temporal spectral patterns.",
+  "algorithm": "Temporal Frequency Anomaly分析アルゴリズム",
+  "mechanism": "This method detects temporal frequency anomalies for video deepfake detection:\n\n1. **時間的信号抽出**: Per-pixel or per-region temporal signals are extracted — tracking intensity, color, and texture over time. These signals capture the temporal dynamics at each spatial location.\n\n2. **時間的周波数分解**: Temporal signals are analyzed via FFT to obtain per-location temporal frequency spectra. This reveals the frequency components of temporal variation: scene motion (~0-5 Hz), lighting changes (~0-1 Hz), and potential generation artifacts.\n\n3. **異常検出in時間的Spectra**: Natural video temporal spectra are dominated by low frequencies (slow scene changes) with rapid falloff at higher frequencies. The method detects anomalous spectral components: (a) energy at incommensurate frequencies with no physical source, (b) spectral peaks at the video generator's characteristic temporal frequencies, (c) unexpected harmonics from repetitive generation patterns.\n\n4. **空間的マッピングof時間的Anomalies**: The detected temporal frequency anomalies are mapped spatially. Anomalies concentrated in face regions (but absent in background) strongly indicate face-specific generation artifacts. The spatial distribution of temporal anomalies reveals the extent and boundaries of generated content.\n\n5. **Cross-周波数コヒーレンス**: In natural video, temporal frequency components at different spatial frequencies are coherently related (same physical motion produces correlated temporal variations at all spatial frequencies). The method checks cross-frequency coherence — AI generation may produce temporally incoherent variations at different spatial scales.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

@@ -1,22 +1,22 @@
 {
-    "name": "単語ごとの正規化エントロピー",
-    "description": "個々の単語に詰め込まれた平均的な統計的予測不可能性（エントロピー）を計算します。AIモデルは安全で最適化された確率のしきい値内でテキストを生成するため、単語ごとのエントロピーは人間の文章よりも常に低くなります。",
-    "algorithm": "トークンレベルの正規化エントロピー計算（Kirchenbauer et al., 2023）",
-    "mechanism": "自然言語処理において、先行する文脈が与えられた場合の単語の「驚きの値（サプライズ・バリュー）」は、情報エントロピーとして測定されます。人間の書き手は頻繁に創造的な飛躍を行い、予想外の形容詞や珍しい同義語を選択したり、まったく新しい概念に飛びついたりします。これは数学的に、単語ごとの高いエントロピーをもたらします。大規模言語モデルの動作は異なります。LLMは、流暢さと有用性を最大限に高めるために「統計的に最も可能性の高い」次のトークンを選択するように設計された確率エンジンです。Temperature（温度）設定を上げても、LLMの基本的なアーキテクチャは、極端にまれな、または予測不可能なトークンシーケンスに重いペナルティを科します。この手法は、基礎となる言語モデルを使用してテキスト内のすべての単語の確率を推定し、負の対数尤度（エントロピー）を計算し、この値を総単語数全体で正規化します。結果として得られる「単語ごとの平均エントロピー」が異常に低く一貫している場合、そのテキストが数学的に安全で確率の高いアルゴリズムの経路を使用して構築されたことが証明され、人工的な起源であることが暴露されます。",
-    "useCase": "エッセイ、クリエイティブ・ライティング、およびジャーナリズムの記事を分析し、語彙の選択が人間のような認知的予測不可能性を示しているか、それとも機械のような統計的安全性を示しているかを判断します。",
-    "strengths": "• AIのウォーターマーキング（電子透かし）およびゼロショット検出における基礎研究（Kirchenbauer / Mitchell）に裏付けられた、非常に正確な指標です。\n• QuillBotなどの単純なパラフレーズ（言い換え）ツールに対しても非常に堅牢です。これらのツールも高確率のトークン置換に依存しているためです。\n• すべての自己回帰型LLMの核心的な機械的限界、すなわち文法的な流暢さを壊すことなく理論上の言語モデルを純粋に驚かせることができないという事実を暴き出します。",
-    "limitations": "• 基本となるトークン確率を計算するために、大規模な基盤となる参照言語モデル（GPT-2やBERTなど）をバックグラウンドで実行する必要があり、計算コストがかかります。\n• 幼児向けに書かれた人間のテキストや、高度に標準化された法的/企業ドキュメントは、当然単語ごとのエントロピーが低く、誤検知を引き起こす可能性があります。\n• 非常に短いテキストでは、統計的に有意な平均を確立するのに十分な単語数が得られません。",
-    "parameters": "解析: 自己回帰型負の対数尤度計算\n評価基準: トークンごとの平均エントロピー（単語あたりのビット数）\n出力結果: 0-100 語彙の予測可能性（アルゴリズムの安全性）スコア",
-    "accuracy": "高 — 200単語以上のテキストで80-88%。これは、ゼロショットの機械生成を検出するための最も科学的に厳密で弾力性のある方法の1つです。",
-    "references": [
-        {
-            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
-            "url": "https://arxiv.org/abs/2301.10226"
-        },
-        {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        }
-    ],
-    "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+  "name": "単語ごとの正規化エントロピー",
+  "description": "個々の単語に詰め込まれた平均的な統計的予測不可能性（エントロピー）を計算します。AIモデルは安全で最適化された確率のしきい値内でテキストを生成するため、単語ごとのエントロピーは人間の文章よりも常に低くなります。",
+  "algorithm": "トークンレベルの正規化エントロピー計算（Kirchenbauer et al., 2023）",
+  "mechanism": "In natural language processing, the 'surprise value' of a word given its preceding context is measured as Information Entropy. Human writers frequently take creative leaps, selecting unexpected adjectives, rare synonyms, or jumping to entirely new concepts, which mathematically results in high entropy per word. Large Language Models operate differently: they are probability engines designed to select the 'most statistically likely' next token to ensure maximum fluency and helpfulness. Even when temperature settings are raised, the foundational architecture of LLMs heavily penalizes extremely rare or unpredictable token sequences. This method uses an underlying language model to estimate the probability of every single word in the text, computes the negative log-likelihood (entropy), and then normalizes this value across the total word count. If the resulting 'average entropy per word' is exceptionally low and consistent, it proves the text was constructed using a mathematically safe, high-probability algorithmic path, exposing its artificial origin.",
+  "useCase": "エッセイ、クリエイティブ・ライティング、およびジャーナリズムの記事を分析し、語彙の選択が人間のような認知的予測不可能性を示しているか、それとも機械のような統計的安全性を示しているかを判断します。",
+  "strengths": "• AIのウォーターマーキング（電子透かし）およびゼロショット検出における基礎研究（Kirchenbauer / Mitchell）に裏付けられた、非常に正確な指標です。\n• QuillBotなどの単純なパラフレーズ（言い換え）ツールに対しても非常に堅牢です。これらのツールも高確率のトークン置換に依存しているためです。\n• すべての自己回帰型LLMの核心的な機械的限界、すなわち文法的な流暢さを壊すことなく理論上の言語モデルを純粋に驚かせることができないという事実を暴き出します。",
+  "limitations": "• 基本となるトークン確率を計算するために、大規模な基盤となる参照言語モデル（GPT-2やBERTなど）をバックグラウンドで実行する必要があり、計算コストがかかります。\n• 幼児向けに書かれた人間のテキストや、高度に標準化された法的/企業ドキュメントは、当然単語ごとのエントロピーが低く、誤検知を引き起こす可能性があります。\n• 非常に短いテキストでは、統計的に有意な平均を確立するのに十分な単語数が得られません。",
+  "parameters": "解析: 自己回帰型負の対数尤度計算\n評価基準: トークンごとの平均エントロピー（単語あたりのビット数）\n出力結果: 0-100 語彙の予測可能性（アルゴリズムの安全性）スコア",
+  "accuracy": "高 — 200単語以上のテキストで80-88%。これは、ゼロショットの機械生成を検出するための最も科学的に厳密で弾力性のある方法の1つです。",
+  "references": [
+    {
+      "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+      "url": "https://arxiv.org/abs/2301.10226"
+    },
+    {
+      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+      "url": "https://arxiv.org/abs/2301.11305"
+    }
+  ],
+  "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

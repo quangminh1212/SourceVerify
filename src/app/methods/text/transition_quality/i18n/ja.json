@@ -1,22 +1,22 @@
 {
-    "name": "移行（トランジション）の品質 (Transition Quality)",
-    "description": "文と段落の間の機械的な滑らかさと、明示的な接続組織を評価します。生成AIモデルは局所的な一貫性を強く最適化し、「さらに」、「その上」、「結果として」、「一方で」などの予測可能な公式の推移マーカーの配列を使用して、機械的に文をつなぎ合わせます。これにより、人工的に滑らかで摩擦のない読書体験が生まれます。逆に、人間の書き手は、暗黙の論理的つながり、テーマの連続性、または物語の勢いに頻繁に依存し、その結果、構造的には「粗い」ものの、明示的な道標（サインポスト）を省略した文脈的に自然な推移をもたらします。",
-    "algorithm": "暗黙的/明示的推移の比率とマーカーの予測可能性",
-    "mechanism": "アルゴリズムはテキストを解析して、文と段落の境界を特定します。次に、これらの接続点（接合部）をスキャンして、既知の明示的な推移デバイス（接続詞、接続副詞、特定の文全体を修飾する前置詞句）を探します。「明示的に橋渡しされた」推移と「暗黙的に連続した」推移の比率を計算します。さらに、使用されるマーカーの予測可能性と多様性を評価します。公式の接続詞の狭く非常に予測可能な語彙を利用して、すべての論理的な接続点でほぼ一定の明示的な道標を示すテキストは、人工的な移行の品質を示しているとしてフラグが付けられます。",
-    "useCase": "AIの生成を裏切るような、「まず第一に、第二に、最後に」という構造の過度に「洗練された」、または執拗な流れを持つ学術エッセイ、プロフェッショナルな電子メール、および解説コンテンツの分析に効果的です。",
-    "strengths": "• 読者が暗黙のうちに接続を推論することを信頼するのに苦労するLLM特有の「定型的な流れ」を検出するのに非常に効果的です。\n• 移行パターンを確実にカウントし、統計的な比率を確立できる中程度の長さのテキストでうまく機能します。",
-    "limitations": "• 明確さを確保するために公式の推移マーカーを使いすぎるように明示的に教えられている非ネイティブスピーカーまたはESL（第二言語としての英語）の学生によって書かれたテキストで偽陽性（誤検知）を生成する可能性があります。\n• 極端な明示的な接続性が構造的に要求される技術マニュアルや法的文書ではあまり効果がありません。",
-    "parameters": "解析: 文/段落の境界の接続詞の識別\n評価基準: 暗黙の接続に対する明示的な推移マーカーの比率\n出力結果: 0-100 推移の人工性スコア",
-    "accuracy": "中〜高 — 74-83%の精度。語彙の多様性および構文の分散のメトリクスと組み合わせて、ドキュメントの「滑らかさ」の完全なプロファイルを作成すると、非常に優れたパフォーマンスを発揮します。",
-    "references": [
-        {
-            "title": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.",
-            "url": "https://link.springer.com/article/10.3758/s13428-015-0626-y"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        }
-    ],
-    "source": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+  "name": "移行（トランジション）の品質 (Transition Quality)",
+  "description": "文と段落の間の機械的な滑らかさと、明示的な接続組織を評価します。生成AIモデルは局所的な一貫性を強く最適化し、「さらに」、「その上」、「結果として」、「一方で」などの予測可能な公式の推移マーカーの配列を使用して、機械的に文をつなぎ合わせます。これにより、人工的に滑らかで摩擦のない読書体験が生まれます。逆に、人間の書き手は、暗黙の論理的つながり、テーマの連続性、または物語の勢いに頻繁に依存し、その結果、構造的には「粗い」ものの、明示的な道標（サインポスト）を省略した文脈的に自然な推移をもたらします。",
+  "algorithm": "暗黙的/明示的推移の比率とマーカーの予測可能性",
+  "mechanism": "The algorithm parses the text to identify the boundaries between sentences and paragraphs. It then scans these junctures for known explicit transitional devices (conjunctions, conjunctive adverbs, specific prepositional phrases). It calculates the ratio of 'explicitly bridged' transitions to 'implicitly continuous' transitions. Furthermore, it evaluates the predictability and variety of the markers used. A text that exhibits near-constant explicit signposting at every logical juncture, utilizing a narrow and highly predictable vocabulary of formal connectors, is flagged as exhibiting artificial transition quality.",
+  "useCase": "AIの生成を裏切るような、「まず第一に、第二に、最後に」という構造の過度に「洗練された」、または執拗な流れを持つ学術エッセイ、プロフェッショナルな電子メール、および解説コンテンツの分析に効果的です。",
+  "strengths": "• 読者が暗黙のうちに接続を推論することを信頼するのに苦労するLLM特有の「定型的な流れ」を検出するのに非常に効果的です。\n• 移行パターンを確実にカウントし、統計的な比率を確立できる中程度の長さのテキストでうまく機能します。",
+  "limitations": "• 明確さを確保するために公式の推移マーカーを使いすぎるように明示的に教えられている非ネイティブスピーカーまたはESL（第二言語としての英語）の学生によって書かれたテキストで偽陽性（誤検知）を生成する可能性があります。\n• 極端な明示的な接続性が構造的に要求される技術マニュアルや法的文書ではあまり効果がありません。",
+  "parameters": "解析: 文/段落の境界の接続詞の識別\n評価基準: 暗黙の接続に対する明示的な推移マーカーの比率\n出力結果: 0-100 推移の人工性スコア",
+  "accuracy": "中〜高 — 74-83%の精度。語彙の多様性および構文の分散のメトリクスと組み合わせて、ドキュメントの「滑らかさ」の完全なプロファイルを作成すると、非常に優れたパフォーマンスを発揮します。",
+  "references": [
+    {
+      "title": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.",
+      "url": "https://link.springer.com/article/10.3758/s13428-015-0626-y"
+    },
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    }
+  ],
+  "source": "Crossley, S. A., et al. (2016). The tool for the automatic analysis of cohesion (TAACO). Behavior Research Methods.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

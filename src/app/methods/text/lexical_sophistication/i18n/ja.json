@@ -1,22 +1,22 @@
 {
-    "name": "語彙の洗練度（出現頻度帯域プロファイリング）",
-    "description": "テキストで使用されている、まれな、固有性が高い、または高度な語彙の割合を評価します。AIモデルは統計的確率を最大化するために、本質的に「安全な」高頻度および中頻度の単語に引き寄せられ、人間の専門家が自然に使用するような、難解で頻度の低い用語（オフリスト語）を一貫して避けます。",
-    "algorithm": "コーパス頻度帯域マッピングとAWL（学術語彙リスト）浸透度スコアリング",
-    "mechanism": "言語内のすべての単語は、現実世界での統計的な使用頻度にマッピングできます（例：「house（家）」は高頻度、「defenestrate（窓から投げ落とす）」は低頻度）。人間のライター、特に専門家やクリエイティブな作家は、特定のニュアンスを説明したり、権威を確立したり、詩的なインパクトを生み出すために、低頻度帯域（まれな単語）から多くを引き出します。逆に、大規模言語モデル（LLM）は、交差エントロピー損失を使用して「次に最も可能性の高い」単語を予測するように訓練されています。専門的に書くように指示された場合でも、統計的には低頻度帯域に深く手を伸ばすのに苦労し、代わりに最も一般的な学術語彙リスト（AWL）の用語や中頻度の専門用語に依存することになります。このアルゴリズムは、テキスト内のすべての内容語を、大規模な言語頻度コーパス（SUBTLEXやBNCなど）と相互参照します。語彙を頻度帯域（上位1k、2k、5k、10k、およびリスト外）に分類します。テキストが専門家レベルであると主張しているにもかかわらず、その意味的プロファイルが上位5,000の最も一般的な単語に圧倒的に支配されており、「リスト外」のまれな用語が著しく欠如している場合、それは確率によって平滑化された人工的な生成物としてフラグが立てられます。",
-    "useCase": "学術論文、技術文書、ハイレベルなジャーナリズムを分析する上で極めて重要です。表面上は「賢く」聞こえても、真の専門的な深みに欠けるAI生成テキストを効果的に暴き出します。",
-    "strengths": "• AIライティングの「不気味の谷」を定量化します。なぜLLMのエッセイが構造的には完璧に感じられるのに、知的レベルでは浅く感じられるのかを明らかにします。\n• AIに「難しい言葉を使え」と単に指示するだけで回避することは極めて困難です。LLMは、本当に文脈に合ったまれな語彙を使用するのではなく、最も一般的な「複雑な」単語（例：『delve（掘り下げる）』、『tapestry（タペストリー）』、『multifaceted（多面的な）』）をスパムのように繰り返すだけだからです。\n• 人間の語彙習得に関する数十年にわたる確立された心理言語学の研究に基づいています。",
-    "limitations": "• 絵本、基本的な指示書、カジュアルなSNSの投稿など、本質的に高頻度語を使用する単純な構成のテキストでは、パフォーマンスが急落します。\n• サポートされる各言語に対して、大規模で高精度な頻度辞書が必要です。英語は十分にサポートされていますが、マイナーな言語では必要なコーパスが不足している可能性があります。\n• 極端にニッチな分野の技術文書では、リスト外の単語の数を歪める特定の専門用語が導入される可能性があり、ドメイン固有のキャリブレーションが必要になります。",
-    "parameters": "解析: 言語コーパスの相互参照\n評価基準: 高頻度語彙に対する低頻度語彙の割合\n出力結果: 0-100 語彙の予測可能性（語彙の平滑化）スコア",
-    "accuracy": "高 — 学術的および専門的なテキストで79-86%。専門家レベルのまれな用語を一貫して使用できないAIの構造的無能さを捉えることに成功しています。",
-    "references": [
-        {
-            "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
-            "url": "https://doi.org/10.1002/tesq.194"
-        },
-        {
-            "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
-            "url": "https://arxiv.org/abs/2406.07016"
-        }
-    ],
-    "source": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.; Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv."
+  "name": "語彙の洗練度（出現頻度帯域プロファイリング）",
+  "description": "テキストで使用されている、まれな、固有性が高い、または高度な語彙の割合を評価します。AIモデルは統計的確率を最大化するために、本質的に「安全な」高頻度および中頻度の単語に引き寄せられ、人間の専門家が自然に使用するような、難解で頻度の低い用語（オフリスト語）を一貫して避けます。",
+  "algorithm": "コーパス頻度帯域マッピングとAWL（学術語彙リスト）浸透度スコアリング",
+  "mechanism": "Every word in a language can be mapped to its statistical frequency of use in the real world (e.g., 'house' is high-frequency, 'defenestrate' is low-frequency). Human writers, especially experts or creative authors, draw heavily from low-frequency bands (rare words) to describe specific nuances, establish authority, or create poetic impact. Conversely, Large Language Models (LLMs) are trained using cross-entropy loss to predict the *most likely* next word. Even when instructed to write professionally, they statistically struggle to reach deep into the low-frequency bands, instead relying on the most common Academic Word List (AWL) terms and mid-frequency professional jargon. This algorithm cross-references every content word in the text against massive linguistic frequency corpora (such as SUBTLEX or BNC). It categorizes the vocabulary into frequency bands (Top 1K, 2K, 5K, 10K, and Off-List). If a text claims to be expert-level but its semantic profile is overwhelmingly dominated by the top 5,000 most common words with a conspicuous absence of 'Off-List' rare terminology, it is flagged as an artificial, probability-smoothed generation.",
+  "useCase": "学術論文、技術文書、ハイレベルなジャーナリズムを分析する上で極めて重要です。表面上は「賢く」聞こえても、真の専門的な深みに欠けるAI生成テキストを効果的に暴き出します。",
+  "strengths": "• AIライティングの「不気味の谷」を定量化します。なぜLLMのエッセイが構造的には完璧に感じられるのに、知的レベルでは浅く感じられるのかを明らかにします。\n• AIに「難しい言葉を使え」と単に指示するだけで回避することは極めて困難です。LLMは、本当に文脈に合ったまれな語彙を使用するのではなく、最も一般的な「複雑な」単語（例：『delve（掘り下げる）』、『tapestry（タペストリー）』、『multifaceted（多面的な）』）をスパムのように繰り返すだけだからです。\n• 人間の語彙習得に関する数十年にわたる確立された心理言語学の研究に基づいています。",
+  "limitations": "• 絵本、基本的な指示書、カジュアルなSNSの投稿など、本質的に高頻度語を使用する単純な構成のテキストでは、パフォーマンスが急落します。\n• サポートされる各言語に対して、大規模で高精度な頻度辞書が必要です。英語は十分にサポートされていますが、マイナーな言語では必要なコーパスが不足している可能性があります。\n• 極端にニッチな分野の技術文書では、リスト外の単語の数を歪める特定の専門用語が導入される可能性があり、ドメイン固有のキャリブレーションが必要になります。",
+  "parameters": "解析: 言語コーパスの相互参照\n評価基準: 高頻度語彙に対する低頻度語彙の割合\n出力結果: 0-100 語彙の予測可能性（語彙の平滑化）スコア",
+  "accuracy": "高 — 学術的および専門的なテキストで79-86%。専門家レベルのまれな用語を一貫して使用できないAIの構造的無能さを捉えることに成功しています。",
+  "references": [
+    {
+      "title": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.",
+      "url": "https://doi.org/10.1002/tesq.194"
+    },
+    {
+      "title": "Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv.",
+      "url": "https://arxiv.org/abs/2406.07016"
+    }
+  ],
+  "source": "Kyle, K. & Crossley, S. A. (2015). Automatically Assessing Lexical Sophistication: Indices, Tools, Findings, and Application. TESOL Quarterly.; Kobak, D. et al. (2024). Delving into ChatGPT Usage in Academic Writing Through Excess Vocabulary. arXiv."
 }

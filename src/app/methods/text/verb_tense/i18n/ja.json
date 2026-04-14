@@ -1,22 +1,22 @@
 {
-    "name": "動詞の時制の一貫性 (Verb Tense Consistency)",
-    "description": "ドキュメント全体における動詞の時制の分布、変化、および長距離の時制ロジックを分析します。大規模言語モデルは、複雑で非線形なタイムラインを維持するのに苦労します。モデルは単純な時制（現在形または過去形）を強く好み、巨視的な物語の時間よりも局所的な文法の一貫性を優先します。その結果、AIの文章は複雑な時間関係を平坦化することが多く、過去完了（「〜していた」）や未来進行形（「〜しているだろう」）などのニュアンスのある時制を避けます。さらに、LLMが長い文章にわたって時制をシフトさせる場合、そのシフトはしばしば耳障り（不自然）で論理的に固定されておらず、物語の真の必要性よりも直前のプロンプトコンテキストの変化によって引き起こされます。",
-    "algorithm": "時間的アンカー追跡と時制推移マトリックス",
-    "mechanism": "アルゴリズムは、品詞（POS）タグ付けと依存関係解析を使用して、すべての動詞とそれに関連する形態論的時制を抽出します。ドキュメントの「時制のタイムライン」を構築します。システムは、単純な時制と複雑な／完了形の時制の比率を計算し、時制シフトのロジック（例えば、有効な修辞的マーカーなしに過去から現在にシフトするなど）を評価します。単一の単純な時制への不自然なほど厳格な固執、複雑な関係時制の欠如、または段落の境界を越えた数学的に恣意的な時制のジャンプを示すテキストは、生成AIの可能性が非常に高いです。",
-    "useCase": "複雑で多層的なタイムラインをたどることが物語に不可欠な、クリエイティブライティング、歴史エッセイ、ケーススタディ、および伝記コンテンツの分析に非常に効果的です。",
-    "strengths": "• LLMの根本的な制限、つまり時間に関する真の内部「世界モデル（ワールドモデル）」の欠如をターゲットにしており、LLMに表面的な文法確率のみに頼ることを強制します。\n• 時間的構造の変更には物語の完全な書き直しが必要になるため、基本的な言い換え（パラフレーズ）に対して非常に強い耐性があります。",
-    "limitations": "• ソフトウェアのドキュメント、科学的な要約、または取扱説明書など、人間の書き手によっても厳格で平坦な「現在形」を維持することが構造的に要求されるものにはあまり効果がありません。\n• 複雑な英語の時制の規則に苦労している非ネイティブによる人間の文章をフラグする可能性があります。",
-    "parameters": "解析: POS形態論的抽出とタイムラインマッピング\n評価基準: 複雑な時制と単純な時制の比率、および無効な推移の頻度\n出力結果: 0-100 時間的人工性スコア",
-    "accuracy": "中〜高 — 71-85%の精度。その有効性はドキュメントの長さに比例して指数関数的に拡大します。ドキュメントが長くなると、LLMはより長いタイムラインを管理する必要があり、検出可能な「時制の平坦化」の確率が高まります。",
-    "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        },
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        }
-    ],
-    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
+  "name": "動詞の時制の一貫性 (Verb Tense Consistency)",
+  "description": "ドキュメント全体における動詞の時制の分布、変化、および長距離の時制ロジックを分析します。大規模言語モデルは、複雑で非線形なタイムラインを維持するのに苦労します。モデルは単純な時制（現在形または過去形）を強く好み、巨視的な物語の時間よりも局所的な文法の一貫性を優先します。その結果、AIの文章は複雑な時間関係を平坦化することが多く、過去完了（「〜していた」）や未来進行形（「〜しているだろう」）などのニュアンスのある時制を避けます。さらに、LLMが長い文章にわたって時制をシフトさせる場合、そのシフトはしばしば耳障り（不自然）で論理的に固定されておらず、物語の真の必要性よりも直前のプロンプトコンテキストの変化によって引き起こされます。",
+  "algorithm": "時間的アンカー追跡と時制推移マトリックス",
+  "mechanism": "The algorithm extracts all verbs and their associated morphological tenses using Parts-of-Speech (POS) tagging and dependency parsing. It constructs a 'temporal timeline' of the document. The system calculates the ratio of simple tenses to complex/perfect tenses, and evaluates the logic of tense shifts (e.g., shifting from past to present without a valid rhetorical marker). A text exhibiting an unnaturally rigid adherence to a single simple tense, a lack of complex relational tenses, or mathematically arbitrary tense jumping across paragraph boundaries, is strongly indicative of generative AI.",
+  "useCase": "複雑で多層的なタイムラインをたどることが物語に不可欠な、クリエイティブライティング、歴史エッセイ、ケーススタディ、および伝記コンテンツの分析に非常に効果的です。",
+  "strengths": "• LLMの根本的な制限、つまり時間に関する真の内部「世界モデル（ワールドモデル）」の欠如をターゲットにしており、LLMに表面的な文法確率のみに頼ることを強制します。\n• 時間的構造の変更には物語の完全な書き直しが必要になるため、基本的な言い換え（パラフレーズ）に対して非常に強い耐性があります。",
+  "limitations": "• ソフトウェアのドキュメント、科学的な要約、または取扱説明書など、人間の書き手によっても厳格で平坦な「現在形」を維持することが構造的に要求されるものにはあまり効果がありません。\n• 複雑な英語の時制の規則に苦労している非ネイティブによる人間の文章をフラグする可能性があります。",
+  "parameters": "解析: POS形態論的抽出とタイムラインマッピング\n評価基準: 複雑な時制と単純な時制の比率、および無効な推移の頻度\n出力結果: 0-100 時間的人工性スコア",
+  "accuracy": "中〜高 — 71-85%の精度。その有効性はドキュメントの長さに比例して指数関数的に拡大します。ドキュメントが長くなると、LLMはより長いタイムラインを管理する必要があり、検出可能な「時制の平坦化」の確率が高まります。",
+  "references": [
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    },
+    {
+      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/"
+    }
+  ],
+  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "耳の詳細一貫性分析",
-    "description": "左右の耳の詳細一貫性を比較してディープフェイクを検出",
-    "algorithm": "耳の詳細一貫性 — ピクセルレベル空間分析",
-    "mechanism": "この手法はディープフェイクおよびAI生成検出のために動画フレームを分析します:\n\n1. **フレーム抽出**: 分析のために動画ストリームからキーフレームを抽出します。\n\n2. **特徴分析**: 左右の耳の詳細一貫性を比較します。フレームごとに関連する視覚的および時間的特徴を計算します。\n\n3. **時間的一貫性チェック**: 連続するフレーム間で特徴を追跡し、不整合を検出します。\n\n4. **パターンマッチング**: 結果を既知のディープフェイクアーティファクトパターンと比較します。\n\n5. **スコア計算**: AI操作の可能性を反映する信頼度スコア (0-100) を計算します。",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: キー間隔で抽出された動画フレーム\n出力: 信頼度スコア (0-100)\nフレームサンプリング: アダプティブ (手法に応じて1-5 fps)\n時間ウィンドウ: フレームシーケンスのスライディングウィンドウ",
-    "accuracy": "中〜高 — 70-88% 単独精度。他の動画フォレンジック手法と組み合わせた場合に最も効果的です。パフォーマンスは動画の品質、解像度、圧縮レベルに依存します。",
-    "source": "動画フォレンジックおよびディープフェイク検出研究。コンピュータビジョンおよび時間信号分析手法に基づく。",
-    "useCase": "耳の詳細一貫性分析を通じてディープフェイクおよびAI生成動画を検出します。この手法はAIシステムが完璧に再現することが困難な時間的および空間的特徴を検査し、動画の真正性評価の証拠を提供します。",
-    "strengths": "• 単一フレーム分析では見逃される時間的アーティファクトを捕捉\n• 標準的な動画フォーマットに対応\n• 一般的なディープフェイク手法に対して有効\n• 他の動画フォレンジック手法と組み合わせ可能\n• 確立されたコンピュータビジョン研究に基づく",
-    "limitations": "• パフォーマンスは動画の圧縮と解像度に影響される\n• 一部の手法は時間分析のために十分なフレーム数が必要\n• 有効性はディープフェイク生成手法により異なる\n• 包括的なマルチメソッドパイプラインの一部として使用するのが最適\n• 大幅に編集された本物の動画では誤検出が発生する場合がある",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "耳の詳細一貫性分析",
+  "description": "左右の耳の詳細一貫性を比較してディープフェイクを検出",
+  "algorithm": "耳の詳細一貫性 — ピクセルレベル空間分析",
+  "mechanism": "This method analyzes ear anatomical detail for deepfake detection:\n\n1. **Ear領域抽出**: Ears are detected and segmented using facial landmark extensions and ear-specific detectors. The ear region includes the helix, antihelix, tragus, antitragus, concha, and lobule — each with distinctive anatomical structure that serves as a biometric identifier.\n\n2. **AnatomicalDetail評価**: Fine ear structures are analyzed: cartilaginous ridges (helix curvature, antihelix branching), skin texture, and vascular patterns. Real ears exhibit high-frequency anatomical detail with complex 3D surface geometry. AI-generated ears typically show simplified anatomy — missing the intricate folds or producing physically impossible ear structures.\n\n3. **Bilateral対称性検証**: Left and right ears of the same person share characteristic family resemblance while showing natural asymmetry. The method compares both ears for anatomical consistency — deepfakes may produce ears with inconsistent morphology between sides, or ears that don't match the identity of the generated face.\n\n4. **時間的Ear安定性**: Ear anatomy is rigid (cartilage doesn't deform) and should remain geometrically stable across frames regardless of head motion. The method tracks ear detail consistency — deepfake generators may produce temporally inconsistent ear rendering with fluctuating detail levels, especially when the ear is near the face-swap boundary.\n\n5. **Ear-顔Identityコヒーレンス**: Ear morphology is correlated with face shape and ethnicity. The method checks whether ear characteristics are plausible for the depicted face. Deepfakes that swap faces but not ears (or generate ears independently) may produce biometrically inconsistent ear-face combinations.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: キー間隔で抽出された動画フレーム\n出力: 信頼度スコア (0-100)\nフレームサンプリング: アダプティブ (手法に応じて1-5 fps)\n時間ウィンドウ: フレームシーケンスのスライディングウィンドウ",
+  "accuracy": "中〜高 — 70-88% 単独精度。他の動画フォレンジック手法と組み合わせた場合に最も効果的です。パフォーマンスは動画の品質、解像度、圧縮レベルに依存します。",
+  "source": "動画フォレンジックおよびディープフェイク検出研究。コンピュータビジョンおよび時間信号分析手法に基づく。",
+  "useCase": "耳の詳細一貫性分析を通じてディープフェイクおよびAI生成動画を検出します。この手法はAIシステムが完璧に再現することが困難な時間的および空間的特徴を検査し、動画の真正性評価の証拠を提供します。",
+  "strengths": "• 単一フレーム分析では見逃される時間的アーティファクトを捕捉\n• 標準的な動画フォーマットに対応\n• 一般的なディープフェイク手法に対して有効\n• 他の動画フォレンジック手法と組み合わせ可能\n• 確立されたコンピュータビジョン研究に基づく",
+  "limitations": "• パフォーマンスは動画の圧縮と解像度に影響される\n• 一部の手法は時間分析のために十分なフレーム数が必要\n• 有効性はディープフェイク生成手法により異なる\n• 包括的なマルチメソッドパイプラインの一部として使用するのが最適\n• 大幅に編集された本物の動画では誤検出が発生する場合がある",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

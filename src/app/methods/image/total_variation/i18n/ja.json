@@ -1,12 +1,12 @@
 {
-    "name": "Total Variation Norm Analysis",
-    "description": "Measures total variation norm to detect unnatural smoothness or excessive regularity in AI-generated images (Rudin et al., 1992).",
-    "algorithm": "Total Variation Norm Analysis分析アルゴリズム",
-    "mechanism": "Total Variation Norm Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Total Variation Norm Analysis",
+  "description": "Measures total variation norm to detect unnatural smoothness or excessive regularity in AI-generated images (Rudin et al., 1992).",
+  "algorithm": "Total Variation Norm Analysis分析アルゴリズム",
+  "mechanism": "この手法は applies Total Variation (TV) analysis following Rudin, Osher & Fatemi (1992) for forensic image assessment:\n\n1. **TotalVariation計算**: The isotropic TV of the image I is computed as TV(I) = Σ√(|∂I/∂x|² + |∂I/∂y|²), measuring the total amount of spatial variation. This L¹ norm of the gradient penalizes oscillations while preserving edges — making it sensitive to the difference between natural and synthetic image characteristics.\n\n2. **ローカルTVマッピング**: A spatial map of local TV values computed in sliding windows reveals the distribution of image complexity. Natural images show physically coherent TV variation — smooth regions (low TV), edges (moderate TV), and textures (high TV) arranged in semantically meaningful patterns.\n\n3. **TVRegularity分析**: The ratio of TV to image energy (TV/‖I‖₂) provides a normalized smoothness measure. AI生成の images often exhibit characteristic TV profiles: diffusion models tend toward overly smooth interiors with sharp boundaries, while GANs may produce micro-oscillations elevating TV in supposedly smooth regions.\n\n4. **AnisotropicTV分解**: The directional components TV_x and TV_y are analyzed separately. Natural images show orientation-dependent TV variation correlated with scene geometry. AI生成の images may exhibit isotropic TV even in scenes that should show strong directional bias (e.g., architectural images).\n\n5. **ChambolleProjection分析**: Using Chambolle's (2004) dual formulation, the TV-minimizing reconstruction is computed. The difference between the original and TV-denoised image isolates the texture/noise component. Analysis of this component reveals whether the fine-scale structure follows natural sensor noise statistics or exhibits AI generation artifacts.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

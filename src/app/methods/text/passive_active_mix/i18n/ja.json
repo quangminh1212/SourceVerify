@@ -1,22 +1,22 @@
 {
-    "name": "受動態・能動態の混合比率（Passive-Active Voice Ratio）",
-    "description": "能動態と受動態の構造のバランスと切り替えの頻度を分析します。中立性と客観性を強く持たされたAIモデルは、直接的な行為主体や非難を割り当てることを避けるため（例：「私たちは間違いを犯した」ではなく「間違いが犯された」）に受動態を極端に過剰使用するか、テキスト全体で不自然に一貫した比率を維持する傾向があります。人間のライターは、感情的な意図、強調、物語のペースに基づいて、はるかにダイナミックに態（ボイス）を切り替えます。",
-    "algorithm": "構文上の主体（Agent）マッピングと態（Voice）移行の分散",
-    "mechanism": "このアルゴリズムは、依存関係解析を使用して、テキスト内のすべての節を能動態（主語-動詞-目的語）または受動態（目的語-動詞-主語によって）のいずれかに分類します。受動態の文と能動態の文の絶対的な比率、および「態（Voice）の移行率」（テキストが2つの間で切り替わる頻度）という2つの主要な指標を計算します。大規模言語モデル（LLM）は、権威があり、安全で、客観的に聞こえるようにRLHF（人間のフィードバックからの強化学習）でトレーニングされています。このトレーニングは、意図せず多くの文脈で一人称の能動態の使用を罰し、AIが受動態の構造（「...であることに注意することが重要である」、「データは...によって分析された」）に大きく依存する原因となります。能動的に書くように指示された場合でも、AIのテキストはしばしば、数学的に一貫した、停滞した態の使用比率に落ち着きます。人間のライターは非常に予測不可能です。完全に能動的で攻撃的な導入段落を書き、極端に受動的な方法論のセクションに切り替え、能動的な結論に戻るかもしれません。人間の態の切り替えは、物語のリズムと修辞的な焦点によって推進され、能動態または受動態の文の集中的なバースト（群れ）を作成します。システムは、受動態構造への過度の依存と、態の切り替えにおける有機的なクラスタリング（群れ）の欠如の両方を測定することにより、「主体（Agent）の人工性スコア」を計算します。",
-    "useCase": "企業コミュニケーション、学術エッセイ、およびニュース記事を分析し、機械の無機質で人工的に客観的なトーン（語り口）と、人間の著者のダイナミックで意図的な態のシフトを区別するために不可欠です。",
-    "strengths": "• 「プロフェッショナル」または「学術的」に聞こえるようにしようとするAIの文章を検出するのに非常に効果的です。なぜなら、これらのプロンプトはほぼ常にAIの受動態バイアスを引き起こすからです。\n• ほとんどのプロンプトエンジニアは深く文法的な主体の構造ではなく語彙に焦点を当てるため、平均的なユーザーが回避するのは困難です。",
-    "limitations": "• スタイルガイド（過去のAPAフォーマットガイドラインなど）によって受動態を排他的に使用することが人間の著者に厳密に義務付けられている科学論文、実験報告書、またはテクニカルマニュアルでは、誤検知が発生しやすくなります。\n• AIも人間も受動態をめったに使用しない、カジュアルで非常に会話的なテキスト（テキストメッセージなど）では効果が低くなります。",
-    "parameters": "解析: 主語-動詞-目的語の主体（Agent）に対する依存関係解析\n評価基準: 受動態/能動態の比率と態の移行のクラスタリング\n出力結果: 0-100 主体（Agent）の人工性（態の硬直性）スコア",
-    "accuracy": "中〜高 — 75-85%の精度。AIが「客観的な」安全性に過剰にインデックスを付ける、フォーマル、教育的、およびプロフェッショナルな記述コンテキストのための非常に信頼性の高い指標です。",
-    "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        }
-    ],
-    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+  "name": "受動態・能動態の混合比率（Passive-Active Voice Ratio）",
+  "description": "能動態と受動態の構造のバランスと切り替えの頻度を分析します。中立性と客観性を強く持たされたAIモデルは、直接的な行為主体や非難を割り当てることを避けるため（例：「私たちは間違いを犯した」ではなく「間違いが犯された」）に受動態を極端に過剰使用するか、テキスト全体で不自然に一貫した比率を維持する傾向があります。人間のライターは、感情的な意図、強調、物語のペースに基づいて、はるかにダイナミックに態（ボイス）を切り替えます。",
+  "algorithm": "構文上の主体（Agent）マッピングと態（Voice）移行の分散",
+  "mechanism": "This algorithm uses dependency parsing to classify every clause in the text as either Active (Subject-Verb-Object) or Passive (Object-Verb-by-Subject). It calculates two primary metrics: the absolute ratio of Passive to Active sentences, and the 'Voice Transition Rate' (how often the text switches between the two). Large Language Models (LLMs) are RLHF-trained to sound authoritative, safe, and objective. This training inadvertently penalizes the use of first-person active voice in many contexts, causing the AI to rely heavily on passive constructions ('It is important to note that...', 'The data was analyzed...'). Even when prompted to write actively, AI texts often settle into a stagnant, mathematically consistent ratio of voice usage. Human writers are highly erratic: they might write a purely active, aggressive introductory paragraph, switch to a heavily passive methodology section, and return to an active conclusion. Human voice-switching is driven by narrative rhythm and rhetorical focus, creating clustered bursts of active or passive sentences. The system calculates an 'Agency Artificiality Score' by measuring both the over-reliance on passive structures and the lack of organic clustering in voice transitions.",
+  "useCase": "企業コミュニケーション、学術エッセイ、およびニュース記事を分析し、機械の無機質で人工的に客観的なトーン（語り口）と、人間の著者のダイナミックで意図的な態のシフトを区別するために不可欠です。",
+  "strengths": "• 「プロフェッショナル」または「学術的」に聞こえるようにしようとするAIの文章を検出するのに非常に効果的です。なぜなら、これらのプロンプトはほぼ常にAIの受動態バイアスを引き起こすからです。\n• ほとんどのプロンプトエンジニアは深く文法的な主体の構造ではなく語彙に焦点を当てるため、平均的なユーザーが回避するのは困難です。",
+  "limitations": "• スタイルガイド（過去のAPAフォーマットガイドラインなど）によって受動態を排他的に使用することが人間の著者に厳密に義務付けられている科学論文、実験報告書、またはテクニカルマニュアルでは、誤検知が発生しやすくなります。\n• AIも人間も受動態をめったに使用しない、カジュアルで非常に会話的なテキスト（テキストメッセージなど）では効果が低くなります。",
+  "parameters": "解析: 主語-動詞-目的語の主体（Agent）に対する依存関係解析\n評価基準: 受動態/能動態の比率と態の移行のクラスタリング\n出力結果: 0-100 主体（Agent）の人工性（態の硬直性）スコア",
+  "accuracy": "中〜高 — 75-85%の精度。AIが「客観的な」安全性に過剰にインデックスを付ける、フォーマル、教育的、およびプロフェッショナルな記述コンテキストのための非常に信頼性の高い指標です。",
+  "references": [
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    },
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    }
+  ],
+  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "B-Frame Consistency Analysis",
-    "description": "Analyzes bidirectional frame consistency — deepfake injection disrupts natural B-frame interpolation patterns.",
-    "algorithm": "B-Frame Consistency Analysis分析アルゴリズム",
-    "mechanism": "B-Frame Consistency Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "B-Frame Consistency Analysis",
+  "description": "Analyzes bidirectional frame consistency — deepfake injection disrupts natural B-frame interpolation patterns.",
+  "algorithm": "B-Frame Consistency Analysis分析アルゴリズム",
+  "mechanism": "This method analyzes B-frame prediction patterns in video compression for forensic authentication following Sullivan et al. (2012):\n\n1. **GOPStructure分析**: The Group of Pictures (GOP) structure is parsed to identify I-frames (intra-coded), P-frames (predictive), and B-frames (bidirectional predictive). The expected B-frame pattern depends on codec configuration and is consistent in unmanipulated video.\n\n2. **Bi-DirectionalPredictionResidual**: B-frames use both forward and backward temporal prediction. The prediction residuals are analyzed — in authentic video, B-frame residuals are typically smaller than P-frame residuals due to the advantage of bidirectional prediction. Manipulated regions produce anomalous residual patterns where inserted content disrupts the predicted motion trajectory.\n\n3. **動きベクトル一貫性**: B-frame motion vectors point both forward and backward in time. The method checks whether forward and backward motion vectors are physically consistent — they should describe complementary views of the same motion. Deepfake insertion creates motion vector inconsistencies where forward and backward predictions disagree abnormally.\n\n4. **QuantizationParameterトラッキング**: Per Stamm et al. (2012), the quantization parameters (QP) assigned to B-frames follow predictable patterns relative to reference frames. Double-encoding artifacts from video manipulation alter these QP patterns, creating detectable statistical anomalies in the B-frame quantization structure.\n\n5. **時間的DependencyGraph検証**: The reference frame dependencies of B-frames are verified for consistency. Inserted or replaced frames disrupt the expected temporal dependency chain, producing frames that reference incorrect temporal contexts — detectable through prediction error analysis.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

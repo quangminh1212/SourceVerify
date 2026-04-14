@@ -1,22 +1,22 @@
 {
-    "name": "Posterization Detection",
-    "description": "Detects color posterization artifacts",
-    "algorithm": "Posterization Detection — ピクセルレベル空間分析",
-    "mechanism": "この手法はピクセルレベルの空間分析を実行してAI生成のアーティファクトを検出します:\n\n1. **画像前処理**: 入力画像を読み込み、分析に適した色空間に変換します.\n\n2. **特徴抽出**: Detects color posterization artifacts. アルゴリズムが画像グリッド全体から関連するピクセルレベルの特徴を抽出します.\n\n3. **パターン分析**: 抽出された特徴から統計的測定値を計算して不規則性を特定します.\n\n4. **異常検出**: 結果を本物のカメラ画像とAI生成画像のベースラインと比較します.\n\n5. **スコア計算**: 検出された異常の程度に基づいて信頼度スコア (0-100) を計算します.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： posterization detection 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
-            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
-        }
-    ]
+  "name": "Posterization Detection",
+  "description": "Detects color posterization artifacts",
+  "algorithm": "Posterization Detection — ピクセルレベル空間分析",
+  "mechanism": "This method detects posterization artifacts for image forensic analysis:\n\n1. **IntensityLevelCensus**: The number of unique intensity levels actually used in each color channel is counted. 8-bit images have 256 possible levels per channel. Posterization reduces the number of distinct levels, creating visible banding in smooth gradients.\n\n2. **勾配Banding検出**: Smooth image regions (sky, skin, gradual lighting transitions) are identified, and within these regions, the method checks for intensity staircase patterns — sudden jumps between flat intensity plateaus instead of smooth transitions.\n\n3. **ToneCurve分析**: The image's effective tone curve is estimated by analyzing the mapping from expected smooth gradients to observed intensity values. Posterization creates a staircase-like tone curve. The method characterizes the tone curve's step pattern — number of steps, step sizes, and their distribution.\n\n4. **AIGenerationPosterizationSignatures**: Some AI generators produce posterization-like artifacts from: (a) limited output precision in the generator's final layer, (b) training on processed/compressed images, (c) color quantization in the generation pipeline. The method distinguishes between processing-induced posterization (uniform across the image) and generation-specific posterization (may appear selectively in generated content).\n\n5. **PosterizationSeverityスコアリング**: The severity of posterization is scored based on: number of missing intensity levels, banding visibility in smooth regions, and comparison against expected levels for the image's declared bit depth and pipeline.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
+  "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
+  "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
+  "useCase": "以下の分析によるAI生成または改ざん画像の検出： posterization detection 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
+  "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
+  "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
+      "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+    }
+  ]
 }

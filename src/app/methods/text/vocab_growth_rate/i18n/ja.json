@@ -1,22 +1,22 @@
 {
-    "name": "語彙の増加率 (Vocabulary Growth Rate)",
-    "description": "ドキュメントが進むにつれて新しい（以前に使用されていない）単語が導入される数学的な速度を分析します。ヒープスの法則 (Heaps' Law) によると、人間の語彙の増加は、（新しいサブトピックが導入されたときの）突然の急増と長い停滞期（プラトー）を特徴とする予測不可能な曲線を描きます。人間の書き手は、物語の必要性に駆られて、新しい専門用語をまとまって（クラスターで）導入します。逆に、大規模言語モデルは、一貫したトークン生成と安定したパープレキシティの境界のために最適化されており、新しい語彙の導入を数学的にスムーズで非常に予測可能な速度で分散させる傾向があります。AIが序盤で語彙を枯渇させることはめったになく、また、テキストの終盤で突然圧倒的な数の新しい用語を大量に投下することもありません。",
-    "algorithm": "ヒープスの法則の逸脱と対数線形増加のプロファイリング",
-    "mechanism": "アルゴリズムはテキストを順次処理し、処理された総トークン数 ($N$) に対して固有のトークンの累積数 ($V$) をプロットします。ヒープスの法則 ($V = k N^\\beta$) の指数 $\\beta$ を計算し、理想的な対数曲線に対する実際のテキスト曲線の分散/残差を測定します。スムーズな対数軌道からの逸脱が最小限であり、人間の認知的シフトを示す有機的な急増や停滞期（プラトー）を欠いている「完璧すぎる」語彙増加曲線は、高い人工性スコアをもたらします。",
-    "useCase": "語彙導入の巨視的なペースが統計的に有意になる、中〜長文のコンテンツ（エッセイ、レポート、記事）の分析に非常に効果的です。",
-    "strengths": "• 自己回帰生成の基本的な特性を利用しています。これは、出力ウィンドウ全体にわたって安定した確率分布を維持しようとするLLMの生来の衝動であり、自然な意味論的クラスタリングを防ぎます。\n• ユーザーは新しい単語を導入する正確な数学的速度を簡単に指定できないため、標準的なプロンプトを使用して回避することは極めて困難です。",
-    "limitations": "• 語彙の増加曲線が安定したり、意味のある発散を示したりするのに十分なトークンがない短いテキスト（ツイートや短いメールなど）では、まったく効果がありません。\n• 非常に構造化された定型的な人間の文章（法的契約書や標準作業手順書など）は、自然とAIのような滑らかな語彙の増加率を示す場合があります。",
-    "parameters": "解析: 順次的なトークン蓄積の追跡\n評価基準: 理想化されたヒープスの法則モデルからの分散\n出力結果: 0-100 増加率の人工性スコア",
-    "accuracy": "中〜高 — 70-85%の精度。その予測力はドキュメントの長さに比例して直接拡大します。局所的な構文チェックと組み合わせて、巨視的な構造的指標として使用するのが最適です。",
-    "references": [
-        {
-            "title": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.",
-            "url": "https://doi.org/10.1371/journal.pone.0146059"
-        },
-        {
-            "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS.",
-            "url": "https://arxiv.org/abs/2304.09065"
-        }
-    ],
-    "source": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.; Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS."
+  "name": "語彙の増加率 (Vocabulary Growth Rate)",
+  "description": "ドキュメントが進むにつれて新しい（以前に使用されていない）単語が導入される数学的な速度を分析します。ヒープスの法則 (Heaps' Law) によると、人間の語彙の増加は、（新しいサブトピックが導入されたときの）突然の急増と長い停滞期（プラトー）を特徴とする予測不可能な曲線を描きます。人間の書き手は、物語の必要性に駆られて、新しい専門用語をまとまって（クラスターで）導入します。逆に、大規模言語モデルは、一貫したトークン生成と安定したパープレキシティの境界のために最適化されており、新しい語彙の導入を数学的にスムーズで非常に予測可能な速度で分散させる傾向があります。AIが序盤で語彙を枯渇させることはめったになく、また、テキストの終盤で突然圧倒的な数の新しい用語を大量に投下することもありません。",
+  "algorithm": "ヒープスの法則の逸脱と対数線形増加のプロファイリング",
+  "mechanism": "The algorithm processes the text sequentially, plotting the cumulative number of unique tokens ($V$) against the total number of processed tokens ($N$). It calculates the exponent $\\beta$ in Heaps' law ($V = k N^\\beta$) and measures the variance/residuals of the actual text curve against an idealized logarithmic curve. A vocabulary growth curve that is 'too perfect'—showing minimal deviation from a smooth logarithmic trajectory, lacking the organic bursts and plateaus indicative of human cognitive shifts—yields a high artificiality score.",
+  "useCase": "語彙導入の巨視的なペースが統計的に有意になる、中〜長文のコンテンツ（エッセイ、レポート、記事）の分析に非常に効果的です。",
+  "strengths": "• 自己回帰生成の基本的な特性を利用しています。これは、出力ウィンドウ全体にわたって安定した確率分布を維持しようとするLLMの生来の衝動であり、自然な意味論的クラスタリングを防ぎます。\n• ユーザーは新しい単語を導入する正確な数学的速度を簡単に指定できないため、標準的なプロンプトを使用して回避することは極めて困難です。",
+  "limitations": "• 語彙の増加曲線が安定したり、意味のある発散を示したりするのに十分なトークンがない短いテキスト（ツイートや短いメールなど）では、まったく効果がありません。\n• 非常に構造化された定型的な人間の文章（法的契約書や標準作業手順書など）は、自然とAIのような滑らかな語彙の増加率を示す場合があります。",
+  "parameters": "解析: 順次的なトークン蓄積の追跡\n評価基準: 理想化されたヒープスの法則モデルからの分散\n出力結果: 0-100 増加率の人工性スコア",
+  "accuracy": "中〜高 — 70-85%の精度。その予測力はドキュメントの長さに比例して直接拡大します。局所的な構文チェックと組み合わせて、巨視的な構造的指標として使用するのが最適です。",
+  "references": [
+    {
+      "title": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.",
+      "url": "https://doi.org/10.1371/journal.pone.0146059"
+    },
+    {
+      "title": "Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS.",
+      "url": "https://arxiv.org/abs/2304.09065"
+    }
+  ],
+  "source": "Herdagdelen, A. et al. (2016). The mathematical formulation of Heaps' law. PLOS ONE.; Tulchinskii, E. et al. (2023). Intrinsic Dimension of Data Representations in Deep Neural Networks. NeurIPS."
 }

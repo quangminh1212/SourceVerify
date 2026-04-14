@@ -1,12 +1,12 @@
 {
-    "name": "Voice Fundamental Frequency",
-    "description": "Analyzes voice F0 (fundamental frequency) patterns — voice cloning often has unnatural F0 contours.",
-    "algorithm": "Voice Fundamental Frequency分析アルゴリズム",
-    "mechanism": "Voice Fundamental Frequencyシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Voice Fundamental Frequency",
+  "description": "Analyzes voice F0 (fundamental frequency) patterns — voice cloning often has unnatural F0 contours.",
+  "algorithm": "Voice Fundamental Frequency分析アルゴリズム",
+  "mechanism": "This method analyzes voice fundamental frequency (F0) for deepfake detection:\n\n1. **F0抽出**: The fundamental frequency (pitch) of the voice is extracted per frame using autocorrelation, cepstral, or YIN algorithm. F0 corresponds to the vocal fold vibration rate, typically 85-180 Hz for males and 165-255 Hz for females.\n\n2. **F0輪郭分析**: The temporal F0 contour (pitch track) is analyzed for naturalness. Natural speech shows characteristic F0 patterns: (a) declination (gradual F0 decrease across utterances), (b) prosodic contours (rises for questions, falls for statements), (c) micro-prosody (F0 perturbations at phoneme boundaries). AI voice synthesis may produce F0 contours with incorrect prosodic patterns or missing micro-prosodic detail.\n\n3. **F0RangeandVariability**: Each speaker has a characteristic F0 range and variability. The method checks whether F0 statistics (mean, standard deviation, range) fall within physiologically plausible values for the apparent speaker. AI-generated voices may show either unnaturally constrained (monotone) or excessive F0 variability.\n\n4. **JitterandShimmer**: Natural voice shows slight cycle-to-cycle F0 variation (jitter, typically <1%) and amplitude variation (shimmer, typically <3%). These micro-perturbations reflect the biomechanics of vocal fold vibration. AI voice synthesis may produce either too-perfect (zero jitter/shimmer) or incorrectly modeled perturbation patterns.\n\n5. **F0-視覚的相関**: Voice F0 should correlate with visible physical effort — higher pitch may correspond with increased tension visible in the neck muscles. The method checks audio-visual F0 correspondence. Deepfakes combining generated audio with generated video may show poor F0-visual correlation.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

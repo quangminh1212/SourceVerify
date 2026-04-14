@@ -1,22 +1,22 @@
 {
-    "name": "文章のリズムと抑揚 (Writing Rhythm & Cadence)",
-    "description": "文の長さ、構文の複雑さ、およびページング（歩調）の連続的な変動を測定することにより、テキストのメトロノームのような規則性を分析します。人間の書き手は自然に不規則で呼吸のような抑揚を採用します。短くパンチの効いた文と、長く、広がりがあり、複雑な文を組み合わせて、緊張感を構築したり、強調したり、アイデア間を移行したりします。数学的抵抗が最も少ないパスを検索する最適化関数に制約されている生成型AIモデルは、高度に規則化された「メトロノーム的」なリズムを出力します。それらは、予測可能な構造的テンポからほとんど逸脱しない、安定した中程度のペースの抑揚をデフォルトとします。このエンジンは、高度にスタイル化されたLLMの出力にさえ潜む人工的な単調さを検出します。",
-    "algorithm": "連続的なページングと音節エネルギーの自己相関",
-    "mechanism": "アルゴリズムは、ドキュメントを時系列信号として扱います。各文の「エネルギー」（文字長、音節数、構文の深さを介して計算される）を測定し、それを順次マッピングします。次に、自己相関関数を適用して、繰り返される間隔または周期的なパターンを検出します。人間の著者は、予測不可能なスパイクと小休止を伴う、ノイズが多く非周期的な信号を生成します（例：非常に複雑な段落の後に、突然2語の文が続くなど）。逆に、AIテキストは予測可能な生成ループに陥り、ロボットのような等間隔のメトロノームのビートを維持するため、高度に相関した周期的な波形を生成します。",
-    "useCase": "カバーレター、物語の構造、クリエイティブライティングなど、長文コンテンツを評価するために不可欠です。リズミカルな単調さは、機械が意図的に上書きするのが最も難しい文体的特徴の1つであるため、「無味乾燥な」生成出力に対する深いチェックとして機能します。",
-    "strengths": "• 孤立した単語ではなくドキュメント全体の流れを分析するため、単純な同義語の置き換え攻撃の影響を受けなくなります。\n• AI生成における数学的規則性の現象は特定の言語構文を超越するため、言語をまたいだ普遍的な検出器として機能します。",
-    "limitations": "• 短い入力（例：単一段落やツイート）には、リズミカルなベースラインを確立するために必要な連続したデータポイントがないため、自己相関分析は役に立ちません。\n• 契約書、正式なAPIドキュメント、厳格なリストなど、意図的に均一に構造化されているテキストは、誤検知（偽陽性）を引き起こします。",
-    "parameters": "解析: 連続エネルギー自己相関\n評価基準: 抑揚の分散、周期的な波形の平滑化、および複数の文の連続エントロピー\n出力結果: 0-100 リズミカルな単調さスコア",
-    "accuracy": "中〜高 — 75〜85%の精度。短いテキストではその有効性が著しく損なわれますが、500語を超えるエッセイでは非常に致命的になります。バースト性（Burstiness: 文の長さのばらつき）と組み合わせると、機械生成のほぼ確実な痕跡（シグネチャ）を提供します。",
-    "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
-        },
-        {
-            "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
-            "url": "https://doi.org/10.1145/3132039"
-        }
-    ],
-    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys."
+  "name": "文章のリズムと抑揚 (Writing Rhythm & Cadence)",
+  "description": "文の長さ、構文の複雑さ、およびページング（歩調）の連続的な変動を測定することにより、テキストのメトロノームのような規則性を分析します。人間の書き手は自然に不規則で呼吸のような抑揚を採用します。短くパンチの効いた文と、長く、広がりがあり、複雑な文を組み合わせて、緊張感を構築したり、強調したり、アイデア間を移行したりします。数学的抵抗が最も少ないパスを検索する最適化関数に制約されている生成型AIモデルは、高度に規則化された「メトロノーム的」なリズムを出力します。それらは、予測可能な構造的テンポからほとんど逸脱しない、安定した中程度のペースの抑揚をデフォルトとします。このエンジンは、高度にスタイル化されたLLMの出力にさえ潜む人工的な単調さを検出します。",
+  "algorithm": "連続的なページングと音節エネルギーの自己相関",
+  "mechanism": "The algorithm treats the document as a time-series signal. It measures the 'energy' of each sentence—calculated via character length, syllable count, and syntactic depth—and maps it sequentially. It then applies an autocorrelation function to detect repeating intervals or periodic patterns. A human author will generate a noisy, aperiodic signal with unpredictable spikes and lulls (e.g., highly complex paragraphs followed by a sudden two-word sentence). AI text, conversely, produces a highly correlated, periodic waveform because it falls into predictable generative loops, maintaining a robotic, evenly-spaced metronomic beat.",
+  "useCase": "カバーレター、物語の構造、クリエイティブライティングなど、長文コンテンツを評価するために不可欠です。リズミカルな単調さは、機械が意図的に上書きするのが最も難しい文体的特徴の1つであるため、「無味乾燥な」生成出力に対する深いチェックとして機能します。",
+  "strengths": "• 孤立した単語ではなくドキュメント全体の流れを分析するため、単純な同義語の置き換え攻撃の影響を受けなくなります。\n• AI生成における数学的規則性の現象は特定の言語構文を超越するため、言語をまたいだ普遍的な検出器として機能します。",
+  "limitations": "• 短い入力（例：単一段落やツイート）には、リズミカルなベースラインを確立するために必要な連続したデータポイントがないため、自己相関分析は役に立ちません。\n• 契約書、正式なAPIドキュメント、厳格なリストなど、意図的に均一に構造化されているテキストは、誤検知（偽陽性）を引き起こします。",
+  "parameters": "解析: 連続エネルギー自己相関\n評価基準: 抑揚の分散、周期的な波形の平滑化、および複数の文の連続エントロピー\n出力結果: 0-100 リズミカルな単調さスコア",
+  "accuracy": "中〜高 — 75〜85%の精度。短いテキストではその有効性が著しく損なわれますが、500語を超えるエッセイでは非常に致命的になります。バースト性（Burstiness: 文の長さのばらつき）と組み合わせると、機械生成のほぼ確実な痕跡（シグネチャ）を提供します。",
+  "references": [
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://doi.org/10.18653/v1/2020.emnlp-main.673"
+    },
+    {
+      "title": "Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys.",
+      "url": "https://doi.org/10.1145/3132039"
+    }
+  ],
+  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Neal, T. et al. (2018). Surveying Stylometry Techniques and Applications. ACM Computing Surveys."
 }

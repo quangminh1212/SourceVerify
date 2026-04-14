@@ -1,22 +1,22 @@
 {
-    "name": "Bokeh Naturalness",
-    "description": "Analyzes bokeh effect naturalness",
-    "algorithm": "Bokeh Naturalness — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Analyzes bokeh effect naturalness. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: sensor\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through bokeh naturalness analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ]
+  "name": "Bokeh Naturalness",
+  "description": "Analyzes bokeh effect naturalness",
+  "algorithm": "Bokeh Naturalness — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes bokeh (out-of-focus rendering) naturalness for forensic detection:\n\n1. **深度-of-FieldMap推定**: The image is analyzed to estimate relative depth across the frame using defocus cues. Regions are classified by their blur level — sharp (in-focus), slightly blurred, and heavily blurred, creating a depth-ordered defocus map.\n\n2. **BokehDisc分析**: Out-of-focus highlights are identified and their shape (bokeh disc) is analyzed. Real lenses produce bokeh discs with shapes determined by the aperture blade count and shape — circular, hexagonal, or octagonal with consistent geometry across the frame. AI-generated bokeh often produces physically impossible disc shapes or inconsistent shapes at different frame positions.\n\n3. **Defocus勾配一貫性**: The transition from sharp to blurred regions should follow a smooth gradient consistent with optical depth-of-field physics (proportional to 1/distance from focal plane). AI generators may produce abrupt focus transitions, incorrect blur gradient directions, or depth-of-field effects inconsistent with any physical lens.\n\n4. **ChromaticAberrationinBokeh**: Real out-of-focus regions exhibit longitudinal chromatic aberration — color fringing with green/magenta shifts depending on whether the object is in front of or behind the focal plane. The method checks for correct chromatic behavior in bokeh regions. Generated images typically lack or incorrectly render chromatic bokeh effects.\n\n5. **時間的Bokeh一貫性**: In video, bokeh characteristics should vary smoothly with camera-to-subject distance changes. The method tracks bokeh quality across frames — generated video may produce inconsistent frame-to-frame bokeh rendering, with disc shapes, blur amounts, or chromatic effects that fluctuate without corresponding depth changes.",
+  "parameters": "分析タイプ: sensor\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through bokeh naturalness analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ]
 }

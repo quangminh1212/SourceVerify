@@ -1,12 +1,12 @@
 {
-    "name": "Multiscale Entropy Analysis",
-    "description": "Computes sample entropy at multiple time scales to detect complexity differences between real and AI images (Costa et al., 2002).",
-    "algorithm": "Multiscale Entropy Analysis分析アルゴリズム",
-    "mechanism": "Multiscale Entropy Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Multiscale Entropy Analysis",
+  "description": "Computes sample entropy at multiple time scales to detect complexity differences between real and AI images (Costa et al., 2002).",
+  "algorithm": "Multiscale Entropy Analysis分析アルゴリズム",
+  "mechanism": "この手法は applies Costa et al.'s (2002) Multiscale Entropy (MSE) framework to quantify image complexity across scales:\n\n1. **Coarse-Graining**: The image signal is coarse-grained at multiple temporal scales τ by averaging non-overlapping windows of length τ: yⱼ(τ) = (1/τ)Σᵢ₌₍ⱼ₋₁₎τ₊₁ʲᵗ xᵢ. This creates a family of representations capturing structure at different resolutions.\n\n2. **SampleEntropy計算**: At each scale τ, sample entropy SampEn(m, r, N) is calculated — measuring the negative natural logarithm of the conditional probability that sequences similar for m points remain similar for m+1 points within tolerance r. This quantifies irregularity without requiring stationarity.\n\n3. **MSECurveConstruction**: The entropy values across scales form the MSE curve. Natural images exhibit a characteristic MSE profile: high entropy at fine scales (sensor noise, texture detail) with controlled decay at coarse scales reflecting structured content.\n\n4. **ComplexityIndex計算**: The area under the MSE curve (Complexity Index, CI) provides a single measure of multi-scale complexity. AI生成の images 通常 show abnormal MSE profiles — either excessively smooth (low MSE across all scales) or with artificial periodicity absent in natural images.\n\n5. **異常検出**: The MSE curve shape is compared against reference distributions from natural images. Deviations indicate synthetic generation — diffusion models often produce overly regular fine-scale structure, while GANs may show characteristic entropy dips at specific scales corresponding to generator architecture artifacts.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Chroma Bleed",
-    "description": "Detects chroma bleed artifacts",
-    "algorithm": "Chroma Bleed — ピクセルレベル空間分析",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Detects chroma bleed artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through chroma bleed analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Chroma Bleed",
+  "description": "Detects chroma bleed artifacts",
+  "algorithm": "Chroma Bleed — ピクセルレベル空間分析",
+  "mechanism": "This method detects chroma bleeding artifacts for video forensic analysis:\n\n1. **ChromaSubsampling分析**: Video codecs (H.264/H.265) use chroma subsampling (4:2:0, 4:2:2) where chrominance has lower resolution than luminance. The method analyzes whether chroma-luma relationships follow the expected subsampling pattern. Manipulated or AI-generated regions may exhibit chroma bleeding inconsistent with the video's declared subsampling scheme.\n\n2. **色チャンネルエッジAlignment**: At sharp edges, the luma (Y) channel shows a precise boundary while chroma channels (Cb, Cr) show slightly broader edges due to subsampling. The method measures the spatial offset between luminance and chrominance edges. Natural video shows consistent chroma spread matching the codec's subsampling. Deepfake insertion may produce regions with different chroma edge characteristics.\n\n3. **Cross-チャンネル相関**: In authentic video, chroma bleeding patterns are consistent across the entire frame (same codec pipeline). The method computes local cross-channel correlations and flags regions where chroma-luma relationships differ from the frame average — indicating content from a different encoding pipeline.\n\n4. **時間的Chroma安定性**: Chroma bleeding characteristics should remain temporally consistent. The method tracks chroma-luma edge relationships across frames. AI-generated content may produce temporally varying chroma artifacts as the generator independently renders chrominance without modeling the encoding pipeline's subsampling behavior.\n\n5. **Re-Encoding検出**: Double-encoded video (original + manipulation + re-encoding) produces characteristic double-chroma-bleeding artifacts. The method detects these compound artifacts by analyzing the spectral signature of chroma bleeding, which differs between single-pass and multi-pass encoding chains.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through chroma bleed analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Pixel Jitter",
-    "description": "Detects ピクセル jitter artifacts",
-    "algorithm": "Pixel Jitter — ピクセルレベル空間分析",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Detects ピクセル jitter artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through ピクセル jitter analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Pixel Jitter",
+  "description": "Detects ピクセル jitter artifacts",
+  "algorithm": "Pixel Jitter — ピクセルレベル空間分析",
+  "mechanism": "This method detects pixel-level temporal jitter for video deepfake detection:\n\n1. **Sub-ピクセル動き分析**: Per-pixel temporal variation is measured in regions that should be static (stationary background, stable facial features during stillness). Sub-pixel motion is extracted using phase-based methods to detect motion below one-pixel magnitude.\n\n2. **Jitter周波数分析**: The temporal frequency content of per-pixel variation is analyzed. Natural video shows specific jitter signatures: (a) sensor read noise (white noise, typically < 1 LSB), (b) quantization dither, (c) compression artifact variation. AI-generated video may show jitter with different spectral characteristics — frame-independent rendering produces temporally uncorrelated pixel variations.\n\n3. **空間的Jitterパターン**: The spatial distribution of jitter intensity is mapped. Natural jitter is spatially uniform (same sensor for all pixels). AI-generated jitter may be spatially non-uniform — varying in intensity across the frame or showing different jitter characteristics in generated face regions vs. original background.\n\n4. **顔-BackgroundJitter比較**: Jitter characteristics of face pixels are compared with background pixels. In authentic video, both originate from the same sensor and show identical noise characteristics. Deepfake composites show different jitter signatures between the generated face and original background.\n\n5. **Jitter-動きDecoupling**: The method separates true motion from jitter to avoid false positives. Genuine micro-motion (physiological tremor, breathing) is distinguished from generation artifacts based on spatial coherence and frequency characteristics. The forensic score quantifies the anomalous jitter component.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through ピクセル jitter analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

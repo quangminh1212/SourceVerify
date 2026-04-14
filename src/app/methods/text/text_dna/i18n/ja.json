@@ -1,22 +1,22 @@
 {
-    "name": "構文DNA電子透かし (Syntactic DNA Watermarking)",
-    "description": "AIの生成プロセス中にテキストに目に見えないように埋め込まれた暗号的または統計的な「電子透かし（watermarks）」の存在を検出します。現代の多くの大規模言語モデルは、「グリーン・レッドリストの分割（Kirchenbauer et al., 2023）」のような手法を使用して、数学的に検出可能なシグネチャ（署名）を出力に意図的に注入しています。生成中、モデルの語彙は、前の単語のハッシュに基づいて、擬似ランダムに「グリーン」（促進される）トークンと「レッド」（ペナルティを受ける）トークンに分割されます。トークンシーケンスを分析し、この統計的バイアスをリバースエンジニアリングすることで、アルゴリズムはAIの著作権を決定的に証明できます。なぜなら、人間の書き手は自然に、これらの隠された確率的制約なしに単語を選択するからです。",
-    "algorithm": "トークンハッシュ分割と統計的バイアス検証",
-    "mechanism": "アルゴリズムはテキストをトークンごとに処理し、AIが語彙を分割するために使用した可能性のある擬似ランダムハッシュ関数を再構築しようと試みます。特定のウィンドウにわたって連続する「グリーン」トークンの統計的頻度を計算します。標準的な、透かしのない人間のテキストは、当然のことながら、擬似ランダムにハッシュ化された「グリーン」と「レッド」のトークンのほぼ50/50の分布を示します。数学的に有意な「グリーン」トークンの過剰表現は、機械生成の否定できない暗号的フィンガープリント（指紋）を構成します。",
-    "useCase": "AIの安全性の透明性基準に準拠し、目に見えない透かしを埋め込んでいる商用LLMによって生成されたテキストを検出するための、究極の決定的なテストです。",
-    "strengths": "• ソースAIモデルの特定の透かしハッシュアルゴリズムがわかっていれば、100%に近い確実性（誤検知率ほぼゼロ）に近づきます。\n• 統計的な「DNA」はより広範なドキュメント全体で持続するため、人間の軽い編集、同義語の置換、または対抗的な言い換え（adversarial paraphrasing）に対して非常に堅牢です。",
-    "limitations": "• 生成に使用されたAIモデルがオープンソースであるか、大幅に量子化されているか、単にアクティブな透かしプロトコルを採用していない場合は完全に無効です。\n• 統計的有意性を証明し、数学的しきい値のトリガーを引くには、十分に長いテキストスニペット（通常は50以上のトークン）が必要です。",
-    "parameters": "解析: 暗号トークンハッシュ検証\n評価基準: グリーンリストトークンのバイアスと分布の分散\n出力結果: 0-100 透かしの数学的確実性スコア",
-    "accuracy": "決定的 — 既知の透かしが存在する場合の単独精度は99%を超えます。テキストに透かしがない場合は、安全に機能しません（誤検知なし）。",
-    "references": [
-        {
-            "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
-            "url": "https://arxiv.org/abs/2301.10226"
-        },
-        {
-            "title": "Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
-            "url": "https://arxiv.org/abs/2303.11156"
-        }
-    ],
-    "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv."
+  "name": "構文DNA電子透かし (Syntactic DNA Watermarking)",
+  "description": "AIの生成プロセス中にテキストに目に見えないように埋め込まれた暗号的または統計的な「電子透かし（watermarks）」の存在を検出します。現代の多くの大規模言語モデルは、「グリーン・レッドリストの分割（Kirchenbauer et al., 2023）」のような手法を使用して、数学的に検出可能なシグネチャ（署名）を出力に意図的に注入しています。生成中、モデルの語彙は、前の単語のハッシュに基づいて、擬似ランダムに「グリーン」（促進される）トークンと「レッド」（ペナルティを受ける）トークンに分割されます。トークンシーケンスを分析し、この統計的バイアスをリバースエンジニアリングすることで、アルゴリズムはAIの著作権を決定的に証明できます。なぜなら、人間の書き手は自然に、これらの隠された確率的制約なしに単語を選択するからです。",
+  "algorithm": "トークンハッシュ分割と統計的バイアス検証",
+  "mechanism": "The algorithm processes the text token by token, attempting to reconstruct the pseudo-random hashing function that may have been used by an AI to partition its vocabulary. It calculates the statistical frequency of consecutive 'green' tokens over a specific window. A standard, unwatermarked human text will naturally exhibit a roughly 50/50 distribution of pseudo-randomly hashed 'green' and 'red' tokens. A mathematically significant overrepresentation of 'green' tokens constitutes an undeniable cryptographic fingerprint of machine generation.",
+  "useCase": "AIの安全性の透明性基準に準拠し、目に見えない透かしを埋め込んでいる商用LLMによって生成されたテキストを検出するための、究極の決定的なテストです。",
+  "strengths": "• ソースAIモデルの特定の透かしハッシュアルゴリズムがわかっていれば、100%に近い確実性（誤検知率ほぼゼロ）に近づきます。\n• 統計的な「DNA」はより広範なドキュメント全体で持続するため、人間の軽い編集、同義語の置換、または対抗的な言い換え（adversarial paraphrasing）に対して非常に堅牢です。",
+  "limitations": "• 生成に使用されたAIモデルがオープンソースであるか、大幅に量子化されているか、単にアクティブな透かしプロトコルを採用していない場合は完全に無効です。\n• 統計的有意性を証明し、数学的しきい値のトリガーを引くには、十分に長いテキストスニペット（通常は50以上のトークン）が必要です。",
+  "parameters": "解析: 暗号トークンハッシュ検証\n評価基準: グリーンリストトークンのバイアスと分布の分散\n出力結果: 0-100 透かしの数学的確実性スコア",
+  "accuracy": "決定的 — 既知の透かしが存在する場合の単独精度は99%を超えます。テキストに透かしがない場合は、安全に機能しません（誤検知なし）。",
+  "references": [
+    {
+      "title": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.",
+      "url": "https://arxiv.org/abs/2301.10226"
+    },
+    {
+      "title": "Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv.",
+      "url": "https://arxiv.org/abs/2303.11156"
+    }
+  ],
+  "source": "Kirchenbauer, J. et al. (2023). A Watermark for Large Language Models. ICML.; Sadasivan, V.S. et al. (2023). Can AI-Generated Text be Reliably Detected? arXiv."
 }

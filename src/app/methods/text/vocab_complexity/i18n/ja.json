@@ -1,22 +1,22 @@
 {
-    "name": "語彙の複雑さ (Vocabulary Complexity)",
-    "description": "ドキュメント全体で使用されている語彙の洗練度、希少性、および使用域（レジスター）を評価します。大規模言語モデルは、ユーザーの理解度とトークン効率を最大化するように設計されており、本質的に「中道的」な語彙に偏っています。統計的に確率が高く、よく使われる単語や標準的な「学術的」な言い回し（例：「さらに (furthermore)」、「重要な (crucial)」、「掘り下げる (delve)」）に大きく依存しています。AIは複雑な単語を使用できますが、それらを均等かつ予測可能に分布させ、特に指示されない限り、真に無名な、古風な、または特異な用語を使用することはめったにありません。対照的に、人間の専門家はしばしば「とがった（spiky）」語彙プロファイルを示し、高度に専門的で希少な専門用語と口語表現を標準的な統計基準から逸脱した方法で混在させます。",
-    "algorithm": "語彙の洗練度と単語頻度ランクのプロファイリング",
-    "mechanism": "モデルはテキストを解析し、確立された大規模なコーパス頻度リスト（例：Subtlex、Google Web Trillion Word Corpus）に対してすべての単語を評価します。高頻度（一般的）な単語と低頻度（希少/複雑）な単語の比率に基づいて「複雑さのプロファイル」を計算します。さらに、使用されている複雑な単語の意味論的な使用域を分析します。非常にまれな用語やドメイン特有の用語への予測不可能な急上昇（スパイク）がなく、執拗なまでに一貫して均等に分布した「中程度に高い」語彙の複雑さ（多くの場合、高校生や学部生のエッセイのように読める）を維持しているテキストは、一般的な読みやすさと雄弁さのバランスをとろうとするLLMの強力な数学的兆候です。",
-    "useCase": "学術論文、専門的なジャーナリズム、クリエイティブライティングの分析に不可欠です。人間の著者の本物でニュアンスの豊かな専門知識と、AIのシミュレートされた平均化された「スマートな」トーンとを区別するのに役立ちます。",
-    "strengths": "• 「ChatGPTトーン」—過度に磨き上げられ、明瞭でありながら、最終的には一般的な「賢く聞こえる」単語（「多面的な (multifaceted)」、「タペストリー (tapestry)」、「証左 (testament)」など）に依存しているテキストの明確な感触—を検出するのに非常に効果的です。\n• AIに「専門家のように書く」ように単に依頼するだけでは回避することが困難です。なぜなら、AIの考える専門知識は、依然として予測可能なトークン確率に縛られているからです。",
-    "limitations": "• 高度に標準化された、アクセスしやすい言語で意図的に書いている人間のライター（厳格な平易な言語のガイドラインに従っているテクニカルライターやESL学習者など）を分析する場合、偽陽性（誤検知）の影響を受けやすくなります。\n• 統計的な頻度のベースラインを確立するのに十分な単語量がない、非常に短いテキストでは効果が低くなります。",
-    "parameters": "解析: コーパス頻度マッチングとレジスター評価\n評価基準: 平均単語頻度ランクと特異な語彙のスパイク\n出力結果: 0-100 語彙的人工性スコア",
-    "accuracy": "高 — 75-85%の精度。LLMは真の人間の専門家の数学的に非効率で不均衡な語彙の選択を有機的に複製するのに苦労するため、これは最も信頼性の高い意味論的指標の1つです。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press.",
-            "url": "https://doi.org/10.1017/CBO9780511621024"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press."
+  "name": "語彙の複雑さ (Vocabulary Complexity)",
+  "description": "ドキュメント全体で使用されている語彙の洗練度、希少性、および使用域（レジスター）を評価します。大規模言語モデルは、ユーザーの理解度とトークン効率を最大化するように設計されており、本質的に「中道的」な語彙に偏っています。統計的に確率が高く、よく使われる単語や標準的な「学術的」な言い回し（例：「さらに (furthermore)」、「重要な (crucial)」、「掘り下げる (delve)」）に大きく依存しています。AIは複雑な単語を使用できますが、それらを均等かつ予測可能に分布させ、特に指示されない限り、真に無名な、古風な、または特異な用語を使用することはめったにありません。対照的に、人間の専門家はしばしば「とがった（spiky）」語彙プロファイルを示し、高度に専門的で希少な専門用語と口語表現を標準的な統計基準から逸脱した方法で混在させます。",
+  "algorithm": "語彙の洗練度と単語頻度ランクのプロファイリング",
+  "mechanism": "The model parses the text and evaluates every word against established massive corpus frequency lists (e.g., Subtlex, Google Web Trillion Word Corpus). It calculates a 'complexity profile' based on the ratio of high-frequency (common) words to low-frequency (rare/complex) words. Furthermore, it analyzes the semantic register of the complex words used. A text that maintains a relentlessly consistent, evenly distributed 'moderately high' vocabulary complexity (often reading like a high school or undergraduate essay) without any unpredictable spikes into extremely rare or domain-idiosyncratic terminology is a strong mathematical signature of an LLM seeking to balance eloquence with generic readability.",
+  "useCase": "学術論文、専門的なジャーナリズム、クリエイティブライティングの分析に不可欠です。人間の著者の本物でニュアンスの豊かな専門知識と、AIのシミュレートされた平均化された「スマートな」トーンとを区別するのに役立ちます。",
+  "strengths": "• 「ChatGPTトーン」—過度に磨き上げられ、明瞭でありながら、最終的には一般的な「賢く聞こえる」単語（「多面的な (multifaceted)」、「タペストリー (tapestry)」、「証左 (testament)」など）に依存しているテキストの明確な感触—を検出するのに非常に効果的です。\n• AIに「専門家のように書く」ように単に依頼するだけでは回避することが困難です。なぜなら、AIの考える専門知識は、依然として予測可能なトークン確率に縛られているからです。",
+  "limitations": "• 高度に標準化された、アクセスしやすい言語で意図的に書いている人間のライター（厳格な平易な言語のガイドラインに従っているテクニカルライターやESL学習者など）を分析する場合、偽陽性（誤検知）の影響を受けやすくなります。\n• 統計的な頻度のベースラインを確立するのに十分な単語量がない、非常に短いテキストでは効果が低くなります。",
+  "parameters": "解析: コーパス頻度マッチングとレジスター評価\n評価基準: 平均単語頻度ランクと特異な語彙のスパイク\n出力結果: 0-100 語彙的人工性スコア",
+  "accuracy": "高 — 75-85%の精度。LLMは真の人間の専門家の数学的に非効率で不均衡な語彙の選択を有機的に複製するのに苦労するため、これは最も信頼性の高い意味論的指標の1つです。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press.",
+      "url": "https://doi.org/10.1017/CBO9780511621024"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Biber, D. (1988). Variation across Speech and Writing. Cambridge University Press."
 }

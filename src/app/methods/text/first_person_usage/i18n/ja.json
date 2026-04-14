@@ -1,22 +1,22 @@
 {
-    "name": "一人称視点（一人称代名詞）分析",
-    "description": "一人称代名詞（私、僕、俺、私たちなど）の頻度と文脈への統合を分析します。AIモデルは本質的に客観的で三人称での視点をデフォルトとしており、明示的に強制されない限り、一人称の言語を有機的に使用することに苦戦します。",
-    "algorithm": "代名詞の密度および主観的フレーミング分析",
-    "mechanism": "一人称代名詞は、人間の経験の言語的なアンカー（拠り所）です。人間が意見、レビュー、または個人的な逸話を書くとき、彼らは自然に自分自身を中心に置きます（「私は…であることに気づいた」「私の経験では…」）。逆に、大規模言語モデルは、有用で、全知全能で、客観的なアシスタントとして機能するように（RLHFを介して）数学的に調整されています。彼らには個人的な経験、肉体、または意見がないため、ベースラインの出力では「架空の人格のハルシネーション（幻覚）」を避けるために一人称の言語が大幅に抑圧されます。AIが一人称で書くように明示的にプロンプトされると、多くの場合過剰修正（オーバー・コレクション）を行い、すべての文の正確な先頭に「私」を対称的に配置するか、一人称視点を一般的な導入節にのみ限定します（「私は［超客観的な事実］であると信じています」）。このアルゴリズムは、テキストの「主観的密度」を計算します。一人称代名詞の頻度だけでなく、その構文の深さも測定します。本来主観的であるべきジャンル（製品レビューやブログの投稿など）で一人称代名詞が完全に欠如している場合や、主観的な感情の枠組み（フレーミング）をまったく伴わずに「私」が極めて不自然でロボットのように配置されている場合は、そのテキストが機械で生成されたものであると強力にフラグが立てられます。",
-    "useCase": "著者の「生きた経験」がコアバリューとなる、個人的なエッセイ、カバーレター、製品レビュー、オピニオン記事などの真実性を検証するために不可欠です。",
-    "strengths": "• モデルが客観性を保とうとする本能と、ユーザーの「個人的なストーリーを書いて」というプロンプトの間で常に葛藤が生じるため、AIが生成したレビューや個人のブログを検出するのに非常に効果的です。\n• AIモデルが「私」を使ってエッセイを書き始めたにもかかわらず、テキストの途中で徐々に出力しやすい客観的な三人称視点へとドリフトしていく「ペルソナ幻覚疲労」を捉えます。\n• 高速で動作が軽く、単純な同義語の置換（スピニング）による手法を完全に無効化します。",
-    "limitations": "• 人間の文体規則でも一人称代名詞の使用が厳しく禁じられている、正式な学術論文、技術文書、またはジャーナリズムではまったく効果がありません。\n• 極めてフォーマルで、どこか他人事のような「企業的な」トーンで書く人間が誤検知（偽陽性）を引き起こす可能性があります。\n• ドキュメント全体に「私は思う」や「私の意見では」を挿入するだけで、人間がAIテキストに手動で簡単に「パッチ（修正）」を当てることができてしまいます。",
-    "parameters": "解析: 代名詞の頻度抽出および構文配置\n評価基準: 主観的な一人称のフレーミング vs 客観的な宣言の比率\n出力結果: 0-100 代名詞の無菌性（主観的な分離）スコア",
-    "accuracy": "中〜高 — カジュアル、物語風、および説得力のあるテキストで75-85%。AIの安全性アライメントによって義務付けられた「客観的分離」に対する、強力な行動的回避装置（ポリグラフ）として機能します。",
-    "references": [
-        {
-            "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
-            "url": "https://arxiv.org/abs/2010.07091"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        }
-    ],
-    "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+  "name": "一人称視点（一人称代名詞）分析",
+  "description": "一人称代名詞（私、僕、俺、私たちなど）の頻度と文脈への統合を分析します。AIモデルは本質的に客観的で三人称での視点をデフォルトとしており、明示的に強制されない限り、一人称の言語を有機的に使用することに苦戦します。",
+  "algorithm": "代名詞の密度および主観的フレーミング分析",
+  "mechanism": "First-person pronouns are the linguistic anchor of human experience. When humans write opinions, reviews, or personal anecdotes, they naturally center themselves ('I noticed that...', 'In my experience...'). Large Language Models, conversely, are mathematically aligned (via RLHF) to act as helpful, omniscient, and objective assistants. They do not have personal experiences, bodies, or opinions, and therefore their baseline output heavily suppresses first-person language to avoid 'hallucinating a persona'. When an AI is explicitly prompted to write in the first person, it often over-corrects, either using 'I' symmetrically at the exact beginning of every sentence, or confining the first-person perspective exclusively to generic introductory clauses ('I believe that [hyper-objective fact]'). This algorithm calculates the 'Subjective Density' of the text. It measures not only the frequency of first-person pronouns but their syntactic depth. A complete lack of first-person pronouns in an inherently subjective genre (like a product review or blog post), or a highly unnatural, robotic placement of 'I' without any subjective emotional framing, strongly flags the text as machine-generated.",
+  "useCase": "著者の「生きた経験」がコアバリューとなる、個人的なエッセイ、カバーレター、製品レビュー、オピニオン記事などの真実性を検証するために不可欠です。",
+  "strengths": "• モデルが客観性を保とうとする本能と、ユーザーの「個人的なストーリーを書いて」というプロンプトの間で常に葛藤が生じるため、AIが生成したレビューや個人のブログを検出するのに非常に効果的です。\n• AIモデルが「私」を使ってエッセイを書き始めたにもかかわらず、テキストの途中で徐々に出力しやすい客観的な三人称視点へとドリフトしていく「ペルソナ幻覚疲労」を捉えます。\n• 高速で動作が軽く、単純な同義語の置換（スピニング）による手法を完全に無効化します。",
+  "limitations": "• 人間の文体規則でも一人称代名詞の使用が厳しく禁じられている、正式な学術論文、技術文書、またはジャーナリズムではまったく効果がありません。\n• 極めてフォーマルで、どこか他人事のような「企業的な」トーンで書く人間が誤検知（偽陽性）を引き起こす可能性があります。\n• ドキュメント全体に「私は思う」や「私の意見では」を挿入するだけで、人間がAIテキストに手動で簡単に「パッチ（修正）」を当てることができてしまいます。",
+  "parameters": "解析: 代名詞の頻度抽出および構文配置\n評価基準: 主観的な一人称のフレーミング vs 客観的な宣言の比率\n出力結果: 0-100 代名詞の無菌性（主観的な分離）スコア",
+  "accuracy": "中〜高 — カジュアル、物語風、および説得力のあるテキストで75-85%。AIの安全性アライメントによって義務付けられた「客観的分離」に対する、強力な行動的回避装置（ポリグラフ）として機能します。",
+  "references": [
+    {
+      "title": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.",
+      "url": "https://arxiv.org/abs/2010.07091"
+    },
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    }
+  ],
+  "source": "Uchendu, A. et al. (2020). Authorship Attribution for Neural Text Generation. EMNLP.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

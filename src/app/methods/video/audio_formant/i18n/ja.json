@@ -1,12 +1,12 @@
 {
-    "name": "Audio Formant Analysis",
-    "description": "Analyzes speech formant frequencies (F1-F4) — voice synthesis often produces unnatural formant transitions.",
-    "algorithm": "Audio Formant Analysis分析アルゴリズム",
-    "mechanism": "Audio Formant Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Audio Formant Analysis",
+  "description": "Analyzes speech formant frequencies (F1-F4) — voice synthesis often produces unnatural formant transitions.",
+  "algorithm": "Audio Formant Analysis分析アルゴリズム",
+  "mechanism": "This method analyzes speech formant structure for audio deepfake detection following Chetty & Wagner (2006):\n\n1. **フォルマント抽出**: Speech segments are analyzed using Linear Predictive Coding (LPC) to extract formant frequencies F1-F4 and their bandwidths. Formants are the resonant frequencies of the vocal tract, determined by physical anatomy — tongue position, jaw opening, and vocal tract length.\n\n2. **フォルマントTrajectory分析**: Temporal trajectories of formant frequencies are tracked across phoneme transitions. Natural speech shows smooth, physiologically constrained formant transitions governed by articulatory dynamics. AI-generated speech may exhibit unnaturally abrupt formant shifts or overly smooth trajectories lacking natural micro-variations.\n\n3. **Speaker-Specificフォルマントモデリング**: Each speaker has characteristic formant ranges determined by vocal tract geometry. The method builds a speaker-specific formant model and checks consistency — deepfake audio may inadvertently blend formant characteristics from source and target speakers, creating acoustically impossible vocal tract configurations.\n\n4. **フォルマントBandwidth分析**: Natural formant bandwidths reflect the damping properties of the vocal tract. AI synthesis often produces formants with unnatural bandwidth patterns — either too narrow (over-resonant) or too uniform across frequency bands, lacking the frequency-dependent damping of real vocal tracts.\n\n5. **Harmonic-to-フォルマントRatio**: The relationship between harmonic series and formant peaks is analyzed. In natural speech, harmonics interact with formant resonances in predictable ways governed by source-filter theory. Synthetic speech may show anomalous harmonic-formant relationships indicating generated rather than physical sound production.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

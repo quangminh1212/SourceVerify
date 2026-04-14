@@ -1,12 +1,12 @@
 {
-    "name": "Quantization Parameter Analysis",
-    "description": "Analyzes video codec QP values for compression consistency — re-encoded deepfakes show QP anomalies.",
-    "algorithm": "Quantization Parameter Analysis分析アルゴリズム",
-    "mechanism": "Quantization Parameter Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Quantization Parameter Analysis",
+  "description": "Analyzes video codec QP values for compression consistency — re-encoded deepfakes show QP anomalies.",
+  "algorithm": "Quantization Parameter Analysis分析アルゴリズム",
+  "mechanism": "This method analyzes quantization parameter (QP) patterns for video forensic detection:\n\n1. **QPMap抽出**: The per-macroblock quantization parameter is extracted from the video bitstream. The QP map reveals how the encoder allocated quality across the frame — lower QP (higher quality) for important/complex regions, higher QP (lower quality) for simpler regions.\n\n2. **QP分布分析**: The QP distribution across the frame is analyzed. Authentic single-encoded video shows QP values following the encoder's rate-control algorithm — smooth QP variation correlated with content complexity. Re-encoded video (manipulation + re-encoding) shows QP distributions influenced by two encoding passes.\n\n3. **QP-Content一貫性**: The relationship between QP and local content complexity is verified. In normal encoding, complex regions (edges, texture) receive lower QP. Manipulated regions may show QP-content mismatches — the second encoder's QP decisions may not optimally match the inserted content.\n\n4. **DoubleQuantization検出**: When video is decoded, manipulated, and re-encoded, characteristic double-quantization artifacts appear in the QP and DCT coefficient distributions. The method detects periodicities in DCT histograms that indicate the original QP, revealing the encoding history.\n\n5. **時間的QPパターン分析**: QP allocation across frames follows the encoder's rate control model — I-frames typically get lower QP than P/B-frames. The method analyzes temporal QP patterns for anomalies. Manipulated video segments may show QP pattern breaks where the manipulation disrupted the original rate control.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

@@ -1,22 +1,22 @@
 {
-    "name": "単語特異性インデックス (Word Specificity Index)",
-    "description": "テキストで使用されている語彙の分類学的な深さ（taxonomic depth）と精度を評価します。大規模言語モデル（LLM）は、プロンプトに対して最も広く受け入れられ、統計的に「安全な」継続を生成するように訓練された確率エンジンです。このアーキテクチャにより、明示的に誘導されない限り、本質的に非常に具体的で正確な語彙（下位語：hyponyms）よりも一般的で高レベルな用語（上位語：hypernyms）を偏重する傾向があります。たとえば、AIは統計的に「アンデスコンドル」よりも「大きな鳥」を、「ECMOマシン」よりも「医療機器」を生成する可能性が高くなります。逆に、人間の専門家は、身近な主題について議論するとき、自然に超具体的な分類レベルまで掘り下げます。このアルゴリズムは、プロンプトなしのAI生成に典型的な、一般的で「表面レベル」の語彙の平滑化を検出します。",
-    "algorithm": "分類学的深さと上位語/下位語の比率分析",
-    "mechanism": "アルゴリズムは、名詞、動詞、形容詞を階層的な語彙データベース（WordNetやターゲットドメインのオントロジーなど）と相互参照して、「分類学的深さ」を決定します。一般的な単語（「動物」「乗り物」「言う」）は階層の最上位（深さ 1 または 2）にあります。非常に特異的な単語（「シーラカンス」「三葉機」「教皇の権力を振るう」）は、はるかに深いところ（深さ 6 以上）に存在します。システムは、テキストの平均的な特異性の深さと、上位語（幅広いカテゴリ）に対する下位語（特定のインスタンス）の比率を計算します。AIテキストは一貫して浅い分類学的深さを示し、最大限の統計的安全性を維持するために最上位の一般化に大きく依存しています。",
-    "useCase": "技術文書、医学文献、学術エッセイ、詳細な製品レビューなど、「専門家レベル」のコンテンツを監査するための究極のツールです。権威のトーンを模倣しているが、真の人間の専門知識に特徴的なきめ細かく深いレベルの語彙を欠いているテキストを暴露します。",
-    "strengths": "• AIの「専門知識の幻覚」—モデルは自信に満ちているように聞こえるが、完全に一般的な「ごまかし」に依存している—を暴くのに非常に優れています。\n• 文構造とは独立して動作するため、基本的なパラフレーズ（言い換え）ツールや「バースト性」の調整に対する耐性が非常に高くなります。",
-    "limitations": "• 入門的な教育資料、平易な言葉で書かれた法的要約、子供向けの本など、幅広いアクセシビリティを考慮して設計されたテキストでは誤検知（偽陽性）の影響を受けやすくなります。\n• ユーザーがAIに合成するための超特異的な用語のリストを明示的に提供した場合、高度なプロンプトエンジニアリングに対して脆弱になります。",
-    "parameters": "解析: 階層的語彙深度マッピング\n評価基準: 平均分類深度、下位語の密度、およびドメイン固有の抽出された名詞\n出力結果: 0-100 語彙の一般性 vs. 特異性スコア",
-    "accuracy": "高 — ドメイン固有のトピックに適用した場合、78〜88%の精度です。単語特異性インデックスは、プロンプトパラメーターを安全に満たすために、ほぼ例外なく最も浅い語彙をデフォルトとするゼロショット（Zero-shot）またはプロンプトが不十分なAI出力に対して特に威力を発揮します。",
-    "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
-        {
-            "title": "Miller, G. A. (1995). WordNet: A Lexical Database for English. Communications of the ACM.",
-            "url": "https://doi.org/10.1145/219717.219748"
-        }
-    ],
-    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Miller, G. A. (1995). WordNet: A Lexical Database for English. Communications of the ACM."
+  "name": "単語特異性インデックス (Word Specificity Index)",
+  "description": "テキストで使用されている語彙の分類学的な深さ（taxonomic depth）と精度を評価します。大規模言語モデル（LLM）は、プロンプトに対して最も広く受け入れられ、統計的に「安全な」継続を生成するように訓練された確率エンジンです。このアーキテクチャにより、明示的に誘導されない限り、本質的に非常に具体的で正確な語彙（下位語：hyponyms）よりも一般的で高レベルな用語（上位語：hypernyms）を偏重する傾向があります。たとえば、AIは統計的に「アンデスコンドル」よりも「大きな鳥」を、「ECMOマシン」よりも「医療機器」を生成する可能性が高くなります。逆に、人間の専門家は、身近な主題について議論するとき、自然に超具体的な分類レベルまで掘り下げます。このアルゴリズムは、プロンプトなしのAI生成に典型的な、一般的で「表面レベル」の語彙の平滑化を検出します。",
+  "algorithm": "分類学的深さと上位語/下位語の比率分析",
+  "mechanism": "The algorithm cross-references nouns, verbs, and adjectives against a hierarchical lexical database (such as WordNet or targeted domain ontologies) to determine their 'Taxonomic Depth'. A general word ('animal', 'vehicle', 'say') resides at the top of the hierarchy (Depth 1 or 2). A highly specific word ('coelacanth', 'triplane', 'pontificate') exists much deeper (Depth 6+). The system calculates the average specificity depth of the text and the ratio of hypernyms (broad categories) to hyponyms (specific instances). AI texts consistently demonstrate a shallow taxonomic depth, heavily relying on top-tier generalizations to maintain maximum statistical safety.",
+  "useCase": "技術文書、医学文献、学術エッセイ、詳細な製品レビューなど、「専門家レベル」のコンテンツを監査するための究極のツールです。権威のトーンを模倣しているが、真の人間の専門知識に特徴的なきめ細かく深いレベルの語彙を欠いているテキストを暴露します。",
+  "strengths": "• AIの「専門知識の幻覚」—モデルは自信に満ちているように聞こえるが、完全に一般的な「ごまかし」に依存している—を暴くのに非常に優れています。\n• 文構造とは独立して動作するため、基本的なパラフレーズ（言い換え）ツールや「バースト性」の調整に対する耐性が非常に高くなります。",
+  "limitations": "• 入門的な教育資料、平易な言葉で書かれた法的要約、子供向けの本など、幅広いアクセシビリティを考慮して設計されたテキストでは誤検知（偽陽性）の影響を受けやすくなります。\n• ユーザーがAIに合成するための超特異的な用語のリストを明示的に提供した場合、高度なプロンプトエンジニアリングに対して脆弱になります。",
+  "parameters": "解析: 階層的語彙深度マッピング\n評価基準: 平均分類深度、下位語の密度、およびドメイン固有の抽出された名詞\n出力結果: 0-100 語彙の一般性 vs. 特異性スコア",
+  "accuracy": "高 — ドメイン固有のトピックに適用した場合、78〜88%の精度です。単語特異性インデックスは、プロンプトパラメーターを安全に満たすために、ほぼ例外なく最も浅い語彙をデフォルトとするゼロショット（Zero-shot）またはプロンプトが不十分なAI出力に対して特に威力を発揮します。",
+  "references": [
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    },
+    {
+      "title": "Miller, G. A. (1995). WordNet: A Lexical Database for English. Communications of the ACM.",
+      "url": "https://doi.org/10.1145/219717.219748"
+    }
+  ],
+  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Miller, G. A. (1995). WordNet: A Lexical Database for English. Communications of the ACM."
 }

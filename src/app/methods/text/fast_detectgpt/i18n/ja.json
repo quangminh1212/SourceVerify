@@ -1,22 +1,22 @@
 {
-    "name": "Fast-DetectGPT 確率曲率",
-    "description": "計算コストの高いテキストの摂動（パータベーション）を必要とせずに、単語の条件付き確率の曲率（カーバチャー）を分析することでAI生成テキストを識別する、高速なゼロショット検出アルゴリズムです。",
-    "algorithm": "条件付き確率曲率推定（Bao et al., 2024）",
-    "mechanism": "DetectGPTは、AIが生成したテキストがモデルの対数確率曲線の絶対的な頂点（局所的極大値）に位置することを証明しました。数語を変更（摂動）すると、確率は急激に低下します。一方、人間のテキストはこの曲線のランダムな谷間に位置するため、単語を変更しても確率はそれほど急激には低下しません。元のDetectGPTは、この曲線をマッピングするためにテキストの何百ものバリエーションを生成する必要があったため、非常に低速（計算コスト高）でした。Fast-DetectGPTは数学的なブレークスルーです。何百もの偽のバリエーションを生成する代わりに、各トークンの条件付き確率を解析的に計算し、サロゲート（代替）スコアリング関数を使用して、1回のパス（走査）で確率の曲率を推定します。これは、現在の単語の確率が、その正確な文脈における他のすべての可能な単語の予想確率からどの程度逸脱しているかを測定します。テキストが条件付き確率空間の最も鋭い数学的ピークに継続的に達している場合（つまり、選択された単語が常に超最適で最も安全な選択であることを意味します）、アルゴリズムによる検出のしきい値が即座にトリガーされます。",
-    "useCase": "生の、変更されていないAIテキストをリアルタイムで検出するための究極の主力ツールです。計算効率とゼロショットの精度が求められる、大量のテキストをスキャンするのに理想的です。",
-    "strengths": "• 検出精度を維持または向上させながら、元のDetectGPTと比較して驚異的な速度（最大340倍高速）を実現します。\n• ゼロショット機能: テキストを生成した特定のAIモデルで事前にトレーニングしなくても、それを捕らえることができます。\n• 数学的に厳密です。直感、文法、文体を見るのではなく、LLMの基本的な自己回帰（オートレグレッシブ）の性質を直接尋問します。",
-    "limitations": "• 人間の谷間を模倣するために意図的に確率のピークを人為的に下げる、強力な敵対的パラフレーズ（WordAIや積極的なQuillBotなど）の影響を受けやすいです。\n• 非常に短いテキスト（100単語未満）では、信頼性の高い曲率マップを計算するのに十分なトークンがないため、精度が低下します。\n• 本来、より高い確率のピークに自然に存在する、厳密に制約された人間の文章（例：高度な技術マニュアルやソースコード）では本質的に誤検知が生じやすくなります。",
-    "parameters": "解析: シングルパス・条件付き確率およびサロゲート・スコアリング\n評価基準: 推定される対数確率曲率の偏差\n出力結果: 0-100 確率曲率（アルゴリズムの極大値）スコア",
-    "accuracy": "非常に高 — 十分な長さの未変更のAIテキストで85-95%。現在、AIフォレンジックにおいて最も効率的で最先端の診断ツールの1つです。",
-    "references": [
-        {
-            "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
-            "url": "https://arxiv.org/abs/2310.05130"
-        },
-        {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        }
-    ],
-    "source": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
+  "name": "Fast-DetectGPT 確率曲率",
+  "description": "計算コストの高いテキストの摂動（パータベーション）を必要とせずに、単語の条件付き確率の曲率（カーバチャー）を分析することでAI生成テキストを識別する、高速なゼロショット検出アルゴリズムです。",
+  "algorithm": "条件付き確率曲率推定（Bao et al., 2024）",
+  "mechanism": "DetectGPT proved that AI-generated text sits at the absolute peak (local maxima) of a model's log-probability curve. If you change a few words (perturbation), the probability drops drastically. Human text, however, sits in the random valleys of this curve, so changing words doesn't drastically lower the probability. The original DetectGPT was painfully slow because it required generating hundreds of variations of the text to map this curve. Fast-DetectGPT is a mathematical breakthrough. Instead of generating hundreds of fake variations, it analytically computes the conditional probability of each token and uses a surrogate scoring function to estimate the probability curvature in a single pass. It measures how much the current word's probability diverges from the expected probability of all other possible words in that exact context. If the text consistently hits the sharpest mathematical peaks of conditional probability space—meaning the words chosen are always the hyper-optimal, safest choices—it triggers the algorithmic detection threshold instantly.",
+  "useCase": "生の、変更されていないAIテキストをリアルタイムで検出するための究極の主力ツールです。計算効率とゼロショットの精度が求められる、大量のテキストをスキャンするのに理想的です。",
+  "strengths": "• 検出精度を維持または向上させながら、元のDetectGPTと比較して驚異的な速度（最大340倍高速）を実現します。\n• ゼロショット機能: テキストを生成した特定のAIモデルで事前にトレーニングしなくても、それを捕らえることができます。\n• 数学的に厳密です。直感、文法、文体を見るのではなく、LLMの基本的な自己回帰（オートレグレッシブ）の性質を直接尋問します。",
+  "limitations": "• 人間の谷間を模倣するために意図的に確率のピークを人為的に下げる、強力な敵対的パラフレーズ（WordAIや積極的なQuillBotなど）の影響を受けやすいです。\n• 非常に短いテキスト（100単語未満）では、信頼性の高い曲率マップを計算するのに十分なトークンがないため、精度が低下します。\n• 本来、より高い確率のピークに自然に存在する、厳密に制約された人間の文章（例：高度な技術マニュアルやソースコード）では本質的に誤検知が生じやすくなります。",
+  "parameters": "解析: シングルパス・条件付き確率およびサロゲート・スコアリング\n評価基準: 推定される対数確率曲率の偏差\n出力結果: 0-100 確率曲率（アルゴリズムの極大値）スコア",
+  "accuracy": "非常に高 — 十分な長さの未変更のAIテキストで85-95%。現在、AIフォレンジックにおいて最も効率的で最先端の診断ツールの1つです。",
+  "references": [
+    {
+      "title": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.",
+      "url": "https://arxiv.org/abs/2310.05130"
+    },
+    {
+      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML.",
+      "url": "https://arxiv.org/abs/2301.11305"
+    }
+  ],
+  "source": "Bao, G. et al. (2024). Fast-DetectGPT: Efficient Zero-Shot Detection of Machine-Generated Text via Conditional Probability Curvature. ICLR.; Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection using Probability Curvature. ICML."
 }

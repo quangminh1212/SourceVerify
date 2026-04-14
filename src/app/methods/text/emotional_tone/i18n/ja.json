@@ -1,22 +1,22 @@
 {
-    "name": "感情的トーンの分散（Variance）",
-    "description": "文ごとの感情やトーンの変動を測定します。人間の文章には、トーンの頻繁な微細な変化（例：客観性からフラストレーションへ）が見られますが、AIは厳格に一定で揺るぎない表現（レジスター）を維持します。",
-    "algorithm": "文レベルのセンチメント変動分析",
-    "mechanism": "「感情の弧」が物語のマクロな軌跡を追跡するのに対し、「感情的トーンの分散」は文レベルでのセンチメント（感情価）のミクロな変動を測定します。人間のコミュニケーションは本質的にダイナミックです。人間の書き手は、客観的な事実を述べた直後にストレスを表現し、皮肉（ジョーク）を交え、そして希望に満ちた解決策を提示するかもしれません。これにより、文から文への感情的トーンの分散が大きくなります。確率や「役立つ/中立的」なアライメント（調整）プロトコルに縛られたAI言語モデルは、深刻な「トーンの慣性（惰性）」に苦しんでいます。LLMが一定のトーン（通常は権威ある、情報に富む、または礼儀正しく熱心なトーン）を確立すると、それは単一の和音を保持し続けるシンセサイザーのように振る舞い、それに続くすべての文がまったく同じトーンの周波数に一致します。この手法は、個々の文のセンチメントスコアを計算し、テキスト全体にわたる統計的「分散」と「標準偏差」を算出します。数十の文にわたってトーンの分散がほぼゼロで「横ばい（flatlines）」になるテキストは、人間の心理から見て統計的に非常に考えにくく、人工生成であることを強く示しています。",
-    "useCase": "人間が通常コードスイッチング（話し方の切り替え）を行い、感情の表現（レジスター）を急激に変化させるオピニオン記事（論説）、レビュー、電子メール、およびフォーラムの投稿の分析。AIの「ロボットのような一貫性」を検出します。",
-    "strengths": "• 完全な「感情の弧」をプロットすることはできないが、ミクロな分散は測定できる短中編のテキストに最適です。\n• 特定のペルソナ（例：「怒っている海賊のように書いて」）を採用するようにプロンプトされたAIテキストの検出に非常に効果的です。なぜなら、AIはその「怒っている」トーンを、不自然で途切れることのない一貫性で維持し続けるためです。\n• 基礎となるセンチメントアナライザーが対象言語に対して堅牢であれば、言語に依存しません（不可知論的）。",
-    "limitations": "• 高度に専門的なドキュメント、法的契約、または標準作業手順書など、自然に単調な人間の文章では誤検知を生じやすいです。\n• 極端に短いテキスト（3文未満）では、統計的に有意な分散スコアを算出できません。\n• 感情の意味を分析するのではなく、その強度の数学的変動のみを分析します。",
-    "parameters": "解析: 文のトークン化およびVADERスタイルの感情（Sentiment）スコアリング\n評価基準: 文レベルの極性スコアの標準偏差と分散\n出力結果: 0-100 トーンの慣性（ロボットのような一貫性）スコア",
-    "accuracy": "高 — 75-85%。人間の心理的ダイナミズムと機械のアルゴリズム的な一貫性を区別する、非常に信頼性の高い指標です。",
-    "references": [
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        },
-        {
-            "title": "Hutto, C.J. & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM.",
-            "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14550"
-        }
-    ],
-    "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Hutto, C.J. & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM."
+  "name": "感情的トーンの分散（Variance）",
+  "description": "文ごとの感情やトーンの変動を測定します。人間の文章には、トーンの頻繁な微細な変化（例：客観性からフラストレーションへ）が見られますが、AIは厳格に一定で揺るぎない表現（レジスター）を維持します。",
+  "algorithm": "文レベルのセンチメント変動分析",
+  "mechanism": "While the 'Emotional Arc' tracks the macro-trajectory of a narrative, 'Emotional Tone Variance' measures the micro-fluctuations of sentiment at the sentence level. Human communication is inherently dynamic; a human writer might state an objective fact, immediately follow it with a frustrated opinion, make a sarcastic quip, and then offer a hopeful resolution. This creates a high variance in emotional tone from one sentence to the next. AI language models, bound by probability and 'helpful/neutral' alignment protocols, suffer from severe tonal inertia. Once an LLM establishes a tone (usually authoritative, informative, or politely enthusiastic), it acts like a synthesizer holding a single chord—every subsequent sentence matches that exact same tonal frequency. This method calculates the sentiment score of every individual sentence and computes the statistical variance and standard deviation across the entire text. A text that 'flatlines' with near-zero tonal variance across dozens of sentences is statistically highly improbable for human psychology and strongly indicates artificial generation.",
+  "useCase": "人間が通常コードスイッチング（話し方の切り替え）を行い、感情の表現（レジスター）を急激に変化させるオピニオン記事（論説）、レビュー、電子メール、およびフォーラムの投稿の分析。AIの「ロボットのような一貫性」を検出します。",
+  "strengths": "• 完全な「感情の弧」をプロットすることはできないが、ミクロな分散は測定できる短中編のテキストに最適です。\n• 特定のペルソナ（例：「怒っている海賊のように書いて」）を採用するようにプロンプトされたAIテキストの検出に非常に効果的です。なぜなら、AIはその「怒っている」トーンを、不自然で途切れることのない一貫性で維持し続けるためです。\n• 基礎となるセンチメントアナライザーが対象言語に対して堅牢であれば、言語に依存しません（不可知論的）。",
+  "limitations": "• 高度に専門的なドキュメント、法的契約、または標準作業手順書など、自然に単調な人間の文章では誤検知を生じやすいです。\n• 極端に短いテキスト（3文未満）では、統計的に有意な分散スコアを算出できません。\n• 感情の意味を分析するのではなく、その強度の数学的変動のみを分析します。",
+  "parameters": "解析: 文のトークン化およびVADERスタイルの感情（Sentiment）スコアリング\n評価基準: 文レベルの極性スコアの標準偏差と分散\n出力結果: 0-100 トーンの慣性（ロボットのような一貫性）スコア",
+  "accuracy": "高 — 75-85%。人間の心理的ダイナミズムと機械のアルゴリズム的な一貫性を区別する、非常に信頼性の高い指標です。",
+  "references": [
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    },
+    {
+      "title": "Hutto, C.J. & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM.",
+      "url": "https://ojs.aaai.org/index.php/ICWSM/article/view/14550"
+    }
+  ],
+  "source": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.; Hutto, C.J. & Gilbert, E. (2014). VADER: A Parsimonious Rule-based Model for Sentiment Analysis of Social Media Text. ICWSM."
 }

@@ -1,12 +1,12 @@
 {
-    "name": "Eye Saccade Analysis",
-    "description": "Detects unnatural saccadic eye movement patterns — AI videos often lack realistic micro-saccades (Duchowski, 2017).",
-    "algorithm": "Eye Saccade Analysis分析アルゴリズム",
-    "mechanism": "Eye Saccade Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Eye Saccade Analysis",
+  "description": "Detects unnatural saccadic eye movement patterns — AI videos often lack realistic micro-saccades (Duchowski, 2017).",
+  "algorithm": "Eye Saccade Analysis分析アルゴリズム",
+  "mechanism": "This method analyzes saccadic eye movements for deepfake detection:\n\n1. **Saccade検出**: Saccades (rapid ballistic eye movements) are detected from the gaze direction temporal signal. Saccades are characterized by their amplitude (typical 1-40°), peak velocity (up to 500°/s), and duration (20-200ms).\n\n2. **MainSequence検証**: Saccades follow the \"main sequence\" — a fixed relationship between amplitude and peak velocity: V_peak ∝ √amplitude (Bahill et al., 1975). The method checks whether detected saccades conform to this physiological invariant. AI-generated eye movements may violate the main sequence — producing incorrect velocity-amplitude relationships.\n\n3. **SaccadeDynamics分析**: Natural saccades have characteristic dynamics: rapid acceleration, smooth velocity profile with single peak, small post-saccadic oscillation. The method analyzes each saccade's kinematic profile. AI-generated saccades may show: multiple velocity peaks, incorrect acceleration/deceleration asymmetry, or missing post-saccadic ringing.\n\n4. **Fixation-Saccadeパターン**: Natural gaze alternates between fixations (~200-400ms, stable gaze) and saccades (~20-80ms, rapid shifts). The method verifies this pattern — particularly the fixation duration distribution (approximately log-normal) and saccade rate (3-4 per second during reading/scanning). Deepfakes may show anomalous fixation-saccade patterns.\n\n5. **BilateralSaccadeCoordination**: Both eyes execute saccades simultaneously (conjugate movements). The method checks saccade synchrony between eyes — independent AI generation of each eye may produce asynchronous or differently-sized saccades between left and right eyes.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

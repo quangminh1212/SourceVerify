@@ -1,22 +1,22 @@
 {
-    "name": "最大ソフトマックス確率（MSP）",
-    "description": "言語モデルが選択した単語に数学的に割り当てた、絶対的な確信度（信頼水準）を調べます。AIモデルは一貫して、「Softmax」確率分布が、圧倒的に優先される単一の候補に大きく偏っている単語を出力します。人間の文章ははるかに分散が大きく、予測の確実性がはるかに低い単語を頻繁に使用します。",
-    "algorithm": "トークンレベルのソフトマックス確信度閾値処理",
-    "mechanism": "あらゆる大規模言語モデルの最終層で、「Softmax」関数は生の数学的スコア（ロジット）を、言語のすべての語彙全体の確率分布に変換し、合計を1.0（100%）にします。AIがテキストを生成するとき（標準の温度設定と仮定）、出力される「最大ソフトマックス確率」（それが実際に選択した単一の単語の確率）は非常に高く、文法的な接続詞や予測可能な名詞ではしばしば0.90から0.99に近づきます。AIは数学的最適化に従っているため、その選択に非常に「自信（確信）」を持っています。しかし人間のライターは、人間が統計的可能性よりも創造的なニュアンスや特定の記憶の想起を優先するため、LLMのソフトマックス関数が比較的低い確率（例：0.15や0.05）を割り当てる単語を頻繁に選択します。ターゲットテキストを参照モデルに通し、すべてのトークンの平均最大ソフトマックス確率を計算することにより、このメソッドはアルゴリズム生成の明らかな「過信（Overconfidence）」の痕跡を検出します。90%以上のソフトマックス確率スコアの途切れない連鎖を維持するテキストは、人間が有機的に書いたものであるとは数学的に不可能です。",
-    "useCase": "AIが自然に非常に予測可能で確信度の高い言い回しのパターンに陥る、AI生成のニュース記事、学術論文の要約、マーケティングコピーを検出するのに非常に効果的です。",
-    "strengths": "• 表面的な言い換えを無効化します。文をわずかに再編成しても、根底にある単語のシーケンスが完全に高確率のトークンで構成されているという事実は変わりません。\n• 疑わしい生成元と全く同じモデルに対してテキストを分析する場合、非常に強力なホワイトボックスの診断指標となります。\n• 数学的に厳密であり、継続的な確信度スコアとして非常に解釈しやすいです。",
-    "limitations": "• ソフトマックス分布を計算するために堅牢な参照言語モデルへのアクセスを必要とするため、計算負荷が高くなります。\n• ユーザーが生成中に「Top-P」（核サンプリング）や「温度（Temperature）」パラメーターを積極的に操作し、AIに低確率のトークンを選択させた場合、検出を免れる可能性があります。\n• 非常に定型的で型通りの人間の文章（法的契約など）は本質的に予測可能であり、高いMSPスコアを出し、誤検知を引き起こす可能性があります。",
-    "parameters": "解析: トークンごとのロジットからソフトマックス分布へのスコアリング\n評価基準: 最大ソフトマックス確率の平均と分散\n出力結果: 0-100 アルゴリズムの確信度（予測可能性）スコア",
-    "accuracy": "高 — 標準的な生成テキストで82-89%。テキストを支離滅裂にすることなくカモフラージュすることが困難な、AI検出のための基本的な統計的基盤を提供します。",
-    "references": [
-        {
-            "title": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.",
-            "url": "https://arxiv.org/abs/1610.02136"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
-            "url": "https://arxiv.org/abs/1908.09203"
-        }
-    ],
-    "source": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
+  "name": "最大ソフトマックス確率（MSP）",
+  "description": "言語モデルが選択した単語に数学的に割り当てた、絶対的な確信度（信頼水準）を調べます。AIモデルは一貫して、「Softmax」確率分布が、圧倒的に優先される単一の候補に大きく偏っている単語を出力します。人間の文章ははるかに分散が大きく、予測の確実性がはるかに低い単語を頻繁に使用します。",
+  "algorithm": "トークンレベルのソフトマックス確信度閾値処理",
+  "mechanism": "At the final layer of any Large Language Model, a 'Softmax' function converts raw mathematical scores (logits) into a probability distribution across the entire vocabulary, summing to 1.0 (100%). When an AI generates text (assuming standard temperature settings), the 'Maximum Softmax Probability' (the probability of the single word it actually chooses) is extremely high—often approaching 0.90 to 0.99 for grammatical connectors and predictable nouns. The AI is highly 'confident' in its choices because it is following mathematical optimization. Human writers, however, frequently select words that an LLM's Softmax function would assign a relatively low probability to (e.g., 0.15 or 0.05), because humans prioritize creative nuance or specific memory recall over statistical likelihood. By passing the target text through a reference model and calculating the average Maximum Softmax Probability for every token, this method detects the telltale 'overconfidence' signature of algorithmic generation. A text maintaining an unbroken chain of 90%+ softmax probability scores is mathematically impossible to have been written organically by a human.",
+  "useCase": "AIが自然に非常に予測可能で確信度の高い言い回しのパターンに陥る、AI生成のニュース記事、学術論文の要約、マーケティングコピーを検出するのに非常に効果的です。",
+  "strengths": "• 表面的な言い換えを無効化します。文をわずかに再編成しても、根底にある単語のシーケンスが完全に高確率のトークンで構成されているという事実は変わりません。\n• 疑わしい生成元と全く同じモデルに対してテキストを分析する場合、非常に強力なホワイトボックスの診断指標となります。\n• 数学的に厳密であり、継続的な確信度スコアとして非常に解釈しやすいです。",
+  "limitations": "• ソフトマックス分布を計算するために堅牢な参照言語モデルへのアクセスを必要とするため、計算負荷が高くなります。\n• ユーザーが生成中に「Top-P」（核サンプリング）や「温度（Temperature）」パラメーターを積極的に操作し、AIに低確率のトークンを選択させた場合、検出を免れる可能性があります。\n• 非常に定型的で型通りの人間の文章（法的契約など）は本質的に予測可能であり、高いMSPスコアを出し、誤検知を引き起こす可能性があります。",
+  "parameters": "解析: トークンごとのロジットからソフトマックス分布へのスコアリング\n評価基準: 最大ソフトマックス確率の平均と分散\n出力結果: 0-100 アルゴリズムの確信度（予測可能性）スコア",
+  "accuracy": "高 — 標準的な生成テキストで82-89%。テキストを支離滅裂にすることなくカモフラージュすることが困難な、AI検出のための基本的な統計的基盤を提供します。",
+  "references": [
+    {
+      "title": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.",
+      "url": "https://arxiv.org/abs/1610.02136"
+    },
+    {
+      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+      "url": "https://arxiv.org/abs/1908.09203"
+    }
+  ],
+  "source": "Hendrycks, D. & Gimpel, K. (2017). A Baseline for Detecting Misclassified and Out-of-Distribution Examples. ICLR.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
 }

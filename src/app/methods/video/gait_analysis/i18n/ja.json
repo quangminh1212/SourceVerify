@@ -1,22 +1,22 @@
 {
-    "name": "Gait Analysis",
-    "description": "Analyzes walking gait naturalness",
-    "algorithm": "Gait Analysis — ピクセルレベル空間分析",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Analyzes walking gait naturalness. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through gait analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Gait Analysis",
+  "description": "Analyzes walking gait naturalness",
+  "algorithm": "Gait Analysis — ピクセルレベル空間分析",
+  "mechanism": "This method analyzes gait (walking) patterns for deepfake detection:\n\n1. **PoseSequence抽出**: Full-body pose estimation tracks joint positions (ankles, knees, hips, shoulders, head) across frames during walking motion. The gait cycle is decomposed into phases: stance (foot on ground), swing (foot in air), heel strike, and toe-off.\n\n2. **GaitBiomechanical分析**: Human gait follows predictable biomechanical patterns: (a) periodic joint angle trajectories, (b) characteristic ground reaction force profiles, (c) coordinated upper-lower body motion (arm swing opposing leg swing). The method verifies these biomechanical constraints. AI-generated walking may violate gait physics.\n\n3. **IndividualGaitSignature**: Each person has a characteristic gait determined by body proportions, musculoskeletal dynamics, and habitual patterns. Gait features (stride length/frequency ratio, knee flexion amplitude, hip sway) form an individual signature. Face-swap deepfakes may show mismatched gait-face identity.\n\n4. **時間的Regularity分析**: Gait is quasi-periodic with characteristic cycle duration (1-1.2s at normal speed). The method analyzes gait cycle regularity via autocorrelation. AI-generated walking motion may show irregular periodicity, missing the subtle natural variations in gait timing.\n\n5. **物理的Constraintスコアリング**: The method checks multiple physical constraints simultaneously: center of mass trajectory follows ballistic parabola during swing phase, ground contact produces consistent foot placement, joint angles remain within anatomical limits. Violations indicate AI generation that hasn't properly modeled multi-body dynamics.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through gait analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

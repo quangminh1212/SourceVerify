@@ -1,22 +1,22 @@
 {
-    "name": "Face Mask Edge",
-    "description": "Detects face mask edge artifacts",
-    "algorithm": "Face Mask Edge — ピクセルレベル空間分析",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Detects face mask edge artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through face mask edge analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
-            "url": "https://arxiv.org/abs/1908.05932"
-        }
-    ]
+  "name": "Face Mask Edge",
+  "description": "Detects face mask edge artifacts",
+  "algorithm": "Face Mask Edge — ピクセルレベル空間分析",
+  "mechanism": "This method specifically targets the face mask edge artifacts produced by face-swap deepfakes:\n\n1. **顔Mask領域推定**: The likely face mask used in the deepfake generation is estimated by analyzing the spatial extent of generated content. Face-swap models use face detection to define a mask region (typically a convex hull of landmarks or Delaunay triangulation), then blend the synthesized face within this mask.\n\n2. **エッジアーティファクト検出**: At the mask boundary, multiple artifact types are detected: (a) color seams where generated and original content don't color-match perfectly, (b) texture discontinuities from different rendering qualities, (c) double edges where mask feathering creates a visible transition zone, (d) compression artifact differences between generated and original regions.\n\n3. **Feathering分析**: The mask edge feathering (smooth alpha transition) is characterized. The method measures feathering width, symmetry, and consistency. Deepfake feathering tends to be uniform width around the entire mask, while natural face boundaries have varying transition characteristics (sharp at hairline, gradual at jaw-neck junction).\n\n4. **MaskShapeCharacterization**: The inferred mask shape is analyzed. Common deepfake masks follow landmark-derived geometric shapes. The method detects unnaturally geometric or symmetric face boundaries inconsistent with natural facial contours. Specific deepfake architectures produce characteristic mask shapes that can be identified.\n\n5. **時間的Maskエッジトラッキング**: The face mask edge position and artifact characteristics are tracked across frames. In well-executed deepfakes, the mask tracks face landmarks frame-by-frame, but the mask edge artifacts (color seams, texture mismatches) may vary in intensity — becoming more visible in challenging lighting or at extreme head poses. These temporal variations are quantified for scoring.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through face mask edge analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
+      "url": "https://arxiv.org/abs/1908.05932"
+    }
+  ]
 }

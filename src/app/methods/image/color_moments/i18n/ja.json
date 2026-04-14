@@ -1,22 +1,22 @@
 {
-    "name": "カラーモーメント統計プロファイリング",
-    "description": "「カラーモーメント（Color Moments）」として知られる、色分布のコアとなる統計的特徴（平均、標準偏差、歪度（歪み））を計算します。現実世界の照明は、表面全体に物理的に制限された明確な色と光の分布を作り出します。AI生成モデルは、数学的な潜在空間において微妙でシステム的なバイアス（偏り）を示すことが多く、統計的・生物学的な基準から大きく逸脱した色分布（例：実際の光学系では見られない、異常に対称的な色分散や歪んだ彩度）を生み出します。",
-    "algorithm": "1次、2次、および3次の統計的RGB/HSVモーメント",
-    "mechanism": "アルゴリズムは、各カラーチャネルに対して数学的に特定の3つの指標を計算します。第1モーメント（平均）は平均的な色の強度を捉えます。第2モーメント（標準偏差）はコントラストと色の広がりを測定します。第3モーメント（歪度）は色分布の非対称性を測定します。本物の写真には、環境光の物理学、影、およびオクルージョン（遮蔽）によって支配される自然でカオスな歪みがあります。AI画像は、トレーニングデータの分布や潜在モデリングアルゴリズムによって計算的に制約されているため、不自然に低い歪度を持つ「完全に」バランスの取れた色を合成するか、あるいは逆に、単一の統合された物理的な光源が決定的に欠如していることを露呈する、不規則な分散曲線を合成することがよくあります。",
-    "parameters": "カラーチャネル: HSV（推奨）, 評価指標: 平均（明るさの偏り）, 標準偏差（コントラストの広がり）, 歪度（測光の非対称性）",
-    "accuracy": "低〜中（60-70%） - 単独で決定的なフォレンジック（法医学的）テストとして機能するのではなく、主に基礎的で補助的な「特徴抽出」指標として機能します。",
-    "source": "Stricker & Orengo (1995) / Reinhard (2001) - 統計的な色の類似性と転送の物理学",
-    "useCase": "AI合成出力における自然な照明物理学の欠如を明らかにする、異常なグローバルな色分布の異常を検出するための、軽量で最前線の統計的ふるい（フィルター）として採用されます。",
-    "references": [
-        {
-            "title": "Stricker, M.A., & Orengo, M. (1995). Similarity of Color Images. SPIE.",
-            "url": "https://doi.org/10.1117/12.205308"
-        },
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        }
-    ],
-    "strengths": "• 非常に高速かつ軽量であり、高解像度の画像全体を一度に処理するために、驚くほど少ない計算リソースしか必要としません。\n• より深い空間テクスチャ指標と組み合わせることで、機械学習のアンサンブル分類器のための、非常に堅牢な基礎的特徴セット（データ基盤）を形成します。\n• スケーリング（拡大・縮小）、回転、および基本的な幾何学的変換に対する高い不変性（耐性）を持っています。",
-    "limitations": "• それ単独で画像をAI生成として自信を持ってフラグ付けするために必要な、診断の厳密さと精度が不足しています（単独での信頼性は絶望的です）。\n• 大幅にカラーグレーディングされたシネマティックな写真、ハイキーなスタジオのセットアップ、または意図的な人間の芸術的な色の操作を伴う画像を評価する場合、誤検知（偽陽性）の影響を非常に受けやすいです。\n• 期待される統計的モーメントを自然に完全に歪めてしまう、極端な物理的照明現象（例：シルエット、強烈なレンズフレアなど）を含む本物の画像では、法医学的有効性を著しく失います。"
+  "name": "カラーモーメント統計プロファイリング",
+  "description": "「カラーモーメント（Color Moments）」として知られる、色分布のコアとなる統計的特徴（平均、標準偏差、歪度（歪み））を計算します。現実世界の照明は、表面全体に物理的に制限された明確な色と光の分布を作り出します。AI生成モデルは、数学的な潜在空間において微妙でシステム的なバイアス（偏り）を示すことが多く、統計的・生物学的な基準から大きく逸脱した色分布（例：実際の光学系では見られない、異常に対称的な色分散や歪んだ彩度）を生み出します。",
+  "algorithm": "1次、2次、および3次の統計的RGB/HSVモーメント",
+  "mechanism": "The algorithm calculates three mathematically specific metrics for each color channel: The 1st Moment (Mean) captures the average color intensity; the 2nd Moment (Standard Deviation) measures contrast and color spread; the 3rd Moment (Skewness) measures the asymmetry of the color distribution. Authentic photographs possess a natural, chaotic skewness governed by environmental lighting physics, shadows, and occlusions. AI images, computationally constrained by their training data distributions and latent decoding algorithms, often synthesize 'perfectly' balanced colors possessing an unnaturally low skewness, or conversely, an erratic variance curve that exposes the absolute lack of a single, unified physical light source.",
+  "parameters": "カラーチャネル: HSV（推奨）, 評価指標: 平均（明るさの偏り）, 標準偏差（コントラストの広がり）, 歪度（測光の非対称性）",
+  "accuracy": "低〜中（60-70%） - 単独で決定的なフォレンジック（法医学的）テストとして機能するのではなく、主に基礎的で補助的な「特徴抽出」指標として機能します。",
+  "source": "Stricker & Orengo (1995) / Reinhard (2001) - 統計的な色の類似性と転送の物理学",
+  "useCase": "AI合成出力における自然な照明物理学の欠如を明らかにする、異常なグローバルな色分布の異常を検出するための、軽量で最前線の統計的ふるい（フィルター）として採用されます。",
+  "references": [
+    {
+      "title": "Stricker, M.A., & Orengo, M. (1995). Similarity of Color Images. SPIE.",
+      "url": "https://doi.org/10.1117/12.205308"
+    },
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    }
+  ],
+  "strengths": "• 非常に高速かつ軽量であり、高解像度の画像全体を一度に処理するために、驚くほど少ない計算リソースしか必要としません。\n• より深い空間テクスチャ指標と組み合わせることで、機械学習のアンサンブル分類器のための、非常に堅牢な基礎的特徴セット（データ基盤）を形成します。\n• スケーリング（拡大・縮小）、回転、および基本的な幾何学的変換に対する高い不変性（耐性）を持っています。",
+  "limitations": "• それ単独で画像をAI生成として自信を持ってフラグ付けするために必要な、診断の厳密さと精度が不足しています（単独での信頼性は絶望的です）。\n• 大幅にカラーグレーディングされたシネマティックな写真、ハイキーなスタジオのセットアップ、または意図的な人間の芸術的な色の操作を伴う画像を評価する場合、誤検知（偽陽性）の影響を非常に受けやすいです。\n• 期待される統計的モーメントを自然に完全に歪めてしまう、極端な物理的照明現象（例：シルエット、強烈なレンズフレアなど）を含む本物の画像では、法医学的有効性を著しく失います。"
 }

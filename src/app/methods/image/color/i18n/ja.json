@@ -1,22 +1,22 @@
 {
-    "name": "カラーチャネル相関（Gray World Variance）解析",
-    "description": "赤、緑、青のカラーチャネル間の統計的相関と絡み合いを分析します。自然光または人工光の下でキャプチャされた本物の写真は、厳格な物理的照明の法則（例：Gray Worldの仮定）に従っており、チャネル内で高度に絡み合った予測可能な関係を作り出します。生成AIモデルは、チャネルを個別の数学的特徴として扱うか、局所的にスタイル化されたレンダリングを適用することによって色を合成することが多く、その結果、RGB値の間に微妙で不自然な分離が生じます。",
-    "algorithm": "チャネル間ピアソン相関および照明マトリックス分析",
-    "mechanism": "このアルゴリズムは、R、G、Bチャネルを分離し、小さな（例：32x32）ブロック内で互いのグローバルおよびローカルな統計的依存関係（R-G、R-B、およびG-Bのピアソン相関係数など）を測定します。単一の主要な光源によって照らされた現実世界のシーンは、シャドウとハイライトが変化するにつれて、高度に相関するカラーグラデーションを示します。対照的に、AIジェネレーターは、異種のトレーニングセットからテクスチャを繋ぎ合わせます。その結果、AIには統一された数学的に一貫したシミュレートされた光源がないため、たとえばシャドウが不自然に緑色にシフトするような独立した色生成が発生します。",
-    "parameters": "ブロック解像度: 32x32から64x64, 測定基準: ピアソン相関 R-G/R-B/G-B, グローバルヒストグラムの配置, 基礎理論: Gray World Assumption（グレーワールド仮説）",
-    "accuracy": "低から中（60-70%） - 他の指標と組み合わせた場合に最も効果的です。人間の編集者によって使用される様々な極端なアーティスティックカラーグレーディング技術により、単独での精度は妨げられます。",
-    "source": "Gijsenij et al. (2011) - 計算色恒常性 / Riess & Angelopoulou",
-    "useCase": "原始的なAI生成や、マルチソースのずさんな局所的な写真操作（コピー＆ムーブ）によって引き起こされる不自然な色の分離を検出するための、補助的または補完的な検証方法として機能します。",
-    "references": [
-        {
-            "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
-            "url": "https://doi.org/10.1109/TIP.2010.2072681"
-        },
-        {
-            "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation.",
-            "url": "https://doi.org/10.1007/978-3-642-16435-4_5"
-        }
-    ],
-    "strengths": "• 計算が非常に速いため、多層フォレンジックスイートにおける軽量なパスとして優れています。\n• 自然の照明特性を評価するようにハードコーディングされており、統一された環境照明のシミュレートに失敗した粗悪なディープフェイクをキャッチします。\n• （JPEGのような）特定の圧縮グリッドに依存する必要がなく、多様な画像フォーマットに普遍的に適用できます。",
-    "limitations": "• 構造ベースまたはノイズベースのフォレンジックと比較すると、一般に単独の信頼性が低くなります（精度60-70%）。\n• プロのカラーリストによって大幅にスタイル化、クロスプロセス、またはスプリットトーンが行われた本物の写真を分析する場合、誤検知がほぼ確実に発生します。\n• モノクロ（白黒）画像や、ミニマリストのベクター/イラストに対しては完全に無用です。"
+  "name": "カラーチャネル相関（Gray World Variance）解析",
+  "description": "赤、緑、青のカラーチャネル間の統計的相関と絡み合いを分析します。自然光または人工光の下でキャプチャされた本物の写真は、厳格な物理的照明の法則（例：Gray Worldの仮定）に従っており、チャネル内で高度に絡み合った予測可能な関係を作り出します。生成AIモデルは、チャネルを個別の数学的特徴として扱うか、局所的にスタイル化されたレンダリングを適用することによって色を合成することが多く、その結果、RGB値の間に微妙で不自然な分離が生じます。",
+  "algorithm": "チャネル間ピアソン相関および照明マトリックス分析",
+  "mechanism": "The algorithm isolates the R, G, and B channels and measures their global and local statistical reliance on one another (such as R-G, R-B, and G-B Pearson correlation coefficients) within small (e.g., 32x32) blocks. Real-world scenes lit by a single dominant light source exhibit highly correlated color gradients as shadows and highlights roll off. In contrast, AI generators piece together textures from disparate training sets. This results in independent color generation where, for example, a shadow might unnaturally shift green simply because the AI lacks a unified, mathematically consistent simulated light source.",
+  "parameters": "ブロック解像度: 32x32から64x64, 測定基準: ピアソン相関 R-G/R-B/G-B, グローバルヒストグラムの配置, 基礎理論: Gray World Assumption（グレーワールド仮説）",
+  "accuracy": "低から中（60-70%） - 他の指標と組み合わせた場合に最も効果的です。人間の編集者によって使用される様々な極端なアーティスティックカラーグレーディング技術により、単独での精度は妨げられます。",
+  "source": "Gijsenij et al. (2011) - 計算色恒常性 / Riess & Angelopoulou",
+  "useCase": "原始的なAI生成や、マルチソースのずさんな局所的な写真操作（コピー＆ムーブ）によって引き起こされる不自然な色の分離を検出するための、補助的または補完的な検証方法として機能します。",
+  "references": [
+    {
+      "title": "Gijsenij, A. et al. (2011). Computational Color Constancy: Survey and Experiments. IEEE TIP.",
+      "url": "https://doi.org/10.1109/TIP.2010.2072681"
+    },
+    {
+      "title": "Riess, C. & Angelopoulou, E. (2010). Scene Illumination as an Indicator of Image Manipulation.",
+      "url": "https://doi.org/10.1007/978-3-642-16435-4_5"
+    }
+  ],
+  "strengths": "• 計算が非常に速いため、多層フォレンジックスイートにおける軽量なパスとして優れています。\n• 自然の照明特性を評価するようにハードコーディングされており、統一された環境照明のシミュレートに失敗した粗悪なディープフェイクをキャッチします。\n• （JPEGのような）特定の圧縮グリッドに依存する必要がなく、多様な画像フォーマットに普遍的に適用できます。",
+  "limitations": "• 構造ベースまたはノイズベースのフォレンジックと比較すると、一般に単独の信頼性が低くなります（精度60-70%）。\n• プロのカラーリストによって大幅にスタイル化、クロスプロセス、またはスプリットトーンが行われた本物の写真を分析する場合、誤検知がほぼ確実に発生します。\n• モノクロ（白黒）画像や、ミニマリストのベクター/イラストに対しては完全に無用です。"
 }

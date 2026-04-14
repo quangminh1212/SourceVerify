@@ -1,12 +1,12 @@
 {
-    "name": "Shearlet Transform Analysis",
-    "description": "Uses shearlet transform for multi-directional analysis — superior to wavelets for anisotropic features (Kutyniok et al., 2012).",
-    "algorithm": "Shearlet Transform Analysis分析アルゴリズム",
-    "mechanism": "Shearlet Transform Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Shearlet Transform Analysis",
+  "description": "Uses shearlet transform for multi-directional analysis — superior to wavelets for anisotropic features (Kutyniok et al., 2012).",
+  "algorithm": "Shearlet Transform Analysis分析アルゴリズム",
+  "mechanism": "この手法は applies the Shearlet Transform following Kutyniok & Labate (2012) for directional multi-scale forensic analysis:\n\n1. **ShearletSystemConstruction**: A shearlet system is constructed using parabolic scaling matrices Aₐ = diag(a, √a) and shear matrices Sₛ. The shearlet ψₐ,ₛ,ₜ(x) = a⁻³/⁴ψ(Sₛ⁻¹Aₐ⁻¹(x−t)) provides near-optimal sparse representation of images with edges along curves.\n\n2. **Directional分解**: Unlike wavelets, shearlets capture directional information via the shear parameter, enabling anisotropic analysis across multiple orientations at each scale. This is particularly effective for detecting edge artifacts in AI生成の images that exhibit unnatural directional properties.\n\n3. **位相Congruency分析**: Shearlet-domain phase congruency measures the coherence of frequency components at edge locations. Natural edges show high phase congruency across scales, while AI生成の boundaries may show 一貫性のない phase relationships.\n\n4. **SparsityProfiling**: The shearlet representation sparsity (measured by ℓ¹/ℓ² ratio) is analyzed per block. Natural images achieve near-optimal sparsity in the shearlet domain due to the geometric regularity of natural edges. AI artifacts — ringing, grid patterns, texture discontinuities — reduce sparsity in characteristic ways.\n\n5. **エッジRegularity評価**: The decay rate of shearlet coefficients across scales at detected edges is measured. Natural edges follow predictable decay patterns governed by Hölder regularity, while AI生成の edges often show 異常な coefficient decay indicating synthetic generation.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

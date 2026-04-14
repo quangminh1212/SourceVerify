@@ -1,12 +1,12 @@
 {
-    "name": "Pixel Value Differencing",
-    "description": "Detects stego-like pixel value differencing patterns that leak into AI-generated images (Wu & Tsai, 2003).",
-    "algorithm": "Pixel Value Differencing分析アルゴリズム",
-    "mechanism": "Pixel Value Differencingシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Pixel Value Differencing",
+  "description": "Detects stego-like pixel value differencing patterns that leak into AI-generated images (Wu & Tsai, 2003).",
+  "algorithm": "Pixel Value Differencing分析アルゴリズム",
+  "mechanism": "この手法は applies Pixel Value Differencing (PVD) analysis following Wu & Tsai (2003) for steganographic and manipulation detection:\n\n1. **ブロックPartitioning**: The image is divided into non-overlapping blocks of two consecutive pixels. For each block, the difference value dₖ = |pᵢ − pᵢ₊₁| is computed between adjacent pixel pairs in both horizontal and vertical directions.\n\n2. **DifferenceヒストグラムConstruction**: A histogram of all pixel difference values is constructed. Natural images exhibit a characteristic PVD histogram following a Laplacian-like distribution — high concentration near zero (smooth regions) with exponential decay toward larger differences (edge regions).\n\n3. **RangeTable分析**: Differences are classified into ranges [lₖ, uₖ] following the PVD range table. Each range has an expected capacity proportional to its width. Steganographic embedding modifies the histogram within these ranges in detectable ways — creating artifacts in the distribution tails.\n\n4. **統計的Regularity検出**: 本手法は detects statistical anomalies in the PVD histogram: (a) unnatural steps between adjacent bins caused by embedding algorithms, (b) abnormal symmetry or flatness in 通常 peaked distributions, (c) deviations from the expected Benford-like first-digit distribution of differences.\n\n5. **AIGenerationIndicators**: AI生成の images 通常 exhibit PVD histograms with abnormal smoothness (lacking the fine-grained irregularities of real camera quantization), unusual uniformity across difference ranges, or artificial periodicity absent in natural pixel statistics. The analysis score quantifies these deviations.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

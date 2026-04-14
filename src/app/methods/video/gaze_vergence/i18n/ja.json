@@ -1,12 +1,12 @@
 {
-    "name": "Gaze Vergence Analysis",
-    "description": "Analyzes binocular vergence (convergence/divergence) of eye gaze — deepfakes often fail at correct vergence.",
-    "algorithm": "Gaze Vergence Analysis分析アルゴリズム",
-    "mechanism": "Gaze Vergence Analysisシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Gaze Vergence Analysis",
+  "description": "Analyzes binocular vergence (convergence/divergence) of eye gaze — deepfakes often fail at correct vergence.",
+  "algorithm": "Gaze Vergence Analysis分析アルゴリズム",
+  "mechanism": "This method analyzes binocular gaze vergence for deepfake detection:\n\n1. **Binocular視線推定**: Independent gaze vectors for left and right eyes are estimated per frame from iris position, pupil contour, and corneal reflection analysis. The vergence angle (angle between left and right gaze vectors) is computed.\n\n2. **Vergence-Distance一貫性**: Gaze vergence angle should be inversely proportional to fixation distance (eyes converge more for near objects). The method checks whether the measured vergence angle is consistent with the likely fixation target distance estimated from scene context. Deepfakes may produce vergence inconsistent with target distance.\n\n3. **VergenceDynamics**: When shifting gaze between near and far targets, vergence changes follow specific dynamics: vergence movements are slow (compared to saccades), smooth, and coordinated between eyes. The method analyzes vergence change dynamics — deepfakes may produce instantaneous vergence changes or non-conjugate eye movements.\n\n4. **Vergence-AccommodationCoupling**: In real vision, vergence is coupled with pupil size changes (near response triad: convergence + accommodation + pupil constriction). The method checks for this physiological coupling. Deepfakes typically don't model the vergence-pupil coupling, producing convergent gaze without corresponding pupil constriction.\n\n5. **時間的Vergence安定性**: During stable fixation, vergence shows micro-fluctuations (fixation disparity) within a narrow range. The method analyzes vergence stability — too-stable vergence (no disparity fluctuations) or excessive instability (divergent episodes) indicate AI generation.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

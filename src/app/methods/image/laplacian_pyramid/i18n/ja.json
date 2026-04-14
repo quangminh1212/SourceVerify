@@ -1,12 +1,12 @@
 {
-    "name": "Laplacian Pyramid Residual",
-    "description": "Analyzes Laplacian pyramid residual energy distribution across scales (Burt & Adelson, 1983).",
-    "algorithm": "Laplacian Pyramid Residual分析アルゴリズム",
-    "mechanism": "Laplacian Pyramid Residualシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Laplacian Pyramid Residual",
+  "description": "Analyzes Laplacian pyramid residual energy distribution across scales (Burt & Adelson, 1983).",
+  "algorithm": "Laplacian Pyramid Residual分析アルゴリズム",
+  "mechanism": "この手法は applies the Burt-Adelson Laplacian pyramid decomposition to analyze multi-scale residual structures:\n\n1. **GaussianPyramidConstruction**: The image is iteratively low-pass filtered and downsampled by factor 2 to build a Gaussian pyramid G₀, G₁, ..., Gₙ. Each level captures progressively coarser spatial information.\n\n2. **LaplacianResidual計算**: Each Laplacian level Lₖ = Gₖ − expand(Gₖ₊₁) captures the band-pass detail lost between consecutive Gaussian levels. These residuals encode edges, textures, and fine structures at each spatial scale.\n\n3. **Cross-Scale相関分析**: Natural images exhibit characteristic statistical dependencies between Laplacian pyramid levels — adjacent scales show predictable correlation patterns governed by the 1/f power spectrum of natural scenes. AI生成の images often violate these cross-scale relationships.\n\n4. **Kurtosisand分布Profiling**: The coefficient distributions at each pyramid level are analyzed. Natural image Laplacian coefficients follow a leptokurtic (heavy-tailed) distribution well modeled by generalized Gaussian. GAN/diffusion artifacts produce deviations from these expected distributions.\n\n5. **ResidualEnergyスコアリング**: The energy (sum of squared coefficients) at each level is computed and compared against natural image statistics. 異常な energy distributions across scales indicate synthetic generation or manipulation.",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

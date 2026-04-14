@@ -1,12 +1,12 @@
 {
-    "name": "Background Object Physics",
-    "description": "Validates physics consistency of background objects (shadows, reflections, perspective) across frames.",
-    "algorithm": "Background Object Physics分析アルゴリズム",
-    "mechanism": "Background Object Physicsシステムは、AI生成コンテンツと本物のメディアを区別するために特定の信号パターンを分析します。",
-    "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
-    "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
-    "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
-    "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
-    "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
-    "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
+  "name": "Background Object Physics",
+  "description": "Validates physics consistency of background objects (shadows, reflections, perspective) across frames.",
+  "algorithm": "Background Object Physics分析アルゴリズム",
+  "mechanism": "この手法は verifies physical plausibility of background objects in video for deepfake and manipulation detection following Farid (2016):\n\n1. **Object検出&トラッキング**: Background objects (furniture, walls, windows, vehicles) are detected and tracked フレーム間で. Their positions, orientations, and visible surfaces are monitored for physical consistency throughout the video sequence.\n\n2. **Perspective一貫性検証**: Object geometry is analyzed for correct linear perspective. Parallel edges should converge at 一貫した vanishing points across all background objects. Manipulated videos may introduce objects with 一貫性のない perspective geometry or perspective that shifts inconsistently with camera motion.\n\n3. **Lighting&影Physics**: Shadow directions, ambient occlusion, and specular highlights on background objects are verified for mutual consistency and agreement with the primary light source direction. Composited backgrounds or AI生成の scenes may produce physically impossible shadow configurations.\n\n4. **時間的物理的コヒーレンス**: Background objects must obey physical laws — rigid objects maintain shape, occluded objects remain 一貫した when revealed, and object motion follows Newtonian mechanics. AI生成の backgrounds may produce objects that subtly deform, disappear/reappear inconsistently, or move in physically impossible ways.\n\n5. **ChromaticAberration&レンズEffects**: Real camera lenses produce 一貫した chromatic aberration and distortion across the entire field of view. Background objects should exhibit the same optical characteristics as foreground subjects. Composited or generated backgrounds may show 一貫性のない lens effects, serving as manipulation indicators per Johnson & Farid (2007).",
+  "parameters": "分析タイプ：自動統計\\nスコア範囲：0（本物）から100（AI生成）",
+  "accuracy": "中〜高 — 入力品質に応じて70-85%の精度。",
+  "source": "デジタルフォレンジックとAIコンテンツ検出の査読済み研究に基づく。",
+  "useCase": "AI生成コンテンツを検出するためのマルチシグナル分析パイプラインの一部として使用。",
+  "strengths": "• 研究に裏付けられた方法論\\n• 高速な計算時間\\n• 他の検出方法と相補的",
+  "limitations": "• 精度は入力品質により変動\\n• 他の方法と組み合わせて使用するのが最適"
 }

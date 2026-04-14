@@ -1,22 +1,22 @@
 {
-    "name": "クロスエントロピー分散（Cross-Entropy Variance）",
-    "description": "トークンごとの予測可能性（クロスエントロピー）の変動を測定します。AIのテキストは一定の信頼度レベルを維持するため平坦ですが、人間の文章は突然の創造的な飛躍により高い分散（ばらつき）を示します。",
-    "algorithm": "トークンレベルのクロスエントロピーおよび統計的分散プロファイリング",
-    "mechanism": "自己回帰言語モデルは、統計的に最も確率の高い次のトークンを継続的に予測することによってテキストを生成します。トークンの「クロスエントロピー」は、モデルの内部確率分布に従って、その単語がどれほど「驚くべき」ものであるか、または数学的にありそうもないかを測定します。AIシステムは文書全体で安全で高確率のトークン（低クロスエントロピー）を選択するように最適化されているため、これらのクロスエントロピースコアの数学的分散は不自然なほど狭く、平坦なままになります。対照的に、人間の認知は局所的な統計的確率に基づいて動作しません。人間の書き手は頻繁に突然のインスピレーションの爆発、予期せぬ話題の転換、または非常に特異な語彙の注入を経験し、標準的な言い回しの中に高いクロスエントロピートークンの突発的で混沌としたスパイク（急上昇）をもたらします。この手法は、参照言語モデルを使用してトークンごとのクロスエントロピーを計算し、全体的な統計的分散を算出します。分散スコアが低い場合、合成され、アルゴリズムによって平滑化されたテキストであることを示す非常に信頼性の高い指標となります。",
-    "useCase": "執拗に安定した中確率の語彙の使用が、人間の創造的な変動の欠如を裏切っている、AIが生成した学術論文、技術文書、および拡張エッセイの検出。",
-    "strengths": "• LLMの中核となる数学的アーキテクチャに触れるため、LLMが異なるトーンに微調整（ファインチューニング）されている場合でも非常に信頼性が高くなります。\n• 基盤となるトークン選択の確率エンジンは変更されないため、基本的なプロンプトエンジニアリング（「創造的に書け」など）で回避するのは極めて困難です。\n• ゼロショットの機械生成テキスト検出アルゴリズム（DetectGPTなど）の主要なシグナルとして、例外的にうまく機能します。",
-    "limitations": "• 計算負荷が高く、リアルタイムでトークン確率を計算するために、大規模な参照言語モデル（GPT-2/RoBERTaなど）が舞台裏で必要になります。\n• 語彙の分散が自然に低いため、高度に定型化された、またはテンプレート化された人間の文章（法的なボイラープレートや標準作業手順書など）を誤分類する可能性があります。\n• 短いテキストでは、意味のある統計的分散を確立するのに十分なデータポイントが提供されません。",
-    "parameters": "解析: トークンごとの確率的クロスエントロピー\n評価基準: 統計的分散（σ²）、トークンの驚きの四分位範囲\n出力結果: 0-100 数学的平滑化（分散の欠如）スコア",
-    "accuracy": "高 — 80-90%。現代のAI検出における基礎的な指標であり、多くの高度な統計的検出器の数学的バックボーンを形成しています。",
-    "references": [
-        {
-            "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
-            "url": "https://arxiv.org/abs/2301.11305"
-        },
-        {
-            "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
-            "url": "https://arxiv.org/abs/1908.09203"
-        }
-    ],
-    "source": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
+  "name": "クロスエントロピー分散（Cross-Entropy Variance）",
+  "description": "トークンごとの予測可能性（クロスエントロピー）の変動を測定します。AIのテキストは一定の信頼度レベルを維持するため平坦ですが、人間の文章は突然の創造的な飛躍により高い分散（ばらつき）を示します。",
+  "algorithm": "トークンレベルのクロスエントロピーおよび統計的分散プロファイリング",
+  "mechanism": "Autoregressive language models generate text by continuously predicting the most statistically probable next token. The 'cross-entropy' of a token measures how 'surprising' or mathematically improbable that word is according to the model's internal probability distribution. Because AI systems are optimized to select safe, high-probability tokens (low cross-entropy) across the entire document, the mathematical variance of these cross-entropy scores remains unnaturally tight and flat. In stark contrast, human cognition does not operate on localized statistical probabilities. Human writers frequently experience sudden bursts of inspiration, abrupt topic shifts, or the injection of highly idiosyncratic vocabulary, resulting in sudden, chaotic spikes of high cross-entropy tokens interspersed with standard phrasing. This method calculates the per-token cross-entropy using a reference language model and computes the overall statistical variance. A low variance score is a highly reliable indicator of synthetic, algorithmically smoothed text.",
+  "useCase": "執拗に安定した中確率の語彙の使用が、人間の創造的な変動の欠如を裏切っている、AIが生成した学術論文、技術文書、および拡張エッセイの検出。",
+  "strengths": "• LLMの中核となる数学的アーキテクチャに触れるため、LLMが異なるトーンに微調整（ファインチューニング）されている場合でも非常に信頼性が高くなります。\n• 基盤となるトークン選択の確率エンジンは変更されないため、基本的なプロンプトエンジニアリング（「創造的に書け」など）で回避するのは極めて困難です。\n• ゼロショットの機械生成テキスト検出アルゴリズム（DetectGPTなど）の主要なシグナルとして、例外的にうまく機能します。",
+  "limitations": "• 計算負荷が高く、リアルタイムでトークン確率を計算するために、大規模な参照言語モデル（GPT-2/RoBERTaなど）が舞台裏で必要になります。\n• 語彙の分散が自然に低いため、高度に定型化された、またはテンプレート化された人間の文章（法的なボイラープレートや標準作業手順書など）を誤分類する可能性があります。\n• 短いテキストでは、意味のある統計的分散を確立するのに十分なデータポイントが提供されません。",
+  "parameters": "解析: トークンごとの確率的クロスエントロピー\n評価基準: 統計的分散（σ²）、トークンの驚きの四分位範囲\n出力結果: 0-100 数学的平滑化（分散の欠如）スコア",
+  "accuracy": "高 — 80-90%。現代のAI検出における基礎的な指標であり、多くの高度な統計的検出器の数学的バックボーンを形成しています。",
+  "references": [
+    {
+      "title": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.",
+      "url": "https://arxiv.org/abs/2301.11305"
+    },
+    {
+      "title": "Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv.",
+      "url": "https://arxiv.org/abs/1908.09203"
+    }
+  ],
+  "source": "Mitchell, E. et al. (2023). DetectGPT: Zero-Shot Machine-Generated Text Detection. ICML.; Solaiman, I. et al. (2019). Release Strategies and the Social Impacts of Language Models. arXiv."
 }

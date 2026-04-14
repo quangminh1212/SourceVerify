@@ -1,22 +1,22 @@
 {
-    "name": "Texture Periodicity",
-    "description": "Detects periodic テキストure patterns common in AI generation",
-    "algorithm": "Texture Periodicity — ピクセルレベル空間分析",
-    "mechanism": "この手法はピクセルレベルの空間分析を実行してAI生成のアーティファクトを検出します:\n\n1. **画像前処理**: 入力画像を読み込み、分析に適した色空間に変換します.\n\n2. **特徴抽出**: Detects periodic テキストure patterns common in AI generation. アルゴリズムが画像グリッド全体から関連するピクセルレベルの特徴を抽出します.\n\n3. **パターン分析**: 抽出された特徴から統計的測定値を計算して不規則性を特定します.\n\n4. **異常検出**: 結果を本物のカメラ画像とAI生成画像のベースラインと比較します.\n\n5. **スコア計算**: 検出された異常の程度に基づいて信頼度スコア (0-100) を計算します.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
-    "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
-    "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
-    "useCase": "以下の分析によるAI生成または改ざん画像の検出： テキストure periodicity 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
-    "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
-    "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
-    "references": [
-        {
-            "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
-            "url": "https://doi.org/10.1109/TSMC.1973.4309314"
-        },
-        {
-            "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval of Image Data. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/34.531803"
-        }
-    ]
+  "name": "Texture Periodicity",
+  "description": "Detects periodic テキストure patterns common in AI generation",
+  "algorithm": "Texture Periodicity — ピクセルレベル空間分析",
+  "mechanism": "This method analyzes texture periodicity for image forensic analysis, based on texture analysis frameworks from Haralick et al. (1973):\n\n1. **Autocorrelation分析**: The 2D autocorrelation function of the image (or image regions) is computed. Periodic textures produce peaks in the autocorrelation at the period intervals. The method extracts periodicity parameters: period, orientation, and regularity.\n\n2. **PowerスペクトルPeriodicity**: The 2D Fourier power spectrum is analyzed for spectral peaks indicating periodic content. The location of peaks reveals the spatial frequency and orientation of periodic patterns. The method distinguishes between natural periodicities (fabric weave, architectural patterns) and artificial periodicities (GAN grid artifacts, aliasing patterns).\n\n3. **PeriodRegularity評価**: The regularity (or irregularity) of detected periodicities is measured. Natural periodic textures show slight irregularity (variation in period, phase jitter) from the physical process generating them. AI-generated periodicities may be either too regular (perfect repetition from learned patterns) or show characteristic period variation from the generation process.\n\n4. **Periodicity空間的分布**: The spatial distribution of periodic content is mapped. Natural periodic textures are confined to specific objects (fabric, brickwork). AI generation may produce subtle periodicities throughout the image from the convolutional architecture (grid artifacts appearing across all generated content).\n\n5. **PeriodicityFeatureスコアリング**: Periodicity features (detected periods, regularity measures, spatial distribution, spectral peak analysis) are combined into a forensic score. The score captures the presence of anomalous periodicities characteristic of AI generation or manipulation.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 画像\n入力: 生ピクセルデータ / 画像ファイル\n出力: 信頼度スコア (0-100)\n処理方式: クライアントサイド Canvas API\n色空間: RGB、グレースケール（適用に応じて）",
+  "accuracy": "中〜高 — 70-90% 単独精度. 非圧縮画像で最高のパフォーマンスを発揮 and 高度なJPEG圧縮やSNS再エンコードにより低下する場合があります.",
+  "source": "デジタル画像フォレンジクス研究。信号処理と計算写真学の原理に基づく.",
+  "useCase": "以下の分析によるAI生成または改ざん画像の検出： テキストure periodicity 分析。この手法はAI生成に特徴的なパターンとアーティファクトを特定し、包括的な画像フォレンジクス分析に貢献します.",
+  "strengths": "• Canvas API を使用した高速クライアントサイド処理\n• 特定のAI生成アーティファクトの検出に効果的\n• 一般的な画像フォーマット（JPEG、PNG、WebP）に対応\n• 補完的な分析手法と組み合わせ可能\n• 確立された画像フォレンジクス研究に基づく",
+  "limitations": "• 画像の圧縮レベルによりパフォーマンスが変動する場合があります\n• SNSの再エンコードが精度に影響する場合があります\n• 他のフォレンジクス手法と併用するのが最適です\n• 高度に加工された本物の画像では誤検出が発生する場合があります\n• 有効性は使用されるAI生成モデルに依存します",
+  "references": [
+    {
+      "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
+      "url": "https://doi.org/10.1109/TSMC.1973.4309314"
+    },
+    {
+      "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval of Image Data. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/34.531803"
+    }
+  ]
 }

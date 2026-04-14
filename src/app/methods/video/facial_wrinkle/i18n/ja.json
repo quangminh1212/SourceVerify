@@ -1,22 +1,22 @@
 {
-    "name": "Facial Wrinkle Consistency",
-    "description": "Analyzes wrinkle pattern and depth consistency",
-    "algorithm": "Facial Wrinkle Consistency — ピクセルレベル空間分析",
-    "mechanism": "This method analyzes 動画 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 動画 stream for analysis.\n\n2. **Feature Analysis**: Analyzes wrinkle pattern and depth consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **スコア計算**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 動画 through facial wrinkle consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Facial Wrinkle Consistency",
+  "description": "Analyzes wrinkle pattern and depth consistency",
+  "algorithm": "Facial Wrinkle Consistency — ピクセルレベル空間分析",
+  "mechanism": "This method analyzes facial wrinkle patterns for deepfake detection:\n\n1. **Wrinkle検出&分類**: Wrinkles are detected using multi-scale ridge detection and classified by type: dynamic wrinkles (appear during expressions — forehead furrows, crow's feet), static wrinkles (always present — nasolabial folds), and fine lines (aging-related texture). Each wrinkle's depth, length, and position are measured.\n\n2. **Expression-Wrinkle相関**: Dynamic wrinkles must correlate with facial expressions — forehead wrinkles with brow raise (AU1/AU2), crow's feet with cheek raise (AU6), nasolabial deepening with smile (AU12). The method verifies these anatomical correlations. Deepfakes may produce expressions without corresponding wrinkles or wrinkles without corresponding expressions.\n\n3. **WrinklePosition安定性**: Static wrinkles occupy fixed positions determined by skin's collagen structure. The method tracks wrinkle positions across frames — wrinkle locations should remain stable (may vary in visibility with expression but not in position). Temporal wrinkle position drift indicates AI generation.\n\n4. **WrinkleRenderingQuality**: Wrinkles have specific rendering characteristics: they are valleys in the skin surface creating linear shadows with depth-dependent width. The method evaluates wrinkle rendering quality — AI generators often produce wrinkles that are too sharp (drawn lines) or too diffuse (lacking proper 3D depth cues).\n\n5. **Age-AppropriateWrinkleマッピング**: The wrinkle pattern should be age-appropriate: young faces have few static wrinkles, aged faces show predictable wrinkle progression (forehead → crow's feet → nasolabial → marionette). The method checks wrinkle pattern consistency with apparent age. Face-swapped deepfakes may show wrinkle-age mismatches.",
+  "parameters": "分析タイプ: ピクセル\nメディア: 動画\n入力: Video frames extracted at key intervals\n出力: 信頼度スコア (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "中〜高 — 70-88% 単独精度. Most effective when combined with other 動画 forensic methods. Performance depends on 動画 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 動画 through facial wrinkle consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 動画 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 動画 formats\n• Effective against common deepfake techniques\n• Can be combined with other 動画 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 動画 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 動画",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "機能語のプロファイリング",
-    "description": "著者のアイデンティティを示す独自のコントロール不可能な生体認証（バイオメトリクス）として機能する、機能語（冠詞、前置詞、接続詞、代名詞）の無意識下の分布を分析します。",
-    "algorithm": "閉じたクラスの語彙分布とバロウズ・デルタ分析",
-    "mechanism": "内容語（名詞、動詞、形容詞）がテキストが「何について」書かれているかを示すのに対し、機能語（the、of、and、in、aなど）は、それが認知的に「どのように」構造化されているかを示します。機能語は英語のほぼ50%を占めますが、人間はそれらをほぼ完全に無意識に使用しています。数十年にわたる計量文体学（著者属性分析）の歴史は、これら「見えない」単語の頻度と比率に基づいて、すべての人間がユニークで非常に安定した数学的指紋（フィンガープリント）を持っていることを証明してきました。しかし、AIモデルは何十億人もの著者の集合体（キメラ）です。LLMは、単一の安定した人間の指紋を持つのではなく、圧倒的に一般的で完全に平均化された「統計的な幽霊」の分布を出力します。この手法では、バロウズ・デルタ（Burrows's Delta）指標を使用して、300以上の閉じたクラスの機能語の相対頻度を、人間の記述ベースラインの巨大なコーパスと比較・測定します。機能語の分布がほぼ完璧で無味乾燥な（バニラのような）統計的平均値に達し、プロの人間が書いた文章でさえも有機的に発生する、著者の癖やわずかに非対称な機能語の比率が欠けている場合、そのテキストは機械で生成された合成物としてフラグが立てられます。",
-    "useCase": "法医学的な著者属性（フォレンジック）分析のゴールドスタンダードであり、他の文体的特徴（スラングや感情表現など）がすでに抑制されている、非常にフォーマルまたは学術的な文書を精査するのに理想的です。",
-    "strengths": "• 機能語の選択は意識的な思考の閾値（しきい値）以下で行われるため、人間（または特定のペルソナをプロンプトしたAI）が意識的に操作することは事実上不可能です。\n• 異なるジャンルやトピックにまたがって非常に高い回復力を持っています。著者の機能語の指紋は、技術マニュアルを書いていようとラブレターを書いていようと安定しています。\n• 法廷で証拠能力を持つ、30年以上にわたる法医学言語学（フォレンジック・リンギスティクス）の査読付き研究に裏付けられています。",
-    "limitations": "• 統計的に有意な分布曲線を確立するには、かなりのテキスト長（通常300語以上）が必要です。\n• すべての厳密にアライメント（調整）されたモデルは、類似の「平均化された」言語的セントロイド（重心）に収束するため、異なるLLM（例：ClaudeとGPT-4）を簡単に区別することはできません。\n• 言語固有の「閉じたクラス」の辞書に大きく依存しているため、英語、スペイン語、日本語などでまったく別の数学的モデルを構築する必要があります。",
-    "parameters": "解析: 300以上の閉じたクラスの単語の抽出とZスコア正規化\n評価基準: バロウズ・デルタ文体発散率 vs 人間の語彙重心\n出力結果: 0-100 文体均質化（アルゴリズムによる平均化）スコア",
-    "accuracy": "高 — 複数段落のテキストで80-88%。有機的な人間の認知プロセスと統計的なテキスト生成を区別するための、最も信頼性が高く学術的に検証された方法の1つです。",
-    "references": [
-        {
-            "title": "Burrows, J. F. (2002). Delta: A Measure of Stylistic Difference and Its Literary History. Literary and Linguistic Computing.",
-            "url": "https://doi.org/10.1093/llc/17.3.267"
-        },
-        {
-            "title": "Kestemont, M. (2014). Function Words in Authorship Attribution: From Black Magic to Theory? EACL.",
-            "url": "https://aclanthology.org/W14-0908/"
-        }
-    ],
-    "source": "Burrows, J. F. (2002). Delta: A Measure of Stylistic Difference and Its Literary History. Literary and Linguistic Computing.; Kestemont, M. (2014). Function Words in Authorship Attribution: From Black Magic to Theory? EACL."
+  "name": "機能語のプロファイリング",
+  "description": "著者のアイデンティティを示す独自のコントロール不可能な生体認証（バイオメトリクス）として機能する、機能語（冠詞、前置詞、接続詞、代名詞）の無意識下の分布を分析します。",
+  "algorithm": "閉じたクラスの語彙分布とバロウズ・デルタ分析",
+  "mechanism": "While content words (nouns, verbs, adjectives) dictate *what* a text is about, function words (the, of, and, in, a) dictate *how* it is cognitively structured. Function words constitute nearly 50% of the English language, yet humans use them almost entirely subconsciously. Decades of computational stylometry (authorship attribution) have proven that every human has a unique, highly stable mathematical fingerprint based on the frequencies and ratios of these 'invisible' words. AI models, however, are an amalgamation of billions of authors. Rather than possessing a singular, stable human fingerprint, an LLM outputs an overwhelmingly generic, perfectly averaged 'statistical ghost' distribution. This method utilizes Burrows's Delta metric to measure the relative frequencies of over 300 closed-class function words against an immense corpus of baseline human writing. If the function word distribution achieves a near-perfect 'vanilla' statistical mean—lacking the idiosyncratic, slightly asymmetrical function word ratios that organically occur even in professional human writing—the text is flagged as a machine-generated synthesis.",
+  "useCase": "法医学的な著者属性（フォレンジック）分析のゴールドスタンダードであり、他の文体的特徴（スラングや感情表現など）がすでに抑制されている、非常にフォーマルまたは学術的な文書を精査するのに理想的です。",
+  "strengths": "• 機能語の選択は意識的な思考の閾値（しきい値）以下で行われるため、人間（または特定のペルソナをプロンプトしたAI）が意識的に操作することは事実上不可能です。\n• 異なるジャンルやトピックにまたがって非常に高い回復力を持っています。著者の機能語の指紋は、技術マニュアルを書いていようとラブレターを書いていようと安定しています。\n• 法廷で証拠能力を持つ、30年以上にわたる法医学言語学（フォレンジック・リンギスティクス）の査読付き研究に裏付けられています。",
+  "limitations": "• 統計的に有意な分布曲線を確立するには、かなりのテキスト長（通常300語以上）が必要です。\n• すべての厳密にアライメント（調整）されたモデルは、類似の「平均化された」言語的セントロイド（重心）に収束するため、異なるLLM（例：ClaudeとGPT-4）を簡単に区別することはできません。\n• 言語固有の「閉じたクラス」の辞書に大きく依存しているため、英語、スペイン語、日本語などでまったく別の数学的モデルを構築する必要があります。",
+  "parameters": "解析: 300以上の閉じたクラスの単語の抽出とZスコア正規化\n評価基準: バロウズ・デルタ文体発散率 vs 人間の語彙重心\n出力結果: 0-100 文体均質化（アルゴリズムによる平均化）スコア",
+  "accuracy": "高 — 複数段落のテキストで80-88%。有機的な人間の認知プロセスと統計的なテキスト生成を区別するための、最も信頼性が高く学術的に検証された方法の1つです。",
+  "references": [
+    {
+      "title": "Burrows, J. F. (2002). Delta: A Measure of Stylistic Difference and Its Literary History. Literary and Linguistic Computing.",
+      "url": "https://doi.org/10.1093/llc/17.3.267"
+    },
+    {
+      "title": "Kestemont, M. (2014). Function Words in Authorship Attribution: From Black Magic to Theory? EACL.",
+      "url": "https://aclanthology.org/W14-0908/"
+    }
+  ],
+  "source": "Burrows, J. F. (2002). Delta: A Measure of Stylistic Difference and Its Literary History. Literary and Linguistic Computing.; Kestemont, M. (2014). Function Words in Authorship Attribution: From Black Magic to Theory? EACL."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Coh-Metrix 結束性（コヒージョン）インデックス",
-    "description": "局所的な参照の重複と、大局的（グローバル）な意味の連続性との間のデルタ（差）をマッピングすることにより、テキストの結束性、統語的複雑さ、および可読性の高度なインデックスを計算します。",
-    "algorithm": "自動談話結束性（コヒージョン）プロファイラー",
-    "mechanism": "GraesserとMcNamaraによって確立された先駆的なCoh-Metrixフレームワークに基づいて動作するこの手法は、参照的結束性（主張の重複）から深い状況モデルの結束性まで、計算言語学の網羅的な特徴の配列を計算します。AIモデルは、反復的な推移語（つなぎ言葉）や同一の代名詞を使用して文を積極的に鎖のようにつなぎ合わせる、明示的で表面的な「局所的結束性（ローカル・コヒージョン）」で常に過剰に高いインデックス（数値）を示します。これは、大局的で長期的なスパンでの状況認識能力の欠如を数学的に隠蔽するためです。極端に高い局所的な参照の重複（文がすぐ隣の文に完璧に接着している状態）と、異常に低い大局的な意味の進行（複数の段落にわたって中心となるテーマを展開できないこと）との間の、数学的にあり得ないデルタ（差分）を正確に測定することで、この手法はLLMの「論理のハルシネーション（幻覚）」を厳密に特定します。",
-    "useCase": "大量のミクロな推移（トランジション）によって１行ずつ読むと「もっともらしく聞こえる」が、ドキュメント全体にわたってまとまりのある、進展する大局的な議論を構築することに完全に失敗している、洗練されたAIエッセイの検出。",
-    "strengths": "• 談話分析に利用可能な、最も学術的に厳格で査読済みの計算言語学フレームワークの１つを展開します。\n• モデルの中核となるメモリ・アーキテクチャとトークン予測の重みを根本的に変更しない限り、単純なプロンプト・エンジニアリングでモデルを回避することは事実上不可能です。\n• 有限のTransformerコンテキスト・ウィンドウに固有の、正確な構造上の基盤となる欠陥を明示的に暴き出します。",
-    "limitations": "• セットアップと計算は、100を超える連動するサブメトリクス（副次的指標）を含むため、驚くほどリソースを消費します。\n• リスト記事、箇条書きの要約、ばらばらな講義ノートなど、本質的にまとまりがない、またはモジュール化されているように設計されたテキストでは統計的に信頼性が低くなります。\n• 現在、英語のNLPパラメータに対して大幅に最適化されているため、位相幾何学的に異なる言語グループに翻訳された場合、さまざまな精度の低下と忠実度の低下に直面します。",
-    "parameters": "解析: 多次元談話モデリング\n評価基準: 局所的参照結束性 vs 大局的意味結束性のデルタ（差分）\n出力結果: 0-100 結束性の異常（アノマリー）スコア",
-    "accuracy": "非常に高い — 説明論文や学術論文で85-92%。長文のAIハルシネーションに対して致命的な威力を発揮します。",
-    "references": [
-        {
-            "url": "https://doi.org/10.1017/CBO9780511894664",
-            "title": "McNamara, D.S. et al. (2014). Automated Evaluation of Text and Discourse with Coh-Metrix. Cambridge University Press."
-        },
-        {
-            "url": "https://doi.org/10.3758/BF03195564",
-            "title": "Graesser, A.C. et al. (2004). Coh-Metrix: Analysis of Text on Cohesion and Language. Behavior Research Methods."
-        }
-    ],
-    "source": "McNamara, D.S. et al. (2014). Automated Evaluation of Text and Discourse with Coh-Metrix. Cambridge University Press.; Graesser, A.C. et al. (2004). Coh-Metrix: Analysis of Text on Cohesion and Language. Behavior Research Methods."
+  "name": "Coh-Metrix 結束性（コヒージョン）インデックス",
+  "description": "局所的な参照の重複と、大局的（グローバル）な意味の連続性との間のデルタ（差）をマッピングすることにより、テキストの結束性、統語的複雑さ、および可読性の高度なインデックスを計算します。",
+  "algorithm": "自動談話結束性（コヒージョン）プロファイラー",
+  "mechanism": "Operating on the pioneering Coh-Metrix framework established by Graesser and McNamara, this method computes an exhaustive array of computational linguistics features ranging from referential cohesion (argument overlap) to deep situational model cohesion. AI models consistently over-index on explicit, superficial 'local cohesion'—aggressively chaining sentences together using repetitive transition words and identical pronouns—to mathematically mask their inherent lack of global, long-span situational awareness. By precisely measuring the mathematically improbable delta between extremely high local referential overlap (sentences gluing perfectly to their immediate neighbors) and abnormally low global semantic progression (the failure to advance a central thesis over multiple paragraphs), this method rigorously fingerprints the LLM 'hallucination of logic'.",
+  "useCase": "大量のミクロな推移（トランジション）によって１行ずつ読むと「もっともらしく聞こえる」が、ドキュメント全体にわたってまとまりのある、進展する大局的な議論を構築することに完全に失敗している、洗練されたAIエッセイの検出。",
+  "strengths": "• 談話分析に利用可能な、最も学術的に厳格で査読済みの計算言語学フレームワークの１つを展開します。\n• モデルの中核となるメモリ・アーキテクチャとトークン予測の重みを根本的に変更しない限り、単純なプロンプト・エンジニアリングでモデルを回避することは事実上不可能です。\n• 有限のTransformerコンテキスト・ウィンドウに固有の、正確な構造上の基盤となる欠陥を明示的に暴き出します。",
+  "limitations": "• セットアップと計算は、100を超える連動するサブメトリクス（副次的指標）を含むため、驚くほどリソースを消費します。\n• リスト記事、箇条書きの要約、ばらばらな講義ノートなど、本質的にまとまりがない、またはモジュール化されているように設計されたテキストでは統計的に信頼性が低くなります。\n• 現在、英語のNLPパラメータに対して大幅に最適化されているため、位相幾何学的に異なる言語グループに翻訳された場合、さまざまな精度の低下と忠実度の低下に直面します。",
+  "parameters": "解析: 多次元談話モデリング\n評価基準: 局所的参照結束性 vs 大局的意味結束性のデルタ（差分）\n出力結果: 0-100 結束性の異常（アノマリー）スコア",
+  "accuracy": "非常に高い — 説明論文や学術論文で85-92%。長文のAIハルシネーションに対して致命的な威力を発揮します。",
+  "references": [
+    {
+      "url": "https://doi.org/10.1017/CBO9780511894664",
+      "title": "McNamara, D.S. et al. (2014). Automated Evaluation of Text and Discourse with Coh-Metrix. Cambridge University Press."
+    },
+    {
+      "url": "https://doi.org/10.3758/BF03195564",
+      "title": "Graesser, A.C. et al. (2004). Coh-Metrix: Analysis of Text on Cohesion and Language. Behavior Research Methods."
+    }
+  ],
+  "source": "McNamara, D.S. et al. (2014). Automated Evaluation of Text and Discourse with Coh-Metrix. Cambridge University Press.; Graesser, A.C. et al. (2004). Coh-Metrix: Analysis of Text on Cohesion and Language. Behavior Research Methods."
 }

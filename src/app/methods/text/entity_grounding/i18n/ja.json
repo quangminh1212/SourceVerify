@@ -1,22 +1,22 @@
 {
-    "name": "エンティティ・グラウンディング（事実の根拠）分析",
-    "description": "固有表現（著名人、地名、組織など）が事実に基づいているかを検証します。AIモデルは、物語の流暢さを維持するために、存在しないエンティティを幻覚（ハルシネーション）として出力したり、実在する人物間の虚偽の関係をでっち上げたりすることがよくあります。",
-    "algorithm": "固有表現抽出（NER）および事実知識グラフ（Knowledge Graph）とのクロスリファレンス",
-    "mechanism": "人間のライターが情報テキストを作成する際は、事実に基づく知識ベースを参照し、言及するエンティティ（著者、日付、機関、ソフトウェアライブラリなど）が実際に存在し、論理的に関連していることを確認します。しかし、大規模言語モデルは事実を「知っている」わけではありません。統計的な共起関係に基づいてトークンのシーケンス（文面）を予測・生成しているだけです。LLMに難解な情報、学術的な引用、または非常に専門的な技術的詳細を求めると、モデルはしばしば、もっともらしく聞こえるが完全に架空のエンティティを「ハルシネーション（幻覚）」として生成します。実在する大学で働く「X博士」という架空の研究者をでっち上げたり、ユーザーの要求を完璧に解決する存在しないPythonライブラリを参照したりするかもしれません。この手法は、高度な固有表現抽出（NER）を展開し、テキストからすべての固有名詞、日付、および専門用語を抽出します。次に、抽出されたこれらのエンティティとその構文上の関係を、確立された知識グラフ（WikidataやGoogle Knowledge Graphなど）と照合します。「根拠のない」エンティティ（非常に権威があるように聞こえるが、外部で検証可能な一致がゼロの名前や関係性）が 高密度に含まれるテキストは、AIの幻覚による生成であることを示す決定的な（決定論的な）指標となります。",
-    "useCase": "事実の正確性が最も重要となる、学術論文、ニュース記事、技術文書、歴史的エッセイなどの分析。AIによって生成された「偽の引用」を捕らえるのに極めて優れています。",
-    "strengths": "• AIのハルシネーションを検出する際の決定性が非常に高いです。でっち上げられた本のタイトルや架空の研究者は、生成テキストの決定的な証拠（スモーキング・ガン）となります。\n• データが不足している場合に事実をでっち上げる傾向が高い、古いモデルやインターネットに接続されていないモデル（標準のChatGPT-3.5やLlama-2など）に対して極めて効果的です。\n• 文体や構文の癖に依存しないため、「自然なトーンで書き直して」といった単純なプロンプトのトリック（ごまかし）に完全に免疫があります。",
-    "limitations": "• SFやファンタジーなど、エンティティ（登場人物や設定）が意図的に創作されるクリエイティブ・ライティングでは誤検知が生じやすいです。\n• AIテキストが完全にグラウンディングされている（根拠がある）場合（例：ユーザーがRAGなどを使用してAIにすべての正しい事実を提供した場合）は検出できません。\n• 外部のKnowledge Graph APIへの接続が必要なため、非常にニッチな知識、ごく最近の知識、または企業独自のローカルな知識には対処できない可能性があります。",
-    "parameters": "解析: Spacy NER抽出および外部Knowledge Graph APIによる検証\n評価基準: 検証可能なエンティティと検証不可能な（幻覚の）エンティティの比率\n出力結果: 0-100 エンティティ・ハルシネーション（根拠の欠如）スコア",
-    "accuracy": "高 — 情報テキストで80-90%。単なる統計的確率に依存するのではなく、検証可能な強力な生成の証拠を提供します。",
-    "references": [
-        {
-            "title": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.",
-            "url": "https://aclanthology.org/P11-1115/"
-        },
-        {
-            "title": "Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL.",
-            "url": "https://arxiv.org/abs/1803.05355"
-        }
-    ],
-    "source": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.; Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL."
+  "name": "エンティティ・グラウンディング（事実の根拠）分析",
+  "description": "固有表現（著名人、地名、組織など）が事実に基づいているかを検証します。AIモデルは、物語の流暢さを維持するために、存在しないエンティティを幻覚（ハルシネーション）として出力したり、実在する人物間の虚偽の関係をでっち上げたりすることがよくあります。",
+  "algorithm": "固有表現抽出（NER）および事実知識グラフ（Knowledge Graph）とのクロスリファレンス",
+  "mechanism": "Human writers generate informational text by drawing upon factual knowledge bases, ensuring that the entities they mention (authors, dates, institutions, software libraries) actually exist and relate to one another logically. Large Language Models, however, do not 'know' facts; they generate predicting sequences of tokens based on statistical co-occurrence. When prompting an LLM for obscure information, citations, or highly specific technical details, the model will often 'hallucinate' plausible-sounding but entirely fictitious entities. It might invent a researcher named 'Dr. X' who works at a real university, or reference a non-existent Python library that perfectly solves the user's problem. This method deploys Advanced Named Entity Recognition (NER) to extract all proper nouns, dates, and specialized terminology from the text. It then cross-references these extracted entities and their relational syntax against established Knowledge Graphs (like Wikidata or Google Knowledge Graph). A text containing a high density of 'ungrounded' entities—names or relationships that sound highly authoritative but yield zero external verifiable matches—is a definitive indicator of AI hallucination.",
+  "useCase": "事実の正確性が最も重要となる、学術論文、ニュース記事、技術文書、歴史的エッセイなどの分析。AIによって生成された「偽の引用」を捕らえるのに極めて優れています。",
+  "strengths": "• AIのハルシネーションを検出する際の決定性が非常に高いです。でっち上げられた本のタイトルや架空の研究者は、生成テキストの決定的な証拠（スモーキング・ガン）となります。\n• データが不足している場合に事実をでっち上げる傾向が高い、古いモデルやインターネットに接続されていないモデル（標準のChatGPT-3.5やLlama-2など）に対して極めて効果的です。\n• 文体や構文の癖に依存しないため、「自然なトーンで書き直して」といった単純なプロンプトのトリック（ごまかし）に完全に免疫があります。",
+  "limitations": "• SFやファンタジーなど、エンティティ（登場人物や設定）が意図的に創作されるクリエイティブ・ライティングでは誤検知が生じやすいです。\n• AIテキストが完全にグラウンディングされている（根拠がある）場合（例：ユーザーがRAGなどを使用してAIにすべての正しい事実を提供した場合）は検出できません。\n• 外部のKnowledge Graph APIへの接続が必要なため、非常にニッチな知識、ごく最近の知識、または企業独自のローカルな知識には対処できない可能性があります。",
+  "parameters": "解析: Spacy NER抽出および外部Knowledge Graph APIによる検証\n評価基準: 検証可能なエンティティと検証不可能な（幻覚の）エンティティの比率\n出力結果: 0-100 エンティティ・ハルシネーション（根拠の欠如）スコア",
+  "accuracy": "高 — 情報テキストで80-90%。単なる統計的確率に依存するのではなく、検証可能な強力な生成の証拠を提供します。",
+  "references": [
+    {
+      "title": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.",
+      "url": "https://aclanthology.org/P11-1115/"
+    },
+    {
+      "title": "Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL.",
+      "url": "https://arxiv.org/abs/1803.05355"
+    }
+  ],
+  "source": "Ji, H. & Grishman, R. (2011). Knowledge Base Population: Successful Approaches and Challenges. ACL.; Thorne, J. et al. (2018). FEVER: a Large-scale Dataset for Fact Extraction and VERification. NAACL."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "キャニーエッジ密度解析",
-    "description": "修正されたCannyエッジ検出アルゴリズムを使用して、エッジ密度と空間的な高周波構造の変化を測定します。AI生成モデルは、しばしば異常に滑らかな輪郭や、有機的な写真に見られる自然なエッジの統計的密度を乱す過度に鋭い合成エッジを生成します。",
-    "algorithm": "二重閾値エッジトポグラフィーおよび密度プロファイリング",
-    "mechanism": "このアルゴリズムは、非極大値抑制とヒステリシス閾値処理を適用して正確なエッジマップを抽出し、これらの境界の局所的および全体的な密度を計算します。自然な写真は、有機的な照明や物理的なテクスチャに決定される複雑でフラクタルなエッジ分布を示します。逆に、潜在空間のデコードと畳み込みによるアップバント平滑化に制約されたAI合成画像は、エッジ密度が均質化されていることが多く、「ハイパーシャープ」な焦点の周りに、真のマイクロテクスチャを欠いた人工的に不毛で滑らかな領域が広がっています。",
-    "parameters": "検出器: Canny勾配カーネル, 閾値: 適応ヒステリシス（T_low, T_high）, 指標: 空間エッジ集中度",
-    "accuracy": "中（70-80%） - 非写実的な合成の平滑化の強調に効果的ですが、積極的な圧縮に対しては非常に敏感です。",
-    "source": "Canny (1986) / Farid (2016) - 計算エッジフォレンジック",
-    "useCase": "AIによるデジタルアートの検出、積極的な合成の平滑化の特定、および不可能な均質化されたエッジの均一性の暴露。",
-    "references": [
-        {
-            "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
-        },
-        {
-            "title": "Farid, H. (2016). Photo Forensics. MIT Press.",
-            "url": "https://mitpress.mit.edu/9780262537523/photo-forensics/"
-        }
-    ],
-    "strengths": "• 必要なリソースが最小限で済む、非常に高速で軽量な空間領域での計算。\n• 生成デコードアルゴリズムによって引き起こされる構造的およびテクスチャ的な均質化を視覚的に強調表示する。\n• 非常に多様でごちゃごちゃしたシーンにわたって、カラー入力とグレースケール入力の両方を効率的に解析する。\n• 基本的な色調整やグローバルな明るさのシフト操作に対して、本質的に回復力がある。",
-    "limitations": "• 構造を変更するJPEGの大量圧縮の後では、フォレンジックの精度が著しく低下する。\n• ハイエンドレンズによる、本物で有機的な被写界深度のぼやけ（ボケ）は、非常に似た滑らかで不毛なエッジのスポットを作成する。\n• 拡散AIと、最新のスマートフォンに組み込まれている積極的なノイズ除去アルゴリズムを区別するのにかなり苦労する。\n• 自然に滑らかな環境（雲のない快晴の空、何もない室内の壁など）では、偽陽性が発生しやすい。"
+  "name": "キャニーエッジ密度解析",
+  "description": "修正されたCannyエッジ検出アルゴリズムを使用して、エッジ密度と空間的な高周波構造の変化を測定します。AI生成モデルは、しばしば異常に滑らかな輪郭や、有機的な写真に見られる自然なエッジの統計的密度を乱す過度に鋭い合成エッジを生成します。",
+  "algorithm": "二重閾値エッジトポグラフィーおよび密度プロファイリング",
+  "mechanism": "The algorithm applies non-maximum suppression and hysteresis thresholding to extract precise edge maps, calculating the local and global density of these boundaries. Natural photographs exhibit complex, fractal-like edge distributions dictated by organic lighting and physical textures. Conversely, AI-synthesized images—constrained by latent space decoding and convolutional upband-smoothing—often display homogenized edge densities, leaving 'hyper-sharp' focal points surrounded by artificially barren, smoothed areas devoid of true micro-texture.",
+  "parameters": "検出器: Canny勾配カーネル, 閾値: 適応ヒステリシス（T_low, T_high）, 指標: 空間エッジ集中度",
+  "accuracy": "中（70-80%） - 非写実的な合成の平滑化の強調に効果的ですが、積極的な圧縮に対しては非常に敏感です。",
+  "source": "Canny (1986) / Farid (2016) - 計算エッジフォレンジック",
+  "useCase": "AIによるデジタルアートの検出、積極的な合成の平滑化の特定、および不可能な均質化されたエッジの均一性の暴露。",
+  "references": [
+    {
+      "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
+    },
+    {
+      "title": "Farid, H. (2016). Photo Forensics. MIT Press.",
+      "url": "https://mitpress.mit.edu/9780262537523/photo-forensics/"
+    }
+  ],
+  "strengths": "• 必要なリソースが最小限で済む、非常に高速で軽量な空間領域での計算。\n• 生成デコードアルゴリズムによって引き起こされる構造的およびテクスチャ的な均質化を視覚的に強調表示する。\n• 非常に多様でごちゃごちゃしたシーンにわたって、カラー入力とグレースケール入力の両方を効率的に解析する。\n• 基本的な色調整やグローバルな明るさのシフト操作に対して、本質的に回復力がある。",
+  "limitations": "• 構造を変更するJPEGの大量圧縮の後では、フォレンジックの精度が著しく低下する。\n• ハイエンドレンズによる、本物で有機的な被写界深度のぼやけ（ボケ）は、非常に似た滑らかで不毛なエッジのスポットを作成する。\n• 拡散AIと、最新のスマートフォンに組み込まれている積極的なノイズ除去アルゴリズムを区別するのにかなり苦労する。\n• 自然に滑らかな環境（雲のない快晴の空、何もない室内の壁など）では、偽陽性が発生しやすい。"
 }

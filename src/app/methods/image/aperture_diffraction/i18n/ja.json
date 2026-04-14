@@ -1,22 +1,22 @@
 {
-    "name": "開口絞り回折パターン分析 (Aperture Diffraction)",
-    "description": "実際のカメラの絞り羽根を光が通過する際に生じる、物理的に不可避な光の回折パターンの存在を検証します。実際のカメラで撮影する際、特に狭い絞り値（f/11〜f/22）では、点光源が波動光学に基づいた特徴的なスターバースト（星形光条）やエアリーディスクのパターンを生成します。AI画像生成器は、波動物理学を一切理解していません。主要な光源に粗いスターバースト効果を模倣することはありますが、シーン内のすべての点光源に同時に物理的に正確で一貫した回折挙動を再現することには系統的に失敗します。",
-    "algorithm": "波動光学回折フィンガープリントの検証",
-    "mechanism": "アルゴリズムは、画像内のすべての高輝度点光源（街灯、反射光、遠方の太陽）を特定します。各光源について、周囲のピクセルデータを分析して回折パターンの存在を検査します：スターバーストのスパイク数（絞り羽根枚数の2倍と一致する必要があります）、スパイクの角度の均一性、および特徴的なエアリーリングの有無です。次にシーン全体の整合性を検証します。同じ画像内の同程度の明るさのすべての点光源は、同一の物理レンズを通過したため、同一の回折フィンガープリントを示す必要があります。AI画像はほぼ例外なくこのクロスバリデーションに失敗し、異なる光源に異なるスターバーストパターンを生成するか、まったくパターンを生成しません。",
-    "useCase": "点光源が豊富な屋外の夜景写真、都市風景、コンサート写真を認証するためのゴールドスタンダードです。現在のAIが一貫した回折パターンを偽造することは事実上不可能です。",
-    "strengths": "• 波動光学の不変の法則に基づいており、あらゆるAIアーキテクチャに対して根本的に将来にわたって有効です。\n• シーン全体のクロスバリデーション（すべての光が一致する必要がある）により、対象画像において偽陽性率がほぼゼロの極めて高信頼度の信号を提供します。",
-    "limitations": "• 点光源のない画像（例：日中の風景、ディフューズ照明のスタジオポートレート）にはまったく無力です。\n• 開放絞り（f/1.4〜f/2.8）で撮影された画像は目に見える回折が最小限であり、分析が不確定になります。",
-    "parameters": "解析: 点光源回折パターンマッチング\n評価基準: スターバーストスパイク数、角度均一性、エアリーリングの存在、光源間の整合性\n出力結果: 0-100 光学的真正性スコア",
-    "accuracy": "非常に高い — 狭い絞りで撮影された3つ以上の可視点光源を含む画像で88〜95%の精度。開放絞りまたは日中の撮影では不確定に低下します。",
-    "references": [
-        {
-            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2006.873602"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ],
-    "source": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.; Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson."
+  "name": "開口絞り回折パターン分析 (Aperture Diffraction)",
+  "description": "実際のカメラの絞り羽根を光が通過する際に生じる、物理的に不可避な光の回折パターンの存在を検証します。実際のカメラで撮影する際、特に狭い絞り値（f/11〜f/22）では、点光源が波動光学に基づいた特徴的なスターバースト（星形光条）やエアリーディスクのパターンを生成します。AI画像生成器は、波動物理学を一切理解していません。主要な光源に粗いスターバースト効果を模倣することはありますが、シーン内のすべての点光源に同時に物理的に正確で一貫した回折挙動を再現することには系統的に失敗します。",
+  "algorithm": "波動光学回折フィンガープリントの検証",
+  "mechanism": "The algorithm identifies all high-intensity point light sources in the image (streetlights, reflections, distant sun). For each source, it analyzes the surrounding pixel data for the presence of a diffraction pattern: the number of spikes in a starburst (which must match 2× the number of aperture blades), the angular uniformity of spikes, and the characteristic Airy rings. It then validates cross-scene consistency: every point light source at a similar brightness in the same image must exhibit an identical diffraction fingerprint because they all passed through the same physical lens. AI images almost universally fail this cross-validation, producing differing starburst patterns on different lights—or no pattern at all.",
+  "useCase": "点光源が豊富な屋外の夜景写真、都市風景、コンサート写真を認証するためのゴールドスタンダードです。現在のAIが一貫した回折パターンを偽造することは事実上不可能です。",
+  "strengths": "• 波動光学の不変の法則に基づいており、あらゆるAIアーキテクチャに対して根本的に将来にわたって有効です。\n• シーン全体のクロスバリデーション（すべての光が一致する必要がある）により、対象画像において偽陽性率がほぼゼロの極めて高信頼度の信号を提供します。",
+  "limitations": "• 点光源のない画像（例：日中の風景、ディフューズ照明のスタジオポートレート）にはまったく無力です。\n• 開放絞り（f/1.4〜f/2.8）で撮影された画像は目に見える回折が最小限であり、分析が不確定になります。",
+  "parameters": "解析: 点光源回折パターンマッチング\n評価基準: スターバーストスパイク数、角度均一性、エアリーリングの存在、光源間の整合性\n出力結果: 0-100 光学的真正性スコア",
+  "accuracy": "非常に高い — 狭い絞りで撮影された3つ以上の可視点光源を含む画像で88〜95%の精度。開放絞りまたは日中の撮影では不確定に低下します。",
+  "references": [
+    {
+      "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2006.873602"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ],
+  "source": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.; Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson."
 }

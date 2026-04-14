@@ -1,22 +1,22 @@
 {
-    "name": "論理的接続詞のプロファイリング",
-    "description": "移行語（例：「しかしながら」「さらに」「したがって」）の頻度と種類を分析します。AIモデルは、出力を人工的に構造化するために明示的な論理的接続詞を過剰に使用する傾向があり、その結果、予測可能で非常に定型的な議論のリズムが生じます。",
-    "algorithm": "談話標識の頻度と分散分析",
-    "mechanism": "このメソッドはテキストを構文解析し、文や段落を橋渡しするために使用されるすべての談話標識（Discourse marker）と論理的接続詞を特定します。これらの接続詞を機能（添加、逆接、因果、順接）によって分類し、テキストの長さに対する全体的な密度を計算します。LLMは構造化された議論的なデータセットで重点的にトレーニングされており、「役に立ち、明確な」応答を生成するように調整されています。その結果、論理を強制的に明示するために、移行副詞（「第一に」「さらに」「結論として」「かくして」）の強固な骨格に頻繁に依存します。人間のライターは、正式なエッセイを起草する場合でも、これらの明示的な標識をはるかに控えめに使用し、暗黙の論理フロー、物語の勢い、またはより微妙な構造の変化に依存することがよくあります。アナライザーは、文に対する明示的な接続詞の比率を人間の基準と比較します。テキストが、特にすべての新しい文や段落の先頭に、教科書的な移行語の不自然な密度を示している場合、AIが作成した確率が高いとスコア付けします。",
-    "useCase": "AIが過度に厳格な「5段落エッセイ（Five-paragraph essay）」形式の移行フレーミングを通じて自らを暴露しがちな、学術論文、カバーレター、分析レポートの監査に非常に効果的です。",
-    "strengths": "• 有機的なペースよりも過剰な明確さと構造化された議論を優先する、LLMの根本的なアライメントトレーニング（Alignment training）を標的にします。\n• 複雑な意味解析ではなく、談話標識の包括的な語彙目録との照合に依存するため、計算が非常に高速です。\n• 解釈が非常に容易です。悪名高い「Furthermore（さらに）」など、具体的に過剰に使用されている接続詞を証拠として明示的に強調表示できます。",
-    "limitations": "• 非ネイティブスピーカー（ESL学習者）や、文章を構造化するために移行語を過剰に使用するように人為的に教えられた初心者のライターが書いたテキストでは、誤検知が発生しやすくなります。\n• プロンプトエンジニアリング（例：「しかしながら、や、さらに、などの移行語を使用せずに記述してください」）によって回避される可能性があります。\n• LLMが自然に正式な接続詞を抑制する、創造的なフィクションやカジュアルな対話では効果が低くなります。",
-    "parameters": "解析: 談話標識トークンのマッチング\n評価基準: 文に対する接続詞の比率と接続詞の語彙分散\n出力結果: 0-100 移行の硬直性スコア",
-    "accuracy": "中〜高 — 72-84%の精度。ChatGPTやClaudeのステレオタイプで過度に教訓的なトーンを強調するための、強力な補完的ヒューリスティックとして機能します。",
-    "references": [
-        {
-            "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
-            "url": "https://web.stanford.edu/~jurafsky/slp3/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        }
-    ],
-    "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+  "name": "論理的接続詞のプロファイリング",
+  "description": "移行語（例：「しかしながら」「さらに」「したがって」）の頻度と種類を分析します。AIモデルは、出力を人工的に構造化するために明示的な論理的接続詞を過剰に使用する傾向があり、その結果、予測可能で非常に定型的な議論のリズムが生じます。",
+  "algorithm": "談話標識の頻度と分散分析",
+  "mechanism": "This method parses the text to identify all discourse markers and logical connectors used to bridge sentences and paragraphs. It categorizes these connectors by function (additive, adversative, causal, sequential) and calculates their overall density relative to the text length. LLMs are trained heavily on structured, argumentative datasets and are tuned to produce 'helpful and clear' responses. As a result, they frequently rely on a rigid skeleton of transitional adverbs ('Firstly', 'Moreover', 'In conclusion', 'Thus') to forcefully signpost their logic. Human writers, even when drafting formal essays, use these explicit markers much more sparingly, often relying on implicit logical flow, narrative momentum, or more subtle structural shifts. The analyzer compares the ratio of explicit connectors to sentences against human baselines. If a text exhibits an unnatural density of textbook transition words, particularly at the beginning of every new sentence or paragraph, it generates a high probability score for AI authorship.",
+  "useCase": "AIが過度に厳格な「5段落エッセイ（Five-paragraph essay）」形式の移行フレーミングを通じて自らを暴露しがちな、学術論文、カバーレター、分析レポートの監査に非常に効果的です。",
+  "strengths": "• 有機的なペースよりも過剰な明確さと構造化された議論を優先する、LLMの根本的なアライメントトレーニング（Alignment training）を標的にします。\n• 複雑な意味解析ではなく、談話標識の包括的な語彙目録との照合に依存するため、計算が非常に高速です。\n• 解釈が非常に容易です。悪名高い「Furthermore（さらに）」など、具体的に過剰に使用されている接続詞を証拠として明示的に強調表示できます。",
+  "limitations": "• 非ネイティブスピーカー（ESL学習者）や、文章を構造化するために移行語を過剰に使用するように人為的に教えられた初心者のライターが書いたテキストでは、誤検知が発生しやすくなります。\n• プロンプトエンジニアリング（例：「しかしながら、や、さらに、などの移行語を使用せずに記述してください」）によって回避される可能性があります。\n• LLMが自然に正式な接続詞を抑制する、創造的なフィクションやカジュアルな対話では効果が低くなります。",
+  "parameters": "解析: 談話標識トークンのマッチング\n評価基準: 文に対する接続詞の比率と接続詞の語彙分散\n出力結果: 0-100 移行の硬直性スコア",
+  "accuracy": "中〜高 — 72-84%の精度。ChatGPTやClaudeのステレオタイプで過度に教訓的なトーンを強調するための、強力な補完的ヒューリスティックとして機能します。",
+  "references": [
+    {
+      "title": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.",
+      "url": "https://web.stanford.edu/~jurafsky/slp3/"
+    },
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    }
+  ],
+  "source": "Jurafsky, D. & Martin, J.H. (2024). Speech and Language Processing. 3rd Edition.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }

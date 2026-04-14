@@ -1,22 +1,22 @@
 {
-    "name": "語彙連鎖の固着（Lexical Chain Fixation）",
-    "description": "「語彙連鎖」（トピックに関連する単語のシーケンス）の多様性と繰り返しを分析します。AIモデルは、意味ネットワークを有機的に拡大するのではなく、特定のテーマ語彙に過度に固着（ハイパーフィクセーション）し、同じ単語や非常に予測可能な同義語を無限に使い回す（リサイクルする）傾向があります。",
-    "algorithm": "トピック語彙の抽出と連鎖の冗長性スコアリング",
-    "mechanism": "「語彙連鎖（Lexical chain）」とは、テキスト全体を貫き、まとまり（結束性）を提供する関連語のシーケンスです（例：「病院」→「医師」→「手術」→「回復」）。人間が長い文書を書くとき、その語彙連鎖は自然にさまよい、枝分かれし、個人の経験や水平思考（水平的思考）に由来する非常に多様で多層的な語彙を取り入れます。逆に、大規模言語モデルは、固定されたアテンション（注意）メカニズムと確率分布に基づいて動作します。LLMが特定のトピックにいかりを下ろすと、狭い意味的隣接領域に「閉じ込め」られます。LLMはそのトピックで最も確率の高い上位10個の単語を抽出し、それらを単に継続的に循環させます。これにより、まったく同じ名詞や動詞が不自然な頻度で再出現する、高密度で反復性の高い語彙連鎖が作成されます。このアルゴリズムは、文書内のすべてのテーマ別の単語シーケンスをマッピングし、連鎖の総出現回数に対する固有の連鎖エンティティの比率を計算します。テキストが500語にわたって複雑なトピックを議論しているのにもかかわらず、枝分かれすることなく、まったく同じ5つのテーマ語彙の使い回しに依存している場合、それはAIによる意味的な停滞（バリエーションの欠弱）を強く示しています。",
-    "useCase": "人間のライターであれば自然に広範で進化する語彙の広がりを示すのに対し、AIは単にプロンプトのキーワードを繰り返すだけになる、エッセイ、ブログ記事、および一般的な記事の監査に非常に効果的です。",
-    "strengths": "• 追加する新しい情報がないのに、文字数の要件を満たすために同じ語彙を使って堂々巡りの話をするという、AIの「意味的ルーピング」の癖を暴くのに優れています。\n• 人間の編集者が文書の根底にあるテーマ語彙のウェブ（網）全体を書き直すことはめったにないため、軽微な編集に対して非常に高い耐性を持ちます。\n• 人間の連想記憶（幅広い）とAIのアテンションウィンドウ（最も確率の高いトークンに狭く焦点を当てる）の根本的な違いを捉えます。",
-    "limitations": "• 完全な精度と明確さのために正確な専門用語の自動的な繰り返し（厳格な語彙連鎖）が義務付けられている、高度に専門的、科学的、または法的な文書では効果が低くなります（誤検知の発生率が高くなります）。\n• 連鎖を正確にマッピングするには、より長いテキストが必要です。50語の段落で語彙連鎖を分析しても、統計的に意味がありません。\n• 意味関係のマッピングが必要なため、基本的なn-gram分析よりも計算負荷が高くなります。",
-    "parameters": "解析: テーマのグループ化と反復頻度のマッピング\n評価基準: 固有の連鎖ノード / 連鎖の総言及数\n出力結果: 0-100 語彙の停滞（連鎖の固着）スコア",
-    "accuracy": "高 — クリエイティブなテキストや一般的なノンフィクションで81-87%。AIの「テーマ的想像力の限界」に関する堅牢な構造マップを提供します。",
-    "references": [
-        {
-            "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
-            "url": "https://nlp.stanford.edu/fsnlp/"
-        },
-        {
-            "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
-            "url": "https://arxiv.org/abs/2301.07597"
-        }
-    ],
-    "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
+  "name": "語彙連鎖の固着（Lexical Chain Fixation）",
+  "description": "「語彙連鎖」（トピックに関連する単語のシーケンス）の多様性と繰り返しを分析します。AIモデルは、意味ネットワークを有機的に拡大するのではなく、特定のテーマ語彙に過度に固着（ハイパーフィクセーション）し、同じ単語や非常に予測可能な同義語を無限に使い回す（リサイクルする）傾向があります。",
+  "algorithm": "トピック語彙の抽出と連鎖の冗長性スコアリング",
+  "mechanism": "A 'lexical chain' is a sequence of related words that runs through a text, providing cohesion (e.g., 'hospital' -> 'doctor' -> 'surgery' -> 'recovery'). When humans write a long document, their lexical chains naturally wander, branch out, and incorporate highly diverse, multi-layered vocabulary derived from personal experience or lateral thinking. Conversely, Large Language Models operate on fixed attention mechanisms and probability distributions. Once an LLM anchors onto a specific topic, it gets 'trapped' in a narrow semantic neighborhood. It will extract the top 10 most probable words for that topic and simply cycle through them continuously. This creates a dense, highly repetitive lexical chain where the exact same nouns and verbs reappear with unnatural frequency. This algorithm maps all thematic word sequences in the document and calculates the ratio of unique chain entities to total chain occurrences. If a text discusses a complex topic for 500 words but relies on recycling the exact same 5 thematic words instead of branching out, it strongly indicates AI-generated semantic stagnation.",
+  "useCase": "人間のライターであれば自然に広範で進化する語彙の広がりを示すのに対し、AIは単にプロンプトのキーワードを繰り返すだけになる、エッセイ、ブログ記事、および一般的な記事の監査に非常に効果的です。",
+  "strengths": "• 追加する新しい情報がないのに、文字数の要件を満たすために同じ語彙を使って堂々巡りの話をするという、AIの「意味的ルーピング」の癖を暴くのに優れています。\n• 人間の編集者が文書の根底にあるテーマ語彙のウェブ（網）全体を書き直すことはめったにないため、軽微な編集に対して非常に高い耐性を持ちます。\n• 人間の連想記憶（幅広い）とAIのアテンションウィンドウ（最も確率の高いトークンに狭く焦点を当てる）の根本的な違いを捉えます。",
+  "limitations": "• 完全な精度と明確さのために正確な専門用語の自動的な繰り返し（厳格な語彙連鎖）が義務付けられている、高度に専門的、科学的、または法的な文書では効果が低くなります（誤検知の発生率が高くなります）。\n• 連鎖を正確にマッピングするには、より長いテキストが必要です。50語の段落で語彙連鎖を分析しても、統計的に意味がありません。\n• 意味関係のマッピングが必要なため、基本的なn-gram分析よりも計算負荷が高くなります。",
+  "parameters": "解析: テーマのグループ化と反復頻度のマッピング\n評価基準: 固有の連鎖ノード / 連鎖の総言及数\n出力結果: 0-100 語彙の停滞（連鎖の固着）スコア",
+  "accuracy": "高 — クリエイティブなテキストや一般的なノンフィクションで81-87%。AIの「テーマ的想像力の限界」に関する堅牢な構造マップを提供します。",
+  "references": [
+    {
+      "title": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.",
+      "url": "https://nlp.stanford.edu/fsnlp/"
+    },
+    {
+      "title": "Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS.",
+      "url": "https://arxiv.org/abs/2301.07597"
+    }
+  ],
+  "source": "Manning, C.D. & Schütze, H. (1999). Foundations of Statistical Natural Language Processing. MIT Press.; Guo, B. et al. (2023). How Close is ChatGPT to Human Experts? Comparison Corpus, Evaluation, and Detection. NeurIPS."
 }
