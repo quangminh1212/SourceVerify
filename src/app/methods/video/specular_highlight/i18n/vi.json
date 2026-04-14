@@ -1,22 +1,22 @@
 {
-    "name": "Điểm sáng phản xạ",
-    "description": "Phân tích nhất quán điểm sáng phản xạ",
-    "algorithm": "Thuật toán phân tích Điểm sáng phản xạ",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích nhất quán điểm sáng phản xạ. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích điểm sáng phản xạ. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Điểm sáng phản xạ",
+  "description": "Phân tích nhất quán điểm sáng phản xạ",
+  "algorithm": "Thuật toán phân tích Điểm sáng phản xạ",
+  "mechanism": "Phương pháp này phân tích specular highlights để phát hiện deepfake:\n\n1. **Highlight Phát hiện**: Specular highlights (bright spots from direct light reflection) are detected across the frame on all surfaces — skin, eyes, glasses, jewelry, objects. Highlights are identified by local maximum intensity exceeding neighbors by a threshold.\n\n2. **Highlight - Ánh sáng Source Nhất quán**: All specular highlights in the scene should be nhất quán with the same light source configuration. Using highlight positions and surface geometry, Phương pháp ước lượng implied light directions. All highlights should point to nhất quán light source positions. Deepfakes may produce highlights with không nhất quán implied light directions.\n\n3. **Highlight Shape Phân tích**: The shape of specular highlights encodes surface curvature — highlights on flat surfaces appear as points, on curved surfaces as elongated reflections following surface curvature. Phương pháp kiểm tra highlight shapes against estimated surface geometry. do AI tạo ra highlights may have shapes không nhất quán with the underlying geometry.\n\n4. **Highlight Intensity & Physics**: Specular highlight intensity follows the Fresnel equations — brighter at grazing angles, with material-dependent characteristics. Phương pháp xác minh highlight intensity follows physical reflectance models. bộ sinh AI may produce highlights with incorrect intensity patterns.\n\n5. **Thời gian Highlight Dynamics**: As objects move, specular highlights should move according to the changing reflection angle. Phương pháp theo dõi highlight motion — highlights should move faster than texture features for convex surfaces (virtual image effect). Incorrect highlight dynamics indicate quá trình sinh AI without proper reflectance modeling.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích điểm sáng phản xạ. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

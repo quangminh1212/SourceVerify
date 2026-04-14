@@ -1,22 +1,22 @@
 {
-    "name": "Năng lượng kết cấu Laws",
-    "description": "Tính các đại lượng năng lượng kết cấu Laws",
-    "algorithm": "Thuật toán phân tích Năng lượng kết cấu Laws",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Tính các đại lượng năng lượng kết cấu Laws. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích năng lượng kết cấu laws. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Laws, K.I. (1980). Rapid Texture Identification. SPIE Image Processing.",
-            "url": "https://doi.org/10.1117/12.959169"
-        },
-        {
-            "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
-            "url": "https://doi.org/10.1109/TSMC.1973.4309314"
-        }
-    ]
+  "name": "Năng lượng kết cấu Laws",
+  "description": "Tính các đại lượng năng lượng kết cấu Laws",
+  "algorithm": "Thuật toán phân tích Năng lượng kết cấu Laws",
+  "mechanism": "This method applies Laws' texture energy measures for image forensic analysis following Laws (1980):\n\n1. **Laws' Nhân Generation**: Nine specific 5×5 texture energy kernels are generated from combinations of three 1D vectors: Level L5=[1,4,6,4,1], Edge E5=[-1,-2,0,2,1], and Spot S5=[-1,0,2,0,-1]. The nine kernels (L5E5, E5L5, L5S5, S5L5, E5E5, E5S5, S5E5, S5S5, L5L5) each detect different texture properties.\n\n2. **Kết cấu Energy Map Tính toán**: Each Laws' kernel is convolved with the image, and the resulting filtered image is processed with a local energy measure (mean absolute value or variance in a window). This produces nine texture energy maps, each capturing a different texture characteristic — edges, spots, ripples, and combinations.\n\n3. **Kết cấu Feature Véc-tơ Phân tích**: The nine energy maps form a texture feature vector at each pixel. The distribution and spatial pattern of these features characterize the image's texture properties. Natural textures produce characteristic feature vector distributions shaped by the physical texture-generating process.\n\n4. **Forensic Kết cấu Bất thường Phát hiện**: AI-generated textures often fail to reproduce the full complexity of natural texture statistics. The method analyzes Laws' texture energy distributions for anomalies: (a) texture energy ratios that deviate from natural distributions as characterized by Haralick et al. (1973), (b) spatial discontinuities in texture energy at suspected manipulation boundaries.\n\n5. **Kết cấu Nhất quán Chấm điểm**: A comprehensive texture score is computed from all nine energy maps. The score measures how well the image's texture statistics conform to natural texture models versus synthetic texture characteristics. Region-specific scoring highlights areas where texture properties suggest manipulation.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích năng lượng kết cấu laws. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Laws, K.I. (1980). Rapid Texture Identification. SPIE Image Processing.",
+      "url": "https://doi.org/10.1117/12.959169"
+    },
+    {
+      "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
+      "url": "https://doi.org/10.1109/TSMC.1973.4309314"
+    }
+  ]
 }

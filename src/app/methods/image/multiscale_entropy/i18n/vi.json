@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Multiscale Entropy",
-    "description": "Tính entropy mẫu ở nhiều tỷ lệ thời gian để phát hiện khác biệt phức tạp giữa ảnh thực và AI (Costa et al., 2002).",
-    "algorithm": "Thuật toán phân tích Multiscale Entropy Analysis",
-    "mechanism": "Hệ thống Multiscale Entropy Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1103/PhysRevLett.89.068102",
-            "title": "Costa, M. et al. (2002). Multiscale Entropy Analysis of Complex Physiologic Time Series. Physical Review Letters."
-        },
-        {
-            "url": "https://doi.org/10.1152/ajpheart.2000.278.6.H2039",
-            "title": "Richman, J.S. & Moorman, J.R. (2000). Physiological Time-series Analysis Using Approximate Entropy. AJP Heart."
-        }
-    ]
+  "name": "Phân tích Multiscale Entropy",
+  "description": "Tính entropy mẫu ở nhiều tỷ lệ thời gian để phát hiện khác biệt phức tạp giữa ảnh thực và AI (Costa et al., 2002).",
+  "algorithm": "Thuật toán phân tích Multiscale Entropy Analysis",
+  "mechanism": "Phương pháp này applies Costa et al.'s (2002) Multiscale Entropy (MSE) framework to quantify image complexity across scales:\n\n1. **Coarse - Graining**: The image signal is coarse-grained at multiple temporal scales τ by averaging non-overlapping windows of length τ: yⱼ(τ) = (1/τ)Σᵢ₌₍ⱼ₋₁₎τ₊₁ʲᵗ xᵢ. This creates a family of representations capturing structure at different resolutions.\n\n2. **Sample Entropy Tính toán**: At each scale τ, sample entropy SampEn(m, r, N) is calculated — measuring the negative natural logarithm of the conditional probability that sequences similar for m points remain similar for m+1 points within tolerance r. This định lượng irregularity without requiring stationarity.\n\n3. **MSE Curve Construction**: The entropy values across scales form the MSE curve. Natural images exhibit a đặc trưng MSE profile: high entropy at fine scales (sensor noise, texture detail) with controlled decay at coarse scales reflecting structured content.\n\n4. **Complexity Index Tính toán**: The area under the MSE curve (Complexity Index, CI) provides a single đo lường of multi-scale complexity. do AI tạo ra images thường show abnormal MSE profiles — either excessively smooth (low MSE across all scales) or with artificial periodicity absent in natural images.\n\n5. **Phát hiện bất thường**: The MSE curve shape is compared against reference distributions from natural images. Deviations indicate synthetic generation — diffusion models often produce overly regular fine-scale structure, while GANs may show đặc trưng entropy dips at specific scales corresponding to generator architecture artifacts.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1103/PhysRevLett.89.068102",
+      "title": "Costa, M. et al. (2002). Multiscale Entropy Analysis of Complex Physiologic Time Series. Physical Review Letters."
+    },
+    {
+      "url": "https://doi.org/10.1152/ajpheart.2000.278.6.H2039",
+      "title": "Richman, J.S. & Moorman, J.R. (2000). Physiological Time-series Analysis Using Approximate Entropy. AJP Heart."
+    }
+  ]
 }

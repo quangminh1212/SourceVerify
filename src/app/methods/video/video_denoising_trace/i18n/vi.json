@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Video Denoising Trace",
-    "description": "Phát hiện dấu vết khử nhiễu áp dụng cho video deepfake để che giấu dấu vết tạo sinh.",
-    "algorithm": "Thuật toán phân tích Video Denoising Trace",
-    "mechanism": "Hệ thống Video Denoising Trace phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TIFS.2007.916285",
-            "title": "Chen, C. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS."
-        },
-        {
-            "url": "https://doi.org/10.1109/TIP.2007.901238",
-            "title": "Dabov, K. et al. (2007). Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering. IEEE TIP."
-        }
-    ]
+  "name": "Phân tích Video Denoising Trace",
+  "description": "Phát hiện dấu vết khử nhiễu áp dụng cho video deepfake để che giấu dấu vết tạo sinh.",
+  "algorithm": "Thuật toán phân tích Video Denoising Trace",
+  "mechanism": "Phương pháp này phát hiện denoising traces để phân tích pháp y video:\n\n1. **Nhiễu Level Ước lượng**: The noise level and noise model of the video are estimated mỗi khung hình. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **Denoising Signature Phát hiện**: Denoising algorithms leave đặc trưng signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from mạng nơ-ron denoising). Phương pháp identifies these signatures.\n\n3. **Selective Denoising Phát hiện**: Phương pháp kiểm tra whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising - Phân giải Nhất quán**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). Phương pháp kiểm tra whether denoised regions show nhất quán effective resolution with non-denoised regions. Resolution mismatches cho thấy processing different regions with different denoising parameters.\n\n5. **Multi - Pass Denoising Phát hiện**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. Phương pháp phát hiện evidence of multiple denoising steps, nhất quán with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TIFS.2007.916285",
+      "title": "Chen, C. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2007.901238",
+      "title": "Dabov, K. et al. (2007). Image Denoising by Sparse 3-D Transform-Domain Collaborative Filtering. IEEE TIP."
+    }
+  ]
 }

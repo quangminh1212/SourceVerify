@@ -1,22 +1,22 @@
 {
-    "name": "Phổ tần số video",
-    "description": "Phân tích phổ tần số khung hình video",
-    "algorithm": "Thuật toán phân tích Phổ tần số video",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích phổ tần số khung hình video. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phổ tần số video. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Phổ tần số video",
+  "description": "Phân tích phổ tần số khung hình video",
+  "algorithm": "Thuật toán phân tích Phổ tần số video",
+  "mechanism": "Phương pháp này phân tích the video frequency spectrum để phát hiện pháp y:\n\n1. **2D Không gian Tần số Phân tích**: Per-frame 2D FFT cho thấy the tần số không gian spectrum. Phương pháp phân tích the overall spectral shape, spectral peaks, and spectral symmetry. Natural images follow approximately 1/f spectral decay.\n\n2. **Phổ Bất thường Phát hiện**: bộ sinh AI produce đặc trưng spectral anomalies: (a) GAN checkerboard peaks at upsampling stride frequencies, (b) diffusion model spectral gaps at certain frequency bands, (c) autoencoder spectral truncation at the bottleneck resolution. Phương pháp phát hiện these architecture-specific spectral signatures.\n\n3. **Khuôn mặt - Background Phổ So sánh**: The tần số không gian spectrum of các vùng khuôn mặt and background should be nhất quán (same imaging pipeline). Phương pháp so sánh spectral shapes — generated faces may show different spectral characteristics (different noise spectrum, different high-frequency falloff, or additional spectral peaks from generation artifacts).\n\n4. **Thời gian Phổ Ổn định**: The tần số không gian spectrum should be temporally stable for static content. Phương pháp theo dõi spectral stability — Quá trình tạo deepfake may produce temporally varying spectral content as the generator's output fluctuates giữa các khung hình.\n\n5. **3D Spatio - Thời gian Phổ**: The combined spatial-tần số thời gian spectrum (3D FFT over x, y, t) cho thấy motion structure. Natural motion produces đặc trưng spatio-temporal spectral planes. do AI tạo ra motion may show different spectral structure — particularly at the tần số thời gian boundaries of the generation model.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phổ tần số video. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

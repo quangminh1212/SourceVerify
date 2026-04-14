@@ -1,22 +1,22 @@
 {
-    "name": "Độ tối lỗ mũi",
-    "description": "Đánh giá độ sâu bóng đổ khoang mũi và tính đối xứng độ sáng hai bên, nhắm vào vùng chi tiết nhỏ nơi các mô hình sinh thường tạo ra gradient bóng không hợp lý về mặt vật lý.",
-    "algorithm": "Thuật toán phân tích Độ tối lỗ mũi",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán độ tối lỗ mũi. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích độ tối lỗ mũi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        }
-    ]
+  "name": "Độ tối lỗ mũi",
+  "description": "Đánh giá độ sâu bóng đổ khoang mũi và tính đối xứng độ sáng hai bên, nhắm vào vùng chi tiết nhỏ nơi các mô hình sinh thường tạo ra gradient bóng không hợp lý về mặt vật lý.",
+  "algorithm": "Thuật toán phân tích Độ tối lỗ mũi",
+  "mechanism": "Phương pháp này phân tích nostril darkness and rendering để phát hiện deepfake:\n\n1. **Nostril Phát hiện**: The nostrils are detected mỗi khung hình as dark interior regions visible at the base of the nose. Their shape (thường oval), size, and darkness level are measured.\n\n2. **Darkness Level Phân tích**: Natural nostrils show very low luminance (dark cavity) with specific spectral properties (warm dark due to skin back-scattering). Phương pháp đo lường nostril darkness and so sánh against expected values. bộ sinh AI may produce nostrils that are: too bright (failing to render the cavity), too uniform (lacking internal light gradients), or with incorrect color temperature.\n\n3. **Bilateral Đối xứng**: Left and right nostrils should be approximately symmetric in size and darkness (adjusted for head pose). Phương pháp kiểm tra bilateral nostril consistency. bộ sinh AI may produce asymmetric nostrils or nostrils that change relative size between frames.\n\n4. **Pose - Dependent Visibility**: Nostril visibility changes predictably with head pitch — looking up shows more nostril interior, looking down hides them. Phương pháp xác minh that nostril appearance changes correctly with estimated head pose. Incorrect pose-dependent nostril rendering indicates quá trình sinh AI.\n\n5. **Thời gian Nostril Ổn định**: Nostril dark regions should maintain nhất quán shape and position qua các khung hình (nostrils don't move relative to nose). Phương pháp theo dõi nostril features theo thời gian. giữa các khung hình nostril instability — changing shape, flickering darkness, shifting position — indicates per-frame independent rendering.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích độ tối lỗ mũi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    }
+  ]
 }

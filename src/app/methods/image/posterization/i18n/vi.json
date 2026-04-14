@@ -1,22 +1,22 @@
 {
-    "name": "Phát hiện posterization",
-    "description": "Phát hiện hiện tượng dải tông màu do lượng tử hóa đột ngột kênh màu — cấu phần giống nén mà mô hình sinh tạo ra khi ánh xạ không gian tiềm ẩn liên tục sang giá trị pixel rời rạc.",
-    "algorithm": "Thuật toán phân tích Phát hiện posterization",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phát hiện dấu vết posterization màu. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phát hiện posterization. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
-            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
-        }
-    ]
+  "name": "Phát hiện posterization",
+  "description": "Phát hiện hiện tượng dải tông màu do lượng tử hóa đột ngột kênh màu — cấu phần giống nén mà mô hình sinh tạo ra khi ánh xạ không gian tiềm ẩn liên tục sang giá trị pixel rời rạc.",
+  "algorithm": "Thuật toán phân tích Phát hiện posterization",
+  "mechanism": "This method detects posterization artifacts for image forensic analysis:\n\n1. **Intensity Level Census**: The number of unique intensity levels actually used in each color channel is counted. 8-bit images have 256 possible levels per channel. Posterization reduces the number of distinct levels, creating visible banding in smooth gradients.\n\n2. **Gradient Banding Phát hiện**: Smooth image regions (sky, skin, gradual lighting transitions) are identified, and within these regions, the method checks for intensity staircase patterns — sudden jumps between flat intensity plateaus instead of smooth transitions.\n\n3. **Tone Curve Phân tích**: The image's effective tone curve is estimated by analyzing the mapping from expected smooth gradients to observed intensity values. Posterization creates a staircase-like tone curve. The method characterizes the tone curve's step pattern — number of steps, step sizes, and their distribution.\n\n4. **AI Generation Posterization Signatures**: Some AI generators produce posterization-like artifacts from: (a) limited output precision in the generator's final layer, (b) training on processed/compressed images, (c) color quantization in the generation pipeline. The method distinguishes between processing-induced posterization (uniform across the image) and generation-specific posterization (may appear selectively in generated content).\n\n5. **Posterization Severity Chấm điểm**: The severity of posterization is scored based on: number of missing intensity levels, banding visibility in smooth regions, and comparison against expected levels for the image's declared bit depth and pipeline.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phát hiện posterization. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
+      "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Head Nod/Shake Pattern",
-    "description": "Phân tích mẫu gật/lắc đầu cho đồng bộ hội thoại tự nhiên — AI thường mất đồng bộ.",
-    "algorithm": "Thuật toán phân tích Head Nod/Shake Pattern",
-    "mechanism": "Hệ thống Head Nod/Shake Pattern phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1145/971478.971509",
-            "title": "Kapoor, A. & Picard, R.W. (2001). A Real-Time Head Nod and Shake Detector. ACM PUI."
-        },
-        {
-            "url": "https://doi.org/10.1109/TPAMI.2012.261",
-            "title": "Yang, Y. & Ramanan, D. (2012). Articulated Human Detection with Flexible Mixtures of Parts. IEEE TPAMI."
-        }
-    ]
+  "name": "Phân tích Head Nod/Shake Pattern",
+  "description": "Phân tích mẫu gật/lắc đầu cho đồng bộ hội thoại tự nhiên — AI thường mất đồng bộ.",
+  "algorithm": "Thuật toán phân tích Head Nod/Shake Pattern",
+  "mechanism": "Phương pháp này phân tích head gesture dynamics để phát hiện deepfake:\n\n1. **Head Pose Theo dõi**: Head orientation (yaw, pitch, roll) is estimated mỗi khung hình using facial landmark geometry or 3D head model fitting. Head pose signals are decomposed to identify gestural movements (nods = pitch oscillation, shakes = yaw oscillation).\n\n2. **Gesture Kinematics Phân tích**: Natural head gestures follow specific kinematics: (a) nodding involves 10-20° pitch oscillation at 1-2 Hz, (b) shaking involves 15-30° yaw oscillation at 1-2.5 Hz, (c) gestures show smooth sinusoidal profiles with physiologically constrained velocity. Phương pháp kiểm tra whether detected gestures fall within natural kinematic parameters.\n\n3. **Gesture - Lời nói Tương quan**: Head gestures correlate with speech prosody — nods often coincide with stressed syllables, head movements accompany turn-taking in conversation. Phương pháp phân tích temporal correlation between head motion and speech intensity. Deepfake có thể cho thấy gestures temporally decoupled from speech.\n\n4. **Neck - Head Coordination**: Head rotation involves coupled neck and cervical spine motion with đặc trưng ranges — large yaw rotations involve torso contribution. Phương pháp xác minh head-neck-shoulder coordination. Deepfake generators that only manipulate the face may produce head rotations that don't propagate correctly to neck and shoulders.\n\n5. **Inertial Nhất quán**: Head motion should show proper inertial dynamics — acceleration/deceleration following the mass and muscle force constraints of the head-neck system. Phương pháp phân tích the frequency content and jerk profile of head motion. do AI tạo ra head movements may lack natural inertial characteristics.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1145/971478.971509",
+      "title": "Kapoor, A. & Picard, R.W. (2001). A Real-Time Head Nod and Shake Detector. ACM PUI."
+    },
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2012.261",
+      "title": "Yang, Y. & Ramanan, D. (2012). Articulated Human Detection with Flexible Mixtures of Parts. IEEE TPAMI."
+    }
+  ]
 }

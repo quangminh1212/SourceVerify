@@ -1,22 +1,22 @@
 {
-    "name": "Vật lý phản chiếu",
-    "description": "Phân tích tính nhất quán vật lý phản chiếu",
-    "algorithm": "Thuật toán phân tích Vật lý phản chiếu",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán vật lý phản chiếu. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích vật lý phản chiếu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Vật lý phản chiếu",
+  "description": "Phân tích tính nhất quán vật lý phản chiếu",
+  "algorithm": "Thuật toán phân tích Vật lý phản chiếu",
+  "mechanism": "Phương pháp này phân tích reflection physical consistency để phát hiện deepfake:\n\n1. **Reflection Phát hiện**: Reflective surfaces in the scene are identified — mirrors, glass, glossy surfaces, water, metallic objects. Reflected content (particularly face reflections) is detected and extracted from these surfaces.\n\n2. **Reflection Geometry Xác minh**: Reflections should follow the laws of optics — the reflected image is positioned according to the geometry of the reflective surface. Phương pháp kiểm tra whether face reflections are geometrically nhất quán with the face position and surface orientation. Deepfakes that only modify the direct view of the face may leave original reflections unmodified, creating geometry mismatches.\n\n3. **Reflection - Source Identity Đối sánh**: If the face is visible both directly and in a reflection, both views should show the same identity, expression, and appearance. Phương pháp cross-kiểm tra reflection identity against the direct face view — face-swap deepfakes that don't modify all reflections create detectable identity disagreements.\n\n4. **Specular Highlight Physics**: Specular reflections on shiny surfaces (glasses, jewelry, skin highlights) should follow Fresnel equations — intensity and position depend on the angle between light source, surface, and camera. Phương pháp xác minh specular highlight physics. bộ sinh AI may produce specular highlights with incorrect angular behavior.\n\n5. **Thời gian Reflection Nhất quán**: As objects move, reflections should change according to optics (mirror law, Snell's law for refraction). Phương pháp theo dõi reflection dynamics — reflections should move smoothly and consistently with source object motion. Deepfake reflections may show temporal artifacts or fail to update with face motion.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích vật lý phản chiếu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

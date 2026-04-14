@@ -1,22 +1,22 @@
 {
-    "name": "Tương phản thời gian",
-    "description": "Theo dõi biến động tương phản giữa các khung hình sử dụng phân tích đạo hàm thời gian để phát hiện mẫu độ chói ổn định bất thường hoặc dao động tuần hoàn do tổng hợp video tự hồi quy tạo ra.",
-    "algorithm": "Thuật toán phân tích Tương phản thời gian",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích ổn định tương phản theo thời gian. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích tương phản thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Tương phản thời gian",
+  "description": "Theo dõi biến động tương phản giữa các khung hình sử dụng phân tích đạo hàm thời gian để phát hiện mẫu độ chói ổn định bất thường hoặc dao động tuần hoàn do tổng hợp video tự hồi quy tạo ra.",
+  "algorithm": "Thuật toán phân tích Tương phản thời gian",
+  "mechanism": "Phương pháp này phát hiện temporal contrast anomalies để phát hiện deepfake video:\n\n1. **Cục bộ Contrast Ánh xạ**: mỗi khung hình, local contrast (RMS contrast, Michelson contrast) is computed in sliding windows across the image. This creates a contrast map revealing spatial distribution of image contrast — bright/dark transitions, texture contrast, and edge strength.\n\n2. **Thời gian Contrast Tín hiệu Trích xuất**: The mean and distribution statistics of local contrast are tracked qua các khung hình. Natural video shows smooth contrast evolution governed by illumination changes and scene dynamics. The contrast temporal signal captures how overall and regional contrast varies theo thời gian.\n\n3. **Khuôn mặt - Background Contrast Nhất quán**: Contrast characteristics of các vùng khuôn mặt and background are compared temporally. Trong video chân thực, both regions respond identically to illumination changes. Deepfake face insertion may create contrast mismatches — the khuôn mặt được tạo may have different dynamic range or contrast characteristics than the background, detectable as divergent contrast temporal signals.\n\n4. **Contrast Flicker Phát hiện**: giữa các khung hình contrast variations are analyzed for abnormal flicker. Natural contrast changes are slow (illumination) or physically motivated (object motion). do AI tạo ra video may produce micro-contrast fluctuations as the generator independently determines contrast mỗi khung hình, creating a detectable tần số thời gian signature.\n\n5. **Biểu đồ - Based Contrast Phân tích**: Per-frame histograms are analyzed for dynamic range utilization across time. Natural video maintains nhất quán histogram shape evolution. nội dung được tạo may show abrupt histogram changes or unnatural histogram shapes (e.g., truncated dynamic range, bimodal distributions) indicating quá trình sinh AI.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích tương phản thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

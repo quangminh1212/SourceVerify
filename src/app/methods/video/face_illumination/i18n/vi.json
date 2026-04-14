@@ -1,22 +1,22 @@
 {
-    "name": "Chiếu sáng mặt",
-    "description": "Tái tạo bản đồ môi trường chiếu sáng theo từng khuôn mặt sử dụng hài cầu để phát hiện bất nhất quán ánh sáng giữa khuôn mặt tổng hợp và bối cảnh cảnh xung quanh.",
-    "algorithm": "Thuật toán phân tích Chiếu sáng mặt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán chiếu sáng khuôn mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích chiếu sáng mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Chiếu sáng mặt",
+  "description": "Tái tạo bản đồ môi trường chiếu sáng theo từng khuôn mặt sử dụng hài cầu để phát hiện bất nhất quán ánh sáng giữa khuôn mặt tổng hợp và bối cảnh cảnh xung quanh.",
+  "algorithm": "Thuật toán phân tích Chiếu sáng mặt",
+  "mechanism": "Phương pháp này phân tích facial illumination consistency để phát hiện deepfake:\n\n1. **Ánh sáng Source Ước lượng**: The primary illumination direction is estimated from facial shading using shape-from-shading techniques. The face's known approximate 3D geometry (frontal face as a convex surface) constrains the lighting estimation — shadow patterns on nose, cheeks, and forehead indicate light position.\n\n2. **Khuôn mặt - Scene Chiếu sáng So sánh**: The illumination direction estimated from facial shading is compared with illumination cues in the scene: background shadows, specular highlights on objects, window/light positions. Trong video chân thực, face and scene illumination match. Deepfake face insertion may produce faces lit from a different direction than the scene.\n\n3. **Bóng Nhất quán Xác minh**: Facial shadows (nose shadow, orbital shadows, chin shadow) are analyzed for mutual consistency — all shadows on the face should originate from the same light source(s). do AI tạo ra faces may produce physically không nhất quán shadow patterns where different facial features appear lit from different directions.\n\n4. **Thời gian Chiếu sáng Ổn định**: As the head rotates, facial shading should change smoothly and consistently with the estimated light source position. Phương pháp theo dõi illumination parameters qua các khung hình. Deepfakes may produce illumination that doesn't respond correctly to head pose changes — illumination remaining static during head rotation or changing independently of physical light positions.\n\n5. **Specular - Diffuse Phân tích**: Facial skin shows both diffuse reflection (matte appearance) and specular reflection (highlights on forehead, nose, cheeks). The ratio and spatial distribution of specular-to-diffuse components should follow physical models. bộ sinh AI may produce unnatural specular patterns, absent highlights, or incorrect specular-to-diffuse ratios.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích chiếu sáng mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Pha trộn biên mặt",
-    "description": "Phát hiện dấu vết pha trộn biên khuôn mặt",
-    "algorithm": "Thuật toán phân tích Pha trộn biên mặt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện dấu vết pha trộn biên khuôn mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích pha trộn biên mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Pha trộn biên mặt",
+  "description": "Phát hiện dấu vết pha trộn biên khuôn mặt",
+  "algorithm": "Thuật toán phân tích Pha trộn biên mặt",
+  "mechanism": "This method analyzes face-to-background boundary blending for deepfake detection following techniques from Face X-ray (Li et al., 2020):\n\n1. **Ranh giới Vùng Trích xuất**: The transition zone between the face and surrounding context (hair, neck, ears, background) is extracted. This region — typically 10-30 pixels wide — is where deepfake blending artifacts are concentrated.\n\n2. **Alpha Matte Ước lượng**: The effective alpha transparency at the face boundary is estimated. Natural faces don't have alpha boundaries — they transition organically to hair and neck. Deepfakes produce a detectable soft alpha matte where the generated face was composited, creating an unnatural transparency gradient.\n\n3. **Cross - Ranh giới Feature Phân tích**: Features on both sides of the boundary are compared: noise level, compression artifacts, color temperature, texture granularity, and local contrast. In authentic video, these features are continuous across the face boundary. In deepfakes, the separately generated face shows different characteristics than the original surrounding footage.\n\n4. **Ranh giới Shape Phân tích**: The shape of the blending region is analyzed. Deepfake systems typically use simple geometric templates (ellipses, convex hulls of landmarks) for face masks. These produce unnaturally regular boundary shapes compared to the organic boundaries of natural face-to-hair and face-to-neck transitions.\n\n5. **Per - Kênh Ranh giới Phân tích**: The blending boundary is analyzed independently in each color channel and in frequency domain. Even well-blended deepfakes may show boundary artifacts in specific channels — particularly in chroma channels where blending algorithms may be less sophisticated than in luminance.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích pha trộn biên mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

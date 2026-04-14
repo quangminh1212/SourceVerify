@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Micro-Tremor Detection",
-    "description": "Phát hiện rung vi mô sinh lý trong cơ mặt — vắng mặt trong khuôn mặt AI (Jain et al., 2022).",
-    "algorithm": "Thuật toán phân tích Micro-Tremor Detection",
-    "mechanism": "Hệ thống Micro-Tremor Detection phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
-            "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
-        },
-        {
-            "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
-            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
-        }
-    ]
+  "name": "Phân tích Micro-Tremor Detection",
+  "description": "Phát hiện rung vi mô sinh lý trong cơ mặt — vắng mặt trong khuôn mặt AI (Jain et al., 2022).",
+  "algorithm": "Thuật toán phân tích Micro-Tremor Detection",
+  "mechanism": "Phương pháp này phân tích physiological micro-tremor để phát hiện deepfake:\n\n1. **Micro - Chuyển động Trích xuất**: Sub-pixel facial motion is extracted using phase-based video motion magnification or dense luồng quang học. The signals of interest are involuntary physiological tremors — oscillatory motions at frequencies above voluntary control (4-12 Hz).\n\n2. **Physiological Tremor Phát hiện**: All living humans exhibit physiological tremor (8-12 Hz) caused by motor unit firing and stretch reflex oscillation. Phương pháp searches for this đặc trưng frequency in facial motion signals. Deepfake videos generated without physiological modeling lack this biological signal.\n\n3. **Không gian Tremor Nhất quán**: Physiological tremor affects the entire body coherently — all facial points should show correlated tremor at similar frequencies. Phương pháp kiểm tra spatial coherence of detected high-frequency motion. quá trình sinh AI may produce spatially incoherent micro-motion (independent per-region noise) rather than the coherent biological tremor.\n\n4. **Tremor Tần số Ổn định**: Physiological tremor frequency is relatively stable for an individual over short periods but varies naturally within the 8-12 Hz band. Phương pháp phân tích tremor frequency stability — completely stable frequency (single spectral line) or no detectable tremor peak both indicate non-biological origin.\n\n5. **Tremor Amplitude Đánh giá**: Physiological tremor amplitude is thường 50-200 μm (sub-pixel in most video). Phương pháp uses motion magnification to assess whether the detected tremor amplitude falls within physiological ranges. Absent tremor, excessive tremor, or tremor with wrong spectral shape indicates Quá trình tạo deepfake.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
+      "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
+    },
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+    }
+  ]
 }

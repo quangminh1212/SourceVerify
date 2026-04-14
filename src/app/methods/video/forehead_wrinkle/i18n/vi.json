@@ -1,22 +1,22 @@
 {
-    "name": "Nếp nhăn trán",
-    "description": "Đánh giá tính tự nhiên của hình thành nếp nhăn trán động trong biểu cảm khuôn mặt, phát hiện mẫu nếp nhăn tĩnh hoặc biến dạng sai chỉ báo thao túng tái diễn khuôn mặt.",
-    "algorithm": "Thuật toán phân tích Nếp nhăn trán",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán nếp nhăn trán. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nếp nhăn trán. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Nếp nhăn trán",
+  "description": "Đánh giá tính tự nhiên của hình thành nếp nhăn trán động trong biểu cảm khuôn mặt, phát hiện mẫu nếp nhăn tĩnh hoặc biến dạng sai chỉ báo thao túng tái diễn khuôn mặt.",
+  "algorithm": "Thuật toán phân tích Nếp nhăn trán",
+  "mechanism": "Phương pháp này specifically phân tích forehead wrinkle dynamics để phát hiện deepfake:\n\n1. **Forehead Wrinkle Phát hiện**: Horizontal forehead wrinkles are detected using oriented ridge detection filters. Each wrinkle is characterized: position (forehead height), depth (shadow contrast), length (ear-to-ear extent), and curvature (following frontal bone contour).\n\n2. **Frontalis - Wrinkle Biomechanics**: Forehead wrinkles are produced by frontalis muscle contraction. Phương pháp xác minh biomechanical correctness: (a) wrinkles should be roughly horizontal following frontalis fiber direction, (b) wrinkle spacing reflects the muscle's compartmentalized structure, (c) wrinkle depth should correlate with brow elevation magnitude. Deepfakes may produce wrinkles with incorrect orientation or depth.\n\n3. **Dynamic Wrinkle Behavior**: As the brow raises, wrinkles deepen and become more visible; as the brow relaxes, they flatten. Phương pháp theo dõi the temporal correlation between brow position (AU1/AU2) and wrinkle visibility. Low correlation indicates the face generator produces wrinkles independently of expression.\n\n4. **Wrinkle Mẫu Individual Nhất quán**: Each person has a đặc trưng forehead wrinkle pattern determined by muscle anatomy and skin elasticity. Phương pháp kiểm tra whether the wrinkle pattern remains nhất quán qua các khung hình. Deepfakes may produce varying wrinkle patterns giữa các khung hình, especially when combining different source identities.\n\n5. **Wrinkle Rendering Đánh giá**: The 3D appearance of wrinkles (shadow on the upper edge, highlight on the lower edge in downward illumination) should be nhất quán with scene lighting. Phương pháp evaluates wrinkle rendering quality and lighting consistency. do AI tạo ra wrinkles may show physically incorrect shadow patterns.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nếp nhăn trán. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

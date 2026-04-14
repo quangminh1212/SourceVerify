@@ -1,22 +1,22 @@
 {
-    "name": "Đối xứng khuôn mặt (Video)",
-    "description": "Phân tích nhất quán đối xứng khuôn mặt trong video",
-    "algorithm": "Thuật toán phân tích Đối xứng khuôn mặt (Video)",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích nhất quán đối xứng khuôn mặt trong video. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích đối xứng khuôn mặt (video). Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Đối xứng khuôn mặt (Video)",
+  "description": "Phân tích nhất quán đối xứng khuôn mặt trong video",
+  "algorithm": "Thuật toán phân tích Đối xứng khuôn mặt (Video)",
+  "mechanism": "Phương pháp này phân tích facial symmetry patterns in video để phát hiện deepfake:\n\n1. **Bilateral Feature Đo lường**: Corresponding bilateral facial features are measured: left/right eye size, eyebrow position, cheek contour, nasolabial fold depth, lip corner position. The asymmetry (difference between left and right) is quantified for each feature pair.\n\n2. **Natural Asymmetry Baseline**: All human faces exhibit natural bilateral asymmetry — thường 2-5% difference between sides. Phương pháp establishes per-subject asymmetry characteristics and kiểm tra whether they fall within normal ranges. Deepfakes may produce unnaturally symmetric faces (≈0% asymmetry) or exaggerated asymmetry không nhất quán with natural variation.\n\n3. **Pose - Adjusted Đối xứng**: Apparent symmetry changes with head pose due to perspective projection. Phương pháp compensates for head pose to đo lường intrinsic facial symmetry. After correction, true facial asymmetry should remain constant regardless of viewing angle. Deepfake có thể cho thấy pose-dependent symmetry changes indicating không nhất quán 3D face modeling.\n\n4. **Dynamic Đối xứng Phân tích**: During expressions, bilateral symmetry changes predictably — genuine smiles may be slightly asymmetric, surprise is relatively symmetric. Phương pháp phân tích dynamic symmetry patterns during expression events. Deepfakes may produce symmetric expressions when natural ones should be asymmetric, or vice versa.\n\n5. **Thời gian Đối xứng Ổn định**: The subject's baseline facial asymmetry should remain constant across the video (bone structure doesn't change). Phương pháp theo dõi symmetry metrics temporally. giữa các khung hình variations in facial asymmetry — caused by independent generation of left and right face halves — indicate quá trình sinh AI artifacts.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích đối xứng khuôn mặt (video). Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

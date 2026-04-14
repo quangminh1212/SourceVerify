@@ -1,22 +1,22 @@
 {
-    "name": "Tự nhiên bokeh",
-    "description": "Đánh giá hình dạng đĩa mờ chiều sâu trường ảnh và mẫu quang sai so với mô hình ống kính thật để nhận diện bokeh mô phỏng tính toán thiếu khuyết tật quang học xác thực.",
-    "algorithm": "Thuật toán phân tích Tự nhiên bokeh",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính tự nhiên hiệu ứng bokeh. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích tự nhiên bokeh. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ]
+  "name": "Tự nhiên bokeh",
+  "description": "Đánh giá hình dạng đĩa mờ chiều sâu trường ảnh và mẫu quang sai so với mô hình ống kính thật để nhận diện bokeh mô phỏng tính toán thiếu khuyết tật quang học xác thực.",
+  "algorithm": "Thuật toán phân tích Tự nhiên bokeh",
+  "mechanism": "Phương pháp này phân tích bokeh (out-of-focus rendering) naturalness để phát hiện pháp y:\n\n1. **Chiều sâu - of - Field Map Ước lượng**: The image is analyzed to ước lượng relative depth across the frame using defocus cues. Regions are classified by their blur level — sharp (in-focus), slightly blurred, and heavily blurred, creating a depth-ordered defocus map.\n\n2. **Bokeh Disc Phân tích**: Out-of-focus highlights are identified and their shape (bokeh disc) is analyzed. Real lenses produce bokeh discs with shapes determined by the aperture blade count and shape — circular, hexagonal, or octagonal with nhất quán geometry across the frame. do AI tạo ra bokeh often produces physically impossible disc shapes or không nhất quán shapes at different frame positions.\n\n3. **Defocus Gradient Nhất quán**: The transition from sharp to blurred regions should follow a smooth gradient nhất quán with optical depth-of-field physics (proportional to 1/distance from focal plane). bộ sinh AI may produce abrupt focus transitions, incorrect blur gradient directions, or depth-of-field effects không nhất quán with any physical lens.\n\n4. **Chromatic Aberration in Bokeh**: Real out-of-focus regions exhibit longitudinal chromatic aberration — color fringing with green/magenta shifts depending on whether the object is in front of or behind the focal plane. Phương pháp kiểm tra for correct chromatic behavior in bokeh regions. Generated images thường lack or incorrectly render chromatic bokeh effects.\n\n5. **Thời gian Bokeh Nhất quán**: In video, bokeh characteristics should vary smoothly with camera-to-subject distance changes. Phương pháp theo dõi bokeh quality qua các khung hình — video được tạo may produce không nhất quán giữa các khung hình bokeh rendering, with disc shapes, blur amounts, or chromatic effects that fluctuate without corresponding depth changes.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích tự nhiên bokeh. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ]
 }

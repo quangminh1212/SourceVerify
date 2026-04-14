@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán chi tiết tai",
-    "description": "So sánh nhất quán chi tiết tai trái-phải",
-    "algorithm": "Thuật toán phân tích Nhất quán chi tiết tai",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: So sánh nhất quán chi tiết tai trái-phải. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán chi tiết tai. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Nhất quán chi tiết tai",
+  "description": "So sánh nhất quán chi tiết tai trái-phải",
+  "algorithm": "Thuật toán phân tích Nhất quán chi tiết tai",
+  "mechanism": "Phương pháp này phân tích ear anatomical detail để phát hiện deepfake:\n\n1. **Ear Vùng Trích xuất**: Ears are detected and segmented using facial landmark extensions and ear-specific detectors. The ear region includes the helix, antihelix, tragus, antitragus, concha, and lobule — each with distinctive anatomical structure that serves as a biometric identifier.\n\n2. **Anatomical Detail Đánh giá**: Fine ear structures are analyzed: cartilaginous ridges (helix curvature, antihelix branching), skin texture, and vascular patterns. Real ears exhibit high-frequency anatomical detail with complex 3D surface geometry. do AI tạo ra ears thường show simplified anatomy — missing the intricate folds or producing physically impossible ear structures.\n\n3. **Bilateral Đối xứng Xác minh**: Left and right ears of the same person share đặc trưng family resemblance while showing natural asymmetry. Phương pháp so sánh both ears for anatomical consistency — deepfakes may produce ears with không nhất quán morphology between sides, or ears that don't match the identity of the khuôn mặt được tạo.\n\n4. **Thời gian Ear Ổn định**: Ear anatomy is rigid (cartilage doesn't deform) and should remain geometrically stable qua các khung hình regardless of head motion. Phương pháp theo dõi ear detail consistency — deepfake generators may produce temporally không nhất quán ear rendering with fluctuating detail levels, especially when the ear is near the face-swap boundary.\n\n5. **Ear - Khuôn mặt Identity Nhất quán**: Ear morphology is correlated with face shape and ethnicity. Phương pháp kiểm tra whether ear characteristics are plausible for the depicted face. Deepfakes that swap faces but not ears (or generate ears independently) may produce biometrically không nhất quán ear-face combinations.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán chi tiết tai. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

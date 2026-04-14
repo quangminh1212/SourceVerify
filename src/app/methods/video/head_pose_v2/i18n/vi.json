@@ -1,22 +1,22 @@
 {
-    "name": "Ước lượng tư thế đầu v2",
-    "description": "Phân tích vật lý tư thế và xoay đầu",
-    "algorithm": "Thuật toán phân tích Ước lượng tư thế đầu v2",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích vật lý tư thế và xoay đầu. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích ước lượng tư thế đầu v2. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
-            "url": "https://arxiv.org/abs/1811.00661"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Ước lượng tư thế đầu v2",
+  "description": "Phân tích vật lý tư thế và xoay đầu",
+  "algorithm": "Thuật toán phân tích Ước lượng tư thế đầu v2",
+  "mechanism": "Phương pháp này performs advanced head pose analysis để phát hiện deepfake:\n\n1. **6 - DOF Pose Ước lượng**: Head pose is estimated with 6 degrees of freedom (3D rotation: yaw, pitch, roll + 3D translation) mỗi khung hình using a combination of facial landmarks and perspective-n-point (PnP) solving with a 3D face model.\n\n2. **Pose Trajectory Smoothness**: Head pose trajectories should be smooth (low jerk), reflecting the biomechanical properties of the cervical spine and head mass. Phương pháp phân tích trajectory smoothness using third-derivative (jerk) metrics. Deepfakes may produce jittery pose trajectories from frame-independent head estimation.\n\n3. **Hình học Self - Nhất quán**: The estimated 3D pose should be geometrically self-nhất quán: (a) reprojected landmark positions should match detected landmarks, (b) face visibility should be nhất quán with estimated pose, (c) facial feature foreshortening should match perspective projection at the estimated pose. Deepfake có thể cho thấy geometric inconsistencies.\n\n4. **Pose - Dependent Khuôn mặt Appearance**: At different head poses, different face surfaces become visible. Phương pháp kiểm tra whether newly visible regions (revealed during head rotation) are nhất quán with previously visible regions — same texture quality, same skin tone, same detail level. Deepfake có thể cho thấy không nhất quán face appearance as pose changes cho thấy poorly generated regions.\n\n5. **Pose Range Phân tích**: The range of head poses in the video is analyzed. Natural head movement in conversation thường stays within ±30° yaw, ±20° pitch. Phương pháp kiểm tra whether deepfake quality degrades at extreme poses (common for face-swap models trained primarily on frontal faces), creating a detectable pose-dependent artifact signature.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích ước lượng tư thế đầu v2. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
+      "url": "https://arxiv.org/abs/1811.00661"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

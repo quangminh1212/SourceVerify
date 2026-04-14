@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Temporal Face Embedding Drift",
-    "description": "Theo dõi trôi dạt vector nhúng khuôn mặt theo thời gian — deepfake có phương sai nhúng lớn hơn mặt thật.",
-    "algorithm": "Thuật toán phân tích Temporal Face Embedding Drift",
-    "mechanism": "Hệ thống Temporal Face Embedding Drift phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/ICCV48922.2021.01480",
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV."
-        },
-        {
-            "url": "https://doi.org/10.1109/ICCV.2019.00009",
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV."
-        }
-    ]
+  "name": "Phân tích Temporal Face Embedding Drift",
+  "description": "Theo dõi trôi dạt vector nhúng khuôn mặt theo thời gian — deepfake có phương sai nhúng lớn hơn mặt thật.",
+  "algorithm": "Thuật toán phân tích Temporal Face Embedding Drift",
+  "mechanism": "Phương pháp này phân tích temporal face embedding drift để phát hiện deepfake:\n\n1. **Khuôn mặt Embedding Trích xuất**: A face recognition embedding vector is computed mỗi khung hình using a pre-trained face recognition network. The embedding captures identity-discriminative features in a high-dimensional space.\n\n2. **Embedding Trajectory Phân tích**: The face embedding trajectory through the embedding space is tracked theo thời gian. Trong video chân thực, the embedding remains near a fixed point (same identity) with small perturbations from expression, pose, and illumination changes.\n\n3. **Drift Phát hiện**: Phương pháp phát hiện systematic embedding drift — gradual movement of the embedding centroid theo thời gian. Trong video chân thực, the centroid is stationary. Deepfake generators may produce slowly drifting identity characteristics as the model's latent space traversal creates gradual identity shifts.\n\n4. **Embedding Phương sai Phân tích**: The variance of embeddings qua các khung hình is analyzed. Authentic video shows low variance (nhất quán identity). Deepfake có thể cho thấy elevated variance — the khuôn mặt được tạo may fluctuate in identity space, sometimes closer to the source identity, sometimes to the target identity, creating detectable identity instability.\n\n5. **Embedding - Pose Tương quan**: Embedding should be pose-invariant for a fixed identity (good face recognition models achieve this). Phương pháp kiểm tra whether embedding changes correlate with head pose — deepfake quality may be pose-dependent (better at frontal, worse at profile), causing embedding to shift with pose in ways that don't occur with authentic faces.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/ICCV48922.2021.01480",
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV."
+    },
+    {
+      "url": "https://doi.org/10.1109/ICCV.2019.00009",
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV."
+    }
+  ]
 }

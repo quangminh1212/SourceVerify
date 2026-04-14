@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích tỷ lệ chớp mắt",
-    "description": "Phân tích mẫu chớp mắt tự nhiên — AI thường tạo tỷ lệ chớp mắt không tự nhiên",
-    "algorithm": "Thuật toán phân tích Phân tích tỷ lệ chớp mắt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu chớp mắt tự nhiên — AI thường tạo tỷ lệ chớp mắt không tự nhiên. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích tỷ lệ chớp mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2018). In Ictu Oculi: Exposing AI Created Fake Videos by Detecting Eye Blinking. WIFS.",
-            "url": "https://arxiv.org/abs/1806.02396"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Phân tích tỷ lệ chớp mắt",
+  "description": "Phân tích mẫu chớp mắt tự nhiên — AI thường tạo tỷ lệ chớp mắt không tự nhiên",
+  "algorithm": "Thuật toán phân tích Phân tích tỷ lệ chớp mắt",
+  "mechanism": "This method analyzes eye blinking patterns for deepfake detection following Li et al. (2018) \"In Ictu Oculi\":\n\n1. **Phân loại trạng thái mắt**: For each frame, the eye aspect ratio (EAR) is computed from eye landmarks: EAR = (‖p2−p6‖ + ‖p3−p5‖) / (2‖p1−p4‖), where p1-p6 are the eye contour landmarks. EAR drops significantly during blinks, enabling frame-level open/closed classification.\n\n2. **Phát hiện sự kiện chớp mắt**: Consecutive frames with low EAR form blink events. Each blink is characterized by duration (typically 100-400ms in natural blinking), amplitude (EAR change magnitude), and velocity profile (rapid closing, slightly slower opening following Evinger et al., 1991).\n\n3. **Phân tích thống kê tần suất chớp mắt**: The inter-blink interval (IBI) distribution is analyzed. Natural spontaneous blinking occurs at 15-20 blinks/minute with a characteristic IBI distribution following a gamma or log-normal model. Early deepfake methods produced subjects that rarely or never blinked — a key detection cue identified by Li et al. (2018).\n\n4. **Đánh giá tự nhiên của chớp mắt**: Individual blink kinematics are evaluated: natural blinks are bilateral (both eyes close simultaneously), show stereotyped velocity profiles, and exhibit physiological reflexes (increased blink rate during speech, periodic patterns). AI-generated blinks may appear unilateral, show unnatural velocity profiles, or lack expected behavioral correlations.\n\n5. **Chấm điểm mẫu thời gian**: The overall blink pattern is scored against natural human behavior models. Anomalies include: absence of blinks, unnatural blink rates, irregular blink dynamics, asymmetric blinking, or blinks that don't correspond to expected cognitive/behavioral triggers. The score quantifies deviation from natural blink physiology.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích tỷ lệ chớp mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2018). In Ictu Oculi: Exposing AI Created Fake Videos by Detecting Eye Blinking. WIFS.",
+      "url": "https://arxiv.org/abs/1806.02396"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Steerable Pyramid Decomposition",
-    "description": "Áp dụng kim tự tháp điều hướng cho phân tích dải con chọn lọc hướng — phát hiện dấu vết tổng hợp kết cấu AI (Simoncelli & Freeman, 1995).",
-    "algorithm": "Thuật toán phân tích Steerable Pyramid Decomposition",
-    "mechanism": "Hệ thống Steerable Pyramid Decomposition phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/ICIP.1995.537667",
-            "title": "Simoncelli, E.P. & Freeman, W.T. (1995). The Steerable Pyramid: A Flexible Architecture for Multi-Scale Derivative Computation. IEEE ICIP."
-        },
-        {
-            "url": "https://doi.org/10.1023/A:1026553619983",
-            "title": "Portilla, J. & Simoncelli, E.P. (2000). A Parametric Texture Model Based on Joint Statistics of Complex Wavelet Coefficients. IJCV."
-        }
-    ]
+  "name": "Phân tích Steerable Pyramid Decomposition",
+  "description": "Áp dụng kim tự tháp điều hướng cho phân tích dải con chọn lọc hướng — phát hiện dấu vết tổng hợp kết cấu AI (Simoncelli & Freeman, 1995).",
+  "algorithm": "Thuật toán phân tích Steerable Pyramid Decomposition",
+  "mechanism": "Phương pháp này applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **Pyramid Construction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **Subband Statistics Trích xuất**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce đặc trưng heavy-tailed distributions in oriented subbands.\n\n3. **Cross - Scale Pha Phân tích**: Phase relationships between coefficients at adjacent scales cho thấy edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. do AI tạo ra images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **Hướng Energy Phân tích**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while quá trình sinh AI artifacts often produce bất thường peaks or gaps in the orientation energy function.\n\n5. **Kết cấu Synthesis Phát hiện**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). do AI tạo ra textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/ICIP.1995.537667",
+      "title": "Simoncelli, E.P. & Freeman, W.T. (1995). The Steerable Pyramid: A Flexible Architecture for Multi-Scale Derivative Computation. IEEE ICIP."
+    },
+    {
+      "url": "https://doi.org/10.1023/A:1026553619983",
+      "title": "Portilla, J. & Simoncelli, E.P. (2000). A Parametric Texture Model Based on Joint Statistics of Complex Wavelet Coefficients. IJCV."
+    }
+  ]
 }

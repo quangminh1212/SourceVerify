@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán sắc độ",
-    "description": "Phân tích tính nhất quán sắc độ trên các vùng",
-    "algorithm": "Thuật toán phân tích Nhất quán sắc độ",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích tính nhất quán sắc độ trên các vùng. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích nhất quán sắc độ. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
-        },
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        }
-    ]
+  "name": "Nhất quán sắc độ",
+  "description": "Phân tích tính nhất quán sắc độ trên các vùng",
+  "algorithm": "Thuật toán phân tích Nhất quán sắc độ",
+  "mechanism": "This method analyzes hue consistency to detect image manipulation and AI generation:\n\n1. **Màu sắc Space Conversion**: The image is converted from RGB to HSV (Hue-Saturation-Value) color space, isolating the hue channel. The hue channel represents the dominant wavelength of light independent of brightness and saturation, following Popescu & Farid's (2005) approach to color analysis.\n\n2. **Regional Hue Phân tích**: The image is divided into overlapping regions and per-region hue statistics are computed — mean hue, hue variance, and circular hue histogram (since hue is angular). Natural images show smooth hue transitions between adjacent regions following physical illumination constraints.\n\n3. **Hue Gradient Tính toán**: The spatial gradient of the hue channel is computed. In authentic images, hue gradients correlate with material boundaries and illumination changes. AI-generated images may show hue inconsistencies — abrupt hue shifts not explained by scene geometry or lighting, especially at object boundaries.\n\n4. **Cross - Kênh Hue Tương quan**: The relationship between hue and luminance/saturation is analyzed. Natural scenes follow physical constraints (e.g., sky hue depends on viewing angle, skin hue varies with illumination). AI models may produce hue-luminance relationships that violate these physical priors.\n\n5. **Hue Nhất quán Chấm điểm**: A coherence score is computed measuring the overall consistency of hue across the image. Low coherence (high hue variation not explained by scene content) indicates potential manipulation. The score reflects deviations from the expected hue distribution for the detected scene type.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích nhất quán sắc độ. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
+      "url": "https://doi.org/10.1109/TSP.2005.855406"
+    },
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Hướng mờ chuyển động",
-    "description": "Phân tích tính định hướng mờ chuyển động",
-    "algorithm": "Thuật toán phân tích Hướng mờ chuyển động",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính định hướng mờ chuyển động. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích hướng mờ chuyển động. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Hướng mờ chuyển động",
+  "description": "Phân tích tính định hướng mờ chuyển động",
+  "algorithm": "Thuật toán phân tích Hướng mờ chuyển động",
+  "mechanism": "Phương pháp này phân tích motion blur direction consistency for video forensic detection:\n\n1. **Chuyển động Blur Phát hiện**: Blurred regions in each frame are identified by analyzing the directional spread of the local point spread function (PSF). Motion-blurred regions show đặc trưng elongated PSFs in the direction of motion.\n\n2. **Blur Direction Ước lượng**: For each blurred region, the blur direction and magnitude are estimated. Natural motion blur direction should be nhất quán with the object's motion vector between adjacent frames — blur direction aligns with the displacement vector.\n\n3. **Toàn cục - Cục bộ Blur Nhất quán**: Camera motion produces globally coherent blur (all objects blur in the same direction, adjusted for depth). Object motion produces local blur. Phương pháp xác minh that the observed blur field is nhất quán with a combination of camera and object motion. Composited or nội dung được tạo may show không nhất quán blur directions between regions.\n\n4. **Khuôn mặt - Background Blur Nhất quán**: When camera motion occurs, the face and background should show nhất quán motion blur. Deepfake composites may show the face with different blur than the background — either sharper (generated without blur accounting) or blurred differently (incorrect motion estimation).\n\n5. **Thời gian Blur Continuity**: Motion blur should vary smoothly qua các khung hình — increasing with faster motion, decreasing with slower motion. Phương pháp theo dõi blur magnitude and direction temporally. Abrupt changes in blur characteristics without corresponding motion changes chỉ ra sự thao tác or generation artifacts.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích hướng mờ chuyển động. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

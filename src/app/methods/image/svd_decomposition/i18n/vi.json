@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích SVD Decomposition",
-    "description": "Áp dụng phân tích SVD để phát hiện mẫu thiếu hạng đặc trưng của ảnh AI, dựa trên bất thường phân bổ giá trị riêng.",
-    "algorithm": "Thuật toán phân tích SVD Decomposition Analysis",
-    "mechanism": "Hệ thống SVD Decomposition Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1007/BF02288367",
-            "title": "Eckart, C. & Young, G. (1936). The Approximation of One Matrix by Another of Lower Rank. Psychometrika."
-        },
-        {
-            "url": "https://doi.org/10.1109/TIFS.2015.2390999",
-            "title": "Liu, H. et al. (2015). Image Forgery Localization via Integrating Tampering Possibility Maps. IEEE TIFS."
-        }
-    ]
+  "name": "Phân tích SVD Decomposition",
+  "description": "Áp dụng phân tích SVD để phát hiện mẫu thiếu hạng đặc trưng của ảnh AI, dựa trên bất thường phân bổ giá trị riêng.",
+  "algorithm": "Thuật toán phân tích SVD Decomposition Analysis",
+  "mechanism": "Phương pháp này applies Singular Value Decomposition (SVD) analysis for forensic image authentication:\n\n1. **Khối - wise SVD Tính toán**: The image is partitioned into blocks, and for each block matrix A ∈ ℝᵐˣⁿ, the SVD A = UΣVᵀ is computed. The singular values σ₁ ≥ σ₂ ≥ ... ≥ σᵣ capture the energy distribution across orthogonal rank-1 components following Eckart & Young (1936).\n\n2. **Singular Value Phổ Phân tích**: The decay profile of singular values is analyzed. Natural image blocks exhibit đặc trưng decay patterns — smooth regions decay rapidly (low effective rank), while textured regions show gradual decay. do AI tạo ra images often produce bất thường decay profiles with unexpected rank distributions.\n\n3. **Effective Rank Ánh xạ**: The effective rank ρ(A) = exp(H(σ̃)), where H is the Shannon entropy of normalized singular values σ̃ᵢ = σᵢ/Σσⱼ, provides a continuous đo lường of block complexity. A spatial map of effective rank cho thấy regions with unnatural complexity — either over-smoothed (low rank) or artificially textured.\n\n4. **Principal Component Residual Phân tích**: After retaining the top-k singular components (capturing structural content), the residual R = A − UₖΣₖVₖᵀ contains noise, texture detail, and potential artifacts. The statistical properties of this residual differ systematically between natural photographs (sensor noise characteristics) and do AI tạo ra images.\n\n5. **Forensic Chấm điểm**: The spatial distribution of SVD statistics (effective rank, spectral decay rate, residual statistics) is analyzed for consistency. Manipulated or do AI tạo ra regions show đặc trưng SVD signatures — truncated singular value spectra, abnormal rank distributions, or residuals lacking genuine sensor noise characteristics.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/BF02288367",
+      "title": "Eckart, C. & Young, G. (1936). The Approximation of One Matrix by Another of Lower Rank. Psychometrika."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIFS.2015.2390999",
+      "title": "Liu, H. et al. (2015). Image Forgery Localization via Integrating Tampering Possibility Maps. IEEE TIFS."
+    }
+  ]
 }

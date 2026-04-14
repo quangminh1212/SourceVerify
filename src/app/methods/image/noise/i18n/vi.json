@@ -1,26 +1,26 @@
 {
-    "name": "Phân tích nhiễu dư",
-    "description": "Kiểm tra mẫu nhiễu tần cao bằng giải mã Wiener. Máy ảnh thật tạo nhiễu cảm biến đặc trưng biến đổi trên toàn ảnh, trong khi AI tạo nhiễu đồng nhất bất thường.",
-    "algorithm": "Trích xuất nhiễu dư bằng bộ lọc Wiener",
-    "mechanism": "Áp dụng giải tích chập ngược Wiener để trích xuất thành phần nhiễu tần cao. Ảnh camera thật tạo ra nhiễu cảm biến đặc trưng biến đổi theo vùng, trong khi ảnh AI có mẫu nhiễu đồng nhất hoặc thiếu nhiễu.",
-    "parameters": "Bộ lọc: Wiener, Kích thước cửa sổ: 5x5, Phân tích: phương sai nhiễu cục bộ, tính nhất quán",
-    "accuracy": "Cao - 82-92%",
-    "source": "Chen et al. (2008) - Determining Image Origin and Integrity Using Sensor Noise",
-    "useCase": "Phát hiện ảnh AI qua mẫu nhiễu đồng nhất bất thường",
-    "strengths": "• Độ chính xác cao (82-92%)\n• Dựa trên đặc tính vật lý cảm biến camera\n• Phát hiện tốt nhiễu tổng hợp đồng nhất\n• Bền vững với nhiều loại nội dung ảnh",
-    "limitations": "• Ảnh đã khử nhiễu có thể tạo dương tính giả\n• Nén JPEG nặng phá hủy mẫu nhiễu\n• Cảnh thiếu sáng có nhiễu tự nhiên cao gây nhiễu\n• Một số AI mới đang cải thiện mô phỏng nhiễu",
-    "references": [
-        {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
-        },
-        {
-            "title": "Lukas, J., Fridrich, J. & Goljan, M. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2006.873602"
-        },
-        {
-            "title": "Cozzolino, D. & Verdoliva, L. (2020). Noiseprint: A CNN-Based Camera Model Fingerprint. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2019.2916364"
-        }
-    ]
+  "name": "Phân tích nhiễu dư",
+  "description": "Kiểm tra mẫu nhiễu tần cao bằng giải mã Wiener. Máy ảnh thật tạo nhiễu cảm biến đặc trưng biến đổi trên toàn ảnh, trong khi AI tạo nhiễu đồng nhất bất thường.",
+  "algorithm": "Trích xuất nhiễu dư bằng bộ lọc Wiener",
+  "mechanism": "The analysis process:\n\n1. **Nhiễu extraction**: Applies Wiener deconvolution filter to separate the noise component from image content.\n\n2. **Cục bộ variance mapping**: Computes local noise variance across overlapping blocks to create a noise variance heatmap.\n\n3. **Uniformity analysis**: Real camera noise varies due to sensor manufacturing imperfections (Photo Response Non-Uniformity). AI images lack this variation.\n\n4. **Thống kê profiling**: Analyzes noise distribution statistics (kurtosis, skewness) against known camera noise models.",
+  "parameters": "Bộ lọc: Wiener, Kích thước cửa sổ: 5x5, Phân tích: phương sai nhiễu cục bộ, tính nhất quán",
+  "accuracy": "Cao - 82-92%",
+  "source": "Chen et al. (2008) - Determining Image Origin and Integrity Using Sensor Noise",
+  "useCase": "Phát hiện ảnh AI qua mẫu nhiễu đồng nhất bất thường",
+  "strengths": "• Độ chính xác cao (82-92%)\n• Dựa trên đặc tính vật lý cảm biến camera\n• Phát hiện tốt nhiễu tổng hợp đồng nhất\n• Bền vững với nhiều loại nội dung ảnh",
+  "limitations": "• Ảnh đã khử nhiễu có thể tạo dương tính giả\n• Nén JPEG nặng phá hủy mẫu nhiễu\n• Cảnh thiếu sáng có nhiễu tự nhiên cao gây nhiễu\n• Một số AI mới đang cải thiện mô phỏng nhiễu",
+  "references": [
+    {
+      "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2007.916285"
+    },
+    {
+      "title": "Lukas, J., Fridrich, J. & Goljan, M. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2006.873602"
+    },
+    {
+      "title": "Cozzolino, D. & Verdoliva, L. (2020). Noiseprint: A CNN-Based Camera Model Fingerprint. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2019.2916364"
+    }
+  ]
 }

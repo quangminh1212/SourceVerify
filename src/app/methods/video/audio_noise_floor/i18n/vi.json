@@ -1,22 +1,22 @@
 {
-    "name": "Sàn nhiễu âm thanh",
-    "description": "Phân tích mẫu sàn nhiễu âm thanh",
-    "algorithm": "Thuật toán phân tích Sàn nhiễu âm thanh",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu sàn nhiễu âm thanh. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích sàn nhiễu âm thanh. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Chen, T. et al. (2020). Generalization of Audio Deepfake Detection. Odyssey.",
-            "url": "https://arxiv.org/abs/2010.11317"
-        },
-        {
-            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413700"
-        }
-    ]
+  "name": "Sàn nhiễu âm thanh",
+  "description": "Phân tích mẫu sàn nhiễu âm thanh",
+  "algorithm": "Thuật toán phân tích Sàn nhiễu âm thanh",
+  "mechanism": "This method analyzes the audio noise floor characteristics for deepfake detection following Chen et al. (2020):\n\n1. **Nhiễu Floor Ước lượng**: The background noise level is estimated across frequency bands using minimum statistics or MMSE-based methods. Real audio recordings contain characteristic noise profiles shaped by microphone electronics, room acoustics, and environmental sounds with specific spectral coloring.\n\n2. **Phổ Nhiễu Hồ sơ Phân tích**: The noise floor spectrum is compared against expected characteristics for genuine recordings. Real microphones produce noise with predictable spectral shape (often pink/brownian). AI-generated audio typically produces either unnaturally clean signals (absence of environmental noise) or artificially added noise with incorrect spectral characteristics.\n\n3. **Thời gian Nhiễu Nhất quán**: The noise floor is tracked across the recording duration. In authentic recordings, ambient noise varies naturally with room dynamics but maintains consistent spectral character. Deepfake audio may show noise floor discontinuities at splice points or unnatural noise stationarity across the entire clip.\n\n4. **Nhiễu - Tín hiệu Tương quan Phân tích**: In real recordings, background noise acoustically interacts with the speech signal via room reverberation. The method checks whether noise-signal correlations follow physical room acoustic models. Synthesized speech overlaid on separately generated or copied noise lacks these natural cross-correlations.\n\n5. **Quantization Nhiễu Đánh giá**: The quantization noise pattern is examined for codec consistency. Re-encoded deepfake audio shows double-quantization artifacts in the noise floor — subtle but detectable statistical irregularities in the least significant bits that differ from single-pass recording chains.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích sàn nhiễu âm thanh. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Chen, T. et al. (2020). Generalization of Audio Deepfake Detection. Odyssey.",
+      "url": "https://arxiv.org/abs/2010.11317"
+    },
+    {
+      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413700"
+    }
+  ]
 }

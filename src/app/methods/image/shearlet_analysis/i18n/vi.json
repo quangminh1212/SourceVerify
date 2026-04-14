@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Shearlet Transform",
-    "description": "Sử dụng biến đổi shearlet cho phân tích đa hướng — vượt trội hơn wavelet cho đặc trưng bất đẳng hướng (Kutyniok et al., 2012).",
-    "algorithm": "Thuật toán phân tích Shearlet Transform Analysis",
-    "mechanism": "Hệ thống Shearlet Transform Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1007/978-0-8176-8316-0",
-            "title": "Kutyniok, G. & Labate, D. (2012). Shearlets: Multiscale Analysis for Multivariate Data. Birkhauser."
-        },
-        {
-            "url": "https://doi.org/10.1137/060649781",
-            "title": "Guo, K. & Labate, D. (2007). Optimally Sparse Multidimensional Representation Using Shearlets. SIAM J. Math. Anal."
-        }
-    ]
+  "name": "Phân tích Shearlet Transform",
+  "description": "Sử dụng biến đổi shearlet cho phân tích đa hướng — vượt trội hơn wavelet cho đặc trưng bất đẳng hướng (Kutyniok et al., 2012).",
+  "algorithm": "Thuật toán phân tích Shearlet Transform Analysis",
+  "mechanism": "Phương pháp này applies the Shearlet Transform following Kutyniok & Labate (2012) for directional multi-scale forensic analysis:\n\n1. **Shearlet System Construction**: A shearlet system is constructed using parabolic scaling matrices Aₐ = diag(a, √a) and shear matrices Sₛ. The shearlet ψₐ,ₛ,ₜ(x) = a⁻³/⁴ψ(Sₛ⁻¹Aₐ⁻¹(x−t)) provides near-optimal sparse representation of images with edges along curves.\n\n2. **Directional Phân tích**: Unlike wavelets, shearlets capture directional information via the shear parameter, enabling anisotropic analysis across multiple orientations at each scale. This is particularly effective for detecting edge artifacts in do AI tạo ra images that exhibit unnatural directional properties.\n\n3. **Pha Congruency Phân tích**: Shearlet-domain phase congruency đo lường the coherence of frequency components at edge locations. Natural edges show high phase congruency across scales, while do AI tạo ra boundaries may show không nhất quán phase relationships.\n\n4. **Sparsity Profiling**: The shearlet representation sparsity (measured by ℓ¹/ℓ² ratio) is analyzed per block. Natural images achieve near-optimal sparsity in the shearlet domain due to the geometric regularity of natural edges. AI artifacts — ringing, grid patterns, texture discontinuities — reduce sparsity in đặc trưng ways.\n\n5. **Cạnh Regularity Đánh giá**: The decay rate of shearlet coefficients across scales at detected edges is measured. Natural edges follow predictable decay patterns governed by Hölder regularity, while do AI tạo ra edges often show bất thường coefficient decay indicating synthetic generation.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/978-0-8176-8316-0",
+      "title": "Kutyniok, G. & Labate, D. (2012). Shearlets: Multiscale Analysis for Multivariate Data. Birkhauser."
+    },
+    {
+      "url": "https://doi.org/10.1137/060649781",
+      "title": "Guo, K. & Labate, D. (2007). Optimally Sparse Multidimensional Representation Using Shearlets. SIAM J. Math. Anal."
+    }
+  ]
 }

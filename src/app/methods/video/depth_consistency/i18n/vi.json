@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán độ sâu",
-    "description": "So sánh ước lượng độ sâu đơn mắt giữa các khung hình liên tiếp để nhận diện gián đoạn độ sâu đột ngột và thay đổi cấu trúc 3D bất khả thi vật lý phát lộ hình học cảnh tổng hợp AI.",
-    "algorithm": "Thuật toán phân tích Nhất quán độ sâu",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán bản đồ độ sâu. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán độ sâu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Nhất quán độ sâu",
+  "description": "So sánh ước lượng độ sâu đơn mắt giữa các khung hình liên tiếp để nhận diện gián đoạn độ sâu đột ngột và thay đổi cấu trúc 3D bất khả thi vật lý phát lộ hình học cảnh tổng hợp AI.",
+  "algorithm": "Thuật toán phân tích Nhất quán độ sâu",
+  "mechanism": "Phương pháp này phân tích depth consistency across video frames for deepfake and manipulation detection:\n\n1. **Monocular Chiều sâu Ước lượng**: Per-frame relative depth maps are estimated using monocular depth cues: texture gradients, defocus, atmospheric perspective, relative size, and occlusion relationships. Each pixel receives a relative depth value nhất quán with the scene geometry.\n\n2. **Thời gian Chiều sâu Ổn định**: Depth maps across consecutive frames should show smooth, physically motivated changes. Phương pháp theo dõi depth map evolution — natural scene depth changes are caused by camera motion (smooth, globally coherent) or object motion (local, bounded). Deepfakes may produce temporally unstable depth maps, especially at face-swap boundaries where khuôn mặt được tạo depth differs from the original face geometry.\n\n3. **Khuôn mặt - Scene Chiều sâu Tích hợp**: The depth relationship between the face and surrounding scene must be nhất quán. Phương pháp kiểm tra: (a) face depth varies correctly with camera distance, (b) face depth matches nearby objects at similar distances, (c) face depth changes are nhất quán with measured face scale changes. Composited deepfake faces may show depth inconsistencies with the scene.\n\n4. **Chiều sâu - Defocus Nhất quán**: Estimated depth should correlate with defocus blur — objects at similar depths should show similar focus. Phương pháp cross-validates depth ước lượng against local defocus đo lường. do AI tạo ra faces may show incorrect depth-defocus relationships, appearing sharp at depths where the background is blurred (or vice versa).\n\n5. **3D Hình học Nhất quán Chấm điểm**: The implied 3D geometry is checked for physical plausibility. Face orientation (from landmarks) should produce nhất quán depth gradients. Perspective distortion should match the estimated camera parameters. Violations of geometric consistency chỉ ra sự thao tác, yielding an elevated forensic score.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán độ sâu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

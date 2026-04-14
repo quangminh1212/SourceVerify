@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Scene Cut Anomaly Detection",
-    "description": "Phát hiện mẫu cắt cảnh bất thường và điểm chuyển tiếp bất tự nhiên trong video bị thao tác.",
-    "algorithm": "Thuật toán phân tích Scene Cut Anomaly Detection",
-    "mechanism": "Hệ thống Scene Cut Anomaly Detection phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TMM.2005.861777",
-            "title": "Rasheed, Z. & Shah, M. (2005). Detection and Representation of Scenes in Videos. IEEE TMM."
-        },
-        {
-            "url": "https://doi.org/10.1145/2733373.2806316",
-            "title": "Baraldi, L. et al. (2015). A Deep Siamese Network for Scene Detection in Broadcast Videos. ACM MM."
-        }
-    ]
+  "name": "Phân tích Scene Cut Anomaly Detection",
+  "description": "Phát hiện mẫu cắt cảnh bất thường và điểm chuyển tiếp bất tự nhiên trong video bị thao tác.",
+  "algorithm": "Thuật toán phân tích Scene Cut Anomaly Detection",
+  "mechanism": "Phương pháp này phát hiện scene cut anomalies để phân tích pháp y video:\n\n1. **Scene Cut Phát hiện**: Scene cuts (hard cuts, dissolves, fades, wipes) are detected by analyzing inter-frame similarity metrics — histogram differences, pixel MSE, and structural similarity. Cut locations are identified and classified by type.\n\n2. **Cut Point Content Phân tích**: The content immediately before and after each cut is analyzed for consistency. Manipulated videos may contain cuts specifically placed to hide temporal discontinuities from deepfake insertion — cuts at moments where generation artifacts would be most visible.\n\n3. **Cut Tần số Phân tích**: The temporal distribution of cuts is analyzed. Normal video editing follows content-driven patterns (cuts at speech pauses, action changes). bất thường cut frequency — particularly rapid cuts correlating with challenging deepfake scenarios (profile views, extreme expressions) — may indicate editing to conceal generation failures.\n\n4. **Cross - Cut Nhất quán**: Content properties (lighting, color balance, noise level) should be nhất quán across cuts within the same scene. Phương pháp kiểm tra for property discontinuities at cuts that might indicate different source material. Face properties changing at cut points (subtle identity shifts, quality changes) suggest manipulation.\n\n5. **Cut - Nén Alignment**: In properly encoded video, scene cuts should align with I-frame positions. Misalignment between detected cuts and I-frames may indicate post-manipulation re-encoding without proper scene detection, a forensic trace of manipulation processing.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TMM.2005.861777",
+      "title": "Rasheed, Z. & Shah, M. (2005). Detection and Representation of Scenes in Videos. IEEE TMM."
+    },
+    {
+      "url": "https://doi.org/10.1145/2733373.2806316",
+      "title": "Baraldi, L. et al. (2015). A Deep Siamese Network for Scene Detection in Broadcast Videos. ACM MM."
+    }
+  ]
 }

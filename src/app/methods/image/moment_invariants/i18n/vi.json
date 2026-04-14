@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Hu Moment Invariants",
-    "description": "Tính bảy bất biến mô-men Hu để phát hiện bất thường hình dạng và xoay trong nội dung AI (Hu, 1962).",
-    "algorithm": "Thuật toán phân tích Hu Moment Invariants",
-    "mechanism": "Hệ thống Hu Moment Invariants phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TIT.1962.1057692",
-            "title": "Hu, M.K. (1962). Visual Pattern Recognition by Moment Invariants. IRE Trans. Information Theory."
-        },
-        {
-            "url": "https://doi.org/10.1002/9780470684757",
-            "title": "Flusser, J. et al. (2009). Moments and Moment Invariants in Pattern Recognition. Wiley."
-        }
-    ]
+  "name": "Phân tích Hu Moment Invariants",
+  "description": "Tính bảy bất biến mô-men Hu để phát hiện bất thường hình dạng và xoay trong nội dung AI (Hu, 1962).",
+  "algorithm": "Thuật toán phân tích Hu Moment Invariants",
+  "mechanism": "Phương pháp này tính toán Hu's (1962) moment invariants and extended affine moment invariants for forgery detection:\n\n1. **Hình học Moment Tính toán**: Raw geometric moments mₚᵧ = ΣΣ xᵖyᵧI(x,y) are computed over image blocks. Central moments μₚᵧ are derived by shifting to the centroid, providing translation invariance.\n\n2. **Hu Moment Invariant Trích xuất**: The seven Hu invariants (φ₁ through φ₇) are calculated from normalized central moments. These are invariant to translation, rotation, and scaling — properties that enable detection of copy-move forgery where copied regions may be geometrically transformed.\n\n3. **Khối - wise Invariant Ánh xạ**: The image is divided into overlapping blocks and moment invariants are computed per block. Blocks with similar invariant vectors but different spatial locations suggest copy-move manipulation.\n\n4. **Affine Moment Invariants (AMI)**: Extended invariants following Flusser et al. (2009) capture affine-invariant features, detecting copies that have undergone shearing or non-uniform scaling beyond simple rotation.\n\n5. **Nhất quán Phân tích**: Moment invariant distributions across the image are analyzed for statistical anomalies. Natural images show smooth spatial variation in moment features, while do AI tạo ra images may exhibit unnatural uniformity or discontinuities at generation boundaries. The final score định lượng deviation from expected natural moment statistics.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TIT.1962.1057692",
+      "title": "Hu, M.K. (1962). Visual Pattern Recognition by Moment Invariants. IRE Trans. Information Theory."
+    },
+    {
+      "url": "https://doi.org/10.1002/9780470684757",
+      "title": "Flusser, J. et al. (2009). Moments and Moment Invariants in Pattern Recognition. Wiley."
+    }
+  ]
 }

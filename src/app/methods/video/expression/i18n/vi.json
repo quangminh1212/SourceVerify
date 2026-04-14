@@ -1,22 +1,22 @@
 {
-    "name": "Tự nhiên biểu cảm",
-    "description": "Phân tích động lực biểu cảm khuôn mặt",
-    "algorithm": "Thuật toán phân tích Tự nhiên biểu cảm",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích động lực biểu cảm khuôn mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích tự nhiên biểu cảm. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
-            "url": "https://arxiv.org/abs/1908.05932"
-        }
-    ]
+  "name": "Tự nhiên biểu cảm",
+  "description": "Phân tích động lực biểu cảm khuôn mặt",
+  "algorithm": "Thuật toán phân tích Tự nhiên biểu cảm",
+  "mechanism": "Phương pháp này phân tích facial expression dynamics để phát hiện deepfake:\n\n1. **Action Unit Phát hiện**: Facial Action Coding System (FACS) action units (AUs) are detected mỗi khung hình — AU1 (inner brow raise), AU2 (outer brow raise), AU4 (brow lowerer), AU6 (cheek raiser), AU12 (lip corner puller), etc. The activation intensity of each AU is continuously measured.\n\n2. **Expression Dynamics Phân tích**: Natural facial expressions follow specific temporal dynamics: onset (muscles contracting, ~0.5s), apex (peak expression, variable duration), and offset (muscle relaxation, thường slower than onset). Phương pháp xác minh that detected expression transitions follow these physiologically constrained dynamics. Deepfakes may produce expressions that appear/disappear too quickly or show unnatural dynamics.\n\n3. **AU Co - Occurrence Xác nhận**: Certain AU combinations are anatomically linked: genuine smiles (Duchenne smiles) involve AU6+AU12 simultaneously, genuine surprise involves AU1+AU2+AU5+AU26. Phương pháp kiểm tra whether detected AU combinations follow anatomically valid co-occurrence patterns. do AI tạo ra expressions may produce anatomically impossible AU combinations.\n\n4. **Micro - Expression Phát hiện**: Brief involuntary micro-expressions (lasting 40-200ms) cho thấy suppressed emotions. Their presence and naturalness are analyzed — authentic video may contain micro-expressions nhất quán with the behavioral context, while deepfakes thường lack these subtle physiological signals.\n\n5. **Expression - Context Nhất quán**: Facial expressions should be contextually appropriate — matching speech content, conversational dynamics, and emotional context. Phương pháp evaluates expression-speech correlation and emotional trajectory coherence. Deepfakes may produce expressions that are contextually inappropriate or emotionally flat.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích tự nhiên biểu cảm. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
+      "url": "https://arxiv.org/abs/1908.05932"
+    }
+  ]
 }

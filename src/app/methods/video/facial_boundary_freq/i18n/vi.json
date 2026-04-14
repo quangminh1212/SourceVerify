@@ -1,22 +1,22 @@
 {
-    "name": "Tần số biên mặt",
-    "description": "Phân tích nội dung tần số biên khuôn mặt",
-    "algorithm": "Thuật toán phân tích Tần số biên mặt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích nội dung tần số biên khuôn mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích tần số biên mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Zhou, P. et al. (2017). Two-Stream Neural Networks for Tampered Face Detection. CVPRW.",
-            "url": "https://arxiv.org/abs/1803.11276"
-        }
-    ]
+  "name": "Tần số biên mặt",
+  "description": "Phân tích nội dung tần số biên khuôn mặt",
+  "algorithm": "Thuật toán phân tích Tần số biên mặt",
+  "mechanism": "Phương pháp này phân tích frequency characteristics at facial boundaries để phát hiện deepfake:\n\n1. **Ranh giới Vùng Trích xuất**: The boundary zone between the face and surrounding content (hair, neck, background) is extracted as a narrow strip. This boundary is where face-swap blending produces the most detectable frequency-domain artifacts.\n\n2. **Cục bộ Tần số Phân tích**: tần số không gian content in the boundary strip is analyzed via localized 2D FFT or wavelet transforms. The frequency characteristics on the face side vs. the background side of the boundary are compared. Different generation/capture pipelines produce different frequency signatures.\n\n3. **Tần số Transition Profiling**: The transition of frequency content across the boundary is measured. Natural face boundaries show smooth frequency transitions. Deepfake blending creates đặc trưng frequency discontinuities — thường a high-frequency step (different noise levels) or spectral notch (frequency content removed by low-pass blending).\n\n4. **Periodic Artifact Phát hiện**: Phương pháp specifically searches for periodic frequency artifacts at the boundary that arise from: (a) resampling/interpolation during face alignment, (b) GAN generator architecture (checkerboard patterns from transposed convolutions), (c) encoder-decoder quantization in autoencoder-based face swaps.\n\n5. **Multi - Hướng Tần số Scanning**: The boundary frequency content is analyzed at multiple orientations. Natural boundaries show orientation-dependent frequency content (hair has directional texture, skin is more isotropic). Deepfake boundaries may show unnatural frequency isotropy or orientation-dependent artifacts from the blending direction.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích tần số biên mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Zhou, P. et al. (2017). Two-Stream Neural Networks for Tampered Face Detection. CVPRW.",
+      "url": "https://arxiv.org/abs/1803.11276"
+    }
+  ]
 }

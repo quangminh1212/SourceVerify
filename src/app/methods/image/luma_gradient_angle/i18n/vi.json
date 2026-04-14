@@ -1,22 +1,22 @@
 {
-    "name": "Góc gradient độ sáng",
-    "description": "Phân tích phân bổ góc gradient độ sáng",
-    "algorithm": "Thuật toán phân tích Góc gradient độ sáng",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ góc gradient độ sáng. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích góc gradient độ sáng. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        }
-    ]
+  "name": "Góc gradient độ sáng",
+  "description": "Phân tích phân bổ góc gradient độ sáng",
+  "algorithm": "Thuật toán phân tích Góc gradient độ sáng",
+  "mechanism": "This method analyzes luminance gradient angles for image forensic analysis following the rich model framework of Fridrich & Kodovsky (2012):\n\n1. **Gradient Tính toán**: The luminance gradient vector is computed at each pixel using finite differences or Sobel operators: (∂I/∂x, ∂I/∂y). The gradient angle θ = arctan(∂I/∂y / ∂I/∂x) captures the local edge orientation.\n\n2. **Gradient Angle Statistics**: The distribution of gradient angles across the image is analyzed. Natural images show characteristic angle distributions shaped by scene content. The method extracts statistical features from the gradient angle histogram — moments, entropy, and directional energy ratios.\n\n3. **Cục bộ Gradient Angle Patterns**: Co-occurrence patterns of gradient angles between neighboring pixels are analyzed, similar to the rich model approach. Natural images show specific gradient angle co-occurrence patterns arising from smooth edge curves and continuous surfaces. AI artifacts disrupt these patterns.\n\n4. **Gradient Angle Nhất quán**: The spatial consistency of gradient angles along edges is checked. Real edges show gradually varying gradient angles (smooth contours). AI-generated images may show abrupt angle changes along edges or gradient angle patterns inconsistent with the expected camera imaging pipeline.\n\n5. **Forensic Score from Gradient Features**: The gradient angle features (histogram statistics, co-occurrence patterns, consistency measures) are combined into a forensic score. Features are evaluated against models trained on natural vs. AI-generated images, following the rich model steganalysis framework adapted for AI detection.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích góc gradient độ sáng. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    }
+  ]
 }

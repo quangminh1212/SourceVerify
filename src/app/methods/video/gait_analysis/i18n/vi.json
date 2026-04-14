@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích dáng đi",
-    "description": "Trích xuất chuỗi tư thế cơ thể và phân tích cơ sinh học chu kỳ đi bộ để nhận diện các mẫu dáng đi không hợp lý về mặt vật lý mà các mô hình tổng hợp cơ thể AI không thể tái tạo chính xác.",
-    "algorithm": "Thuật toán phân tích Phân tích dáng đi",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính tự nhiên dáng đi. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích dáng đi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Phân tích dáng đi",
+  "description": "Trích xuất chuỗi tư thế cơ thể và phân tích cơ sinh học chu kỳ đi bộ để nhận diện các mẫu dáng đi không hợp lý về mặt vật lý mà các mô hình tổng hợp cơ thể AI không thể tái tạo chính xác.",
+  "algorithm": "Thuật toán phân tích Phân tích dáng đi",
+  "mechanism": "Phương pháp này phân tích gait (walking) patterns để phát hiện deepfake:\n\n1. **Pose Sequence Trích xuất**: Full-body pose estimation theo dõi joint positions (ankles, knees, hips, shoulders, head) qua các khung hình during walking motion. The gait cycle is decomposed into phases: stance (foot on ground), swing (foot in air), heel strike, and toe-off.\n\n2. **Gait Biomechanical Phân tích**: Human gait follows predictable biomechanical patterns: (a) periodic joint angle trajectories, (b) đặc trưng ground reaction force profiles, (c) coordinated upper-lower body motion (arm swing opposing leg swing). Phương pháp xác minh these biomechanical constraints. do AI tạo ra walking may violate gait physics.\n\n3. **Individual Gait Signature**: Each person has a đặc trưng gait determined by body proportions, musculoskeletal dynamics, and habitual patterns. Gait features (stride length/frequency ratio, knee flexion amplitude, hip sway) form an individual signature. Face-swap Deepfake có thể cho thấy mismatched gait-face identity.\n\n4. **Thời gian Regularity Phân tích**: Gait is quasi-periodic with đặc trưng cycle duration (1-1.2s at normal speed). Phương pháp phân tích gait cycle regularity via autocorrelation. do AI tạo ra walking motion may show irregular periodicity, missing the subtle natural variations in gait timing.\n\n5. **Vật lý Constraint Chấm điểm**: Phương pháp kiểm tra multiple physical constraints simultaneously: center of mass trajectory follows ballistic parabola during swing phase, ground contact produces nhất quán foot placement, joint angles remain within anatomical limits. Violations indicate quá trình sinh AI that hasn't properly modeled multi-body dynamics.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích dáng đi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

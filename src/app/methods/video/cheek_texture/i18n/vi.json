@@ -1,22 +1,22 @@
 {
-    "name": "Kết cấu má",
-    "description": "Kiểm tra phân bố lỗ chân lông cấp dưới pixel và tính đều đặn vi kết cấu trên bề mặt má sử dụng phân tích biên Face X-ray để phát lộ cấu phần pha trộn do mạng hoán đổi khuôn mặt.",
-    "algorithm": "Thuật toán phân tích Kết cấu má",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu kết cấu da má. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích kết cấu má. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Kết cấu má",
+  "description": "Kiểm tra phân bố lỗ chân lông cấp dưới pixel và tính đều đặn vi kết cấu trên bề mặt má sử dụng phân tích biên Face X-ray để phát lộ cấu phần pha trộn do mạng hoán đổi khuôn mặt.",
+  "algorithm": "Thuật toán phân tích Kết cấu má",
+  "mechanism": "Phương pháp này phân tích cheek skin texture patterns across video frames để phát hiện deepfake:\n\n1. **Cheek Vùng Trích xuất**: Using facial landmarks, the cheek regions (below the zygomatic bone, lateral to the nose, above the jawline) are precisely segmented mỗi khung hình. The regions are geometrically normalized to compensate for head pose variations, enabling nhất quán texture comparison qua các khung hình.\n\n2. **Micro - Kết cấu Phân tích**: High-frequency texture features — pores, fine wrinkles, skin grain, and sebaceous patterns — are extracted using Gabor filters and Local Binary Pattern (LBP) descriptors. Real human cheek skin exhibits a đặc trưng multi-scale texture hierarchy determined by dermatological structure.\n\n3. **Kết cấu Thời gian Nhất quán**: The micro-texture signature of cheek regions is tracked across consecutive frames. Trong video chân thực, skin micro-texture remains stable (pores don't move or disappear between frames). Deepfake generators often produce không nhất quán giữa các khung hình micro-texture — pores may appear, disappear, or shift position as the generator independently synthesizes each frame.\n\n4. **Da Rendering Quality Đánh giá**: The statistical properties of cheek texture (histogram of oriented gradients, tần số không gian distribution) are compared against natural skin models. do AI tạo ra cheeks tend to be either over-smoothed (lacking natural pore detail) or show artificial texture patterns with repetitive structures uncommon in real skin.\n\n5. **Chiếu sáng - Independent Kết cấu Chấm điểm**: Texture features are computed in illumination-invariant color spaces to separate genuine texture from illumination effects. The final score định lượng the deviation of cheek texture from expected natural skin characteristics and its temporal stability qua các khung hình.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích kết cấu má. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }

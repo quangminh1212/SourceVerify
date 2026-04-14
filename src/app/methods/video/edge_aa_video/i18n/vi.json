@@ -1,22 +1,22 @@
 {
-    "name": "Khử răng cưa cạnh (Video)",
-    "description": "Phân tích khử răng cưa cạnh trong khung hình video",
-    "algorithm": "Thuật toán phân tích Khử răng cưa cạnh (Video)",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích khử răng cưa cạnh trong khung hình video. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích khử răng cưa cạnh (video). Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Khử răng cưa cạnh (Video)",
+  "description": "Phân tích khử răng cưa cạnh trong khung hình video",
+  "algorithm": "Thuật toán phân tích Khử răng cưa cạnh (Video)",
+  "mechanism": "Phương pháp này phân tích edge anti-aliasing patterns in video để phát hiện deepfake:\n\n1. **Cạnh Phát hiện & Phân loại**: Edges are detected using multi-directional gradient operators and classified by type: natural edges (object boundaries, texture), compression edges (DCT block boundaries), and potential artifact edges (generation boundaries).\n\n2. **Anti - Aliasing Hồ sơ Phân tích**: The sub-pixel transition profile at each edge is measured. Real camera capture produces edges with specific anti-aliasing characteristics determined by the optical low-pass filter and sensor sampling. do AI tạo ra content often produces different edge profiles — either over-sharp (no optical AA) or artificially smoothed.\n\n3. **Cạnh Nhất quán Xác minh**: All edges Trong video chân thực share the same optical pipeline, producing nhất quán anti-aliasing characteristics. Phương pháp so sánh edge profiles between các vùng khuôn mặt and background. Deepfake composites may show different AA characteristics in khuôn mặt được tạo regions versus original footage.\n\n4. **Thời gian Cạnh Ổn định**: Edge anti-aliasing should remain nhất quán qua các khung hình for stationary edges. Phương pháp theo dõi AA profiles temporally — deepfake generators may produce không nhất quán sub-pixel edge rendering giữa các khung hình, creating a temporal AA flicker not present Trong video chân thực.\n\n5. **Phân giải Ranh giới Phát hiện**: Phương pháp phát hiện boundaries between regions of different effective resolution by analyzing edge sharpness gradients. Face-swap deepfakes may produce faces with different effective resolution than the background, creating a detectable resolution discontinuity at the face boundary.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích khử răng cưa cạnh (video). Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

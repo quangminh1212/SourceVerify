@@ -1,22 +1,22 @@
 {
-    "name": "Biên đối tượng",
-    "description": "Theo dõi đường viền bóng đối tượng qua các khung hình để phát hiện ranh giới không ổn định theo thời gian, răng cưa cạnh bất thường và mẫu che khuất không nhất quán ngữ cảnh do mạng tổng hợp video tạo ra.",
-    "algorithm": "Thuật toán phân tích Biên đối tượng",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán biên đối tượng. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên đối tượng. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Biên đối tượng",
+  "description": "Theo dõi đường viền bóng đối tượng qua các khung hình để phát hiện ranh giới không ổn định theo thời gian, răng cưa cạnh bất thường và mẫu che khuất không nhất quán ngữ cảnh do mạng tổng hợp video tạo ra.",
+  "algorithm": "Thuật toán phân tích Biên đối tượng",
+  "mechanism": "Phương pháp này phân tích object boundary quality in video để phát hiện deepfake:\n\n1. **Ranh giới Phát hiện & Phân loại**: Object boundaries are detected using edge detection and semantic segmentation. Boundaries are classified: person-background boundaries, clothing-skin boundaries, face feature boundaries (eyes, nose, mouth), and hair-background boundaries.\n\n2. **Ranh giới Quality Đánh giá**: The quality of each boundary is measured: sharpness, smoothness, sub-pixel anti-aliasing. Natural boundaries have nhất quán quality across the frame (same optical system). Deepfake composites may show different boundary quality between khuôn mặt được tạo regions and original footage.\n\n3. **Person - Background Ranh giới Phân tích**: The boundary between the person and background is particularly informative. Trong video chân thực, this boundary shows nhất quán optical properties. In composited deepfakes, the person-background boundary may show: matting artifacts (alpha channel errors), fringing, or resolution mismatches.\n\n4. **Thời gian Ranh giới Ổn định**: Object boundaries should be temporally stable and move smoothly. Phương pháp theo dõi boundary positions and quality qua các khung hình. do AI tạo ra boundaries may exhibit sub-pixel jitter, temporal instability, or motion artifacts not present in authentically captured boundaries.\n\n5. **Ranh giới Tần số Phân tích**: The tần số không gian content at object boundaries encodes the imaging pipeline's optical characteristics. Phương pháp phân tích boundary frequency profiles — different capture/generation pipelines produce different boundary frequency signatures. Mismatched boundary profiles between face and background chỉ ra sự ghép nối.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên đối tượng. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

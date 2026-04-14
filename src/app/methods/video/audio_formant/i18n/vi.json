@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Audio Formant",
-    "description": "Phân tích tần số formant lời nói (F1-F4) — tổng hợp giọng thường tạo chuyển tiếp formant bất tự nhiên.",
-    "algorithm": "Thuật toán phân tích Audio Formant Analysis",
-    "mechanism": "Hệ thống Audio Formant Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1007/11613107_12",
-            "title": "Chetty, G. & Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
-        },
-        {
-            "url": "https://doi.org/10.1007/978-3-642-36806-6",
-            "title": "Schuller, B. et al. (2013). Computational Paralinguistics. Springer."
-        }
-    ]
+  "name": "Phân tích Audio Formant",
+  "description": "Phân tích tần số formant lời nói (F1-F4) — tổng hợp giọng thường tạo chuyển tiếp formant bất tự nhiên.",
+  "algorithm": "Thuật toán phân tích Audio Formant Analysis",
+  "mechanism": "Phương pháp này phân tích speech formant structure for audio deepfake detection following Chetty & Wagner (2006):\n\n1. **Formant Trích xuất**: Speech segments are analyzed using Linear Predictive Coding (LPC) to trích xuất formant frequencies F1-F4 and their bandwidths. Formants are the resonant frequencies of the vocal tract, determined by physical anatomy — tongue position, jaw opening, and vocal tract length.\n\n2. **Formant Trajectory Phân tích**: Temporal trajectories of formant frequencies are tracked across phoneme transitions. Natural speech shows smooth, physiologically constrained formant transitions governed by articulatory dynamics. do AI tạo ra speech may exhibit unnaturally abrupt formant shifts or overly smooth trajectories lacking natural micro-variations.\n\n3. **Speaker - Specific Formant Mô hình hóa**: Each speaker has đặc trưng formant ranges determined by vocal tract geometry. Phương pháp builds a speaker-specific formant model and kiểm tra consistency — deepfake audio may inadvertently blend formant characteristics from source and target speakers, creating acoustically impossible vocal tract configurations.\n\n4. **Formant Bandwidth Phân tích**: Natural formant bandwidths reflect the damping properties of the vocal tract. tổng hợp AI often produces formants with unnatural bandwidth patterns — either too narrow (over-resonant) or too uniform across frequency bands, lacking the frequency-dependent damping of real vocal tracts.\n\n5. **Harmonic - to - Formant Ratio**: The relationship between harmonic series and formant peaks is analyzed. In natural speech, harmonics interact with formant resonances in predictable ways governed by source-filter theory. Synthetic speech may show bất thường harmonic-formant relationships indicating generated rather than physical sound production.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1007/11613107_12",
+      "title": "Chetty, G. & Wagner, M. (2006). Audio-Visual Multimodal Fusion for Biometric Person Authentication. AVBPA."
+    },
+    {
+      "url": "https://doi.org/10.1007/978-3-642-36806-6",
+      "title": "Schuller, B. et al. (2013). Computational Paralinguistics. Springer."
+    }
+  ]
 }

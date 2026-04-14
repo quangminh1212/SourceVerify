@@ -1,22 +1,22 @@
 {
-    "name": "Phân bổ biên độ Sobel",
-    "description": "Phân tích phân bổ biên độ gradient Sobel",
-    "algorithm": "Thuật toán phân tích Phân bổ biên độ Sobel",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích phân bổ biên độ gradient Sobel. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phân bổ biên độ sobel. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Sobel, I. & Feldman, G. (1968). A 3x3 Isotropic Gradient Operator for Image Processing. Stanford AI Project.",
-            "url": "https://www.researchgate.net/publication/239398674"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ]
+  "name": "Phân bổ biên độ Sobel",
+  "description": "Phân tích phân bổ biên độ gradient Sobel",
+  "algorithm": "Thuật toán phân tích Phân bổ biên độ Sobel",
+  "mechanism": "This method analyzes Sobel magnitude distributions for image forensic analysis following Sobel & Feldman (1968):\n\n1. **Sobel Cạnh Phát hiện**: The Sobel operator computes horizontal (Gx) and vertical (Gy) gradients using 3×3 kernels. The gradient magnitude G = √(Gx² + Gy²) and direction θ = arctan(Gy/Gx) are computed at each pixel, providing a robust measure of edge strength and orientation.\n\n2. **Biên độ Phân bố Phân tích**: The histogram of Sobel magnitude values across the image is analyzed. Natural images show specific magnitude distributions following approximately an exponential or Weibull distribution. AI-generated images may show different distributions — modified tail behavior, unusual peak structures, or distribution shape inconsistent with optical imaging.\n\n3. **Không gian Biên độ Patterns**: The spatial distribution of Sobel magnitudes reveals the image's edge structure. In natural images, high-magnitude pixels (strong edges) form connected contours following object boundaries. AI-generated images may show: fragmented edge structures, edge magnitudes not consistent with depth-of-field expectations, or unnaturally uniform edge strength.\n\n4. **Biên độ - Direction Tương quan**: In natural images, edge magnitude and direction are correlated through scene structure — strong edges along object boundaries have coherent directions. The method analyzes magnitude-direction correlation. AI artifacts may produce strong gradients with incoherent directions.\n\n5. **Sobel Feature Chấm điểm**: Sobel magnitude features (distribution parameters, spatial patterns, magnitude-direction correlation, multi-scale behavior) are combined into a forensic score. The score measures deviation from natural image edge statistics.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phân bổ biên độ sobel. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Sobel, I. & Feldman, G. (1968). A 3x3 Isotropic Gradient Operator for Image Processing. Stanford AI Project.",
+      "url": "https://www.researchgate.net/publication/239398674"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ]
 }

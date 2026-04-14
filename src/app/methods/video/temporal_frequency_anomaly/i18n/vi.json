@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Temporal Frequency Anomaly",
-    "description": "Phát hiện chữ ký tần số thời gian bất thường trong video — tạo sinh AI tạo mẫu phổ thời gian đặc trưng.",
-    "algorithm": "Thuật toán phân tích Temporal Frequency Anomaly",
-    "mechanism": "Hệ thống Temporal Frequency Anomaly phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/AVSS.2018.8639163",
-            "title": "Guera, D. & Delp, E.J. (2018). Deepfake Video Detection Using Recurrent Neural Networks. AVSS."
-        },
-        {
-            "url": "https://arxiv.org/abs/1905.00582",
-            "title": "Sabir, E. et al. (2019). Recurrent Convolutional Strategies for Face Manipulation Detection. CVPR Workshop."
-        }
-    ]
+  "name": "Phân tích Temporal Frequency Anomaly",
+  "description": "Phát hiện chữ ký tần số thời gian bất thường trong video — tạo sinh AI tạo mẫu phổ thời gian đặc trưng.",
+  "algorithm": "Thuật toán phân tích Temporal Frequency Anomaly",
+  "mechanism": "Phương pháp này phát hiện tần số thời gian anomalies để phát hiện deepfake video:\n\n1. **Thời gian Tín hiệu Trích xuất**: mỗi pixel or per-region temporal signals are extracted — tracking intensity, color, and texture theo thời gian. These signals capture the temporal dynamics at each spatial location.\n\n2. **Thời gian Tần số Phân tích**: Temporal signals are analyzed via FFT to obtain per-location tần số thời gian spectra. This cho thấy the frequency components of temporal variation: scene motion (~0-5 Hz), lighting changes (~0-1 Hz), and potential generation artifacts.\n\n3. **Bất thường Phát hiện in Thời gian Spectra**: Natural video temporal spectra are dominated by low frequencies (slow scene changes) with rapid falloff at higher frequencies. Phương pháp phát hiện bất thường spectral components: (a) energy at incommensurate frequencies with no physical source, (b) spectral peaks at the video generator's đặc trưng temporal frequencies, (c) unexpected harmonics from repetitive generation patterns.\n\n4. **Không gian Ánh xạ of Thời gian Anomalies**: The detected tần số thời gian anomalies are mapped spatially. Anomalies concentrated in các vùng khuôn mặt (but absent in background) strongly indicate face-specific generation artifacts. The spatial distribution of temporal anomalies cho thấy the extent and boundaries of nội dung được tạo.\n\n5. **Cross - Tần số Nhất quán**: Trong video tự nhiên, tần số thời gian components at different spatial frequencies are coherently related (same physical motion produces correlated temporal variations at all spatial frequencies). Phương pháp kiểm tra cross-frequency coherence — quá trình sinh AI may produce temporally incoherent variations at different spatial scales.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/AVSS.2018.8639163",
+      "title": "Guera, D. & Delp, E.J. (2018). Deepfake Video Detection Using Recurrent Neural Networks. AVSS."
+    },
+    {
+      "url": "https://arxiv.org/abs/1905.00582",
+      "title": "Sabir, E. et al. (2019). Recurrent Convolutional Strategies for Face Manipulation Detection. CVPR Workshop."
+    }
+  ]
 }

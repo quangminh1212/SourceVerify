@@ -1,22 +1,22 @@
 {
-    "name": "Tương quan âm vị",
-    "description": "Tương quan hình dạng âm vị với âm thanh",
-    "algorithm": "Thuật toán phân tích Tương quan âm vị",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Tương quan hình dạng âm vị với âm thanh. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích tương quan âm vị. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/2012.07657"
-        },
-        {
-            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413700"
-        }
-    ]
+  "name": "Tương quan âm vị",
+  "description": "Tương quan hình dạng âm vị với âm thanh",
+  "algorithm": "Thuật toán phân tích Tương quan âm vị",
+  "mechanism": "Phương pháp này phân tích phoneme-visual correlation để phát hiện deepfake:\n\n1. **Âm thanh Âm vị Trích xuất**: The audio theo dõi is processed to trích xuất a phoneme sequence with precise temporal alignment. Each phoneme is identified with its onset-offset timestamps and confidence score using speech recognition.\n\n2. **Thị giác Âm vị (Viseme) Phát hiện**: The corresponding visual phoneme (viseme) sequence is extracted from lip/jaw motion analysis. Key visemes include: bilabial closure (/m/, /p/, /b/), labiodental (/f/, /v/), dental (/θ/, /ð/), and open vowels (/a/, /o/).\n\n3. **Âm vị - Viseme Thời gian Tương quan**: The temporal alignment between audio phonemes and visual visemes is measured. In authentic speech, audio leads visual by ~50ms (auditory-visual speech lag). Phương pháp tính toán cross-correlation to kiểm tra this temporal relationship. Deepfake có thể cho thấy incorrect timing between audio and visual speech.\n\n4. **Articulation Completeness**: Certain phonemes require specific visual articulations that are physiologically mandatory — /m/ requires complete lip closure, /f/ requires lip-teeth contact. Phương pháp kiểm tra whether mandatory articulations are achieved. Deepfake lip generators may fail to produce complete target articulations.\n\n5. **Co - Articulation Mẫu Xác minh**: In natural speech, phoneme production is influenced by surrounding phonemes (anticipatory and carry-over coarticulation). Phương pháp kiểm tra for natural coarticulation effects in the visual speech signal. do AI tạo ra lip movements often lack proper coarticulation, producing discrete viseme transitions.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích tương quan âm vị. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/2012.07657"
+    },
+    {
+      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413700"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Biên Face X-Ray",
-    "description": "Phát hiện biên pha trộn bằng kỹ thuật Face X-Ray (Li, 2020)",
-    "algorithm": "Thuật toán phân tích Biên Face X-Ray",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện biên pha trộn bằng kỹ thuật Face X-Ray (Li, 2020). Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên face x-ray. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Biên Face X-Ray",
+  "description": "Phát hiện biên pha trộn bằng kỹ thuật Face X-Ray (Li, 2020)",
+  "algorithm": "Thuật toán phân tích Biên Face X-Ray",
+  "mechanism": "Phương pháp này implements the Face X-ray technique from Li et al. (2020) for general face forgery detection:\n\n1. **Pha trộn Ranh giới Hypothesis**: Face X-ray is based on the key insight that most face manipulation methods share a common step — blending a modified vùng khuôn mặt onto a background. This blending creates a detectable boundary even when the face modification itself is imperceptible. Phương pháp targets this universal blending step rather than specific manipulation artifacts.\n\n2. **Gray - Scale Pha trộn Map Ước lượng**: For each pixel, Phương pháp ước lượng whether it belongs to a blending boundary. The \"face X-ray\" is computed as a map B(x) indicating the probability that pixel x is at a face blending boundary. This is estimated using the observation that blended regions show HR (high-resolution) content from the face source mixed with LR (low-resolution) content from the background at boundaries.\n\n3. **Multi - Scale Ranh giới Phát hiện**: The face X-ray is computed at multiple scales to phát hiện blending at different resolutions. Blending boundaries may be sharp (simple alpha compositing) or smooth (Poisson blending, feathered masks), requiring multi-scale analysis for robust detection.\n\n4. **Cross - Màu sắc - Space Phân tích**: The blending boundary signature is analyzed in multiple color spaces (RGB, YCbCr, HSV). Different color channels may show blending artifacts with varying intensity — YCbCr chrominance channels are particularly sensitive to blending artifacts that are invisible in luminance.\n\n5. **Thời gian X - ray Nhất quán**: The face X-ray map is computed mỗi khung hình and tracked temporally. A persistent blending boundary at nhất quán facial locations qua các khung hình provides strong evidence of face manipulation. The temporal stability of the X-ray signal increases detection confidence and reduces false positives from compression artifacts or natural skin boundaries.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên face x-ray. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

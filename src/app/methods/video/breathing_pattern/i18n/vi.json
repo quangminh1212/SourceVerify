@@ -1,22 +1,22 @@
 {
-    "name": "Mẫu thở",
-    "description": "Theo dõi vi chuyển động tuần hoàn ngực và vai ở tần số hô hấp sinh lý, tận dụng framework FakeCatcher để phát lộ deepfake không tái tạo được nhịp thở tự nhiên.",
-    "algorithm": "Thuật toán phân tích Mẫu thở",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện mẫu chuyển động thở. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích mẫu thở. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos using Biological Signals. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2020.3009287"
-        },
-        {
-            "title": "Qi, H. et al. (2020). DeepRhythm: Exposing DeepFakes with Attentional Visual Heartbeat Rhythms. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413707"
-        }
-    ]
+  "name": "Mẫu thở",
+  "description": "Theo dõi vi chuyển động tuần hoàn ngực và vai ở tần số hô hấp sinh lý, tận dụng framework FakeCatcher để phát lộ deepfake không tái tạo được nhịp thở tự nhiên.",
+  "algorithm": "Thuật toán phân tích Mẫu thở",
+  "mechanism": "Phương pháp này phát hiện deepfakes by analyzing breathing patterns as biological signals following Ciftci et al. (2020):\n\n1. **Chest/Shoulder Chuyển động Trích xuất**: Periodic chest expansion and shoulder elevation associated with respiration are tracked via body landmark detection. The respiratory motion signal is extracted by measuring vertical displacement of shoulder landmarks and chest region luồng quang học, compensating for other body movements.\n\n2. **Respiratory Rate Ước lượng**: The respiratory signal's power spectrum is analyzed to trích xuất breathing frequency. Normal resting respiratory rate is 12-20 breaths/minute (0.2-0.33 Hz). Phương pháp kiểm tra: (a) presence of a clear respiratory spectral peak, (b) rate within physiological range, (c) consistency across the recording.\n\n3. **Breathing Regularity Phân tích**: Natural breathing exhibits đặc trưng variability — respiratory rate varies with cognitive load, speech, and autonomic regulation. The coefficient of variation of inter-breath intervals follows expected distributions. do AI tạo ra video may show either absent breathing motion or artificially regular breathing without natural variability.\n\n4. **Cardio - Respiratory Coupling**: In authentic subjects, breathing and heart rate show physiological coupling (respiratory sinus arrhythmia — heart rate increases during inspiration). Phương pháp kiểm tra cross-correlation between extracted respiratory and cardiac (rPPG) signals. Deepfakes lack this physiological coupling, as neither signal is generated from real biological processes.\n\n5. **Lời nói - Breathing Coordination**: During speech in video, breathing patterns synchronize with linguistic phrasing — speakers inhale at phrase boundaries. Phương pháp xác minh that detected inspiration events align with speech pause patterns. do AI tạo ra videos thường fail to produce coordinated speech-breathing dynamics, serving as a forensic indicator.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích mẫu thở. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos using Biological Signals. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287"
+    },
+    {
+      "title": "Qi, H. et al. (2020). DeepRhythm: Exposing DeepFakes with Attentional Visual Heartbeat Rhythms. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413707"
+    }
+  ]
 }

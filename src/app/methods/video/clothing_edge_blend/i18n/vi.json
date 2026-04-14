@@ -1,22 +1,22 @@
 {
-    "name": "Pha trộn biên quần áo",
-    "description": "Soi xét vùng chuyển tiếp giữa biên quần áo và nền để tìm cấu phần alpha-blending và làm mềm biên không nhất quán phổ biến trong tổng hợp deepfake hoán đổi thân thể.",
-    "algorithm": "Thuật toán phân tích Pha trộn biên quần áo",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích chất lượng pha trộn biên quần áo. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích pha trộn biên quần áo. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Pha trộn biên quần áo",
+  "description": "Soi xét vùng chuyển tiếp giữa biên quần áo và nền để tìm cấu phần alpha-blending và làm mềm biên không nhất quán phổ biến trong tổng hợp deepfake hoán đổi thân thể.",
+  "algorithm": "Thuật toán phân tích Pha trộn biên quần áo",
+  "mechanism": "This method analyzes clothing-body edge blending for deepfake detection following Rossler et al. (2019):\n\n1. **Clothing Ranh giới Phát hiện**: The boundary between clothing and body/face regions is detected per frame using semantic segmentation. Clothing edges (collar-neck junction, sleeve-arm boundary, neckline) are extracted and parameterized.\n\n2. **Cạnh Blend Zone Phân tích**: In authentic video, clothing-body boundaries show physically correct transitions — fabric partially occluding skin, compression of fabric at pressure points, natural draping creating soft shadows. The method measures the blend zone width, gradient profile, and shadow consistency at clothing boundaries.\n\n3. **Khuôn mặt - Swap Ranh giới Phát hiện**: Face-swap deepfakes must blend the generated face with the original body/clothing. The method specifically examines the collar-neck-jawline junction where this blending occurs. Artifacts include: unnatural alpha blending gradients, color temperature discontinuities, and resolution mismatches between generated face and original clothing.\n\n4. **Thời gian Cạnh Nhất quán**: Clothing-body edges should move coherently with body motion. The method tracks edge positions across frames and measures temporal consistency. Deepfake artifacts may cause clothing edges to flicker, teleport, or exhibit motion decoupled from the body's physical movement.\n\n5. **Occlusion Nhất quán**: Natural clothing creates consistent occlusion patterns — a collar always covers the same neck region from a given angle. The method checks whether occlusion relationships between clothing and body remain physically consistent across frames and head pose changes. Deepfakes may produce impossible occlusion states where generated face regions incorrectly overlap with original clothing.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích pha trộn biên quần áo. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

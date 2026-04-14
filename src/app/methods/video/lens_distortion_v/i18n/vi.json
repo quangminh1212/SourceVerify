@@ -1,22 +1,22 @@
 {
-    "name": "Méo ống kính",
-    "description": "Xác minh biên dạng méo hình thùng và méo hình gối trên các khung hình video so với mô hình ống kính camera đã hiệu chuẩn, phát hiện cảnh quay AI thiếu méo hình học quang học thực.",
-    "algorithm": "Thuật toán phân tích Méo ống kính",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu méo ống kính. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích méo ống kính. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Méo ống kính",
+  "description": "Xác minh biên dạng méo hình thùng và méo hình gối trên các khung hình video so với mô hình ống kính camera đã hiệu chuẩn, phát hiện cảnh quay AI thiếu méo hình học quang học thực.",
+  "algorithm": "Thuật toán phân tích Méo ống kính",
+  "mechanism": "Phương pháp này phân tích lens distortion consistency để phát hiện deepfake video:\n\n1. **Radial Méo Ước lượng**: The camera's lens distortion parameters (barrel/pincushion distortion coefficients k1, k2, k3) are estimated from straight lines in the scene mỗi khung hình. All objects captured through the same lens should show nhất quán radial distortion.\n\n2. **Khuôn mặt - Background Méo So sánh**: Lens distortion should affect the face and background equally. Phương pháp ước lượng distortion independently from face geometry (curved features that should be straight) and background geometry (architectural lines, furniture edges). Mismatched distortion parameters indicate the face was captured/generated with a different optical system.\n\n3. **Méo Thời gian Ổn định**: For a fixed-lens camera (most video), distortion parameters should remain constant across all frames. Phương pháp theo dõi estimated parameters temporally. Variations in distortion — particularly in the vùng khuôn mặt — indicate frame-by-frame face generation that doesn't account for lens optics.\n\n4. **Méo Center Xác minh**: Radial distortion is centered on the lens optical axis (thường near image center). All radial distortion in the image should share the same center point. Composited faces may show different effective distortion centers than the background.\n\n5. **Chromatic Méo Cross - Check**: Real lenses produce chromatic aberration (wavelength-dependent distortion). Phương pháp kiểm tra whether lateral chromatic aberration follows the expected pattern for the estimated lens model. Generated faces thường lack correct chromatic distortion, creating a detectable difference from the optically-captured background.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích méo ống kính. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Intra-frame Prediction",
-    "description": "Kiểm tra phân bổ chế độ dự đoán nội khung H.264/H.265 — mã hóa lại deepfake thay đổi mẫu dự đoán.",
-    "algorithm": "Thuật toán phân tích Intra-frame Prediction Analysis",
-    "mechanism": "Hệ thống Intra-frame Prediction Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TCSVT.2003.815165",
-            "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
-        },
-        {
-            "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
-            "title": "Sullivan, G.J. et al. (2012). Overview of HEVC Standard. IEEE TCSVT."
-        }
-    ]
+  "name": "Phân tích Intra-frame Prediction",
+  "description": "Kiểm tra phân bổ chế độ dự đoán nội khung H.264/H.265 — mã hóa lại deepfake thay đổi mẫu dự đoán.",
+  "algorithm": "Thuật toán phân tích Intra-frame Prediction Analysis",
+  "mechanism": "Phương pháp này phân tích H.264/H.265 intra-prediction patterns for video forensic detection:\n\n1. **Intra - Prediction Mode Trích xuất**: For I-frames and intra-blocks in P/B-frames, the selected intra-prediction modes are extracted from the bitstream (9 modes in H.264, 35+ in H.265: DC, planar, and angular predictions). These mode decisions are influenced by local image content.\n\n2. **Mode Phân bố Phân tích**: The statistical distribution of intra-prediction modes across the frame is analyzed. Natural video produces đặc trưng mode distributions — predominantly DC/planar in smooth regions, angular modes following edge orientations. Manipulated or do AI tạo ra content may show bất thường mode distributions không nhất quán with the visual content.\n\n3. **Mode - Content Nhất quán**: The selected mode should match the actual image content direction. At a horizontal edge, a horizontal prediction mode should be selected. Phương pháp kiểm tra mode-content alignment — content inserted from a different encoding may show suboptimal mode selections (modes chosen for the original content, not the replaced content).\n\n4. **Prediction Residual Phân tích**: The intra-prediction residual (actual − predicted) encodes what the prediction couldn't capture. Residual statistics differ between original content (well-predicted, small residuals) and replaced content (poorly predicted by modes chosen for different content, larger residuals). Phương pháp phát hiện bất thường residual distributions.\n\n5. **Re - Encoding Signature Phát hiện**: Double-encoded video (original + manipulation + re-encoding) shows đặc trưng intra-prediction artifacts: the second encoder's mode decisions partially align with the first encoder's block structure, creating detectable periodicity in prediction residuals.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TCSVT.2003.815165",
+      "title": "Wiegand, T. et al. (2003). Overview of the H.264/AVC Video Coding Standard. IEEE TCSVT."
+    },
+    {
+      "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
+      "title": "Sullivan, G.J. et al. (2012). Overview of HEVC Standard. IEEE TCSVT."
+    }
+  ]
 }

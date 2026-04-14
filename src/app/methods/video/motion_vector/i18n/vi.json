@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích vector chuyển động",
-    "description": "Phân tích tính nhất quán vector chuyển động",
-    "algorithm": "Thuật toán phân tích Phân tích vector chuyển động",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán vector chuyển động. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích vector chuyển động. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Phân tích vector chuyển động",
+  "description": "Phân tích tính nhất quán vector chuyển động",
+  "algorithm": "Thuật toán phân tích Phân tích vector chuyển động",
+  "mechanism": "Phương pháp này phân tích motion vectors from video compression để phát hiện pháp y:\n\n1. **Chuyển động Véc-tơ Trích xuất**: Block-level motion vectors are extracted from the video bitstream (H.264/H.265 encoded streams contain explicitly coded motion vectors). These describe how the encoder predicted each block from reference frames.\n\n2. **Chuyển động Field Nhất quán**: The motion vector field should be physically coherent — nearby blocks should have similar motion vectors (smoothly varying field) except at object boundaries. Phương pháp phát hiện regions with bất thường motion vector patterns không nhất quán with physical object motion or camera motion.\n\n3. **Foreground - Background Chuyển động Separation**: Global camera motion produces a coherent motion vector field across the frame, while object motion creates local deviations. Phương pháp separates these components and xác minh that face/body motion is physically nhất quán. Deepfake insertion may produce face motion that's không nhất quán with the camera motion model.\n\n4. **Chuyển động Véc-tơ Biên độ Phân bố**: The distribution of motion vector magnitudes follows predictable patterns depending on motion speed and search range. Phương pháp phân tích this distribution for anomalies — re-encoded Deepfake có thể cho thấy motion vector distributions affected by the original encoding, creating detectable double-estimation artifacts.\n\n5. **Prediction Error Tương quan**: Motion vectors should produce effective predictions (low residual). Phương pháp phân tích the correlation between motion vector quality and prediction residuals. Regions where motion vectors are optimal for the original content but suboptimal for inserted content cho thấy manipulation through elevated prediction errors.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích vector chuyển động. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

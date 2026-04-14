@@ -1,22 +1,22 @@
 {
-    "name": "Hình học ngón tay",
-    "description": "Xác thực tỷ lệ ngón tay, góc khớp và số ngón so với ràng buộc giải phẫu, nhắm vào lỗi dai dẳng của tổng hợp cơ thể người dựa trên khuếch tán và GAN.",
-    "algorithm": "Thuật toán phân tích Hình học ngón tay",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích số lượng và hình học ngón tay. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích hình học ngón tay. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Hình học ngón tay",
+  "description": "Xác thực tỷ lệ ngón tay, góc khớp và số ngón so với ràng buộc giải phẫu, nhắm vào lỗi dai dẳng của tổng hợp cơ thể người dựa trên khuếch tán và GAN.",
+  "algorithm": "Thuật toán phân tích Hình học ngón tay",
+  "mechanism": "Phương pháp này phân tích finger and hand geometry để phát hiện deepfake:\n\n1. **Hand & Finger Phát hiện**: Hands are detected and finger landmarks (finger tips, joints, palm points) are tracked mỗi khung hình. The geometric model captures finger lengths, joint angles, inter-finger spacing, and hand proportions.\n\n2. **Anatomical Constraint Xác minh**: Finger geometry must obey anatomical constraints: (a) fingers can only bend at joints in specific directions, (b) joint angles have limited ranges, (c) finger proportions follow đặc trưng ratios (golden ratio relationships). Phương pháp kiểm tra whether detected hand geometry satisfies these constraints. bộ sinh AI notoriously produce extra fingers, impossible joint angles, or disproportionate fingers.\n\n3. **Finger Count Xác minh**: The correct number of fingers (5 per hand) is verified. bộ sinh AI — particularly diffusion models — frequently generate incorrect finger counts (4 or 6 fingers), fused fingers, or bifurcated fingers. This simple kiểm tra remains one of the most reliable quá trình sinh AI indicators.\n\n4. **Thời gian Geometry Ổn định**: Hand geometry should be temporally nhất quán during smooth motions. Phương pháp theo dõi finger length ratios and joint angles qua các khung hình. bộ sinh AI may produce hands that change proportions, lose/gain fingers, or show impossible geometric transformations between frames.\n\n5. **Hand - Khuôn mặt Scale Nhất quán**: When hands are visible near the face, their relative proportions should be anatomically correct. Phương pháp xác minh hand-face size ratios against anthropometric data. bộ sinh AI may produce hands that are disproportionately large or small relative to the face, indicating generation rather than capture.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích hình học ngón tay. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

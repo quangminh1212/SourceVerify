@@ -1,22 +1,22 @@
 {
-    "name": "Chi tiết mống mắt",
-    "description": "Phân tích chi tiết và nhất quán mẫu mống mắt",
-    "algorithm": "Thuật toán phân tích Chi tiết mống mắt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích chi tiết và nhất quán mẫu mống mắt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích chi tiết mống mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Chi tiết mống mắt",
+  "description": "Phân tích chi tiết và nhất quán mẫu mống mắt",
+  "algorithm": "Thuật toán phân tích Chi tiết mống mắt",
+  "mechanism": "Phương pháp này phân tích iris detail and rendering quality để phát hiện deepfake:\n\n1. **Mống mắt Vùng Trích xuất**: The iris is precisely segmented mỗi khung hình using circular/elliptical fitting between pupil and limbus (iris-sclera boundary). The iris texture region is extracted and geometrically normalized to a canonical representation (polar coordinates, normalized radius).\n\n2. **Mống mắt Kết cấu Phân tích**: Natural iris texture contains complex radial structures (collarette, crypts, furrows, pigment spots) forming a unique biometric pattern. Phương pháp phân tích iris texture complexity, radial structure presence, and fine detail quality. do AI tạo ra irises often lack the intricate natural iris texture, appearing either too smooth, too regular, or showing physically implausible patterns.\n\n3. **Bilateral Mống mắt So sánh**: Both irises of the same person should show similar (but not identical) structural characteristics — same color, similar complexity, matching pigmentation patterns. Phương pháp so sánh iris features between eyes. Deepfakes may produce irises with không nhất quán appearance (different colors, different detail levels) between left and right eyes.\n\n4. **Mống mắt - Đồng tử Dynamics**: The pupil-to-iris ratio should respond to light conditions. Phương pháp kiểm tra whether pupil size is nhất quán between both eyes and appropriate for the scene illumination. Deepfakes may produce asymmetric pupils or pupil sizes không nhất quán with the lighting environment.\n\n5. **Thời gian Mống mắt Ổn định**: Iris texture is a physical structure that doesn't change between frames — only viewing angle and pupil dilation change. Phương pháp theo dõi iris texture consistency (using iris code distance metrics) qua các khung hình. giữa các khung hình iris texture changes indicate quá trình sinh AI where iris detail is independently rendered mỗi khung hình.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích chi tiết mống mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Giãn đồng tử",
-    "description": "Phân tích phản ứng và mẫu giãn nở đồng tử",
-    "algorithm": "Thuật toán phân tích Giãn đồng tử",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích phản ứng và mẫu giãn nở đồng tử. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích giãn đồng tử. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos using Biological Signals. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.2020.3009287"
-        }
-    ]
+  "name": "Giãn đồng tử",
+  "description": "Phân tích phản ứng và mẫu giãn nở đồng tử",
+  "algorithm": "Thuật toán phân tích Giãn đồng tử",
+  "mechanism": "Phương pháp này phân tích pupil dilation dynamics để phát hiện deepfake:\n\n1. **Đồng tử Theo dõi**: Precise pupil boundaries are tracked mỗi khung hình using circular Hough transform or ellipse fitting. Pupil diameter is measured relative to iris diameter (to normalize for distance/zoom changes). The pupil-to-iris ratio temporal signal is extracted.\n\n2. **Lighting - Đồng tử Tương quan**: Pupil diameter should inversely correlate with ambient light level — brighter environment → smaller pupils. Phương pháp đo lường scene luminance and kiểm tra the pupil-light correlation. In deepfakes, generated pupil sizes may not respond to scene illumination changes.\n\n3. **Dilation Dynamics**: Pupil dilation/constriction follows specific temporal dynamics: constriction is faster (~0.5s) than dilation (~1s), with đặc trưng latency (~250ms). Phương pháp xác minh that observed pupil changes follow these physiological dynamics. do AI tạo ra pupils may show instantaneous or non-physiological size changes.\n\n4. **Bilateral Nhất quán**: Both pupils should maintain nearly equal sizes (anisocoria < 1mm in normal conditions). Phương pháp theo dõi left-right pupil size difference. Deepfakes frequently produce different pupil sizes in left and right eyes because each eye is generated independently.\n\n5. **Đồng tử Shape Đánh giá**: Real pupils are circular (round pupil margin) under normal conditions. Slight elliptical deformation occurs only at extreme gaze angles. Phương pháp kiểm tra pupil shape — bộ sinh AI may produce irregularly shaped pupils, non-circular boundaries, or pupils that change shape between frames. The combined pupil analysis provides a physiological authenticity assessment.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích giãn đồng tử. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos using Biological Signals. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287"
+    }
+  ]
 }

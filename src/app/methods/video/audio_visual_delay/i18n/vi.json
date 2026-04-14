@@ -1,22 +1,22 @@
 {
-    "name": "Trễ âm thanh-hình ảnh",
-    "description": "Đo trễ đồng bộ âm thanh-video",
-    "algorithm": "Thuật toán phân tích Trễ âm thanh-hình ảnh",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Đo trễ đồng bộ âm thanh-video. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích trễ âm thanh-hình ảnh. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413700"
-        },
-        {
-            "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM.",
-            "url": "https://doi.org/10.1145/3394171.3413570"
-        }
-    ]
+  "name": "Trễ âm thanh-hình ảnh",
+  "description": "Đo trễ đồng bộ âm thanh-video",
+  "algorithm": "Thuật toán phân tích Trễ âm thanh-hình ảnh",
+  "mechanism": "Phương pháp này phát hiện audio-visual temporal misalignment to identify deepfakes, following Chugh et al. (2020):\n\n1. **Môi Chuyển động Trích xuất**: Lip landmark positions are tracked mỗi khung hình, computing lip aperture (vertical opening), lip spread (horizontal width), and lip area. The temporal signal of these geometric features captures the visual component of speech articulation.\n\n2. **Âm thanh Envelope Trích xuất**: The speech audio amplitude envelope and energy contour are computed in corresponding time windows. Additionally, voice activity detection (VAD) segments identify speech vs. silence boundaries in the audio stream.\n\n3. **Cross - Tương quan Phân tích**: The temporal cross-correlation between lip motion signals and audio energy is computed at multiple lag values. Authentic speech shows peak correlation at near-zero lag (within the natural audio-visual asynchrony tolerance of ~±50ms). Deepfakes may exhibit shifted peaks due to imprecise lip-sync in face-swap or lip-sync models.\n\n4. **Âm vị - Level Synchrony Check**: Specific phonemes with visually distinctive mouth shapes (visemes) — bilabials /p/, /b/, /m/ requiring lip closure, and open vowels /a/, /o/ requiring wide opening — are detected in audio and verified against corresponding visual frames. Temporal mismatches at these critical phonemes chỉ ra sự thao tác per Mittal et al. (2020).\n\n5. **Dynamic Synchronization Chấm điểm**: The consistency of audio-visual synchrony is measured theo thời gian. Natural speech maintains stable synchrony throughout. Deepfake videos may show variable synchrony — good alignment in some segments but drifting in others — as the face generation model intermittently fails to theo dõi the audio signal accurately.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích trễ âm thanh-hình ảnh. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Chugh, K. et al. (2020). Not Made for Each Other — Audio-Visual Dissonance-based Deepfake Detection. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413700"
+    },
+    {
+      "title": "Mittal, T. et al. (2020). Emotions Don't Lie: An Audio-Visual Deepfake Detection Method Using Affective Cues. ACM MM.",
+      "url": "https://doi.org/10.1145/3394171.3413570"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phát hiện rung thời gian",
-    "description": "Phát hiện mẫu dao động rung thời gian",
-    "algorithm": "Thuật toán phân tích Phát hiện rung thời gian",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện mẫu dao động rung thời gian. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phát hiện rung thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        }
-    ]
+  "name": "Phát hiện rung thời gian",
+  "description": "Phát hiện mẫu dao động rung thời gian",
+  "algorithm": "Thuật toán phân tích Phát hiện rung thời gian",
+  "mechanism": "Phương pháp này phát hiện temporal jitter để phát hiện deepfake video:\n\n1. **Jitter Đo lường**: Sub-pixel temporal jitter is measured across the video — the high-frequency component of point trajectories after removing the smooth (intentional) motion component. Jitter represents giữa các khung hình positional noise.\n\n2. **Jitter Source Phân loại**: Different jitter sources produce different characteristics: (a) camera sensor noise → spatially uniform, small amplitude, (b) compression jitter → block-aligned, (c) Quá trình tạo deepfake jitter → content-dependent, potentially larger amplitude. Phương pháp phân loại detected jitter by source.\n\n3. **Khuôn mặt - Background Jitter So sánh**: Trong video chân thực, jitter characteristics are uniform across the frame (same camera). Phương pháp so sánh jitter in các vùng khuôn mặt vs. background. Deepfake thường cho thấy elevated jitter in the khuôn mặt được tạo — the generator introduces positional uncertainty that differs from the camera's native noise.\n\n4. **Jitter Thời gian Structure**: Camera jitter has flat temporal spectrum (white noise). Generation jitter may show đặc trưng temporal structure — periodicity from the generation pipeline, correlation patterns from autoregressive generation, or specific spectral color from the training process.\n\n5. **Jitter Amplitude Đánh giá**: The amplitude of detected jitter is compared against expected values for the estimated camera system. Excessive jitter (beyond what the camera would produce) in các vùng khuôn mặt indicates generation artifacts. Phương pháp định lượng excess jitter as a deepfake indicator.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phát hiện rung thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    }
+  ]
 }

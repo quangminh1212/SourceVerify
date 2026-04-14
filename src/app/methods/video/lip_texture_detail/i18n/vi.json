@@ -1,22 +1,22 @@
 {
-    "name": "Chi tiết kết cấu môi",
-    "description": "Kiểm tra vi kết cấu bề mặt môi bao gồm độ sắc nét đường viền son và mẫu độ ẩm niêm mạc để phát hiện mất chi tiết bị làm mịn phổ biến trong các mô hình tổng hợp khuôn mặt nói.",
-    "algorithm": "Thuật toán phân tích Chi tiết kết cấu môi",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích chi tiết vi kết cấu môi. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích chi tiết kết cấu môi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/2012.07657"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Chi tiết kết cấu môi",
+  "description": "Kiểm tra vi kết cấu bề mặt môi bao gồm độ sắc nét đường viền son và mẫu độ ẩm niêm mạc để phát hiện mất chi tiết bị làm mịn phổ biến trong các mô hình tổng hợp khuôn mặt nói.",
+  "algorithm": "Thuật toán phân tích Chi tiết kết cấu môi",
+  "mechanism": "Phương pháp này phân tích lip texture rendering detail để phát hiện deepfake:\n\n1. **Môi Vùng Trích xuất**: The lip region is precisely segmented mỗi khung hình using lip landmarks (vermilion border, cupid's bow, lip corners, oral commissures). Both the dry lip surface and wet inner lip are analyzed.\n\n2. **Môi Bề mặt Kết cấu Phân tích**: Natural lips show đặc trưng surface texture: vertical wrinkle lines (more prominent on lower lip), moisture-dependent specularity, and color variation from vermilion border to inner mucosa. Phương pháp phân tích texture quality at multiple scales. do AI tạo ra lips often show either over-smoothed surfaces (lacking natural lip wrinkles) or artificial texture patterns.\n\n3. **Môi - Teeth - Tongue Rendering**: When the mouth opens during speech, teeth and tongue become visible. Phương pháp evaluates rendering quality of these elements: (a) teeth should show individual tooth structure with correct dental anatomy, (b) tongue position should be nhất quán with articulated phonemes. bộ sinh AI often produce blurred or merged teeth and simplified tongue rendering.\n\n4. **Môi Moisture and Specular Reflection**: Natural lips show moisture-dependent specularity that changes with lip movement (stretching reduces moisture, licking increases it). Phương pháp theo dõi specular patterns — bộ sinh AI thường don't model dynamic lip moisture, producing static or absent specular highlights.\n\n5. **Thời gian Kết cấu Nhất quán**: Lip texture should remain nhất quán qua các khung hình — the wrinkle pattern is stable, only varying in visibility with lip stretch. Phương pháp theo dõi lip texture features theo thời gian. giữa các khung hình texture instability — changing wrinkle patterns, flickering detail — indicates per-frame independent generation.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích chi tiết kết cấu môi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/2012.07657"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

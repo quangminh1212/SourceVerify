@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Sparse Representation",
-    "description": "Sử dụng mã hóa thưa và học từ điển để phát hiện bất thường biểu diễn trong ảnh AI (Wright et al., 2009).",
-    "algorithm": "Thuật toán phân tích Sparse Representation Analysis",
-    "mechanism": "Hệ thống Sparse Representation Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TPAMI.2008.79",
-            "title": "Wright, J. et al. (2009). Robust Face Recognition via Sparse Representation. IEEE TPAMI."
-        },
-        {
-            "url": "https://doi.org/10.1109/TIP.2006.881969",
-            "title": "Elad, M. & Aharon, M. (2006). Image Denoising via Sparse and Redundant Representations. IEEE TIP."
-        }
-    ]
+  "name": "Phân tích Sparse Representation",
+  "description": "Sử dụng mã hóa thưa và học từ điển để phát hiện bất thường biểu diễn trong ảnh AI (Wright et al., 2009).",
+  "algorithm": "Thuật toán phân tích Sparse Representation Analysis",
+  "mechanism": "Phương pháp này applies sparse representation theory following Wright et al. (2009) and Elad & Aharon (2006) để phân tích pháp y:\n\n1. **Dictionary Learning**: A redundant dictionary D ∈ ℝⁿˣᴷ (K >> n, overcomplete) is learned from natural image patches via K-SVD algorithm. Each atom captures a đặc trưng local structure (edge, texture, smooth region) found in authentic images.\n\n2. **Sparse Coding**: For each image patch y, the sparsest representation α is found via: min‖α‖₀ s.t. ‖y − Dα‖₂ ≤ ε. In practice, OMP (Orthogonal Matching Pursuit) or LASSO provides an approximate solution. Natural image patches admit highly sparse representations (few active atoms).\n\n3. **Representation Residual Phân tích**: The residual r = ‖y − Dα‖₂ đo lường how well each patch fits the natural image dictionary. Authentic image patches yield low residuals, while do AI tạo ra patches — containing artifacts outside the natural image manifold — produce elevated residuals.\n\n4. **Sparsity Map Construction**: A spatial map of sparsity levels (‖α‖₀) and residuals across the image cho thấy regions không nhất quán with natural image statistics. Manipulated or do AI tạo ra regions thường require more dictionary atoms (lower sparsity) yet still produce higher residuals.\n\n5. **Bất thường Chấm điểm**: The joint distribution of sparsity and residuals across all patches is compared to the expected distribution for natural images. Systematic deviations — particularly elevated residuals in textured regions that should be well-represented by the learned dictionary — indicate synthetic generation.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2008.79",
+      "title": "Wright, J. et al. (2009). Robust Face Recognition via Sparse Representation. IEEE TPAMI."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2006.881969",
+      "title": "Elad, M. & Aharon, M. (2006). Image Denoising via Sparse and Redundant Representations. IEEE TIP."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Eye Saccade",
-    "description": "Phát hiện mẫu chuyển động mắt saccade bất thường — video AI thường thiếu micro-saccade thực tế (Duchowski, 2017).",
-    "algorithm": "Thuật toán phân tích Eye Saccade Analysis",
-    "mechanism": "Hệ thống Eye Saccade Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/CVPR.2015.7299081",
-            "title": "Zhang, X. et al. (2015). Appearance-Based Gaze Estimation in the Wild. CVPR."
-        },
-        {
-            "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
-            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
-        }
-    ]
+  "name": "Phân tích Eye Saccade",
+  "description": "Phát hiện mẫu chuyển động mắt saccade bất thường — video AI thường thiếu micro-saccade thực tế (Duchowski, 2017).",
+  "algorithm": "Thuật toán phân tích Eye Saccade Analysis",
+  "mechanism": "Phương pháp này phân tích saccadic eye movements để phát hiện deepfake:\n\n1. **Saccade Phát hiện**: Saccades (rapid ballistic eye movements) are detected from the gaze direction temporal signal. Saccades are characterized by their amplitude (typical 1-40°), peak velocity (up to 500°/s), and duration (20-200ms).\n\n2. **Main Sequence Xác minh**: Saccades follow the \"main sequence\" — a fixed relationship between amplitude and peak velocity: V_peak ∝ √amplitude (Bahill et al., 1975). Phương pháp kiểm tra whether detected saccades conform to this physiological invariant. do AI tạo ra eye movements may violate the main sequence — producing incorrect velocity-amplitude relationships.\n\n3. **Saccade Dynamics Phân tích**: Natural saccades have đặc trưng dynamics: rapid acceleration, smooth velocity profile with single peak, small post-saccadic oscillation. Phương pháp phân tích each saccade's kinematic profile. do AI tạo ra saccades may show: multiple velocity peaks, incorrect acceleration/deceleration asymmetry, or missing post-saccadic ringing.\n\n4. **Fixation - Saccade Mẫu**: Natural gaze alternates between fixations (~200-400ms, stable gaze) and saccades (~20-80ms, rapid shifts). Phương pháp xác minh this pattern — particularly the fixation duration distribution (approximately log-normal) and saccade rate (3-4 per second during reading/scanning). Deepfake có thể cho thấy bất thường fixation-saccade patterns.\n\n5. **Bilateral Saccade Coordination**: Both eyes execute saccades simultaneously (conjugate movements). Phương pháp kiểm tra saccade synchrony between eyes — independent quá trình sinh AI of each eye may produce asynchronous or differently-sized saccades between left and right eyes.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/CVPR.2015.7299081",
+      "title": "Zhang, X. et al. (2015). Appearance-Based Gaze Estimation in the Wild. CVPR."
+    },
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+    }
+  ]
 }

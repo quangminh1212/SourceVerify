@@ -1,22 +1,22 @@
 {
-    "name": "Năng lượng khung hình",
-    "description": "Đo phương sai cường độ pixel tổng thể trên các khung hình video để phát hiện bất thường phân bổ năng lượng phát sinh từ sự không nhất quán thời gian trong các khung hình được tạo độc lập hoặc nội suy.",
-    "algorithm": "Thuật toán phân tích Năng lượng khung hình",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích phân bổ năng lượng khung hình. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích năng lượng khung hình. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Năng lượng khung hình",
+  "description": "Đo phương sai cường độ pixel tổng thể trên các khung hình video để phát hiện bất thường phân bổ năng lượng phát sinh từ sự không nhất quán thời gian trong các khung hình được tạo độc lập hoặc nội suy.",
+  "algorithm": "Thuật toán phân tích Năng lượng khung hình",
+  "mechanism": "Phương pháp này phân tích total frame energy for video forensic detection:\n\n1. **Frame Energy Tính toán**: Total frame energy is computed as E = Σ I(x,y)² over all pixels, along with AC energy (energy excluding DC component, measuring content energy). Per-region energy (face, background, edges, smooth areas) provides a spatial energy map.\n\n2. **Thời gian Energy Hồ sơ**: Frame energy is tracked across time. Natural video shows smooth energy evolution with changes correlated to content (brighter scenes = higher energy, more texture = higher AC energy). Deepfakes may produce energy profiles with bất thường micro-fluctuations from frame-independent generation.\n\n3. **Kênh Energy Phân bố**: Energy distribution across color channels (R, G, B) should be nhất quán with scene illumination. Phương pháp đo lường per-channel energy ratios. Deepfake face insertion may alter channel energy distribution in the vùng khuôn mặt relative to the background.\n\n4. **Tần số - Band Energy Partition**: Frame energy is decomposed into frequency bands (low, medium, high frequency). Natural images partition energy predictably with approximately 1/f spectral character. do AI tạo ra content may show bất thường energy in specific frequency bands — excess energy at the generator's đặc trưng frequencies or insufficient high-frequency energy.\n\n5. **Energy Nhất quán Chấm điểm**: The temporal stability of energy, spatial coherence of energy distribution, and conformity to natural image energy statistics are combined into a forensic score. Systematic energy anomalies — particularly between các vùng khuôn mặt and surrounding content — chỉ ra sự thao tác.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích năng lượng khung hình. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

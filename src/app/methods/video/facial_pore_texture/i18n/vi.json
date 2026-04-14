@@ -1,22 +1,22 @@
 {
-    "name": "Kết cấu lỗ chân lông",
-    "description": "Định lượng mật độ lỗ chân lông, phân bố kích thước và tính đều đặn không gian ở độ phóng đại cao để phát lộ sự vắng mặt vi kết cấu ngẫu nhiên tự nhiên trong vùng mặt tổng hợp GAN.",
-    "algorithm": "Thuật toán phân tích Kết cấu lỗ chân lông",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích vi kết cấu lỗ chân lông mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích kết cấu lỗ chân lông. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Kết cấu lỗ chân lông",
+  "description": "Định lượng mật độ lỗ chân lông, phân bố kích thước và tính đều đặn không gian ở độ phóng đại cao để phát lộ sự vắng mặt vi kết cấu ngẫu nhiên tự nhiên trong vùng mặt tổng hợp GAN.",
+  "algorithm": "Thuật toán phân tích Kết cấu lỗ chân lông",
+  "mechanism": "Phương pháp này phân tích facial pore texture để phát hiện deepfake at the micro-detail level:\n\n1. **Pore Phát hiện**: Individual skin pores are detected in high-resolution facial regions using morphological operators and local contrast enhancement. Pore density, size distribution, and spatial arrangement are measured — human skin has approximately 250-300 pores per cm² on the face with region-dependent variation.\n\n2. **Pore Mẫu Phân tích**: Natural pore patterns exhibit specific spatial statistics — approximately regular spacing with random perturbation (a \"blue noise\" pattern) determined by follicle biology. Phương pháp phân tích the spatial point process of detected pores. do AI tạo ra pores may show: too regular spacing (grid-like), too random spacing, or complete absence in supposedly textured skin areas.\n\n3. **Pore - Scale Kết cấu Nhất quán**: The texture within each pore (depth, shadowing, surrounding skin quality) should be nhất quán with the illumination direction and skin region. Phương pháp xác minh intra-pore rendering quality. bộ sinh AI often produce pore textures with incorrect shadow directions or uniform appearance regardless of facial curvature.\n\n4. **Thời gian Pore Ổn định**: Pores have fixed spatial positions — they don't move between frames. Phương pháp theo dõi pore positions theo thời gian. giữa các khung hình pore position shifts, appearing/disappearing pores, or changing pore sizes indicate per-frame independent rendering by bộ sinh AI.\n\n5. **Regional Pore Phân bố**: Pore density and size vary characteristically across facial regions — larger pores on the nose, medium on cheeks, finer on forehead. Phương pháp kiểm tra whether the detected pore distribution follows anatomical expectations. bộ sinh AI often produce spatially uniform pore patterns ignoring regional anatomical variation.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích kết cấu lỗ chân lông. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }

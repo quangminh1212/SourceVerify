@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán răng",
-    "description": "Phân tích render và sắp xếp răng",
-    "algorithm": "Thuật toán phân tích Nhất quán răng",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích render và sắp xếp răng. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán răng. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        }
-    ]
+  "name": "Nhất quán răng",
+  "description": "Phân tích render và sắp xếp răng",
+  "algorithm": "Thuật toán phân tích Nhất quán răng",
+  "mechanism": "Phương pháp này phân tích teeth rendering and consistency để phát hiện deepfake:\n\n1. **Teeth Phát hiện & Segmentation**: When the mouth is open during speech or smiling, visible teeth are detected and segmented. Individual teeth boundaries, alignment, and arrangement are analyzed mỗi khung hình.\n\n2. **Dental Anatomy Xác minh**: Phương pháp kiểm tra dental anatomy: (a) correct tooth count for visible region, (b) proper tooth shapes (incisors, canines, premolars with distinct morphology), (c) realistic tooth size and spacing, (d) gum line contour. bộ sinh AI often produce blurred, merged, or anatomically incorrect teeth — too many, too few, or with impossible shapes.\n\n3. **Teeth Kết cấu & Màu sắc**: Real teeth show đặc trưng features: translucency at the incisal edge, varying color (slightly yellow body, whiter enamel surface), surface texture (microlines, stain patterns). Phương pháp evaluates teeth rendering quality. Generated teeth are often unrealistically white, uniformly colored, or lacking surface detail.\n\n4. **Thời gian Teeth Ổn định**: Teeth structure is completely rigid — tooth positions, sizes, and arrangement cannot change between frames. Phương pháp theo dõi teeth geometry giữa các khung hình. Changes in visible tooth arrangement (teeth appearing/disappearing, changing shape) indicate quá trình sinh AI where teeth are rendered independently mỗi khung hình.\n\n5. **Teeth - Môi Interaction**: During speech, lips interact with teeth in specific ways — upper teeth visible during /f/ and /v/ sounds, teeth edges visible during particular articulations. Phương pháp kiểm tra teeth-lip coordination. Deepfake có thể cho thấy teeth visibility that doesn't correlate with the spoken phonemes.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán răng. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    }
+  ]
 }

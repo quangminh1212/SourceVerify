@@ -1,22 +1,22 @@
 {
-    "name": "Trôi chảy chuyển động cơ thể",
-    "description": "Phân tích độ mượt chuyển động cơ thể",
-    "algorithm": "Thuật toán phân tích Trôi chảy chuyển động cơ thể",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích độ mượt chuyển động cơ thể. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích trôi chảy chuyển động cơ thể. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Trôi chảy chuyển động cơ thể",
+  "description": "Phân tích độ mượt chuyển động cơ thể",
+  "algorithm": "Thuật toán phân tích Trôi chảy chuyển động cơ thể",
+  "mechanism": "This method analyzes body movement naturalness for deepfake detection following Zheng et al. (2021):\n\n1. **Pose Ước lượng**: Full-body or upper-body pose is estimated per frame using landmark detection (shoulders, elbows, wrists, head, torso). Joint angles and positions are tracked to build temporal motion trajectories for each body part.\n\n2. **Chuyển động Smoothness Phân tích**: Natural body movements follow minimum-jerk trajectories (Flash & Hogan, 1985) — meaning the third derivative of position (jerk) is minimized. The method computes jerk profiles for tracked joints. AI-generated body movements may violate this biological constraint, showing either excessive jerk (unnatural abruptness) or unnaturally perfect smoothness (lacking physiological tremor).\n\n3. **Joint Coordination Patterns**: Natural movements exhibit coordinated joint motion governed by biomechanical coupling. The method analyzes inter-joint correlations — shoulder-elbow coordination during gestures, head-torso coupling during turns. Deepfakes may produce joints that move independently in physically impossible ways.\n\n4. **Thời gian Tần số Phân tích**: Body motion signals are analyzed in frequency domain. Natural movements contain characteristic frequency components: voluntary motion (0-2 Hz), physiological tremor (~8-12 Hz), and postural sway (~0.5 Hz). Generated movements may lack these physiological frequency signatures or produce spectrally flat motion without natural frequency structure.\n\n5. **Fluidity Chấm điểm**: Movement fluidity is quantified by combining jerk metrics, coordination scores, and spectral indicators. Low fluidity scores (jerky, uncoordinated, or spectrally abnormal motion) indicate AI generation. The method is particularly effective for full-body deepfakes where generation artifacts extend beyond the face region.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích trôi chảy chuyển động cơ thể. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

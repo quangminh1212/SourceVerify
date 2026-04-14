@@ -1,22 +1,22 @@
 {
-    "name": "Ringing biên",
-    "description": "Phát hiện hiện tượng Gibbs và dao động quá ngưỡng gần biên sắc nét phát sinh từ cắt ngắn miền tần số trong các lớp nâng mẫu và giải chập của mạng neural.",
-    "algorithm": "Thuật toán phân tích Ringing biên",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích dấu vết ringing biên. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích ringing biên. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Ringing biên",
+  "description": "Phát hiện hiện tượng Gibbs và dao động quá ngưỡng gần biên sắc nét phát sinh từ cắt ngắn miền tần số trong các lớp nâng mẫu và giải chập của mạng neural.",
+  "algorithm": "Thuật toán phân tích Ringing biên",
+  "mechanism": "Phương pháp này phát hiện edge ringing artifacts để phân tích pháp y video:\n\n1. **Gibbs Phenomenon Phát hiện**: Sharp edges may exhibit oscillatory overshoot/undershoot (Gibbs phenomenon) from frequency-domain processing. Phương pháp profiles intensity around strong edges, looking for đặc trưng ringing patterns — alternating bright/dark fringes decaying with distance from the edge.\n\n2. **Ringing Source Phân loại**: Different sources produce different ringing signatures: (a) JPEG/HEVC compression produces block-aligned ringing, (b) upscaling interpolation produces ringing at the interpolation kernel's cutoff frequency, (c) quá trình sinh AI may produce ringing from the generator's convolutional architecture. Phương pháp phân loại observed ringing to identify its source.\n\n3. **Không gian Ringing Nhất quán**: All regions of authentically processed video should show nhất quán ringing characteristics. Phương pháp so sánh ringing patterns between face and background regions — different ringing signatures chỉ ra sự ghép nối, where the face underwent different processing than the background.\n\n4. **Ringing Tần số Phân tích**: The tần số không gian of ringing oscillations cho thấy the processing that caused them. Phương pháp đo lường ringing frequency at multiple edges throughout the image. không nhất quán ringing frequencies between regions indicate content from different processing pipelines.\n\n5. **Thời gian Ringing Theo dõi**: Ringing patterns at static edges should be temporally stable. Phương pháp theo dõi ringing characteristics qua các khung hình — quá trình sinh AI may produce varying ringing artifacts as the generator processes each frame independently, while codec ringing remains nhất quán for static regions qua các khung hình within a GOP.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích ringing biên. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

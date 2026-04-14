@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Laplacian Pyramid Residual",
-    "description": "Phân tích phân bổ năng lượng dư kim tự tháp Laplacian qua các tỷ lệ (Burt & Adelson, 1983).",
-    "algorithm": "Thuật toán phân tích Laplacian Pyramid Residual",
-    "mechanism": "Hệ thống Laplacian Pyramid Residual phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TCOM.1983.1095851",
-            "title": "Burt, P.J. & Adelson, E.H. (1983). The Laplacian Pyramid as a Compact Image Code. IEEE Trans. Communications."
-        },
-        {
-            "url": "https://persci.mit.edu/pub_pdfs/RCA84.pdf",
-            "title": "Adelson, E.H. et al. (1984). Pyramid Methods in Image Processing. RCA Engineer."
-        }
-    ]
+  "name": "Phân tích Laplacian Pyramid Residual",
+  "description": "Phân tích phân bổ năng lượng dư kim tự tháp Laplacian qua các tỷ lệ (Burt & Adelson, 1983).",
+  "algorithm": "Thuật toán phân tích Laplacian Pyramid Residual",
+  "mechanism": "Phương pháp này applies the Burt-Adelson Laplacian pyramid decomposition to phân tích multi-scale residual structures:\n\n1. **Gaussian Pyramid Construction**: The image is iteratively low-pass filtered and downsampled by factor 2 to build a Gaussian pyramid G₀, G₁, ..., Gₙ. Each level captures progressively coarser spatial information.\n\n2. **Laplacian Residual Tính toán**: Each Laplacian level Lₖ = Gₖ − expand(Gₖ₊₁) captures the band-pass detail lost between consecutive Gaussian levels. These residuals encode edges, textures, and fine structures at each spatial scale.\n\n3. **Cross - Scale Tương quan Phân tích**: Natural images exhibit đặc trưng statistical dependencies between Laplacian pyramid levels — adjacent scales show predictable correlation patterns governed by the 1/f power spectrum of natural scenes. do AI tạo ra images often violate these cross-scale relationships.\n\n4. **Kurtosis and Phân bố Profiling**: The coefficient distributions at each pyramid level are analyzed. Natural image Laplacian coefficients follow a leptokurtic (heavy-tailed) distribution well modeled by generalized Gaussian. GAN/diffusion artifacts produce deviations from these expected distributions.\n\n5. **Residual Energy Chấm điểm**: The energy (sum of squared coefficients) at each level is computed and compared against natural image statistics. bất thường energy distributions across scales indicate synthetic generation or manipulation.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TCOM.1983.1095851",
+      "title": "Burt, P.J. & Adelson, E.H. (1983). The Laplacian Pyramid as a Compact Image Code. IEEE Trans. Communications."
+    },
+    {
+      "url": "https://persci.mit.edu/pub_pdfs/RCA84.pdf",
+      "title": "Adelson, E.H. et al. (1984). Pyramid Methods in Image Processing. RCA Engineer."
+    }
+  ]
 }

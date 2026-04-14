@@ -1,22 +1,22 @@
 {
-    "name": "Pha trộn liên khung",
-    "description": "Nhận diện hiện tượng bóng ma và các artifact nội suy alpha giữa các khung hình liên tiếp do pha trộn thời gian trong pipeline deepfake video thiếu tổng hợp khung hình bù chuyển động phù hợp.",
-    "algorithm": "Thuật toán phân tích Pha trộn liên khung",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện dấu vết pha trộn giữa các khung hình. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích pha trộn liên khung. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        }
-    ]
+  "name": "Pha trộn liên khung",
+  "description": "Nhận diện hiện tượng bóng ma và các artifact nội suy alpha giữa các khung hình liên tiếp do pha trộn thời gian trong pipeline deepfake video thiếu tổng hợp khung hình bù chuyển động phù hợp.",
+  "algorithm": "Thuật toán phân tích Pha trộn liên khung",
+  "mechanism": "Phương pháp này phát hiện inter-frame blending artifacts để phát hiện deepfake video:\n\n1. **Frame Blend Phát hiện**: Phương pháp identifies frames that appear to be blends of adjacent frames — visible as ghosting, double-exposure effects, or unnatural motion blur. Frame blending can result from frame rate conversion in the deepfake pipeline or temporal smoothing applied to reduce generation flicker.\n\n2. **Chuyển động Blur Phân tích**: Natural motion blur follows object motion trajectories with blur direction and magnitude nhất quán with the object's velocity. Phương pháp phân tích blur characteristics — artificially blended frames show non-directional or multi-directional blur không nhất quán with any single motion trajectory.\n\n3. **Alpha Pha trộn Residual Phát hiện**: Frame blending thường uses alpha compositing: I_blend = α·I_t + (1−α)·I_{t+1}. This creates đặc trưng intermediate pixel values detectable via distribution analysis. Phương pháp phát hiện frames with bimodal pixel value distributions indicating blend composition.\n\n4. **Thời gian Derivative Phân tích**: The temporal derivative (frame difference) signal is analyzed. Natural video shows smooth temporal derivatives with abrupt changes only at scene cuts. Blended frames produce đặc trưng low-derivative frames (blending reduces temporal contrast) surrounded by normal-derivative frames.\n\n5. **Blend Mẫu Chấm điểm**: The temporal pattern of detected blend artifacts is analyzed. Periodic blending (every N frames) indicates frame rate conversion. Random blending may indicate temporal smoothing to cover generation artifacts. The pattern and frequency of blending provide forensic clues about the manipulation pipeline used.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích pha trộn liên khung. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    }
+  ]
 }

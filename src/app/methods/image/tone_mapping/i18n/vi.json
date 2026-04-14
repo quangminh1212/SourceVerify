@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích ánh xạ tông",
-    "description": "Phân tích dấu vết ánh xạ tông HDR",
-    "algorithm": "Thuật toán phân tích Phân tích ánh xạ tông",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích dấu vết ánh xạ tông HDR. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phân tích ánh xạ tông. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ]
+  "name": "Phân tích ánh xạ tông",
+  "description": "Phân tích dấu vết ánh xạ tông HDR",
+  "algorithm": "Thuật toán phân tích Phân tích ánh xạ tông",
+  "mechanism": "This method analyzes tone mapping characteristics for image forensic analysis:\n\n1. **Tone Curve Ước lượng**: The effective tone curve (mapping from scene luminance to pixel values) is estimated from the image content. This is done by analyzing: highlight rolloff behavior, shadow detail rendering, and the overall luminance distribution relative to expected scene statistics.\n\n2. **Tone Ánh xạ Operator Phát hiện**: Different cameras and processing pipelines apply different tone mapping operators (TMOs). The method identifies the TMO type — standard curves (sRGB gamma), camera-specific tone curves (S-curves), HDR tone mapping (Reinhard, Drago, Mantiuk), or AI-generated tone mapping. AI generators learn tone mapping from their training data and may produce inconsistent or unusual tone curves.\n\n3. **Per - Vùng Tone Response Phân tích**: The local tone response is analyzed in different image regions. In single-capture images, the same tone curve applies globally. Composite images may show different effective tone curves in different regions — a key indicator of manipulation.\n\n4. **Dynamic Range Nhất quán**: The effective dynamic range and its distribution across the image are analyzed. Natural single-capture images have consistent dynamic range limited by the sensor. AI-generated images may show dynamic range inconsistencies — regions with impossible dynamic range extension or unnatural highlight-shadow balance.\n\n5. **Tone Ánh xạ Forensic Score**: Tone mapping features (estimated TMO parameters, per-region tone response consistency, dynamic range analysis) are combined into a forensic score. The score captures tone mapping inconsistencies indicative of compositing, AI generation, or post-processing manipulation.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích phân tích ánh xạ tông. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ]
 }

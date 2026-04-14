@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Wavelet Packet Decomposition",
-    "description": "Áp dụng phân tích gói wavelet đầy đủ cho phân tích năng lượng dải con chi tiết (Coifman & Wickerhauser, 1992).",
-    "algorithm": "Thuật toán phân tích Wavelet Packet Decomposition",
-    "mechanism": "Hệ thống Wavelet Packet Decomposition phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/18.119732",
-            "title": "Coifman, R.R. & Wickerhauser, M.V. (1992). Entropy-Based Algorithms for Best Basis Selection. IEEE TIT."
-        },
-        {
-            "url": "https://doi.org/10.1109/83.862633",
-            "title": "Chang, S.G. et al. (2000). Adaptive Wavelet Thresholding for Image Denoising. IEEE TIP."
-        }
-    ]
+  "name": "Phân tích Wavelet Packet Decomposition",
+  "description": "Áp dụng phân tích gói wavelet đầy đủ cho phân tích năng lượng dải con chi tiết (Coifman & Wickerhauser, 1992).",
+  "algorithm": "Thuật toán phân tích Wavelet Packet Decomposition",
+  "mechanism": "Phương pháp này applies Wavelet Packet Decomposition (WPD) following Coifman & Wickerhauser (1992) for comprehensive frequency-domain forensic analysis:\n\n1. **Full Wavelet Packet Tree**: Unlike standard DWT (which only decomposes the approximation subband), WPD recursively decomposes both approximation and detail subbands, creating a full binary tree of 2ⁿ subbands at depth n. This provides uniform frequency resolution across the entire spectrum.\n\n2. **Best Basis Selection**: The optimal basis is selected via entropy-based cost function (Shannon entropy, log-energy, or threshold counting) minimization over the packet tree. The best basis structure itself is forensically informative — natural images optimize differently than do AI tạo ra ones.\n\n3. **Subband Energy Phân bố**: Energy distribution across all wavelet packet subbands is computed. Natural images follow predictable energy decay patterns related to the 1/f spectral falloff. AI artifacts produce bất thường energy in specific subbands — GAN grid artifacts appear as energy peaks at đặc trưng spatial frequencies.\n\n4. **Inter - Subband Tương quan Phân tích**: Cross-correlations between sibling and parent-child subbands capture statistical dependencies inherent in natural images. do AI tạo ra images often exhibit altered inter-subband correlation structures — either excessive independence (failing to replicate natural dependencies) or artificial correlations from generator architectures.\n\n5. **Hệ số Phân bố Profiling**: Wavelet packet coefficient distributions at each node are modeled. Natural image coefficients follow generalized Gaussian distributions with scale-dependent parameters. Deviations from these models — particularly in high-frequency subbands where bộ sinh AI struggle to reproduce correct statistics — are quantified for forensic scoring.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/18.119732",
+      "title": "Coifman, R.R. & Wickerhauser, M.V. (1992). Entropy-Based Algorithms for Best Basis Selection. IEEE TIT."
+    },
+    {
+      "url": "https://doi.org/10.1109/83.862633",
+      "title": "Chang, S.G. et al. (2000). Adaptive Wavelet Thresholding for Image Denoising. IEEE TIP."
+    }
+  ]
 }

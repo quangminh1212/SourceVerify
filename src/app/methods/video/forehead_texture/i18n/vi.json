@@ -1,22 +1,22 @@
 {
-    "name": "Kết cấu trán",
-    "description": "Phân tích vi mẫu và kết cấu trán",
-    "algorithm": "Thuật toán phân tích Kết cấu trán",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích vi mẫu và kết cấu trán. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích kết cấu trán. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Kết cấu trán",
+  "description": "Phân tích vi mẫu và kết cấu trán",
+  "algorithm": "Thuật toán phân tích Kết cấu trán",
+  "mechanism": "Phương pháp này phân tích forehead skin texture để phát hiện deepfake:\n\n1. **Forehead Vùng Trích xuất**: The forehead region is segmented mỗi khung hình — bounded by hairline, eyebrows, and temples. This region is geometrically normalized to compensate for head tilt and provide nhất quán texture analysis qua các khung hình.\n\n2. **Multi - Scale Kết cấu Phân tích**: Forehead texture is analyzed at multiple scales: macro (expression wrinkles, vein visibility), meso (pores, fine wrinkles), and micro (skin grain, peach fuzz). Natural foreheads exhibit đặc trưng texture at each scale. do AI tạo ra foreheads often show texture quality that drops off at finer scales.\n\n3. **Expression - Kết cấu Tương quan**: Forehead texture changes predictably with expressions — horizontal wrinkles appear with brow raising (frontalis contraction), vertical wrinkles with brow furrowing (corrugator contraction). Phương pháp xác minh that texture changes correlate correctly with detected expressions. Deepfake có thể cho thấy expression without corresponding wrinkle formation.\n\n4. **Sweat/Sebum Indicator Phân tích**: Real foreheads show subtle specular highlights from skin oils/perspiration, with đặc trưng spatial distribution. Phương pháp phát hiện these physiological indicators — bộ sinh AI thường don't model skin surface moisture, producing either uniformly matte or uniformly shiny foreheads.\n\n5. **Thời gian Kết cấu Ổn định**: Fine forehead texture (pore positions, stable wrinkles) should remain fixed qua các khung hình. Phương pháp theo dõi micro-texture consistency — giữa các khung hình variations in pore patterns or shifting wrinkle positions indicate per-frame independent rendering by bộ sinh AI.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích kết cấu trán. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }

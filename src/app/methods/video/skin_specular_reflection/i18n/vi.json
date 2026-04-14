@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Skin Specular Reflection",
-    "description": "Phân tích mẫu phản xạ gương da — da AI thường có điểm sáng gương bất thực tế.",
-    "algorithm": "Thuật toán phân tích Skin Specular Reflection",
-    "mechanism": "Hệ thống Skin Specular Reflection phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
-            "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
-        },
-        {
-            "url": "https://doi.org/10.1109/WIFS47025.2019.9035099",
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WIFS."
-        }
-    ]
+  "name": "Phân tích Skin Specular Reflection",
+  "description": "Phân tích mẫu phản xạ gương da — da AI thường có điểm sáng gương bất thực tế.",
+  "algorithm": "Thuật toán phân tích Skin Specular Reflection",
+  "mechanism": "Phương pháp này phân tích skin specular reflection để phát hiện deepfake:\n\n1. **Specular Component Trích xuất**: The specular (glossy) component of skin reflectance is separated from the diffuse (matte) component using dichromatic reflection model decomposition. Specular highlights appear where skin surface is oriented to reflect light directly toward the camera.\n\n2. **Specular Highlight Phân bố**: The spatial distribution of skin specular highlights should follow the face's 3D geometry and illumination. Phương pháp kiểm tra highlight positions against expected locations — forehead center, nose bridge and tip, cheekbone apexes. bộ sinh AI may produce specular highlights at incorrect locations or with wrong intensity distributions.\n\n3. **Vật lý Specular Model**: Skin specular reflection follows the Torrance-Sparrow (microfacet) BRDF model with đặc trưng roughness parameters. Phương pháp đo lường specular highlight shape and falloff, comparing against physical skin reflectance models. Generated highlights may show non-physical profiles — too sharp, too broad, or incorrect Fresnel behavior.\n\n4. **Thời gian Specular Dynamics**: As the head moves, specular highlights should slide across the face following the changing reflection geometry. Phương pháp theo dõi highlight positions relative to landmarks — highlights should move according to the rotation of the surface normal relative to the light direction. Incorrect highlight dynamics indicate quá trình sinh AI.\n\n5. **Sweat/Oil Physics**: Facial skin specularity varies with surface moisture — oily regions (forehead, nose) are more specular. This distribution should be nhất quán qua các khung hình and follow physiological patterns. bộ sinh AI thường don't model skin moisture variation, producing uniform or incorrectly distributed specularity.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2020.3009287",
+      "title": "Ciftci, U.A. et al. (2020). FakeCatcher: Detection of Synthetic Portrait Videos Using Biological Signals. IEEE TPAMI."
+    },
+    {
+      "url": "https://doi.org/10.1109/WIFS47025.2019.9035099",
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WIFS."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Dòng gradient cực đại",
-    "description": "Phân tích hướng dòng gradient chiếm ưu thế",
-    "algorithm": "Thuật toán phân tích Dòng gradient cực đại",
-    "mechanism": "Phương pháp này phân tích ảnh ở cấp độ pixel để phát hiện dấu vết AI:\n\n1. **Tiền xử lý ảnh**: Ảnh đầu vào được tải và chuyển đổi sang không gian màu phù hợp.\n\n2. **Trích xuất đặc trưng**: Phân tích hướng dòng gradient chiếm ưu thế. Các đặc trưng liên quan được tính toán trên lưới pixel.\n\n3. **Phân tích mẫu**: Các phép đo thống kê được tính từ đặc trưng để nhận dạng bất thường.\n\n4. **Phát hiện dị thường**: Kết quả được so sánh với chuẩn từ ảnh camera thật và ảnh AI.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) được tính dựa trên mức độ bất thường.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
-    "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
-    "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích dòng gradient cực đại. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
-    "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
-    "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
-        }
-    ]
+  "name": "Dòng gradient cực đại",
+  "description": "Phân tích hướng dòng gradient chiếm ưu thế",
+  "algorithm": "Thuật toán phân tích Dòng gradient cực đại",
+  "mechanism": "This method analyzes maximal gradient flow for image forensic analysis:\n\n1. **Gradient Field Tính toán**: The full gradient vector field ∇I(x,y) = (∂I/∂x, ∂I/∂y) is computed across the image. The gradient magnitude and direction at each point characterize the local image structure.\n\n2. **Gradient Flow Tracing**: Starting from each pixel, the maximal gradient ascent path is traced — following the direction of steepest intensity increase. These paths converge at local intensity maxima (peaks). The network of gradient flow paths reveals the image's topological structure.\n\n3. **Flow Convergence Phân tích**: In natural images, gradient flow paths show smooth convergence patterns consistent with continuous intensity surfaces. The method analyzes convergence patterns — AI-generated images may show anomalous convergence: flow paths that terminate prematurely, converge in non-physical patterns, or show grid-aligned artifacts from the generation architecture.\n\n4. **Watershed - Like Segmentation**: The gradient flow induces a natural segmentation of the image into basins of attraction (each associated with a local maximum). The shapes and boundaries of these basins reflect the image's natural structure. Generated images may show basin shapes inconsistent with the depicted scene physics.\n\n5. **Flow Topology Chấm điểm**: The topological complexity of the gradient flow field (number of critical points: maxima, minima, saddle points, and their spatial distribution) is analyzed. Natural images follow predictable topological statistics. The score measures deviation from expected gradient flow topology, flagging images with anomalous gradient structure.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: ảnh\nĐầu vào: Dữ liệu pixel thô / file ảnh\nĐầu ra: Điểm tin cậy (0-100)\nXử lý: Canvas API phía client\nKhông gian màu: RGB, Grayscale tùy phương pháp",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-90% khi sử dụng độc lập. Hiệu suất cao nhất trên ảnh chưa nén và có thể giảm khi nén JPEG nặng hoặc mã hóa lại từ mạng xã hội.",
+  "source": "Nghiên cứu pháp y ảnh số. Dựa trên xử lý tín hiệu và nguyên lý nhiếp ảnh tính toán.",
+  "useCase": "Phát hiện ảnh AI hoặc bị thao túng thông qua phân tích dòng gradient cực đại. Phương pháp này nhận dạng mẫu và dấu vết đặc trưng của AI, đóng góp vào phân tích pháp y ảnh toàn diện.",
+  "strengths": "• Xử lý nhanh phía client bằng Canvas API\n• Hiệu quả phát hiện dấu vết AI cụ thể\n• Hoạt động với định dạng ảnh phổ biến (JPEG, PNG, WebP)\n• Kết hợp được với nhiều phương pháp bổ sung\n• Dựa trên nghiên cứu pháp y ảnh đã thiết lập",
+  "limitations": "• Hiệu suất thay đổi theo mức nén ảnh\n• Mã hóa lại từ mạng xã hội có thể ảnh hưởng\n• Tốt nhất khi kết hợp nhiều phương pháp\n• Có thể gây dương tính giả trên ảnh xử lý nặng\n• Hiệu quả phụ thuộc vào mô hình AI tạo ảnh",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
+    }
+  ]
 }

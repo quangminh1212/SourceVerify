@@ -1,22 +1,22 @@
 {
-    "name": "Biên mặt nạ",
-    "description": "Phát hiện dấu vết biên mặt nạ khuôn mặt",
-    "algorithm": "Thuật toán phân tích Biên mặt nạ",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện dấu vết biên mặt nạ khuôn mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên mặt nạ. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
-            "url": "https://arxiv.org/abs/1908.05932"
-        }
-    ]
+  "name": "Biên mặt nạ",
+  "description": "Phát hiện dấu vết biên mặt nạ khuôn mặt",
+  "algorithm": "Thuật toán phân tích Biên mặt nạ",
+  "mechanism": "Phương pháp này specifically targets the face mask edge artifacts produced by face-swap deepfakes:\n\n1. **Khuôn mặt Mask Vùng Ước lượng**: The likely face mask used in the Quá trình tạo deepfake is estimated by analyzing the spatial extent of nội dung được tạo. Face-swap models use face detection to define a mask region (thường a convex hull of landmarks or Delaunay triangulation), then blend the synthesized face within this mask.\n\n2. **Cạnh Artifact Phát hiện**: At the mask boundary, multiple artifact types are detected: (a) color seams where generated and original content don't color-match perfectly, (b) texture discontinuities from different rendering qualities, (c) double edges where mask feathering creates a visible transition zone, (d) compression artifact differences between generated and original regions.\n\n3. **Feathering Phân tích**: The mask edge feathering (smooth alpha transition) is characterized. Phương pháp đo lường feathering width, symmetry, and consistency. Deepfake feathering tends to be uniform width around the entire mask, while natural face boundaries have varying transition characteristics (sharp at hairline, gradual at jaw-neck junction).\n\n4. **Mask Shape Characterization**: The inferred mask shape is analyzed. Common deepfake masks follow landmark-derived geometric shapes. Phương pháp phát hiện unnaturally geometric or symmetric face boundaries không nhất quán with natural facial contours. Specific deepfake architectures produce đặc trưng mask shapes that can be identified.\n\n5. **Thời gian Mask Cạnh Theo dõi**: The face mask edge position and artifact characteristics are tracked qua các khung hình. In well-executed deepfakes, the mask theo dõi face landmarks frame-by-frame, but the mask edge artifacts (color seams, texture mismatches) may vary in intensity — becoming more visible in challenging lighting or at extreme head poses. These temporal variations are quantified for scoring.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên mặt nạ. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
+      "url": "https://arxiv.org/abs/1908.05932"
+    }
+  ]
 }

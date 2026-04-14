@@ -1,22 +1,22 @@
 {
-    "name": "Liên tục đường viền",
-    "description": "Phân tích mẫu liên tục cạnh đường viền",
-    "algorithm": "Thuật toán phân tích Liên tục đường viền",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu liên tục cạnh đường viền. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích liên tục đường viền. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Liên tục đường viền",
+  "description": "Phân tích mẫu liên tục cạnh đường viền",
+  "algorithm": "Thuật toán phân tích Liên tục đường viền",
+  "mechanism": "This method analyzes facial contour continuity for deepfake detection following Li et al. (2020) Face X-ray:\n\n1. **Facial Đường viền Trích xuất**: The complete facial contour — forehead hairline, temple, cheekbone, jawline, chin — is traced per frame using high-resolution edge detection and facial landmark interpolation. The contour is parameterized as a smooth curve with measured curvature at each point.\n\n2. **Curvature Continuity Phân tích**: Natural facial contours are C² continuous (smooth second derivative) except at anatomical feature boundaries (chin point, jaw angle). The method detects breaks in curvature continuity — deepfake face swaps may produce contour kinks or unnaturally straight segments where the generated face mesh interfaces with the original face boundary.\n\n3. **Đường viền - Da Ranh giới Phân tích**: Following Li et al.'s Face X-ray approach, the method examines the blending boundary between the face and surrounding area. Authentic faces have seamless continuation from face to neck/hair. Deepfakes create a detectable blending boundary where the generated face patch meets the original footage, visible as subtle texture or color discontinuities along the contour.\n\n4. **Thời gian Đường viền Theo dõi**: The facial contour is tracked across frames. Natural contours deform smoothly according to facial muscles and head rotation. Deepfake contours may exhibit temporal jitter — small frame-to-frame fluctuations in contour position inconsistent with smooth physical motion, caused by independent per-frame face generation.\n\n5. **Multi - Scale Đường viền Chấm điểm**: Contour continuity is analyzed at multiple scales: coarse (overall shape), medium (local curvature), and fine (pixel-level edge quality). Natural faces show consistent quality at all scales. Deepfakes may show good coarse continuity but poor fine-scale continuity at blending boundaries, yielding a graded forensic score.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích liên tục đường viền. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Chất cảm da thực tế",
-    "description": "Phân tích vi kết cấu da và chi tiết lỗ chân lông",
-    "algorithm": "Thuật toán phân tích Chất cảm da thực tế",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích vi kết cấu da và chi tiết lỗ chân lông. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích chất cảm da thực tế. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Chất cảm da thực tế",
+  "description": "Phân tích vi kết cấu da và chi tiết lỗ chân lông",
+  "algorithm": "Thuật toán phân tích Chất cảm da thực tế",
+  "mechanism": "Phương pháp này phân tích skin texture characteristics để phát hiện deepfake video:\n\n1. **Multi - Scale Da Kết cấu Trích xuất**: Skin texture is analyzed at multiple scales using Gabor filters and Local Binary Pattern (LBP) descriptors. The texture hierarchy captures: macro-texture (wrinkles, expression lines), meso-texture (pores, fine wrinkles), and micro-texture (skin grain, cell patterns).\n\n2. **Kết cấu Quality Đánh giá**: Natural skin texture shows đặc trưng statistical properties at each scale — specific kurtosis, spatial autocorrelation, and frequency content. Phương pháp evaluates texture quality against natural skin models. do AI tạo ra skin often shows: over-smoothed texture (lost high-frequency detail), artificial periodicity, or textures that don't scale correctly with resolution.\n\n3. **Regional Kết cấu Nhất quán**: Different facial regions have different texture characteristics (nose more textured than cheeks). These regional differences should be physically motivated and nhất quán across the face. Phương pháp maps texture distribution and kiểm tra for anomalies — bộ sinh AI may produce không nhất quán regional texture, particularly at the boundaries between separately generated regions.\n\n4. **Kết cấu - Expression Interaction**: During expressions, skin texture changes predictably: wrinkles deepen, pores stretch across tension lines, and skin becomes smoother in compressed regions. Phương pháp xác minh texture-expression correspondence. Deepfake có thể cho thấy expressions without corresponding texture changes.\n\n5. **Thời gian Kết cấu Ổn định**: Fixed skin texture elements (pores, stable wrinkles, moles) should maintain nhất quán positions qua các khung hình. Phương pháp theo dõi landmark texture features theo thời gian — temporal texture instability indicates per-frame independent rendering đặc trưng of quá trình sinh AI.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích chất cảm da thực tế. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }

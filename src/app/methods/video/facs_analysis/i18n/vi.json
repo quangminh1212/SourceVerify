@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích FACS Action Unit",
-    "description": "Phân tích đơn vị hành động FACS để phát hiện tổ hợp cơ mặt bất khả thi trong deepfake (Ekman & Friesen, 1978).",
-    "algorithm": "Thuật toán phân tích FACS Action Unit Analysis",
-    "mechanism": "Hệ thống FACS Action Unit Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://www.paulekman.com/facial-action-coding-system/",
-            "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
-        },
-        {
-            "url": "https://doi.org/10.1109/TPAMI.2017.2654479",
-            "title": "Martinez, B. et al. (2017). Automatic Analysis of Facial Actions. IEEE TPAMI."
-        }
-    ]
+  "name": "Phân tích FACS Action Unit",
+  "description": "Phân tích đơn vị hành động FACS để phát hiện tổ hợp cơ mặt bất khả thi trong deepfake (Ekman & Friesen, 1978).",
+  "algorithm": "Thuật toán phân tích FACS Action Unit Analysis",
+  "mechanism": "This method performs Facial Action Coding System (FACS) analysis for deepfake detection following Ekman & Friesen's framework:\n\n1. **Toàn diện AU Phát hiện**: All 30+ FACS action units are detected per frame with intensity ratings (A-E). This includes upper face AUs (AU1-7), lower face AUs (AU9-28), and miscellaneous AUs (AU38, AU39, AU43, AU45, AU46). Each AU is tracked with its activation intensity over time.\n\n2. **AU Combination Validity**: The detected AU combination per frame is checked against the FACS combinatorial rules. Certain AU combinations are anatomically impossible (e.g., full AU1+AU4 simultaneous activation is constrained), while others co-occur in specific emotional expressions. The method flags anatomically invalid AU combinations produced by deepfake generators.\n\n3. **Emotional Expression Nhất quán**: Detected AU combinations are mapped to basic emotions (happiness:AU6+12, sadness:AU1+4+15, anger:AU4+5+7+23, etc.) and verified for emotional coherence. The method checks whether the expression is a valid emotional state and whether expression transitions follow logical emotional progression. Deepfakes may produce incoherent or emotionally impossible AU patterns.\n\n4. **AU Intensity Dynamics**: AU intensity changes follow neuromuscular dynamics — smooth onset, peak, and offset with physiologically constrained velocities. The method analyzes intensity dynamics of each active AU. Deepfakes may show unnatural intensity profiles: stepped changes, too-fast transitions, or perfectly linear ramps instead of natural muscle contraction curves.\n\n5. **FACS - Lời nói Coordination**: During speech, specific AU patterns correlate with phoneme articulation (AU25/26/27 for jaw opening, AU22/28 for lip pucker). The method verifies FACS-speech temporal coordination. Deepfakes may show misaligned lip-jaw AU patterns relative to the audio speech signal.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://www.paulekman.com/facial-action-coding-system/",
+      "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
+    },
+    {
+      "url": "https://doi.org/10.1109/TPAMI.2017.2654479",
+      "title": "Martinez, B. et al. (2017). Automatic Analysis of Facial Actions. IEEE TPAMI."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Phoneme-Viseme Mapping",
-    "description": "Xác thực tương ứng âm vị-hình vị — deepfake thường không ánh xạ đúng âm vị âm thanh sang hình dạng môi.",
-    "algorithm": "Thuật toán phân tích Phoneme-Viseme Mapping",
-    "mechanism": "Hệ thống Phoneme-Viseme Mapping phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
-            "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
-        },
-        {
-            "url": "https://doi.org/10.1109/CVPR46437.2021.00579",
-            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach to Face Forgery Detection. CVPR."
-        }
-    ]
+  "name": "Phân tích Phoneme-Viseme Mapping",
+  "description": "Xác thực tương ứng âm vị-hình vị — deepfake thường không ánh xạ đúng âm vị âm thanh sang hình dạng môi.",
+  "algorithm": "Thuật toán phân tích Phoneme-Viseme Mapping",
+  "mechanism": "Phương pháp này creates and phân tích phoneme-to-viseme mapping để phát hiện deepfake:\n\n1. **Toàn diện Viseme Ánh xạ**: A many-to-one mapping from phonemes to visemes is established and verified per video. Multiple phonemes map to the same viseme (e.g., /p/, /b/, /m/ all produce bilabial closure). Phương pháp kiểm tra that phonemes with the same target viseme actually produce the same visual appearance.\n\n2. **Viseme Cluster Phân tích**: For each viseme category, all instances across the video are collected and analyzed for consistency. The visual appearance of the same viseme should be nhất quán throughout the video. High intra-viseme variance suggests quá trình sinh AI where the lip model doesn't consistently reproduce the same visual targets.\n\n3. **Speaker - Specific Viseme Model**: Each speaker has đặc trưng viseme shapes determined by their dental/skeletal structure and speaking habits. Phương pháp builds a per-speaker viseme model and kiểm tra temporal consistency. Deepfake có thể cho thấy không nhất quán viseme shapes as the generator doesn't maintain a stable articulatory model.\n\n4. **Transition Trajectory Phân tích**: Viseme-to-viseme transitions follow curved trajectories through the lip configuration space, determined by articulatory dynamics. Phương pháp phân tích transition trajectories for physical plausibility — do AI tạo ra transitions may take shorter (unnatural shortcuts) or longer (meandering) paths than anatomically possible.\n\n5. **Viseme Duration Phân bố**: Each viseme has a đặc trưng duration distribution dependent on the phonemic context and speaking rate. Phương pháp kiểm tra whether viseme durations follow expected distributions. AI lip generation may produce visemes with incorrect or implausibly uniform durations.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/CVPRW50498.2020.00338",
+      "title": "Agarwal, S. et al. (2020). Detecting Deep-Fake Videos from Phoneme-Viseme Mismatches. CVPR Workshop."
+    },
+    {
+      "url": "https://doi.org/10.1109/CVPR46437.2021.00579",
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach to Face Forgery Detection. CVPR."
+    }
+  ]
 }

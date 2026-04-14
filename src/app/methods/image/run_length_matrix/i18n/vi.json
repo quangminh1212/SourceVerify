@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Run Length Matrix",
-    "description": "Tính đặc trưng ma trận chiều dài chuỗi mức xám cho đặc tả kết cấu — phát hiện dấu vết làm mịn AI (Galloway, 1975).",
-    "algorithm": "Thuật toán phân tích Run Length Matrix Analysis",
-    "mechanism": "Hệ thống Run Length Matrix Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1016/S0146-664X(75)80008-6",
-            "title": "Galloway, M.M. (1975). Texture Analysis Using Gray Level Run Lengths. Computer Graphics and Image Processing."
-        },
-        {
-            "url": "https://doi.org/10.1109/83.725367",
-            "title": "Tang, X. (1998). Texture Information in Run-Length Matrices. IEEE TIP."
-        }
-    ]
+  "name": "Phân tích Run Length Matrix",
+  "description": "Tính đặc trưng ma trận chiều dài chuỗi mức xám cho đặc tả kết cấu — phát hiện dấu vết làm mịn AI (Galloway, 1975).",
+  "algorithm": "Thuật toán phân tích Run Length Matrix Analysis",
+  "mechanism": "This method applies Galloway's (1975) Gray Level Run Length Matrix (GLRLM) for texture-based forensic analysis:\n\n1. **Run Length Encoding**: For each direction θ (0°, 45°, 90°, 135°), the image is scanned to identify runs — consecutive pixels with the same gray level. The GLRLM R(i,j|θ) counts the number of runs with gray level i and length j in direction θ.\n\n2. **Trích xuất đặc trưng**: Standard GLRLM features are computed: - Short Run Emphasis (SRE): Measures fine texture density - Long Run Emphasis (LRE): Quantifies coarse texture presence - Gray Level Non-Uniformity (GLN): Measures gray level distribution uniformity - Run Length Non-Uniformity (RLN): Quantifies run length distribution uniformity - Run Percentage (RP): Ratio of runs to total pixel count\n\n3. **Directional Nhất quán Phân tích**: Natural images show smooth, physically motivated directional variation in GLRLM features. AI-generated images often exhibit either excessive directional uniformity (over-smoothed textures) or implausible directional discontinuities at generation boundaries.\n\n4. **Higher - Order Statistics**: Following Tang (1998), higher-order run length features including Low/High Gray Level Run Emphasis (LGRE/HGRE) capture subtle gray level-run length correlations that differ between natural and synthetic textures.\n\n5. **Forensic Chấm điểm**: GLRLM feature vectors from image blocks are compared against natural image texture statistics. AI-generated images typically produce anomalous short-run-to-long-run ratios and unnatural gray level uniformity patterns, yielding elevated detection scores.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1016/S0146-664X(75)80008-6",
+      "title": "Galloway, M.M. (1975). Texture Analysis Using Gray Level Run Lengths. Computer Graphics and Image Processing."
+    },
+    {
+      "url": "https://doi.org/10.1109/83.725367",
+      "title": "Tang, X. (1998). Texture Information in Run-Length Matrices. IEEE TIP."
+    }
+  ]
 }

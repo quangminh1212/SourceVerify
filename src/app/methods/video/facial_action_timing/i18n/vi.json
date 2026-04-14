@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Facial Action Timing",
-    "description": "Phân tích thời gian bắt đầu, đỉnh và kết thúc đơn vị hành động khuôn mặt — biểu cảm AI có động lực thời gian bất tự nhiên.",
-    "algorithm": "Thuật toán phân tích Facial Action Timing Analysis",
-    "mechanism": "Hệ thống Facial Action Timing Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://www.paulekman.com/facial-action-coding-system/",
-            "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
-        },
-        {
-            "url": "https://doi.org/10.1109/CVPR42600.2020.00505",
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR."
-        }
-    ]
+  "name": "Phân tích Facial Action Timing",
+  "description": "Phân tích thời gian bắt đầu, đỉnh và kết thúc đơn vị hành động khuôn mặt — biểu cảm AI có động lực thời gian bất tự nhiên.",
+  "algorithm": "Thuật toán phân tích Facial Action Timing Analysis",
+  "mechanism": "Phương pháp này phân tích the temporal dynamics of facial action units để phát hiện deepfake:\n\n1. **Action Unit Thời gian Profiling**: Each FACS action unit activation is profiled theo thời gian, measuring onset velocity (rate of muscle contraction initiation), peak intensity, sustain duration, and offset velocity. Natural facial actions follow stereotyped temporal profiles governed by neuromuscular physiology.\n\n2. **Timing Regularity Phân tích**: Natural facial actions show specific timing distributions — spontaneous smiles onset in ~0.5s, reflexive blinks in ~0.1s, surprise reactions in ~0.25s. Phương pháp kiểm tra whether detected AU timing falls within physiologically valid ranges. do AI tạo ra facial actions may show unrealistic timing — too fast, too slow, or uniformly timed.\n\n3. **Inter - AU Thời gian Coordination**: When multiple AUs activate together (e.g., smile = AU6 + AU12), their relative timing follows biomechanical constraints — zygomatic major contracts before orbicularis oculi. Phương pháp kiểm tra inter-AU timing relationships. Deepfakes may produce simultaneous AU activation lacking natural temporal offsets.\n\n4. **Action - Reaction Timing**: In conversation, facial actions follow a temporal structure: reaction expressions appear after the triggering event with đặc trưng delays (200-500ms for emotional reactions). Phương pháp evaluates whether expression timing is contextually appropriate. do AI tạo ra faces may show incorrect action-reaction timing.\n\n5. **Thời gian Đối xứng Đánh giá**: Natural facial actions show slight bilateral temporal asymmetry — the dominant side activates marginally earlier. Phương pháp đo lường left-right onset timing differences. Perfect bilateral temporal symmetry or excessive asymmetry indicates quá trình sinh AI artifacts.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://www.paulekman.com/facial-action-coding-system/",
+      "title": "Ekman, P. & Friesen, W.V. (1978). Facial Action Coding System. Consulting Psychologists Press."
+    },
+    {
+      "url": "https://doi.org/10.1109/CVPR42600.2020.00505",
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR."
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích đối xứng tai",
-    "description": "Kiểm tra hình dạng và đối xứng tai",
-    "algorithm": "Thuật toán phân tích Phân tích đối xứng tai",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Kiểm tra hình dạng và đối xứng tai. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích đối xứng tai. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Phân tích đối xứng tai",
+  "description": "Kiểm tra hình dạng và đối xứng tai",
+  "algorithm": "Thuật toán phân tích Phân tích đối xứng tai",
+  "mechanism": "Phương pháp này phân tích bilateral ear symmetry để phát hiện deepfake:\n\n1. **Bilateral Ear Phát hiện**: Both ears are detected when visible. Their geometric landmarks — helix attachment point, lobule tip, tragion, ear length, ear width, protrusion angle — are measured mỗi khung hình.\n\n2. **Đối xứng Phân tích**: Natural ears exhibit nhất quán but imperfect bilateral symmetry (minor asymmetry is normal). Phương pháp định lượng symmetry metrics: size ratio, shape similarity (procrustes distance), and protrusion angle difference. Deepfakes may produce: (a) perfectly symmetric ears (too artificial), (b) grossly asymmetric ears (generator inconsistency), or (c) ears symmetric in ways không nhất quán with natural anatomical variation.\n\n3. **Head Pose - Corrected So sánh**: Apparent ear asymmetry changes with head pose — the closer ear appears larger due to perspective. Phương pháp corrects for head pose using estimated 3D head orientation, comparing ears in a pose-normalized framework. Deepfake có thể cho thấy incorrect perspective scaling of ears.\n\n4. **Thời gian Đối xứng Ổn định**: The ratio and shape relationship between ears should remain constant qua các khung hình (bone/cartilage doesn't change shape). Phương pháp theo dõi bilateral symmetry metrics theo thời gian — temporal variation in ear symmetry indicates generation artifacts where the two ears are rendered independently mỗi khung hình.\n\n5. **Đối xứng Bất thường Chấm điểm**: The combined assessment of static symmetry plausibility, pose-corrected comparison, and temporal stability generates a forensic score. Methods like FaceForensics++ have shown that peripheral các vùng khuôn mặt (ears, hairline) carry important manipulation cues often overlooked by face-centric generators.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích đối xứng tai. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

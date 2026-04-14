@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán nhiễu video",
-    "description": "Kiểm tra tính nhất quán của mẫu nhiễu trên các vùng khung hình",
-    "algorithm": "Thuật toán phân tích Nhất quán nhiễu video",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Kiểm tra tính nhất quán của mẫu nhiễu trên các vùng khung hình. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán nhiễu video. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Nhất quán nhiễu video",
+  "description": "Kiểm tra tính nhất quán của mẫu nhiễu trên các vùng khung hình",
+  "algorithm": "Thuật toán phân tích Nhất quán nhiễu video",
+  "mechanism": "Phương pháp này phân tích video noise consistency để phát hiện pháp y:\n\n1. **Nhiễu Ước lượng**: Per-region noise level and noise characteristics are estimated from each frame using smooth-region analysis and noise estimation algorithms. The noise model (Gaussian, Poisson, mixed) and parameters (variance, spatial correlation) are determined.\n\n2. **Nhiễu Không gian Nhất quán**: Camera noise should be spatially nhất quán — same sensor, same noise for all regions at a given signal level. Phương pháp so sánh noise characteristics between face and background. Deepfake composites show noise mismatches — the khuôn mặt được tạo has different noise (from the generator) than the captured background (from the camera sensor).\n\n3. **Nhiễu - Tín hiệu Relationship**: Camera noise follows specific noise-signal relationships: photon shot noise creates variance proportional to signal. Phương pháp kiểm tra this relationship across the frame. do AI tạo ra content may show incorrect noise-signal dependencies — either constant noise (additive model) or noise patterns that don't follow physical sensor models.\n\n4. **Nhiễu Phổ Shape**: Camera sensor noise has specific tần số không gian characteristics determined by the anti-aliasing filter and readout electronics. Phương pháp phân tích noise power spectral density — bộ sinh AI produce noise with different spectral characteristics than camera sensors.\n\n5. **Thời gian Nhiễu Phân tích**: giữa các khung hình noise should be independently distributed (uncorrelated). Phương pháp kiểm tra temporal noise independence — do AI tạo ra frames may show correlated noise patterns (repeated noise structures between frames or systematically evolving noise) không nhất quán with camera capture.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán nhiễu video. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Bản đồ nhất quán thời gian",
-    "description": "Ánh xạ nhất quán thời gian giữa các khung hình",
-    "algorithm": "Thuật toán phân tích Bản đồ nhất quán thời gian",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Ánh xạ nhất quán thời gian giữa các khung hình. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích bản đồ nhất quán thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        }
-    ]
+  "name": "Bản đồ nhất quán thời gian",
+  "description": "Ánh xạ nhất quán thời gian giữa các khung hình",
+  "algorithm": "Thuật toán phân tích Bản đồ nhất quán thời gian",
+  "mechanism": "Phương pháp này creates temporal coherence maps để phát hiện deepfake:\n\n1. **Feature Theo dõi Across Frames**: Dense feature correspondences are established between consecutive frames using luồng quang học, and long-range correspondences across multiple frames using feature matching. This creates a spatio-temporal feature trajectory map.\n\n2. **Cục bộ Nhất quán Tính toán**: For each pixel, temporal coherence is computed as the consistency of its feature trajectory — smooth, hợp lý về mặt vật lý trajectories have high coherence, while erratic or discontinuous trajectories have low coherence. The coherence map cho thấy regions with temporal instability.\n\n3. **Nhất quán Map Không gian Phân tích**: Natural video shows uniformly high coherence for static regions and physically motivated coherence patterns for moving objects. Phương pháp phân tích the coherence map for bất thường low-coherence regions — deepfake-generated areas often show reduced temporal coherence, particularly at face boundaries and in texture regions.\n\n4. **Khuôn mặt - Background Nhất quán So sánh**: The average coherence in các vùng khuôn mặt vs. background provides a diagnostic ratio. Trong video chân thực, both show similar coherence levels. Deepfake thường cho thấy lower coherence in the khuôn mặt được tạo (per-frame independent generation) compared to the naturally captured background.\n\n5. **Nhất quán Thời gian Trends**: The per-frame average coherence is tracked theo thời gian. Natural video maintains high, stable coherence. Deepfake videos may show coherence drops correlated with challenging face poses, expressions, or lighting conditions where the generator produces more temporally không nhất quán output.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích bản đồ nhất quán thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    }
+  ]
 }

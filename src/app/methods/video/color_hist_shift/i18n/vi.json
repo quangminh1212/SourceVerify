@@ -1,22 +1,22 @@
 {
-    "name": "Dịch histogram màu",
-    "description": "Phát hiện dịch histogram màu giữa mặt và nền",
-    "algorithm": "Thuật toán phân tích Dịch histogram màu",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện dịch histogram màu giữa mặt và nền. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích dịch histogram màu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Dịch histogram màu",
+  "description": "Phát hiện dịch histogram màu giữa mặt và nền",
+  "algorithm": "Thuật toán phân tích Dịch histogram màu",
+  "mechanism": "Phương pháp này phát hiện temporal color histogram shifts để phát hiện deepfake video following Zheng et al. (2021):\n\n1. **Per - Frame Màu sắc Biểu đồ Tính toán**: For each frame, color histograms are computed in multiple color spaces (RGB, HSV, Lab) across face and background regions separately. Histograms capture the overall color distribution with bin resolution tuned to phát hiện subtle shifts.\n\n2. **Inter - Frame Biểu đồ So sánh**: Consecutive frame histograms are compared using Earth Mover's Distance (EMD), chi-squared distance, and Bhattacharyya distance. Natural video shows smooth, gradual histogram evolution. Deepfakes may produce giữa các khung hình color distribution jumps, especially when the face generator's color model differs from the source video.\n\n3. **Khuôn mặt - Background Màu sắc Nhất quán**: The color histogram relationship between các vùng khuôn mặt and background is analyzed mỗi khung hình. Trong video chân thực, face and background share the same white balance and color grading. Deepfake face insertion may introduce subtle color distribution mismatches — the khuôn mặt được tạo may have different color temperature or saturation characteristics than the background.\n\n4. **Thời gian Màu sắc Ổn định Phân tích**: Long-term color histogram trends are tracked. Natural illumination changes produce smooth, physically motivated color shifts (gradual, affecting all regions similarly). Deepfakes may produce oscillating or jerky color histogram changes as the generator struggles to maintain nhất quán color rendering qua các khung hình.\n\n5. **Biểu đồ Bất thường Chấm điểm**: Statistical tests phát hiện frames with đáng kể color histogram deviations from temporal neighbors. The score combines inter-frame stability, face-background coherence, and long-term trend analysis, quantifying the likelihood of color manipulation or quá trình sinh AI artifacts.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích dịch histogram màu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

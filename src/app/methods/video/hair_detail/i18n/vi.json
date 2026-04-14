@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích chi tiết tóc",
-    "description": "Kiểm tra chi tiết sợi tóc và chất lượng render",
-    "algorithm": "Thuật toán phân tích Phân tích chi tiết tóc",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Kiểm tra chi tiết sợi tóc và chất lượng render. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích chi tiết tóc. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Phân tích chi tiết tóc",
+  "description": "Kiểm tra chi tiết sợi tóc và chất lượng render",
+  "algorithm": "Thuật toán phân tích Phân tích chi tiết tóc",
+  "mechanism": "Phương pháp này phân tích hair rendering detail để phát hiện deepfake:\n\n1. **Tóc Vùng Segmentation**: Hair regions are segmented mỗi khung hình using semantic segmentation. The hair mass, hairline contour, and individual strand visibility are analyzed. Hair is one of the most challenging elements for bộ sinh AI due to its semi-transparent, fine-structured nature.\n\n2. **Strand - Level Phân tích**: In sufficient resolution, individual hair strands or strand groups should be visible. Phương pháp phát hiện linear high-frequency features nhất quán with hair strands using oriented filters. do AI tạo ra hair often appears as a smooth texture blob lacking individual strand detail, or shows repeating strand patterns (texture repetition).\n\n3. **Hairline Transition Phân tích**: The hairline — where hair meets forehead skin — is a critical forensic region. Natural hairlines show gradual transition with individual hairs and baby hairs. Deepfake hairlines may be unnaturally sharp, irregular, or show blending artifacts where the khuôn mặt được tạo meets the original hair.\n\n4. **Tóc - Ánh sáng Interaction**: Real hair shows complex light interaction: specular highlights following hair curvature (Marschner model), translucency at thin sections, and anisotropic reflectance. Phương pháp evaluates hair rendering against physical reflectance models. bộ sinh AI often produce over-simplified hair-light interaction.\n\n5. **Thời gian Tóc Ổn định**: Hair maintains its large-scale structure qua các khung hình, with strand-level motion following physics (inertia, gravity, coherent flow). Phương pháp theo dõi hair consistency — deepfake generators may produce temporally unstable hair rendering with flickering texture, shifting hairline, or physically impossible hair motion.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích phân tích chi tiết tóc. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích NIQE Quality Score",
-    "description": "Tính điểm chất lượng NIQE mù — ảnh AI thường có điểm khác ảnh tự nhiên (Mittal et al., 2013).",
-    "algorithm": "Thuật toán phân tích NIQE Quality Score",
-    "mechanism": "Hệ thống NIQE Quality Score phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/LSP.2012.2227726",
-            "title": "Mittal, A. et al. (2013). Making a Completely Blind Image Quality Analyzer. IEEE Signal Processing Letters."
-        },
-        {
-            "url": "https://doi.org/10.1109/TIP.2012.2214050",
-            "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP."
-        }
-    ]
+  "name": "Phân tích NIQE Quality Score",
+  "description": "Tính điểm chất lượng NIQE mù — ảnh AI thường có điểm khác ảnh tự nhiên (Mittal et al., 2013).",
+  "algorithm": "Thuật toán phân tích NIQE Quality Score",
+  "mechanism": "Phương pháp này implements the Natural Image Quality Evaluator (NIQE) by Mittal et al. (2013) for blind quality assessment:\n\n1. **NSS Feature Trích xuất**: The image is decomposed into normalized luminance coefficients using mean-subtracted contrast-normalized (MSCN) coefficients: Î(x,y) = (I(x,y) − μ(x,y))/(σ(x,y) + C). These MSCN coefficients of natural images follow a unit Gaussian distribution.\n\n2. **Generalized Gaussian Phân bố (GGD) Fitting**: MSCN coefficient distributions are fit to a GGD parameterized by shape (α) and variance (σ²). Additionally, pairwise products of adjacent MSCN coefficients are modeled using an asymmetric GGD (AGGD) in four directions (horizontal, vertical, and two diagonals).\n\n3. **Multivariate Gaussian (MVG) Model**: The extracted NSS features (GGD shape, variance, AGGD parameters) form a feature vector. A pristine MVG model (μₙ, Σₙ) is pre-computed from a corpus of natural undistorted images.\n\n4. **Quality Distance Tính toán**: The NIQE score is computed as the Mahalanobis-like distance: D = √((μ₁−μ₂)ᵀ((Σ₁+Σ₂)/2)⁻¹(μ₁−μ₂)) between the test image's feature distribution (μ₁, Σ₁) and the pristine model (μ₂, Σ₂). Lower scores indicate more natural-looking images.\n\n5. **Forensic Application**: do AI tạo ra images often deviate from natural scene statistics (NSS) captured by NIQE. While visually plausible, synthetic images exhibit subtle violations of NSS regularity — particularly in local contrast normalization and adjacent coefficient dependencies — yielding elevated NIQE scores that serve as a generation indicator.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/LSP.2012.2227726",
+      "title": "Mittal, A. et al. (2013). Making a Completely Blind Image Quality Analyzer. IEEE Signal Processing Letters."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIP.2012.2214050",
+      "title": "Mittal, A. et al. (2012). No-Reference Image Quality Assessment in the Spatial Domain. IEEE TIP."
+    }
+  ]
 }

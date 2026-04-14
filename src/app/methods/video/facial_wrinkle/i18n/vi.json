@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán nếp nhăn",
-    "description": "Phân tích mẫu nếp nhăn và độ sâu",
-    "algorithm": "Thuật toán phân tích Nhất quán nếp nhăn",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu nếp nhăn và độ sâu. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán nếp nhăn. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Nhất quán nếp nhăn",
+  "description": "Phân tích mẫu nếp nhăn và độ sâu",
+  "algorithm": "Thuật toán phân tích Nhất quán nếp nhăn",
+  "mechanism": "Phương pháp này phân tích facial wrinkle patterns để phát hiện deepfake:\n\n1. **Wrinkle Phát hiện & Phân loại**: Wrinkles are detected using multi-scale ridge detection and classified by type: dynamic wrinkles (appear during expressions — forehead furrows, crow's feet), static wrinkles (always present — nasolabial folds), and fine lines (aging-related texture). Each wrinkle's depth, length, and position are measured.\n\n2. **Expression - Wrinkle Tương quan**: Dynamic wrinkles must correlate with facial expressions — forehead wrinkles with brow raise (AU1/AU2), crow's feet with cheek raise (AU6), nasolabial deepening with smile (AU12). Phương pháp xác minh these anatomical correlations. Deepfakes may produce expressions without corresponding wrinkles or wrinkles without corresponding expressions.\n\n3. **Wrinkle Position Ổn định**: Static wrinkles occupy fixed positions determined by skin's collagen structure. Phương pháp theo dõi wrinkle positions qua các khung hình — wrinkle locations should remain stable (may vary in visibility with expression but not in position). Temporal wrinkle position drift indicates quá trình sinh AI.\n\n4. **Wrinkle Rendering Quality**: Wrinkles have specific rendering characteristics: they are valleys in the skin surface creating linear shadows with depth-dependent width. Phương pháp evaluates wrinkle rendering quality — bộ sinh AI often produce wrinkles that are too sharp (drawn lines) or too diffuse (lacking proper 3D depth cues).\n\n5. **Age - Appropriate Wrinkle Ánh xạ**: The wrinkle pattern should be age-appropriate: young faces have few static wrinkles, aged faces show predictable wrinkle progression (forehead → crow's feet → nasolabial → marionette). Phương pháp kiểm tra wrinkle pattern consistency with apparent age. Face-swapped Deepfake có thể cho thấy wrinkle-age mismatches.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán nếp nhăn. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

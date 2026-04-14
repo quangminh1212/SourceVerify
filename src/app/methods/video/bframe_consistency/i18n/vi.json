@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích B-Frame Consistency",
-    "description": "Phân tích nhất quán khung hai chiều — chèn deepfake phá vỡ mẫu nội suy B-frame tự nhiên.",
-    "algorithm": "Thuật toán phân tích B-Frame Consistency Analysis",
-    "mechanism": "Hệ thống B-Frame Consistency Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
-            "title": "Sullivan, G.J. et al. (2012). Overview of the High Efficiency Video Coding (HEVC) Standard. IEEE TCSVT."
-        },
-        {
-            "url": "https://doi.org/10.1109/TIFS.2012.2209832",
-            "title": "Stamm, M.C. et al. (2012). Anti-Forensics of JPEG Compression. IEEE TIFS."
-        }
-    ]
+  "name": "Phân tích B-Frame Consistency",
+  "description": "Phân tích nhất quán khung hai chiều — chèn deepfake phá vỡ mẫu nội suy B-frame tự nhiên.",
+  "algorithm": "Thuật toán phân tích B-Frame Consistency Analysis",
+  "mechanism": "Phương pháp này phân tích B-frame prediction patterns in video compression for forensic authentication following Sullivan et al. (2012):\n\n1. **GOP Structure Phân tích**: The Group of Pictures (GOP) structure is parsed to identify I-frames (intra-coded), P-frames (predictive), and B-frames (bidirectional predictive). The expected B-frame pattern depends on codec configuration and is nhất quán in unmanipulated video.\n\n2. **Bi - Directional Prediction Residual**: B-frames use both forward and backward temporal prediction. The prediction residuals are analyzed — Trong video chân thực, B-frame residuals are thường smaller than P-frame residuals due to the advantage of bidirectional prediction. Manipulated regions produce bất thường residual patterns where inserted content disrupts the predicted motion trajectory.\n\n3. **Chuyển động Véc-tơ Nhất quán**: B-frame motion vectors point both forward and backward in time. Phương pháp kiểm tra whether forward and backward motion vectors are physically nhất quán — they should describe complementary views of the same motion. Deepfake insertion creates motion vector inconsistencies where forward and backward predictions disagree abnormally.\n\n4. **Quantization Parameter Theo dõi**: Per Stamm et al. (2012), the quantization parameters (QP) assigned to B-frames follow predictable patterns relative to reference frames. Double-encoding artifacts from video manipulation alter these QP patterns, creating detectable statistical anomalies in the B-frame quantization structure.\n\n5. **Thời gian Dependency Graph Xác minh**: The reference frame dependencies of B-frames are verified for consistency. Inserted or replaced frames disrupt the expected temporal dependency chain, producing frames that reference incorrect temporal contexts — detectable through prediction error analysis.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/TCSVT.2012.2221191",
+      "title": "Sullivan, G.J. et al. (2012). Overview of the High Efficiency Video Coding (HEVC) Standard. IEEE TCSVT."
+    },
+    {
+      "url": "https://doi.org/10.1109/TIFS.2012.2209832",
+      "title": "Stamm, M.C. et al. (2012). Anti-Forensics of JPEG Compression. IEEE TIFS."
+    }
+  ]
 }

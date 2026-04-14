@@ -1,22 +1,22 @@
 {
-    "name": "Vi biểu cảm v2",
-    "description": "Phát hiện mẫu vi biểu cảm và tính tự nhiên",
-    "algorithm": "Thuật toán phân tích Vi biểu cảm v2",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện mẫu vi biểu cảm và tính tự nhiên. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích vi biểu cảm v2. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Vi biểu cảm v2",
+  "description": "Phát hiện mẫu vi biểu cảm và tính tự nhiên",
+  "algorithm": "Thuật toán phân tích Vi biểu cảm v2",
+  "mechanism": "Phương pháp này phát hiện and phân tích micro-expressions để phát hiện deepfake:\n\n1. **Micro - Expression Phát hiện**: Micro-expressions are brief (40-200ms), involuntary facial expressions that cho thấy suppressed emotions. Phương pháp phát hiện these by analyzing high-temporal-resolution facial AU changes — rapid onset-apex-offset cycles that are shorter than voluntary expressions.\n\n2. **Thời gian Characteristics Xác minh**: Genuine micro-expressions have specific temporal properties: (a) duration 40-200ms (much shorter than regular expressions at 0.5-4s), (b) rapid onset (<60ms), (c) may show asymmetry or incomplete expression. Phương pháp xác minh that detected micro-expressions conform to these established psychological criteria.\n\n3. **Presence/Absence Phân tích**: Natural human behavior includes occasional micro-expressions during emotional suppression or deception. Their complete absence from a video where emotional context suggests suppression is suspicious. Conversely, do AI tạo ra faces rarely produce micro-expressions as they are not explicitly modeled by most generators.\n\n4. **Micro - Expression Authenticity**: Detected candidate micro-expressions are evaluated for authenticity: genuine micro-expressions involve specific AU combinations nhất quán with basic emotions, show physiologically constrained dynamics, and thường appear during emotionally charged moments. Fabricated micro-movements without these characteristics may indicate generation artifacts.\n\n5. **Micro - Expression - Context Nhất quán**: The emotional content of micro-expressions should be contextually plausible — a micro-expression of fear during casual conversation is suspicious. Phương pháp evaluates whether micro-expression content is contextually appropriate, using behavioral science criteria for naturalness assessment.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích vi biểu cảm v2. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

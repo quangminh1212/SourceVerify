@@ -1,22 +1,22 @@
 {
-    "name": "Mẫu nhiễu thời gian",
-    "description": "Phân tích mẫu nhiễu theo thời gian",
-    "algorithm": "Thuật toán phân tích Mẫu nhiễu thời gian",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu nhiễu theo thời gian. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích mẫu nhiễu thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Mẫu nhiễu thời gian",
+  "description": "Phân tích mẫu nhiễu theo thời gian",
+  "algorithm": "Thuật toán phân tích Mẫu nhiễu thời gian",
+  "mechanism": "Phương pháp này phân tích temporal noise patterns để phát hiện deepfake video:\n\n1. **Thời gian Nhiễu Trích xuất**: The temporal noise component is extracted by computing mỗi pixel temporal variance in static regions. This isolates noise from signal, capturing the stochastic temporal fluctuation characteristics of the imaging system.\n\n2. **Nhiễu Model Identification**: Camera temporal noise follows specific models: (a) photon shot noise (Poisson, signal-dependent), (b) read noise (Gaussian, signal-independent), (c) thermal noise (dark current). Phương pháp fits these physical noise models to the observed temporal noise. do AI tạo ra video thường doesn't follow physical camera noise models.\n\n3. **Nhiễu Không gian Homogeneity**: Camera noise is spatially homogeneous (same sensor for all pixels) with possible variation from vignetting. Phương pháp kiểm tra noise spatial distribution — deepfakes show different noise characteristics in khuôn mặt được tạo regions (from the generator's stochastic process) vs. captured background (from camera noise).\n\n4. **Nhiễu - Tín hiệu Dependency**: In camera-captured video, noise variance depends on signal level (shot noise ∝ signal). Phương pháp kiểm tra this dependency — do AI tạo ra noise may be signal-independent (additive noise model) or show incorrect signal-noise relationship.\n\n5. **Thời gian Nhiễu Tương quan**: Camera temporal noise is temporally uncorrelated (white). Phương pháp kiểm tra temporal autocorrelation of the noise signal — do AI tạo ra temporal noise may show temporal correlations from the generation process (autoregressive generation, frame interpolation), producing non-white temporal noise distinguishable from camera noise.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích mẫu nhiễu thời gian. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

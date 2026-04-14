@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán giao tiếp mắt",
-    "description": "Phân tích nhất quán hướng giao tiếp mắt",
-    "algorithm": "Thuật toán phân tích Nhất quán giao tiếp mắt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích nhất quán hướng giao tiếp mắt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán giao tiếp mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
-            "url": "https://arxiv.org/abs/1811.00661"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Nhất quán giao tiếp mắt",
+  "description": "Phân tích nhất quán hướng giao tiếp mắt",
+  "algorithm": "Thuật toán phân tích Nhất quán giao tiếp mắt",
+  "mechanism": "Phương pháp này phân tích eye contact patterns để phát hiện deepfake:\n\n1. **Ánh nhìn Direction Ước lượng**: Per-frame gaze direction is estimated from iris position, eye corner landmarks, and head pose. The gaze vector is decomposed into horizontal and vertical components relative to the camera, determining whether the subject appears to be making eye contact.\n\n2. **Mắt Contact Mẫu Phân tích**: Natural eye contact follows specific behavioral patterns — during conversation, humans alternate between direct eye contact and glancing away (thường maintaining eye contact 60-70% of time). Phương pháp models these patterns and kiểm tra whether the subject's gaze behavior follows expected psychological norms.\n\n3. **Ánh nhìn - Head Coordination**: When shifting gaze, natural eye movements combine eye rotation (saccades) with head rotation in coordinated vestibulo-ocular patterns. Phương pháp xác minh gaze-head coordination — deepfakes may produce eye movements decoupled from head motion or show unnaturally stable gaze during head turns.\n\n4. **Bilateral Ánh nhìn Nhất quán**: Both eyes should converge on the same target point (vergence). Phương pháp kiểm tra that left and right eye gaze vectors intersect at a plausible depth. Deepfakes may produce strabismus-like artifacts where eyes appear to look in slightly different directions.\n\n5. **Thời gian Ánh nhìn Naturalness**: Gaze changes include saccades (fast, ballistic movements), smooth pursuit (tracking moving objects), and fixations (stable gaze). Phương pháp phân tích the temporal structure of gaze signals for correct velocity profiles. do AI tạo ra eye movements often lack natural saccadic dynamics, producing either unrealistically smooth or jittery gaze patterns.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán giao tiếp mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
+      "url": "https://arxiv.org/abs/1811.00661"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

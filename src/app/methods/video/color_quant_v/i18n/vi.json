@@ -1,22 +1,22 @@
 {
-    "name": "Lượng tử hóa màu",
-    "description": "Ánh xạ phân bố histogram màu theo từng khung hình để phát hiện mức lượng tử hóa đồng đều bất thường xuất hiện khi bộ sinh video neural rời rạc hóa không gian màu liên tục.",
-    "algorithm": "Thuật toán phân tích Lượng tử hóa màu",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mức lượng tử hóa màu. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích lượng tử hóa màu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Lượng tử hóa màu",
+  "description": "Ánh xạ phân bố histogram màu theo từng khung hình để phát hiện mức lượng tử hóa đồng đều bất thường xuất hiện khi bộ sinh video neural rời rạc hóa không gian màu liên tục.",
+  "algorithm": "Thuật toán phân tích Lượng tử hóa màu",
+  "mechanism": "Phương pháp này phân tích color quantization patterns in video để phát hiện pháp y:\n\n1. **Màu sắc Precision Phân tích**: The effective number of distinct colors mỗi khung hình is measured and compared to the expected color depth of the video format. Natural video captured at 8-bit depth shows đặc trưng color quantization patterns including smooth gradient banding. do AI tạo ra content may exhibit different quantization characteristics — either smoother (floating-point internal representation posterized to 8-bit) or with artificial color clustering.\n\n2. **Quantization Step Phát hiện**: Color channel histograms are analyzed for quantization artifacts — periodic gaps or peaks in the histogram indicate specific quantization step sizes. Double-quantization from re-encoding produces đặc trưng paired histogram features detectable via spectral analysis of the histogram signal.\n\n3. **Không gian Quantization Nhất quán**: Quantization patterns should be spatially uniform (same encoding pipeline). Phương pháp so sánh quantization characteristics between các vùng khuôn mặt and background. Deepfake composites may show different quantization in the khuôn mặt được tạo (from the generator's output pipeline) versus the original background footage.\n\n4. **Gradient Banding Phân tích**: Smooth gradients in the image cho thấy quantization characteristics. Natural camera capture plus compression produces specific banding patterns. do AI tạo ra gradients may show finer or coarser banding không nhất quán with the declared bit depth and codec, revealing post-processing or generation artifacts.\n\n5. **Thời gian Quantization Theo dõi**: Color quantization characteristics are tracked qua các khung hình. Authentic video maintains nhất quán quantization throughout. do AI tạo ra content may show varying quantization quality qua các khung hình, particularly in các vùng khuôn mặt where the generator's output precision may fluctuate.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích lượng tử hóa màu. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

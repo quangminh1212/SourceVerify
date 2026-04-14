@@ -1,22 +1,22 @@
 {
-    "name": "Căn chỉnh khuôn mặt",
-    "description": "Phân tích tính nhất quán hình học căn chỉnh mặt",
-    "algorithm": "Thuật toán phân tích Căn chỉnh khuôn mặt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán hình học căn chỉnh mặt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích căn chỉnh khuôn mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
-            "url": "https://arxiv.org/abs/1811.00661"
-        }
-    ]
+  "name": "Căn chỉnh khuôn mặt",
+  "description": "Phân tích tính nhất quán hình học căn chỉnh mặt",
+  "algorithm": "Thuật toán phân tích Căn chỉnh khuôn mặt",
+  "mechanism": "Phương pháp này phân tích facial alignment and landmark stability để phát hiện deepfake video:\n\n1. **Dense Facial Landmark Theo dõi**: A dense set of facial landmarks (68-468 points) is tracked mỗi khung hình. Landmark positions are analyzed for both absolute accuracy (correct facial geometry) and temporal stability (smooth motion trajectories).\n\n2. **Hình học Nhất quán Xác minh**: Facial landmark geometry must conform to anthropometric constraints — inter-ocular distance vs. face width ratios, nose-mouth proportions, and facial thirds (forehead, nose, chin). Phương pháp kiểm tra whether geometric ratios remain nhất quán qua các khung hình and fall within normal human ranges. Deepfakes may produce faces with fluctuating proportions.\n\n3. **Landmark Jitter Phân tích**: Trong video chân thực, facial landmarks follow smooth trajectories governed by musculoskeletal dynamics. Phương pháp đo lường high-frequency landmark position variations (jitter). Elevated jitter — particularly at face boundary landmarks — indicates deepfake artifacts from frame-independent face generation or imperfect face-to-background alignment.\n\n4. **Pose - Corrected Alignment**: Landmarks are corrected for 3D head pose (yaw, pitch, roll) to evaluate face structure independent of viewing angle. After pose correction, facial proportions should remain constant. Deepfakes may produce pose-dependent proportion changes, indicating the generator doesn't maintain nhất quán 3D face geometry.\n\n5. **Alignment Ranh giới Phân tích**: The alignment between khuôn mặt được tạo landmarks and background facial context (hairline, ears, neck) is checked. Misalignment at the face-swap boundary — where generated landmarks don't smoothly transition to background anatomy — indicates deepfake manipulation.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích căn chỉnh khuôn mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
+      "url": "https://arxiv.org/abs/1811.00661"
+    }
+  ]
 }

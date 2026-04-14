@@ -1,22 +1,22 @@
 {
-    "name": "Phân tích Gaze Vergence",
-    "description": "Phân tích hội tụ/phân kỳ hai mắt của ánh nhìn — deepfake thường sai ở hội tụ đúng.",
-    "algorithm": "Thuật toán phân tích Gaze Vergence Analysis",
-    "mechanism": "Hệ thống Gaze Vergence Analysis phân tích các mẫu tín hiệu cụ thể để phân biệt nội dung AI với media thực.\\n\\n1. **Trích xuất đặc trưng**: Trích xuất các đặc trưng liên quan từ dữ liệu đầu vào.\\n2. **Phân tích thống kê**: Tính các số đo thống kê và so sánh với baseline đã biết.\\n3. **Tính điểm**: Tạo điểm tin cậy dựa trên các bất thường phát hiện được.",
-    "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
-    "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
-    "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
-    "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
-    "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
-    "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
-    "references": [
-        {
-            "url": "https://doi.org/10.1109/CVPR.2015.7299081",
-            "title": "Zhang, X. et al. (2015). Appearance-Based Gaze Estimation in the Wild. CVPR."
-        },
-        {
-            "url": "http://dlib.net/",
-            "title": "Dlib (2019). Eye Aspect Ratio for Blink Detection. Dlib C++ Library."
-        }
-    ]
+  "name": "Phân tích Gaze Vergence",
+  "description": "Phân tích hội tụ/phân kỳ hai mắt của ánh nhìn — deepfake thường sai ở hội tụ đúng.",
+  "algorithm": "Thuật toán phân tích Gaze Vergence Analysis",
+  "mechanism": "Phương pháp này phân tích binocular gaze vergence để phát hiện deepfake:\n\n1. **Binocular Ánh nhìn Ước lượng**: Independent gaze vectors for left and right eyes are estimated mỗi khung hình from iris position, pupil contour, and corneal reflection analysis. The vergence angle (angle between left and right gaze vectors) is computed.\n\n2. **Vergence - Distance Nhất quán**: Gaze vergence angle should be inversely proportional to fixation distance (eyes converge more for near objects). Phương pháp kiểm tra whether the measured vergence angle is nhất quán with the likely fixation target distance estimated from scene context. Deepfakes may produce vergence không nhất quán with target distance.\n\n3. **Vergence Dynamics**: When shifting gaze between near and far targets, vergence changes follow specific dynamics: vergence movements are slow (compared to saccades), smooth, and coordinated between eyes. Phương pháp phân tích vergence change dynamics — deepfakes may produce instantaneous vergence changes or non-conjugate eye movements.\n\n4. **Vergence - Accommodation Coupling**: In real vision, vergence is coupled with pupil size changes (near response triad: convergence + accommodation + pupil constriction). Phương pháp kiểm tra for this physiological coupling. Deepfakes thường don't model the vergence-pupil coupling, producing convergent gaze without corresponding pupil constriction.\n\n5. **Thời gian Vergence Ổn định**: During stable fixation, vergence shows micro-fluctuations (fixation disparity) within a narrow range. Phương pháp phân tích vergence stability — too-stable vergence (no disparity fluctuations) or excessive instability (divergent episodes) indicate quá trình sinh AI.",
+  "parameters": "Loại phân tích: thống kê tự động\\nPhạm vi điểm: 0 (thực) đến 100 (AI)\\nKích thước đầu vào tối thiểu: tùy loại media",
+  "accuracy": "Trung bình đến Cao — 70-85% chính xác tùy chất lượng đầu vào.",
+  "source": "Dựa trên nghiên cứu được bình duyệt trong pháp y kỹ thuật số và phát hiện nội dung AI.",
+  "useCase": "Sử dụng như phần của pipeline phân tích đa tín hiệu để phát hiện nội dung AI.",
+  "strengths": "• Phương pháp luận dựa trên nghiên cứu\\n• Tốc độ tính toán nhanh\\n• Bổ trợ cho các phương pháp phát hiện khác\\n• Hoạt động trên nhiều bộ tạo AI",
+  "limitations": "• Độ chính xác thay đổi theo chất lượng đầu vào\\n• Tốt nhất khi kết hợp với các phương pháp khác\\n• Có thể cần hiệu chỉnh cho mô hình AI mới",
+  "references": [
+    {
+      "url": "https://doi.org/10.1109/CVPR.2015.7299081",
+      "title": "Zhang, X. et al. (2015). Appearance-Based Gaze Estimation in the Wild. CVPR."
+    },
+    {
+      "url": "http://dlib.net/",
+      "title": "Dlib (2019). Eye Aspect Ratio for Blink Detection. Dlib C++ Library."
+    }
+  ]
 }

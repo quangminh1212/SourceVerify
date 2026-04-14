@@ -1,22 +1,22 @@
 {
-    "name": "Biên pha trộn mặt",
-    "description": "Phân tích dấu vết biên pha trộn mặt-nền",
-    "algorithm": "Thuật toán phân tích Biên pha trộn mặt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích dấu vết biên pha trộn mặt-nền. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên pha trộn mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Biên pha trộn mặt",
+  "description": "Phân tích dấu vết biên pha trộn mặt-nền",
+  "algorithm": "Thuật toán phân tích Biên pha trộn mặt",
+  "mechanism": "Phương pháp này phát hiện face blending boundaries để phát hiện deepfake:\n\n1. **Pha trộn Ranh giới Localization**: The boundary where a generated/swapped face meets the original video is detected. This is thường an oval or irregular contour around the face where alpha blending, Poisson blending, or feathered compositing was applied. The boundary is localized using gradient analysis and texture transition detection.\n\n2. **Ranh giới Gradient Phân tích**: At the blending boundary, Phương pháp đo lường gradient profiles perpendicular to the boundary. Natural skin-to-hair/neck transitions show anatomically motivated gradients. Artificial blending creates đặc trưng smooth transition zones with unnatural gradient profiles — too uniform or too symmetrical compared to natural boundaries.\n\n3. **Màu sắc Discontinuity Phát hiện**: Even with sophisticated blending (Poisson editing), subtle color discontinuities persist at the boundary. Phương pháp phát hiện these by analyzing color channel differences across the boundary in multiple color spaces (RGB, Lab, YCbCr). The CIE ΔE color difference is computed across the boundary.\n\n4. **Kết cấu Tần số Mismatch**: The tần số không gian content (texture) on either side of the blending boundary is compared. khuôn mặt được tạo texture (inside the boundary) often differs from original footage texture (outside) — different noise characteristics, sharpness, or compression artifacts. This frequency mismatch is detectable even when color blending is well-executed.\n\n5. **Thời gian Ranh giới Ổn định**: The blending boundary position and width should remain nhất quán relative to the face qua các khung hình. Phương pháp theo dõi boundary characteristics theo thời gian — unstable or shifting boundary artifacts indicate per-frame independent face generation with không nhất quán blending, yielding elevated forensic scores.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích biên pha trộn mặt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

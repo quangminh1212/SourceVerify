@@ -1,22 +1,22 @@
 {
-    "name": "Chảy sắc độ",
-    "description": "Đo lệch kênh màu tại biên tương phản cao nơi video AI thể hiện lan tỏa sắc độ bất thường vắng mặt trong cảnh quay quang học có giải mã Bayer đúng chuẩn.",
-    "algorithm": "Thuật toán phân tích Chảy sắc độ",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phát hiện dấu vết chảy sắc độ. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích chảy sắc độ. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Chảy sắc độ",
+  "description": "Đo lệch kênh màu tại biên tương phản cao nơi video AI thể hiện lan tỏa sắc độ bất thường vắng mặt trong cảnh quay quang học có giải mã Bayer đúng chuẩn.",
+  "algorithm": "Thuật toán phân tích Chảy sắc độ",
+  "mechanism": "Phương pháp này phát hiện chroma bleeding artifacts để phân tích pháp y video:\n\n1. **Chroma Subsampling Phân tích**: Video codecs (H.264/H.265) use chroma subsampling (4:2:0, 4:2:2) where chrominance has lower resolution than luminance. Phương pháp phân tích whether chroma-luma relationships follow the expected subsampling pattern. Manipulated or do AI tạo ra regions may exhibit chroma bleeding không nhất quán with the video's declared subsampling scheme.\n\n2. **Màu sắc Kênh Cạnh Alignment**: At sharp edges, the luma (Y) channel shows a precise boundary while chroma channels (Cb, Cr) show slightly broader edges due to subsampling. Phương pháp đo lường the spatial offset between luminance and chrominance edges. Natural video shows nhất quán chroma spread matching the codec's subsampling. Deepfake insertion may produce regions with different chroma edge characteristics.\n\n3. **Cross - Kênh Tương quan**: Trong video chân thực, chroma bleeding patterns are nhất quán across the entire frame (same codec pipeline). Phương pháp tính toán local cross-channel correlations and flags regions where chroma-luma relationships differ from the frame average — indicating content from a different encoding pipeline.\n\n4. **Thời gian Chroma Ổn định**: Chroma bleeding characteristics should remain temporally nhất quán. Phương pháp theo dõi chroma-luma edge relationships qua các khung hình. do AI tạo ra content may produce temporally varying chroma artifacts as the generator independently renders chrominance without modeling the encoding pipeline's subsampling behavior.\n\n5. **Re - Encoding Phát hiện**: Double-encoded video (original + manipulation + re-encoding) produces đặc trưng double-chroma-bleeding artifacts. Phương pháp phát hiện these compound artifacts by analyzing the spectral signature of chroma bleeding, which differs between single-pass and multi-pass encoding chains.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích chảy sắc độ. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

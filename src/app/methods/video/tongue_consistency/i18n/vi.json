@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán lưỡi",
-    "description": "Phân tích tính nhất quán render lưỡi",
-    "algorithm": "Thuật toán phân tích Nhất quán lưỡi",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích tính nhất quán render lưỡi. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán lưỡi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/2012.07657"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Nhất quán lưỡi",
+  "description": "Phân tích tính nhất quán render lưỡi",
+  "algorithm": "Thuật toán phân tích Nhất quán lưỡi",
+  "mechanism": "Phương pháp này phân tích tongue rendering and consistency để phát hiện deepfake:\n\n1. **Tongue Phát hiện**: The tongue is detected when visible during speech and expressions (tongue protrusions, licking lips, certain phoneme articulations like /l/, /t/, /d/). Tongue shape, color, and surface texture are characterized mỗi khung hình.\n\n2. **Tongue Anatomy Xác minh**: Natural tongues have specific anatomical features: dorsal surface texture (papillae), central groove (median sulcus), smooth ventral surface, đặc trưng pink-red coloration. Phương pháp kiểm tra anatomical correctness. do AI tạo ra tongues may show: incorrect color, missing texture, wrong shape, or physically impossible configurations.\n\n3. **Tongue - Âm vị Coordination**: Tongue position should correspond to articulated phonemes — visible tongue tip for /l/, /th/, tongue retraction for /k/, /g/. Phương pháp kiểm tra whether tongue visibility and position correlate correctly with detected speech sounds. Deepfake có thể cho thấy tongue positions không nhất quán with the audio.\n\n4. **Thời gian Tongue Ổn định**: When the tongue is not actively moving (resting in closed mouth, sustained position during speech holds), its appearance should remain stable between frames. Phương pháp theo dõi tongue consistency — quá trình sinh AI may produce flickering tongue texture or shape changes during supposedly static tongue positions.\n\n5. **Tongue - Teeth - Môi Interaction**: During speech, tongue, teeth, and lips interact in coordinated, anatomically constrained ways. Phương pháp kiểm tra whether these interactions are hợp lý về mặt vật lý. Deepfakes may produce impossible interaction states — tongue passing through teeth or occupying impossible positions relative to the oral cavity.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán lưỡi. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/2012.07657"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

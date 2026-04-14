@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán phản chiếu mắt",
-    "description": "Phân tích mẫu phản chiếu ánh sáng trong mắt",
-    "algorithm": "Thuật toán phân tích Nhất quán phản chiếu mắt",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích mẫu phản chiếu ánh sáng trong mắt. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán phản chiếu mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Nhất quán phản chiếu mắt",
+  "description": "Phân tích mẫu phản chiếu ánh sáng trong mắt",
+  "algorithm": "Thuật toán phân tích Nhất quán phản chiếu mắt",
+  "mechanism": "Phương pháp này phân tích eye reflections (corneal specular highlights) để phát hiện deepfake:\n\n1. **Specular Highlight Phát hiện**: Corneal reflections (Purkinje images) are detected in each eye mỗi khung hình. These bright spots on the curved corneal surface reflect the ambient light environment — creating miniature images of light sources visible in high-resolution video.\n\n2. **Bilateral Reflection Nhất quán**: Both eyes of the same person should show nhất quán specular reflections — same light sources, similar positions adjusted for inter-ocular distance, and nhất quán highlight shapes. Deepfake generators often produce eyes independently, creating reflection inconsistencies (different number of highlights, different positions, different shapes between left and right eyes).\n\n3. **Vật lý Reflection Mô hình hóa**: Corneal reflections should be physically nhất quán with the scene illumination: (a) positions determined by light source locations via reflection geometry, (b) shapes following corneal curvature, (c) brightness proportional to light source intensity. Phương pháp xác minh these physical constraints. do AI tạo ra reflections may violate geometric reflection laws.\n\n4. **Thời gian Reflection Theo dõi**: As the head moves, corneal reflections should shift smoothly according to the changing viewing angle. Phương pháp theo dõi reflection positions qua các khung hình — they should follow smooth trajectories nhất quán with rigid body motion. Deepfakes may produce reflections that jump erratically or remain stationary during head movement.\n\n5. **Environment Nhất quán Cross - Check**: Corneal reflections provide information about the scene environment. Phương pháp cross-kiểm tra reflections between both eyes and against visible scene lighting. Inconsistencies between reflected and visible light sources chỉ ra sự thao tác or generation artifacts.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán phản chiếu mắt. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

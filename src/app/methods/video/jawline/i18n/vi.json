@@ -1,22 +1,22 @@
 {
-    "name": "Nhất quán đường hàm",
-    "description": "Phân tích độ mịn và nhất quán của đường viền hàm",
-    "algorithm": "Thuật toán phân tích Nhất quán đường hàm",
-    "mechanism": "Phương pháp này phân tích video để phát hiện deepfake và nội dung AI:\n\n1. **Trích xuất khung hình**: Các khung hình chính được trích xuất từ luồng video.\n\n2. **Phân tích đặc trưng**: Phân tích độ mịn và nhất quán của đường viền hàm. Các đặc trưng thị giác và thời gian được tính toán.\n\n3. **Kiểm tra nhất quán thời gian**: Đặc trưng được theo dõi qua các khung hình liên tiếp.\n\n4. **So khớp mẫu**: Kết quả được so sánh với các mẫu deepfake đã biết.\n\n5. **Tính điểm**: Điểm tin cậy (0-100) phản ánh khả năng bị thao túng AI.",
-    "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
-    "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
-    "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
-    "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán đường hàm. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
-    "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
-    "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/1912.13458"
-        }
-    ]
+  "name": "Nhất quán đường hàm",
+  "description": "Phân tích độ mịn và nhất quán của đường viền hàm",
+  "algorithm": "Thuật toán phân tích Nhất quán đường hàm",
+  "mechanism": "Phương pháp này phân tích jawline characteristics để phát hiện deepfake video:\n\n1. **Jawline Đường viền Theo dõi**: The mandibular contour is tracked mỗi khung hình using facial landmarks from chin point through jaw angles to ear attachment points. The contour is parameterized by curvature, angular measurements at the gonial angle, and chin shape.\n\n2. **Hàm - Neck Transition Phân tích**: The boundary where the jaw meets the neck is a critical deepfake artifact zone. Natural jaw-neck transitions show anatomically correct tissue layering (skin, platysma muscle, subcutaneous fat). Phương pháp phân tích this transition for blending artifacts, color discontinuities, or unnatural sharp/smooth boundaries.\n\n3. **Hàm Chuyển động Biomechanics**: During speech, the mandible rotates on the temporomandibular joint with specific biomechanical constraints (hinge + sliding motion, maximum opening ~40mm). Phương pháp xác minh that jaw motion during speech follows these constraints. Deepfakes may produce jaw motion that violates TMJ biomechanics.\n\n4. **Jawline Đối xứng Nhất quán**: Mandibular asymmetry is a stable individual đặc trưng. Phương pháp theo dõi left-right jawline correspondence qua các khung hình — the asymmetry pattern should remain constant. Deepfakes may produce varying jaw asymmetry as the generator independently renders each frame.\n\n5. **Jawline Phân giải Đánh giá**: The jawline is often at the boundary of the face-swap region. Phương pháp so sánh rendering quality of the jawline itself versus adjacent regions — resolution drops, texture quality changes, or sharpness discontinuities at the jawline indicate the edge of a khuôn mặt được tạo region.",
+  "parameters": "Loại phân tích: pixel/tần số/thống kê\nPhương tiện: video\nĐầu vào: Khung hình video\nĐầu ra: Điểm tin cậy (0-100)\nLấy mẫu khung: Tự thích ứng (1-5 fps)\nCửa sổ thời gian: Trượt qua chuỗi khung hình",
+  "accuracy": "Trung bình đến Cao — Độ chính xác 70-88% khi sử dụng độc lập. Hiệu quả nhất khi kết hợp với các phương pháp pháp y video khác. Hiệu suất phụ thuộc vào chất lượng, độ phân giải và mức nén video.",
+  "source": "Nghiên cứu pháp y video và phát hiện deepfake. Dựa trên thị giác máy tính và phân tích tín hiệu thời gian.",
+  "useCase": "Phát hiện deepfake và video AI thông qua phân tích nhất quán đường hàm. Phương pháp này kiểm tra các đặc trưng thị giác và thời gian mà AI khó tái tạo hoàn hảo.",
+  "strengths": "• Nắm bắt dấu vết thời gian mà phân tích đơn khung bỏ sót\n• Hoạt động với các định dạng video phổ biến\n• Hiệu quả với các kỹ thuật deepfake phổ biến\n• Có thể kết hợp với phương pháp pháp y video khác\n• Dựa trên nghiên cứu thị giác máy tính",
+  "limitations": "• Hiệu suất bị ảnh hưởng bởi nén và độ phân giải video\n• Một số phương pháp cần đủ số khung hình\n• Hiệu quả thay đổi theo kỹ thuật deepfake\n• Tốt nhất khi dùng trong quy trình đa phương pháp\n• Có thể gây dương tính giả trên video chỉnh sửa nặng",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Li, Y. et al. (2020). Face X-ray for More General Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/1912.13458"
+    }
+  ]
 }
