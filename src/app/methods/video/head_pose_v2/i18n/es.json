@@ -1,22 +1,22 @@
 {
-    "name": "Estimación de Pose de Cabeza V2",
-    "description": "Analyzes head pose physics and rotation",
-    "algorithm": "Head Pose Estimation v2 — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes head pose physics and rotation. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante head pose estimation v2 analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
-            "url": "https://arxiv.org/abs/1811.00661"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Estimación de Pose de Cabeza V2",
+  "description": "Analyzes head pose physics and rotation",
+  "algorithm": "Head Pose Estimation v2 — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method performs advanced head pose analysis for deepfake detection:\n\n1. **6 - DOF Pose Estimación**: Head pose is estimated with 6 degrees of freedom (3D rotation: yaw, pitch, roll + 3D translation) per frame using a combination of facial landmarks and perspective-n-point (PnP) solving with a 3D face model.\n\n2. **Pose Trajectory Smoothness**: Head pose trajectories should be smooth (low jerk), reflecting the biomechanical properties of the cervical spine and head mass. The method analyzes trajectory smoothness using third-derivative (jerk) metrics. Deepfakes may produce jittery pose trajectories from frame-independent head estimation.\n\n3. **Geométrico Self - Consistencia**: The estimated 3D pose should be geometrically self-consistent: (a) reprojected landmark positions should match detected landmarks, (b) face visibility should be consistent with estimated pose, (c) facial feature foreshortening should match perspective projection at the estimated pose. Deepfakes may show geometric inconsistencies.\n\n4. **Pose - Dependent Rostro Appearance**: At different head poses, different face surfaces become visible. The method checks whether newly visible regions (revealed during head rotation) are consistent with previously visible regions — same texture quality, same skin tone, same detail level. Deepfakes may show inconsistent face appearance as pose changes reveal poorly generated regions.\n\n5. **Pose Range Análisis**: The range of head poses in the video is analyzed. Natural head movement in conversation typically stays within ±30° yaw, ±20° pitch. The method checks whether deepfake quality degrades at extreme poses (common for face-swap models trained primarily on frontal faces), creating a detectable pose-dependent artifact signature.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante head pose estimation v2 analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
+      "url": "https://arxiv.org/abs/1811.00661"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

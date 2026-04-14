@@ -1,22 +1,22 @@
 {
-    "name": "Tasa de Parpadeo",
-    "description": "Analiza la tasa de parpadeo para detectar videos deepfake",
-    "algorithm": "Blink Rate Analysis — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes eye blink patterns for naturalness — AI often generates unnatural blink rates. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: sensor\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante blink rate analysis analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2018). In Ictu Oculi: Exposing AI Created Fake Videos by Detecting Eye Blinking. WIFS.",
-            "url": "https://arxiv.org/abs/1806.02396"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Tasa de Parpadeo",
+  "description": "Analiza la tasa de parpadeo para detectar videos deepfake",
+  "algorithm": "Blink Rate Analysis — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes eye blinking patterns for deepfake detection following Li et al. (2018) \"In Ictu Oculi\":\n\n1. **Clasificación del estado ocular**: For each frame, the eye aspect ratio (EAR) is computed from eye landmarks: EAR = (‖p2−p6‖ + ‖p3−p5‖) / (2‖p1−p4‖), where p1-p6 are the eye contour landmarks. EAR drops significantly during blinks, enabling frame-level open/closed classification.\n\n2. **Detección de eventos de parpadeo**: Consecutive frames with low EAR form blink events. Each blink is characterized by duration (typically 100-400ms in natural blinking), amplitude (EAR change magnitude), and velocity profile (rapid closing, slightly slower opening following Evinger et al., 1991).\n\n3. **Análisis estadístico de la tasa de parpadeo**: The inter-blink interval (IBI) distribution is analyzed. Natural spontaneous blinking occurs at 15-20 blinks/minute with a characteristic IBI distribution following a gamma or log-normal model. Early deepfake methods produced subjects that rarely or never blinked — a key detection cue identified by Li et al. (2018).\n\n4. **Evaluación de la naturalidad del parpadeo**: Individual blink kinematics are evaluated: natural blinks are bilateral (both eyes close simultaneously), show stereotyped velocity profiles, and exhibit physiological reflexes (increased blink rate during speech, periodic patterns). AI-generated blinks may appear unilateral, show unnatural velocity profiles, or lack expected behavioral correlations.\n\n5. **Puntuación del patrón temporal**: The overall blink pattern is scored against natural human behavior models. Anomalies include: absence of blinks, unnatural blink rates, irregular blink dynamics, asymmetric blinking, or blinks that don't correspond to expected cognitive/behavioral triggers. The score quantifies deviation from natural blink physiology.",
+  "parameters": "Tipo de análisis: sensor\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante blink rate analysis analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2018). In Ictu Oculi: Exposing AI Created Fake Videos by Detecting Eye Blinking. WIFS.",
+      "url": "https://arxiv.org/abs/1806.02396"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

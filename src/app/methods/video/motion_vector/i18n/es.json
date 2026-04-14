@@ -1,22 +1,22 @@
 {
-    "name": "Análisis de Vectores de Movimiento",
-    "description": "Analiza vectores de movimiento para detectar anomalías en video manipulado",
-    "algorithm": "Motion Vector Analysis — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes motion vector consistency and smoothness. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante motion vector analysis analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Análisis de Vectores de Movimiento",
+  "description": "Analiza vectores de movimiento para detectar anomalías en video manipulado",
+  "algorithm": "Motion Vector Analysis — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes motion vectors from video compression for forensic detection:\n\n1. **Movimiento Vector Extracción**: Block-level motion vectors are extracted from the video bitstream (H.264/H.265 encoded streams contain explicitly coded motion vectors). These describe how the encoder predicted each block from reference frames.\n\n2. **Movimiento Field Coherencia**: The motion vector field should be physically coherent — nearby blocks should have similar motion vectors (smoothly varying field) except at object boundaries. The method detects regions with anomalous motion vector patterns inconsistent with physical object motion or camera motion.\n\n3. **Foreground - Background Movimiento Separation**: Global camera motion produces a coherent motion vector field across the frame, while object motion creates local deviations. The method separates these components and verifies that face/body motion is physically consistent. Deepfake insertion may produce face motion that's inconsistent with the camera motion model.\n\n4. **Movimiento Vector Magnitud Distribución**: The distribution of motion vector magnitudes follows predictable patterns depending on motion speed and search range. The method analyzes this distribution for anomalies — re-encoded deepfakes may show motion vector distributions affected by the original encoding, creating detectable double-estimation artifacts.\n\n5. **Prediction Error Correlación**: Motion vectors should produce effective predictions (low residual). The method analyzes the correlation between motion vector quality and prediction residuals. Regions where motion vectors are optimal for the original content but suboptimal for inserted content reveal manipulation through elevated prediction errors.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante motion vector analysis analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

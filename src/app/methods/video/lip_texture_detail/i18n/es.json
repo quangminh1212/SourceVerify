@@ -1,22 +1,22 @@
 {
-    "name": "Detalle de Textura Labial",
-    "description": "Analyzes lip micro-textoure detail",
-    "algorithm": "Lip Texture Detail — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes lip micro-textoure detail. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through lip textoure detail analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
-            "url": "https://arxiv.org/abs/2012.07657"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Detalle de Textura Labial",
+  "description": "Analyzes lip micro-textoure detail",
+  "algorithm": "Lip Texture Detail — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes lip texture rendering detail for deepfake detection:\n\n1. **Labio Región Extracción**: The lip region is precisely segmented per frame using lip landmarks (vermilion border, cupid's bow, lip corners, oral commissures). Both the dry lip surface and wet inner lip are analyzed.\n\n2. **Labio Superficie Textura Análisis**: Natural lips show characteristic surface texture: vertical wrinkle lines (more prominent on lower lip), moisture-dependent specularity, and color variation from vermilion border to inner mucosa. The method analyzes texture quality at multiple scales. AI-generated lips often show either over-smoothed surfaces (lacking natural lip wrinkles) or artificial texture patterns.\n\n3. **Labio - Teeth - Tongue Rendering**: When the mouth opens during speech, teeth and tongue become visible. The method evaluates rendering quality of these elements: (a) teeth should show individual tooth structure with correct dental anatomy, (b) tongue position should be consistent with articulated phonemes. AI generators often produce blurred or merged teeth and simplified tongue rendering.\n\n4. **Labio Moisture and Specular Reflection**: Natural lips show moisture-dependent specularity that changes with lip movement (stretching reduces moisture, licking increases it). The method tracks specular patterns — AI generators typically don't model dynamic lip moisture, producing static or absent specular highlights.\n\n5. **Temporal Textura Consistencia**: Lip texture should remain consistent across frames — the wrinkle pattern is stable, only varying in visibility with lip stretch. The method tracks lip texture features over time. Frame-to-frame texture instability — changing wrinkle patterns, flickering detail — indicates per-frame independent generation.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through lip textoure detail analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Haliassos, A. et al. (2021). Lips Don't Lie: A Generalisable and Robust Approach To Face Forgery Detection. CVPR.",
+      "url": "https://arxiv.org/abs/2012.07657"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

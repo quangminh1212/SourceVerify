@@ -1,12 +1,12 @@
 {
-    "name": "Traza de Eliminación de Ruido de Video",
-    "description": "Detecta trazas de eliminación de ruido artificial en video",
-    "algorithm": "Algoritmo de análisis Video Denoising Trace",
-    "mechanism": "El sistema Video Denoising Trace analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+  "name": "Traza de Eliminación de Ruido de Video",
+  "description": "Detecta trazas de eliminación de ruido artificial en video",
+  "algorithm": "Algoritmo de análisis Video Denoising Trace",
+  "mechanism": "This method detects denoising traces for video forensic analysis:\n\n1. **Ruido Level Estimación**: The noise level and noise model of the video are estimated per frame. This establishes the baseline expected noise characteristics for the imaging pipeline.\n\n2. **Denoising Signature Detección**: Denoising algorithms leave characteristic signatures: (a) selective frequency attenuation (noise reduction in high frequencies while preserving edges), (b) stair-casing artifacts (from total variation denoising), (c) hallucinated details (from neural network denoising). The method identifies these signatures.\n\n3. **Selective Denoising Detección**: The method checks whether denoising has been selectively applied to specific regions. Authentic video is either entirely denoised or not at all. Selective denoising (face denoised but background not) indicates targeted processing — potentially part of a deepfake pipeline's post-processing.\n\n4. **Denoising - Resolución Consistencia**: Denoising affects the effective resolution of the image (removing high-frequency noise also removes some high-frequency detail). The method checks whether denoised regions show consistent effective resolution with non-denoised regions. Resolution mismatches reveal processing different regions with different denoising parameters.\n\n5. **Multi - Pass Denoising Detección**: Multiple denoising passes produce cumulative signatures — progressive loss of fine detail. The method detects evidence of multiple denoising steps, consistent with a deepfake pipeline: generator output → denoising → blending → additional denoising to smooth blending artifacts.",
+  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
 }

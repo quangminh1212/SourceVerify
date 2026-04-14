@@ -1,22 +1,22 @@
 {
-    "name": "Iluminación Facial",
-    "description": "Analyzes face illumination consistency",
-    "algorithm": "Face Illumination — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes face illumination consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante face illumination analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Iluminación Facial",
+  "description": "Analyzes face illumination consistency",
+  "algorithm": "Face Illumination — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes facial illumination consistency for deepfake detection:\n\n1. **Luz Source Estimación**: The primary illumination direction is estimated from facial shading using shape-from-shading techniques. The face's known approximate 3D geometry (frontal face as a convex surface) constrains the lighting estimation — shadow patterns on nose, cheeks, and forehead indicate light position.\n\n2. **Rostro - Scene Iluminación Comparación**: The illumination direction estimated from facial shading is compared with illumination cues in the scene: background shadows, specular highlights on objects, window/light positions. In authentic video, face and scene illumination match. Deepfake face insertion may produce faces lit from a different direction than the scene.\n\n3. **Sombra Consistencia Verificación**: Facial shadows (nose shadow, orbital shadows, chin shadow) are analyzed for mutual consistency — all shadows on the face should originate from the same light source(s). AI-generated faces may produce physically inconsistent shadow patterns where different facial features appear lit from different directions.\n\n4. **Temporal Iluminación Estabilidad**: As the head rotates, facial shading should change smoothly and consistently with the estimated light source position. The method tracks illumination parameters across frames. Deepfakes may produce illumination that doesn't respond correctly to head pose changes — illumination remaining static during head rotation or changing independently of physical light positions.\n\n5. **Specular - Diffuse Descomposición**: Facial skin shows both diffuse reflection (matte appearance) and specular reflection (highlights on forehead, nose, cheeks). The ratio and spatial distribution of specular-to-diffuse components should follow physical models. AI generators may produce unnatural specular patterns, absent highlights, or incorrect specular-to-diffuse ratios.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante face illumination analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

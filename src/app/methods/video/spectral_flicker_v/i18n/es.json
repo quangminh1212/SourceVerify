@@ -1,22 +1,22 @@
 {
-    "name": "Parpadeo Espectral en Video",
-    "description": "Detects spectral flicker patterns",
-    "algorithm": "Spectral Flicker — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects spectral flicker patterns. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: frecuencia\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante spectral flicker analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Parpadeo Espectral en Video",
+  "description": "Detects spectral flicker patterns",
+  "algorithm": "Spectral Flicker — Frequency Domain Analyzer",
+  "mechanism": "This method detects spectral flicker artifacts for video deepfake detection:\n\n1. **Frecuencia - Domain Temporal Análisis**: The spatial frequency spectrum is computed per frame, and frame-to-frame spectral changes are quantified. Spectral flicker is defined as temporal oscillation in the energy of specific spatial frequency bands that doesn't correspond to scene content changes.\n\n2. **Band - Specific Flicker Detección**: Different spatial frequency bands are monitored independently. The method detects oscillating energy in specific bands — GANs may produce characteristic flicker at their architecture-specific frequencies (related to upsampling layers), while diffusion models may show flicker in mid-frequency bands during denoising step transitions.\n\n3. **Flicker Periodicity Análisis**: The temporal periodicity of detected spectral flicker is analyzed via autocorrelation. Periodic flicker (at regular intervals) indicates systematic generation artifacts. Natural spectral variation is aperiodic (random scene changes) or very low frequency (illumination changes).\n\n4. **Flicker Espacial Localization**: Spectral flicker is analyzed per image region. The method maps flicker intensity across the frame — flicker concentrated in face regions but absent in background strongly indicates face generation artifacts. Whole-frame flicker may indicate post-processing artifacts.\n\n5. **Flicker Frecuencia Puntuación**: The detected flicker is scored based on: (a) temporal frequency of flicker (physiologically irrelevant frequencies indicate artifacts), (b) spatial frequency bands affected, (c) spatial localization to face region, (d) periodicity strength. High scores indicate AI generation.",
+  "parameters": "Tipo de análisis: frecuencia\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante spectral flicker analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

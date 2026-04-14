@@ -1,22 +1,22 @@
 {
-    "name": "Simetría de Orejas",
-    "description": "Compara la simetría de las orejas para detectar inconsistencias de deepfake",
-    "algorithm": "Ear Symmetry Analysis — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Examines ear shape and symmetry consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante ear symmetry analysis analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Simetría de Orejas",
+  "description": "Compara la simetría de las orejas para detectar inconsistencias de deepfake",
+  "algorithm": "Ear Symmetry Analysis — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes bilateral ear symmetry for deepfake detection:\n\n1. **Bilateral Ear Detección**: Both ears are detected when visible. Their geometric landmarks — helix attachment point, lobule tip, tragion, ear length, ear width, protrusion angle — are measured per frame.\n\n2. **Simetría Análisis**: Natural ears exhibit consistent but imperfect bilateral symmetry (minor asymmetry is normal). The method quantifies symmetry metrics: size ratio, shape similarity (procrustes distance), and protrusion angle difference. Deepfakes may produce: (a) perfectly symmetric ears (too artificial), (b) grossly asymmetric ears (generator inconsistency), or (c) ears symmetric in ways inconsistent with natural anatomical variation.\n\n3. **Head Pose - Corrected Comparación**: Apparent ear asymmetry changes with head pose — the closer ear appears larger due to perspective. The method corrects for head pose using estimated 3D head orientation, comparing ears in a pose-normalized framework. Deepfakes may show incorrect perspective scaling of ears.\n\n4. **Temporal Simetría Estabilidad**: The ratio and shape relationship between ears should remain constant across frames (bone/cartilage doesn't change shape). The method tracks bilateral symmetry metrics over time — temporal variation in ear symmetry indicates generation artifacts where the two ears are rendered independently per frame.\n\n5. **Simetría Anomalía Puntuación**: The combined assessment of static symmetry plausibility, pose-corrected comparison, and temporal stability generates a forensic score. Methods like FaceForensics++ have shown that peripheral face regions (ears, hairline) carry important manipulation cues often overlooked by face-centric generators.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante ear symmetry analysis analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

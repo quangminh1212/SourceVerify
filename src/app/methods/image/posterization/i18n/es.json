@@ -1,22 +1,22 @@
 {
-    "name": "Detección de Posterización",
-    "description": "Detects color posterization artifacts",
-    "algorithm": "Posterization Detection — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "Este método realiza un análisis espacial a nivel de píxel para detectar artefactos generados por IA:\n\n1. **Preprocesamiento de imagenn**: La imagenn de entrada se carga y convierte al espacio de color apropiado para el análisis.\n\n2. **Extracción de características**: Detects color posterization artifacts. El algoritmo extrae características relevantes a nivel de píxel en toda la cuadrícula de la imagenn.\n\n3. **Análisis de patrones**: Se calculan medidas estadísticas a partir de las características extraídas para identificar irregularidades.\n\n4. **Detección de anomalías**: Los resultados se comparan con las líneas base de imágenes auténticas de cámara vs imágenes generadas por IA.\n\n5. **Cálculo de puntuación**: Se calcula una puntuación de confianza (0-100) basada en el grado de anomalías detectadas.",
-    "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: posterization detection análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
-            "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
-        }
-    ]
+  "name": "Detección de Posterización",
+  "description": "Detects color posterization artifacts",
+  "algorithm": "Posterization Detection — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method detects posterization artifacts for image forensic analysis:\n\n1. **Intensity Level Census**: The number of unique intensity levels actually used in each color channel is counted. 8-bit images have 256 possible levels per channel. Posterization reduces the number of distinct levels, creating visible banding in smooth gradients.\n\n2. **Gradiente Banding Detección**: Smooth image regions (sky, skin, gradual lighting transitions) are identified, and within these regions, the method checks for intensity staircase patterns — sudden jumps between flat intensity plateaus instead of smooth transitions.\n\n3. **Tone Curve Análisis**: The image's effective tone curve is estimated by analyzing the mapping from expected smooth gradients to observed intensity values. Posterization creates a staircase-like tone curve. The method characterizes the tone curve's step pattern — number of steps, step sizes, and their distribution.\n\n4. **AI Generation Posterization Signatures**: Some AI generators produce posterization-like artifacts from: (a) limited output precision in the generator's final layer, (b) training on processed/compressed images, (c) color quantization in the generation pipeline. The method distinguishes between processing-induced posterization (uniform across the image) and generation-specific posterization (may appear selectively in generated content).\n\n5. **Posterization Severity Puntuación**: The severity of posterization is scored based on: number of missing intensity levels, banding visibility in smooth regions, and comparison against expected levels for the image's declared bit depth and pipeline.",
+  "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
+  "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
+  "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
+  "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: posterization detection análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
+  "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
+  "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Krawetz, N. (2007). A Picture's Worth — Digital Image Analysis and Forensics.",
+      "url": "https://www.hackerfactor.com/papers/bh-usa-07-krawetz-wp.pdf"
+    }
+  ]
 }

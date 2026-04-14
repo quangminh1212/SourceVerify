@@ -1,22 +1,22 @@
 {
-    "name": "Mapa de Frecuencia del Fondo",
-    "description": "Maps frecuencia content of background regions",
-    "algorithm": "Background Frequency Map — Frequency Domain Analyzer",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Maps frecuencia content of background regions. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: frecuencia\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through background frecuencia map analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Mapa de Frecuencia del Fondo",
+  "description": "Maps frecuencia content of background regions",
+  "algorithm": "Background Frequency Map — Frequency Domain Analyzer",
+  "mechanism": "This method creates frequency maps of video backgrounds for forensic deepfake detection:\n\n1. **Background Segmentation**: Face/body regions are segmented and separated from the background using semantic segmentation. The background region is isolated for independent frequency analysis, avoiding frequency interference from the dynamically changing foreground.\n\n2. **Espacial Frecuencia Mapeo**: 2D FFT is computed over background regions in each frame, creating a spatial frequency map. Natural backgrounds exhibit stable frequency content dominated by scene-specific features (texture of walls, furniture patterns, foliage). The frequency map reveals the spectral signature of the background.\n\n3. **Temporal Frecuencia Estabilidad**: Background frequency maps across frames are compared. In authentic video with a stationary camera, background frequencies remain nearly constant. Deepfake generators may introduce frame-to-frame frequency artifacts in the background — subtle spectral flickering from imperfect temporal consistency in the generation process.\n\n4. **Cross - Región Frecuencia Consistencia**: Different background regions should show frequency characteristics consistent with a single imaging pipeline. GAN or diffusion-generated backgrounds may show frequency inconsistencies between spatial regions — different noise patterns, compression artifacts, or spectral energy distributions in different parts of the generated background.\n\n5. **Frecuencia Anomalía Puntuación**: The temporal variance of background frequency maps, cross-region frequency consistency, and deviation from expected spectral profiles are combined into a forensic score. Elevated scores indicate backgrounds that exhibit frequency characteristics inconsistent with natural video capture.",
+  "parameters": "Tipo de análisis: frecuencia\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through background frecuencia map analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

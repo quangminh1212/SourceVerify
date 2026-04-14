@@ -1,22 +1,22 @@
 {
-    "name": "Gradiente de Segundo Orden",
-    "description": "Computes 2nd-order gradient for textoure analysis (Wang, 2019)",
-    "algorithm": "Second Order Gradient — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "Este método realiza un análisis espacial a nivel de píxel para detectar artefactos generados por IA:\n\n1. **Preprocesamiento de imagenn**: La imagenn de entrada se carga y convierte al espacio de color apropiado para el análisis.\n\n2. **Extracción de características**: Computes 2nd-order gradient for textoure analysis (Wang, 2019). El algoritmo extrae características relevantes a nivel de píxel en toda la cuadrícula de la imagenn.\n\n3. **Análisis de patrones**: Se calculan medidas estadísticas a partir de las características extraídas para identificar irregularidades.\n\n4. **Detección de anomalías**: Los resultados se comparan con las líneas base de imágenes auténticas de cámara vs imágenes generadas por IA.\n\n5. **Cálculo de puntuación**: Se calcula una puntuación de confianza (0-100) basada en el grado de anomalías detectadas.",
-    "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: second order gradient análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        }
-    ]
+  "name": "Gradiente de Segundo Orden",
+  "description": "Computes 2nd-order gradient for textoure analysis (Wang, 2019)",
+  "algorithm": "Second Order Gradient — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes second-order gradient features for image forensic analysis:\n\n1. **Second - Order Derivative Cálculo**: Second-order partial derivatives (∂²I/∂x², ∂²I/∂y², ∂²I/∂x∂y) are computed, capturing the rate of change of image gradients. These measure edge sharpness, curvature, and texture acceleration — properties sensitive to image generation and processing.\n\n2. **Hessian Matriz Análisis**: The 2×2 Hessian matrix H(x,y) = [[∂²I/∂x², ∂²I/∂x∂y], [∂²I/∂x∂y, ∂²I/∂y²]] is computed at each pixel. Eigenvalue analysis of the Hessian reveals local surface curvature — ridges, valleys, and flat regions. The distribution of Hessian eigenvalues characterizes image structure.\n\n3. **Curvature Patrón Análisis**: The principal curvatures (Hessian eigenvalues) and their directions reveal edge profile shapes. Natural edges show specific curvature profiles from optical blur. AI-generated edges may show different curvature — sharper (lacking optical blur), more uniform (from generation smoothing), or with curvature discontinuities at generation boundaries.\n\n4. **Second - Order Statistics**: Statistical moments of second-order derivatives are computed in local windows. Natural images follow specific distributions (typically super-Gaussian). AI generation may produce different second-order statistics — particularly in the relationship between first and second order derivatives, which reflects the image's underlying generative process.\n\n5. **Multi - Scale Second - Order Análisis**: Second-order features are computed at multiple scales (using Gaussian scale-space). The scale-dependent behavior of second-order statistics characterizes the imaging pipeline. AI generation produces different multi-scale second-order behavior than camera capture.",
+  "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
+  "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
+  "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
+  "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: second order gradient análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
+  "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
+  "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Análisis de Consistencia de Matiz",
-    "description": "Analyzes hue consistency across regions",
-    "algorithm": "Hue Consistency — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "Este método realiza un análisis espacial a nivel de píxel para detectar artefactos generados por IA:\n\n1. **Preprocesamiento de imagenn**: La imagenn de entrada se carga y convierte al espacio de color apropiado para el análisis.\n\n2. **Extracción de características**: Analyzes hue consistency across regions. El algoritmo extrae características relevantes a nivel de píxel en toda la cuadrícula de la imagenn.\n\n3. **Análisis de patrones**: Se calculan medidas estadísticas a partir de las características extraídas para identificar irregularidades.\n\n4. **Detección de anomalías**: Los resultados se comparan con las líneas base de imágenes auténticas de cámara vs imágenes generadas por IA.\n\n5. **Cálculo de puntuación**: Se calcula una puntuación de confianza (0-100) basada en el grado de anomalías detectadas.",
-    "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: hue consistency análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
-    "references": [
-        {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
-        },
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        }
-    ]
+  "name": "Análisis de Consistencia de Matiz",
+  "description": "Analyzes hue consistency across regions",
+  "algorithm": "Hue Consistency — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes hue consistency to detect image manipulation and AI generation:\n\n1. **Color Space Conversion**: The image is converted from RGB to HSV (Hue-Saturation-Value) color space, isolating the hue channel. The hue channel represents the dominant wavelength of light independent of brightness and saturation, following Popescu & Farid's (2005) approach to color analysis.\n\n2. **Regional Hue Análisis**: The image is divided into overlapping regions and per-region hue statistics are computed — mean hue, hue variance, and circular hue histogram (since hue is angular). Natural images show smooth hue transitions between adjacent regions following physical illumination constraints.\n\n3. **Hue Gradiente Cálculo**: The spatial gradient of the hue channel is computed. In authentic images, hue gradients correlate with material boundaries and illumination changes. AI-generated images may show hue inconsistencies — abrupt hue shifts not explained by scene geometry or lighting, especially at object boundaries.\n\n4. **Cross - Canal Hue Correlación**: The relationship between hue and luminance/saturation is analyzed. Natural scenes follow physical constraints (e.g., sky hue depends on viewing angle, skin hue varies with illumination). AI models may produce hue-luminance relationships that violate these physical priors.\n\n5. **Hue Coherencia Puntuación**: A coherence score is computed measuring the overall consistency of hue across the image. Low coherence (high hue variation not explained by scene content) indicates potential manipulation. The score reflects deviations from the expected hue distribution for the detected scene type.",
+  "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
+  "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
+  "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
+  "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: hue consistency análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
+  "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
+  "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+  "references": [
+    {
+      "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
+      "url": "https://doi.org/10.1109/TSP.2005.855406"
+    },
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    }
+  ]
 }

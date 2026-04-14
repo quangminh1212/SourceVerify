@@ -1,22 +1,22 @@
 {
-    "name": "Tremor de Píxeles",
-    "description": "Detects píxel jitter artifacts",
-    "algorithm": "Pixel Jitter — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Detects píxel jitter artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated video through píxel jitter analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Tremor de Píxeles",
+  "description": "Detects píxel jitter artifacts",
+  "algorithm": "Pixel Jitter — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method detects pixel-level temporal jitter for video deepfake detection:\n\n1. **Sub - Píxel Movimiento Análisis**: Per-pixel temporal variation is measured in regions that should be static (stationary background, stable facial features during stillness). Sub-pixel motion is extracted using phase-based methods to detect motion below one-pixel magnitude.\n\n2. **Jitter Frecuencia Análisis**: The temporal frequency content of per-pixel variation is analyzed. Natural video shows specific jitter signatures: (a) sensor read noise (white noise, typically < 1 LSB), (b) quantization dither, (c) compression artifact variation. AI-generated video may show jitter with different spectral characteristics — frame-independent rendering produces temporally uncorrelated pixel variations.\n\n3. **Espacial Jitter Patrón**: The spatial distribution of jitter intensity is mapped. Natural jitter is spatially uniform (same sensor for all pixels). AI-generated jitter may be spatially non-uniform — varying in intensity across the frame or showing different jitter characteristics in generated face regions vs. original background.\n\n4. **Rostro - Background Jitter Comparación**: Jitter characteristics of face pixels are compared with background pixels. In authentic video, both originate from the same sensor and show identical noise characteristics. Deepfake composites show different jitter signatures between the generated face and original background.\n\n5. **Jitter - Movimiento Decoupling**: The method separates true motion from jitter to avoid false positives. Genuine micro-motion (physiological tremor, breathing) is distinguished from generation artifacts based on spatial coherence and frequency characteristics. The forensic score quantifies the anomalous jitter component.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated video through píxel jitter analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for video authenticity assessment.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

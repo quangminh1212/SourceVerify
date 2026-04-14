@@ -1,12 +1,12 @@
 {
-    "name": "Mapa de Fonemas-Visemas",
-    "description": "Mapea fonemas a visemas para detectar desincronización labial en deepfakes",
-    "algorithm": "Algoritmo de análisis Phoneme-Viseme Mapping",
-    "mechanism": "El sistema Phoneme-Viseme Mapping analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+  "name": "Mapa de Fonemas-Visemas",
+  "description": "Mapea fonemas a visemas para detectar desincronización labial en deepfakes",
+  "algorithm": "Algoritmo de análisis Phoneme-Viseme Mapping",
+  "mechanism": "Este método creates and analyzes phoneme-to-viseme mapping para la detección de deepfakes:\n\n1. **Integral Viseme Mapeo**: A many-to-one mapping from phonemes to visemes is established and verified per video. Multiple phonemes map to the same viseme (e.g., /p/, /b/, /m/ all produce bilabial closure). El método checks that phonemes with the same target viseme actually produce the same visual appearance.\n\n2. **Viseme Cluster Análisis**: For each viseme category, all instances across the video are collected and analyzed for consistency. The visual appearance of the same viseme should be consistente throughout the video. High intra-viseme variance suggests generación de IA where the lip model doesn't consistently reproduce the same visual targets.\n\n3. **Speaker - Specific Viseme Model**: Each speaker has characteristic viseme shapes determined by their dental/skeletal structure and speaking habits. El método builds a per-speaker viseme model and checks temporal consistency. Los deepfakes pueden mostrar inconsistente viseme shapes as the generator doesn't maintain a stable articulatory model.\n\n4. **Transition Trajectory Análisis**: Viseme-to-viseme transitions follow curved trajectories through the lip configuration space, determined by articulatory dynamics. El método analyzes transition trajectories for physical plausibility — generado por IA transitions may take shorter (unnatural shortcuts) or longer (meandering) paths than anatomically possible.\n\n5. **Viseme Duration Distribución**: Each viseme has a characteristic duration distribution dependent on the phonemic context and speaking rate. El método checks whether viseme durations follow expected distributions. AI lip generation may produce visemes with incorrect or implausibly uniform durations.",
+  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
 }

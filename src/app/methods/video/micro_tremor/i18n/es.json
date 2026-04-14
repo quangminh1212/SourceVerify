@@ -1,12 +1,12 @@
 {
-    "name": "Micro Temblor",
-    "description": "Analiza micro temblores faciales para detectar videos generados por IA",
-    "algorithm": "Algoritmo de análisis Micro-Tremor Detection",
-    "mechanism": "El sistema Micro-Tremor Detection analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+  "name": "Micro Temblor",
+  "description": "Analiza micro temblores faciales para detectar videos generados por IA",
+  "algorithm": "Algoritmo de análisis Micro-Tremor Detection",
+  "mechanism": "This method analyzes physiological micro-tremor for deepfake detection:\n\n1. **Micro - Movimiento Extracción**: Sub-pixel facial motion is extracted using phase-based video motion magnification or dense optical flow. The signals of interest are involuntary physiological tremors — oscillatory motions at frequencies above voluntary control (4-12 Hz).\n\n2. **Physiological Tremor Detección**: All living humans exhibit physiological tremor (8-12 Hz) caused by motor unit firing and stretch reflex oscillation. The method searches for this characteristic frequency in facial motion signals. Deepfake videos generated without physiological modeling lack this biological signal.\n\n3. **Espacial Tremor Coherencia**: Physiological tremor affects the entire body coherently — all facial points should show correlated tremor at similar frequencies. The method checks spatial coherence of detected high-frequency motion. AI generation may produce spatially incoherent micro-motion (independent per-region noise) rather than the coherent biological tremor.\n\n4. **Tremor Frecuencia Estabilidad**: Physiological tremor frequency is relatively stable for an individual over short periods but varies naturally within the 8-12 Hz band. The method analyzes tremor frequency stability — completely stable frequency (single spectral line) or no detectable tremor peak both indicate non-biological origin.\n\n5. **Tremor Amplitude Evaluación**: Physiological tremor amplitude is typically 50-200 μm (sub-pixel in most video). The method uses motion magnification to assess whether the detected tremor amplitude falls within physiological ranges. Absent tremor, excessive tremor, or tremor with wrong spectral shape indicates deepfake generation.",
+  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
 }

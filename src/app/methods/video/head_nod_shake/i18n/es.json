@@ -1,12 +1,12 @@
 {
-    "name": "Asentimiento y Negación de Cabeza",
-    "description": "Analiza movimientos de asentimiento y negación para detectar anomalías de deepfake",
-    "algorithm": "Algoritmo de análisis Head Nod/Shake Pattern",
-    "mechanism": "El sistema Head Nod/Shake Pattern analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+  "name": "Asentimiento y Negación de Cabeza",
+  "description": "Analiza movimientos de asentimiento y negación para detectar anomalías de deepfake",
+  "algorithm": "Algoritmo de análisis Head Nod/Shake Pattern",
+  "mechanism": "This method analyzes head gesture dynamics for deepfake detection:\n\n1. **Head Pose Seguimiento**: Head orientation (yaw, pitch, roll) is estimated per frame using facial landmark geometry or 3D head model fitting. Head pose signals are decomposed to identify gestural movements (nods = pitch oscillation, shakes = yaw oscillation).\n\n2. **Gesture Kinematics Análisis**: Natural head gestures follow specific kinematics: (a) nodding involves 10-20° pitch oscillation at 1-2 Hz, (b) shaking involves 15-30° yaw oscillation at 1-2.5 Hz, (c) gestures show smooth sinusoidal profiles with physiologically constrained velocity. The method checks whether detected gestures fall within natural kinematic parameters.\n\n3. **Gesture - Habla Correlación**: Head gestures correlate with speech prosody — nods often coincide with stressed syllables, head movements accompany turn-taking in conversation. The method analyzes temporal correlation between head motion and speech intensity. Deepfakes may show gestures temporally decoupled from speech.\n\n4. **Neck - Head Coordination**: Head rotation involves coupled neck and cervical spine motion with characteristic ranges — large yaw rotations involve torso contribution. The method verifies head-neck-shoulder coordination. Deepfake generators that only manipulate the face may produce head rotations that don't propagate correctly to neck and shoulders.\n\n5. **Inertial Consistencia**: Head motion should show proper inertial dynamics — acceleration/deceleration following the mass and muscle force constraints of the head-neck system. The method analyzes the frequency content and jerk profile of head motion. AI-generated head movements may lack natural inertial characteristics.",
+  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
 }

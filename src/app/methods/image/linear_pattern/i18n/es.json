@@ -1,22 +1,22 @@
 {
-    "name": "Detección de Patrones Lineales",
-    "description": "Detects unnatural linear patterns in imagen",
-    "algorithm": "Linear Pattern Detection — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "Este método realiza un análisis espacial a nivel de píxel para detectar artefactos generados por IA:\n\n1. **Preprocesamiento de imagenn**: La imagenn de entrada se carga y convierte al espacio de color apropiado para el análisis.\n\n2. **Extracción de características**: Detects unnatural linear patterns in imagen. El algoritmo extrae características relevantes a nivel de píxel en toda la cuadrícula de la imagenn.\n\n3. **Análisis de patrones**: Se calculan medidas estadísticas a partir de las características extraídas para identificar irregularidades.\n\n4. **Detección de anomalías**: Los resultados se comparan con las líneas base de imágenes auténticas de cámara vs imágenes generadas por IA.\n\n5. **Cálculo de puntuación**: Se calcula una puntuación de confianza (0-100) basada en el grado de anomalías detectadas.",
-    "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: linear pattern detection análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
-    "references": [
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ]
+  "name": "Detección de Patrones Lineales",
+  "description": "Detects unnatural linear patterns in imagen",
+  "algorithm": "Linear Pattern Detection — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method detects linear patterns for image forensic analysis using features inspired by Fridrich & Kodovsky (2012):\n\n1. **Linear Structure Detección**: The image is analyzed for linear structures using directional filtering (oriented Gabor filters, Hough transform, or Radon transform). Lines, edges, and linear patterns are extracted with their orientation, length, and intensity.\n\n2. **Linear Patrón Regularity Análisis**: The regularity and periodicity of linear patterns are analyzed. Natural images contain some linear structures (architecture, horizon lines) but AI-generated images may show: (a) excessive linear regularity, (b) line patterns from the generator's convolutional grid structure, (c) artificial straight lines where natural curves should exist.\n\n3. **Orientación Histograma**: The distribution of linear pattern orientations is computed. Natural scenes show orientation distributions related to scene geometry (many horizontal/vertical lines in architectural scenes, random orientations in natural scenes). AI generators may produce orientation biases from their training data or architecture.\n\n4. **Subpixel Line Análisis**: Lines in authentic images, when analyzed at subpixel precision, show characteristics of the optical imaging process: anti-aliasing from the lens, CFA interpolation effects, edge softening. AI-generated lines may show different subpixel profiles — too sharp, too smooth, or with incorrect anti-aliasing patterns.\n\n5. **Linear Coherencia Puntuación**: The overall coherence of linear patterns is scored. Anomalies include: linear patterns that don't follow perspective geometry, line segments that terminate abruptly without physical justification, and linear structures with non-physical optical characteristics. The score quantifies deviation from expected linear pattern statistics.",
+  "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
+  "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
+  "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
+  "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: linear pattern detection análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
+  "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
+  "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+  "references": [
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ]
 }

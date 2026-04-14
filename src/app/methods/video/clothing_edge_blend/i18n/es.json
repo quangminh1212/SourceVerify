@@ -1,22 +1,22 @@
 {
-    "name": "Mezcla de Bordes de Ropa",
-    "description": "Analyzes clothing edge blending quality",
-    "algorithm": "Clothing Edge Blend — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "This method analyzes video frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the video stream for analysis.\n\n2. **Feature Analysis**: Analyzes clothing edge blending quality. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **Cálculo de puntuación**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detección de deepfake y video generado por IA mediante clothing edge blend analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
-    "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
-    "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
-            "url": "https://arxiv.org/abs/2001.00179"
-        }
-    ]
+  "name": "Mezcla de Bordes de Ropa",
+  "description": "Analyzes clothing edge blending quality",
+  "algorithm": "Clothing Edge Blend — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes clothing-body edge blending for deepfake detection following Rossler et al. (2019):\n\n1. **Clothing Límite Detección**: The boundary between clothing and body/face regions is detected per frame using semantic segmentation. Clothing edges (collar-neck junction, sleeve-arm boundary, neckline) are extracted and parameterized.\n\n2. **Borde Blend Zone Análisis**: In authentic video, clothing-body boundaries show physically correct transitions — fabric partially occluding skin, compression of fabric at pressure points, natural draping creating soft shadows. The method measures the blend zone width, gradient profile, and shadow consistency at clothing boundaries.\n\n3. **Rostro - Swap Límite Detección**: Face-swap deepfakes must blend the generated face with the original body/clothing. The method specifically examines the collar-neck-jawline junction where this blending occurs. Artifacts include: unnatural alpha blending gradients, color temperature discontinuities, and resolution mismatches between generated face and original clothing.\n\n4. **Temporal Borde Coherencia**: Clothing-body edges should move coherently with body motion. The method tracks edge positions across frames and measures temporal consistency. Deepfake artifacts may cause clothing edges to flicker, teleport, or exhibit motion decoupled from the body's physical movement.\n\n5. **Occlusion Consistencia**: Natural clothing creates consistent occlusion patterns — a collar always covers the same neck region from a given angle. The method checks whether occlusion relationships between clothing and body remain physically consistent across frames and head pose changes. Deepfakes may produce impossible occlusion states where generated face regions incorrectly overlap with original clothing.",
+  "parameters": "Tipo de análisis: píxel\nMedio: video\nEntrada: Video frames extracted at key intervals\nSalida: Puntuación de confianza (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "Moderada a Alta — 70-88% precisión independiente. Most effective when combined with other video forensic methods. Performance depends on video quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detección de deepfake y video generado por IA mediante clothing edge blend analysis. Este método examina características temporales y espaciales que son difíciles de replicar perfectamente por sistemas de IA, proporcionando evidencia para la evaluación de autenticidad del video.",
+  "strengths": "• Captura artefactos temporales que el análisis de cuadro único pierde\n• Funciona con formatos de video estándar\n• Efectivo contra técnicas comunes de deepfake\n• Se puede combinar con otros métodos forenses de video\n• Basado en investigación establecida de visión por computadora",
+  "limitations": "• Rendimiento afectado por la compresión y resolución del video\n• Algunos métodos requieren suficiente cantidad de cuadros para el análisis temporal\n• La efectividad varía según la técnica de generación de deepfake\n• Se usa mejor como parte de un pipeline integral de múltiples métodos\n• Puede producir falsos positivos en videos auténticos con edición intensiva",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Tolosana, R. et al. (2020). DeepFakes and Beyond: A Survey of Face Manipulation and Detection. Information Fusion.",
+      "url": "https://arxiv.org/abs/2001.00179"
+    }
+  ]
 }

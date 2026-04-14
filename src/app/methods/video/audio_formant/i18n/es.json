@@ -1,12 +1,12 @@
 {
-    "name": "Formantes de Audio",
-    "description": "Analiza formantes de audio para detectar manipulación vocal en videos",
-    "algorithm": "Algoritmo de análisis Audio Formant Analysis",
-    "mechanism": "El sistema Audio Formant Analysis analiza patrones de señales específicos para distinguir contenido generado por IA de medios auténticos.",
-    "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
-    "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
-    "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
-    "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
-    "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
-    "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
+  "name": "Formantes de Audio",
+  "description": "Analiza formantes de audio para detectar manipulación vocal en videos",
+  "algorithm": "Algoritmo de análisis Audio Formant Analysis",
+  "mechanism": "This method analyzes speech formant structure for audio deepfake detection following Chetty & Wagner (2006):\n\n1. **Formante Extracción**: Speech segments are analyzed using Linear Predictive Coding (LPC) to extract formant frequencies F1-F4 and their bandwidths. Formants are the resonant frequencies of the vocal tract, determined by physical anatomy — tongue position, jaw opening, and vocal tract length.\n\n2. **Formante Trajectory Análisis**: Temporal trajectories of formant frequencies are tracked across phoneme transitions. Natural speech shows smooth, physiologically constrained formant transitions governed by articulatory dynamics. AI-generated speech may exhibit unnaturally abrupt formant shifts or overly smooth trajectories lacking natural micro-variations.\n\n3. **Speaker - Specific Formante Modelado**: Each speaker has characteristic formant ranges determined by vocal tract geometry. The method builds a speaker-specific formant model and checks consistency — deepfake audio may inadvertently blend formant characteristics from source and target speakers, creating acoustically impossible vocal tract configurations.\n\n4. **Formante Bandwidth Análisis**: Natural formant bandwidths reflect the damping properties of the vocal tract. AI synthesis often produces formants with unnatural bandwidth patterns — either too narrow (over-resonant) or too uniform across frequency bands, lacking the frequency-dependent damping of real vocal tracts.\n\n5. **Harmonic - to - Formante Ratio**: The relationship between harmonic series and formant peaks is analyzed. In natural speech, harmonics interact with formant resonances in predictable ways governed by source-filter theory. Synthetic speech may show anomalous harmonic-formant relationships indicating generated rather than physical sound production.",
+  "parameters": "Tipo de análisis: estadístico automático\\nRango de puntuación: 0 (auténtico) a 100 (generado por IA)",
+  "accuracy": "Moderada a Alta — 70-85% de precisión según la calidad de entrada.",
+  "source": "Basado en investigación revisada por pares en forense digital y detección de contenido IA.",
+  "useCase": "Se utiliza como parte del pipeline de análisis multiseñal para detectar contenido generado por IA.",
+  "strengths": "• Metodología respaldada por investigación\\n• Tiempo de cálculo rápido\\n• Complementario a otros métodos de detección",
+  "limitations": "• La precisión varía con la calidad de entrada\\n• Mejor utilizado en combinación con otros métodos"
 }

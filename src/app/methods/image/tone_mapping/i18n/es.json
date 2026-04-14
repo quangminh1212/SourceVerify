@@ -1,22 +1,22 @@
 {
-    "name": "Análisis de Mapeo de Tonos",
-    "description": "Analyzes HDR tone mapping artifacts",
-    "algorithm": "Tone Mapping Analysis — Análisis Espacial a Nivel de Píxel",
-    "mechanism": "Este método realiza un análisis espacial a nivel de píxel para detectar artefactos generados por IA:\n\n1. **Preprocesamiento de imagenn**: La imagenn de entrada se carga y convierte al espacio de color apropiado para el análisis.\n\n2. **Extracción de características**: Analyzes HDR tone mapping artifacts. El algoritmo extrae características relevantes a nivel de píxel en toda la cuadrícula de la imagenn.\n\n3. **Análisis de patrones**: Se calculan medidas estadísticas a partir de las características extraídas para identificar irregularidades.\n\n4. **Detección de anomalías**: Los resultados se comparan con las líneas base de imágenes auténticas de cámara vs imágenes generadas por IA.\n\n5. **Cálculo de puntuación**: Se calcula una puntuación de confianza (0-100) basada en el grado de anomalías detectadas.",
-    "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
-    "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
-    "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
-    "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: tone mapping analysis análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
-    "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
-    "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
-    "references": [
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ]
+  "name": "Análisis de Mapeo de Tonos",
+  "description": "Analyzes HDR tone mapping artifacts",
+  "algorithm": "Tone Mapping Analysis — Análisis Espacial a Nivel de Píxel",
+  "mechanism": "This method analyzes tone mapping characteristics for image forensic analysis:\n\n1. **Tone Curve Estimación**: The effective tone curve (mapping from scene luminance to pixel values) is estimated from the image content. This is done by analyzing: highlight rolloff behavior, shadow detail rendering, and the overall luminance distribution relative to expected scene statistics.\n\n2. **Tone Mapeo Operator Detección**: Different cameras and processing pipelines apply different tone mapping operators (TMOs). The method identifies the TMO type — standard curves (sRGB gamma), camera-specific tone curves (S-curves), HDR tone mapping (Reinhard, Drago, Mantiuk), or AI-generated tone mapping. AI generators learn tone mapping from their training data and may produce inconsistent or unusual tone curves.\n\n3. **Per - Región Tone Response Análisis**: The local tone response is analyzed in different image regions. In single-capture images, the same tone curve applies globally. Composite images may show different effective tone curves in different regions — a key indicator of manipulation.\n\n4. **Dynamic Range Consistencia**: The effective dynamic range and its distribution across the image are analyzed. Natural single-capture images have consistent dynamic range limited by the sensor. AI-generated images may show dynamic range inconsistencies — regions with impossible dynamic range extension or unnatural highlight-shadow balance.\n\n5. **Tone Mapeo Forensic Score**: Tone mapping features (estimated TMO parameters, per-region tone response consistency, dynamic range analysis) are combined into a forensic score. The score captures tone mapping inconsistencies indicative of compositing, AI generation, or post-processing manipulation.",
+  "parameters": "Tipo de análisis: píxel\nMedio: imagen\nEntrada: Datos de píxeles sin procesar / archivo de imagenn\nSalida: Puntuación de confianza (0-100)\nProcesamiento: API Canvas del lado del cliente\nEspacios de color: RGB, Escala de grises según corresponda",
+  "accuracy": "Moderada a Alta — 70-90% precisión independiente. El rendimiento es mejor en imágenes sin comprimir and puede disminuir con compresión JPEG intensa o recodificación de redes sociales.",
+  "source": "Investigación en análisis forense de imágenes digitales. Basado en principios de procesamiento de señales y fotografía computacional.",
+  "useCase": "Detección de imágenes generadas o manipuladas por IA mediante: tone mapping analysis análisis. Este método identifica patrones y artefactos característicos de la generación por IA, contribuyendo a un análisis forense de imágenes integral.",
+  "strengths": "• Procesamiento rápido del lado del cliente usando Canvas API\n• Eficaz en la detección de artefactos específicos de generación de IA\n• Funciona con formatos de imagenn comunes (JPEG, PNG, WebP)\n• Se puede combinar con métodos de análisis complementarios\n• Basado en investigación establecida de análisis forense de imágenes",
+  "limitations": "• El rendimiento puede variar según el nivel de compresión de la imagenn\n• La recodificación de redes sociales puede afectar la precisión\n• Se utiliza mejor en combinación con otros métodos forenses\n• Puede producir falsos positivos en imágenes auténticas muy procesadas\n• La efectividad depende del modelo de generación de IA utilizado",
+  "references": [
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ]
 }
