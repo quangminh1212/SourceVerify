@@ -1,12 +1,12 @@
 {
     "name": "グラディエントマイクロテクスチャ",
-    "description": "調査します smooth regions for natural micro-texture from camera sensors. AI images lack sensor-level noise in 勾配s, producing unnaturally clean smooth areas.",
-    "algorithm": "Gradient Smoothness and Micro-Texture Analysis",
+    "description": "色変換の空間的勾配の連続性を調査します。本物の写真は光子分布の自然な減衰波を示しますが、AI画像はセンサーレベルのノイズ勾配を欠き、不自然にクリーンな滑らかな領域を生成します。",
+    "algorithm": "空間的地形一次導関数勾配連続性分析",
     "mechanism": "このエンジンは色変換の生の加速速度を測定します。白い塗装壁から漆黒のジャケットへの遷移は光子の微分を過激に最大速度（最大グラディエント）に投げます。罠はここに明示的に設定されます：詐欺的に接合されたオブジェクトの周囲は常に攻撃的で不自然に鋭い有刺鉄線グラディエントを生み出します。逆に、AI幻覚によって生成された内部質量は窒息するほど平坦で、物理的アナログ光学ノイズから生まれるカオス的で微視的なグラディエント波紋が完全にありません。この自然な均衡が残酷に破壊されると（剃刀のような合成境界がデッドフラットなワックス内部を閉じ込める）、ギロチンが即座に落ちます。",
-    "parameters": "Gradient operator: Scharr, Window: 16x16 sliding, Metrics: 勾配 エントロピー, smoothness ratio",
-    "accuracy": "中 - 70-80%, higher for diffusion model outputs",
+    "parameters": "数学演算子：一次空間導関数(dx, dy)、抽出器：勾配大きさ畳み込みフィルタ",
+    "accuracy": "中程度 - 70-80%、拡散モデル出力に対してはより高精度",
     "source": "Nataraj et al. (2019) Detecting GAN generated Fake Images using Co-occurrence Matrices",
-    "useCase": "Identifying AI生成の smooth 勾配s lacking natural micro-texture",
+    "useCase": "オブジェクトの構造的境界に直接消去ブラシやぼかしツールを使用した不自然なスプライス痕跡の検出。接触点での数学的勾配の致命的な破壊を特定します。",
     "references": [
         {
             "url": "https://doi.org/10.1109/TIFS.2012.2190402",
@@ -17,6 +17,6 @@
             "title": "Tanaka, K. et al. (2019). Distinguishing Computer Graphics from Natural Images. Digital Investigation."
         }
     ],
-    "strengths": "• Detection vùng 勾配 quá sạch đặc trưng AI\n• Chi phí tính toán thấp\n• Hoạt động tốt với ảnh có vùng mượt lớn",
-    "limitations": "• スタジオで適切に撮影された画像は誤検出の可能性\n• ノイズ追加後は効果が低下\n• 画像の内容に依存"
+    "strengths": "• 超高速で計算コストが極めて低い処理パイプライン\n• 生物学的にありえない焦点異常を的確に検出\n• AI画像の不自然に平坦な勾配領域を効果的に特定",
+    "limitations": "• 高圧縮画像（JPEG品質10以下等）では偽陽性が増加\n• インスタグラムのシャープンフィルター等の過度な後処理で誤検出の恐れ\n• 画像内容に依存"
 }

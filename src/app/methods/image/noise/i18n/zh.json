@@ -1,12 +1,12 @@
 {
-    "name": "Noise Residual",
-    "description": "Examines high-frequency noise patterns by applying Wiener deconvolution. Real cameras produce characteristic sensor noise that varies across the image, while AI generates unnaturally uniform noise.",
-    "algorithm": "High-Frequency Noise Residual Analysis (Wiener Filter)",
-    "mechanism": "The 分析 process:\n\n1. **Noise extraction**: 应用 Wiener deconvolution filter to separate the noise component from image content.\n\n2. **Local 方差 mapping**: Computes local noise 方差 跨 overlapping blocks to create a noise 方差 heatmap.\n\n3. **Uniformity 分析**: Real camera noise varies due to sensor manufacturing imperfections (光响应非均匀性). AI images lack this variation.\n\n4. **Statistical profiling**: 分析 噪声分布 statistics (kurtosis, skewness) against known camera noise models.",
-    "parameters": "Filter: Wiener deconvolution, Window: 5x5\n块大小: 16x16 with 50% overlap\nNoise model: Gaussian + Poisson (heteroscedastic)\nMetrics: local 方差, kurtosis, skewness",
-    "accuracy": "High - 80-90% for distinguishing natural vs synthetic noise",
+    "name": "噪声残差分析",
+    "description": "通过应用维纳反卷积检查高频噪声模式。真实相机产生在图像中变化的特征性传感器噪声，而AI生成的噪声模式则不自然地均匀。",
+    "algorithm": "维纳滤波器噪声残差提取",
+    "mechanism": "分析过程：\n\n1. **噪声提取**：应用维纳反卷积滤波器将噪声成分从图像内容中分离。\n\n2. **局部方差映射**：在重叠块上计算局部噪声方差，生成噪声方差热图。\n\n3. **均匀性分析**：真实相机噪声因传感器制造缺陷（光响应非均匀性）而变化。AI图像缺乏这种变化。\n\n4. **统计特征分析**：根据已知相机噪声模型分析噪声分布统计量（峰度、偏度）。",
+    "parameters": "滤波器：维纳反卷积，窗口：5x5\n块大小：16x16，50%重叠\n噪声模型：高斯+泊松（异方差）\n指标：局部方差、峰度、偏度",
+    "accuracy": "高 - 80-90%，用于区分自然与合成噪声",
     "source": "Fridrich and Kodovsky (2012), IEEE TIFS",
-    "useCase": "Detecting absence of authentic sensor noise patterns in AI-generated images",
+    "useCase": "通过异常均匀的噪声模式检测AI图像。也用于相机来源识别和篡改检测。",
     "references": [
         {
             "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
@@ -21,6 +21,6 @@
             "url": "https://doi.org/10.1109/TIFS.2019.2916364"
         }
     ],
-    "strengths": "• Robust against content 篡改\n• Camera-specific noise is extremely difficult to forge\n• Works 跨 different image formats\n• Can identify specific camera models",
-    "limitations": "• Effectiveness reduced by heavy denoising or compression\n• Requires sufficient image 分辨率\n• Some AI models now add synthetic noise to evade 检测\n• Social media compression degrades 噪声模式s"
+    "strengths": "• 对内容篡改具有鲁棒性\n• 相机特定噪声极难伪造\n• 适用于不同图像格式\n• 可识别特定相机型号",
+    "limitations": "• 重度去噪或压缩会降低有效性\n• 需要足够的图像分辨率\n• 一些AI模型现在添加合成噪声以逃避检测\n• 社交媒体压缩会降解噪声模式"
 }

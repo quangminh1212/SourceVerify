@@ -1,12 +1,12 @@
 {
     "name": "그래디언트 마이크로 텍스처",
-    "description": "조사합니다 smooth regions for natural micro-texture from camera sensors. AI images lack sensor-level noise in 기울기s, producing unnaturally clean smooth areas.",
-    "algorithm": "Gradient Smoothness and Micro-Texture Analysis",
+    "description": "색상 변환의 공간적 기울기 연속성을 조사합니다. 실제 사진은 광자 분포의 자연스러운 감쇠파를 보이지만, AI 이미지는 센서 수준의 노이즈 기울기가 부족하여 부자연스럽게 깨끗한 매끄러운 영역을 생성합니다.",
+    "algorithm": "공간 지형 1차 도함수 기울기 연속성 분석",
     "mechanism": "이 엔진은 색상 변환의 원시 가속 속도를 측정합니다. 흰색 도장 벽에서 칠흑 재킷으로의 전환은 광자 미분을 과격하게 최대 속도(최대 그래디언트)로 던집니다. 함정은 여기에 명시적으로 설정됩니다: 사기성 접합 객체의 둘레는 항상 공격적이고 부자연스럽게 날카로운 철조망 그래디언트를 산출합니다. 반대로, AI 환각으로 생성된 내부 질량은 답답할 정도로 평탄하며 물리적 아날로그 광학 노이즈에서 태어난 혼돈적이고 미세한 그래디언트 파문이 완전히 없습니다. 이 자연적 균형이 잔인하게 파괴되면(면도날 같은 합성 경계가 완전히 평평한 왁스 내부를 가두는), 단두대는 즉시 떨어집니다.",
-    "parameters": "Gradient operator: Scharr, Window: 16x16 sliding, Metrics: 기울기 엔트로피, smoothness ratio",
-    "accuracy": "중간 - 70-80%, higher for diffusion model outputs",
+    "parameters": "수학 연산자: 1차 공간 도함수(dx, dy), 추출기: 기울기 크기 합성곱 필터",
+    "accuracy": "중간 - 70-80%, 확산 모델 출력에 대해 더 높은 정확도",
     "source": "Nataraj et al. (2019) Detecting GAN generated Fake Images using Co-occurrence Matrices",
-    "useCase": "Identifying AI 생성 smooth 기울기s lacking natural micro-texture",
+    "useCase": "객체의 구조적 경계에 직접 지우개/흐림 도구를 사용한 부자연스러운 스플라이스 흔적 탐지. 접촉 지점에서 수학적 기울기의 치명적 파괴를 식별합니다.",
     "references": [
         {
             "url": "https://doi.org/10.1109/TIFS.2012.2190402",
@@ -17,6 +17,6 @@
             "title": "Tanaka, K. et al. (2019). Distinguishing Computer Graphics from Natural Images. Digital Investigation."
         }
     ],
-    "strengths": "• Detection vùng 기울기 quá sạch đặc trưng AI\n• Chi phí tính toán thấp\n• Hoạt động tốt với ảnh có vùng mượt lớn",
-    "limitations": "• 스튜디오에서 잘 촬영된 이미지는 오탐 가능성\n• 노이즈 추가 후 효과 감소\n• 이미지 내용에 의존"
+    "strengths": "• 초고속이며 계산 비용이 매우 낮은 처리 파이프라인\n• 생물학적으로 불가능한 초점 이상을 정확히 탐지\n• AI 이미지의 부자연스럽게 평탄한 기울기 영역을 효과적으로 식별",
+    "limitations": "• 고압축 이미지(JPEG 품질 10 이하 등)에서는 오탐 증가\n• 인스타그램 샤프닝 필터 등 과도한 후처리에 의한 오탐 가능\n• 이미지 내용에 의존"
 }
