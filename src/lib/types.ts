@@ -25,6 +25,7 @@ export interface AnalysisMethod {
     descriptionKey: string;
     icon: string;
     details?: string;
+    index?: string;
 }
 
 export interface FileMetadata {

@@ -297,7 +297,10 @@ export default function MethodsPage() {
                                         </span>
                                     </div>
                                 </div>
-                                <h3 className="methods-card-name">{getMethodTranslation(m.id, locale).name}</h3>
+                                <h3 className="methods-card-name">
+                                    {m.index && <span className="methods-card-index">{m.index}</span>}
+                                    {getMethodTranslation(m.id, locale).name}
+                                </h3>
                                 <p className="methods-card-desc">{getMethodTranslation(m.id, locale).description}</p>
                                 <div className="methods-card-footer">
                                     {m.year && (

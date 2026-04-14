@@ -210,9 +210,14 @@ export default function MethodDetail({ methodId, translations }: { methodId: str
                             <MethodIcon category={method.category} size={36} />
                         </div>
                         <div className="method-detail-header-text">
-                            <h1 className="method-detail-title">{tr.name}</h1>
+                            <h1 className="method-detail-title">
+                                {method.index && <span className="method-detail-index">{method.index}</span>}
+                                {tr.name}
+                            </h1>
                             <div className="method-detail-meta">
                                 <span className={`methods-card-badge ${CAT_COLORS[method.category]}`}>{catLabel}</span>
+                                <span className="method-detail-media-badge">{mediaTypeLoc}</span>
+                                {method.year && <span className="method-detail-year-badge">{method.year}</span>}
                             </div>
                         </div>
                     </div>
