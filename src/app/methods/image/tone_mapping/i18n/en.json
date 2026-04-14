@@ -1,22 +1,22 @@
 {
-    "name": "Tone Mapping Analysis",
-    "description": "Analyzes HDR tone mapping artifacts to detect synthetic artifacts, anomalies, and characteristic signatures of generative AI models.",
-    "algorithm": "Tone Mapping Analysis — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Analyzes HDR tone mapping artifacts. The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through tone mapping analysis analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ]
+  "name": "Tone Mapping Analysis",
+  "description": "Analyzes HDR tone mapping artifacts to detect synthetic artifacts, anomalies, and characteristic signatures of generative AI models.",
+  "algorithm": "Tone Mapping Analysis — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes tone mapping characteristics for image forensic analysis:\n\n1. **Tone Curve Estimation**: The effective tone curve (mapping from scene luminance to pixel values) is estimated from the image content. This is done by analyzing: highlight rolloff behavior, shadow detail rendering, and the overall luminance distribution relative to expected scene statistics.\n\n2. **Tone Mapping Operator Detection**: Different cameras and processing pipelines apply different tone mapping operators (TMOs). The method identifies the TMO type — standard curves (sRGB gamma), camera-specific tone curves (S-curves), HDR tone mapping (Reinhard, Drago, Mantiuk), or AI-generated tone mapping. AI generators learn tone mapping from their training data and may produce inconsistent or unusual tone curves.\n\n3. **Per-Region Tone Response Analysis**: The local tone response is analyzed in different image regions. In single-capture images, the same tone curve applies globally. Composite images may show different effective tone curves in different regions — a key indicator of manipulation.\n\n4. **Dynamic Range Consistency**: The effective dynamic range and its distribution across the image are analyzed. Natural single-capture images have consistent dynamic range limited by the sensor. AI-generated images may show dynamic range inconsistencies — regions with impossible dynamic range extension or unnatural highlight-shadow balance.\n\n5. **Tone Mapping Forensic Score**: Tone mapping features (estimated TMO parameters, per-region tone response consistency, dynamic range analysis) are combined into a forensic score. The score captures tone mapping inconsistencies indicative of compositing, AI generation, or post-processing manipulation.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through tone mapping analysis analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ]
 }

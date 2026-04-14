@@ -1,22 +1,22 @@
 {
-    "name": "Linear Pattern Detection",
-    "description": "Detects unnatural linear patterns in image",
-    "algorithm": "Linear Pattern Detection — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Detects unnatural linear patterns in image. The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through linear pattern detection analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        },
-        {
-            "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
-            "url": "https://arxiv.org/abs/1912.11035"
-        }
-    ]
+  "name": "Linear Pattern Detection",
+  "description": "Detects unnatural linear patterns in image",
+  "algorithm": "Linear Pattern Detection — Pixel-Level Spatial Analysis",
+  "mechanism": "This method detects linear patterns for image forensic analysis using features inspired by Fridrich & Kodovsky (2012):\n\n1. **Linear Structure Detection**: The image is analyzed for linear structures using directional filtering (oriented Gabor filters, Hough transform, or Radon transform). Lines, edges, and linear patterns are extracted with their orientation, length, and intensity.\n\n2. **Linear Pattern Regularity Analysis**: The regularity and periodicity of linear patterns are analyzed. Natural images contain some linear structures (architecture, horizon lines) but AI-generated images may show: (a) excessive linear regularity, (b) line patterns from the generator's convolutional grid structure, (c) artificial straight lines where natural curves should exist.\n\n3. **Orientation Histogram**: The distribution of linear pattern orientations is computed. Natural scenes show orientation distributions related to scene geometry (many horizontal/vertical lines in architectural scenes, random orientations in natural scenes). AI generators may produce orientation biases from their training data or architecture.\n\n4. **Subpixel Line Analysis**: Lines in authentic images, when analyzed at subpixel precision, show characteristics of the optical imaging process: anti-aliasing from the lens, CFA interpolation effects, edge softening. AI-generated lines may show different subpixel profiles — too sharp, too smooth, or with incorrect anti-aliasing patterns.\n\n5. **Linear Coherence Scoring**: The overall coherence of linear patterns is scored. Anomalies include: linear patterns that don't follow perspective geometry, line segments that terminate abruptly without physical justification, and linear structures with non-physical optical characteristics. The score quantifies deviation from expected linear pattern statistics.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through linear pattern detection analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    },
+    {
+      "title": "Wang, S.Y. et al. (2020). CNN-generated images are surprisingly easy to spot. CVPR.",
+      "url": "https://arxiv.org/abs/1912.11035"
+    }
+  ]
 }

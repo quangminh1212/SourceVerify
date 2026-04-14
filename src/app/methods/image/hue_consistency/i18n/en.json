@@ -1,22 +1,22 @@
 {
-    "name": "Hue Consistency",
-    "description": "Analyzes hue consistency across regions to detect synthetic artifacts, anomalies, and characteristic signatures of generative AI models.",
-    "algorithm": "Hue Consistency — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Analyzes hue consistency across regions. The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through hue consistency analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
-            "url": "https://doi.org/10.1109/TSP.2005.855406"
-        },
-        {
-            "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
-            "url": "https://doi.org/10.1109/38.946629"
-        }
-    ]
+  "name": "Hue Consistency",
+  "description": "Analyzes hue consistency across regions to detect synthetic artifacts, anomalies, and characteristic signatures of generative AI models.",
+  "algorithm": "Hue Consistency — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes hue consistency to detect image manipulation and AI generation:\n\n1. **Color Space Conversion**: The image is converted from RGB to HSV (Hue-Saturation-Value) color space, isolating the hue channel. The hue channel represents the dominant wavelength of light independent of brightness and saturation, following Popescu & Farid's (2005) approach to color analysis.\n\n2. **Regional Hue Analysis**: The image is divided into overlapping regions and per-region hue statistics are computed — mean hue, hue variance, and circular hue histogram (since hue is angular). Natural images show smooth hue transitions between adjacent regions following physical illumination constraints.\n\n3. **Hue Gradient Computation**: The spatial gradient of the hue channel is computed. In authentic images, hue gradients correlate with material boundaries and illumination changes. AI-generated images may show hue inconsistencies — abrupt hue shifts not explained by scene geometry or lighting, especially at object boundaries.\n\n4. **Cross-Channel Hue Correlation**: The relationship between hue and luminance/saturation is analyzed. Natural scenes follow physical constraints (e.g., sky hue depends on viewing angle, skin hue varies with illumination). AI models may produce hue-luminance relationships that violate these physical priors.\n\n5. **Hue Coherence Scoring**: A coherence score is computed measuring the overall consistency of hue across the image. Low coherence (high hue variation not explained by scene content) indicates potential manipulation. The score reflects deviations from the expected hue distribution for the detected scene type.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through hue consistency analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Popescu, A.C. & Farid, H. (2005). Exposing digital forgeries in color filter array interpolated images. IEEE SP.",
+      "url": "https://doi.org/10.1109/TSP.2005.855406"
+    },
+    {
+      "title": "Reinhard, E. et al. (2001). Color Transfer Between Images. IEEE CG&A.",
+      "url": "https://doi.org/10.1109/38.946629"
+    }
+  ]
 }

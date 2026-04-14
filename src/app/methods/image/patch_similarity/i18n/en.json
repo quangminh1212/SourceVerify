@@ -1,22 +1,22 @@
 {
-    "name": "Patch Similarity Matrix",
-    "description": "Computes self-similarity matrix of image patches",
-    "algorithm": "Patch Similarity Matrix — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Computes self-similarity matrix of image patches. The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through patch similarity matrix analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ]
+  "name": "Patch Similarity Matrix",
+  "description": "Computes self-similarity matrix of image patches",
+  "algorithm": "Patch Similarity Matrix — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes patch similarity patterns for image forensic analysis:\n\n1. **Patch Extraction**: The image is divided into overlapping patches (typically 8×8 to 32×32 pixels). Each patch is characterized by its feature vector — pixel values, DCT coefficients, or learned features.\n\n2. **Similarity Matrix Computation**: A similarity matrix is computed measuring the similarity (e.g., cosine similarity, normalized cross-correlation) between all patch pairs. This matrix reveals the self-similarity structure of the image — which regions look alike.\n\n3. **Self-Similarity Pattern Analysis**: Natural images show specific self-similarity patterns: similar patches cluster near repeated textures and objects, and similarity falls off with spatial distance. AI-generated images may show: (a) excessive self-similarity (repetitive generation patterns), (b) similarity patterns inconsistent with scene geometry, (c) patch similarity at non-physically-motivated spatial distances (from the generator repeating learned patterns).\n\n4. **Copy-Move Forensics**: High patch similarity between distant image regions can indicate copy-move manipulation. The method distinguishes between natural recurrence (repeated textures, symmetric objects) and artificial duplication. Geometric matching checks for affine transformations between similar patches.\n\n5. **Similarity Distribution Scoring**: The overall similarity distribution is scored against expected distributions for natural images vs. AI-generated content. Features include: maximum similarity values, similarity decay with distance, number of near-duplicate patches, and spatial distribution of high-similarity regions.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through patch similarity matrix analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ]
 }

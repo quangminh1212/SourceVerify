@@ -1,22 +1,22 @@
 {
-    "name": "Texture Periodicity",
-    "description": "Detects periodic texture patterns common in AI generation",
-    "algorithm": "Texture Periodicity — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Detects periodic texture patterns common in AI generation. The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through texture periodicity analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
-            "url": "https://doi.org/10.1109/TSMC.1973.4309314"
-        },
-        {
-            "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval of Image Data. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/34.531803"
-        }
-    ]
+  "name": "Texture Periodicity",
+  "description": "Detects periodic texture patterns common in AI generation",
+  "algorithm": "Texture Periodicity — Pixel-Level Spatial Analysis",
+  "mechanism": "This method analyzes texture periodicity for image forensic analysis, based on texture analysis frameworks from Haralick et al. (1973):\n\n1. **Autocorrelation Analysis**: The 2D autocorrelation function of the image (or image regions) is computed. Periodic textures produce peaks in the autocorrelation at the period intervals. The method extracts periodicity parameters: period, orientation, and regularity.\n\n2. **Power Spectrum Periodicity**: The 2D Fourier power spectrum is analyzed for spectral peaks indicating periodic content. The location of peaks reveals the spatial frequency and orientation of periodic patterns. The method distinguishes between natural periodicities (fabric weave, architectural patterns) and artificial periodicities (GAN grid artifacts, aliasing patterns).\n\n3. **Period Regularity Assessment**: The regularity (or irregularity) of detected periodicities is measured. Natural periodic textures show slight irregularity (variation in period, phase jitter) from the physical process generating them. AI-generated periodicities may be either too regular (perfect repetition from learned patterns) or show characteristic period variation from the generation process.\n\n4. **Periodicity Spatial Distribution**: The spatial distribution of periodic content is mapped. Natural periodic textures are confined to specific objects (fabric, brickwork). AI generation may produce subtle periodicities throughout the image from the convolutional architecture (grid artifacts appearing across all generated content).\n\n5. **Periodicity Feature Scoring**: Periodicity features (detected periods, regularity measures, spatial distribution, spectral peak analysis) are combined into a forensic score. The score captures the presence of anomalous periodicities characteristic of AI generation or manipulation.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through texture periodicity analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Haralick, R.M. et al. (1973). Textural Features for Image Classification. IEEE TSMC.",
+      "url": "https://doi.org/10.1109/TSMC.1973.4309314"
+    },
+    {
+      "title": "Manjunath, B.S. & Ma, W.Y. (1996). Texture Features for Browsing and Retrieval of Image Data. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/34.531803"
+    }
+  ]
 }

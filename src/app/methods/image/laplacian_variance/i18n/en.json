@@ -1,22 +1,22 @@
 {
-    "name": "Laplacian Variance",
-    "description": "Measures Laplacian variance for blur detection (Tenenbaum, 2004)",
-    "algorithm": "Laplacian Variance — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Measures Laplacian variance for blur detection (Tenenbaum, 2004). The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through laplacian variance analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
-        }
-    ]
+  "name": "Laplacian Variance",
+  "description": "Measures Laplacian variance for blur detection (Tenenbaum, 2004)",
+  "algorithm": "Laplacian Variance — Pixel-Level Spatial Analysis",
+  "mechanism": "This method uses Laplacian variance statistics for image forensic analysis:\n\n1. **Laplacian Computation**: The discrete Laplacian operator (second-order derivative) is applied to the image: ∇²I = ∂²I/∂x² + ∂²I/∂y². The Laplacian highlights regions of rapid intensity change — edges, textures, and noise — while suppressing smooth regions.\n\n2. **Local Variance Analysis**: The local variance of the Laplacian response is computed in sliding windows across the image. This captures the spatial distribution of image detail and texture energy. Natural images show Laplacian variance patterns that follow scene content — high variance at textured regions, low variance at smooth surfaces.\n\n3. **Blur Detection**: The overall Laplacian variance is a classic blur metric (higher values indicate sharper images). The method computes per-region Laplacian variance to detect focus inconsistencies. Regions with different Laplacian variance than expected for their scene position (relative to the focal plane) indicate potential compositing.\n\n4. **AI Generation Signature Detection**: AI-generated images often show characteristic Laplacian variance patterns: (a) unnaturally uniform Laplacian variance across regions that should vary (e.g., in-focus vs. out-of-focus), (b) excessive or insufficient high-frequency content in specific regions, (c) Laplacian variance ratios between spatial scales that don't match natural image statistics.\n\n5. **Comparative Scoring**: The overall Laplacian variance statistics are compared against expected values for the image type and content. Deviations from natural Laplacian variance distributions — measured by moments, kurtosis, and scale ratios — contribute to the forensic score.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through laplacian variance analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Scharr Gradient",
-    "description": "Computes Scharr gradient for edge analysis (2000)",
-    "algorithm": "Scharr Gradient — Pixel-Level Spatial Analysis",
-    "mechanism": "This method performs pixel-level spatial analysis to detect AI-generated artifacts:\n\n1. **Image Preprocessing**: The input image is loaded and converted to appropriate color space for analysis.\n\n2. **Feature Extraction**: Computes Scharr gradient for edge analysis (2000). The algorithm extracts relevant pixel-level features across the image grid.\n\n3. **Pattern Analysis**: Statistical measures are computed from extracted features to identify irregularities.\n\n4. **Anomaly Detection**: Results are compared against baselines from authentic camera images vs AI-generated images.\n\n5. **Score Computation**: A confidence score (0-100) is calculated based on the degree of detected anomalies.",
-    "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
-    "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
-    "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
-    "useCase": "Detection of AI-generated or manipulated images through scharr gradient analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
-    "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
-    "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
-    "references": [
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        },
-        {
-            "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
-            "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
-        }
-    ]
+  "name": "Scharr Gradient",
+  "description": "Computes Scharr gradient for edge analysis (2000)",
+  "algorithm": "Scharr Gradient — Pixel-Level Spatial Analysis",
+  "mechanism": "This method applies the Scharr gradient operator for image forensic analysis:\n\n1. **Scharr Operator Application**: The 3×3 Scharr kernels are applied in horizontal and vertical directions. The Scharr operator provides improved rotational symmetry compared to Sobel, with kernel weights [−3,0,3; −10,0,10; −3,0,3] for the horizontal direction, yielding more accurate gradient estimation.\n\n2. **Gradient Magnitude Distribution**: The distribution of Scharr gradient magnitudes across the image is analyzed. Natural images show characteristic gradient magnitude distributions shaped by the optical transfer function and scene content. AI-generated images may show different distributions — modified high-frequency content or gradient magnitude statistics inconsistent with optical imaging.\n\n3. **Gradient Direction Analysis**: The gradient direction field θ = arctan(Gy/Gx) reveals edge orientations. The method analyzes direction distributions and directional coherence. AI-generated images may show direction field anomalies — grid-aligned gradient biases from convolutional architectures or direction distributions not matching scene geometry.\n\n4. **Local Gradient Statistics**: Per-region Scharr gradient statistics (mean, variance, skewness, kurtosis) are computed. Spatial variation in gradient statistics should follow scene content. The method detects regions where gradient statistics are inconsistent with neighboring regions — indicating potential manipulation boundaries.\n\n5. **Gradient Feature Scoring**: Scharr gradient features (magnitude distribution, directional statistics, spatial consistency, scale behavior) are combined into a forensic score measuring conformity with natural image gradient characteristics versus AI generation artifacts.",
+  "parameters": "Analysis type: pixel\nMedia: image\nInput: Raw pixel data / image file\nOutput: Confidence score (0-100)\nProcessing: Client-side Canvas API\nColor spaces: RGB, Grayscale as applicable",
+  "accuracy": "Moderate to High — 70-90% standalone accuracy. Performance is highest on uncompressed images and may decrease with heavy JPEG compression or social media re-encoding.",
+  "source": "Digital image forensics research. Based on signal processing and computational photography principles.",
+  "useCase": "Detection of AI-generated or manipulated images through scharr gradient analysis. This method identifies patterns and artifacts that are characteristic of AI generation, contributing to a comprehensive image forensic analysis.",
+  "strengths": "• Fast client-side processing using Canvas API\n• Effective at detecting specific AI generation artifacts\n• Works with common image formats (JPEG, PNG, WebP)\n• Can be combined with complementary analysis methods\n• Based on established image forensics research",
+  "limitations": "• Performance may vary with image compression level\n• Social media re-encoding can affect accuracy\n• Best used in combination with other forensic methods\n• May produce false positives on heavily processed authentic images\n• Effectiveness depends on the AI generation model used",
+  "references": [
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    },
+    {
+      "title": "Canny, J. (1986). A Computational Approach to Edge Detection. IEEE TPAMI.",
+      "url": "https://doi.org/10.1109/TPAMI.1986.4767851"
+    }
+  ]
 }
