@@ -12,7 +12,6 @@ export function analyzeFaceLandmarkConsistency(pixels: Uint8ClampedArray, w: num
             category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.faceLandmarkConsistency.error", icon: "👤",
- details,
     };
     }
 

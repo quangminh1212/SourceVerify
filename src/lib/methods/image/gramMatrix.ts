@@ -12,7 +12,6 @@ export function analyzeGramMatrix(pixels: Uint8ClampedArray, w: number, h: numbe
             category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.gramMatrix.error", icon: "📏",
- details,
     };
     }
 

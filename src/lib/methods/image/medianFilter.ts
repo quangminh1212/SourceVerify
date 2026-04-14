@@ -12,7 +12,6 @@ export function analyzeMedianFilter(pixels: Uint8ClampedArray, w: number, h: num
             category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.medianFilter.error", icon: "🔲",
- details,
     };
     }
 

@@ -12,7 +12,6 @@ export function analyzeVitDetection(pixels: Uint8ClampedArray, w: number, h: num
             category: "sensor", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.vitDetection.error", icon: "🔲",
- details,
     };
     }
 

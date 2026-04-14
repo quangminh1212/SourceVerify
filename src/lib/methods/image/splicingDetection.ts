@@ -12,7 +12,6 @@ export function analyzeSplicingDetection(pixels: Uint8ClampedArray, w: number, h
             category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.splicingDetection.error", icon: "✂️",
- details,
     };
     }
 

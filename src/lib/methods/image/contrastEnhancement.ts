@@ -12,7 +12,6 @@ export function analyzeContrastEnhancement(pixels: Uint8ClampedArray, w: number,
             category: "statistical", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.contrastEnhancement.error", icon: "🔆",
- details,
     };
     }
 

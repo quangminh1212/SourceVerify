@@ -12,7 +12,6 @@ export function analyzeStyleTransfer(pixels: Uint8ClampedArray, w: number, h: nu
             category: "sensor", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.styleTransfer.error", icon: "🎨",
- details,
     };
     }
 

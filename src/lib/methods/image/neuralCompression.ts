@@ -12,7 +12,6 @@ export function analyzeNeuralCompression(pixels: Uint8ClampedArray, w: number, h
             category: "sensor", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.neuralCompression.error", icon: "⚡",
- details,
     };
     }
 

@@ -12,7 +12,6 @@ export function analyzeSiftForensics(pixels: Uint8ClampedArray, w: number, h: nu
             category: "statistical", score: 50, weight: 0.35,
             description: "Image too small for analysis",
             descriptionKey: "signal.siftForensics.error", icon: "🔑",
- details,
     };
     }
 

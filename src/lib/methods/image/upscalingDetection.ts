@@ -12,7 +12,6 @@ export function analyzeUpscalingDetection(pixels: Uint8ClampedArray, w: number, 
             category: "frequency", score: 50, weight: 0.3,
             description: "Image too small for analysis",
             descriptionKey: "signal.upscalingDetection.error", icon: "🔎",
- details,
     };
     }
 

@@ -12,7 +12,6 @@ export function analyzeReflectionConsistency(pixels: Uint8ClampedArray, w: numbe
             category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.reflectionConsistency.error", icon: "🪞",
- details,
     };
     }
 

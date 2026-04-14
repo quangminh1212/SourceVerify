@@ -12,7 +12,6 @@ export function analyzeSteganalysis(pixels: Uint8ClampedArray, w: number, h: num
             category: "statistical", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.steganalysis.error", icon: "🔍",
- details,
     };
     }
 

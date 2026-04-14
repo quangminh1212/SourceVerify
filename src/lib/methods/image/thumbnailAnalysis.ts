@@ -12,7 +12,6 @@ export function analyzeThumbnailConsistency(pixels: Uint8ClampedArray, w: number
             category: "metadata", score: 50, weight: 0.25,
             description: "Image too small for analysis",
             descriptionKey: "signal.thumbnailAnalysis.error", icon: "🖼️",
- details,
     };
     }
 
