@@ -1,22 +1,22 @@
 {
-    "name": "Video Noise Consistency",
-    "description": "Examines noise pattern consistency across frame regions",
-    "algorithm": "Video Noise Consistency — Statistical Pattern Analyzer",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Examines noise pattern consistency across frame regions. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 통계\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 noise consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Video Noise Consistency",
+  "description": "Examines noise pattern consistency across frame regions",
+  "algorithm": "Video Noise Consistency — Statistical Pattern Analyzer",
+  "mechanism": "This method analyzes video noise consistency for forensic detection:\n\n1. **노이즈추정**: Per-region noise level and noise characteristics are estimated from each frame using smooth-region analysis and noise estimation algorithms. The noise model (Gaussian, Poisson, mixed) and parameters (variance, spatial correlation) are determined.\n\n2. **노이즈공간적일관성**: Camera noise should be spatially consistent — same sensor, same noise for all regions at a given signal level. The method compares noise characteristics between face and background. Deepfake composites show noise mismatches — the generated face has different noise (from the generator) than the captured background (from the camera sensor).\n\n3. **노이즈-신호Relationship**: Camera noise follows specific noise-signal relationships: photon shot noise creates variance proportional to signal. The method checks this relationship across the frame. AI-generated content may show incorrect noise-signal dependencies — either constant noise (additive model) or noise patterns that don't follow physical sensor models.\n\n4. **노이즈스펙트럼Shape**: Camera sensor noise has specific spatial frequency characteristics determined by the anti-aliasing filter and readout electronics. The method analyzes noise power spectral density — AI generators produce noise with different spectral characteristics than camera sensors.\n\n5. **시간적노이즈분석**: Frame-to-frame noise should be independently distributed (uncorrelated). The method checks temporal noise independence — AI-generated frames may show correlated noise patterns (repeated noise structures between frames or systematically evolving noise) inconsistent with camera capture.",
+  "parameters": "분석 유형: 통계\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 noise consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

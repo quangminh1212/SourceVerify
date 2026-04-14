@@ -1,22 +1,22 @@
 {
-    "name": "Depth Consistency",
-    "description": "Analyzes depth map consistency",
-    "algorithm": "Depth Consistency — 픽셀 수준 공간 분석",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes depth map consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through depth consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Depth Consistency",
+  "description": "Analyzes depth map consistency",
+  "algorithm": "Depth Consistency — 픽셀 수준 공간 분석",
+  "mechanism": "This method analyzes depth consistency across video frames for deepfake and manipulation detection:\n\n1. **Monocular깊이추정**: Per-frame relative depth maps are estimated using monocular depth cues: texture gradients, defocus, atmospheric perspective, relative size, and occlusion relationships. Each pixel receives a relative depth value consistent with the scene geometry.\n\n2. **시간적깊이안정성**: Depth maps across consecutive frames should show smooth, physically motivated changes. The method tracks depth map evolution — natural scene depth changes are caused by camera motion (smooth, globally coherent) or object motion (local, bounded). Deepfakes may produce temporally unstable depth maps, especially at face-swap boundaries where generated face depth differs from the original face geometry.\n\n3. **얼굴-Scene깊이통합**: The depth relationship between the face and surrounding scene must be consistent. The method checks: (a) face depth varies correctly with camera distance, (b) face depth matches nearby objects at similar distances, (c) face depth changes are consistent with measured face scale changes. Composited deepfake faces may show depth inconsistencies with the scene.\n\n4. **깊이-Defocus일관성**: Estimated depth should correlate with defocus blur — objects at similar depths should show similar focus. The method cross-validates depth estimates against local defocus measures. AI-generated faces may show incorrect depth-defocus relationships, appearing sharp at depths where the background is blurred (or vice versa).\n\n5. **3D기하학적일관성점수 산출**: The implied 3D geometry is checked for physical plausibility. Face orientation (from landmarks) should produce consistent depth gradients. Perspective distortion should match the estimated camera parameters. Violations of geometric consistency indicate manipulation, yielding an elevated forensic score.",
+  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through depth consistency analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

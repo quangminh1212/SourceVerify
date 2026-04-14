@@ -1,22 +1,22 @@
 {
-    "name": "Video Frame Rate",
-    "description": "Analyzes frame rate consistency patterns",
-    "algorithm": "Video Frame Rate — Statistical Pattern Analyzer",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes frame rate consistency patterns. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 통계\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 frame rate analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
-            "url": "https://doi.org/10.1109/ICCVW.2019.00152"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Video Frame Rate",
+  "description": "Analyzes frame rate consistency patterns",
+  "algorithm": "Video Frame Rate — Statistical Pattern Analyzer",
+  "mechanism": "This method analyzes video frame rate characteristics for forensic detection:\n\n1. **EffectiveFrameRate추정**: The actual effective frame rate is measured from inter-frame differences (beyond the declared container frame rate). This detects: (a) duplicated frames (effective rate lower than declared), (b) frame interpolation (artificially increased rate), (c) variable frame rate.\n\n2. **FrameRateConversion감지**: If the deepfake was generated at a different frame rate and converted, frame rate conversion artifacts are detectable: blend frames (intermediate alpha-blended frames), motion trajectory irregularities, and periodic motion discontinuities at the source-target rate ratio.\n\n3. **얼굴-BackgroundFrameRate일관성**: In composited deepfakes, the face and background may originate from different frame rate sources. The method independently estimates effective frame rates for face and background regions using their respective motion characteristics. Frame rate mismatches indicate compositing.\n\n4. **시간적Aliasing분석**: Frame rate determines the temporal sampling frequency (Nyquist limit). Motion exceeding the Nyquist limit produces temporal aliasing (wagon wheel effect). The method checks whether aliasing behavior is consistent across the frame. Different effective frame rates in face vs. background produce different aliasing characteristics.\n\n5. **FrameTimingRegularity**: The inter-frame timing should be regular for constant-frame-rate video. The method analyzes timing regularity — irregular intervals may indicate: variable frame rate from the generator, dropped frames during processing, or asynchronous capture-generation timing.",
+  "parameters": "분석 유형: 통계\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 frame rate analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Amerini, I. et al. (2019). Deepfake Video Detection through Optical Flow based CNN. ICCV Workshop.",
+      "url": "https://doi.org/10.1109/ICCVW.2019.00152"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

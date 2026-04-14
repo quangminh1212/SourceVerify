@@ -1,22 +1,22 @@
 {
-    "name": "Specular 높음light",
-    "description": "Analyzes specular highlight consistency",
-    "algorithm": "Specular 높음light — 픽셀 수준 공간 분석",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes specular highlight consistency. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through specular highlight analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
-            "url": "https://doi.org/10.1109/WACVW.2019.00020"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Specular 높음light",
+  "description": "Analyzes specular highlight consistency",
+  "algorithm": "Specular 높음light — 픽셀 수준 공간 분석",
+  "mechanism": "This method analyzes specular highlights for deepfake detection:\n\n1. **Highlight감지**: Specular highlights (bright spots from direct light reflection) are detected across the frame on all surfaces — skin, eyes, glasses, jewelry, objects. Highlights are identified by local maximum intensity exceeding neighbors by a threshold.\n\n2. **Highlight-빛Source일관성**: All specular highlights in the scene should be consistent with the same light source configuration. Using highlight positions and surface geometry, the method estimates implied light directions. All highlights should point to consistent light source positions. Deepfakes may produce highlights with inconsistent implied light directions.\n\n3. **HighlightShape분석**: The shape of specular highlights encodes surface curvature — highlights on flat surfaces appear as points, on curved surfaces as elongated reflections following surface curvature. The method checks highlight shapes against estimated surface geometry. AI-generated highlights may have shapes inconsistent with the underlying geometry.\n\n4. **HighlightIntensity&Physics**: Specular highlight intensity follows the Fresnel equations — brighter at grazing angles, with material-dependent characteristics. The method verifies highlight intensity follows physical reflectance models. AI generators may produce highlights with incorrect intensity patterns.\n\n5. **시간적HighlightDynamics**: As objects move, specular highlights should move according to the changing reflection angle. The method tracks highlight motion — highlights should move faster than texture features for convex surfaces (virtual image effect). Incorrect highlight dynamics indicate AI generation without proper reflectance modeling.",
+  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through specular highlight analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Matern, F. et al. (2019). Exploiting Visual Artifacts to Expose Deepfakes. WACVW.",
+      "url": "https://doi.org/10.1109/WACVW.2019.00020"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Blink Rate Analysis",
-    "description": "Analyzes eye blink patterns for naturalness — AI often generates unnatural blink rates",
-    "algorithm": "Blink Rate Analysis — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes eye blink patterns for naturalness — AI often generates unnatural blink rates. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: sensor\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through blink rate analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Li, Y. et al. (2018). In Ictu Oculi: Exposing AI Created Fake Videos by Detecting Eye Blinking. WIFS.",
-            "url": "https://arxiv.org/abs/1806.02396"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Blink Rate Analysis",
+  "description": "Analyzes eye blink patterns for naturalness — AI often generates unnatural blink rates",
+  "algorithm": "Blink Rate Analysis — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes eye blinking patterns for deepfake detection following Li et al. (2018) \"In Ictu Oculi\":\n\n1. **눈 상태 분류**: For each frame, the eye aspect ratio (EAR) is computed from eye landmarks: EAR = (‖p2−p6‖ + ‖p3−p5‖) / (2‖p1−p4‖), where p1-p6 are the eye contour landmarks. EAR drops significantly during blinks, enabling frame-level open/closed classification.\n\n2. **깜빡임 이벤트 감지**: Consecutive frames with low EAR form blink events. Each blink is characterized by duration (typically 100-400ms in natural blinking), amplitude (EAR change magnitude), and velocity profile (rapid closing, slightly slower opening following Evinger et al., 1991).\n\n3. **깜빡임 빈도 통계 분석**: The inter-blink interval (IBI) distribution is analyzed. Natural spontaneous blinking occurs at 15-20 blinks/minute with a characteristic IBI distribution following a gamma or log-normal model. Early deepfake methods produced subjects that rarely or never blinked — a key detection cue identified by Li et al. (2018).\n\n4. **깜빡임 자연스러움 평가**: Individual blink kinematics are evaluated: natural blinks are bilateral (both eyes close simultaneously), show stereotyped velocity profiles, and exhibit physiological reflexes (increased blink rate during speech, periodic patterns). AI-generated blinks may appear unilateral, show unnatural velocity profiles, or lack expected behavioral correlations.\n\n5. **시간 패턴 점수 산출**: The overall blink pattern is scored against natural human behavior models. Anomalies include: absence of blinks, unnatural blink rates, irregular blink dynamics, asymmetric blinking, or blinks that don't correspond to expected cognitive/behavioral triggers. The score quantifies deviation from natural blink physiology.",
+  "parameters": "분석 유형: sensor\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through blink rate analysis analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Li, Y. et al. (2018). In Ictu Oculi: Exposing AI Created Fake Videos by Detecting Eye Blinking. WIFS.",
+      "url": "https://arxiv.org/abs/1806.02396"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

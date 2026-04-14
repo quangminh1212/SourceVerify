@@ -1,22 +1,22 @@
 {
-    "name": "카메라 센서 PRNU 식별",
-    "description": "PRNU(Photo-Response Non-Uniformity, 광응답 불균일성) 센서 노이즈 패턴과 하드웨어 처리 파이프라인 지문을 분석하여 원본 카메라 모델을 식별하거나 합성 생성 여부를 감지합니다.",
-    "algorithm": "센서 PRNU 추출 및 CFA 패턴 핑거프린팅",
-    "mechanism": "알고리즘은 기기 고유의 광응답 불균일성(PRNU) 노이즈와 컬러 필터 어레이(CFA) 보간 파이프라인의 흔적이 포함된 고주파 잔류 신호를 추출합니다. 진본 사진 이미지는 물리적 하드웨어 실리콘과 연결된 일관된 PRNU 지문을 가지고 있습니다. AI로 생성된 이미지는 이러한 일관된 물리적 서명이 부족하여 완전히 합성된 노이즈 프로필을 보이거나, 훈련 데이터에서 혼합된 다중 카메라 노이즈의 '프랑켄슈타인' 형태를 띠거나, 물리적으로 불가능한 CFA 디모자이킹 패턴을 나타냅니다.",
-    "parameters": "특징: PRNU 상관관계, CFA 디모자이킹 맵, 분류기: 교차 상관관계 필터 / SVM, 창: 128x128 패치",
-    "accuracy": "높음 (85-95%) - 일반적인 합성 노이즈를 식별하는 데 매우 강력하지만, 정확한 카메라 모델을 식별하려면 참조 데이터베이스가 필요합니다.",
-    "source": "Lukas, J. et al. (2006) - 센서 패턴 노이즈를 통한 디지털 카메라 식별",
-    "useCase": "이미지가 실제 카메라 하드웨어에서 나온 것인지 확인하고, 주장하는 모델을 인증하며, AI 생성물에서 물리적으로 불가능한 센서 노이즈를 찾아냅니다.",
-    "references": [
-        {
-            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2006.873602"
-        },
-        {
-            "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2007.916285"
-        }
-    ],
-    "strengths": "• 의미론적 또는 시각적 내용보다는 물리적 반도체 특성에 깊이 뿌리를 두고 있습니다.\n• 추출된 PRNU는 AI가 합성으로 위조하기 사실상 불가능한 본질적인 디지털 지문 역할을 합니다.\n• 유기적인 하드웨어 센서 노이즈와 확산 모델(Diffusion Model)에 의해 주입된 유사 난수 잠재 노이즈를 안정적으로 구별합니다.\n• 조명 조건, 피사체 또는 국소적인 장면의 맥락과 무관하게 독립적으로 작동합니다.",
-    "limitations": "• 정확한 특정 카메라 모델을 검증하려면 원본 그대로의 플랫 필드(Flat-field) 이미지에 대한 광범위한 참조 라이브러리가 필요합니다.\n• 과도한 디지털 노이즈 제거 필터, 스마트폰의 AI 보정 또는 심한 JPEG 양자화에 의해 성능이 크게 저하됩니다.\n• 동일한 물리적 카메라 센서 바디에 장착된 다른 교환식 렌즈를 구별할 수 없습니다.\n• 확대/축소, 회전 또는 디지털 자르기(Cropping)는 PRNU 맵의 정렬을 본질적으로 어긋나게 하여 정밀한 상관관계 측정을 불가능하게 만듭니다."
+  "name": "카메라 센서 PRNU 식별",
+  "description": "PRNU(Photo-Response Non-Uniformity, 광응답 불균일성) 센서 노이즈 패턴과 하드웨어 처리 파이프라인 지문을 분석하여 원본 카메라 모델을 식별하거나 합성 생성 여부를 감지합니다.",
+  "algorithm": "센서 PRNU 추출 및 CFA 패턴 핑거프린팅",
+  "mechanism": "The algorithm extracts the high-frequency residual signal containing the device's unique Photo-Response Non-Uniformity (PRNU) noise and traces of its Color Filter Array (CFA) interpolation pipeline. Authentic photographic images possess a consistent PRNU fingerprint tied to physical hardware silicon. AI-generated images lack this coherent physical signature, exhibiting either completely synthetic noise profiles, 'Frankenstein' amalgamations of multi-camera noise from training data, or physically impossible CFA demosaicing patterns.",
+  "parameters": "특징: PRNU 상관관계, CFA 디모자이킹 맵, 분류기: 교차 상관관계 필터 / SVM, 창: 128x128 패치",
+  "accuracy": "높음 (85-95%) - 일반적인 합성 노이즈를 식별하는 데 매우 강력하지만, 정확한 카메라 모델을 식별하려면 참조 데이터베이스가 필요합니다.",
+  "source": "Lukas, J. et al. (2006) - 센서 패턴 노이즈를 통한 디지털 카메라 식별",
+  "useCase": "이미지가 실제 카메라 하드웨어에서 나온 것인지 확인하고, 주장하는 모델을 인증하며, AI 생성물에서 물리적으로 불가능한 센서 노이즈를 찾아냅니다.",
+  "references": [
+    {
+      "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2006.873602"
+    },
+    {
+      "title": "Chen, M. et al. (2008). Determining Image Origin and Integrity Using Sensor Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2007.916285"
+    }
+  ],
+  "strengths": "• 의미론적 또는 시각적 내용보다는 물리적 반도체 특성에 깊이 뿌리를 두고 있습니다.\n• 추출된 PRNU는 AI가 합성으로 위조하기 사실상 불가능한 본질적인 디지털 지문 역할을 합니다.\n• 유기적인 하드웨어 센서 노이즈와 확산 모델(Diffusion Model)에 의해 주입된 유사 난수 잠재 노이즈를 안정적으로 구별합니다.\n• 조명 조건, 피사체 또는 국소적인 장면의 맥락과 무관하게 독립적으로 작동합니다.",
+  "limitations": "• 정확한 특정 카메라 모델을 검증하려면 원본 그대로의 플랫 필드(Flat-field) 이미지에 대한 광범위한 참조 라이브러리가 필요합니다.\n• 과도한 디지털 노이즈 제거 필터, 스마트폰의 AI 보정 또는 심한 JPEG 양자화에 의해 성능이 크게 저하됩니다.\n• 동일한 물리적 카메라 센서 바디에 장착된 다른 교환식 렌즈를 구별할 수 없습니다.\n• 확대/축소, 회전 또는 디지털 자르기(Cropping)는 PRNU 맵의 정렬을 본질적으로 어긋나게 하여 정밀한 상관관계 측정을 불가능하게 만듭니다."
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Pixel Bit Plane",
-    "description": "Analyzes bit plane patterns for hidden artifacts",
-    "algorithm": "Pixel Bit Plane — 픽셀 수준 공간 분석",
-    "mechanism": "이 방법은 픽셀 수준의 공간 분석을 수행하여 AI 생성 아티팩트를 감지합니다:\n\n1. **이미지 전처리**: 입력 이미지를 로드하고 분석에 적합한 색 공간으로 변환합니다.\n\n2. **특징 추출**: Analyzes bit plane patterns for hidden artifacts. 알고리즘이 이미지 그리드 전체에서 관련 픽셀 수준 특징을 추출합니다.\n\n3. **패턴 분석**: 추출된 특징에서 통계적 측정값을 계산하여 불규칙성을 식별합니다.\n\n4. **이상 감지**: 결과를 실제 카메라 이미지와 AI 생성 이미지의 기준선과 비교합니다.\n\n5. **점수 계산**: 감지된 이상 정도에 따라 신뢰도 점수 (0-100)를 계산합니다.",
-    "parameters": "분석 유형: 픽셀\n미디어: 이미지\n입력: 원시 픽셀 데이터 / 이미지 파일\n출력: 신뢰도 점수 (0-100)\n처리 방식: 클라이언트 측 Canvas API\n색 공간: RGB, 그레이스케일 (해당하는 경우)",
-    "accuracy": "중간~높음 — 70-90% 단독 정확도. 비압축 이미지에서 최고 성능 발휘 and 높은 JPEG 압축이나 소셜 미디어 재인코딩 시 감소할 수 있습니다.",
-    "source": "디지털 이미지 포렌식 연구. 신호 처리 및 컴퓨터 사진학 원리에 기반.",
-    "useCase": "다음을 통한 AI 생성 또는 조작된 이미지 감지: 픽셀 bit plane 분석. 이 방법은 AI 생성의 특징적인 패턴과 아티팩트를 식별하여 포괄적인 이미지 포렌식 분석에 기여합니다.",
-    "strengths": "• Canvas API를 사용한 빠른 클라이언트 측 처리\n• 특정 AI 생성 아티팩트 감지에 효과적\n• 일반적인 이미지 형식 (JPEG, PNG, WebP) 지원\n• 보완적인 분석 방법과 결합 가능\n• 확립된 이미지 포렌식 연구에 기반",
-    "limitations": "• 이미지 압축 수준에 따라 성능이 달라질 수 있습니다\n• 소셜 미디어 재인코딩이 정확도에 영향을 줄 수 있습니다\n• 다른 포렌식 방법과 함께 사용하는 것이 가장 좋습니다\n• 과도하게 처리된 실제 이미지에서 오탐이 발생할 수 있습니다\n• 효과는 사용된 AI 생성 모델에 따라 다릅니다",
-    "references": [
-        {
-            "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2012.2190402"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ]
+  "name": "Pixel Bit Plane",
+  "description": "Analyzes bit plane patterns for hidden artifacts",
+  "algorithm": "Pixel Bit Plane — 픽셀 수준 공간 분석",
+  "mechanism": "This method analyzes pixel bit planes for image forensic analysis following the steganalysis framework of Fridrich & Kodovsky (2012):\n\n1. **BitPlane분해**: Each pixel value is decomposed into its constituent bit planes (8 bit planes for 8-bit images). Each bit plane is a binary image representing one bit position across all pixels. Higher bit planes carry structural information; lower bit planes carry fine detail and noise.\n\n2. **BitPlaneStatistics**: Statistical properties of each bit plane are analyzed — randomness (entropy), spatial correlation, and pattern regularity. In natural images, lower bit planes approach random binary noise while higher bit planes show image structure. AI-generated images may show different bit plane statistics — especially in lower planes where the generator's quantization produces non-random patterns.\n\n3. **BitPlane상관분석**: The correlation between adjacent bit planes is measured. Natural camera images show specific inter-plane correlation patterns arising from the sensor's analog-to-digital conversion. AI-generated pixels don't arise from A/D conversion and may show different inter-plane correlations.\n\n4. **LSBPlane분석**: The least significant bit (LSB) plane receives special attention. In natural images, the LSB plane appears quasi-random. AI generators, depending on their output quantization method, may produce LSB planes with: residual patterns, reduced entropy, or spatial correlations that reveal the generation process.\n\n5. **Multi-PlaneFeature점수 산출**: Features from all bit planes are combined into a forensic score. The score captures bit plane entropy ratios, inter-plane correlation anomalies, and spatial regularity in individual planes.",
+  "parameters": "분석 유형: 픽셀\n미디어: 이미지\n입력: 원시 픽셀 데이터 / 이미지 파일\n출력: 신뢰도 점수 (0-100)\n처리 방식: 클라이언트 측 Canvas API\n색 공간: RGB, 그레이스케일 (해당하는 경우)",
+  "accuracy": "중간~높음 — 70-90% 단독 정확도. 비압축 이미지에서 최고 성능 발휘 and 높은 JPEG 압축이나 소셜 미디어 재인코딩 시 감소할 수 있습니다.",
+  "source": "디지털 이미지 포렌식 연구. 신호 처리 및 컴퓨터 사진학 원리에 기반.",
+  "useCase": "다음을 통한 AI 생성 또는 조작된 이미지 감지: 픽셀 bit plane 분석. 이 방법은 AI 생성의 특징적인 패턴과 아티팩트를 식별하여 포괄적인 이미지 포렌식 분석에 기여합니다.",
+  "strengths": "• Canvas API를 사용한 빠른 클라이언트 측 처리\n• 특정 AI 생성 아티팩트 감지에 효과적\n• 일반적인 이미지 형식 (JPEG, PNG, WebP) 지원\n• 보완적인 분석 방법과 결합 가능\n• 확립된 이미지 포렌식 연구에 기반",
+  "limitations": "• 이미지 압축 수준에 따라 성능이 달라질 수 있습니다\n• 소셜 미디어 재인코딩이 정확도에 영향을 줄 수 있습니다\n• 다른 포렌식 방법과 함께 사용하는 것이 가장 좋습니다\n• 과도하게 처리된 실제 이미지에서 오탐이 발생할 수 있습니다\n• 효과는 사용된 AI 생성 모델에 따라 다릅니다",
+  "references": [
+    {
+      "title": "Fridrich, J. & Kodovsky, J. (2012). Rich Models for Steganalysis of Digital Images. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2012.2190402"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ]
 }

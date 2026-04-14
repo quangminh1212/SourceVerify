@@ -1,22 +1,22 @@
 {
-    "name": "Head Pose Estimation v2",
-    "description": "Analyzes head pose physics and rotation",
-    "algorithm": "Head Pose Estimation v2 — 픽셀 수준 공간 분석",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes head pose physics and rotation. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through head pose estimation v2 analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
-            "url": "https://arxiv.org/abs/1811.00661"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Head Pose Estimation v2",
+  "description": "Analyzes head pose physics and rotation",
+  "algorithm": "Head Pose Estimation v2 — 픽셀 수준 공간 분석",
+  "mechanism": "This method performs advanced head pose analysis for deepfake detection:\n\n1. **6-DOFPose추정**: Head pose is estimated with 6 degrees of freedom (3D rotation: yaw, pitch, roll + 3D translation) per frame using a combination of facial landmarks and perspective-n-point (PnP) solving with a 3D face model.\n\n2. **PoseTrajectorySmoothness**: Head pose trajectories should be smooth (low jerk), reflecting the biomechanical properties of the cervical spine and head mass. The method analyzes trajectory smoothness using third-derivative (jerk) metrics. Deepfakes may produce jittery pose trajectories from frame-independent head estimation.\n\n3. **기하학적Self-일관성**: The estimated 3D pose should be geometrically self-consistent: (a) reprojected landmark positions should match detected landmarks, (b) face visibility should be consistent with estimated pose, (c) facial feature foreshortening should match perspective projection at the estimated pose. Deepfakes may show geometric inconsistencies.\n\n4. **Pose-Dependent얼굴Appearance**: At different head poses, different face surfaces become visible. The method checks whether newly visible regions (revealed during head rotation) are consistent with previously visible regions — same texture quality, same skin tone, same detail level. Deepfakes may show inconsistent face appearance as pose changes reveal poorly generated regions.\n\n5. **PoseRange분석**: The range of head poses in the video is analyzed. Natural head movement in conversation typically stays within ±30° yaw, ±20° pitch. The method checks whether deepfake quality degrades at extreme poses (common for face-swap models trained primarily on frontal faces), creating a detectable pose-dependent artifact signature.",
+  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through head pose estimation v2 analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Yang, X. et al. (2019). Exposing Deep Fakes Using Inconsistent Head Poses. ICASSP.",
+      "url": "https://arxiv.org/abs/1811.00661"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

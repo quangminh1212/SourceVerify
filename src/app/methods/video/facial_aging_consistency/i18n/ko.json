@@ -1,12 +1,12 @@
 {
-    "name": "Facial Aging Consistency",
-    "description": "Analyzes consistency of aging features (wrinkles, spots, skin texture) across face — AI often has inconsistent aging.",
-    "algorithm": "Facial Aging Consistency 분석 알고리즘",
-    "mechanism": "Facial Aging Consistency 시스템은 AI 생성 콘텐츠와 실제 미디어를 구별하기 위해 특정 신호 패턴을 분석합니다.",
-    "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
-    "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
-    "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
-    "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
-    "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
-    "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
+  "name": "Facial Aging Consistency",
+  "description": "Analyzes consistency of aging features (wrinkles, spots, skin texture) across face — AI often has inconsistent aging.",
+  "algorithm": "Facial Aging Consistency 분석 알고리즘",
+  "mechanism": "이 방법은 checks facial aging consistency 딥페이크 탐지를 위해:\n\n1. **AgeMarker감지**: Facial aging markers are detected 프레임당: wrinkle density and depth (crow's feet, forehead lines, nasolabial folds), skin texture changes (reduced elasticity, increased roughness), skin laxity (jowling, under-eye bags), and pigmentation changes.\n\n2. **Age일관성검증**: All aging markers should indicate a 일관된 age range. 본 방법은 checks whether wrinkle density, skin texture, and facial volume are mutually 일관된. Deepfakes that swap faces between individuals of different ages may produce 일관성 없는 aging cues — young skin texture with deep wrinkles, or aged skin with juvenile facial volume.\n\n3. **RegionalAge일관성**: Different facial regions should show coherent aging. 본 방법은 verifies that forehead wrinkles, crow's feet, nasolabial folds, and neck skin show the same approximate aging level. AI generation may produce faces with regionally 일관성 없는 aging — perfectly smooth forehead with aged eye areas.\n\n4. **시간적Aging안정성**: Aging markers are static structures that don't change between video frames. Wrinkle positions and depths should remain constant. 본 방법은 tracks aging markers 프레임 전반에 걸쳐 — deepfake generators may produce temporally 일관성 없는 wrinkles that appear, disappear, or shift position as the face is re-generated each frame.\n\n5. **Context-얼굴Age매칭**: If the surrounding context provides age cues (body, hands, clothing style), 본 방법은 checks whether the face age is 일관된 with these contextual indicators. Face-swapping an young face onto an older body creates detectable age inconsistencies between face and body.",
+  "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
+  "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
+  "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
+  "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
+  "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
+  "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
 }

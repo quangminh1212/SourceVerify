@@ -1,22 +1,22 @@
 {
-    "name": "Lens Distortion",
-    "description": "Analyzes lens distortion pattern",
-    "algorithm": "Lens Distortion — Sensor/Physical Model Analyzer",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes lens distortion pattern. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: sensor\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through lens distortion analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Lens Distortion",
+  "description": "Analyzes lens distortion pattern",
+  "algorithm": "Lens Distortion — Sensor/Physical Model Analyzer",
+  "mechanism": "This method analyzes lens distortion consistency for video deepfake detection:\n\n1. **Radial왜곡추정**: The camera's lens distortion parameters (barrel/pincushion distortion coefficients k1, k2, k3) are estimated from straight lines in the scene per frame. All objects captured through the same lens should show consistent radial distortion.\n\n2. **얼굴-Background왜곡비교**: Lens distortion should affect the face and background equally. The method estimates distortion independently from face geometry (curved features that should be straight) and background geometry (architectural lines, furniture edges). Mismatched distortion parameters indicate the face was captured/generated with a different optical system.\n\n3. **왜곡시간적안정성**: For a fixed-lens camera (most video), distortion parameters should remain constant across all frames. The method tracks estimated parameters temporally. Variations in distortion — particularly in the face region — indicate frame-by-frame face generation that doesn't account for lens optics.\n\n4. **왜곡Center검증**: Radial distortion is centered on the lens optical axis (typically near image center). All radial distortion in the image should share the same center point. Composited faces may show different effective distortion centers than the background.\n\n5. **Chromatic왜곡Cross-Check**: Real lenses produce chromatic aberration (wavelength-dependent distortion). The method checks whether lateral chromatic aberration follows the expected pattern for the estimated lens model. Generated faces typically lack correct chromatic distortion, creating a detectable difference from the optically-captured background.",
+  "parameters": "분석 유형: sensor\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through lens distortion analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

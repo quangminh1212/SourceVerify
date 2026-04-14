@@ -1,12 +1,12 @@
 {
-    "name": "Steerable Pyramid Decomposition",
-    "description": "Applies steerable pyramid for orientation-selective sub-band analysis — detects AI texture synthesis artifacts (Simoncelli & Freeman, 1995).",
-    "algorithm": "Steerable Pyramid Decomposition 분석 알고리즘",
-    "mechanism": "Steerable Pyramid Decomposition 시스템은 AI 생성 콘텐츠와 실제 미디어를 구별하기 위해 특정 신호 패턴을 분석합니다.",
-    "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
-    "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
-    "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
-    "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
-    "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
-    "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
+  "name": "Steerable Pyramid Decomposition",
+  "description": "Applies steerable pyramid for orientation-selective sub-band analysis — detects AI texture synthesis artifacts (Simoncelli & Freeman, 1995).",
+  "algorithm": "Steerable Pyramid Decomposition 분석 알고리즘",
+  "mechanism": "이 방법은 applies the Steerable Pyramid decomposition by Simoncelli & Freeman (1995) for multi-scale oriented forensic analysis:\n\n1. **PyramidConstruction**: The image is decomposed via steerable filters into oriented subbands at multiple scales. Unlike the DWT, the steerable pyramid is non-aliased, translation-invariant, and provides exact rotation steerability — enabling analysis at arbitrary orientations without recomputation.\n\n2. **SubbandStatistics추출**: At each scale and orientation, local coefficient statistics are computed: variance, kurtosis, skewness, and the parameters of a fitted generalized Gaussian distribution. Natural images produce characteristic heavy-tailed distributions in oriented subbands.\n\n3. **Cross-Scale위상분석**: Phase relationships between coefficients at adjacent scales reveal edge structure. Natural edges maintain coherent phase across scales following the predictions of local spectral analysis. AI 생성 images may exhibit phase incoherence at generation boundaries or fine scales.\n\n4. **방향Energy분석**: The orientation energy at each scale E(θ,s) = Σ|c(θ,s)|² captures directional texture structure. Natural images show smooth orientation energy as a function of angle, while AI generation artifacts often produce 비정상적인 peaks or gaps in the orientation energy function.\n\n5. **텍스처Synthesis감지**: The joint statistics of steerable pyramid coefficients (parent-child correlations, cross-orientation coupling) define a texture signature per Portilla & Simoncelli (2000). AI 생성 textures often fail to reproduce the full joint statistics achievable by the steerable pyramid model, enabling detection of synthetic content.",
+  "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
+  "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
+  "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
+  "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
+  "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
+  "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
 }

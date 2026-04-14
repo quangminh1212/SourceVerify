@@ -1,22 +1,22 @@
 {
-    "name": "Background Complexity",
-    "description": "Measures background scene complexity",
-    "algorithm": "Background Complexity — 픽셀 수준 공간 분석",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Measures background scene complexity. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through background complexity analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        },
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        }
-    ]
+  "name": "Background Complexity",
+  "description": "Measures background scene complexity",
+  "algorithm": "Background Complexity — 픽셀 수준 공간 분석",
+  "mechanism": "This method analyzes background complexity patterns across video frames for deepfake detection:\n\n1. **공간적Complexity측정**: Background regions (separated from foreground subjects via segmentation) are analyzed for spatial complexity using local entropy, edge density, and texture measures. Each frame's background complexity is quantified as a scalar feature.\n\n2. **시간적Complexity안정성**: Background complexity should remain stable in static-camera scenarios and change smoothly with camera motion. The temporal signal of background complexity is analyzed for anomalous variations — deepfake generation often introduces subtle background fluctuations as the generator's attention resources are concentrated on face regions.\n\n3. **Foreground-BackgroundComplexity상관**: In authentic video, foreground and background share the same imaging pipeline (lens, sensor, compression), producing correlated quality characteristics. Deepfakes may show a complexity mismatch — highly detailed generated faces against backgrounds with different compression or quality characteristics.\n\n4. **주파수DomainBackground분석**: The power spectral density of background regions is computed per frame. Natural backgrounds maintain consistent spectral characteristics across frames. AI-generated backgrounds may show spectral instability — frame-to-frame variations in frequency content that don't correspond to physical scene changes.\n\n5. **Complexity경계감지**: The spatial boundary between foreground subject and background is examined for complexity transitions. Authentic video shows smooth complexity gradients at this boundary. Deepfake composites may produce abrupt complexity transitions coinciding with face-swap boundaries, revealing the manipulation region.",
+  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through background complexity analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    },
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    }
+  ]
 }

@@ -1,22 +1,22 @@
 {
-    "name": "Video Luma Range",
-    "description": "Analyzes luminance range distribution",
-    "algorithm": "Video Luma Range — 픽셀 수준 공간 분석",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Analyzes luminance range distribution. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 luma range analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
-            "url": "https://arxiv.org/abs/2001.06564"
-        },
-        {
-            "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
-            "url": "https://arxiv.org/abs/2108.06693"
-        }
-    ]
+  "name": "Video Luma Range",
+  "description": "Analyzes luminance range distribution",
+  "algorithm": "Video Luma Range — 픽셀 수준 공간 분석",
+  "mechanism": "This method analyzes video luminance range for forensic detection:\n\n1. **DynamicRange분석**: The luminance range (minimum to maximum luma values) is measured per frame. The method checks whether the content uses the expected luma range for the video standard (broadcast range 16-235 for BT.601/709, full range 0-255 for full-range content).\n\n2. **Range일관성Check**: The luma range should be consistent across the frame and over time. The method detects regions with different effective dynamic ranges — composited deepfake faces may show different dynamic range (from the generator's output mapping) than the original background footage.\n\n3. **Highlight/ShadowClipping분석**: The behavior of highlights (near maximum luma) and shadows (near minimum luma) is analyzed. Natural camera capture produces characteristic clipping characteristics. AI generators may produce different highlight/shadow rendering — either clean clipping (missing the natural rolloff) or extended range (values the capture format shouldn't contain).\n\n4. **시간적RangeEvolution**: Dynamic range typically remains stable within a scene. The method tracks luma range statistics over time — sudden range changes without corresponding scene changes indicate processing artifacts.\n\n5. **Gamma/TransferFunction분석**: The effective transfer function (gamma curve) is estimated from the luma distribution. Different cameras and generators use different transfer functions. Mismatched transfer functions between face and background reveal content from different imaging pipelines.",
+  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through 비디오 luma range analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Verdoliva, L. (2020). Media Forensics and DeepFakes: An Overview. IEEE JSTSP.",
+      "url": "https://arxiv.org/abs/2001.06564"
+    },
+    {
+      "title": "Zheng, Y. et al. (2021). Exploring Temporal Coherence for More General Video Face Forgery Detection. ICCV.",
+      "url": "https://arxiv.org/abs/2108.06693"
+    }
+  ]
 }

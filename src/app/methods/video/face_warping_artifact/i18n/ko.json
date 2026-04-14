@@ -1,22 +1,22 @@
 {
-    "name": "Face Warping Artifact",
-    "description": "Detects face warping transformation artifacts",
-    "algorithm": "Face Warping Artifact — 픽셀 수준 공간 분석",
-    "mechanism": "This method analyzes 비디오 frames for deepfake and AI generation detection:\n\n1. **Frame Extraction**: Key frames are extracted from the 비디오 stream for analysis.\n\n2. **Feature Analysis**: Detects face warping transformation artifacts. Relevant visual and temporal features are computed per frame.\n\n3. **Temporal Consistency Check**: Features are tracked across consecutive frames to detect inconsistencies.\n\n4. **Pattern Matching**: Results are compared against known deepfake artifact patterns.\n\n5. **점수 계산**: A confidence score (0-100) reflecting the likelihood of AI manipulation is calculated.",
-    "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
-    "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
-    "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
-    "useCase": "Detection of deepfake and AI-generated 비디오 through face warping artifact analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
-    "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
-    "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
-    "references": [
-        {
-            "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
-            "url": "https://arxiv.org/abs/1908.05932"
-        },
-        {
-            "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
-            "url": "https://arxiv.org/abs/1901.08971"
-        }
-    ]
+  "name": "Face Warping Artifact",
+  "description": "Detects face warping transformation artifacts",
+  "algorithm": "Face Warping Artifact — 픽셀 수준 공간 분석",
+  "mechanism": "This method detects geometric warping artifacts in face-swap deepfakes:\n\n1. **얼굴Geometry분석**: The 3D face geometry is estimated from 2D landmarks per frame. Face-swap methods warp the source face to match the target's geometry using affine or 3D morphable model transforms. Residual geometric artifacts from imperfect warping are detected.\n\n2. **Warping왜곡감지**: Local geometric distortion is measured by analyzing: (a) unnaturally stretched or compressed facial regions, (b) non-uniform scaling inconsistent with perspective projection, (c) barrel/pincushion distortion not matching the camera's lens model. These warp residuals indicate face replacement.\n\n3. **FacialProportion일관성**: Key facial proportions (eye width/face width, nose length/face length, lip width/inter-ocular distance) are measured across frames. Natural proportions remain constant (bone structure doesn't change). Warping artifacts may cause subtle proportion fluctuations as the face swap adjusts to varying target poses.\n\n4. **GridDeformation분석**: A virtual grid overlaid on the face reveals local deformation patterns. The method applies thin-plate spline analysis to detect non-rigid warping — regions where straight lines on the face surface become curved. Natural faces don't exhibit such local deformation artifacts.\n\n5. **시간적Warping안정성**: The warping field (if present) should be temporally smooth. The method analyzes the temporal consistency of detected geometric distortions. Frame-to-frame variations in warping artifacts — caused by independent per-frame face alignment — produce a high-frequency temporal signal distinguishing deepfakes from authentic video.",
+  "parameters": "분석 유형: 픽셀\n미디어: 비디오\n입력: Video frames extracted at key intervals\n출력: 신뢰도 점수 (0-100)\nFrame sampling: Adaptive (1-5 fps depending on method)\nTemporal window: Sliding window across frame sequence",
+  "accuracy": "중간~높음 — 70-88% 단독 정확도. Most effective when combined with other 비디오 forensic methods. Performance depends on 비디오 quality, resolution, and compression level.",
+  "source": "Video forensics and deepfake detection research. Based on computer vision and temporal signal analysis methods.",
+  "useCase": "Detection of deepfake and AI-generated 비디오 through face warping artifact analysis. This method examines temporal and spatial features that are difficult for AI systems to perfectly replicate, providing evidence for 비디오 authenticity assessment.",
+  "strengths": "• Captures temporal artifacts that single-frame analysis misses\n• Works with standard 비디오 formats\n• Effective against common deepfake techniques\n• Can be combined with other 비디오 forensic methods\n• Based on established computer vision research",
+  "limitations": "• Performance affected by 비디오 compression and resolution\n• Some methods require sufficient frame count for temporal analysis\n• Effectiveness varies with deepfake generation technique\n• Best used as part of a comprehensive multi-method pipeline\n• May produce false positives on heavily edited authentic 비디오",
+  "references": [
+    {
+      "title": "Nirkin, Y. et al. (2019). FSGAN: Subject Agnostic Face Swapping and Reenactment. ICCV.",
+      "url": "https://arxiv.org/abs/1908.05932"
+    },
+    {
+      "title": "Rossler, A. et al. (2019). FaceForensics++: Learning to Detect Manipulated Facial Images. ICCV.",
+      "url": "https://arxiv.org/abs/1901.08971"
+    }
+  ]
 }

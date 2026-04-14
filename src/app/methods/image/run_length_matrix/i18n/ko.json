@@ -1,12 +1,12 @@
 {
-    "name": "Run Length Matrix Analysis",
-    "description": "Computes gray-level run-length matrix features for texture characterization — detects AI smoothing artifacts (Galloway, 1975).",
-    "algorithm": "Run Length Matrix Analysis 분석 알고리즘",
-    "mechanism": "Run Length Matrix Analysis 시스템은 AI 생성 콘텐츠와 실제 미디어를 구별하기 위해 특정 신호 패턴을 분석합니다.",
-    "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
-    "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
-    "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
-    "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
-    "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
-    "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
+  "name": "Run Length Matrix Analysis",
+  "description": "Computes gray-level run-length matrix features for texture characterization — detects AI smoothing artifacts (Galloway, 1975).",
+  "algorithm": "Run Length Matrix Analysis 분석 알고리즘",
+  "mechanism": "이 방법은 applies Galloway's (1975) Gray Level Run Length Matrix (GLRLM) for texture-based forensic analysis:\n\n1. **RunLengthEncoding**: For each direction θ (0°, 45°, 90°, 135°), the image is scanned to identify runs — consecutive pixels with the same gray level. The GLRLM R(i,j|θ) counts the number of runs with gray level i and length j in direction θ.\n\n2. **특징 추출**: Standard GLRLM features are computed: - Short Run Emphasis (SRE): Measures fine texture density - Long Run Emphasis (LRE): Quantifies coarse texture presence - Gray Level Non-Uniformity (GLN): Measures gray level distribution uniformity - Run Length Non-Uniformity (RLN): Quantifies run length distribution uniformity - Run Percentage (RP): Ratio of runs to total pixel count\n\n3. **Directional일관성분석**: Natural images show smooth, physically motivated directional variation in GLRLM features. AI 생성 images often exhibit either excessive directional uniformity (over-smoothed textures) or implausible directional discontinuities at generation boundaries.\n\n4. **Higher-OrderStatistics**: Following Tang (1998), higher-order run length features including Low/High Gray Level Run Emphasis (LGRE/HGRE) capture subtle gray level-run length correlations that differ between natural and synthetic textures.\n\n5. **Forensic점수 산출**: GLRLM feature vectors from image blocks are compared against natural image texture statistics. AI 생성 images 일반적으로 produce 비정상적인 short-run-to-long-run ratios and unnatural gray level uniformity patterns, yielding elevated detection scores.",
+  "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
+  "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
+  "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
+  "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
+  "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
+  "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
 }

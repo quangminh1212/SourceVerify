@@ -1,22 +1,22 @@
 {
-    "name": "조리개 회절 패턴 분석 (Aperture Diffraction)",
-    "description": "실제 카메라의 조리개 날을 빛이 통과할 때 물리적으로 반드시 발생하는 광학적 회절 패턴의 존재를 검증합니다. 실제 카메라로 촬영할 때, 특히 좁은 조리개(f/11-f/22)에서 점광원은 불변의 파동 광학에 의해 결정되는 특징적인 별무리(Starburst) 또는 에어리 디스크(Airy disk) 패턴을 만들어냅니다. AI 이미지 생성기는 파동 물리학에 대한 이해가 전무합니다. 주요 광원에 조잡한 별무리 효과를 가끔 흉내 낼 수는 있지만, 장면 내 모든 점광원에 걸쳐 동시에 물리적으로 정확하고 일관된 회절 패턴을 재현하는 데는 체계적으로 실패합니다.",
-    "algorithm": "파동 광학 회절 지문 검증",
-    "mechanism": "알고리즘은 이미지 내 모든 고강도 점광원(가로등, 반사광, 먼 태양)을 식별합니다. 각 광원에 대해 주변 픽셀 데이터를 분석하여 회절 패턴의 존재를 검사합니다: 별무리의 빛살 개수(조리개 날 개수의 2배와 일치해야 함), 빛살의 각도 균일성, 그리고 특징적인 에어리 링의 유무입니다. 이후 장면 전체의 교차 검증을 수행합니다: 동일 이미지 내 유사한 밝기의 모든 점광원은 동일한 물리적 렌즈를 통과했으므로 동일한 회절 지문을 보여야 합니다. AI 이미지는 거의 보편적으로 이 교차 검증에 실패하여, 서로 다른 광원에 제각각 다른 별무리 패턴을 생성하거나—아예 패턴 자체가 없기도 합니다.",
-    "useCase": "점광원이 풍부한 야외 야경 사진, 도시 풍경, 콘서트 사진을 인증하는 황금 기준(Gold standard)입니다. 현재의 AI가 일관된 회절 패턴을 위조하는 것은 사실상 불가능합니다.",
-    "strengths": "• 파동 광학의 불변 법칙에 기반하므로, 어떤 AI 아키텍처에 대해서도 본질적으로 미래에도 유효합니다.\n• 장면 전체 교차 검증(모든 광원이 일치해야 함)을 통해, 조건을 충족하는 이미지에서 위양성 비율이 거의 제로에 가까운 극히 높은 신뢰도의 신호를 제공합니다.",
-    "limitations": "• 점광원이 없는 이미지(예: 대낮 풍경, 확산 조명의 스튜디오 인물사진)에는 완전히 무용지물입니다.\n• 개방 조리개(f/1.4-f/2.8) 촬영은 눈에 보이는 회절이 거의 없어 분석이 비결정적(Inconclusive)이 됩니다.",
-    "parameters": "분석 기준: 점광원 회절 패턴 매칭\n측정 지표: 별무리 빛살 개수, 각도 균일성, 에어리 링 존재 여부, 광원 간 교차 일관성\n출력: 0-100 광학적 진위 스코어",
-    "accuracy": "매우 높음 — 좁은 조리개로 촬영된, 눈에 보이는 점광원이 3개 이상인 이미지에서 88-95% 정확도. 개방 조리개 또는 주간 촬영에서는 비결정적 수준으로 하락합니다.",
-    "references": [
-        {
-            "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
-            "url": "https://doi.org/10.1109/TIFS.2006.873602"
-        },
-        {
-            "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
-            "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
-        }
-    ],
-    "source": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.; Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson."
+  "name": "조리개 회절 패턴 분석 (Aperture Diffraction)",
+  "description": "실제 카메라의 조리개 날을 빛이 통과할 때 물리적으로 반드시 발생하는 광학적 회절 패턴의 존재를 검증합니다. 실제 카메라로 촬영할 때, 특히 좁은 조리개(f/11-f/22)에서 점광원은 불변의 파동 광학에 의해 결정되는 특징적인 별무리(Starburst) 또는 에어리 디스크(Airy disk) 패턴을 만들어냅니다. AI 이미지 생성기는 파동 물리학에 대한 이해가 전무합니다. 주요 광원에 조잡한 별무리 효과를 가끔 흉내 낼 수는 있지만, 장면 내 모든 점광원에 걸쳐 동시에 물리적으로 정확하고 일관된 회절 패턴을 재현하는 데는 체계적으로 실패합니다.",
+  "algorithm": "파동 광학 회절 지문 검증",
+  "mechanism": "The algorithm identifies all high-intensity point light sources in the image (streetlights, reflections, distant sun). For each source, it analyzes the surrounding pixel data for the presence of a diffraction pattern: the number of spikes in a starburst (which must match 2× the number of aperture blades), the angular uniformity of spikes, and the characteristic Airy rings. It then validates cross-scene consistency: every point light source at a similar brightness in the same image must exhibit an identical diffraction fingerprint because they all passed through the same physical lens. AI images almost universally fail this cross-validation, producing differing starburst patterns on different lights—or no pattern at all.",
+  "useCase": "점광원이 풍부한 야외 야경 사진, 도시 풍경, 콘서트 사진을 인증하는 황금 기준(Gold standard)입니다. 현재의 AI가 일관된 회절 패턴을 위조하는 것은 사실상 불가능합니다.",
+  "strengths": "• 파동 광학의 불변 법칙에 기반하므로, 어떤 AI 아키텍처에 대해서도 본질적으로 미래에도 유효합니다.\n• 장면 전체 교차 검증(모든 광원이 일치해야 함)을 통해, 조건을 충족하는 이미지에서 위양성 비율이 거의 제로에 가까운 극히 높은 신뢰도의 신호를 제공합니다.",
+  "limitations": "• 점광원이 없는 이미지(예: 대낮 풍경, 확산 조명의 스튜디오 인물사진)에는 완전히 무용지물입니다.\n• 개방 조리개(f/1.4-f/2.8) 촬영은 눈에 보이는 회절이 거의 없어 분석이 비결정적(Inconclusive)이 됩니다.",
+  "parameters": "분석 기준: 점광원 회절 패턴 매칭\n측정 지표: 별무리 빛살 개수, 각도 균일성, 에어리 링 존재 여부, 광원 간 교차 일관성\n출력: 0-100 광학적 진위 스코어",
+  "accuracy": "매우 높음 — 좁은 조리개로 촬영된, 눈에 보이는 점광원이 3개 이상인 이미지에서 88-95% 정확도. 개방 조리개 또는 주간 촬영에서는 비결정적 수준으로 하락합니다.",
+  "references": [
+    {
+      "title": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.",
+      "url": "https://doi.org/10.1109/TIFS.2006.873602"
+    },
+    {
+      "title": "Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson.",
+      "url": "https://www.pearson.com/en-us/subject-catalog/p/digital-image-processing/P200000003224"
+    }
+  ],
+  "source": "Lukas, J. et al. (2006). Digital Camera Identification from Sensor Pattern Noise. IEEE TIFS.; Gonzalez, R.C. & Woods, R.E. (2018). Digital Image Processing. 4th Edition. Pearson."
 }

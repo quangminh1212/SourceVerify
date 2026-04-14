@@ -1,12 +1,12 @@
 {
-    "name": "Identity Switching Detection",
-    "description": "Detects face identity inconsistencies across frames — face-swap deepfakes show subtle identity drift.",
-    "algorithm": "Identity Switching Detection 분석 알고리즘",
-    "mechanism": "Identity Switching Detection 시스템은 AI 생성 콘텐츠와 실제 미디어를 구별하기 위해 특정 신호 패턴을 분석합니다.",
-    "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
-    "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
-    "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
-    "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
-    "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
-    "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
+  "name": "Identity Switching Detection",
+  "description": "Detects face identity inconsistencies across frames — face-swap deepfakes show subtle identity drift.",
+  "algorithm": "Identity Switching Detection 분석 알고리즘",
+  "mechanism": "This method detects temporal identity switches in video:\n\n1. **얼굴IdentityEncoding**: A face identity embedding vector is computed per frame using established face recognition architectures. The embedding captures identity-specific features (bone structure, feature proportions) independent of expression and pose.\n\n2. **시간적Identity일관성**: Identity embeddings are tracked across the video. In authentic video of a single person, embeddings cluster tightly (cosine similarity > 0.6). The method detects frames where identity embedding significantly deviates from the cluster — indicating face-swap deepfake where the generated face intermittently fails to maintain target identity.\n\n3. **GradualIdentityDrift감지**: Some deepfake methods produce gradual identity drift — the generated face slowly diverges from the target identity over time. The method tracks the moving average of identity embeddings for systematic drift that wouldn't occur with a real person.\n\n4. **Identity-Attribute일관성**: Identity should be consistent with auxiliary attributes: age, gender, ethnicity characteristics should remain stable across frames. The method detects inconsistencies where one frame shows older/younger appearance than others, or where ethnicity-related features vary, indicating identity blending between source and target.\n\n5. **Cross-ReferenceIdentity검증**: If multiple people appear in the video, each person's identity should remain distinct and stable. The method tracks per-person identity embeddings, detecting: identity confusion between individuals, partial face swaps where only some angles are swapped, or identity leakage where one person's features appear on another.",
+  "parameters": "분석 유형: 자동 통계\\n점수 범위: 0(실제)~100(AI 생성)",
+  "accuracy": "중~고 — 입력 품질에 따라 70-85% 정확도.",
+  "source": "디지털 포렌식 및 AI 콘텐츠 탐지 관련 동료 검토 연구 기반.",
+  "useCase": "AI 생성 콘텐츠를 탐지하기 위한 다중 신호 분석 파이프라인의 일부로 사용.",
+  "strengths": "• 연구 기반 방법론\\n• 빠른 계산 속도\\n• 다른 탐지 방법과 보완적",
+  "limitations": "• 정확도는 입력 품질에 따라 변동\\n• 다른 방법과 함께 사용하는 것이 최적"
 }

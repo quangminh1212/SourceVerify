@@ -1,18 +1,18 @@
 {
-    "name": "복제 원본 추적 (Copy-Move 검출)",
-    "description": "기만적인 '복제' 전략(복제된 군중, 복제된 구름, 중복된 나뭇잎)에 대한 대량 계산 파괴 무기입니다. 사기꾼들은 클론 스탬프 도구를 빈번하게 사용하여 한 영역을 복사하고 다른 요소 위에 붙여넣어 역사에서 지워버립니다. 이 알고리즘은 유기적 자연에서 수학적으로 불가능한 절대적 픽셀 구조 중복을 탐지하도록 설계되었습니다.",
-    "algorithm": "강건한 SIFT/SURF 블록 추출 & 빠른 기하학적 매칭",
-    "mechanism": "이 스캐너는 전체 이미지를 체계적으로 수십만 개의 회전 불변 미세 키포인트로 분해합니다. 그런 다음 모든 포인트를 다른 모든 포인트와 교차 대조하여 동일한 '쌍둥이' 시그니처를 검색합니다. 악의적 행위자가 복제된 나무/객체를 스케일링, 회전, 블러, 뒤집기로 위장하더라도 알고리즘은 기하학적 앵커에 고정하여 복제의 반박 불가능한 증거 벡터를 그려냅니다.",
-    "parameters": "핵심 엔진: Dense SIFT / Zernike 모멘트, 거리 메트릭: 교차 L2 노름, 노이즈 제거기: RANSAC 필터링, 기하학: 스케일 불변 벡터",
-    "accuracy": "매우 높음 (88-95%) — 단일 이미지 내부의 Copy-Move 위조에 직면했을 때, 이것은 피할 수 없는 사형 선고로 작용합니다.",
-    "source": "Fridrich (2003) / Copydays 특징 토폴로지 검출",
-    "useCase": "고급 복제 조작의 마스크를 강력하게 벗겨내며, 대규모 '시위 군중'이 실제로는 10명을 복사하여 1000명으로 만든 것임을 즉시 증명하는 상호 연결된 신경 시각 웹을 생성합니다.",
-    "references": [
-        {
-            "title": "Fridrich, J., Soukal, D., & Lukáš, J. (2003). Detection of copy-move forgery in digital images. DFRWS.",
-            "url": "https://www.ws.binghamton.edu/fridrich/Research/copymove.pdf"
-        }
-    ],
-    "strengths": "• 기하학적 적대 공격에 파괴 불가능: 중도 JPEG 압축, 가우시안 블러, 노이즈 주입, 뒤집기 또는 늘리기는 SIFT/SURF 위상적 추출에 완전히 무력합니다.\n• '기증' 영역과 '위조' 영역을 직접 연결하는 파괴적으로 명확하고 시각적으로 반박 불가능한 증거 메시를 생성하여 부정할 여지를 전혀 남기지 않습니다.",
-    "limitations": "• 수백만 벡터에 걸쳐 조합 N차원 매칭 공간(O(N²))을 계산해야 하므로 리소스 소모가 극심하고 느리며, 저사양 하드웨어를 쉽게 마비시킵니다.\n• 자연적인 위상적 반복에 매우 민감하여, 자연적으로 동일한 반복 패턴을 가진 완전히 실제 장면(공장에서 동일하게 제조된 수천 개의 유리창이 있는 고층 빌딩이나 완벽하게 타일링된 바닥 등)에서 오탐을 발생시킵니다."
+  "name": "복제 원본 추적 (Copy-Move 검출)",
+  "description": "기만적인 '복제' 전략(복제된 군중, 복제된 구름, 중복된 나뭇잎)에 대한 대량 계산 파괴 무기입니다. 사기꾼들은 클론 스탬프 도구를 빈번하게 사용하여 한 영역을 복사하고 다른 요소 위에 붙여넣어 역사에서 지워버립니다. 이 알고리즘은 유기적 자연에서 수학적으로 불가능한 절대적 픽셀 구조 중복을 탐지하도록 설계되었습니다.",
+  "algorithm": "강건한 SIFT/SURF 블록 추출 & 빠른 기하학적 매칭",
+  "mechanism": "This brutal scanner systematically shatters the entire image into hundreds of thousands of rotation-invariant microscopic keypoints. It then obsessively cross-interrogates every single point against all others searching for identical 'twin' signatures. Even if the malicious actor attempts to disguise the duplication by scaling, rotating, blurring, or flipping the copied tree/object, the algorithm will ruthlessly lock onto the geometric anchors and draw damning vectors proving incontrovertible proof of cloning.",
+  "parameters": "핵심 엔진: Dense SIFT / Zernike 모멘트, 거리 메트릭: 교차 L2 노름, 노이즈 제거기: RANSAC 필터링, 기하학: 스케일 불변 벡터",
+  "accuracy": "매우 높음 (88-95%) — 단일 이미지 내부의 Copy-Move 위조에 직면했을 때, 이것은 피할 수 없는 사형 선고로 작용합니다.",
+  "source": "Fridrich (2003) / Copydays 특징 토폴로지 검출",
+  "useCase": "고급 복제 조작의 마스크를 강력하게 벗겨내며, 대규모 '시위 군중'이 실제로는 10명을 복사하여 1000명으로 만든 것임을 즉시 증명하는 상호 연결된 신경 시각 웹을 생성합니다.",
+  "references": [
+    {
+      "title": "Fridrich, J., Soukal, D., & Lukáš, J. (2003). Detection of copy-move forgery in digital images. DFRWS.",
+      "url": "https://www.ws.binghamton.edu/fridrich/Research/copymove.pdf"
+    }
+  ],
+  "strengths": "• 기하학적 적대 공격에 파괴 불가능: 중도 JPEG 압축, 가우시안 블러, 노이즈 주입, 뒤집기 또는 늘리기는 SIFT/SURF 위상적 추출에 완전히 무력합니다.\n• '기증' 영역과 '위조' 영역을 직접 연결하는 파괴적으로 명확하고 시각적으로 반박 불가능한 증거 메시를 생성하여 부정할 여지를 전혀 남기지 않습니다.",
+  "limitations": "• 수백만 벡터에 걸쳐 조합 N차원 매칭 공간(O(N²))을 계산해야 하므로 리소스 소모가 극심하고 느리며, 저사양 하드웨어를 쉽게 마비시킵니다.\n• 자연적인 위상적 반복에 매우 민감하여, 자연적으로 동일한 반복 패턴을 가진 완전히 실제 장면(공장에서 동일하게 제조된 수천 개의 유리창이 있는 고층 빌딩이나 완벽하게 타일링된 바닥 등)에서 오탐을 발생시킵니다."
 }
