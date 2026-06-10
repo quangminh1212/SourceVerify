@@ -1,5 +1,9 @@
 ﻿\documentclass[12pt,a4paper]{report}
 
+% ============================================================
+%  BÃO CÃO PROJECT I - SOURCEVERIFY
+%  Chá»§ Ä‘á»: Ná»n táº£ng kiá»ƒm chá»©ng ná»™i dung sá»‘ do AI táº¡o sinh
+% ============================================================
 \usepackage[utf8]{inputenc}
 \usepackage[T5]{fontenc}
 \usepackage[vietnamese]{babel}
@@ -16,294 +20,496 @@
 \usepackage{hyperref}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{amsmath}
 \usepackage{tikz}
-\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit,calc,patterns}
 
 \geometry{top=2.5cm,bottom=2.5cm,left=3cm,right=2.5cm}
 \onehalfspacing
-\setlength{\parindent}{0.75cm}
+\setlength{\parindent}{0.8cm}
 \setlength{\parskip}{4pt}
-\setlist[itemize]{leftmargin=1.2cm,itemsep=2pt,topsep=4pt}
-\setlist[enumerate]{leftmargin=1.2cm,itemsep=2pt,topsep=4pt}
+\setlist[itemize]{leftmargin=1.25cm,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.25cm,itemsep=2pt,topsep=4pt}
+
+\definecolor{Navy}{RGB}{18,52,86}
+\definecolor{Blue}{RGB}{36,101,180}
+\definecolor{LightBlue}{RGB}{232,242,255}
+\definecolor{LightGray}{RGB}{245,247,250}
+\definecolor{Green}{RGB}{38,139,96}
+\definecolor{Orange}{RGB}{220,130,40}
+\definecolor{Red}{RGB}{190,55,55}
+\definecolor{Purple}{RGB}{110,76,180}
 
 \hypersetup{
   hidelinks,
   pdftitle={Bao cao Project I - SourceVerify},
   pdfauthor={SourceVerify},
-  pdfsubject={Tim hieu nen tang phat hien noi dung AI}
+  pdfsubject={Nen tang kiem chung noi dung so do AI tao sinh}
 }
 
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small Project I -- SourceVerify}
-\fancyhead[R]{\small Báo cáo cuối kì}
+\fancyhead[L]{\small\textit{Project I -- SourceVerify}}
+\fancyhead[R]{\small\textit{BÃ¡o cÃ¡o cuá»‘i kÃ¬}}
 \fancyfoot[C]{\thepage}
 
-\titleformat{\chapter}{\normalfont\Large\bfseries}{Chương \thechapter.}{0.6em}{}
-\titleformat{\section}{\normalfont\large\bfseries}{\thesection.}{0.5em}{}
-\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\chapter}{\normalfont\LARGE\bfseries\color{Navy}}{ChÆ°Æ¡ng \thechapter.}{0.6em}{}
+\titleformat{\section}{\normalfont\Large\bfseries\color{Navy}}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries\color{Blue}}{\thesubsection.}{0.5em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection.}{0.5em}{}
 
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 \newcommand{\method}[1]{\textbf{#1}}
+\newcommand{\code}[1]{\texttt{#1}}
 
 \begin{document}
 
 \begin{titlepage}
 \centering
-{\large TRƯỜNG ĐẠI HỌC / KHOA CÔNG NGHỆ THÔNG TIN\par}
-\vspace{1.2cm}
-{\Large\bfseries BÁO CÁO PROJECT I\par}
-\vspace{0.6cm}
-{\LARGE\bfseries SOURCEVERIFY\par}
+{\large TRÆ¯á»œNG Äáº I Há»ŒC / KHOA CÃ”NG NGHá»† THÃ”NG TIN\par}
+\vspace{1.0cm}
+{\Large\bfseries BÃO CÃO PROJECT I\par}
+\vspace{0.5cm}
+{\Huge\bfseries SOURCEVERIFY\par}
 \vspace{0.4cm}
-{\large Nền tảng tìm hiểu và hỗ trợ nhận diện nội dung do AI tạo sinh\par}
+{\Large Ná»n táº£ng tÃ¬m hiá»ƒu vÃ  há»— trá»£ kiá»ƒm chá»©ng ná»™i dung sá»‘ do AI táº¡o sinh\par}
+\vspace{1.2cm}
+\begin{tikzpicture}
+  \node[draw=Navy,rounded corners=12pt,fill=LightBlue,minimum width=12cm,minimum height=3.1cm,align=center] {
+    \Large\bfseries AI Content Forensics Platform\\[4pt]
+    \normalsize PhÃ¢n tÃ­ch Ä‘a tÃ­n hiá»‡u: Metadata -- Táº§n sá»‘ -- Nhiá»…u -- BiÃªn cáº¡nh -- MÃ u sáº¯c -- NÃ©n áº£nh
+  };
+\end{tikzpicture}
 \vfill
 \begin{tabular}{rl}
-Sinh viên thực hiện: & ........................................ \\
-Mã sinh viên: & ........................................ \\
-Lớp: & ........................................ \\
-Giảng viên hướng dẫn: & ........................................ \\
+Sinh viÃªn thá»±c hiá»‡n: & ........................................ \\
+MÃ£ sinh viÃªn: & ........................................ \\
+Lá»›p: & ........................................ \\
+Giáº£ng viÃªn hÆ°á»›ng dáº«n: & ........................................ \\
+Há»c pháº§n: & Project I \\
 \end{tabular}
 \vfill
-{\large Hà Nội, tháng 06 năm 2026\par}
+{\large HÃ  Ná»™i, thÃ¡ng 06 nÄƒm 2026\par}
 \end{titlepage}
 
 \pagenumbering{roman}
+\chapter*{Lá»i nÃ³i Ä‘áº§u}
+\addcontentsline{toc}{chapter}{Lá»i nÃ³i Ä‘áº§u}
+Trong nhá»¯ng nÄƒm gáº§n Ä‘Ã¢y, trÃ­ tuá»‡ nhÃ¢n táº¡o táº¡o sinh Ä‘Ã£ trá»Ÿ thÃ nh má»™t trong cÃ¡c hÆ°á»›ng cÃ´ng nghá»‡ cÃ³ tá»‘c Ä‘á»™ phÃ¡t triá»ƒn nhanh nháº¥t. CÃ¡c mÃ´ hÃ¬nh sinh áº£nh, sinh vÄƒn báº£n vÃ  sinh video giÃºp ngÆ°á»i dÃ¹ng táº¡o ra ná»™i dung cháº¥t lÆ°á»£ng cao trong thá»i gian ráº¥t ngáº¯n. Tuy nhiÃªn, kháº£ nÄƒng táº¡o ná»™i dung quÃ¡ dá»… dÃ ng cÅ©ng lÃ m tÄƒng nguy cÆ¡ giáº£ máº¡o thÃ´ng tin, phÃ¡t tÃ¡n tin sai lá»‡ch, táº¡o báº±ng chá»©ng hÃ¬nh áº£nh khÃ´ng Ä‘Ã¡ng tin cáº­y vÃ  lÃ m suy giáº£m niá»m tin vÃ o dá»¯ liá»‡u sá»‘.
+
+BÃ¡o cÃ¡o Project I nÃ y trÃ¬nh bÃ y quÃ¡ trÃ¬nh tÃ¬m hiá»ƒu vÃ  thiáº¿t káº¿ ná»n táº£ng SourceVerify -- má»™t há»‡ thá»‘ng thá»­ nghiá»‡m nháº±m há»— trá»£ nháº­n diá»‡n dáº¥u hiá»‡u ná»™i dung do AI táº¡o sinh. Ná»™i dung bÃ¡o cÃ¡o táº­p trung vÃ o phÆ°Æ¡ng phÃ¡p tiáº¿p cáº­n Ä‘a tÃ­n hiá»‡u, trong Ä‘Ã³ má»—i method phÃ¢n tÃ­ch má»™t khÃ­a cáº¡nh khÃ¡c nhau cá»§a dá»¯ liá»‡u áº£nh. Do pháº¡m vi Project I chá»§ yáº¿u lÃ  lÃ m quen ná»n táº£ng cÃ´ng nghá»‡ vÃ  cÃ¡ch Ä‘áº·t váº¥n Ä‘á», bÃ¡o cÃ¡o khÃ´ng Ä‘áº·t má»¥c tiÃªu chá»©ng minh há»‡ thá»‘ng Ä‘áº¡t Ä‘á»™ chÃ­nh xÃ¡c tuyá»‡t Ä‘á»‘i, mÃ  hÆ°á»›ng tá»›i viá»‡c trÃ¬nh bÃ y rÃµ bÃ i toÃ¡n, cÆ¡ sá»Ÿ lÃ½ thuyáº¿t, thiáº¿t káº¿ há»‡ thá»‘ng vÃ  káº¿t quáº£ triá»ƒn khai ban Ä‘áº§u.
+
+\chapter*{TÃ³m táº¯t Ä‘á» tÃ i}
+\addcontentsline{toc}{chapter}{TÃ³m táº¯t Ä‘á» tÃ i}
+SourceVerify lÃ  ná»n táº£ng web thá»­ nghiá»‡m há»— trá»£ kiá»ƒm chá»©ng ná»™i dung sá»‘. Há»‡ thá»‘ng nháº­n Ä‘áº§u vÃ o lÃ  tá»‡p áº£nh, vÄƒn báº£n hoáº·c video, sau Ä‘Ã³ cháº¡y cÃ¡c module phÃ¢n tÃ­ch tÆ°Æ¡ng á»©ng Ä‘á»ƒ Ä‘Æ°a ra Ä‘iá»ƒm nghi ngá» AI, nhÃ£n dá»± Ä‘oÃ¡n vÃ  pháº§n giáº£i thÃ­ch dá»±a trÃªn tá»«ng tÃ­n hiá»‡u. Trong bÃ¡o cÃ¡o nÃ y, nhÃ³m phÆ°Æ¡ng phÃ¡p áº£nh Ä‘Æ°á»£c trÃ¬nh bÃ y sÃ¢u nháº¥t vÃ¬ Ä‘Ã¢y lÃ  nhÃ³m cÃ³ nhiá»u dáº¥u váº¿t váº­t lÃ½ vÃ  thá»‘ng kÃª dá»… phÃ¢n tÃ­ch trong Project I.
+
+Äá» tÃ i lá»±a chá»n 10 method tiÃªu biá»ƒu gá»“m: Metadata Analysis, Spectral Nyquist Analysis, Multi-scale Reconstruction, Noise Residual, Edge Coherence, Gradient Micro-Texture, Benford's Law, Chromatic Aberration, DCT Block Artifacts vÃ  Color Channel Correlation. ÄÃ¢y lÃ  nhá»¯ng hÆ°á»›ng tiáº¿p cáº­n quen thuá»™c trong digital image forensics, phÃ¹ há»£p Ä‘á»ƒ sinh viÃªn tÃ¬m hiá»ƒu vá» xá»­ lÃ½ áº£nh, thá»‘ng kÃª tÃ­n hiá»‡u, dáº¥u váº¿t camera vÃ  artifact sinh bá»Ÿi mÃ´ hÃ¬nh AI.
+
 \tableofcontents
+\listoffigures
+\listoftables
 \clearpage
 \pagenumbering{arabic}
 
-\chapter{Giới thiệu đề tài}
+% ============================================================
+\chapter{Giá»›i thiá»‡u Ä‘á» tÃ i}
 
-\section{Bối cảnh}
-Sự phát triển nhanh của các mô hình AI tạo sinh như mô hình sinh ảnh, sinh văn bản và sinh video đã làm thay đổi cách con người tạo lập nội dung số. Người dùng hiện nay có thể tạo ảnh chân dung, bài viết, đoạn quảng cáo, video ngắn hoặc tư liệu minh hoạ chỉ trong vài giây. Bên cạnh lợi ích về năng suất, xu hướng này cũng tạo ra nhiều rủi ro: tin giả, giả mạo bằng chứng, mạo danh cá nhân, lạm dụng hình ảnh và khó kiểm chứng nguồn gốc nội dung.
+\section{Bá»‘i cáº£nh hÃ¬nh thÃ nh Ä‘á» tÃ i}
+AI táº¡o sinh Ä‘Ã£ thay Ä‘á»•i máº¡nh máº½ cÃ¡ch con ngÆ°á»i sáº£n xuáº¥t ná»™i dung sá»‘. TrÆ°á»›c Ä‘Ã¢y, viá»‡c táº¡o má»™t bá»©c áº£nh chÃ¢n thá»±c hoáº·c má»™t Ä‘oáº¡n ná»™i dung thuyáº¿t phá»¥c thÆ°á»ng cáº§n thiáº¿t bá»‹ chuyÃªn dá»¥ng, ká»¹ nÄƒng thiáº¿t káº¿ vÃ  thá»i gian biÃªn táº­p. Hiá»‡n nay, ngÆ°á»i dÃ¹ng phá»• thÃ´ng cÃ³ thá»ƒ táº¡o áº£nh, bÃ i viáº¿t, video ngáº¯n, giá»ng nÃ³i hoáº·c mÃ´ phá»ng khuÃ´n máº·t chá»‰ báº±ng má»™t lá»i nháº¯c ngáº¯n. Äiá»u nÃ y Ä‘em láº¡i nhiá»u giÃ¡ trá»‹ tÃ­ch cá»±c cho giÃ¡o dá»¥c, sÃ¡ng táº¡o ná»™i dung, truyá»n thÃ´ng vÃ  nghiÃªn cá»©u.
 
-Trong bối cảnh đó, nhu cầu kiểm tra mức độ đáng tin cậy của nội dung số ngày càng quan trọng. SourceVerify được xây dựng như một nền tảng tìm hiểu và thử nghiệm các phương pháp phát hiện dấu hiệu AI trong dữ liệu đa phương tiện. Trọng tâm của Project I không phải là tạo một hệ thống thương mại hoàn chỉnh, mà là tìm hiểu nền tảng công nghệ, cách đặt vấn đề, hướng tiếp cận và thiết kế một hệ thống có khả năng mở rộng.
+Tuy nhiÃªn, máº·t trÃ¡i cá»§a xu hÆ°á»›ng nÃ y lÃ  sá»± gia tÄƒng cá»§a ná»™i dung khÃ´ng rÃµ nguá»“n gá»‘c. Má»™t bá»©c áº£nh AI cÃ³ thá»ƒ Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ minh há»a sá»± kiá»‡n khÃ´ng cÃ³ tháº­t; má»™t Ä‘oáº¡n vÄƒn AI cÃ³ thá»ƒ Ä‘Æ°á»£c dÃ¹ng Ä‘á»ƒ táº¡o bÃ¬nh luáº­n giáº£; má»™t video deepfake cÃ³ thá»ƒ gÃ¢y áº£nh hÆ°á»Ÿng Ä‘áº¿n uy tÃ­n cÃ¡ nhÃ¢n hoáº·c tá»• chá»©c. Khi ná»™i dung sá»‘ trá»Ÿ nÃªn khÃ³ phÃ¢n biá»‡t báº±ng máº¯t thÆ°á»ng, xÃ£ há»™i cáº§n cÃ¡c cÃ´ng cá»¥ há»— trá»£ kiá»ƒm chá»©ng Ä‘á»ƒ giáº£m rá»§i ro tiáº¿p nháº­n sai thÃ´ng tin.
 
-\section{Lý do chọn đề tài}
-Đề tài SourceVerify có tính cấp thiết vì ba nguyên nhân chính:
+SourceVerify ra Ä‘á»i tá»« nhu cáº§u Ä‘Ã³. Há»‡ thá»‘ng khÃ´ng cá»‘ gáº¯ng thay tháº¿ chuyÃªn gia giÃ¡m Ä‘á»‹nh sá»‘, mÃ  Ä‘Ã³ng vai trÃ² nhÆ° má»™t cÃ´ng cá»¥ há»— trá»£ phÃ¢n tÃ­ch ban Ä‘áº§u. Báº±ng cÃ¡ch tá»•ng há»£p nhiá»u tÃ­n hiá»‡u khÃ¡c nhau, SourceVerify giÃºp ngÆ°á»i dÃ¹ng hiá»ƒu vÃ¬ sao má»™t ná»™i dung cÃ³ thá»ƒ Ä‘Ã¡ng nghi, tÃ­n hiá»‡u nÃ o á»§ng há»™ giáº£ thuyáº¿t AI vÃ  tÃ­n hiá»‡u nÃ o á»§ng há»™ giáº£ thuyáº¿t ná»™i dung tháº­t.
+
+\section{TÃ­nh cáº¥p thiáº¿t cá»§a Ä‘á» tÃ i}
+Äá» tÃ i cÃ³ tÃ­nh cáº¥p thiáº¿t á»Ÿ cáº£ khÃ­a cáº¡nh xÃ£ há»™i vÃ  ká»¹ thuáº­t.
+
+Vá» xÃ£ há»™i, ná»™i dung giáº£ máº¡o cÃ³ thá»ƒ áº£nh hÆ°á»Ÿng Ä‘áº¿n nháº­n thá»©c cá»™ng Ä‘á»“ng, danh dá»± cÃ¡ nhÃ¢n vÃ  quyáº¿t Ä‘á»‹nh cá»§a tá»• chá»©c. Khi ngÆ°á»i dÃ¹ng thiáº¿u cÃ´ng cá»¥ kiá»ƒm tra, há» dá»… phá»¥ thuá»™c vÃ o cáº£m nháº­n chá»§ quan. Äiá»u nÃ y Ä‘áº·c biá»‡t nguy hiá»ƒm trong bá»‘i cáº£nh máº¡ng xÃ£ há»™i lan truyá»n thÃ´ng tin vá»›i tá»‘c Ä‘á»™ cao.
+
+Vá» ká»¹ thuáº­t, bÃ i toÃ¡n phÃ¡t hiá»‡n AI-generated content lÃ  bÃ i toÃ¡n má»Ÿ. CÃ¡c mÃ´ hÃ¬nh sinh áº£nh ngÃ y cÃ ng tá»‘t hÆ¡n, cÃ²n cÃ¡c dáº¥u váº¿t báº¥t thÆ°á»ng ngÃ y cÃ ng tinh vi hÆ¡n. Do Ä‘Ã³, viá»‡c tÃ¬m hiá»ƒu nhiá»u nhÃ³m method khÃ¡c nhau lÃ  cáº§n thiáº¿t: metadata, táº§n sá»‘, nhiá»…u, biÃªn cáº¡nh, nÃ©n áº£nh, mÃ u sáº¯c, káº¿t cáº¥u vÃ  provenance. Project I lÃ  cÆ¡ há»™i phÃ¹ há»£p Ä‘á»ƒ tiáº¿p cáº­n bÃ i toÃ¡n theo hÆ°á»›ng ná»n táº£ng, khÃ´ng quÃ¡ phá»¥ thuá»™c vÃ o mÃ´ hÃ¬nh há»c sÃ¢u lá»›n nhÆ°ng váº«n cÃ³ tÃ­nh thá»±c tiá»…n.
+
+\section{Má»¥c tiÃªu nghiÃªn cá»©u}
+Äá» tÃ i SourceVerify Ä‘áº·t ra cÃ¡c má»¥c tiÃªu chÃ­nh sau:
 \begin{itemize}
-  \item Nội dung do AI tạo ra ngày càng giống nội dung thật, khiến việc đánh giá bằng mắt thường trở nên kém tin cậy.
-  \item Các công cụ kiểm chứng nguồn gốc nội dung vẫn còn phân tán, thường chỉ tập trung vào một loại dữ liệu hoặc một nhóm tín hiệu nhỏ.
-  \item Việc tìm hiểu các phương pháp forensic giúp sinh viên làm quen với xử lý ảnh, thống kê tín hiệu, xử lý văn bản, xử lý video và thiết kế hệ thống web hiện đại.
+  \item TÃ¬m hiá»ƒu bÃ i toÃ¡n kiá»ƒm chá»©ng ná»™i dung sá»‘ trong bá»‘i cáº£nh AI táº¡o sinh.
+  \item Kháº£o sÃ¡t cÃ¡c nhÃ³m phÆ°Æ¡ng phÃ¡p forensic cÃ³ thá»ƒ Ã¡p dá»¥ng cho áº£nh, vÄƒn báº£n vÃ  video.
+  \item PhÃ¢n tÃ­ch sÃ¢u 10 method áº£nh tiÃªu biá»ƒu, cÃ³ kháº£ nÄƒng giáº£i thÃ­ch tá»‘t vÃ  phÃ¹ há»£p vá»›i pháº¡m vi Project I.
+  \item Thiáº¿t káº¿ kiáº¿n trÃºc há»‡ thá»‘ng web cÃ³ kháº£ nÄƒng nháº­n tá»‡p, tiá»n xá»­ lÃ½, phÃ¢n tÃ­ch, tá»•ng há»£p Ä‘iá»ƒm vÃ  hiá»ƒn thá»‹ káº¿t quáº£.
+  \item XÃ¢y dá»±ng sáº£n pháº©m minh há»a báº±ng Next.js, React, TypeScript vÃ  cÃ¡c module phÃ¢n tÃ­ch ná»™i bá»™.
+  \item Äá» xuáº¥t hÆ°á»›ng phÃ¡t triá»ƒn tiáº¿p theo Ä‘á»ƒ nÃ¢ng há»‡ thá»‘ng tá»« má»©c thá»­ nghiá»‡m lÃªn má»©c Ä‘Ã¡nh giÃ¡ Ä‘á»‹nh lÆ°á»£ng nghiÃªm tÃºc hÆ¡n.
 \end{itemize}
 
-\section{Mục tiêu đề tài}
-Mục tiêu của đề tài gồm:
+\section{Äá»‘i tÆ°á»£ng vÃ  pháº¡m vi nghiÃªn cá»©u}
+Äá»‘i tÆ°á»£ng nghiÃªn cá»©u cá»§a Ä‘á» tÃ i lÃ  ná»™i dung sá»‘ cÃ³ kháº£ nÄƒng Ä‘Æ°á»£c táº¡o hoáº·c chá»‰nh sá»­a bá»Ÿi AI. Trong pháº¡m vi sáº£n pháº©m SourceVerify, há»‡ thá»‘ng cÃ³ hÆ°á»›ng má»Ÿ rá»™ng cho áº£nh, vÄƒn báº£n vÃ  video. Tuy nhiÃªn, do thá»i lÆ°á»£ng Project I cÃ³ háº¡n, bÃ¡o cÃ¡o táº­p trung nhiá»u nháº¥t vÃ o áº£nh vÃ¬ áº£nh sá»‘ chá»©a nhiá»u dáº¥u váº¿t váº­t lÃ½ vÃ  thá»‘ng kÃª cÃ³ thá»ƒ giáº£i thÃ­ch rÃµ rÃ ng.
+
+Pháº¡m vi bÃ¡o cÃ¡o gá»“m:
 \begin{itemize}
-  \item Tìm hiểu bài toán nhận diện nội dung do AI tạo sinh ở mức nền tảng.
-  \item Khảo sát các nhóm phương pháp phân tích ảnh, văn bản và video, trong đó tập trung trình bày 10 phương pháp ảnh tiêu biểu nhất.
-  \item Thiết kế hệ thống SourceVerify có khả năng nhận tệp đầu vào, phân tích bằng nhiều tín hiệu, tổng hợp điểm và trả kết quả dễ hiểu cho người dùng.
-  \item Xây dựng sản phẩm thử nghiệm bằng Next.js, TypeScript và các module phân tích nội bộ để minh hoạ hướng tiếp cận.
+  \item TrÃ¬nh bÃ y tá»•ng quan bÃ i toÃ¡n phÃ¡t hiá»‡n ná»™i dung AI.
+  \item PhÃ¢n tÃ­ch 10 method áº£nh ná»•i báº­t theo Ã½ tÆ°á»Ÿng, Ä‘áº§u vÃ o, Ä‘áº§u ra, Æ°u Ä‘iá»ƒm vÃ  háº¡n cháº¿.
+  \item Thiáº¿t káº¿ há»‡ thá»‘ng SourceVerify á»Ÿ má»©c kiáº¿n trÃºc, chá»©c nÄƒng vÃ  luá»“ng dá»¯ liá»‡u.
+  \item MÃ´ táº£ káº¿t quáº£ triá»ƒn khai ban Ä‘áº§u cá»§a sáº£n pháº©m pháº§n má»m.
 \end{itemize}
 
-\section{Phạm vi thực hiện}
-Trong phạm vi Project I, báo cáo tập trung vào phần nền tảng, phân tích thiết kế và sản phẩm minh hoạ. Hệ thống SourceVerify đã có nhiều method phân tích, tuy nhiên quyển báo cáo này chỉ trình bày sâu 10 method nổi tiếng và dễ giải thích nhất trong nhóm phân tích ảnh:
-\begin{enumerate}
-  \item Metadata Analysis.
-  \item Spectral Nyquist Analysis.
-  \item Multi-scale Reconstruction.
-  \item Noise Residual.
-  \item Edge Coherence.
-  \item Gradient Micro-Texture.
-  \item Benford's Law.
-  \item Chromatic Aberration.
-  \item DCT Block Artifacts.
-  \item Color Channel Correlation.
-\end{enumerate}
+\section{PhÆ°Æ¡ng phÃ¡p thá»±c hiá»‡n}
+Quy trÃ¬nh thá»±c hiá»‡n Ä‘á» tÃ i Ä‘Æ°á»£c chia thÃ nh nÄƒm bÆ°á»›c: kháº£o sÃ¡t bÃ i toÃ¡n, chá»n method, thiáº¿t káº¿ kiáº¿n trÃºc, triá»ƒn khai thá»­ nghiá»‡m vÃ  Ä‘Ã¡nh giÃ¡ Ä‘á»‹nh tÃ­nh. HÃ¬nh \ref{fig:research-process} mÃ´ táº£ quy trÃ¬nh thá»±c hiá»‡n á»Ÿ má»©c tá»•ng quÃ¡t.
 
-\chapter{Cơ sở lý thuyết}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=1.05cm,
+  step/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.0cm,minimum height=0.85cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[step] (s1) {1. Kháº£o sÃ¡t\\bÃ i toÃ¡n};
+\node[step,right=of s1] (s2) {2. Chá»n\\method};
+\node[step,right=of s2] (s3) {3. Thiáº¿t káº¿\\há»‡ thá»‘ng};
+\node[step,below=of s3] (s4) {4. Triá»ƒn khai\\thá»­ nghiá»‡m};
+\node[step,left=of s4] (s5) {5. ÄÃ¡nh giÃ¡\\vÃ  cáº£i tiáº¿n};
+\draw[arrow] (s1) -- (s2);
+\draw[arrow] (s2) -- (s3);
+\draw[arrow] (s3) -- (s4);
+\draw[arrow] (s4) -- (s5);
+\end{tikzpicture}
+\caption{Quy trÃ¬nh thá»±c hiá»‡n Ä‘á» tÃ i SourceVerify}
+\label{fig:research-process}
+\end{figure}
 
-\section{Cách tiếp cận tổng quát}
-Nội dung thật thường được tạo ra thông qua thiết bị vật lý như camera, cảm biến, ống kính và quy trình nén ảnh. Vì vậy nó thường chứa các dấu vết tự nhiên: nhiễu cảm biến, sai lệch quang học, vân nén JPEG, phân bố tần số và tương quan màu đặc trưng. Ngược lại, nội dung do AI tạo sinh được sinh ra từ mô hình học sâu, có thể thiếu một số dấu vết vật lý hoặc tạo ra các mẫu thống kê quá đều.
+% ============================================================
+\chapter{CÆ¡ sá»Ÿ lÃ½ thuyáº¿t}
 
-SourceVerify tiếp cận bài toán theo hướng đa tín hiệu. Thay vì dựa vào một bộ phân loại duy nhất, hệ thống chạy nhiều method độc lập, mỗi method trả về một điểm nghi ngờ và trọng số. Kết quả cuối cùng được tổng hợp thành điểm AI, nhãn dự đoán và độ tin cậy. Cách tiếp cận này phù hợp với Project I vì dễ mở rộng, dễ giải thích và giúp người học hiểu rõ từng nhóm dấu hiệu.
+\section{Tá»•ng quan vá» AI-generated content}
+AI-generated content lÃ  ná»™i dung Ä‘Æ°á»£c táº¡o ra hoÃ n toÃ n hoáº·c má»™t pháº§n bá»Ÿi mÃ´ hÃ¬nh trÃ­ tuá»‡ nhÃ¢n táº¡o. Vá»›i áº£nh, cÃ¡c mÃ´ hÃ¬nh phá»• biáº¿n gá»“m GAN, diffusion model vÃ  cÃ¡c biáº¿n thá»ƒ text-to-image. Vá»›i vÄƒn báº£n, cÃ¡c mÃ´ hÃ¬nh ngÃ´n ngá»¯ lá»›n cÃ³ thá»ƒ táº¡o Ä‘oáº¡n vÄƒn trÃ´i cháº£y, nháº¥t quÃ¡n vÃ  cÃ³ phong cÃ¡ch gáº§n giá»‘ng con ngÆ°á»i. Vá»›i video, cÃ¡c mÃ´ hÃ¬nh deepfake vÃ  text-to-video cÃ³ thá»ƒ mÃ´ phá»ng chuyá»ƒn Ä‘á»™ng, biá»ƒu cáº£m vÃ  bá»‘i cáº£nh.
 
-\section{Nền tảng công nghệ sử dụng}
-Hệ thống được triển khai theo kiến trúc web hiện đại:
+Äiá»ƒm khÃ³ cá»§a bÃ i toÃ¡n lÃ  ná»™i dung AI ngÃ y cÃ ng giá»‘ng tháº­t. Náº¿u chá»‰ quan sÃ¡t báº±ng máº¯t, ngÆ°á»i dÃ¹ng cÃ³ thá»ƒ bá» qua cÃ¡c lá»—i nhá» vá» thá»‘ng kÃª tÃ­n hiá»‡u. NgÆ°á»£c láº¡i, cÃ¡c method forensic cá»‘ gáº¯ng tÃ¬m dáº¥u váº¿t mÃ  máº¯t ngÆ°á»i khÃ³ nháº­n tháº¥y: sá»± thiáº¿u tá»± nhiÃªn cá»§a nhiá»…u cáº£m biáº¿n, phÃ¢n bá»‘ táº§n sá»‘ báº¥t thÆ°á»ng, tÆ°Æ¡ng quan mÃ u khÃ´ng há»£p lÃ½, hoáº·c metadata cho tháº¥y pháº§n má»m táº¡o áº£nh.
+
+\section{CÆ¡ sá»Ÿ cá»§a digital image forensics}
+Digital image forensics lÃ  lÄ©nh vá»±c nghiÃªn cá»©u cÃ¡c ká»¹ thuáº­t kiá»ƒm tra tÃ­nh xÃ¡c thá»±c cá»§a áº£nh sá»‘. Má»™t bá»©c áº£nh chá»¥p tá»« camera tháº­t thÆ°á»ng chá»‹u áº£nh hÆ°á»Ÿng cá»§a nhiá»u yáº¿u tá»‘ váº­t lÃ½:
 \begin{itemize}
-  \item \textbf{Next.js}: xây dựng giao diện và route xử lý phía server.
-  \item \textbf{React}: xây dựng các thành phần giao diện như trang phân tích, bảng kết quả, vòng điểm và biểu đồ radar.
-  \item \textbf{TypeScript}: tăng tính an toàn kiểu dữ liệu cho các module phân tích.
-  \item \textbf{Canvas}: đọc và xử lý pixel ảnh ở phía server hoặc môi trường Node.js.
-  \item \textbf{Module method nội bộ}: mỗi phương pháp phân tích được đóng gói thành hàm riêng, trả về tên method, nhóm phân tích, điểm, trọng số và mô tả.
+  \item Cáº£m biáº¿n áº£nh táº¡o ra nhiá»…u Ä‘áº·c trÆ°ng theo thiáº¿t bá»‹.
+  \item á»ng kÃ­nh gÃ¢y sai lá»‡ch mÃ u, mÃ©o hÃ¬nh hoáº·c khÃ¡c biá»‡t Ã¡nh sÃ¡ng nhá».
+  \item Bá»™ xá»­ lÃ½ áº£nh trong camera thá»±c hiá»‡n demosaicing, sharpening vÃ  nÃ©n JPEG.
+  \item QuÃ¡ trÃ¬nh lÆ°u, truyá»n vÃ  chá»‰nh sá»­a Ä‘á»ƒ láº¡i artifact á»Ÿ metadata, miá»n táº§n sá»‘ vÃ  miá»n khÃ´ng gian.
 \end{itemize}
 
-\section{Mô hình chấm điểm}
-Mỗi method trong SourceVerify tạo ra một tín hiệu có cấu trúc gồm: tên method, nhóm phân tích, điểm nghi ngờ, trọng số và mô tả. Điểm cao thể hiện dấu hiệu nghiêng về AI; điểm thấp thể hiện dấu hiệu nghiêng về nội dung thật; điểm gần 50 thể hiện chưa đủ kết luận.
+áº¢nh AI khÃ´ng Ä‘i qua Ä‘áº§y Ä‘á»§ chuá»—i váº­t lÃ½ Ä‘Ã³. MÃ´ hÃ¬nh sinh áº£nh há»c phÃ¢n bá»‘ dá»¯ liá»‡u vÃ  táº¡o áº£nh má»›i tá»« khÃ´ng gian áº©n. VÃ¬ váº­y, áº£nh AI cÃ³ thá»ƒ trÃ´ng ráº¥t tháº­t nhÆ°ng váº«n thiáº¿u má»™t sá»‘ dáº¥u váº¿t camera hoáº·c cÃ³ máº«u thá»‘ng kÃª quÃ¡ Ä‘á»u. SourceVerify khai thÃ¡c chÃ­nh sá»± khÃ¡c biá»‡t nÃ y.
 
-Công thức tổng quát:
+\section{CÃ¡ch tiáº¿p cáº­n Ä‘a tÃ­n hiá»‡u}
+Má»™t method Ä‘Æ¡n láº» thÆ°á»ng khÃ´ng Ä‘á»§ káº¿t luáº­n cháº¯c cháº¯n. VÃ­ dá»¥, áº£nh tháº­t Ä‘Æ°á»£c nÃ©n láº¡i nhiá»u láº§n cÃ³ thá»ƒ máº¥t metadata; áº£nh AI Ä‘Æ°á»£c chá»‰nh sá»­a háº­u ká»³ cÃ³ thá»ƒ cÃ³ artifact giá»‘ng áº£nh tháº­t; áº£nh chá»¥p mÃ n hÃ¬nh cÃ³ thá»ƒ lÃ m thay Ä‘á»•i dáº¥u váº¿t nÃ©n. VÃ¬ váº­y, SourceVerify Ã¡p dá»¥ng cÃ¡ch tiáº¿p cáº­n Ä‘a tÃ­n hiá»‡u: nhiá»u method cÃ¹ng phÃ¢n tÃ­ch má»™t tá»‡p, sau Ä‘Ã³ há»‡ thá»‘ng tá»•ng há»£p Ä‘iá»ƒm.
+
+Æ¯u Ä‘iá»ƒm cá»§a hÆ°á»›ng Ä‘a tÃ­n hiá»‡u lÃ :
+\begin{itemize}
+  \item Giáº£m phá»¥ thuá»™c vÃ o má»™t dáº¥u hiá»‡u duy nháº¥t.
+  \item Dá»… giáº£i thÃ­ch káº¿t quáº£ cho ngÆ°á»i dÃ¹ng.
+  \item CÃ³ thá»ƒ má»Ÿ rá»™ng dáº§n báº±ng cÃ¡ch thÃªm method má»›i.
+  \item PhÃ¹ há»£p vá»›i giai Ä‘oáº¡n Project I vÃ¬ khÃ´ng báº¯t buá»™c pháº£i cÃ³ táº­p dá»¯ liá»‡u huáº¥n luyá»‡n lá»›n.
+\end{itemize}
+
+\section{MÃ´ hÃ¬nh tá»•ng há»£p Ä‘iá»ƒm}
+Má»—i method tráº£ vá» má»™t Ä‘iá»ƒm trong khoáº£ng tá»« 0 Ä‘áº¿n 100. Äiá»ƒm cao biá»ƒu thá»‹ xu hÆ°á»›ng nghiÃªng vá» AI, Ä‘iá»ƒm tháº¥p biá»ƒu thá»‹ xu hÆ°á»›ng nghiÃªng vá» áº£nh tháº­t, cÃ²n Ä‘iá»ƒm xáº¥p xá»‰ 50 thá»ƒ hiá»‡n chÆ°a Ä‘á»§ báº±ng chá»©ng. Há»‡ thá»‘ng dÃ¹ng trá»ng sá»‘ Ä‘á»ƒ pháº£n Ã¡nh má»©c Ä‘á»™ quan trá»ng tÆ°Æ¡ng Ä‘á»‘i cá»§a tá»«ng method.
+
 \[
 Score_{AI}=\frac{\sum_{i=1}^{n} score_i \times weight_i}{\sum_{i=1}^{n} weight_i}
 \]
-Sau đó hệ thống điều chỉnh nhẹ theo số lượng tín hiệu mạnh, tín hiệu yếu và các trường hợp metadata đặc biệt. Cách này giúp hạn chế việc một method đơn lẻ chi phối toàn bộ kết quả.
 
-\section{Mười method tiêu biểu}
-\begin{longtable}{p{0.05\textwidth}p{0.23\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+Sau bÆ°á»›c trung bÃ¬nh cÃ³ trá»ng sá»‘, há»‡ thá»‘ng cÃ³ thá»ƒ Ä‘iá»u chá»‰nh thÃªm theo sá»‘ lÆ°á»£ng tÃ­n hiá»‡u máº¡nh. Náº¿u nhiá»u method Ä‘á»™c láº­p cÃ¹ng nghiÃªng vá» AI, Ä‘iá»ƒm tá»•ng tÄƒng; náº¿u nhiá»u method cÃ¹ng nghiÃªng vá» áº£nh tháº­t, Ä‘iá»ƒm tá»•ng giáº£m. Má»¥c tiÃªu cá»§a bÆ°á»›c nÃ y lÃ  pháº£n Ã¡nh má»©c Ä‘á»™ Ä‘á»“ng thuáº­n giá»¯a cÃ¡c method.
+
+\section{MÆ°á»i method tiÃªu biá»ƒu cá»§a SourceVerify}
+HÃ¬nh \ref{fig:method-groups} chia 10 method tiÃªu biá»ƒu thÃ nh 5 nhÃ³m chÃ­nh: nguá»“n gá»‘c tá»‡p, miá»n táº§n sá»‘, nhiá»…u/káº¿t cáº¥u, biÃªn cáº¡nh/thá»‘ng kÃª vÃ  mÃ u sáº¯c/nÃ©n áº£nh.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  group/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.6cm,minimum height=1.0cm},
+  item/.style={rectangle,draw=Blue,rounded corners,fill=white,align=center,minimum width=3.4cm,minimum height=0.65cm}
+]
+\node[group] at (0,0) {Nguá»“n gá»‘c tá»‡p};
+\node[item] at (0,-1.0) {Metadata Analysis};
+\node[group] at (4,0) {Miá»n táº§n sá»‘};
+\node[item] at (4,-1.0) {Spectral Nyquist};
+\node[item] at (4,-1.8) {Multi-scale Reconstruction};
+\node[group] at (8,0) {Nhiá»…u / káº¿t cáº¥u};
+\node[item] at (8,-1.0) {Noise Residual};
+\node[item] at (8,-1.8) {Gradient Micro-Texture};
+\node[group] at (2,-3.2) {BiÃªn cáº¡nh / thá»‘ng kÃª};
+\node[item] at (2,-4.2) {Edge Coherence};
+\node[item] at (2,-5.0) {Benford's Law};
+\node[group] at (6.5,-3.2) {MÃ u sáº¯c / nÃ©n áº£nh};
+\node[item] at (6.5,-4.2) {Chromatic Aberration};
+\node[item] at (6.5,-5.0) {DCT Block Artifacts};
+\node[item] at (6.5,-5.8) {Color Channel Correlation};
+\end{tikzpicture}
+\caption{PhÃ¢n nhÃ³m 10 method áº£nh tiÃªu biá»ƒu trong bÃ¡o cÃ¡o}
+\label{fig:method-groups}
+\end{figure}
+\subsection{Metadata Analysis}
+Metadata lÃ  thÃ´ng tin mÃ´ táº£ Ä‘i kÃ¨m tá»‡p áº£nh, vÃ­ dá»¥ tÃªn pháº§n má»m, thá»i gian táº¡o, kÃ­ch thÆ°á»›c, thiáº¿t bá»‹ chá»¥p, thÃ´ng tin EXIF hoáº·c profile mÃ u. Náº¿u metadata ghi nháº­n pháº§n má»m táº¡o áº£nh nhÆ° má»™t cÃ´ng cá»¥ AI, Ä‘Ã¢y lÃ  tÃ­n hiá»‡u máº¡nh. NgÆ°á»£c láº¡i, náº¿u áº£nh cÃ³ thÃ´ng tin camera há»£p lÃ½, Ä‘iá»u Ä‘Ã³ cÃ³ thá»ƒ á»§ng há»™ giáº£ thuyáº¿t áº£nh tháº­t.
+
+Tuy nhiÃªn, metadata ráº¥t dá»… bá»‹ xoÃ¡ hoáº·c sá»­a. Do Ä‘Ã³, SourceVerify khÃ´ng dÃ¹ng metadata lÃ m báº±ng chá»©ng duy nháº¥t. Method nÃ y phÃ¹ há»£p Ä‘á»ƒ phÃ¡t hiá»‡n cÃ¡c trÆ°á»ng há»£p rÃµ rÃ ng, Ä‘á»“ng thá»i há»— trá»£ ngÆ°á»i dÃ¹ng hiá»ƒu nguá»“n gá»‘c tá»‡p ban Ä‘áº§u.
+
+\subsection{Spectral Nyquist Analysis}
+PhÃ¢n tÃ­ch Nyquist táº­p trung vÃ o miá»n táº§n sá»‘ cá»§a áº£nh. áº¢nh sinh bá»Ÿi AI hoáº·c áº£nh Ä‘Æ°á»£c upscale cÃ³ thá»ƒ Ä‘á»ƒ láº¡i cÃ¡c máº«u láº·p á»Ÿ táº§n sá»‘ cao, nháº¥t lÃ  gáº§n biÃªn Nyquist. Nhá»¯ng máº«u nÃ y khÃ´ng pháº£i lÃºc nÃ o cÅ©ng tháº¥y báº±ng máº¯t thÆ°á»ng nhÆ°ng cÃ³ thá»ƒ xuáº¥t hiá»‡n khi phÃ¢n tÃ­ch gradient hoáº·c phá»• táº§n sá»‘.
+
+\subsection{Multi-scale Reconstruction}
+Multi-scale Reconstruction Ä‘Ã¡nh giÃ¡ sá»± á»•n Ä‘á»‹nh cá»§a áº£nh á»Ÿ nhiá»u má»©c phÃ¢n giáº£i. áº¢nh tá»± nhiÃªn thÆ°á»ng cÃ³ biáº¿n thiÃªn cá»¥c bá»™ phá»©c táº¡p; khi giáº£m vÃ  khÃ´i phá»¥c kÃ­ch thÆ°á»›c, sai sá»‘ tÃ¡i táº¡o cÃ³ thá»ƒ thay Ä‘á»•i theo vÃ¹ng. áº¢nh AI Ä‘Ã´i khi cÃ³ sai sá»‘ Ä‘á»“ng Ä‘á»u hÆ¡n do cáº¥u trÃºc Ä‘Æ°á»£c sinh ra tá»« mÃ´ hÃ¬nh.
+
+\subsection{Noise Residual}
+Noise Residual tÃ¡ch pháº§n nhiá»…u cÃ²n láº¡i sau khi loáº¡i bá» thÃ nh pháº§n mÆ°á»£t cá»§a áº£nh. Camera tháº­t thÆ°á»ng táº¡o nhiá»…u cáº£m biáº¿n khÃ´ng hoÃ n toÃ n Ä‘á»“ng nháº¥t. Nhiá»…u cÃ²n phá»¥ thuá»™c Ã¡nh sÃ¡ng, ISO, cáº£m biáº¿n vÃ  pipeline xá»­ lÃ½ áº£nh. áº¢nh AI cÃ³ thá»ƒ quÃ¡ sáº¡ch hoáº·c cÃ³ nhiá»…u khÃ´ng giá»‘ng nhiá»…u váº­t lÃ½.
+
+\subsection{Edge Coherence}
+Edge Coherence phÃ¢n tÃ­ch cÃ¡c Ä‘Æ°á»ng biÃªn vÃ  vÃ¹ng chuyá»ƒn tiáº¿p. áº¢nh tháº­t thÆ°á»ng cÃ³ biÃªn cáº¡nh chá»‹u áº£nh hÆ°á»Ÿng bá»Ÿi váº­t thá»ƒ, Ã¡nh sÃ¡ng, chuyá»ƒn Ä‘á»™ng, lens blur vÃ  sharpening. áº¢nh AI cÃ³ thá»ƒ táº¡o Ä‘Æ°á»ng biÃªn quÃ¡ mÆ°á»£t, thiáº¿u vi sai hoáº·c khÃ´ng nháº¥t quÃ¡n giá»¯a cÃ¡c vÃ¹ng.
+
+\subsection{Gradient Micro-Texture}
+Gradient Micro-Texture Ä‘Ã¡nh giÃ¡ cÃ¡c thay Ä‘á»•i ráº¥t nhá» trong vÃ¹ng chuyá»ƒn sáº¯c vÃ  vÃ¹ng bá» máº·t. áº¢nh tháº­t thÆ°á»ng cÃ³ micro-texture do cáº£m biáº¿n, cháº¥t liá»‡u váº­t thá»ƒ, Ã¡nh sÃ¡ng vÃ  nhiá»…u tá»± nhiÃªn. áº¢nh AI, Ä‘áº·c biá»‡t áº£nh Ä‘Æ°á»£c lÃ m má»‹n, cÃ³ thá»ƒ thiáº¿u loáº¡i káº¿t cáº¥u nhá» nÃ y.
+
+\subsection{Benford's Law}
+Benford's Law lÃ  quy luáº­t thá»‘ng kÃª vá» phÃ¢n bá»‘ chá»¯ sá»‘ Ä‘áº§u trong nhiá»u dá»¯ liá»‡u tá»± nhiÃªn. Trong áº£nh, Ã½ tÆ°á»Ÿng tÆ°Æ¡ng tá»± cÃ³ thá»ƒ Ã¡p dá»¥ng cho phÃ¢n bá»‘ Ä‘á»™ lá»›n gradient hoáº·c cÃ¡c Ä‘áº·c trÆ°ng sá»‘ há»c khÃ¡c. Náº¿u phÃ¢n bá»‘ lá»‡ch quÃ¡ nhiá»u so vá»›i máº«u tá»± nhiÃªn, áº£nh cÃ³ thá»ƒ Ä‘Ã£ qua tá»•ng há»£p hoáº·c xá»­ lÃ½ báº¥t thÆ°á»ng.
+
+\subsection{Chromatic Aberration}
+Chromatic Aberration lÃ  sai lá»‡ch mÃ u nhá» do á»‘ng kÃ­nh tháº­t gÃ¢y ra, thÆ°á»ng xuáº¥t hiá»‡n á»Ÿ vÃ¹ng biÃªn cÃ³ Ä‘á»™ tÆ°Æ¡ng pháº£n cao. Camera tháº­t vÃ  á»‘ng kÃ­nh váº­t lÃ½ cÃ³ thá»ƒ Ä‘á»ƒ láº¡i viá»n mÃ u nháº¹ giá»¯a cÃ¡c kÃªnh RGB. áº¢nh AI khÃ´ng nháº¥t thiáº¿t cÃ³ dáº¥u váº¿t quang há»c nÃ y.
+
+\subsection{DCT Block Artifacts}
+JPEG sá»­ dá»¥ng biáº¿n Ä‘á»•i DCT theo khá»‘i. QuÃ¡ trÃ¬nh nÃ©n táº¡o ra artifact Ä‘áº·c trÆ°ng, nháº¥t lÃ  á»Ÿ áº£nh Ä‘Ã£ lÆ°u nhiá»u láº§n hoáº·c cÃ³ cháº¥t lÆ°á»£ng nÃ©n tháº¥p. áº¢nh tháº­t thÆ°á»ng cÃ³ dáº¥u váº¿t nÃ©n phÃ¹ há»£p vá»›i lá»‹ch sá»­ lÆ°u áº£nh, trong khi áº£nh AI cÃ³ thá»ƒ cÃ³ váº¿t nÃ©n quÃ¡ Ä‘á»u, thiáº¿u tá»± nhiÃªn hoáº·c khÃ´ng tÆ°Æ¡ng thÃ­ch vá»›i metadata.
+
+\subsection{Color Channel Correlation}
+Trong áº£nh tá»± nhiÃªn, ba kÃªnh mÃ u R, G, B cÃ³ tÆ°Æ¡ng quan do Ã¡nh sÃ¡ng, bá» máº·t váº­t thá»ƒ, cáº£m biáº¿n vÃ  pipeline xá»­ lÃ½ áº£nh. áº¢nh AI cÃ³ thá»ƒ sinh kÃªnh mÃ u theo cÃ¡ch khÃ´ng hoÃ n toÃ n giá»‘ng camera tháº­t, dáº«n Ä‘áº¿n tÆ°Æ¡ng quan báº¥t thÆ°á»ng hoáº·c quÃ¡ Ä‘á»u.
+
+\begin{longtable}{p{0.04\textwidth}p{0.20\textwidth}p{0.23\textwidth}p{0.24\textwidth}p{0.18\textwidth}}
+\caption{TÃ³m táº¯t 10 method tiÃªu biá»ƒu cá»§a SourceVerify}\label{tab:ten-methods}\\
 \toprule
-\textbf{STT} & \textbf{Method} & \textbf{Ý tưởng chính} & \textbf{Dấu hiệu cần quan sát} \\
+\textbf{STT} & \textbf{Method} & \textbf{NhÃ³m tÃ­n hiá»‡u} & \textbf{Dáº¥u hiá»‡u phÃ¡t hiá»‡n} & \textbf{Háº¡n cháº¿ chÃ­nh} \\
 \midrule
-1 & Metadata Analysis & Kiểm tra thông tin EXIF, phần mềm tạo ảnh, kích thước và tên tệp. & Metadata ghi rõ phần mềm AI, thiếu dấu vết camera hoặc có mẫu tên thường gặp ở ảnh sinh. \\
-2 & Spectral Nyquist Analysis & Phân tích miền tần số để tìm mẫu lặp hoặc đỉnh bất thường ở biên Nyquist. & Ảnh AI có thể xuất hiện artifact do upsampling hoặc sinh ảnh theo lưới. \\
-3 & Multi-scale Reconstruction & So sánh sai số tái tạo ở nhiều mức phân giải. & Ảnh AI thường có sai số quá đều hoặc thiếu biến thiên tự nhiên. \\
-4 & Noise Residual & Tách phần nhiễu còn lại sau khi làm mượt ảnh. & Ảnh thật có nhiễu cảm biến không đồng nhất; ảnh AI có thể quá sạch hoặc quá đều. \\
-5 & Edge Coherence & Đánh giá độ tự nhiên của biên cạnh và chuyển tiếp. & AI có thể tạo biên quá mượt, thiếu vi sai cục bộ hoặc chuyển tiếp không nhất quán. \\
-6 & Gradient Micro-Texture & Phân tích kết cấu rất nhỏ ở vùng chuyển sắc. & Ảnh thật có micro-texture do cảm biến và ánh sáng; ảnh AI dễ bị mịn hoá. \\
-7 & Benford's Law & Kiểm tra phân bố chữ số đầu hoặc độ lớn gradient theo luật thống kê tự nhiên. & Phân bố lệch mạnh so với mẫu tự nhiên có thể là dấu hiệu tổng hợp. \\
-8 & Chromatic Aberration & Tìm sai lệch màu nhỏ do ống kính thật gây ra. & Ảnh camera thường có viền màu nhẹ; ảnh AI có thể thiếu dấu vết quang học này. \\
-9 & DCT Block Artifacts & Phân tích vết nén JPEG theo khối DCT. & Ảnh thật thường có fingerprint nén tự nhiên; ảnh AI có thể có artifact quá đều hoặc không phù hợp. \\
-10 & Color Channel Correlation & Đo tương quan giữa kênh R, G, B. & Ảnh tự nhiên có tương quan theo ánh sáng và cảm biến; ảnh AI có thể sinh kênh màu bất thường. \\
+\endfirsthead
+\toprule
+\textbf{STT} & \textbf{Method} & \textbf{NhÃ³m tÃ­n hiá»‡u} & \textbf{Dáº¥u hiá»‡u phÃ¡t hiá»‡n} & \textbf{Háº¡n cháº¿ chÃ­nh} \\
+\midrule
+\endhead
+1 & Metadata Analysis & Nguá»“n gá»‘c tá»‡p & Pháº§n má»m táº¡o áº£nh, EXIF, kÃ­ch thÆ°á»›c, tÃªn tá»‡p & Dá»… bá»‹ xoÃ¡/sá»­a \\
+2 & Spectral Nyquist & Miá»n táº§n sá»‘ & Äá»‰nh táº§n sá»‘, artifact upsampling & Bá»‹ áº£nh hÆ°á»Ÿng bá»Ÿi resize \\
+3 & Multi-scale Reconstruction & Cáº¥u trÃºc Ä‘a tá»‰ lá»‡ & Sai sá»‘ tÃ¡i táº¡o quÃ¡ Ä‘á»u & Phá»¥ thuá»™c ná»™i dung áº£nh \\
+4 & Noise Residual & Nhiá»…u cáº£m biáº¿n & Nhiá»…u quÃ¡ sáº¡ch hoáº·c quÃ¡ Ä‘á»“ng nháº¥t & Bá»‹ áº£nh hÆ°á»Ÿng bá»Ÿi nÃ©n/filter \\
+5 & Edge Coherence & BiÃªn cáº¡nh & BiÃªn quÃ¡ mÆ°á»£t hoáº·c thiáº¿u tá»± nhiÃªn & áº¢nh má» khÃ³ phÃ¢n tÃ­ch \\
+6 & Gradient Micro-Texture & Káº¿t cáº¥u nhá» & Thiáº¿u micro-texture tá»± nhiÃªn & Nháº¡y vá»›i lÃ m Ä‘áº¹p áº£nh \\
+7 & Benford's Law & Thá»‘ng kÃª & PhÃ¢n bá»‘ gradient lá»‡ch tá»± nhiÃªn & KhÃ´ng káº¿t luáº­n Ä‘Æ¡n láº» \\
+8 & Chromatic Aberration & Quang há»c & Thiáº¿u sai lá»‡ch mÃ u do á»‘ng kÃ­nh & Camera tá»‘t cÃ³ thá»ƒ Ã­t sai lá»‡ch \\
+9 & DCT Block Artifacts & NÃ©n áº£nh & Váº¿t nÃ©n JPEG báº¥t thÆ°á»ng & PNG/máº¡ng xÃ£ há»™i gÃ¢y nhiá»…u \\
+10 & Color Channel Correlation & MÃ u sáº¯c & TÆ°Æ¡ng quan RGB báº¥t thÆ°á»ng & Phá»¥ thuá»™c Ã¡nh sÃ¡ng/chá»‰nh mÃ u \\
 \bottomrule
 \end{longtable}
+% ============================================================
+\chapter{PhÃ¢n tÃ­ch vÃ  thiáº¿t káº¿ há»‡ thá»‘ng}
 
-\section{Ưu điểm và hạn chế của hướng tiếp cận}
-Ưu điểm của hướng đa method là dễ giải thích, dễ mở rộng và có thể áp dụng ngay cả khi chưa có tập dữ liệu huấn luyện lớn. Hệ thống cũng giúp người dùng thấy được lý do kết luận thay vì chỉ nhận một nhãn AI hoặc thật.
+\section{YÃªu cáº§u há»‡ thá»‘ng}
+\subsection{YÃªu cáº§u chá»©c nÄƒng}
+Há»‡ thá»‘ng SourceVerify cáº§n Ä‘Ã¡p á»©ng cÃ¡c chá»©c nÄƒng sau:
+\begin{enumerate}
+  \item NgÆ°á»i dÃ¹ng cÃ³ thá»ƒ táº£i lÃªn ná»™i dung cáº§n kiá»ƒm tra.
+  \item Há»‡ thá»‘ng xÃ¡c Ä‘á»‹nh loáº¡i dá»¯ liá»‡u vÃ  kiá»ƒm tra tÃ­nh há»£p lá»‡ cá»§a tá»‡p.
+  \item Vá»›i áº£nh, há»‡ thá»‘ng Ä‘á»c metadata vÃ  ma tráº­n pixel Ä‘á»ƒ cháº¡y cÃ¡c method forensic.
+  \item Vá»›i vÄƒn báº£n vÃ  video, há»‡ thá»‘ng cÃ³ cáº¥u trÃºc má»Ÿ Ä‘á»ƒ bá»• sung method tÆ°Æ¡ng á»©ng.
+  \item Há»‡ thá»‘ng tá»•ng há»£p káº¿t quáº£ thÃ nh Ä‘iá»ƒm AI, nhÃ£n dá»± Ä‘oÃ¡n vÃ  Ä‘á»™ tin cáº­y.
+\end{enumerate}
 
-Hạn chế là các method thống kê không thể đảm bảo đúng tuyệt đối. Ảnh bị nén lại, chỉnh sửa qua phần mềm, chụp màn hình hoặc tải lại qua mạng xã hội có thể làm mất dấu vết gốc. Vì vậy SourceVerify nên được xem là công cụ hỗ trợ đánh giá rủi ro, không phải bằng chứng pháp lý duy nhất.
-
-\chapter{Phân tích, thiết kế hệ thống}
-
-\section{Yêu cầu chức năng}
-Các chức năng chính của SourceVerify gồm:
+\subsection{YÃªu cáº§u phi chá»©c nÄƒng}
 \begin{itemize}
-  \item Cho phép người dùng tải lên ảnh, văn bản hoặc video cần kiểm tra.
-  \item Xác định loại tệp và kiểm tra hợp lệ cơ bản trước khi phân tích.
-  \item Chạy các method phù hợp với loại dữ liệu.
-  \item Tổng hợp điểm, nhãn dự đoán và độ tin cậy.
-  \item Hiển thị kết quả theo dạng dễ hiểu: điểm tổng, danh sách tín hiệu, mô tả từng method và thông tin tệp.
-  \item Cung cấp trang tài liệu method để người dùng tìm hiểu cơ sở của từng phương pháp.
+  \item TÃ­nh má»Ÿ rá»™ng: thÃªm method má»›i khÃ´ng lÃ m thay Ä‘á»•i toÃ n bá»™ kiáº¿n trÃºc.
+  \item TÃ­nh minh báº¡ch: káº¿t quáº£ pháº£i cÃ³ giáº£i thÃ­ch, khÃ´ng chá»‰ tráº£ vá» nhÃ£n cuá»‘i.
+  \item Hiá»‡u nÄƒng: áº£nh lá»›n cáº§n Ä‘Æ°á»£c giá»›i háº¡n kÃ­ch thÆ°á»›c xá»­ lÃ½ Ä‘á»ƒ trÃ¡nh quÃ¡ táº£i.
+  \item Äá»™ tin cáº­y: kiá»ƒm tra Ä‘á»‹nh dáº¡ng vÃ  dá»¯ liá»‡u Ä‘áº§u vÃ o trÆ°á»›c khi phÃ¢n tÃ­ch.
 \end{itemize}
+\section{Kiáº¿n trÃºc tá»•ng thá»ƒ}
+Kiáº¿n trÃºc SourceVerify Ä‘Æ°á»£c thiáº¿t káº¿ theo hÆ°á»›ng Ä‘Æ¡n giáº£n trÆ°á»›c, Ä‘Ãºng vá»›i nguyÃªn táº¯c Project I: Æ°u tiÃªn hiá»ƒu rÃµ bÃ i toÃ¡n vÃ  cÃ³ sáº£n pháº©m minh há»a á»•n Ä‘á»‹nh, sau Ä‘Ã³ má»›i má»Ÿ rá»™ng cÃ¡c thÃ nh pháº§n phá»©c táº¡p hÆ¡n.
 
-\section{Yêu cầu phi chức năng}
-\begin{itemize}
-  \item \textbf{Dễ mở rộng}: method mới có thể thêm dưới dạng hàm độc lập.
-  \item \textbf{Dễ bảo trì}: TypeScript giúp kiểm soát kiểu dữ liệu và giảm lỗi khi thay đổi.
-  \item \textbf{Hiệu năng hợp lý}: ảnh lớn được giới hạn kích thước xử lý để tránh quá tải.
-  \item \textbf{Minh bạch}: kết quả cần giải thích được bằng danh sách tín hiệu thay vì chỉ trả nhãn cuối.
-  \item \textbf{An toàn}: chỉ xử lý tệp hợp lệ và không phụ thuộc vào metadata như nguồn tin duy nhất.
-\end{itemize}
-
-\section{Kiến trúc tổng thể}
-\begin{center}
+\begin{figure}[h]
+\centering
 \begin{tikzpicture}[
-  node distance=1.3cm,
-  box/.style={rectangle,draw,rounded corners,align=center,minimum width=3.2cm,minimum height=0.85cm},
-  arrow/.style={-{Latex[length=2mm]},thick}
+  node distance=0.9cm and 1.1cm,
+  layer/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.5cm,minimum height=0.9cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
 ]
-\node[box] (user) {Người dùng};
-\node[box,right=of user] (ui) {Giao diện Next.js};
-\node[box,right=of ui] (api) {API / Analyzer};
-\node[box,below=of api] (methods) {Các method phân tích};
-\node[box,left=of methods] (score) {Tổng hợp điểm};
-\node[box,left=of score] (result) {Hiển thị kết quả};
-\draw[arrow] (user) -- (ui);
-\draw[arrow] (ui) -- (api);
-\draw[arrow] (api) -- (methods);
+\node[layer] (client) {Client Layer\\React UI};
+\node[layer,right=of client] (app) {Application Layer\\Next.js Routes};
+\node[layer,right=of app] (analysis) {Analysis Layer\\Analyzer Engine};
+\node[layer,below=of analysis] (methods) {Method Layer\\Image / Text / Video};
+\node[layer,left=of methods] (score) {Scoring Layer\\Weighted Voting};
+\node[layer,left=of score] (present) {Presentation Layer\\Result Explainability};
+\draw[arrow] (client) -- (app);
+\draw[arrow] (app) -- (analysis);
+\draw[arrow] (analysis) -- (methods);
 \draw[arrow] (methods) -- (score);
-\draw[arrow] (score) -- (result);
-\draw[arrow] (result) -- (user);
+\draw[arrow] (score) -- (present);
+\draw[arrow] (present) -- (client);
 \end{tikzpicture}
-\end{center}
+\caption{Kiáº¿n trÃºc tá»•ng thá»ƒ cá»§a há»‡ thá»‘ng SourceVerify}
+\label{fig:system-architecture}
+\end{figure}
 
-\section{Phân rã chức năng}
+\section{PhÃ¢n rÃ£ chá»©c nÄƒng}
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  root/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=4.2cm,minimum height=0.8cm},
+  child/.style={rectangle,draw=Blue,rounded corners,fill=white,align=center,minimum width=2.9cm,minimum height=0.75cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Blue}
+]
+\node[root] (root) at (0,0) {SourceVerify};
+\node[child] (upload) at (-5,-1.5) {Nháº­p dá»¯ liá»‡u};
+\node[child] (pre) at (-2.5,-1.5) {Tiá»n xá»­ lÃ½};
+\node[child] (method) at (0,-1.5) {PhÃ¢n tÃ­ch method};
+\node[child] (score) at (2.8,-1.5) {Tá»•ng há»£p Ä‘iá»ƒm};
+\node[child] (ui) at (5.5,-1.5) {Hiá»ƒn thá»‹ káº¿t quáº£};
+\foreach \x in {upload,pre,method,score,ui} \draw[arrow] (root) -- (\x);
+\end{tikzpicture}
+\caption{SÆ¡ Ä‘á»“ phÃ¢n rÃ£ chá»©c nÄƒng cá»§a SourceVerify}
+\label{fig:function-tree}
+\end{figure}
+\section{Luá»“ng dá»¯ liá»‡u phÃ¢n tÃ­ch áº£nh}
+Luá»“ng dá»¯ liá»‡u cá»§a má»™t láº§n phÃ¢n tÃ­ch áº£nh Ä‘Æ°á»£c mÃ´ táº£ trong HÃ¬nh \ref{fig:data-flow}. NgÆ°á»i dÃ¹ng gá»­i áº£nh lÃªn há»‡ thá»‘ng; áº£nh Ä‘Æ°á»£c kiá»ƒm tra Ä‘á»‹nh dáº¡ng, Ä‘á»c metadata, chuyá»ƒn thÃ nh dá»¯ liá»‡u pixel; sau Ä‘Ã³ cÃ¡c method cháº¡y Ä‘á»™c láº­p vÃ  tráº£ vá» tÃ­n hiá»‡u; cuá»‘i cÃ¹ng bá»™ tá»•ng há»£p táº¡o káº¿t quáº£.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=0.8cm,
+  box/.style={rectangle,draw=Navy,rounded corners,fill=LightGray,align=center,minimum width=3.1cm,minimum height=0.75cm},
+  data/.style={rectangle,draw=Green,rounded corners,align=center,minimum width=3.1cm,minimum height=0.75cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[box] (a) {Upload áº£nh};
+\node[box,right=of a] (b) {Validate tá»‡p};
+\node[data,right=of b] (c) {Metadata + Pixel};
+\node[box,below=of c] (d) {Cháº¡y 10 method};
+\node[data,left=of d] (e) {Danh sÃ¡ch signal};
+\node[box,left=of e] (f) {Weighted scoring};
+\node[data,below=of f] (g) {AI score / Verdict};
+\node[box,right=of g] (h) {Giáº£i thÃ­ch káº¿t quáº£};
+\draw[arrow] (a) -- (b);
+\draw[arrow] (b) -- (c);
+\draw[arrow] (c) -- (d);
+\draw[arrow] (d) -- (e);
+\draw[arrow] (e) -- (f);
+\draw[arrow] (f) -- (g);
+\draw[arrow] (g) -- (h);
+\end{tikzpicture}
+\caption{Luá»“ng dá»¯ liá»‡u phÃ¢n tÃ­ch áº£nh trong SourceVerify}
+\label{fig:data-flow}
+\end{figure}
+\section{Thiáº¿t káº¿ dá»¯ liá»‡u vÃ  lá»±a chá»n kiáº¿n trÃºc}
+Dá»¯ liá»‡u phÃ¢n tÃ­ch Ä‘Æ°á»£c tá»• chá»©c theo cÃ¡c cáº¥u trÃºc logic sau: FileMetadata, AnalysisMethod vÃ  AnalysisResult. Thiáº¿t káº¿ nÃ y giÃºp káº¿t quáº£ phÃ¢n tÃ­ch cÃ³ cáº¥u trÃºc thá»‘ng nháº¥t Ä‘á»ƒ bá»™ tá»•ng há»£p cÃ³ thá»ƒ dÃ¹ng láº¡i cho nhiá»u loáº¡i method.
+
+\begin{table}[h]
+\centering
+\caption{So sÃ¡nh cÃ¡c lá»±a chá»n kiáº¿n trÃºc cho SourceVerify}
+\label{tab:architecture-tradeoff}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}Y Y p{0.14\textwidth}}
+\toprule
+\textbf{Lá»±a chá»n} & \textbf{Æ¯u Ä‘iá»ƒm} & \textbf{NhÆ°á»£c Ä‘iá»ƒm} & \textbf{Äá»™ phá»©c táº¡p} \\
+\midrule
+Monolithic Next.js + module analyzer & Dá»… triá»ƒn khai, dá»… hiá»ƒu, phÃ¹ há»£p Project I, Ã­t phá»¥ thuá»™c háº¡ táº§ng & KhÃ³ má»Ÿ rá»™ng khi táº£i lá»›n & Tháº¥p \\
+Microservice analyzer riÃªng & Dá»… scale tá»«ng service, phÃ¹ há»£p sáº£n pháº©m lá»›n & Cáº§n háº¡ táº§ng, queue, API ná»™i bá»™, monitoring & Cao \\
+MÃ´ hÃ¬nh ML end-to-end & CÃ³ thá»ƒ Ä‘áº¡t Ä‘á»™ chÃ­nh xÃ¡c cao náº¿u cÃ³ dataset lá»›n & Cáº§n dá»¯ liá»‡u gÃ¡n nhÃ£n, training, Ä‘Ã¡nh giÃ¡ nghiÃªm ngáº·t & Cao \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Quyáº¿t Ä‘á»‹nh hiá»‡n táº¡i lÃ  dÃ¹ng kiáº¿n trÃºc Next.js káº¿t há»£p analyzer module ná»™i bá»™. LÃ½ do lÃ  nhÃ³m thá»±c hiá»‡n cáº§n táº­p trung vÃ o hiá»ƒu bÃ i toÃ¡n vÃ  trÃ¬nh bÃ y method, trong khi microservice hoáº·c training model sáº½ lÃ m tÄƒng Ä‘á»™ phá»©c táº¡p vÆ°á»£t pháº¡m vi Project I.
+% ============================================================
+\chapter{Triá»ƒn khai vÃ  káº¿t quáº£}
+
+\section{MÃ´i trÆ°á»ng vÃ  cÃ´ng nghá»‡ triá»ƒn khai}
+Sáº£n pháº©m SourceVerify Ä‘Æ°á»£c triá»ƒn khai trÃªn ná»n táº£ng web hiá»‡n Ä‘áº¡i. Next.js vÃ  React xá»­ lÃ½ giao diá»‡n, TypeScript tÄƒng an toÃ n kiá»ƒu dá»¯ liá»‡u, Canvas cho phÃ©p Ä‘á»c áº£nh vÃ  pixel. CÃ¡c module method Ä‘Æ°á»£c Ä‘Ã³ng gÃ³i thÃ nh hÃ m riÃªng, dá»… dÃ ng kiá»ƒm thá»­ vÃ  tÃ¡i sá»­ dá»¥ng.
+
+\begin{table}[h]
+\centering
+\caption{CÃ´ng nghá»‡ sá»­ dá»¥ng trong SourceVerify}
+\label{tab:tech-stack}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.25\textwidth}Y}
+\toprule
+\textbf{ThÃ nh pháº§n} & \textbf{CÃ´ng nghá»‡} & \textbf{Vai trÃ²} \\
+\midrule
+Frontend & React / Next.js & XÃ¢y dá»±ng giao diá»‡n vÃ  trang káº¿t quáº£ \\
+NgÃ´n ngá»¯ & TypeScript & An toÃ n kiá»ƒu, dá»… báº£o trÃ¬ module \\
+Xá»­ lÃ½ áº£nh & Canvas / Pixel buffer & Äá»c áº£nh, láº¥y ma tráº­n pixel \\
+Analyzer & Module ná»™i bá»™ & Cháº¡y method vÃ  tráº£ signal thá»‘ng nháº¥t \\
+Scoring & Weighted scoring & Tá»•ng há»£p Ä‘iá»ƒm vÃ  sinh verdict \\
+TÃ i liá»‡u & LaTeX & Quyá»ƒn bÃ¡o cÃ¡o há»c thuáº­t \\
+\bottomrule
+\end{tabularx}
+\end{table}
+\section{CÃ¡c chá»©c nÄƒng Ä‘Ã£ triá»ƒn khai vÃ  minh há»a káº¿t quáº£}
+Trong pháº¡m vi sáº£n pháº©m thá»­ nghiá»‡m, SourceVerify Ä‘Ã£ cÃ³ giao diá»‡n chÃ­nh, cÆ¡ cháº¿ phÃ¢n tÃ­ch áº£nh Ä‘a method, trang tÃ i liá»‡u method vÃ  i18n.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}
+  \draw[fill=LightBlue,draw=Navy,thick] (0,0) circle (1.5);
+  \node[align=center] at (0,0) {\Large\bfseries AI Score\\\Large 68/100};
+  \foreach \angle/\label/\col in {90/Metadata/Orange,18/Frequency/Purple,-54/Noise/Green,-126/Edges/Blue,162/Color/Red} {
+    \draw[draw=\col,fill=\col!15,thick] (\angle:3.2) circle (0.85);
+    \node[align=center,font=\small] at (\angle:3.2) {\label};
+    \draw[-{Latex[length=2mm]},thick,\col] (\angle:2.35) -- (\angle:1.55);
+  }
+\end{tikzpicture}
+\caption{Minh há»a tá»•ng há»£p Ä‘iá»ƒm tá»« nhiá»u nhÃ³m tÃ­n hiá»‡u}
+\label{fig:score-visual}
+\end{figure}
+
+\section{ÄÃ¡nh giÃ¡ káº¿t quáº£ thá»±c hiá»‡n}
+Äá» tÃ i Ä‘Ã£ Ä‘áº¡t Ä‘Æ°á»£c cÃ¡c káº¿t quáº£ quan trá»ng:
+\begin{itemize}
+  \item XÃ¡c Ä‘á»‹nh rÃµ bÃ i toÃ¡n kiá»ƒm chá»©ng ná»™i dung sá»‘ trong thá»i Ä‘áº¡i AI táº¡o sinh.
+  \item XÃ¢y dá»±ng Ä‘Æ°á»£c kiáº¿n trÃºc há»‡ thá»‘ng cÃ³ thá»ƒ má»Ÿ rá»™ng theo method.
+  \item TÃ¬m hiá»ƒu vÃ  trÃ¬nh bÃ y Ä‘Æ°á»£c 10 method áº£nh tiÃªu biá»ƒu trong digital forensics.
+  \item Triá»ƒn khai sáº£n pháº©m minh há»a cÃ³ giao diá»‡n web vÃ  module phÃ¢n tÃ­ch ná»™i bá»™.
+\end{itemize}
+
+á»ž giai Ä‘oáº¡n Project I, káº¿t quáº£ cá»§a SourceVerify nÃªn Ä‘Æ°á»£c hiá»ƒu lÃ  káº¿t quáº£ há»— trá»£ tham kháº£o. Há»‡ thá»‘ng chÆ°a thá»ƒ káº¿t luáº­n tuyá»‡t Ä‘á»‘i má»™t áº£nh lÃ  AI hay tháº­t trong má»i trÆ°á»ng há»£p, nhÆ°ng cÃ³ Æ°u Ä‘iá»ƒm lÃ  minh báº¡ch vÃ  giáº£i thÃ­ch Ä‘Æ°á»£c lÃ½ do dá»± Ä‘oÃ¡n.
+% ============================================================
+\chapter{Káº¿t luáº­n vÃ  phÆ°Æ¡ng hÆ°á»›ng phÃ¡t triá»ƒn}
+
+\section{Káº¿t luáº­n chung}
+SourceVerify lÃ  Ä‘á» tÃ i cÃ³ Ã½ nghÄ©a thá»±c tiá»…n trong bá»‘i cáº£nh ná»™i dung sá»‘ do AI táº¡o sinh ngÃ y cÃ ng phá»• biáº¿n. BÃ¡o cÃ¡o Ä‘Ã£ trÃ¬nh bÃ y tá»« bá»‘i cáº£nh, tÃ­nh cáº¥p thiáº¿t, cÆ¡ sá»Ÿ lÃ½ thuyáº¿t, phÃ¢n tÃ­ch thiáº¿t káº¿ há»‡ thá»‘ng Ä‘áº¿n káº¿t quáº£ triá»ƒn khai. Trá»ng tÃ¢m bÃ¡o cÃ¡o lÃ  10 method áº£nh tiÃªu biá»ƒu, Ä‘Æ°á»£c phÃ¢n tÃ­ch theo Ã½ tÆ°á»Ÿng, dáº¥u hiá»‡u phÃ¡t hiá»‡n, Æ°u Ä‘iá»ƒm vÃ  háº¡n cháº¿.
+
+Qua Ä‘á» tÃ i, sinh viÃªn lÃ m quen vá»›i nhiá»u ná»n táº£ng cÃ´ng nghá»‡: xá»­ lÃ½ áº£nh, phÃ¢n tÃ­ch thá»‘ng kÃª, thiáº¿t káº¿ web báº±ng Next.js, tá»• chá»©c module TypeScript vÃ  thiáº¿t káº¿ há»‡ thá»‘ng theo hÆ°á»›ng dá»… má»Ÿ rá»™ng.
+
+\section{CÃ¡c cÃ´ng viá»‡c Ä‘Ã£ hoÃ n thÃ nh}
+\begin{itemize}
+  \item Kháº£o sÃ¡t bÃ i toÃ¡n phÃ¡t hiá»‡n ná»™i dung AI vÃ  cÃ¡c rá»§i ro liÃªn quan.
+  \item Thiáº¿t káº¿ kiáº¿n trÃºc tá»•ng thá»ƒ cá»§a SourceVerify.
+  \item XÃ¢y dá»±ng mÃ´ hÃ¬nh dá»¯ liá»‡u cho method, signal vÃ  káº¿t quáº£ phÃ¢n tÃ­ch.
+  \item TrÃ¬nh bÃ y 10 method áº£nh ná»•i báº­t trong há»‡ thá»‘ng.
+  \item XÃ¢y dá»±ng sáº£n pháº©m minh há»a cÃ³ kháº£ nÄƒng phÃ¢n tÃ­ch vÃ  giáº£i thÃ­ch káº¿t quáº£.
+  \item HoÃ n thiá»‡n bÃ¡o cÃ¡o theo dáº¡ng quyá»ƒn Ä‘á»“ Ã¡n cÃ³ sÆ¡ Ä‘á»“, báº£ng biá»ƒu vÃ  tÃ i liá»‡u tham kháº£o.
+\end{itemize}
+
+\section{CÃ¡c háº¡n cháº¿ cÃ²n tá»“n táº¡i}
+\begin{itemize}
+  \item ChÆ°a cÃ³ benchmark dataset lá»›n, cÃ¢n báº±ng vÃ  Ä‘Æ°á»£c gÃ¡n nhÃ£n chuáº©n.
+  \item Má»™t sá»‘ method hiá»‡n dá»±a trÃªn heuristic nÃªn chÆ°a thá»ƒ thay tháº¿ mÃ´ hÃ¬nh há»c mÃ¡y chuyÃªn sÃ¢u.
+  \item ChÆ°a cÃ³ Ä‘Ã¡nh giÃ¡ Ä‘á»‹nh lÆ°á»£ng Ä‘áº§y Ä‘á»§ báº±ng accuracy, precision, recall, F1-score vÃ  ROC-AUC.
+  \item Káº¿t quáº£ cÃ³ thá»ƒ bá»‹ áº£nh hÆ°á»Ÿng bá»Ÿi áº£nh bá»‹ nÃ©n láº¡i, crop, resize hoáº·c chá»‰nh sá»­a qua nhiá»u ná»n táº£ng.
+\end{itemize}
+
+\section{PhÆ°Æ¡ng hÆ°á»›ng phÃ¡t triá»ƒn}
 \begin{enumerate}
-  \item \textbf{Nhập dữ liệu}: nhận tệp từ người dùng, kiểm tra định dạng và kích thước.
-  \item \textbf{Tiền xử lý}: đọc metadata, chuẩn hoá dữ liệu ảnh, lấy pixel hoặc nội dung văn bản.
-  \item \textbf{Phân tích}: gọi từng method tương ứng với loại dữ liệu.
-  \item \textbf{Tổng hợp}: tính điểm trung bình có trọng số, phân loại nhãn và độ tin cậy.
-  \item \textbf{Trình bày}: hiển thị kết quả tổng quan, từng tín hiệu và giải thích ngắn.
-  \item \textbf{Tra cứu method}: cung cấp danh sách và trang chi tiết các phương pháp đã triển khai.
+  \item XÃ¢y dá»±ng táº­p dá»¯ liá»‡u kiá»ƒm thá»­ gá»“m áº£nh tháº­t, áº£nh AI, áº£nh Ä‘Ã£ chá»‰nh sá»­a vÃ  áº£nh Ä‘Ã£ nÃ©n láº¡i.
+  \item Bá»• sung pipeline benchmark Ä‘á»ƒ Ä‘o hiá»‡u quáº£ tá»«ng method vÃ  hiá»‡u quáº£ khi káº¿t há»£p nhiá»u method.
+  \item Káº¿t há»£p method heuristic vá»›i mÃ´ hÃ¬nh machine learning hoáº·c deep learning Ä‘á»ƒ tÄƒng Ä‘á»™ chÃ­nh xÃ¡c.
+  \item Má»Ÿ rá»™ng phÃ¢n tÃ­ch video báº±ng optical flow, temporal consistency, lip-sync vÃ  audio-visual synchronization.
+  \item Má»Ÿ rá»™ng phÃ¢n tÃ­ch vÄƒn báº£n báº±ng perplexity, burstiness, stylometry, coherence vÃ  syntactic complexity.
+  \item TÃ­ch há»£p chuáº©n provenance nhÆ° C2PA Ä‘á»ƒ kiá»ƒm tra nguá»“n gá»‘c ná»™i dung cÃ³ chá»¯ kÃ½ xÃ¡c thá»±c.
 \end{enumerate}
 
-\section{Luồng dữ liệu}
-Luồng dữ liệu của chức năng phân tích ảnh gồm các bước:
-\begin{enumerate}
-  \item Người dùng chọn ảnh và gửi lên hệ thống.
-  \item Hệ thống kiểm tra phần mở rộng, magic bytes và thông tin cơ bản.
-  \item Ảnh được đọc vào canvas để lấy ma trận pixel RGBA.
-  \item Analyzer gọi lần lượt 10 method tiêu biểu hoặc nhóm method mở rộng.
-  \item Mỗi method trả về điểm, trọng số, mô tả và thông tin chi tiết.
-  \item Bộ tổng hợp tạo điểm AI cuối cùng, verdict và confidence.
-  \item Giao diện hiển thị kết quả cho người dùng.
-\end{enumerate}
-
-\section{Mô hình dữ liệu}
-Dữ liệu kết quả có thể biểu diễn ở mức logic như sau:
-\begin{itemize}
-  \item \textbf{AnalysisResult}: verdict, confidence, aiScore, signals, processingTimeMs, fileInfo.
-  \item \textbf{AnalysisMethod}: name, category, score, weight, description, details.
-  \item \textbf{FileMetadata}: fileName, fileSize, fileType, width, height, format.
-\end{itemize}
-
-Thiết kế này chưa yêu cầu cơ sở dữ liệu bắt buộc vì Project I tập trung vào phân tích trực tiếp. Nếu phát triển tiếp, có thể bổ sung bảng lưu lịch sử phân tích, người dùng, API key và benchmark dataset.
-
-\chapter{Triển khai và kết quả}
-
-\section{Các phần đã xây dựng}
-Sản phẩm thử nghiệm SourceVerify đã có các phần chính:
-\begin{itemize}
-  \item Giao diện web bằng Next.js và React.
-  \item Module phân tích ảnh với nhiều nhóm method forensic.
-  \item Module phân tích văn bản và video ở mức mở rộng.
-  \item Trang danh sách method và nội dung mô tả đa ngôn ngữ.
-  \item Cơ chế tổng hợp điểm theo trọng số và trả kết quả có giải thích.
-\end{itemize}
-
-\section{Minh hoạ thuật toán tổng hợp}
-Quá trình tổng hợp điểm được triển khai theo hướng đơn giản và dễ kiểm soát:
-\begin{enumerate}
-  \item Thu thập danh sách tín hiệu từ các method.
-  \item Tính trung bình có trọng số.
-  \item Đếm các tín hiệu rất mạnh nghiêng về AI hoặc nghiêng về ảnh thật.
-  \item Điều chỉnh điểm tổng để phản ánh sự đồng thuận giữa nhiều method.
-  \item Sinh nhãn: \textit{AI}, \textit{Real} hoặc \textit{Uncertain}.
-\end{enumerate}
-
-\section{Kết quả đạt được}
-Qua quá trình tìm hiểu và triển khai, đề tài đã đạt được các kết quả:
-\begin{itemize}
-  \item Hiểu được bài toán phát hiện nội dung AI theo hướng forensic đa tín hiệu.
-  \item Xây dựng được nền tảng web có khả năng phân tích tệp và trả kết quả trực quan.
-  \item Tổ chức method thành các module riêng, thuận lợi cho việc thêm mới và kiểm thử.
-  \item Trình bày được 10 method ảnh tiêu biểu có giá trị học thuật và khả năng giải thích cao.
-  \item Có định hướng mở rộng sang benchmark, dataset chuẩn và mô hình học máy chuyên sâu hơn.
-\end{itemize}
-
-\section{Đánh giá}
-SourceVerify phù hợp với mục tiêu Project I vì thể hiện được quá trình tìm hiểu công nghệ, đặt vấn đề, phân tích hướng tiếp cận và thiết kế sản phẩm minh hoạ. Hệ thống chưa phải công cụ phát hiện AI hoàn chỉnh ở mức thương mại, nhưng là nền tảng tốt để phát triển tiếp trong Project II hoặc đồ án chuyên sâu.
-
-\chapter{Kết luận và phương hướng phát triển}
-
-\section{Kết luận}
-Đề tài SourceVerify tập trung giải quyết nhu cầu kiểm chứng nội dung số trong bối cảnh AI tạo sinh phát triển mạnh. Báo cáo đã trình bày bối cảnh, cơ sở lý thuyết, kiến trúc hệ thống, luồng dữ liệu và 10 method phân tích ảnh tiêu biểu. Kết quả quan trọng nhất của đề tài là xây dựng được tư duy tiếp cận bài toán theo hướng đa tín hiệu, có khả năng giải thích và có thể mở rộng.
-
-\section{Các vấn đề chưa giải quyết}
-Một số hạn chế còn tồn tại:
-\begin{itemize}
-  \item Chưa có tập benchmark lớn, cân bằng và được gán nhãn chuẩn để đánh giá định lượng đầy đủ.
-  \item Một số method hiện dựa trên heuristic nên độ chính xác phụ thuộc vào loại ảnh, mức nén và lịch sử chỉnh sửa.
-  \item Chưa có mô hình học máy được huấn luyện riêng trên dữ liệu của hệ thống.
-  \item Chưa lưu lịch sử phân tích và chưa có cơ chế quản lý người dùng hoàn chỉnh.
-  \item Kết quả mới nên xem là tín hiệu tham khảo, chưa đủ thay thế kết luận chuyên gia forensic.
-\end{itemize}
-
-\section{Phương hướng phát triển}
-Trong tương lai, SourceVerify có thể phát triển theo các hướng:
-\begin{itemize}
-  \item Xây dựng bộ dữ liệu kiểm thử gồm ảnh thật, ảnh AI, ảnh đã nén lại và ảnh đã chỉnh sửa.
-  \item Đánh giá từng method bằng các chỉ số accuracy, precision, recall, F1-score và ROC-AUC.
-  \item Kết hợp heuristic forensic với mô hình học máy để tăng độ chính xác.
-  \item Bổ sung C2PA/provenance verification để kiểm tra nguồn gốc nội dung theo chuẩn xác thực mới.
-  \item Mở rộng phân tích video bằng optical flow, lip-sync, temporal consistency và audio-visual sync.
-  \item Hoàn thiện API, dashboard và chức năng lưu lịch sử phân tích cho người dùng.
-\end{itemize}
-
-\begin{thebibliography}{9}
+\begin{thebibliography}{12}
 \bibitem{farid} H. Farid, \textit{Photo Forensics}. MIT Press, 2016.
 \bibitem{popescu} A. C. Popescu and H. Farid, ``Exposing digital forgeries by detecting traces of resampling,'' IEEE Transactions on Signal Processing, 2005.
 \bibitem{lukas} J. Lukas, J. Fridrich and M. Goljan, ``Digital camera identification from sensor pattern noise,'' IEEE Transactions on Information Forensics and Security, 2006.
 \bibitem{ngan} T. T. Ng, S. F. Chang and Q. Sun, ``Blind detection of photomontage using higher order statistics,'' IEEE ISCAS, 2004.
+\bibitem{fridrich} J. Fridrich, \textit{Digital Image Forensics}. IEEE Signal Processing Magazine, 2009.
 \bibitem{c2pa} Coalition for Content Provenance and Authenticity, \textit{C2PA Specification}, 2024.
+\bibitem{goodfellow} I. Goodfellow et al., ``Generative Adversarial Nets,'' NeurIPS, 2014.
+\bibitem{ho} J. Ho, A. Jain and P. Abbeel, ``Denoising Diffusion Probabilistic Models,'' NeurIPS, 2020.
+\bibitem{verdoliva} L. Verdoliva, ``Media Forensics and DeepFakes: An Overview,'' IEEE Journal of Selected Topics in Signal Processing, 2020.
 \end{thebibliography}
 
 \end{document}
