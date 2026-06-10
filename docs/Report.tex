@@ -1,363 +1,309 @@
-% Lưu ý: Bạn có thể xem tổng trang tại https://sourceverify.vercel.app
-% ============================================================
-%  BÁO CÁO TỔNG QUAN ĐỀ TÀI – SourceVerify
-%  Biên soạn: Ngày 07 tháng 04 năm 2026
-% ============================================================
-\documentclass[12pt, a4paper]{article}
+﻿\documentclass[12pt,a4paper]{report}
 
-% ── Encoding & Fonts ────────────────────────────────────────
 \usepackage[utf8]{inputenc}
 \usepackage[T5]{fontenc}
 \usepackage[vietnamese]{babel}
 \usepackage{lmodern}
-
-% ── Page Layout ─────────────────────────────────────────────
-\usepackage[
-  top=2.5cm, bottom=2.5cm,
-  left=3cm,  right=2.5cm
-]{geometry}
-
-% ── Typography ──────────────────────────────────────────────
+\usepackage{geometry}
 \usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric,fit}
+
+\geometry{top=2.5cm,bottom=2.5cm,left=3cm,right=2.5cm}
 \onehalfspacing
 \setlength{\parindent}{0.75cm}
 \setlength{\parskip}{4pt}
+\setlist[itemize]{leftmargin=1.2cm,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.2cm,itemsep=2pt,topsep=4pt}
 
-% ── Colors & Graphics ───────────────────────────────────────
-\usepackage{xcolor}
-\usepackage{graphicx}
-\usepackage{tikz}
-\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds}
-
-% ── Tables ──────────────────────────────────────────────────
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{multirow}
-\usepackage{array}
-\usepackage{longtable}
-
-% ── Lists ───────────────────────────────────────────────────
-\usepackage{enumitem}
-\setlist[itemize]{leftmargin=1.5cm, topsep=4pt, itemsep=2pt}
-\setlist[enumerate]{leftmargin=1.5cm, topsep=4pt, itemsep=2pt}
-
-% ── Links & Metadata ────────────────────────────────────────
-\usepackage[
+\hypersetup{
   hidelinks,
-  pdftitle={Báo cáo đề tài SourceVerify},
-  pdfauthor={Bạch Minh Quang},
-  pdfsubject={Phát hiện nội dung AI}
-]{hyperref}
+  pdftitle={Bao cao Project I - SourceVerify},
+  pdfauthor={SourceVerify},
+  pdfsubject={Tim hieu nen tang phat hien noi dung AI}
+}
 
-% ── Headers / Footers ───────────────────────────────────────
-\usepackage{fancyhdr}
-\setlength{\headheight}{14pt}
 \pagestyle{fancy}
 \fancyhf{}
-\renewcommand{\headrulewidth}{0.4pt}
-\fancyhead[L]{\small\textit{SourceVerify – Báo cáo tổng quan đề tài}}
-\fancyhead[R]{\small\textit{07/04/2026}}
+\fancyhead[L]{\small Project I -- SourceVerify}
+\fancyhead[R]{\small Báo cáo cuối kì}
 \fancyfoot[C]{\thepage}
 
-% ── Section Styling ─────────────────────────────────────────
-\usepackage{titlesec}
-\definecolor{NavyBlue}{RGB}{0, 51, 102}
-\definecolor{AccentBlue}{RGB}{30, 100, 180}
-\definecolor{LightGray}{RGB}{245, 245, 245}
-\definecolor{SuccessGreen}{RGB}{34, 139, 34}
-\definecolor{WarnOrange}{RGB}{204, 102, 0}
+\titleformat{\chapter}{\normalfont\Large\bfseries}{Chương \thechapter.}{0.6em}{}
+\titleformat{\section}{\normalfont\large\bfseries}{\thesection.}{0.5em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection.}{0.5em}{}
 
-\titleformat{\section}[block]
-  {\large\bfseries}
-  {\thesection.}{0.5em}{}
-  [\vspace{-4pt}\rule{\textwidth}{1pt}\vspace{4pt}]
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\method}[1]{\textbf{#1}}
 
-\titleformat{\subsection}[block]
-  {\normalsize\bfseries}
-  {\thesubsection.}{0.5em}{}
-
-\titleformat{\subsubsection}[runin]
-  {\normalsize\bfseries}
-  {\thesubsubsection.}{0.5em}{}[~~]
-
-% ── Gantt / Progress ────────────────────────────────────────
-\usepackage{pgfgantt}
-
-% ── Code Listings ───────────────────────────────────────────
-\usepackage{listings}
-\lstset{
-  basicstyle=\ttfamily\small,
-  backgroundcolor=\color{LightGray},
-  frame=single,
-  breaklines=true,
-  columns=flexible
-}
-
-% ── Custom boxes ────────────────────────────────────────────
-\usepackage{tcolorbox}
-\tcbuselibrary{skins, breakable}
-
-\newtcolorbox{infobox}[1][]{
-  enhanced, breakable,
-  colback=gray!5!white, colframe=black!60,
-  title=#1, fonttitle=\bfseries,
-  left=6pt, right=6pt, top=4pt, bottom=4pt
-}
-
-\newtcolorbox{progressbox}[1][]{
-  enhanced, breakable,
-  colback=gray!5!white, colframe=black!60,
-  title=#1, fonttitle=\bfseries,
-  left=6pt, right=6pt, top=4pt, bottom=4pt
-}
-
-% ── Misc ────────────────────────────────────────────────────
-\usepackage{amsmath}
-\usepackage{microtype}
-
-% ============================================================
 \begin{document}
 
-% ── Title Page ──────────────────────────────────────────────
 \begin{titlepage}
-  \centering
-  \vspace*{2cm}
-
-  {\large\bfseries
-    ĐẠI HỌC BÁCH KHOA HÀ NỘI\\[0.3em]
-  \par}
-
-  \vspace{0.8cm}
-  \rule{\textwidth}{1pt}
-  \vspace{0.5cm}
-
-  {\LARGE\bfseries BÁO CÁO TỔNG QUAN ĐỀ TÀI\par}
-
-  \vspace{0.6cm}
-  {\Huge\bfseries SourceVerify\par}
-  \vspace{0.3cm}
-  {\normalsize\itshape Hệ thống Phát hiện Nội dung do Trí tuệ Nhân tạo Tạo ra\par}
-
-  \vspace{0.5cm}
-  \rule{\textwidth}{1pt}
-  \vspace{1.5cm}
-
-  \begin{tabular}{rl}
-    \textbf{Sinh viên:}     & Bạch Minh Quang \\[4pt]
-    \textbf{MSSV:}          & 202490077 \\[4pt]
-    \textbf{Lớp:}           & CNTT VB2 CQ \\[4pt]
-    \textbf{Ngày báo cáo:}  & 07 tháng 04 năm 2026 \\
-  \end{tabular}
-
-  \vfill
+\centering
+{\large TRƯỜNG ĐẠI HỌC / KHOA CÔNG NGHỆ THÔNG TIN\par}
+\vspace{1.2cm}
+{\Large\bfseries BÁO CÁO PROJECT I\par}
+\vspace{0.6cm}
+{\LARGE\bfseries SOURCEVERIFY\par}
+\vspace{0.4cm}
+{\large Nền tảng tìm hiểu và hỗ trợ nhận diện nội dung do AI tạo sinh\par}
+\vfill
+\begin{tabular}{rl}
+Sinh viên thực hiện: & ........................................ \\
+Mã sinh viên: & ........................................ \\
+Lớp: & ........................................ \\
+Giảng viên hướng dẫn: & ........................................ \\
+\end{tabular}
+\vfill
+{\large Hà Nội, tháng 06 năm 2026\par}
 \end{titlepage}
 
-% ── Table of Contents ───────────────────────────────────────
+\pagenumbering{roman}
 \tableofcontents
-\newpage
+\clearpage
+\pagenumbering{arabic}
 
-% ============================================================
-\section{Tổng quan đề tài}
+\chapter{Giới thiệu đề tài}
 
-\textbf{Lưu ý:} Bạn có thể xem tổng trang trực tuyến tại \href{https://sourceverify.vercel.app}{\textcolor{AccentBlue}{sourceverify.vercel.app}}.
+\section{Bối cảnh}
+Sự phát triển nhanh của các mô hình AI tạo sinh như mô hình sinh ảnh, sinh văn bản và sinh video đã làm thay đổi cách con người tạo lập nội dung số. Người dùng hiện nay có thể tạo ảnh chân dung, bài viết, đoạn quảng cáo, video ngắn hoặc tư liệu minh hoạ chỉ trong vài giây. Bên cạnh lợi ích về năng suất, xu hướng này cũng tạo ra nhiều rủi ro: tin giả, giả mạo bằng chứng, mạo danh cá nhân, lạm dụng hình ảnh và khó kiểm chứng nguồn gốc nội dung.
 
-\textbf{Tên đề tài:} SourceVerify -- Hệ thống phát hiện nội dung do Trí tuệ Nhân tạo tạo ra.
+Trong bối cảnh đó, nhu cầu kiểm tra mức độ đáng tin cậy của nội dung số ngày càng quan trọng. SourceVerify được xây dựng như một nền tảng tìm hiểu và thử nghiệm các phương pháp phát hiện dấu hiệu AI trong dữ liệu đa phương tiện. Trọng tâm của Project I không phải là tạo một hệ thống thương mại hoàn chỉnh, mà là tìm hiểu nền tảng công nghệ, cách đặt vấn đề, hướng tiếp cận và thiết kế một hệ thống có khả năng mở rộng.
 
-\textbf{Mục tiêu:}
+\section{Lý do chọn đề tài}
+Đề tài SourceVerify có tính cấp thiết vì ba nguyên nhân chính:
 \begin{itemize}
-  \item Xây dựng ứng dụng web phát hiện nội dung AI cho ba loại đầu vào: hình ảnh, video và văn bản.
-  \item Toàn bộ phân tích chạy trực tiếp trên trình duyệt -- không gửi dữ liệu lên máy chủ, đảm bảo quyền riêng tư.
-  \item Các phương pháp phân tích dựa trên bài báo khoa học đã công bố (paper-faithful).
-  \item Cung cấp REST API để tích hợp vào hệ thống khác.
-  \item Hỗ trợ đa ngôn ngữ: Tiếng Việt, Tiếng Anh và một số ngôn ngữ khác.
+  \item Nội dung do AI tạo ra ngày càng giống nội dung thật, khiến việc đánh giá bằng mắt thường trở nên kém tin cậy.
+  \item Các công cụ kiểm chứng nguồn gốc nội dung vẫn còn phân tán, thường chỉ tập trung vào một loại dữ liệu hoặc một nhóm tín hiệu nhỏ.
+  \item Việc tìm hiểu các phương pháp forensic giúp sinh viên làm quen với xử lý ảnh, thống kê tín hiệu, xử lý văn bản, xử lý video và thiết kế hệ thống web hiện đại.
 \end{itemize}
 
-% ============================================================
-\section{Công nghệ và Nền tảng}
+\section{Mục tiêu đề tài}
+Mục tiêu của đề tài gồm:
+\begin{itemize}
+  \item Tìm hiểu bài toán nhận diện nội dung do AI tạo sinh ở mức nền tảng.
+  \item Khảo sát các nhóm phương pháp phân tích ảnh, văn bản và video, trong đó tập trung trình bày 10 phương pháp ảnh tiêu biểu nhất.
+  \item Thiết kế hệ thống SourceVerify có khả năng nhận tệp đầu vào, phân tích bằng nhiều tín hiệu, tổng hợp điểm và trả kết quả dễ hiểu cho người dùng.
+  \item Xây dựng sản phẩm thử nghiệm bằng Next.js, TypeScript và các module phân tích nội bộ để minh hoạ hướng tiếp cận.
+\end{itemize}
 
-\begin{table}[h!]
-  \centering
-  \renewcommand{\arraystretch}{1.35}
-  \begin{tabularx}{\textwidth}{>{\bfseries}l l X}
-    \toprule
-    Tầng & Công nghệ & Mục đích \\
-    \midrule
-    Framework   & Next.js 16 (App Router) & Nền tảng web, routing, SSR/SSG \\
-    Ngôn ngữ    & TypeScript 5            & An toàn kiểu dữ liệu, dễ bảo trì \\
-    Giao diện   & Tailwind CSS 4          & Styling nhẹ, hiệu suất cao \\
-    Runtime     & React 19                & UI component, Concurrent features \\
-    Triển khai  & Vercel                  & Hosting toàn cầu, CI/CD tự động \\
-    \bottomrule
-  \end{tabularx}
-  \caption{Tech Stack sử dụng}
-\end{table}
-
-% ============================================================
-\section{Các chức năng và Mô-đun dự kiến}
-
+\section{Phạm vi thực hiện}
+Trong phạm vi Project I, báo cáo tập trung vào phần nền tảng, phân tích thiết kế và sản phẩm minh hoạ. Hệ thống SourceVerify đã có nhiều method phân tích, tuy nhiên quyển báo cáo này chỉ trình bày sâu 10 method nổi tiếng và dễ giải thích nhất trong nhóm phân tích ảnh:
 \begin{enumerate}
-  \item \textbf{Phân tích hình ảnh} -- phát hiện ảnh AI qua nhiều  phương pháp (phân tích pixel, tần số, texture, metadata, dấu vết GAN/Diffusion).
-
-  \item \textbf{Phân tích văn bản} -- phát hiện văn bản AI qua nhiều phương pháp (entropy, phong cách viết, dấu vân tay mô hình ngôn ngữ).
-
-  \item \textbf{Phân tích video} -- phát hiện video AI qua nhiều  phương pháp (phân tích từng khung hình + lip sync, motion artifact).
-
-  \item \textbf{REST API} -- cho phép tích hợp vào hệ thống khác qua endpoint \texttt{POST /api/analyze}.
-
-  \item \textbf{Giao diện người dùng} -- kéo thả file, nhập URL hoặc văn bản; hiển thị kết quả dạng điểm số và biểu đồ.
-
-  \item \textbf{Đa ngôn ngữ} -- hỗ trợ Tiếng Việt, Tiếng Anh, Hàn, Nhật, Trung.
-
-  \item \textbf{Benchmark tự động} -- đo độ chính xác từng phương pháp trên bộ dữ liệu kiểm thử, công bố kết quả công khai.
+  \item Metadata Analysis.
+  \item Spectral Nyquist Analysis.
+  \item Multi-scale Reconstruction.
+  \item Noise Residual.
+  \item Edge Coherence.
+  \item Gradient Micro-Texture.
+  \item Benford's Law.
+  \item Chromatic Aberration.
+  \item DCT Block Artifacts.
+  \item Color Channel Correlation.
 \end{enumerate}
 
-% ============================================================
-\section{Kế hoạch tuần tiếp theo}
+\chapter{Cơ sở lý thuyết}
 
+\section{Cách tiếp cận tổng quát}
+Nội dung thật thường được tạo ra thông qua thiết bị vật lý như camera, cảm biến, ống kính và quy trình nén ảnh. Vì vậy nó thường chứa các dấu vết tự nhiên: nhiễu cảm biến, sai lệch quang học, vân nén JPEG, phân bố tần số và tương quan màu đặc trưng. Ngược lại, nội dung do AI tạo sinh được sinh ra từ mô hình học sâu, có thể thiếu một số dấu vết vật lý hoặc tạo ra các mẫu thống kê quá đều.
+
+SourceVerify tiếp cận bài toán theo hướng đa tín hiệu. Thay vì dựa vào một bộ phân loại duy nhất, hệ thống chạy nhiều method độc lập, mỗi method trả về một điểm nghi ngờ và trọng số. Kết quả cuối cùng được tổng hợp thành điểm AI, nhãn dự đoán và độ tin cậy. Cách tiếp cận này phù hợp với Project I vì dễ mở rộng, dễ giải thích và giúp người học hiểu rõ từng nhóm dấu hiệu.
+
+\section{Nền tảng công nghệ sử dụng}
+Hệ thống được triển khai theo kiến trúc web hiện đại:
 \begin{itemize}
-  \item Hoàn thiện REST API: thêm rate limiting và logging.
-  \item Hoàn thành bản dịch KO, JA, ZH cho toàn bộ giao diện.
-  \item Chạy benchmark văn bản trên corpus thực tế.
-  \item Tinh chỉnh trọng số tổng hợp điểm.
+  \item \textbf{Next.js}: xây dựng giao diện và route xử lý phía server.
+  \item \textbf{React}: xây dựng các thành phần giao diện như trang phân tích, bảng kết quả, vòng điểm và biểu đồ radar.
+  \item \textbf{TypeScript}: tăng tính an toàn kiểu dữ liệu cho các module phân tích.
+  \item \textbf{Canvas}: đọc và xử lý pixel ảnh ở phía server hoặc môi trường Node.js.
+  \item \textbf{Module method nội bộ}: mỗi phương pháp phân tích được đóng gói thành hàm riêng, trả về tên method, nhóm phân tích, điểm, trọng số và mô tả.
 \end{itemize}
 
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 2}
+\section{Mô hình chấm điểm}
+Mỗi method trong SourceVerify tạo ra một tín hiệu có cấu trúc gồm: tên method, nhóm phân tích, điểm nghi ngờ, trọng số và mô tả. Điểm cao thể hiện dấu hiệu nghiêng về AI; điểm thấp thể hiện dấu hiệu nghiêng về nội dung thật; điểm gần 50 thể hiện chưa đủ kết luận.
 
-\textbf{Phạm vi cập nhật:} từ ngày 08/04/2026 đến ngày 12/04/2026.
+Công thức tổng quát:
+\[
+Score_{AI}=\frac{\sum_{i=1}^{n} score_i \times weight_i}{\sum_{i=1}^{n} weight_i}
+\]
+Sau đó hệ thống điều chỉnh nhẹ theo số lượng tín hiệu mạnh, tín hiệu yếu và các trường hợp metadata đặc biệt. Cách này giúp hạn chế việc một method đơn lẻ chi phối toàn bộ kết quả.
 
-\subsection{Công việc đã làm}
+\section{Mười method tiêu biểu}
+\begin{longtable}{p{0.05\textwidth}p{0.23\textwidth}p{0.31\textwidth}p{0.31\textwidth}}
+\toprule
+\textbf{STT} & \textbf{Method} & \textbf{Ý tưởng chính} & \textbf{Dấu hiệu cần quan sát} \\
+\midrule
+1 & Metadata Analysis & Kiểm tra thông tin EXIF, phần mềm tạo ảnh, kích thước và tên tệp. & Metadata ghi rõ phần mềm AI, thiếu dấu vết camera hoặc có mẫu tên thường gặp ở ảnh sinh. \\
+2 & Spectral Nyquist Analysis & Phân tích miền tần số để tìm mẫu lặp hoặc đỉnh bất thường ở biên Nyquist. & Ảnh AI có thể xuất hiện artifact do upsampling hoặc sinh ảnh theo lưới. \\
+3 & Multi-scale Reconstruction & So sánh sai số tái tạo ở nhiều mức phân giải. & Ảnh AI thường có sai số quá đều hoặc thiếu biến thiên tự nhiên. \\
+4 & Noise Residual & Tách phần nhiễu còn lại sau khi làm mượt ảnh. & Ảnh thật có nhiễu cảm biến không đồng nhất; ảnh AI có thể quá sạch hoặc quá đều. \\
+5 & Edge Coherence & Đánh giá độ tự nhiên của biên cạnh và chuyển tiếp. & AI có thể tạo biên quá mượt, thiếu vi sai cục bộ hoặc chuyển tiếp không nhất quán. \\
+6 & Gradient Micro-Texture & Phân tích kết cấu rất nhỏ ở vùng chuyển sắc. & Ảnh thật có micro-texture do cảm biến và ánh sáng; ảnh AI dễ bị mịn hoá. \\
+7 & Benford's Law & Kiểm tra phân bố chữ số đầu hoặc độ lớn gradient theo luật thống kê tự nhiên. & Phân bố lệch mạnh so với mẫu tự nhiên có thể là dấu hiệu tổng hợp. \\
+8 & Chromatic Aberration & Tìm sai lệch màu nhỏ do ống kính thật gây ra. & Ảnh camera thường có viền màu nhẹ; ảnh AI có thể thiếu dấu vết quang học này. \\
+9 & DCT Block Artifacts & Phân tích vết nén JPEG theo khối DCT. & Ảnh thật thường có fingerprint nén tự nhiên; ảnh AI có thể có artifact quá đều hoặc không phù hợp. \\
+10 & Color Channel Correlation & Đo tương quan giữa kênh R, G, B. & Ảnh tự nhiên có tương quan theo ánh sáng và cảm biến; ảnh AI có thể sinh kênh màu bất thường. \\
+\bottomrule
+\end{longtable}
 
+\section{Ưu điểm và hạn chế của hướng tiếp cận}
+Ưu điểm của hướng đa method là dễ giải thích, dễ mở rộng và có thể áp dụng ngay cả khi chưa có tập dữ liệu huấn luyện lớn. Hệ thống cũng giúp người dùng thấy được lý do kết luận thay vì chỉ nhận một nhãn AI hoặc thật.
+
+Hạn chế là các method thống kê không thể đảm bảo đúng tuyệt đối. Ảnh bị nén lại, chỉnh sửa qua phần mềm, chụp màn hình hoặc tải lại qua mạng xã hội có thể làm mất dấu vết gốc. Vì vậy SourceVerify nên được xem là công cụ hỗ trợ đánh giá rủi ro, không phải bằng chứng pháp lý duy nhất.
+
+\chapter{Phân tích, thiết kế hệ thống}
+
+\section{Yêu cầu chức năng}
+Các chức năng chính của SourceVerify gồm:
 \begin{itemize}
-  \item Hoàn thiện API phân tích tại endpoint \texttt{POST /api/analyze}.
-  \item Bổ sung middleware xử lý CORS và rate limiting cho API.
-  \item Hoàn thiện hỗ trợ đa ngôn ngữ cho các ngôn ngữ chính như Việt, Anh, Trung, Nhật và Hàn.
-  \item Thiết lập script benchmark để đo và lưu kết quả các phương pháp phân tích.
-  \item Bắt đầu tinh chỉnh cách tổng hợp điểm để cải thiện kết quả cuối cùng.
+  \item Cho phép người dùng tải lên ảnh, văn bản hoặc video cần kiểm tra.
+  \item Xác định loại tệp và kiểm tra hợp lệ cơ bản trước khi phân tích.
+  \item Chạy các method phù hợp với loại dữ liệu.
+  \item Tổng hợp điểm, nhãn dự đoán và độ tin cậy.
+  \item Hiển thị kết quả theo dạng dễ hiểu: điểm tổng, danh sách tín hiệu, mô tả từng method và thông tin tệp.
+  \item Cung cấp trang tài liệu method để người dùng tìm hiểu cơ sở của từng phương pháp.
 \end{itemize}
 
-\subsection{Khó khăn và tồn tại}
-
+\section{Yêu cầu phi chức năng}
 \begin{itemize}
-  \item Rate limiting hiện vẫn dùng bộ nhớ tạm trong tiến trình, chưa phù hợp cho hệ thống lớn.
-  \item Benchmark văn bản chưa dùng nhiều dữ liệu thực tế.
-  \item Benchmark video hiện mới đánh giá chủ yếu theo từng khung hình.
+  \item \textbf{Dễ mở rộng}: method mới có thể thêm dưới dạng hàm độc lập.
+  \item \textbf{Dễ bảo trì}: TypeScript giúp kiểm soát kiểu dữ liệu và giảm lỗi khi thay đổi.
+  \item \textbf{Hiệu năng hợp lý}: ảnh lớn được giới hạn kích thước xử lý để tránh quá tải.
+  \item \textbf{Minh bạch}: kết quả cần giải thích được bằng danh sách tín hiệu thay vì chỉ trả nhãn cuối.
+  \item \textbf{An toàn}: chỉ xử lý tệp hợp lệ và không phụ thuộc vào metadata như nguồn tin duy nhất.
 \end{itemize}
 
-% ============================================================
-\section{Kế hoạch tuần thứ 3}
+\section{Kiến trúc tổng thể}
+\begin{center}
+\begin{tikzpicture}[
+  node distance=1.3cm,
+  box/.style={rectangle,draw,rounded corners,align=center,minimum width=3.2cm,minimum height=0.85cm},
+  arrow/.style={-{Latex[length=2mm]},thick}
+]
+\node[box] (user) {Người dùng};
+\node[box,right=of user] (ui) {Giao diện Next.js};
+\node[box,right=of ui] (api) {API / Analyzer};
+\node[box,below=of api] (methods) {Các method phân tích};
+\node[box,left=of methods] (score) {Tổng hợp điểm};
+\node[box,left=of score] (result) {Hiển thị kết quả};
+\draw[arrow] (user) -- (ui);
+\draw[arrow] (ui) -- (api);
+\draw[arrow] (api) -- (methods);
+\draw[arrow] (methods) -- (score);
+\draw[arrow] (score) -- (result);
+\draw[arrow] (result) -- (user);
+\end{tikzpicture}
+\end{center}
 
+\section{Phân rã chức năng}
+\begin{enumerate}
+  \item \textbf{Nhập dữ liệu}: nhận tệp từ người dùng, kiểm tra định dạng và kích thước.
+  \item \textbf{Tiền xử lý}: đọc metadata, chuẩn hoá dữ liệu ảnh, lấy pixel hoặc nội dung văn bản.
+  \item \textbf{Phân tích}: gọi từng method tương ứng với loại dữ liệu.
+  \item \textbf{Tổng hợp}: tính điểm trung bình có trọng số, phân loại nhãn và độ tin cậy.
+  \item \textbf{Trình bày}: hiển thị kết quả tổng quan, từng tín hiệu và giải thích ngắn.
+  \item \textbf{Tra cứu method}: cung cấp danh sách và trang chi tiết các phương pháp đã triển khai.
+\end{enumerate}
+
+\section{Luồng dữ liệu}
+Luồng dữ liệu của chức năng phân tích ảnh gồm các bước:
+\begin{enumerate}
+  \item Người dùng chọn ảnh và gửi lên hệ thống.
+  \item Hệ thống kiểm tra phần mở rộng, magic bytes và thông tin cơ bản.
+  \item Ảnh được đọc vào canvas để lấy ma trận pixel RGBA.
+  \item Analyzer gọi lần lượt 10 method tiêu biểu hoặc nhóm method mở rộng.
+  \item Mỗi method trả về điểm, trọng số, mô tả và thông tin chi tiết.
+  \item Bộ tổng hợp tạo điểm AI cuối cùng, verdict và confidence.
+  \item Giao diện hiển thị kết quả cho người dùng.
+\end{enumerate}
+
+\section{Mô hình dữ liệu}
+Dữ liệu kết quả có thể biểu diễn ở mức logic như sau:
 \begin{itemize}
-  \item Thêm logging cho API.
-  \item Chạy benchmark với dữ liệu thực tế hơn cho văn bản và video.
-  \item Tiếp tục tinh chỉnh trọng số và ngưỡng tổng hợp điểm.
-  \item Rà soát lại phần bản dịch trên toàn bộ hệ thống.
+  \item \textbf{AnalysisResult}: verdict, confidence, aiScore, signals, processingTimeMs, fileInfo.
+  \item \textbf{AnalysisMethod}: name, category, score, weight, description, details.
+  \item \textbf{FileMetadata}: fileName, fileSize, fileType, width, height, format.
 \end{itemize}
 
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 3}
+Thiết kế này chưa yêu cầu cơ sở dữ liệu bắt buộc vì Project I tập trung vào phân tích trực tiếp. Nếu phát triển tiếp, có thể bổ sung bảng lưu lịch sử phân tích, người dùng, API key và benchmark dataset.
 
-\textbf{Phạm vi cập nhật:} từ ngày 13/04/2026 đến ngày 18/04/2026.
+\chapter{Triển khai và kết quả}
 
+\section{Các phần đã xây dựng}
+Sản phẩm thử nghiệm SourceVerify đã có các phần chính:
 \begin{itemize}
-  \item Đã thêm logging cơ bản cho API để theo dõi request và lỗi.
-  \item Đã chạy benchmark văn bản và video với dữ liệu thực tế hơn.
-  \item Đã tinh chỉnh thêm trọng số tổng hợp điểm để kết quả ổn định hơn.
-  \item Đã rà soát và sửa một số lỗi dịch trên giao diện đa ngôn ngữ.
+  \item Giao diện web bằng Next.js và React.
+  \item Module phân tích ảnh với nhiều nhóm method forensic.
+  \item Module phân tích văn bản và video ở mức mở rộng.
+  \item Trang danh sách method và nội dung mô tả đa ngôn ngữ.
+  \item Cơ chế tổng hợp điểm theo trọng số và trả kết quả có giải thích.
 \end{itemize}
 
-% ============================================================
-\section{Kế hoạch tuần thứ 4}
+\section{Minh hoạ thuật toán tổng hợp}
+Quá trình tổng hợp điểm được triển khai theo hướng đơn giản và dễ kiểm soát:
+\begin{enumerate}
+  \item Thu thập danh sách tín hiệu từ các method.
+  \item Tính trung bình có trọng số.
+  \item Đếm các tín hiệu rất mạnh nghiêng về AI hoặc nghiêng về ảnh thật.
+  \item Điều chỉnh điểm tổng để phản ánh sự đồng thuận giữa nhiều method.
+  \item Sinh nhãn: \textit{AI}, \textit{Real} hoặc \textit{Uncertain}.
+\end{enumerate}
 
+\section{Kết quả đạt được}
+Qua quá trình tìm hiểu và triển khai, đề tài đã đạt được các kết quả:
 \begin{itemize}
-  \item Hoàn thiện phần báo cáo học thuật cho các phương pháp phân tích.
-  \item Tiếp tục rà soát dữ liệu và bản dịch giữa các ngôn ngữ.
-  \item Ổn định benchmark và các tham số đánh giá.
-  \item Sửa các lỗi nội bộ còn lại liên quan API logging và hiển thị.
+  \item Hiểu được bài toán phát hiện nội dung AI theo hướng forensic đa tín hiệu.
+  \item Xây dựng được nền tảng web có khả năng phân tích tệp và trả kết quả trực quan.
+  \item Tổ chức method thành các module riêng, thuận lợi cho việc thêm mới và kiểm thử.
+  \item Trình bày được 10 method ảnh tiêu biểu có giá trị học thuật và khả năng giải thích cao.
+  \item Có định hướng mở rộng sang benchmark, dataset chuẩn và mô hình học máy chuyên sâu hơn.
 \end{itemize}
 
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 4}
+\section{Đánh giá}
+SourceVerify phù hợp với mục tiêu Project I vì thể hiện được quá trình tìm hiểu công nghệ, đặt vấn đề, phân tích hướng tiếp cận và thiết kế sản phẩm minh hoạ. Hệ thống chưa phải công cụ phát hiện AI hoàn chỉnh ở mức thương mại, nhưng là nền tảng tốt để phát triển tiếp trong Project II hoặc đồ án chuyên sâu.
 
-\textbf{Phạm vi cập nhật:} từ ngày 19/04/2026 đến ngày 24/04/2026.
+\chapter{Kết luận và phương hướng phát triển}
 
+\section{Kết luận}
+Đề tài SourceVerify tập trung giải quyết nhu cầu kiểm chứng nội dung số trong bối cảnh AI tạo sinh phát triển mạnh. Báo cáo đã trình bày bối cảnh, cơ sở lý thuyết, kiến trúc hệ thống, luồng dữ liệu và 10 method phân tích ảnh tiêu biểu. Kết quả quan trọng nhất của đề tài là xây dựng được tư duy tiếp cận bài toán theo hướng đa tín hiệu, có khả năng giải thích và có thể mở rộng.
+
+\section{Các vấn đề chưa giải quyết}
+Một số hạn chế còn tồn tại:
 \begin{itemize}
-  \item Đã tiếp tục hoàn thiện nội dung học thuật cho các phương pháp phân tích văn bản, bổ sung mô tả theo hướng bám sát tài liệu nghiên cứu và chuẩn hoá cách trình bày.
-  \item Đã rà soát, cập nhật thêm dữ liệu và bản dịch cho các trang phương pháp nhằm cải thiện độ đầy đủ và tính nhất quán giữa các ngôn ngữ.
-  \item Đã tiếp tục kiểm tra, tinh chỉnh phần benchmark và các tham số liên quan để kết quả đánh giá ổn định và dễ đối chiếu hơn.
-  \item Đã sửa một số lỗi nội bộ và cải thiện chất lượng mã nguồn ở các phần liên quan đến API logging, benchmark và nội dung hiển thị.
+  \item Chưa có tập benchmark lớn, cân bằng và được gán nhãn chuẩn để đánh giá định lượng đầy đủ.
+  \item Một số method hiện dựa trên heuristic nên độ chính xác phụ thuộc vào loại ảnh, mức nén và lịch sử chỉnh sửa.
+  \item Chưa có mô hình học máy được huấn luyện riêng trên dữ liệu của hệ thống.
+  \item Chưa lưu lịch sử phân tích và chưa có cơ chế quản lý người dùng hoàn chỉnh.
+  \item Kết quả mới nên xem là tín hiệu tham khảo, chưa đủ thay thế kết luận chuyên gia forensic.
 \end{itemize}
 
-% ============================================================
-\section{Kế hoạch tuần thứ 5}
-
+\section{Phương hướng phát triển}
+Trong tương lai, SourceVerify có thể phát triển theo các hướng:
 \begin{itemize}
-  \item Tiếp tục rà soát và hoàn thiện các hạng mục đã triển khai.
-  \item Ổn định lại các phần nội dung, cấu hình và kết quả hiển thị.
+  \item Xây dựng bộ dữ liệu kiểm thử gồm ảnh thật, ảnh AI, ảnh đã nén lại và ảnh đã chỉnh sửa.
+  \item Đánh giá từng method bằng các chỉ số accuracy, precision, recall, F1-score và ROC-AUC.
+  \item Kết hợp heuristic forensic với mô hình học máy để tăng độ chính xác.
+  \item Bổ sung C2PA/provenance verification để kiểm tra nguồn gốc nội dung theo chuẩn xác thực mới.
+  \item Mở rộng phân tích video bằng optical flow, lip-sync, temporal consistency và audio-visual sync.
+  \item Hoàn thiện API, dashboard và chức năng lưu lịch sử phân tích cho người dùng.
 \end{itemize}
 
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 5}
-
-\textbf{Phạm vi cập nhật:} từ ngày 25/04/2026 đến ngày 01/05/2026.
-
-\begin{itemize}
-  \item Tiếp tục duy trì và rà soát các hạng mục đã hoàn thiện ở các tuần trước.
-  \item Đã tập trung kiểm tra tính ổn định của các phần API, benchmark và nội dung phương pháp.
-\end{itemize}
-
-% ============================================================
-\section{Kế hoạch tuần thứ 6}
-
-\begin{itemize}
-  \item Tiếp tục tối ưu độ ổn định chung của hệ thống ở các phần đã hoàn thiện.
-  \item Rà soát tính nhất quán giữa dữ liệu, nội dung và kết quả hiển thị.
-\end{itemize}
-
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 6}
-
-\textbf{Phạm vi cập nhật:} từ ngày 02/05/2026 đến ngày 08/05/2026.
-
-\begin{itemize}
-  \item Đã tiếp tục rà soát và giữ ổn định các hạng mục đã hoàn thành.
-  \item Đã tiếp tục kiểm tra sự nhất quán của các phần chức năng và nội dung liên quan.
-\end{itemize}
-
-% ============================================================
-\section{Kế hoạch tuần thứ 7}
-
-\begin{itemize}
-  \item Tiếp tục hoàn thiện các chi tiết còn dở ở phần nội dung và cấu hình.
-  \item Tiếp tục chuẩn hoá cách trình bày và tính nhất quán giữa các phần.
-\end{itemize}
-
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 7}
-
-\textbf{Phạm vi cập nhật:} từ ngày 09/05/2026 đến ngày 15/05/2026.
-
-\begin{itemize}
-  \item Đã tiếp tục rà soát và giữ ổn định các hạng mục đã hoàn thành.
-  \item Đã tiếp tục tinh chỉnh các chi tiết nhỏ để nội dung và kết quả hiển thị đồng đều hơn.
-\end{itemize}
-
-% ============================================================
-\section{Kế hoạch tuần thứ 8}
-
-\begin{itemize}
-  \item Tiếp tục hoàn thiện các phần còn lại để tổng thể hệ thống đồng bộ hơn.
-  \item Rà soát lại các mục hiển thị để đảm bảo cách trình bày gọn và nhất quán.
-\end{itemize}
-
-% ============================================================
-\section{Báo cáo tiến độ tuần thứ 8}
-
-\textbf{Phạm vi cập nhật:} từ ngày 16/05/2026 đến ngày 23/05/2026.
-
-\begin{itemize}
-  \item Đã tiếp tục hoàn thiện các hạng mục còn lại ở mức chi tiết để hệ thống ổn định hơn.
-  \item Đã rà soát và chuẩn hoá thêm cách trình bày ở các phần liên quan nhằm tăng tính nhất quán chung.
-\end{itemize}
+\begin{thebibliography}{9}
+\bibitem{farid} H. Farid, \textit{Photo Forensics}. MIT Press, 2016.
+\bibitem{popescu} A. C. Popescu and H. Farid, ``Exposing digital forgeries by detecting traces of resampling,'' IEEE Transactions on Signal Processing, 2005.
+\bibitem{lukas} J. Lukas, J. Fridrich and M. Goljan, ``Digital camera identification from sensor pattern noise,'' IEEE Transactions on Information Forensics and Security, 2006.
+\bibitem{ngan} T. T. Ng, S. F. Chang and Q. Sun, ``Blind detection of photomontage using higher order statistics,'' IEEE ISCAS, 2004.
+\bibitem{c2pa} Coalition for Content Provenance and Authenticity, \textit{C2PA Specification}, 2024.
+\end{thebibliography}
 
 \end{document}
