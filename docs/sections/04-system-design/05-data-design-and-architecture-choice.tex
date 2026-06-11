@@ -1,0 +1,19 @@
+\section{Thiết kế dữ liệu và lựa chọn kiến trúc}
+Dữ liệu phân tích được tổ chức theo các cấu trúc logic sau: FileMetadata, AnalysisMethod và AnalysisResult. Thiết kế này giúp kết quả phân tích có cấu trúc thống nhất để bộ tổng hợp có thể dùng lại cho nhiều loại method.
+
+\begin{table}[h]
+\centering
+\caption{So sánh các lựa chọn kiến trúc cho SourceVerify}
+\label{tab:architecture-tradeoff}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}Y Y p{0.14\textwidth}}
+\toprule
+\textbf{Lựa chọn} & \textbf{Ưu điểm} & \textbf{Nhược điểm} & \textbf{Độ phức tạp} \\
+\midrule
+Monolithic Next.js + module analyzer & Dễ triển khai, dễ hiểu, phù hợp Project I, ít phụ thuộc hạ tầng & Khó mở rộng khi tải lớn & Thấp \\
+Microservice analyzer riêng & Dễ scale từng service, phù hợp sản phẩm lớn & Cần hạ tầng, queue, API nội bộ, monitoring & Cao \\
+Mô hình ML end-to-end & Có thể đạt độ chính xác cao nếu có dataset lớn & Cần dữ liệu gán nhãn, training, đánh giá nghiêm ngặt & Cao \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Quyết định hiện tại là dùng kiến trúc Next.js kết hợp analyzer module nội bộ. Lý do là nhóm thực hiện cần tập trung vào hiểu bài toán và trình bày method, trong khi microservice hoặc training model sẽ làm tăng độ phức tạp vượt phạm vi Project I.

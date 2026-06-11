@@ -1,0 +1,26 @@
+\section{Kiến trúc tổng thể}
+Kiến trúc SourceVerify được thiết kế theo hướng đơn giản trước, đúng với nguyên tắc Project I: ưu tiên hiểu rõ bài toán và có sản phẩm minh họa ổn định, sau đó mới mở rộng các thành phần phức tạp hơn.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=0.9cm and 1.1cm,
+  layer/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.5cm,minimum height=0.9cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[layer] (client) {Client Layer\\React UI};
+\node[layer,right=of client] (app) {Application Layer\\Next.js Routes};
+\node[layer,right=of app] (analysis) {Analysis Layer\\Analyzer Engine};
+\node[layer,below=of analysis] (methods) {Method Layer\\Image / Text / Video};
+\node[layer,left=of methods] (score) {Scoring Layer\\Weighted Voting};
+\node[layer,left=of score] (present) {Presentation Layer\\Result Explainability};
+\draw[arrow] (client) -- (app);
+\draw[arrow] (app) -- (analysis);
+\draw[arrow] (analysis) -- (methods);
+\draw[arrow] (methods) -- (score);
+\draw[arrow] (score) -- (present);
+\draw[arrow] (present) -- (client);
+\end{tikzpicture}
+\caption{Kiến trúc tổng thể của hệ thống SourceVerify}
+\label{fig:system-architecture}
+\end{figure}
