@@ -1,75 +1,141 @@
 # Cơ sở lý thuyết
 
-## Tổng quan về AI-generated content
-AI-generated content là nội dung được tạo ra hoàn toàn hoặc một phần bởi mô hình trí tuệ nhân tạo. Với ảnh, các mô hình phổ biến gồm GAN, diffusion model và các biến thể text-to-image. Với văn bản, các mô hình ngôn ngữ lớn có thể tạo đoạn văn trôi chảy, nhất quán và có phong cách gần giống con người. Với video, các mô hình deepfake và text-to-video có thể mô phỏng chuyển động, biểu cảm và bối cảnh.
+## 2.1. Tổng quan về bài toán phát hiện ảnh do AI tạo
+Ảnh do AI tạo sinh là ảnh được tạo ra hoàn toàn hoặc một phần bởi các mô hình như GAN, diffusion model hoặc các hệ thống text-to-image hiện đại. Những ảnh này có thể đạt chất lượng rất cao, bố cục hợp lý và màu sắc thuyết phục, khiến việc nhận biết bằng mắt thường ngày càng khó khăn.
 
-Điểm khó của bài toán là nội dung AI ngày càng giống thật. Nếu chỉ quan sát bằng mắt, người dùng có thể bỏ qua các lỗi nhỏ về thống kê tín hiệu. Ngược lại, các method forensic cố gắng tìm dấu vết mà mắt người khó nhận thấy: sự thiếu tự nhiên của nhiễu cảm biến, phân bố tần số bất thường, tương quan màu không hợp lý, hoặc metadata cho thấy phần mềm tạo ảnh.
+Khác với ảnh chụp từ camera thật, ảnh AI không nhất thiết trải qua đầy đủ chuỗi hình thành vật lý như thu nhận ánh sáng qua ống kính, biến đổi trên cảm biến, xử lý tín hiệu ảnh trong camera và ghi lại metadata gốc. Vì vậy, dù bề ngoài rất chân thực, ảnh AI vẫn có thể để lộ một số bất thường về tần số, nhiễu, nén, quang học hoặc nguồn gốc tệp.
 
-## Cơ sở của digital image forensics
-Digital image forensics là lĩnh vực nghiên cứu các kỹ thuật kiểm tra tính xác thực của ảnh số. Một bức ảnh chụp từ camera thật thường chịu ảnh hưởng của nhiều yếu tố vật lý:
+## 2.2. Cơ sở của digital image forensics
+Digital image forensics là lĩnh vực nghiên cứu các kỹ thuật kiểm tra tính xác thực của ảnh số thông qua những dấu vết kỹ thuật còn sót lại trong tệp ảnh. Một ảnh chụp thật thường chịu tác động của:
 
-- Cảm biến ảnh tạo ra nhiễu đặc trưng theo thiết bị.
-- Ống kính gây sai lệch màu, méo hình hoặc khác biệt ánh sáng nhỏ.
-- Bộ xử lý ảnh trong camera thực hiện demosaicing, sharpening và nén JPEG.
-- Quá trình lưu, truyền và chỉnh sửa để lại artifact ở metadata, miền tần số và miền không gian.
+- Hệ quang học của camera.
+- Nhiễu cảm biến và điều kiện chụp.
+- Thuật toán xử lý ảnh trong thiết bị.
+- Quá trình nén, lưu trữ và chỉnh sửa hậu kỳ.
 
-Ảnh AI không đi qua đầy đủ chuỗi vật lý đó. Mô hình sinh ảnh học phân bố dữ liệu và tạo ảnh mới từ không gian ẩn. Vì vậy, ảnh AI có thể trông rất thật nhưng vẫn thiếu một số dấu vết camera hoặc có mẫu thống kê quá đều. SourceVerify khai thác chính sự khác biệt này.
+Trong khi đó, ảnh AI được sinh từ mô hình học máy nên có thể thiếu hoặc mô phỏng chưa hoàn toàn chính xác các dấu vết vật lý trên. Từ đây, các phương pháp forensic có thể khai thác khác biệt giữa ảnh thật và ảnh AI.
 
-## Cách tiếp cận đa tín hiệu
-Một method đơn lẻ thường không đủ kết luận chắc chắn. Ví dụ, ảnh thật được nén lại nhiều lần có thể mất metadata; ảnh AI được chỉnh sửa hậu kỳ có thể có artifact giống ảnh thật; ảnh chụp màn hình có thể làm thay đổi dấu vết nén. Vì vậy, SourceVerify áp dụng cách tiếp cận đa tín hiệu: nhiều method cùng phân tích một tệp, sau đó hệ thống tổng hợp điểm.
+## 2.3. Cách tiếp cận của SourceVerify
+SourceVerify áp dụng hướng tiếp cận **đa phương pháp**. Thay vì kết luận dựa trên một tín hiệu đơn lẻ, hệ thống cho nhiều phương pháp cùng phân tích ảnh, sau đó tổng hợp các kết quả để đưa ra điểm đánh giá cuối cùng.
 
-Ưu điểm của hướng đa tín hiệu là:
+Trong phạm vi báo cáo này, nhóm chỉ tập trung vào **5 phương pháp nổi bật nhất**, được chọn theo các tiêu chí:
 
-- Giảm phụ thuộc vào một dấu hiệu duy nhất.
-- Dễ giải thích kết quả cho người dùng.
-- Có thể mở rộng dần bằng cách thêm method mới.
-- Phù hợp với giai đoạn Project I vì không bắt buộc phải có tập dữ liệu huấn luyện lớn.
+- Có cơ sở lý thuyết rõ ràng.
+- Đại diện cho các nhóm tín hiệu quan trọng khác nhau.
+- Có khả năng giải thích được kết quả.
+- Phù hợp với phạm vi tìm hiểu của Project I.
 
-## Mô hình tổng hợp điểm
-Mỗi method trả về một điểm trong khoảng từ 0 đến 100. Điểm cao biểu thị xu hướng nghiêng về AI, điểm thấp biểu thị xu hướng nghiêng về ảnh thật, còn điểm xấp xỉ 50 thể hiện chưa đủ bằng chứng. Hệ thống dùng trọng số để phản ánh mức độ quan trọng tương đối của từng method.
+Năm phương pháp được chọn gồm:
+1. Metadata Analysis
+2. Noise Residual
+3. DCT Block Artifacts
+4. Chromatic Aberration
+5. Spectral Nyquist Analysis
+
+## 2.4. Mô hình tổng hợp điểm
+Mỗi phương pháp trả về một điểm trong khoảng từ 0 đến 100:
+
+- Điểm gần **100**: ảnh có xu hướng nghiêng về AI.
+- Điểm gần **0**: ảnh có xu hướng nghiêng về ảnh thật.
+- Điểm gần **50**: phương pháp chưa đủ bằng chứng để kết luận.
+
+Điểm tổng hợp được tính theo trung bình có trọng số:
 
 `Score_AI = Σ(score_i × weight_i) / Σ(weight_i)`
 
-Sau bước trung bình có trọng số, hệ thống có thể điều chỉnh thêm theo số lượng tín hiệu mạnh. Nếu nhiều method độc lập cùng nghiêng về AI, điểm tổng tăng; nếu nhiều method cùng nghiêng về ảnh thật, điểm tổng giảm. Mục tiêu của bước này là phản ánh mức độ đồng thuận giữa các method.
+Cách tính này giúp những phương pháp có giá trị phân biệt cao hơn đóng góp mạnh hơn vào kết quả cuối.
 
-## Năm nhóm tín hiệu hiệu quả của SourceVerify
-Hệ thống phân tích ảnh thành 5 nhóm tín hiệu chính: nguồn gốc tệp, miền tần số, nhiễu/kết cấu, biên cạnh/thống kê và màu sắc/nén ảnh.
+## 2.5. Phân tích 5 phương pháp nổi bật
 
-### Metadata Analysis
-Metadata là thông tin mô tả đi kèm tệp ảnh, ví dụ tên phần mềm, thời gian tạo, kích thước, thiết bị chụp, thông tin EXIF hoặc profile màu. Nếu metadata ghi nhận phần mềm tạo ảnh như một công cụ AI, đây là tín hiệu mạnh. Ngược lại, nếu ảnh có thông tin camera hợp lý, điều đó có thể ủng hộ giả thuyết ảnh thật.
+### 2.5.1. Metadata Analysis
+**Nguyên lý:**
+Metadata là tập thông tin mô tả đi kèm tệp ảnh như EXIF, tên phần mềm tạo ảnh, thời gian tạo, thiết bị chụp, profile màu hoặc các trường liên quan đến xử lý hậu kỳ.
 
-Tuy nhiên, metadata rất dễ bị xoá hoặc sửa. Do đó, SourceVerify không dùng metadata làm bằng chứng duy nhất. Method này phù hợp để phát hiện các trường hợp rõ ràng, đồng thời hỗ trợ người dùng hiểu nguồn gốc tệp ban đầu.
+**Ý nghĩa trong phát hiện ảnh AI:**
+Nếu metadata cho thấy ảnh được tạo bằng một công cụ như Midjourney, Stable Diffusion, DALL·E, Adobe Firefly hoặc một trình biên tập AI, đây là dấu hiệu rất mạnh cho thấy ảnh không phải ảnh chụp gốc từ camera. Ngược lại, nếu metadata thể hiện thông tin camera hợp lý, điều đó có thể ủng hộ giả thuyết ảnh thật.
 
-### Spectral Nyquist Analysis
-Phân tích Nyquist tập trung vào miền tần số của ảnh. Ảnh sinh bởi AI hoặc ảnh được upscale có thể để lại các mẫu lặp ở tần số cao, nhất là gần biên Nyquist. Những mẫu này không phải lúc nào cũng thấy bằng mắt thường nhưng có thể xuất hiện khi phân tích gradient hoặc phổ tần số.
+**Ưu điểm:**
+- Dễ triển khai và dễ giải thích.
+- Hiệu quả với các trường hợp ảnh còn giữ nguyên thông tin gốc.
+- Hữu ích trong việc truy vết nguồn tạo ảnh.
 
-### Multi-scale Reconstruction
-Multi-scale Reconstruction đánh giá sự ổn định của ảnh ở nhiều mức phân giải. Ảnh tự nhiên thường có biến thiên cục bộ phức tạp; khi giảm và khôi phục kích thước, sai số tái tạo có thể thay đổi theo vùng. Ảnh AI đôi khi có sai số đồng đều hơn do cấu trúc được sinh ra từ mô hình.
+**Hạn chế:**
+- Metadata có thể bị xoá hoặc chỉnh sửa rất dễ dàng.
+- Ảnh chụp màn hình hoặc ảnh tải lại từ mạng xã hội thường mất metadata.
+- Không thể dùng như bằng chứng duy nhất.
 
-### Noise Residual
-Noise Residual tách phần nhiễu còn lại sau khi loại bỏ thành phần mượt của ảnh. Camera thật thường tạo nhiễu cảm biến không hoàn toàn đồng nhất. Nhiễu còn phụ thuộc ánh sáng, ISO, cảm biến và pipeline xử lý ảnh. Ảnh AI có thể quá sạch hoặc có nhiễu không giống nhiễu vật lý.
+### 2.5.2. Noise Residual
+**Nguyên lý:**
+Noise Residual là phần nhiễu còn lại sau khi loại bỏ thành phần mượt của ảnh bằng bộ lọc hoặc phép làm trơn. Ở ảnh chụp thật, nhiễu cảm biến thường chịu ảnh hưởng của phần cứng camera, mức ISO, ánh sáng và pipeline xử lý ảnh.
 
-### Edge Coherence
-Edge Coherence phân tích các đường biên và vùng chuyển tiếp. Ảnh thật thường có biên cạnh chịu ảnh hưởng bởi vật thể, ánh sáng, chuyển động, lens blur và sharpening. Ảnh AI có thể tạo đường biên quá mượt, thiếu vi sai hoặc không nhất quán giữa các vùng.
+**Ý nghĩa trong phát hiện ảnh AI:**
+Ảnh AI thường có xu hướng quá sạch, quá đều hoặc có nhiễu không giống nhiễu vật lý của camera thật. Việc phân tích phần nhiễu dư có thể giúp phát hiện các vùng thiếu tự nhiên.
 
-### Gradient Micro-Texture
-Gradient Micro-Texture đánh giá các thay đổi rất nhỏ trong vùng chuyển sắc và vùng bề mặt. Ảnh thật thường có micro-texture do cảm biến, chất liệu vật thể, ánh sáng và nhiễu tự nhiên. Ảnh AI, đặc biệt ảnh được làm mịn, có thể thiếu loại kết cấu nhỏ này.
+**Ưu điểm:**
+- Có liên hệ chặt với đặc trưng cảm biến thật.
+- Phù hợp để phân tích mức độ tự nhiên của bề mặt ảnh.
+- Bổ sung tốt cho các phương pháp miền tần số.
 
-### Benford's Law
-Benford's Law là quy luật thống kê về phân bố chữ số đầu trong nhiều dữ liệu tự nhiên. Trong ảnh, ý tưởng tương tự có thể áp dụng cho phân bố độ lớn gradient hoặc các đặc trưng số học khác. Nếu phân bố lệch quá nhiều so với mẫu tự nhiên, ảnh có thể đã qua tổng hợp hoặc xử lý bất thường.
+**Hạn chế:**
+- Nhạy với nén ảnh mạnh, lọc làm đẹp và resize.
+- Một số ảnh thật đã qua xử lý hậu kỳ cũng có thể bị “quá sạch”.
 
-### Chromatic Aberration
-Chromatic Aberration là sai lệch màu nhỏ do ống kính thật gây ra, thường xuất hiện ở vùng biên có độ tương phản cao. Camera thật và ống kính vật lý có thể để lại viền màu nhẹ giữa các kênh RGB. Ảnh AI không nhất thiết có dấu vết quang học này.
+### 2.5.3. DCT Block Artifacts
+**Nguyên lý:**
+Ảnh JPEG được nén theo từng khối thông qua phép biến đổi DCT. Quá trình này để lại các artifact đặc trưng về biên khối, phân bố hệ số tần số và mức độ mất mát thông tin.
 
-### DCT Block Artifacts
-JPEG sử dụng biến đổi DCT theo khối. Quá trình nén tạo ra artifact đặc trưng, nhất là ở ảnh đã lưu nhiều lần hoặc có chất lượng nén thấp. Ảnh thật thường có dấu vết nén phù hợp với lịch sử lưu ảnh, trong khi ảnh AI có thể có vết nén quá đều, thiếu tự nhiên hoặc không tương thích với metadata.
+**Ý nghĩa trong phát hiện ảnh AI:**
+Ảnh thật thường mang lịch sử nén phù hợp với thiết bị và quá trình lưu ảnh. Trong khi đó, ảnh AI hoặc ảnh đã qua nhiều bước xử lý có thể xuất hiện dấu hiệu nén bất thường, vết khối quá đều hoặc không tương thích với lịch sử tệp.
 
-### Color Channel Correlation
-Trong ảnh tự nhiên, ba kênh màu R, G, B có tương quan do ánh sáng, bề mặt vật thể, cảm biến và pipeline xử lý ảnh. Ảnh AI có thể sinh kênh màu theo cách không hoàn toàn giống camera thật, dẫn đến tương quan bất thường hoặc quá đều.
+**Ưu điểm:**
+- Phù hợp với các ảnh JPEG phổ biến ngoài thực tế.
+- Dễ kết hợp với metadata để đánh giá tính hợp lý của tệp.
+- Có giá trị trong việc phát hiện ảnh bị xử lý lại nhiều lần.
 
-## Tóm tắt 5 nhóm tín hiệu
-1. Nguồn gốc tệp — Metadata Analysis — phần mềm tạo ảnh, EXIF, kích thước, tên tệp — dễ bị xoá/sửa.
-2. Miền tần số — Spectral Nyquist, Multi-scale Reconstruction — đỉnh tần số, artifact upsampling, sai số tái tạo bất thường — bị ảnh hưởng bởi resize.
-3. Nhiễu/kết cấu — Noise Residual, Gradient Micro-Texture — nhiễu quá sạch, thiếu micro-texture tự nhiên — nhạy với nén/filter.
-4. Biên cạnh/thống kê — Edge Coherence, Benford's Law — biên quá mượt, phân bố gradient lệch tự nhiên — không kết luận đơn lẻ.
-5. Màu sắc/nén ảnh — Chromatic Aberration, DCT Block Artifacts, Color Channel Correlation — sai lệch màu, vết nén JPEG, tương quan RGB bất thường — phụ thuộc chỉnh sửa ảnh.
+**Hạn chế:**
+- Độ hiệu quả giảm nếu ảnh dùng PNG hoặc WebP.
+- Resize và re-encode có thể làm thay đổi mạnh artifact.
+
+### 2.5.4. Chromatic Aberration
+**Nguyên lý:**
+Chromatic Aberration là hiện tượng lệch màu nhỏ giữa các kênh RGB do ống kính thật gây ra, thường thấy ở các vùng có tương phản cao hoặc gần rìa ảnh.
+
+**Ý nghĩa trong phát hiện ảnh AI:**
+Ảnh chụp từ camera thật thường mang một mức sai lệch quang học nhất định. Ảnh AI có thể thiếu loại dấu vết vật lý này, hoặc tạo ra sai lệch màu không nhất quán với cấu trúc quang học tự nhiên.
+
+**Ưu điểm:**
+- Đại diện rõ cho dấu vết quang học của hệ camera thật.
+- Giúp bổ sung góc nhìn vật lý cho hệ thống.
+- Có tính giải thích tốt khi phân tích ảnh có biên tương phản rõ.
+
+**Hạn chế:**
+- Không phải mọi ảnh thật đều thể hiện rõ sai lệch màu.
+- Ảnh đã qua chỉnh sửa hoặc dùng ống kính chất lượng cao có thể làm tín hiệu này yếu đi.
+
+### 2.5.5. Spectral Nyquist Analysis
+**Nguyên lý:**
+Phương pháp này phân tích phổ tần số của ảnh, đặc biệt ở vùng tần số cao gần ngưỡng Nyquist. Ảnh được sinh hoặc upscale bởi mô hình có thể để lại các mẫu lặp, đỉnh tần số bất thường hoặc cấu trúc quá đều trong miền phổ.
+
+**Ý nghĩa trong phát hiện ảnh AI:**
+Các mô hình sinh ảnh đôi khi tạo ra cấu trúc tần số không giống quá trình lấy mẫu của camera thật. Bằng cách phân tích miền phổ, hệ thống có thể phát hiện các dấu hiệu nhân tạo mà mắt thường khó nhận ra.
+
+**Ưu điểm:**
+- Khai thác được dấu vết ẩn trong miền tần số.
+- Hiệu quả với một số ảnh có dấu hiệu upscaling hoặc sinh chi tiết nhân tạo.
+- Bổ sung tốt cho phân tích nhiễu và nén.
+
+**Hạn chế:**
+- Tính toán phức tạp hơn các phương pháp đơn giản.
+- Kết quả có thể bị ảnh hưởng bởi resize hoặc nén lại ảnh.
+
+## 2.6. So sánh vai trò của 5 phương pháp
+| Phương pháp | Nhóm tín hiệu | Điểm mạnh chính | Hạn chế chính |
+|---|---|---|---|
+| Metadata Analysis | Nguồn gốc tệp | Truy vết công cụ tạo ảnh, dễ giải thích | Dễ bị xoá hoặc sửa |
+| Noise Residual | Nhiễu cảm biến | Phản ánh mức độ tự nhiên của ảnh | Nhạy với lọc và nén |
+| DCT Block Artifacts | Nén ảnh | Phù hợp ảnh JPEG thực tế | Phụ thuộc định dạng và re-encode |
+| Chromatic Aberration | Quang học | Bám sát đặc trưng ống kính thật | Tín hiệu có thể yếu ở nhiều ảnh |
+| Spectral Nyquist Analysis | Miền tần số | Phát hiện mẫu nhân tạo khó thấy | Tính toán phức tạp, nhạy với resize |
+
+## 2.7. Kết luận chương
+Từ cơ sở lý thuyết trên có thể thấy không có phương pháp nào đủ mạnh để kết luận tuyệt đối trong mọi trường hợp. Tuy nhiên, việc kết hợp 5 phương pháp tiêu biểu giúp SourceVerify tạo được một nền tảng phân tích có tính giải thích tốt, phù hợp với định hướng tìm hiểu công nghệ và thiết kế giải pháp của Project I.

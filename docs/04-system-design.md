@@ -1,57 +1,106 @@
 # Phân tích và thiết kế hệ thống
 
-## Yêu cầu hệ thống
-### Yêu cầu chức năng
-Hệ thống SourceVerify cần đáp ứng các chức năng sau:
+## 3.1. Mục tiêu thiết kế hệ thống
+Hệ thống SourceVerify được thiết kế để hỗ trợ người dùng kiểm tra nhanh một ảnh số và nhận về kết quả đánh giá có giải thích. Với đặc thù của Project I, mục tiêu thiết kế không phải là xây dựng một hệ thống thương mại hoàn chỉnh, mà là tạo ra một nền tảng minh họa rõ ràng cho quy trình phân tích ảnh bằng nhiều phương pháp forensic.
 
-1. Người dùng có thể tải lên nội dung cần kiểm tra.
-2. Hệ thống xác định loại dữ liệu và kiểm tra tính hợp lệ của tệp.
-3. Với ảnh, hệ thống đọc metadata và ma trận pixel để chạy các method forensic.
-4. Với văn bản và video, hệ thống có cấu trúc mở để bổ sung method tương ứng.
-5. Hệ thống tổng hợp kết quả thành điểm AI, nhãn dự đoán và độ tin cậy.
+## 3.2. Yêu cầu hệ thống
+### 3.2.1. Yêu cầu chức năng
+Hệ thống cần đáp ứng các chức năng chính sau:
 
-### Yêu cầu phi chức năng
-- Tính mở rộng: thêm method mới không làm thay đổi toàn bộ kiến trúc.
-- Tính minh bạch: kết quả phải có giải thích, không chỉ trả về nhãn cuối.
-- Hiệu năng: ảnh lớn cần được giới hạn kích thước xử lý để tránh quá tải.
-- Độ tin cậy: kiểm tra định dạng và dữ liệu đầu vào trước khi phân tích.
+1. Cho phép người dùng tải ảnh lên từ giao diện web.
+2. Kiểm tra định dạng và tính hợp lệ của tệp ảnh.
+3. Trích xuất metadata và dữ liệu pixel từ ảnh đầu vào.
+4. Thực hiện phân tích theo 5 phương pháp đã chọn.
+5. Tổng hợp điểm từ các phương pháp thành kết quả chung.
+6. Hiển thị mức độ nghi ngờ ảnh do AI tạo cùng giải thích cho từng phương pháp.
 
-## Kiến trúc tổng thể
-Kiến trúc SourceVerify được thiết kế theo hướng đơn giản trước, đúng với nguyên tắc Project I: ưu tiên hiểu rõ bài toán và có sản phẩm minh họa ổn định, sau đó mới mở rộng các thành phần phức tạp hơn.
+### 3.2.2. Yêu cầu phi chức năng
+- **Tính mở rộng:** dễ bổ sung thêm phương pháp mới sau này.
+- **Tính minh bạch:** phải hiển thị được lý do hình thành kết quả.
+- **Hiệu năng:** thời gian phân tích ở mức chấp nhận được với ảnh phổ biến.
+- **Tính an toàn dữ liệu:** ưu tiên xử lý cục bộ, hạn chế gửi ảnh lên máy chủ.
 
-Các lớp chính gồm:
-- Client Layer / React UI
-- Application Layer / Next.js Routes
-- Analysis Layer / Analyzer Engine
-- Method Layer / Image / Text / Video
-- Scoring Layer / Weighted Voting
-- Presentation Layer / Result Explainability
+## 3.3. Kiến trúc tổng thể của hệ thống
+SourceVerify được thiết kế theo kiến trúc web đơn giản, gồm các lớp chính:
 
-## Phân rã chức năng
-Các khối chức năng chính của SourceVerify gồm:
-- Nhập dữ liệu
-- Tiền xử lý
-- Phân tích method
-- Tổng hợp điểm
-- Hiển thị kết quả
+- **Lớp giao diện người dùng:** tiếp nhận thao tác tải ảnh và hiển thị kết quả.
+- **Lớp điều phối phân tích:** xác định loại dữ liệu, gọi các mô-đun xử lý tương ứng.
+- **Lớp phương pháp phân tích:** triển khai 5 phương pháp forensic đã chọn.
+- **Lớp tổng hợp điểm:** kết hợp kết quả từ các phương pháp để đưa ra nhận định cuối.
+- **Lớp trình bày kết quả:** diễn giải tín hiệu và mức độ nghi ngờ cho người dùng.
 
-## Luồng dữ liệu phân tích ảnh
-Luồng dữ liệu của một lần phân tích ảnh:
-1. Upload ảnh
-2. Validate tệp
-3. Trích xuất metadata và pixel
-4. Chạy 5 nhóm tín hiệu
-5. Thu danh sách signal
-6. Weighted scoring
-7. Sinh AI score / verdict
-8. Giải thích kết quả
+Kiến trúc này phù hợp với Project I vì dễ hiểu, dễ triển khai và thuận tiện cho việc trình bày trực tiếp.
 
-## Thiết kế dữ liệu và lựa chọn kiến trúc
-Dữ liệu phân tích được tổ chức theo các cấu trúc logic sau: `FileMetadata`, `AnalysisMethod` và `AnalysisResult`. Thiết kế này giúp kết quả phân tích có cấu trúc thống nhất để bộ tổng hợp có thể dùng lại cho nhiều loại method.
+## 3.4. Phân rã chức năng hệ thống
+Có thể phân rã hệ thống thành 5 khối chức năng chính:
 
-### So sánh lựa chọn kiến trúc
-- **Monolithic Next.js + module analyzer**: dễ triển khai, dễ hiểu, phù hợp Project I, ít phụ thuộc hạ tầng; nhược điểm là khó mở rộng khi tải lớn.
-- **Microservice analyzer riêng**: dễ scale từng service, phù hợp sản phẩm lớn; nhược điểm là cần hạ tầng, queue, API nội bộ, monitoring.
-- **Mô hình ML end-to-end**: có thể đạt độ chính xác cao nếu có dataset lớn; nhược điểm là cần dữ liệu gán nhãn, training, đánh giá nghiêm ngặt.
+### 3.4.1. Khối nhập dữ liệu
+- Nhận tệp ảnh từ người dùng.
+- Kiểm tra định dạng tệp như JPG, PNG, WebP.
+- Tạo phiên làm việc phân tích.
 
-Quyết định hiện tại là dùng kiến trúc Next.js kết hợp analyzer module nội bộ. Lý do là nhóm thực hiện cần tập trung vào hiểu bài toán và trình bày method, trong khi microservice hoặc training model sẽ làm tăng độ phức tạp vượt phạm vi Project I.
+### 3.4.2. Khối tiền xử lý
+- Đọc metadata của tệp.
+- Chuyển ảnh thành ma trận pixel.
+- Chuẩn hóa kích thước nếu ảnh quá lớn.
+
+### 3.4.3. Khối phân tích phương pháp
+- Chạy **Metadata Analysis**.
+- Chạy **Noise Residual**.
+- Chạy **DCT Block Artifacts**.
+- Chạy **Chromatic Aberration**.
+- Chạy **Spectral Nyquist Analysis**.
+
+### 3.4.4. Khối tổng hợp điểm
+- Thu thập điểm từ từng phương pháp.
+- Áp dụng trọng số cho từng phương pháp.
+- Tính AI score tổng hợp.
+- Sinh nhãn kết quả và mức độ tin cậy.
+
+### 3.4.5. Khối hiển thị kết quả
+- Hiển thị điểm tổng hợp.
+- Hiển thị điểm riêng của từng phương pháp.
+- Giải thích ngắn gọn nguyên nhân phương pháp nghiêng về AI hay ảnh thật.
+
+## 3.5. Luồng dữ liệu của hệ thống
+Luồng xử lý cho một lần phân tích ảnh gồm các bước sau:
+
+1. Người dùng tải ảnh lên hệ thống.
+2. Hệ thống kiểm tra định dạng và kích thước tệp.
+3. Ảnh được đọc metadata và trích xuất dữ liệu pixel.
+4. Bộ điều phối lần lượt gọi 5 phương pháp phân tích.
+5. Mỗi phương pháp trả về điểm số và mô tả tín hiệu.
+6. Bộ tổng hợp tính điểm AI cuối cùng theo trọng số.
+7. Giao diện hiển thị kết quả tổng hợp và giải thích chi tiết.
+
+## 3.6. Thiết kế dữ liệu
+Để thống nhất kết quả giữa các phương pháp, hệ thống sử dụng ba cấu trúc logic chính:
+
+### 3.6.1. FileMetadata
+Lưu các thông tin mô tả tệp như tên tệp, định dạng, kích thước, phần mềm tạo ảnh, thông tin EXIF và các thuộc tính liên quan đến nguồn gốc tệp.
+
+### 3.6.2. AnalysisMethod
+Lưu kết quả của một phương pháp phân tích gồm:
+- Tên phương pháp.
+- Điểm số.
+- Trọng số.
+- Mô tả ngắn.
+- Chi tiết tín hiệu phát hiện.
+
+### 3.6.3. AnalysisResult
+Lưu kết quả cuối cùng của cả phiên phân tích gồm:
+- Điểm AI tổng hợp.
+- Nhãn nhận định.
+- Danh sách các phương pháp đã chạy.
+- Giải thích kết quả tổng quát.
+
+## 3.7. Lý do lựa chọn kiến trúc hiện tại
+Nhóm chọn mô hình **Next.js kết hợp module phân tích nội bộ** thay vì microservice hoặc mô hình học máy end-to-end vì các lý do sau:
+
+- Phù hợp phạm vi Project I.
+- Giảm độ phức tạp triển khai.
+- Dễ trình bày rõ luồng xử lý và các phương pháp.
+- Thuận tiện cho việc mở rộng thêm phương pháp trong các giai đoạn tiếp theo.
+
+## 3.8. Kết luận chương
+Từ phân tích trên, có thể thấy SourceVerify được thiết kế theo hướng đơn giản nhưng có cấu trúc rõ ràng. Hệ thống đủ khả năng minh họa quy trình kiểm chứng ảnh số bằng 5 phương pháp nổi bật, đồng thời vẫn giữ được khả năng mở rộng cho các nghiên cứu sau này.
