@@ -31,7 +31,7 @@
 \label{fig:pipeline-compare}
 \end{figure}
 
-Digital image forensics là lĩnh vực tìm các dấu vết kỹ thuật còn lại trong ảnh để kiểm tra tính xác thực \cite{farid,verdoliva}. Có thể hình dung nó giống như khám nghiệm hiện trường: thám tử không nhìn xem bức ảnh "đẹp hay xấu" mà đi tìm những vết tích nhỏ mà người làm giả thường bỏ sót. Ý tưởng của em là: ảnh AI tuy trông giống thật nhưng thường thiếu hoặc làm sai một vài dấu vết vật lý, ví dụ nhiễu cảm biến, vết nén hay sai lệch quang học. Mỗi phương pháp sẽ soi một loại dấu vết, và khi gộp lại thì kết quả đáng tin hơn là chỉ dựa vào một dấu hiệu.
+Digital image forensics (giám định ảnh số) là lĩnh vực tìm các dấu vết kỹ thuật còn lại trong ảnh để kiểm tra tính xác thực \cite{farid,verdoliva}. Có thể hình dung nó giống như khám nghiệm hiện trường: thám tử không nhìn xem bức ảnh "đẹp hay xấu" mà đi tìm những vết tích nhỏ mà người làm giả thường bỏ sót. Ý tưởng của em là: ảnh AI tuy trông giống thật nhưng thường thiếu hoặc làm sai một vài dấu vết vật lý, ví dụ nhiễu cảm biến, vết nén hay sai lệch quang học. Mỗi phương pháp sẽ soi một loại dấu vết, và khi gộp lại thì kết quả đáng tin hơn là chỉ dựa vào một dấu hiệu.
 
 Lý do em phải dùng nhiều phương pháp là vì không có dấu vết nào đúng trong mọi trường hợp. Một bức ảnh thật bị nén lại nhiều lần có thể mất sạch metadata; một ảnh AI được chỉnh sửa thêm có thể trông giống ảnh thật ở vài khía cạnh. Nếu chỉ tin vào một phương pháp thì rất dễ kết luận sai. Khi nhiều phương pháp độc lập cùng chỉ về một hướng, em mới yên tâm hơn với kết luận.
 
@@ -87,8 +87,8 @@ Thư viện SourceVerify thực ra có hơn 500 phương pháp, nhưng phần l�
 
 \section{Năm phương pháp trọng tâm}
 
-\subsection{Metadata Analysis}
-Metadata là thông tin mô tả đi kèm tệp ảnh: thiết bị chụp, thời gian, phần mềm xử lý, profile màu, các trường EXIF... \cite{farid,c2pa}. Có thể hiểu nó giống như "lý lịch" của bức ảnh. Ví dụ một ảnh chụp từ điện thoại thường ghi rõ hãng máy, model, tiêu cự, ISO, thời gian chụp; còn một ảnh xuất từ phần mềm tạo ảnh có thể ghi tên phần mềm đó hoặc không có thông tin máy ảnh nào cả.
+\subsection{Metadata Analysis (Phân tích siêu dữ liệu)}
+Metadata (siêu dữ liệu) là thông tin mô tả đi kèm tệp ảnh: thiết bị chụp, thời gian, phần mềm xử lý, profile màu, các trường EXIF... \cite{farid,c2pa}. Có thể hiểu nó giống như "lý lịch" của bức ảnh. Ví dụ một ảnh chụp từ điện thoại thường ghi rõ hãng máy, model, tiêu cự, ISO, thời gian chụp; còn một ảnh xuất từ phần mềm tạo ảnh có thể ghi tên phần mềm đó hoặc không có thông tin máy ảnh nào cả.
 
 Nếu trong metadata thấy tên phần mềm tạo ảnh như Midjourney, Stable Diffusion hay DALL\textperiodcentered E thì gần như chắc chắn ảnh không phải chụp từ máy ảnh. Ngược lại, nếu có thông tin camera hợp lý thì ảnh nhiều khả năng là thật.
 
@@ -113,14 +113,14 @@ Không có EXIF camera & 50 & Chưa rõ \\
 
 Metadata mạnh khi còn nguyên, nhưng rất dễ bị xóa hoặc sửa, ví dụ khi ảnh được tải lên mạng xã hội hay chụp màn hình. Vì vậy em không dùng nó làm bằng chứng duy nhất, chỉ coi như một lớp thông tin về nguồn gốc tệp.
 
-\subsection{Noise Residual}
-Ảnh chụp thật luôn có một chút nhiễu từ cảm biến, và nhiễu này thay đổi theo độ sáng, ISO, ánh sáng \cite{lukas,fridrich2009}. Có thể tưởng tượng nhiễu giống như "hạt" li ti trên ảnh, nhất là ảnh chụp thiếu sáng. Một điểm hay là nhiễu thật thường tỉ lệ với căn bậc hai độ sáng ($\sigma\propto\sqrt{I}$), tức là vùng sáng có nhiều hạt nhiễu hơn vùng tối một cách tự nhiên. Ảnh AI hay bị quá sạch hoặc nhiễu đều đều ở mọi vùng, không theo quy luật đó, vì mô hình thường cố tạo ra ảnh mịn đẹp.
+\subsection{Noise Residual (Phân tích nhiễu dư)}
+Ảnh chụp thật luôn có một chút nhiễu từ cảm biến, và nhiễu này thay đổi theo độ sáng, ISO, ánh sáng \cite{lukas,fridrich2009}. Có thể tưởng tượng nhiễu giống như "hạt" li ti trên ảnh, nhất là ảnh chụp thiếu sáng. Một điểm hay là nhiễu thật thường tỉ lệ với căn bậc hai độ sáng ($\sigma\propto\sqrt{I}$), gọi là shot noise (nhiễu lượng tử ánh sáng), tức là vùng sáng có nhiều hạt nhiễu hơn vùng tối một cách tự nhiên. Ảnh AI hay bị quá sạch hoặc nhiễu đều đều ở mọi vùng, không theo quy luật đó, vì mô hình thường cố tạo ra ảnh mịn đẹp.
 
 Hàm \texttt{analyzeNoiseResidual} chia ảnh thành các khối $32\times32$, rồi dùng bộ lọc Laplacian để tách lấy phần nhiễu (phần thay đổi nhanh giữa các pixel cạnh nhau):
 \[
 L(x,y)=4I(x,y)-I(x{-}1,y)-I(x{+}1,y)-I(x,y{-}1)-I(x,y{+}1)
 \]
-Sau đó em tính ba chỉ số: độ không đều của nhiễu giữa các khối ($CV$), tương quan giữa độ sáng và mức nhiễu ($\rho$), và độ lệch kurtosis so với nhiễu Gauss. Ảnh thật có $CV$ cao (nhiễu chỗ nhiều chỗ ít) và $\rho>0$ (vùng sáng nhiễu nhiều hơn); ảnh AI thì $CV$ thấp và $\rho$ gần 0. Hình \ref{fig:noise-shot} minh họa rõ điều này: các chấm của ảnh thật đi lên theo độ sáng, còn ảnh AI nằm ngang.
+Sau đó em tính ba chỉ số: độ không đều của nhiễu giữa các khối ($CV$), tương quan giữa độ sáng và mức nhiễu ($\rho$), và độ lệch kurtosis (độ nhọn của phân bố) so với nhiễu Gauss. Ảnh thật có $CV$ cao (nhiễu chỗ nhiều chỗ ít) và $\rho>0$ (vùng sáng nhiễu nhiều hơn); ảnh AI thì $CV$ thấp và $\rho$ gần 0. Hình \ref{fig:noise-shot} minh họa rõ điều này: các chấm của ảnh thật đi lên theo độ sáng, còn ảnh AI nằm ngang.
 
 \begin{figure}[H]
 \centering
@@ -142,8 +142,8 @@ Sau đó em tính ba chỉ số: độ không đều của nhiễu giữa các k
 
 Noise Residual được gán trọng số cao nhất (3.5) vì nó khai thác dấu vết vật lý khó làm giả. Hạn chế là nó nhạy với nén mạnh, resize và bộ lọc làm đẹp, nên một ảnh thật đã chỉnh nhiều cũng có thể bị coi là quá sạch.
 
-\subsection{DCT Block Artifacts}
-JPEG nén ảnh theo từng khối $8\times8$ bằng biến đổi DCT rồi lượng tử hóa, và quá trình này để lại vết ở biên các khối. Đây là cơ sở của nhiều kỹ thuật forensic về nén ảnh \cite{popescu,fridrich2009}. Nói đơn giản, vì JPEG xử lý từng ô vuông $8\times8$ riêng rẽ nên ở chỗ giáp ranh giữa hai ô hay có một bước nhảy nhỏ về màu, gọi là vết khối. Ảnh JPEG thật từ máy ảnh thường có vết khối khá rõ; ảnh AI lưu dưới dạng PNG thì gần như không có vết khối; còn ảnh AI lưu lại thành JPEG thì vết khối lại quá đều đặn ở mọi vùng.
+\subsection{DCT Block Artifacts (Vết khối nén DCT)}
+JPEG nén ảnh theo từng khối $8\times8$ bằng biến đổi DCT (biến đổi cosine rời rạc) rồi lượng tử hóa, và quá trình này để lại vết ở biên các khối. Đây là cơ sở của nhiều kỹ thuật forensic về nén ảnh \cite{popescu,fridrich2009}. Nói đơn giản, vì JPEG xử lý từng ô vuông $8\times8$ riêng rẽ nên ở chỗ giáp ranh giữa hai ô hay có một bước nhảy nhỏ về màu, gọi là vết khối. Ảnh JPEG thật từ máy ảnh thường có vết khối khá rõ; ảnh AI lưu dưới dạng PNG thì gần như không có vết khối; còn ảnh AI lưu lại thành JPEG thì vết khối lại quá đều đặn ở mọi vùng.
 
 Tính biến đổi DCT đầy đủ khá tốn kém, nên thay vì vậy em đo trực tiếp tỉ lệ năng lượng ở biên khối so với bên trong khối:
 \[
@@ -169,7 +169,7 @@ regionCV & $<0.08$ (quá đều) & $+15$ (AI tái nén) \\
 
 Phương pháp này hợp với ảnh JPEG phổ biến, nhưng yếu với PNG, WebP hoặc ảnh đã resize nhiều lần, nên cũng chỉ là tín hiệu bổ trợ.
 
-\subsection{Chromatic Aberration}
+\subsection{Chromatic Aberration (Quang sai màu)}
 Ống kính thật làm các màu hội tụ lệch nhau một chút, tạo ra viền màu nhẹ ở rìa ảnh hoặc vùng tương phản cao \cite{johnson2006}. Ảnh AI không đi qua ống kính nên thường thiếu dấu vết này. Hàm \texttt{analyzeChromaticAberration} đo độ lệch giữa kênh đỏ và xanh lam ở vùng biên ảnh; lệch càng nhiều thì càng giống ảnh chụp thật (Bảng \ref{tab:chromatic-rules}).
 
 \begin{table}[H]
@@ -189,7 +189,7 @@ $>7.0$ & 10 & Lệch rõ, ống kính thật \\
 
 Phương pháp này có trọng số thấp nhất (0.5) vì không phải ảnh thật nào cũng có viền màu rõ, ống kính tốt hoặc phần mềm chỉnh có thể làm mất dấu vết. Tuy vậy em vẫn giữ nó để có thêm một góc nhìn vật lý.
 
-\subsection{Spectral Nyquist Analysis}
+\subsection{Spectral Nyquist Analysis (Phân tích phổ Nyquist)}
 Phương pháp này nhìn ảnh trong miền tần số thay vì nhìn từng pixel. "Tần số" ở đây hiểu nôm na là mức độ thay đổi nhanh hay chậm của các chi tiết: vùng trời mịn là tần số thấp, vùng nhiều chi tiết nhỏ là tần số cao. Khi mô hình AI sinh ảnh hoặc phóng to ảnh, nó hay để lại các đỉnh bất thường ở vùng tần số cao mà mắt thường không thấy được \cite{durall2020,wang2020}.
 
 Hàm \texttt{analyzeSpectralNyquist} cắt vùng giữa ảnh cỡ $256\times256$, đổi sang ảnh xám rồi tính phổ năng lượng theo từng hàng và cột bằng phép biến đổi Fourier:
