@@ -120,4 +120,6 @@ Bộ tổng hợp \texttt{calculateVerdict} không chỉ lấy trung bình có t
 \label{fig:verdict-flow}
 \end{figure}
 
-Ngưỡng cuối cùng đặt như sau: điểm $\geq 55$ là \texttt{ai}, $\leq 40$ là \texttt{real}, còn lại là \texttt{uncertain}. Độ tin cậy được tính dựa trên khoảng cách của điểm tới ngưỡng, điểm càng xa vùng giữa thì càng chắc chắn.
+Ngưỡng cuối cùng đặt như sau: điểm $\geq 55$ là \texttt{ai}, $\leq 40$ là \texttt{real}, còn lại là \texttt{uncertain}. Em để một vùng "chưa chắc" ở giữa thay vì ép buộc phải chọn ai hoặc real, vì với những ảnh không đủ bằng chứng thì trả lời "chưa rõ" trung thực hơn là đoán bừa. Độ tin cậy được tính dựa trên khoảng cách của điểm tới ngưỡng: điểm càng xa vùng giữa thì hệ thống càng chắc chắn. Ví dụ ảnh được 90 điểm sẽ có độ tin cậy cao hơn nhiều so với ảnh chỉ được 57 điểm, dù cả hai đều bị xếp là \texttt{ai}.
+
+Bước "ưu tiên metadata rõ ràng" đáng chú ý: nếu metadata bắt được đúng tên một phần mềm AI thì đây là bằng chứng rất mạnh, nên em cho nó cộng thẳng vào điểm cuối thay vì chỉ tính trung bình bình thường. Ngược lại, bước "chống báo nhầm" giúp tránh trường hợp nhiều phương pháp quan trọng đều nói ảnh thật mà hệ thống vẫn lỡ kết luận AI.

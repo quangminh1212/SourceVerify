@@ -65,9 +65,14 @@ Metadata & \multicolumn{3}{l}{Đo riêng, phụ thuộc EXIF của tệp} \\
 Vài điều em rút ra từ kết quả này:
 \begin{itemize}
   \item Noise Residual đúng nhất (67.5\%) và gần như luôn dám quyết, nên em để trọng số cao nhất cho nó cũng hợp lý.
-  \item DCT Block khi dám phân loại thì khá đúng (71.6\%) nhưng hay bỏ trung tính với ảnh PNG hoặc đã resize.
+  \item DCT Block khi dám phân loại thì khá đúng (71.6\%) nhưng hay bỏ trung tính với ảnh PNG hoặc đã resize. Coverage chỉ 76.3\% nghĩa là cứ 4 ảnh thì có khoảng 1 ảnh nó trả lời "chưa rõ".
   \item Chromatic Aberration và Spectral Nyquist chỉ quanh 50\% trên tập 320px. Lý do là resize nhỏ làm mất dấu vết tần số cao và viền màu; với ảnh gốc lớn hơn thì hai cái này hữu ích hơn.
 \end{itemize}
+
+Một điều cần nói thẳng là không phương pháp nào đạt độ chính xác thật sự cao, kể cả cái tốt nhất cũng chỉ khoảng 67\%. Đó là lý do em không tin vào một phương pháp đơn lẻ mà phải cộng điểm nhiều phương pháp lại. Con số này cũng cho thấy bài toán phát hiện ảnh AI khó hơn nhiều so với cảm giác ban đầu, và phần benchmark còn phải làm kỹ hơn nữa thì kết quả mới thật sự đáng tin.
+
+\section{Ví dụ một lần phân tích}
+Để thấy hệ thống chạy thế nào, em mô tả lại một lần phân tích một ảnh nghi là AI. Sau khi tải ảnh lên, hệ thống đọc metadata (không thấy thông tin máy ảnh, cũng không thấy phần mềm AI nên Metadata cho 50 điểm trung tính), rồi chạy các phương pháp pixel. Noise Residual thấy nhiễu quá đều nên cho 72 điểm; DCT thấy gần như không có vết khối JPEG nên cho 65; Spectral thấy hơi nhô ở tần số cao nên cho 60; Chromatic thấy thiếu viền màu nên cho 68. Cộng lại theo trọng số (giống Bảng \ref{tab:vidu-diem} ở Chương 2), điểm tổng khoảng 65--68, vượt ngưỡng 55 nên hệ thống kết luận \texttt{AI-GENERATED} với độ tin cậy khoảng 64\%. Quan trọng là người dùng nhìn vào danh sách tín hiệu sẽ hiểu vì sao, chứ không chỉ nhận một con số khô khan.
 
 \section{Sản phẩm}
 Hiện tại SourceVerify đã có giao diện kéo-thả ảnh, trang kết quả hiện điểm AI cùng danh sách tín hiệu, và trang tài liệu cho các phương pháp. Hình \ref{fig:ui-mockup} mô tả bố cục trang kết quả.
