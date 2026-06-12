@@ -1,224 +1,99 @@
 \chapter{Triển khai và kết quả}
 
-\section{Môi trường và công nghệ triển khai}
-Sản phẩm SourceVerify được triển khai trên nền tảng web hiện đại. Next.js và React xử lý giao diện, TypeScript tăng an toàn kiểu dữ liệu, Canvas cho phép đọc ảnh và pixel. Các module method được đóng gói thành hàm riêng, dễ dàng kiểm thử và tái sử dụng. Toàn bộ phân tích chạy phía client nên ảnh không cần tải lên máy chủ.
+\section{Công nghệ sử dụng}
+Em làm SourceVerify bằng Next.js và React cho giao diện, TypeScript cho phần code phân tích, dùng Canvas để đọc pixel ảnh, và triển khai trên Vercel (Bảng \ref{tab:tech-stack}). Mỗi phương pháp là một hàm riêng nên dễ thử và dễ thêm bớt. Toàn bộ phân tích chạy ngay trên trình duyệt nên ảnh không phải tải lên máy chủ.
 
 \begin{table}[H]
 \centering
-\caption{Công nghệ sử dụng trong SourceVerify}
+\caption{Công nghệ sử dụng}
 \label{tab:tech-stack}
-\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.25\textwidth}Y}
+\begin{tabularx}{\textwidth}{p{0.26\textwidth}Y}
 \toprule
-\textbf{Thành phần} & \textbf{Công nghệ} & \textbf{Vai trò} \\
+\textbf{Thành phần} & \textbf{Công nghệ} \\
 \midrule
-Frontend & React 19 / Next.js 16 & Xây dựng giao diện và trang kết quả \\
-Ngôn ngữ & TypeScript 5 & An toàn kiểu, dễ bảo trì module \\
-Styling & Tailwind CSS 4 & Thiết kế giao diện responsive \\
-Xử lý ảnh & Canvas / Pixel buffer & Đọc ảnh, lấy ma trận pixel \\
-Analyzer & Module nội bộ & Chạy method và trả signal thống nhất \\
-Scoring & Weighted scoring & Tổng hợp điểm và sinh verdict \\
-Triển khai & Vercel & Hosting và CI/CD \\
-Tài liệu & LaTeX & Quyển báo cáo học thuật \\
+Giao diện & React 19 / Next.js 16, Tailwind CSS \\
+Ngôn ngữ & TypeScript 5 \\
+Xử lý ảnh & Canvas / Pixel buffer \\
+Phân tích & Module nội bộ + bộ tổng hợp điểm \\
+Triển khai & Vercel \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\section{Quy mô mã nguồn và thư viện phương pháp}
-SourceVerify hiện có hơn 500 phương pháp phân tích trải trên ba miền dữ liệu. Bảng \ref{tab:method-count} thống kê quy mô, còn Hình \ref{fig:method-bar} minh họa tỉ lệ. Tuy nhiên, runtime mặc định chỉ kích hoạt tập \textit{paper-faithful} gồm khoảng 38 phương pháp đã được kiểm chứng bám sát công trình gốc.
+\section{Cách đánh giá}
+Để đo thử hiệu quả, em viết một script benchmark chạy trên tập ảnh nhỏ gồm 120 ảnh thật và 120 ảnh AI, resize tối đa 320px cho dễ lặp lại. Em dùng \textit{strict accuracy} (tỉ lệ đoán đúng, điểm 50 tính là sai vì phương pháp không dám quyết), \textit{classified accuracy} (chỉ tính những ảnh được phân loại) và \textit{coverage} (tỉ lệ ảnh không bị bỏ trung tính).
+
+\section{Kết quả 5 phương pháp}
+Kết quả benchmark của 5 phương pháp trọng tâm như Bảng \ref{tab:five-bench} và Hình \ref{fig:acc-bar}.
 
 \begin{table}[H]
 \centering
-\caption{Thống kê số lượng phương pháp theo miền}
-\label{tab:method-count}
-\begin{tabularx}{\textwidth}{p{0.26\textwidth}p{0.20\textwidth}Y}
-\toprule
-\textbf{Miền dữ liệu} & \textbf{Số phương pháp} & \textbf{Trong runtime mặc định} \\
-\midrule
-Ảnh (Image) & 186 & 32 \\
-Video & 165 & 0 (dùng proxy ảnh) \\
-Văn bản (Text) & 149 & 6 \\
-\textbf{Tổng} & \textbf{500} & \textbf{38} \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=1.0]
-\def\maxw{8.5}
-% bars: image 186, video 165, text 149 ; scale by /186*maxw
-\foreach \lbl/\val/\y/\col in {Image/186/2.4/Blue, Video/165/1.4/Purple, Text/149/0.4/Green}{
-  \pgfmathsetmacro\barlen{\val/186*\maxw}
-  \draw[fill=\col!25,draw=\col,thick] (0,\y) rectangle (\barlen,\y+0.6);
-  \node[left,font=\small] at (-0.1,\y+0.3) {\lbl};
-  \node[right,font=\small] at (\barlen+0.1,\y+0.3) {\val};
-}
-\draw[->,thick] (0,0)--(0,3.3);
-\draw[->,thick] (0,0)--(9.2,0) node[right,font=\scriptsize]{Số phương pháp};
-\end{tikzpicture}
-\caption{Số lượng phương pháp theo từng miền dữ liệu}
-\label{fig:method-bar}
-\end{figure}
-
-\section{Quy trình benchmark}
-Để đánh giá định lượng, hệ thống có script \texttt{benchmark:methods} chạy trên tập dữ liệu cục bộ cân bằng gồm \textbf{120 ảnh thật} và \textbf{120 ảnh AI}, resize tối đa 320px để đảm bảo tính tái lập. Ba chỉ số được đo cho mỗi phương pháp:
-\begin{itemize}
-  \item \textbf{Strict accuracy}: số dự đoán đúng trên tổng số mẫu, trong đó điểm $=50$ bị tính là sai (vì phương pháp giữ trung tính).
-  \item \textbf{Classified accuracy}: số đúng trên số mẫu được phân loại (loại bỏ điểm $=50$).
-  \item \textbf{Coverage}: tỉ lệ mẫu được phân loại (không trung tính).
-\end{itemize}
-
-\section{Kết quả benchmark của năm phương pháp trọng tâm}
-Bảng \ref{tab:five-bench} trình bày kết quả benchmark thực tế của 5 phương pháp trọng tâm, trích từ báo cáo \texttt{METHOD\_ACCURACY\_REPORT} sinh ngày 12/03/2026.
-
-\begin{table}[H]
-\centering
-\caption{Kết quả benchmark của 5 phương pháp trọng tâm (120 thật + 120 AI)}
+\caption{Kết quả benchmark (120 ảnh thật + 120 ảnh AI)}
 \label{tab:five-bench}
-\begin{tabularx}{\textwidth}{p{0.26\textwidth}Y Y Y Y}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth}Y Y Y}
 \toprule
-\textbf{Phương pháp} & \textbf{Strict Acc} & \textbf{Classified Acc} & \textbf{Coverage} & \textbf{Avg ms} \\
+\textbf{Phương pháp} & \textbf{Strict} & \textbf{Classified} & \textbf{Coverage} \\
 \midrule
-Noise Residual & 67.5\% & 67.8\% & 99.6\% & 2.5 \\
-DCT Block Artifacts & 54.6\% & 71.6\% & 76.3\% & 0.6 \\
-Chromatic Aberration & 50.4\% & 50.4\% & 100.0\% & 0.1 \\
-Spectral Nyquist & 50.0\% & 50.0\% & 100.0\% & 227.9 \\
-Metadata Analysis & \multicolumn{4}{l}{Đo riêng ở pipeline server (phụ thuộc EXIF)} \\
+Noise Residual & 67.5\% & 67.8\% & 99.6\% \\
+DCT Block Artifacts & 54.6\% & 71.6\% & 76.3\% \\
+Chromatic Aberration & 50.4\% & 50.4\% & 100\% \\
+Spectral Nyquist & 50.0\% & 50.0\% & 100\% \\
+Metadata & \multicolumn{3}{l}{Đo riêng, phụ thuộc EXIF của tệp} \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Hình \ref{fig:acc-bar} trực quan hóa strict accuracy của bốn phương pháp ảnh đo được trực tiếp. Có thể thấy Noise Residual dẫn đầu rõ rệt, phù hợp với việc nó được gán trọng số cao nhất (3.5).
-
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=1.0]
-\def\maxw{9.0}
+\begin{tikzpicture}[scale=0.95]
+\def\maxw{8.5}
 \foreach \lbl/\val/\y/\col in {{Noise Residual}/67.5/3.0/Green, {DCT Block}/54.6/2.0/Blue, {Chromatic Ab.}/50.4/1.0/Orange, {Spectral Nyq.}/50.0/0.0/Purple}{
   \pgfmathsetmacro\barlen{\val/100*\maxw}
-  \draw[fill=\col!25,draw=\col,thick] (0,\y) rectangle (\barlen,\y+0.6);
-  \node[left,font=\scriptsize] at (-0.1,\y+0.3) {\lbl};
-  \node[right,font=\scriptsize] at (\barlen+0.05,\y+0.3) {\val\%};
+  \draw[fill=\col!25,draw=\col,thick] (0,\y) rectangle (\barlen,\y+0.55);
+  \node[left,font=\scriptsize] at (-0.1,\y+0.27) {\lbl};
+  \node[right,font=\scriptsize] at (\barlen+0.05,\y+0.27) {\val\%};
 }
-% 50% reference line
 \pgfmathsetmacro\refx{50/100*\maxw}
-\draw[Red,dashed,thick] (\refx,-0.3)--(\refx,3.9) node[above,font=\scriptsize,Red]{50\% (ngẫu nhiên)};
-\draw[->,thick] (0,-0.3)--(0,3.9);
-\draw[->,thick] (0,-0.3)--(9.6,-0.3) node[right,font=\scriptsize]{Strict Accuracy};
+\draw[Red,dashed,thick] (\refx,-0.3)--(\refx,3.7) node[above,font=\scriptsize,Red]{50\%};
+\draw[->,thick] (0,-0.3)--(0,3.7);
+\draw[->,thick] (0,-0.3)--(9.0,-0.3) node[right,font=\scriptsize]{Strict Acc};
 \end{tikzpicture}
-\caption{Strict accuracy của 4 phương pháp ảnh trọng tâm so với mốc ngẫu nhiên 50\%}
+\caption{Strict accuracy của 4 phương pháp ảnh so với mốc ngẫu nhiên 50\%}
 \label{fig:acc-bar}
 \end{figure}
 
-\subsection{Phân tích kết quả}
-Một số nhận xét quan trọng từ benchmark:
+Vài điều em rút ra từ kết quả này:
 \begin{itemize}
-  \item \textbf{Noise Residual} đạt strict accuracy cao nhất (67.5\%) với coverage gần như tuyệt đối (99.6\%), khẳng định nhiễu cảm biến là dấu vết phân biệt mạnh. Đây là cơ sở thực nghiệm cho trọng số 3.5.
-  \item \textbf{DCT Block} có classified accuracy cao (71.6\%) nhưng coverage chỉ 76.3\%: khi phương pháp dám phân loại thì khá chính xác, nhưng nó thường trả trung tính với ảnh PNG hoặc đã resize.
-  \item \textbf{Chromatic Aberration} và \textbf{Spectral Nyquist} dao động quanh 50\% trên tập 320px: điều này phù hợp với lý thuyết, vì resize xuống 320px phá hủy nhiều dấu vết tần số cao và viền màu. Trên ảnh độ phân giải gốc, hai phương pháp này hữu ích hơn.
-  \item \textbf{Spectral Nyquist} có chi phí tính toán cao nhất (227.9ms) do dùng DFT 1D trực tiếp, là điểm cần tối ưu trong tương lai.
+  \item Noise Residual đúng nhất (67.5\%) và gần như luôn dám quyết, nên em để trọng số cao nhất cho nó cũng hợp lý.
+  \item DCT Block khi dám phân loại thì khá đúng (71.6\%) nhưng hay bỏ trung tính với ảnh PNG hoặc đã resize.
+  \item Chromatic Aberration và Spectral Nyquist chỉ quanh 50\% trên tập 320px. Lý do là resize nhỏ làm mất dấu vết tần số cao và viền màu; với ảnh gốc lớn hơn thì hai cái này hữu ích hơn.
 \end{itemize}
 
-Bảng \ref{tab:top-findings} tóm tắt các phát hiện top từ toàn bộ benchmark để đặt 5 phương pháp trong bối cảnh chung.
-
-\begin{table}[H]
-\centering
-\caption{Một số phát hiện nổi bật từ toàn bộ benchmark}
-\label{tab:top-findings}
-\begin{tabularx}{\textwidth}{p{0.40\textwidth}Y}
-\toprule
-\textbf{Phát hiện} & \textbf{Giá trị} \\
-\midrule
-Phương pháp ảnh tốt nhất (Moiré Pattern) & 82.5\% \\
-Noise Residual (trọng tâm) & 67.5\% \\
-Phương pháp video proxy tốt nhất (Lip Sync) & 89.6\% \\
-Phương pháp text tốt nhất (First Person) & 100.0\% \\
-Verdict cuối của server analyzer & 52.5\% (coverage 73.8\%) \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\section{Minh họa tổng hợp điểm}
-Hình \ref{fig:score-visual} minh họa cách 5 nhóm tín hiệu hội tụ thành một điểm AI duy nhất. Mỗi nhóm đóng góp theo trọng số riêng, sau đó bộ tổng hợp áp dụng các bước khuếch đại đã mô tả ở Chương 4.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-  \draw[fill=LightBlue,draw=Navy,thick] (0,0) circle (1.5);
-  \node[align=center] at (0,0) {\Large\bfseries AI Score\\\Large 68/100};
-  \foreach \angle/\label/\col in {90/Metadata/Orange,18/Frequency/Purple,-54/Noise/Green,-126/Edges/Blue,162/Color/Red} {
-    \draw[draw=\col,fill=\col!15,thick] (\angle:3.2) circle (0.85);
-    \node[align=center,font=\small] at (\angle:3.2) {\label};
-    \draw[-{Latex[length=2mm]},thick,\col] (\angle:2.35) -- (\angle:1.55);
-  }
-\end{tikzpicture}
-\caption{Minh họa tổng hợp điểm từ nhiều nhóm tín hiệu}
-\label{fig:score-visual}
-\end{figure}
-
-\subsection{Ví dụ một lần phân tích}
-Bảng \ref{tab:example-run} mô phỏng kết quả một lần phân tích ảnh AI điển hình, cho thấy cách từng tín hiệu đóng góp vào điểm cuối.
-
-\begin{table}[H]
-\centering
-\caption{Ví dụ minh họa kết quả phân tích một ảnh nghi AI}
-\label{tab:example-run}
-\begin{tabularx}{\textwidth}{p{0.26\textwidth}Y Y Y}
-\toprule
-\textbf{Tín hiệu} & \textbf{Score} & \textbf{Weight} & \textbf{score$\times$weight} \\
-\midrule
-Metadata Analysis & 50 & 1.5 & 75.0 \\
-Noise Residual & 72 & 3.5 & 252.0 \\
-DCT Block Artifacts & 65 & 2.0 & 130.0 \\
-Chromatic Aberration & 68 & 0.5 & 34.0 \\
-Spectral Nyquist & 60 & 1.5 & 90.0 \\
-\midrule
-\textbf{Tổng} & -- & \textbf{9.0} & \textbf{581.0} \\
-\textbf{Baseline aiScore} & \multicolumn{3}{l}{$581.0 / 9.0 \approx 65 \rightarrow$ sau khuếch đại $\approx 68$ (verdict: \texttt{ai})} \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\section{Giao diện sản phẩm}
-Trong phạm vi sản phẩm thử nghiệm, SourceVerify đã có giao diện chính cho phép kéo-thả ảnh, trang kết quả hiển thị điểm AI cùng danh sách tín hiệu, trang tài liệu cho 700 method với i18n đầy đủ 6 ngôn ngữ (EN, VI, ZH, JA, KO, ES). Hình \ref{fig:ui-mockup} mô phỏng bố cục trang kết quả.
+\section{Sản phẩm}
+Hiện tại SourceVerify đã có giao diện kéo-thả ảnh, trang kết quả hiện điểm AI cùng danh sách tín hiệu, và trang tài liệu cho các phương pháp. Hình \ref{fig:ui-mockup} mô tả bố cục trang kết quả.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[font=\scriptsize]
-% browser frame
-\draw[draw=Navy,thick,rounded corners] (0,0) rectangle (12,7);
-\draw[fill=Navy] (0,6.4) rectangle (12,7);
-\node[white] at (1.4,6.7) {SourceVerify};
-\fill[white] (0.35,6.7) circle (0.08);
-% upload zone
-\draw[draw=Blue,dashed,thick,fill=LightBlue] (0.4,4.0) rectangle (5.6,6.0);
-\node[align=center] at (3.0,5.0) {\bfseries Kéo-thả ảnh\\hoặc bấm để chọn};
-% verdict card
-\draw[draw=Green,thick,fill=Green!10] (6.0,4.0) rectangle (11.6,6.0);
-\node[Green] at (8.8,5.5) {\bfseries VERDICT: AI-GENERATED};
-\node at (8.8,4.9) {AI Score: 68/100 \quad Confidence: 64\%};
-\draw[fill=Green] (6.4,4.4) rectangle (10.2,4.7);
-% signal list
-\node[align=left,font=\scriptsize\bfseries] at (1.6,3.5) {Tín hiệu thành phần:};
-\foreach \y/\name/\val in {3.0/{Noise Residual}/72, 2.5/{DCT Block}/65, 2.0/{Spectral Nyquist}/60, 1.5/{Chromatic Ab.}/68, 1.0/{Metadata}/50}{
+\draw[draw=Navy,thick,rounded corners] (0,0) rectangle (12,6.2);
+\draw[fill=Navy] (0,5.6) rectangle (12,6.2);
+\node[white] at (1.4,5.9) {SourceVerify};
+\draw[draw=Blue,dashed,thick,fill=LightBlue] (0.4,3.4) rectangle (5.6,5.2);
+\node[align=center] at (3.0,4.3) {\bfseries Kéo-thả ảnh};
+\draw[draw=Green,thick,fill=Green!10] (6.0,3.4) rectangle (11.6,5.2);
+\node[Green] at (8.8,4.8) {\bfseries VERDICT: AI-GENERATED};
+\node at (8.8,4.2) {AI Score: 68/100 -- Tin cậy: 64\%};
+\node[align=left,font=\scriptsize\bfseries] at (1.5,2.9) {Tín hiệu:};
+\foreach \y/\name/\val in {2.5/{Noise Residual}/72, 2.0/{DCT Block}/65, 1.5/{Spectral Nyquist}/60, 1.0/{Chromatic Ab.}/68, 0.5/{Metadata}/50}{
   \node[align=left] at (2.0,\y) {\name};
-  \draw[draw=gray] (5.0,\y-0.12) rectangle (10.5,\y+0.12);
+  \draw[draw=gray] (5.0,\y-0.1) rectangle (10.5,\y+0.1);
   \pgfmathsetmacro\fillw{\val/100*5.5}
-  \draw[fill=Orange!50] (5.0,\y-0.12) rectangle (5.0+\fillw,\y+0.12);
+  \draw[fill=Orange!50] (5.0,\y-0.1) rectangle (5.0+\fillw,\y+0.1);
   \node at (11.0,\y) {\val};
 }
 \end{tikzpicture}
-\caption{Mô phỏng bố cục trang kết quả phân tích của SourceVerify}
+\caption{Bố cục trang kết quả phân tích}
 \label{fig:ui-mockup}
 \end{figure}
 
-\section{Đánh giá kết quả thực hiện}
-Đề tài đã đạt được các kết quả quan trọng:
-\begin{itemize}
-  \item Xác định rõ bài toán kiểm chứng nội dung số trong thời đại AI tạo sinh.
-  \item Xây dựng được kiến trúc hệ thống có thể mở rộng theo method.
-  \item Tìm hiểu và trình bày được 5 nhóm tín hiệu ảnh hiệu quả trong digital forensics, kèm thuật toán và benchmark thực tế.
-  \item Triển khai sản phẩm minh họa có giao diện web, module phân tích nội bộ và quy trình benchmark định lượng.
-\end{itemize}
-
-Ở giai đoạn Project I, kết quả của SourceVerify nên được hiểu là kết quả hỗ trợ tham khảo. Hệ thống chưa thể kết luận tuyệt đối một ảnh là AI hay thật trong mọi trường hợp, nhưng có ưu điểm là minh bạch và giải thích được lý do dự đoán -- điều mà một bộ phân loại hộp đen khó cung cấp.
+Nhìn chung ở mức Project I, kết quả của SourceVerify nên hiểu là để tham khảo. Hệ thống chưa kết luận chắc chắn được mọi ảnh, nhưng được cái là minh bạch và giải thích được vì sao nó nghĩ vậy, điều mà một mô hình hộp đen khó làm.

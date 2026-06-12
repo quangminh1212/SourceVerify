@@ -1,70 +1,26 @@
 \chapter{Phân tích và thiết kế hệ thống}
 
 \section{Yêu cầu hệ thống}
-\subsection{Yêu cầu chức năng}
-Hệ thống SourceVerify cần đáp ứng các chức năng sau:
-\begin{enumerate}
-  \item Người dùng có thể tải lên nội dung cần kiểm tra.
-  \item Hệ thống xác định loại dữ liệu và kiểm tra tính hợp lệ của tệp.
-  \item Với ảnh, hệ thống đọc metadata và ma trận pixel để chạy các method forensic.
-  \item Với văn bản và video, hệ thống có cấu trúc mở để bổ sung method tương ứng.
-  \item Hệ thống tổng hợp kết quả thành điểm AI, nhãn dự đoán và độ tin cậy.
-  \item Hệ thống hiển thị từng tín hiệu kèm diễn giải để người dùng hiểu lý do kết luận.
-  \item Hệ thống cung cấp trang tài liệu cho từng phương pháp, hỗ trợ đa ngôn ngữ.
-\end{enumerate}
+Hệ thống cần làm được các việc chính sau: cho người dùng tải ảnh lên; kiểm tra tệp hợp lệ; đọc metadata và dữ liệu pixel; chạy các phương pháp phân tích; tổng hợp thành điểm AI, nhãn và độ tin cậy; và hiển thị từng tín hiệu kèm giải thích. Ngoài ra hệ thống cũng có trang tài liệu cho từng phương pháp.
 
-\subsection{Yêu cầu phi chức năng}
-\begin{itemize}
-  \item Tính mở rộng: thêm method mới không làm thay đổi toàn bộ kiến trúc.
-  \item Tính minh bạch: kết quả phải có giải thích, không chỉ trả về nhãn cuối.
-  \item Hiệu năng: ảnh lớn cần được giới hạn kích thước xử lý để tránh quá tải.
-  \item Quyền riêng tư: toàn bộ phân tích chạy phía client, không tải dữ liệu lên máy chủ.
-  \item Độ tin cậy: kiểm tra định dạng và dữ liệu đầu vào trước khi phân tích.
-\end{itemize}
-
-\section{Tác nhân và use case}
-Hệ thống ở phạm vi Project I có một tác nhân chính là \textit{Người dùng} (người cần kiểm chứng ảnh). Hình \ref{fig:usecase} mô tả các use case chính.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-  actor/.style={align=center,font=\small},
-  uc/.style={ellipse,draw=Navy,fill=LightBlue,align=center,font=\small,minimum width=3.0cm,minimum height=0.85cm},
-  line/.style={-,thick,Navy}
-]
-\node[actor] (user) at (-5.2,0) {\textbf{Người}\\\textbf{dùng}};
-\draw[thick] (-5.2,0.35) circle (0.28);
-\draw[thick] (-5.2,0.07)--(-5.2,-0.6);
-\draw[thick] (-5.55,-0.2)--(-4.85,-0.2);
-\draw[thick] (-5.2,-0.6)--(-5.5,-1.05);
-\draw[thick] (-5.2,-0.6)--(-4.9,-1.05);
-\node[uc] (u1) at (-1.0,2.4) {Tải ảnh lên};
-\node[uc] (u2) at (-1.0,1.0) {Xem điểm AI \& verdict};
-\node[uc] (u3) at (-1.0,-0.4) {Xem diễn giải tín hiệu};
-\node[uc] (u4) at (-1.0,-1.8) {Đọc tài liệu method};
-\node[uc] (u5) at (-1.0,-3.2) {Đổi ngôn ngữ};
-\foreach \u in {u1,u2,u3,u4,u5} \draw[line] (-4.85,-0.1) -- (\u);
-\end{tikzpicture}
-\caption{Sơ đồ use case của SourceVerify}
-\label{fig:usecase}
-\end{figure}
+Về yêu cầu phi chức năng, em ưu tiên ba thứ: dễ mở rộng (thêm phương pháp mới mà không phải sửa lại toàn bộ), minh bạch (kết quả phải giải thích được chứ không chỉ là một con số), và quyền riêng tư (phân tích chạy ngay trên trình duyệt, ảnh không bị gửi lên máy chủ). Ảnh quá lớn được giới hạn kích thước để khỏi treo máy.
 
 \section{Kiến trúc tổng thể}
-Kiến trúc SourceVerify được thiết kế theo hướng đơn giản trước, đúng với nguyên tắc Project I: ưu tiên hiểu rõ bài toán và có sản phẩm minh họa ổn định, sau đó mới mở rộng các thành phần phức tạp hơn. Hệ thống được tổ chức thành sáu lớp logic như Hình \ref{fig:system-architecture}.
+Em thiết kế hệ thống theo hướng đơn giản trước, đúng tinh thần Project I. Hệ thống chia thành các lớp như Hình \ref{fig:system-architecture}: giao diện nhận ảnh, lớp ứng dụng điều phối, lớp phân tích gọi các phương pháp, lớp tổng hợp điểm, rồi trả kết quả về giao diện kèm phần giải thích.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  node distance=0.9cm and 1.1cm,
-  layer/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.5cm,minimum height=0.9cm},
+  node distance=0.8cm and 1.0cm,
+  layer/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.3cm,minimum height=0.85cm},
   arrow/.style={-{Latex[length=2mm]},thick,Navy}
 ]
-\node[layer] (client) {Client Layer\\React UI};
-\node[layer,right=of client] (app) {Application Layer\\Next.js Routes};
-\node[layer,right=of app] (analysis) {Analysis Layer\\Analyzer Engine};
-\node[layer,below=of analysis] (methods) {Method Layer\\Image / Text / Video};
-\node[layer,left=of methods] (score) {Scoring Layer\\Weighted Voting};
-\node[layer,left=of score] (present) {Presentation Layer\\Result Explainability};
+\node[layer] (client) {Giao diện\\(React UI)};
+\node[layer,right=of client] (app) {Điều phối\\(Next.js)};
+\node[layer,right=of app] (analysis) {Phân tích\\(analyzer.ts)};
+\node[layer,below=of analysis] (methods) {Các phương pháp\\(image/text/video)};
+\node[layer,left=of methods] (score) {Tổng hợp điểm\\(calculateVerdict)};
+\node[layer,left=of score] (present) {Trình bày\\kết quả};
 \draw[arrow] (client) -- (app);
 \draw[arrow] (app) -- (analysis);
 \draw[arrow] (analysis) -- (methods);
@@ -72,200 +28,96 @@ Kiến trúc SourceVerify được thiết kế theo hướng đơn giản trư�
 \draw[arrow] (score) -- (present);
 \draw[arrow] (present) -- (client);
 \end{tikzpicture}
-\caption{Kiến trúc tổng thể của hệ thống SourceVerify}
+\caption{Kiến trúc tổng thể của SourceVerify}
 \label{fig:system-architecture}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Vai trò các lớp trong kiến trúc}
-\label{tab:layers}
-\begin{tabularx}{\textwidth}{p{0.24\textwidth}Y}
-\toprule
-\textbf{Lớp} & \textbf{Trách nhiệm chính} \\
-\midrule
-Client Layer & Giao diện React, nhận tệp, hiển thị kết quả và biểu đồ \\
-Application Layer & Định tuyến Next.js, điều phối yêu cầu phân tích \\
-Analysis Layer & \texttt{analyzer.ts} nhận tệp, xác định loại, gọi method \\
-Method Layer & 500+ hàm forensic độc lập (image/video/text) \\
-Scoring Layer & \texttt{calculateVerdict} tổng hợp điểm có trọng số \\
-Presentation Layer & Diễn giải tín hiệu, sinh nhãn và độ tin cậy \\
-\bottomrule
-\end{tabularx}
-\end{table}
+Em chọn cách này (Next.js cộng module phân tích chạy phía client) thay vì làm microservice hay huấn luyện một mô hình học sâu, vì với phạm vi Project I thì nó dễ làm, dễ trình bày và không cần hạ tầng phức tạp. Cách chạy phía client cũng tiện cho quyền riêng tư vì ảnh không rời khỏi máy người dùng.
 
-\section{Phân rã chức năng}
+\section{Phân rã chức năng và luồng xử lý}
+Hệ thống gồm năm khối chức năng (Hình \ref{fig:function-tree}). Khối quan trọng nhất là khối phân tích, nơi chứa 5 phương pháp đã nói ở Chương 2.
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  root/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=4.2cm,minimum height=0.8cm},
-  child/.style={rectangle,draw=Blue,rounded corners,fill=white,align=center,minimum width=2.9cm,minimum height=0.75cm},
-  arrow/.style={-{Latex[length=2mm]},thick,Blue}
+  root/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.6cm,minimum height=0.7cm},
+  child/.style={rectangle,draw=Blue,rounded corners,fill=white,align=center,font=\scriptsize,minimum width=2.4cm,minimum height=0.65cm},
+  arrow/.style={-{Latex[length=1.8mm]},thick,Blue}
 ]
 \node[root] (root) at (0,0) {SourceVerify};
-\node[child] (upload) at (-5,-1.5) {Nhập dữ liệu};
-\node[child] (pre) at (-2.5,-1.5) {Tiền xử lý};
-\node[child] (method) at (0,-1.5) {Phân tích method};
-\node[child] (score) at (2.8,-1.5) {Tổng hợp điểm};
-\node[child] (ui) at (5.5,-1.5) {Hiển thị kết quả};
+\node[child] (upload) at (-5,-1.4) {Nhập dữ liệu};
+\node[child] (pre) at (-2.5,-1.4) {Tiền xử lý};
+\node[child] (method) at (0,-1.4) {Phân tích};
+\node[child] (score) at (2.6,-1.4) {Tổng hợp điểm};
+\node[child] (ui) at (5.2,-1.4) {Hiển thị};
 \foreach \x in {upload,pre,method,score,ui} \draw[arrow] (root) -- (\x);
 \end{tikzpicture}
-\caption{Sơ đồ phân rã chức năng mức 1 của SourceVerify}
+\caption{Phân rã chức năng của SourceVerify}
 \label{fig:function-tree}
 \end{figure}
 
-Mỗi chức năng mức 1 lại được phân rã chi tiết. Hình \ref{fig:function-tree2} minh họa phân rã chức năng \enquote{Phân tích method} -- thành phần trọng tâm chứa 5 phương pháp đã trình bày ở Chương 3.
+Luồng xử lý một lần phân tích ảnh diễn ra như Hình \ref{fig:data-flow}: người dùng tải ảnh lên, hệ thống kiểm tra tệp và lấy metadata cùng pixel, chạy 5 phương pháp, mỗi cái trả về một tín hiệu, rồi bộ tổng hợp cộng điểm và đưa ra kết quả kèm giải thích.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  root/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.4cm,minimum height=0.75cm},
-  child/.style={rectangle,draw=Blue,rounded corners,fill=white,align=center,font=\scriptsize,minimum width=2.4cm,minimum height=0.7cm},
-  arrow/.style={-{Latex[length=1.8mm]},thick,Blue}
-]
-\node[root] (root) at (0,0) {Phân tích method};
-\node[child] (m1) at (-5.4,-1.6) {Metadata};
-\node[child] (m2) at (-2.7,-1.6) {Noise Residual};
-\node[child] (m3) at (0,-1.6) {DCT Block};
-\node[child] (m4) at (2.7,-1.6) {Chromatic Ab.};
-\node[child] (m5) at (5.4,-1.6) {Spectral Nyq.};
-\foreach \x in {m1,m2,m3,m4,m5} \draw[arrow] (root) -- (\x);
-\end{tikzpicture}
-\caption{Phân rã chức năng \enquote{Phân tích method} thành 5 phương pháp trọng tâm}
-\label{fig:function-tree2}
-\end{figure}
-
-\section{Luồng dữ liệu phân tích ảnh}
-Luồng dữ liệu của một lần phân tích ảnh được mô tả trong Hình \ref{fig:data-flow}. Người dùng gửi ảnh lên hệ thống; ảnh được kiểm tra định dạng, đọc metadata, chuyển thành dữ liệu pixel; sau đó các method chạy độc lập và trả về tín hiệu; cuối cùng bộ tổng hợp tạo kết quả.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-  node distance=0.8cm,
-  box/.style={rectangle,draw=Navy,rounded corners,fill=LightGray,align=center,minimum width=3.1cm,minimum height=0.75cm},
-  data/.style={rectangle,draw=Green,rounded corners,align=center,minimum width=3.1cm,minimum height=0.75cm},
+  node distance=0.7cm,
+  box/.style={rectangle,draw=Navy,rounded corners,fill=LightGray,align=center,font=\small,minimum width=2.9cm,minimum height=0.7cm},
+  data/.style={rectangle,draw=Green,rounded corners,align=center,font=\small,minimum width=2.9cm,minimum height=0.7cm},
   arrow/.style={-{Latex[length=2mm]},thick,Navy}
 ]
-\node[box] (a) {Upload ảnh};
-\node[box,right=of a] (b) {Validate tệp};
+\node[box] (a) {Tải ảnh};
+\node[box,right=of a] (b) {Kiểm tra tệp};
 \node[data,right=of b] (c) {Metadata + Pixel};
-\node[box,below=of c] (d) {Chạy 5 nhóm tín hiệu};
-\node[data,left=of d] (e) {Danh sách signal};
-\node[box,left=of e] (f) {Weighted scoring};
-\node[data,below=of f] (g) {AI score / Verdict};
-\node[box,right=of g] (h) {Giải thích kết quả};
-\draw[arrow] (a) -- (b);
-\draw[arrow] (b) -- (c);
-\draw[arrow] (c) -- (d);
-\draw[arrow] (d) -- (e);
-\draw[arrow] (e) -- (f);
-\draw[arrow] (f) -- (g);
-\draw[arrow] (g) -- (h);
+\node[box,below=of c] (d) {Chạy 5 phương pháp};
+\node[data,left=of d] (e) {Danh sách tín hiệu};
+\node[box,left=of e] (f) {Tổng hợp điểm};
+\node[data,below=of f] (g) {Điểm AI / Nhãn};
+\node[box,right=of g] (h) {Giải thích};
+\draw[arrow] (a)--(b); \draw[arrow] (b)--(c); \draw[arrow] (c)--(d);
+\draw[arrow] (d)--(e); \draw[arrow] (e)--(f); \draw[arrow] (f)--(g); \draw[arrow] (g)--(h);
 \end{tikzpicture}
-\caption{Luồng dữ liệu phân tích ảnh trong SourceVerify}
+\caption{Luồng xử lý một lần phân tích ảnh}
 \label{fig:data-flow}
 \end{figure}
 
-\section{Thiết kế cấu trúc dữ liệu}
-Dữ liệu phân tích được tổ chức theo ba cấu trúc logic chính: \texttt{FileMetadata}, \texttt{AnalysisMethod} và \texttt{AnalysisResult}. Thiết kế này giúp kết quả phân tích có cấu trúc thống nhất để bộ tổng hợp có thể dùng lại cho nhiều loại method. Bảng \ref{tab:datamodel} mô tả các trường quan trọng.
+\section{Thiết kế dữ liệu}
+Để các phương pháp trả kết quả thống nhất, em dùng ba cấu trúc chính (Bảng \ref{tab:datamodel}). Nhờ vậy bộ tổng hợp chỉ cần đọc theo một chuẩn chung dù mỗi phương pháp hoạt động khác nhau.
 
 \begin{table}[H]
 \centering
-\caption{Các trường chính trong mô hình dữ liệu phân tích}
+\caption{Các cấu trúc dữ liệu chính}
 \label{tab:datamodel}
-\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.22\textwidth}Y}
+\begin{tabularx}{\textwidth}{p{0.24\textwidth}Y}
 \toprule
-\textbf{Cấu trúc} & \textbf{Trường} & \textbf{Ý nghĩa} \\
+\textbf{Cấu trúc} & \textbf{Nội dung chính} \\
 \midrule
-AnalysisMethod & name, nameKey & Tên hiển thị và khóa i18n của phương pháp \\
- & score (0--100) & Điểm nghiêng AI của riêng phương pháp \\
- & weight & Trọng số đóng góp vào điểm tổng \\
- & description, details & Diễn giải kết quả cho người dùng \\
-AnalysisResult & aiScore & Điểm AI tổng hợp cuối cùng \\
- & verdict & Nhãn: ai / real / uncertain \\
- & confidence & Độ tin cậy của nhãn \\
- & methods[] & Danh sách tín hiệu thành phần \\
-FileMetadata & width, height, fileType & Thông tin cơ bản của tệp \\
- & exifData & Bản đồ trường EXIF đã trích xuất \\
+\texttt{AnalysisMethod} & Tên, điểm (0--100), trọng số, phần giải thích của một phương pháp \\
+\texttt{AnalysisResult} & Điểm AI cuối, nhãn (ai/real/uncertain), độ tin cậy, danh sách tín hiệu \\
+\texttt{FileMetadata} & Kích thước, định dạng, dữ liệu EXIF của tệp \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Quan hệ giữa ba cấu trúc được minh họa ở Hình \ref{fig:class-diagram}.
+\section{Bộ tổng hợp điểm}
+Bộ tổng hợp \texttt{calculateVerdict} không chỉ lấy trung bình có trọng số mà còn chỉnh thêm vài bước cho giống cách một người cân nhắc bằng chứng (Hình \ref{fig:verdict-flow}): đếm xem bao nhiêu phương pháp nghiêng mạnh về AI hay ảnh thật, khuếch đại khi nhiều phương pháp đồng thuận, ưu tiên metadata khi nó rất rõ, và có một bước chống báo nhầm.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  cls/.style={rectangle,draw=Navy,fill=white,align=left,font=\scriptsize,minimum width=3.4cm},
-  arrow/.style={-{Diamond[open]},thick,Navy}
-]
-\node[cls] (res) at (0,0) {\textbf{AnalysisResult}\\ \rule{3.0cm}{0.4pt}\\ aiScore: number\\ verdict: enum\\ confidence: number\\ metadata: FileMetadata\\ methods: AnalysisMethod[]};
-\node[cls] (met) at (5.6,1.0) {\textbf{AnalysisMethod}\\ \rule{3.0cm}{0.4pt}\\ name: string\\ score: number\\ weight: number\\ details: string};
-\node[cls] (file) at (5.6,-1.8) {\textbf{FileMetadata}\\ \rule{3.0cm}{0.4pt}\\ width, height\\ fileType\\ exifData};
-\draw[arrow] (res) -- (met) node[midway,above,font=\scriptsize]{1..*};
-\draw[arrow] (res) -- (file) node[midway,below,font=\scriptsize]{1};
-\end{tikzpicture}
-\caption{Sơ đồ lớp rút gọn của mô hình dữ liệu phân tích}
-\label{fig:class-diagram}
-\end{figure}
-
-\section{Thiết kế bộ tổng hợp điểm}
-Bộ tổng hợp \texttt{calculateVerdict} là trái tim của hệ thống. Nó không chỉ lấy trung bình có trọng số mà còn áp dụng nhiều bước hiệu chỉnh để mô phỏng cách một giám định viên cân nhắc bằng chứng. Quy trình gồm sáu bước như Hình \ref{fig:verdict-flow}.
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[
-  node distance=0.55cm,
-  vstep/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=10.5cm,minimum height=0.72cm},
+  node distance=0.45cm,
+  vstep/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=10.5cm,minimum height=0.65cm},
   arrow/.style={-{Latex[length=2mm]},thick,Navy}
 ]
-\node[vstep] (s1) {B1. Trung bình có trọng số $\rightarrow$ baseline aiScore};
-\node[vstep,below=of s1] (s2) {B2. Đếm mức đồng thuận (strong/very-strong AI vs Real)};
-\node[vstep,below=of s2] (s3) {B3. Khuếch đại đồng thuận + bỏ phiếu đa số có trọng số};
-\node[vstep,below=of s3] (s4) {B4. Khuếch đại theo hướng (tuyến tính + bậc hai)};
-\node[vstep,below=of s4] (s5) {B5. Ghi đè quyết định từ Metadata ($\pm25$) + chống dương tính giả};
-\node[vstep,below=of s5] (s6) {B6. Sinh verdict theo ngưỡng 55/40 + tính confidence};
-\foreach \a/\b in {s1/s2,s2/s3,s3/s4,s4/s5,s5/s6} \draw[arrow] (\a)--(\b);
+\node[vstep] (s1) {1. Trung bình có trọng số $\rightarrow$ điểm cơ sở};
+\node[vstep,below=of s1] (s2) {2. Đếm số phương pháp nghiêng mạnh AI / ảnh thật};
+\node[vstep,below=of s2] (s3) {3. Khuếch đại khi nhiều phương pháp đồng thuận};
+\node[vstep,below=of s3] (s5) {4. Ưu tiên metadata rõ ràng + chống báo nhầm};
+\node[vstep,below=of s5] (s6) {5. Ra nhãn theo ngưỡng 55/40 + tính độ tin cậy};
+\foreach \a/\b in {s1/s2,s2/s3,s3/s5,s5/s6} \draw[arrow] (\a)--(\b);
 \end{tikzpicture}
-\caption{Sáu bước của bộ tổng hợp điểm \texttt{calculateVerdict}}
+\caption{Các bước của bộ tổng hợp điểm}
 \label{fig:verdict-flow}
 \end{figure}
 
-Bước khuếch đại theo hướng dùng công thức phi tuyến để các tín hiệu đồng thuận mạnh được nhấn mạnh hơn:
-\[
-adjustment \mathrel{+}= 1.1\,(s-50) + 0.025\,\text{sign}(s-50)\,(s-50)^2
-\]
-trong đó $s$ là baseline aiScore. Ngưỡng phân loại cuối cùng: $aiScore \geq 55 \Rightarrow$ \texttt{ai}; $aiScore \leq 40 \Rightarrow$ \texttt{real}; còn lại là \texttt{uncertain}. Bảng \ref{tab:verdict-threshold} tóm tắt cách tính độ tin cậy.
-
-\begin{table}[H]
-\centering
-\caption{Ngưỡng verdict và công thức độ tin cậy}
-\label{tab:verdict-threshold}
-\begin{tabularx}{\textwidth}{p{0.18\textwidth}p{0.20\textwidth}Y}
-\toprule
-\textbf{Verdict} & \textbf{Điều kiện aiScore} & \textbf{Công thức confidence} \\
-\midrule
-ai & $\geq 55$ & $\min(100,\;50+(aiScore-55)\times1.1)$ \\
-real & $\leq 40$ & $\min(100,\;50+(40-aiScore)\times1.3)$ \\
-uncertain & $41$--$54$ & $100-|aiScore-47|\times6$ \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\section{Thiết kế dữ liệu và lựa chọn kiến trúc}
-\begin{table}[H]
-\centering
-\caption{So sánh các lựa chọn kiến trúc cho SourceVerify}
-\label{tab:architecture-tradeoff}
-\begin{tabularx}{\textwidth}{p{0.22\textwidth}Y Y p{0.14\textwidth}}
-\toprule
-\textbf{Lựa chọn} & \textbf{Ưu điểm} & \textbf{Nhược điểm} & \textbf{Độ phức tạp} \\
-\midrule
-Monolithic Next.js + module analyzer & Dễ triển khai, dễ hiểu, phù hợp Project I, ít phụ thuộc hạ tầng & Khó mở rộng khi tải lớn & Thấp \\
-Microservice analyzer riêng & Dễ scale từng service, phù hợp sản phẩm lớn & Cần hạ tầng, queue, API nội bộ, monitoring & Cao \\
-Mô hình ML end-to-end & Có thể đạt độ chính xác cao nếu có dataset lớn & Cần dữ liệu gán nhãn, training, đánh giá nghiêm ngặt & Cao \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-Quyết định hiện tại là dùng kiến trúc Next.js kết hợp analyzer module nội bộ chạy phía client. Lý do là nhóm thực hiện cần tập trung vào hiểu bài toán và trình bày method, trong khi microservice hoặc training model sẽ làm tăng độ phức tạp vượt phạm vi Project I. Kiến trúc client-side còn mang lại ưu điểm về quyền riêng tư: ảnh của người dùng không rời khỏi trình duyệt.
+Ngưỡng cuối cùng đặt như sau: điểm $\geq 55$ là \texttt{ai}, $\leq 40$ là \texttt{real}, còn lại là \texttt{uncertain}. Độ tin cậy được tính dựa trên khoảng cách của điểm tới ngưỡng, điểm càng xa vùng giữa thì càng chắc chắn.

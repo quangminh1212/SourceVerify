@@ -1,430 +1,209 @@
 \chapter{Cơ sở lý thuyết}
 
-\section{Tổng quan về bài toán phát hiện ảnh do AI tạo}
-Ảnh do AI tạo sinh là ảnh được tạo ra hoàn toàn hoặc một phần bởi các mô hình học sâu như GAN \cite{goodfellow}, diffusion model \cite{ho} hoặc các hệ thống text-to-image hiện đại. Những ảnh này có thể đạt chất lượng thị giác rất cao, khiến việc phân biệt bằng mắt thường ngày càng khó khăn. Khác với ảnh chụp thật, ảnh AI không nhất thiết đi qua đầy đủ chuỗi vật lý gồm ống kính, cảm biến, bộ xử lý tín hiệu ảnh trong camera và quá trình ghi metadata gốc.
-
-Digital image forensics nghiên cứu các dấu vết kỹ thuật còn lại trong ảnh số để hỗ trợ kiểm tra tính xác thực \cite{farid,verdoliva}. Một ảnh chụp thật thường chứa dấu vết từ cảm biến, hệ quang học, thuật toán nén, metadata và quá trình hậu kỳ. Ảnh AI có thể mô phỏng bề ngoài của ảnh thật nhưng vẫn thiếu hoặc làm sai lệch một số dấu vết này. Vì vậy, SourceVerify chọn cách tiếp cận đa phương pháp: mỗi phương pháp quan sát một nhóm tín hiệu khác nhau, sau đó hệ thống tổng hợp kết quả thành điểm nghi ngờ AI.
-
-\subsection{Chuỗi hình thành ảnh thật và ảnh AI}
-Để hiểu vì sao các dấu vết forensic tồn tại, cần so sánh hai chuỗi hình thành ảnh. Ảnh chụp thật đi qua một pipeline vật lý dài: ánh sáng đi qua ống kính, được lọc bởi mảng màu CFA, lượng tử hóa tại cảm biến, khử nhiễu và nội suy màu (demosaicing), hiệu chỉnh gamma, nén JPEG và ghi metadata EXIF. Mỗi bước để lại một loại dấu vết đặc trưng. Ảnh AI, ngược lại, được sinh trực tiếp từ không gian tiềm ẩn (latent space) qua các lớp tích chập chuyển vị (transposed convolution) hoặc khử nhiễu lặp, rồi mới được lưu thành tệp. Hình \ref{fig:pipeline-compare} so sánh hai chuỗi này.
+\section{Vì sao có thể phát hiện ảnh AI}
+Ảnh chụp thật và ảnh do AI tạo ra được hình thành theo hai cách khác nhau. Ảnh thật đi qua một chuỗi vật lý dài: ánh sáng qua ống kính, vào cảm biến, rồi máy ảnh xử lý nội suy màu, chỉnh gamma, nén JPEG và ghi metadata. Mỗi bước để lại một loại dấu vết riêng. Ảnh AI thì được sinh thẳng từ mô hình rồi mới lưu thành tệp, nên nó không đi qua chuỗi đó (Hình \ref{fig:pipeline-compare}).
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  real/.style={rectangle,draw=Green,rounded corners,fill=Green!10,align=center,font=\scriptsize,minimum width=2.1cm,minimum height=0.7cm},
-  ai/.style={rectangle,draw=Purple,rounded corners,fill=Purple!10,align=center,font=\scriptsize,minimum width=2.1cm,minimum height=0.7cm},
+  real/.style={rectangle,draw=Green,rounded corners,fill=Green!10,align=center,font=\scriptsize,minimum width=2.0cm,minimum height=0.7cm},
+  ai/.style={rectangle,draw=Purple,rounded corners,fill=Purple!10,align=center,font=\scriptsize,minimum width=2.0cm,minimum height=0.7cm},
   arrow/.style={-{Latex[length=1.6mm]},thick}
 ]
-% real pipeline
-\node[align=left,font=\small\bfseries,Green] at (-6.2,1.6) {Ảnh thật};
-\node[real] (r1) at (-4.6,1.6) {Ống kính};
-\node[real] (r2) at (-2.1,1.6) {CFA + Cảm biến};
-\node[real] (r3) at (0.4,1.6) {Demosaic + Gamma};
-\node[real] (r4) at (2.9,1.6) {Nén JPEG};
-\node[real] (r5) at (5.3,1.6) {EXIF / Tệp};
+\node[align=left,font=\small\bfseries,Green] at (-6.2,1.4) {Ảnh thật};
+\node[real] (r1) at (-4.6,1.4) {Ống kính};
+\node[real] (r2) at (-2.1,1.4) {Cảm biến};
+\node[real] (r3) at (0.4,1.4) {Xử lý + Gamma};
+\node[real] (r4) at (2.9,1.4) {Nén JPEG};
+\node[real] (r5) at (5.3,1.4) {EXIF / Tệp};
 \draw[arrow,Green] (r1)--(r2); \draw[arrow,Green] (r2)--(r3);
 \draw[arrow,Green] (r3)--(r4); \draw[arrow,Green] (r4)--(r5);
-% ai pipeline
 \node[align=left,font=\small\bfseries,Purple] at (-6.2,-0.4) {Ảnh AI};
-\node[ai] (a1) at (-4.6,-0.4) {Latent vector};
-\node[ai] (a2) at (-2.1,-0.4) {Generator / U-Net};
+\node[ai] (a1) at (-4.6,-0.4) {Latent};
+\node[ai] (a2) at (-2.1,-0.4) {Generator};
 \node[ai] (a3) at (0.4,-0.4) {Upsampling};
 \node[ai] (a4) at (2.9,-0.4) {Decode RGB};
-\node[ai] (a5) at (5.3,-0.4) {Lưu PNG/JPEG};
+\node[ai] (a5) at (5.3,-0.4) {Lưu tệp};
 \draw[arrow,Purple] (a1)--(a2); \draw[arrow,Purple] (a2)--(a3);
 \draw[arrow,Purple] (a3)--(a4); \draw[arrow,Purple] (a4)--(a5);
 \end{tikzpicture}
-\caption{So sánh chuỗi hình thành ảnh chụp thật và ảnh do AI tạo sinh}
+\caption{So sánh cách hình thành ảnh thật và ảnh AI}
 \label{fig:pipeline-compare}
 \end{figure}
 
-Khác biệt cốt lõi là: ảnh thật mang dấu vết của \textit{thiết bị vật lý} (nhiễu cảm biến, sai lệch quang học, lượng tử hóa nén), còn ảnh AI mang dấu vết của \textit{kiến trúc mạng} (artifact upsampling, phổ tần số bất thường, nhiễu quá đều). SourceVerify khai thác đồng thời cả hai loại dấu vết: nhóm phương pháp tìm dấu vết thiết bị (Noise Residual, DCT, Chromatic Aberration, Metadata) và nhóm tìm dấu vết mạng sinh (Spectral Nyquist).
+Digital image forensics là lĩnh vực tìm các dấu vết kỹ thuật còn lại trong ảnh để kiểm tra tính xác thực \cite{farid,verdoliva}. Ý tưởng của em là: ảnh AI tuy trông giống thật nhưng thường thiếu hoặc làm sai một vài dấu vết vật lý, ví dụ nhiễu cảm biến, vết nén hay sai lệch quang học. Mỗi phương pháp sẽ soi một loại dấu vết, và khi gộp lại thì kết quả đáng tin hơn là chỉ dựa vào một dấu hiệu.
 
-\subsection{Phân loại các họ phương pháp forensic}
-Các phương pháp trong SourceVerify được nhóm thành sáu họ chính theo bản chất tín hiệu mà chúng quan sát. Bảng \ref{tab:method-families} tóm tắt sáu họ này cùng số lượng phương pháp đại diện trong toàn bộ thư viện 500 phương pháp.
-
-\begin{table}[H]
-\centering
-\caption{Sáu họ phương pháp forensic trong SourceVerify}
-\label{tab:method-families}
-\begin{tabularx}{\textwidth}{p{0.20\textwidth}p{0.16\textwidth}Y}
-\toprule
-\textbf{Họ tín hiệu} & \textbf{Đại diện} & \textbf{Bản chất quan sát} \\
-\midrule
-Nguồn gốc / Provenance & Metadata, EXIF, C2PA & Thông tin mô tả tệp, thiết bị, phần mềm tạo ảnh \\
-Nhiễu / Sensor & Noise Residual, PRNU, SRM & Biến động nhỏ liên quan cảm biến vật lý \\
-Nén / Compression & DCT, Double JPEG, ELA & Dấu vết lượng tử hóa và lịch sử nén \\
-Quang học / Optics & Chromatic Aberration, Vignette & Sai lệch do hệ ống kính vật lý \\
-Tần số / Frequency & Spectral Nyquist, PSD, Fourier Ring & Phân bố năng lượng trong miền tần số \\
-Kết cấu / Texture & GLCM, LBP, Tamura & Quy luật thống kê bề mặt và kết cấu \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\section{Mô hình tổng hợp điểm}
-Mỗi phương pháp trả về một điểm trong khoảng từ 0 đến 100. Điểm cao biểu thị xu hướng nghiêng về AI, điểm thấp biểu thị xu hướng nghiêng về ảnh thật, còn điểm xấp xỉ 50 thể hiện chưa đủ bằng chứng. Hệ thống dùng trọng số để phản ánh vai trò tương đối của từng phương pháp:
-
+\section{Cách tổng hợp điểm}
+Mỗi phương pháp trả về một điểm từ 0 đến 100: gần 100 nghĩa là nghiêng về AI, gần 0 nghĩa là nghiêng về ảnh thật, còn khoảng 50 là chưa rõ. Hệ thống lấy trung bình có trọng số để ra điểm cuối:
 \[
 Score_{AI}=\frac{\sum_{i=1}^{n} score_i \times weight_i}{\sum_{i=1}^{n} weight_i}
 \]
+Phương pháp nào đáng tin hơn thì được gán trọng số lớn hơn. Cách làm này giống ý tưởng gộp nhiều ý kiến lại: từng phương pháp có thể sai, nhưng nếu nhiều phương pháp khác nhau cùng nghiêng về một phía thì khả năng đúng cao hơn.
 
-Cách tổng hợp này không nhằm thay thế đánh giá chuyên gia, mà giúp gom nhiều tín hiệu độc lập thành một kết quả dễ hiểu. Nếu nhiều phương pháp khác bản chất cùng nghiêng về AI, độ tin cậy của nhận định sẽ cao hơn so với trường hợp chỉ một tín hiệu đơn lẻ bất thường.
-
-Ý tưởng dùng nhiều tín hiệu yếu để tạo một nhận định mạnh hơn tương đồng với nguyên lý \textit{ensemble} trong học máy: từng phương pháp có thể chỉ đạt độ chính xác trung bình, nhưng khi các sai số độc lập một phần với nhau, tổ hợp của chúng thường ổn định hơn từng thành phần. Đây là lý do SourceVerify không đặt cược vào một bộ phân loại duy nhất.
-
-\subsection{Vì sao chọn 5 phương pháp trọng tâm}
-Thư viện SourceVerify có hơn 500 phương pháp, nhưng phần lớn ở mức nghiên cứu hoặc proxy đơn giản. Trong tệp \texttt{types.ts}, hệ thống định nghĩa một tập \textit{paper-faithful} gồm khoảng 38 phương pháp được đánh giá là bám sát công trình gốc đủ để dùng cho runtime mặc định. Trong báo cáo Project I, chúng tôi chọn 5 phương pháp tiêu biểu nhất từ tập này theo bốn tiêu chí: (1) có nền tảng học thuật rõ ràng và được trích dẫn nhiều; (2) đại diện cho các họ tín hiệu khác nhau; (3) có khả năng giải thích tốt cho người dùng phổ thông; (4) đã được hiện thực hóa và đo đạc trong sản phẩm. Bảng \ref{tab:five-criteria} cho thấy 5 phương pháp này phủ đủ năm họ tín hiệu khác nhau.
-
-\begin{table}[H]
-\centering
-\caption{Năm phương pháp trọng tâm và họ tín hiệu tương ứng}
-\label{tab:five-criteria}
-\begin{tabularx}{\textwidth}{p{0.05\textwidth}p{0.26\textwidth}p{0.18\textwidth}Y}
-\toprule
-\textbf{\#} & \textbf{Phương pháp} & \textbf{Họ tín hiệu} & \textbf{Trọng số (weight)} \\
-\midrule
-1 & Metadata Analysis & Provenance & 1.5 \\
-2 & Noise Residual & Sensor / Nhiễu & 3.5 \\
-3 & DCT Block Artifacts & Compression / Nén & 2.0 \\
-4 & Chromatic Aberration & Optics / Quang học & 0.5 \\
-5 & Spectral Nyquist Analysis & Frequency / Tần số & 1.5 \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-\section{Năm phương pháp trọng tâm của SourceVerify}
-Hình \ref{fig:five-methods} minh họa 5 phương pháp được chọn trong báo cáo. Các phương pháp này lần lượt đại diện cho nguồn gốc tệp, nhiễu cảm biến, nén ảnh, dấu vết quang học và miền tần số.
+Thư viện SourceVerify thực ra có hơn 500 phương pháp, nhưng phần lớn còn ở mức thử nghiệm. Em chọn ra 5 phương pháp để đi sâu vì chúng có cơ sở lý thuyết rõ, được trích dẫn nhiều, đại diện cho các nhóm dấu vết khác nhau và đều đã chạy được trong sản phẩm. Hình \ref{fig:five-methods} cho thấy 5 phương pháp này cùng đóng góp vào điểm chung.
 
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
-  method/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.2cm,minimum height=0.85cm},
-  center/.style={circle,draw=Navy,fill=LightGray,align=center,minimum size=2.2cm},
+  method/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.0cm,minimum height=0.8cm},
+  center/.style={circle,draw=Navy,fill=LightGray,align=center,minimum size=2.0cm},
   arrow/.style={-{Latex[length=2mm]},thick,Navy}
 ]
 \node[center] (sv) at (0,0) {SourceVerify\\AI Score};
-\node[method] (m1) at (0,3) {Metadata\\Analysis};
-\node[method] (m2) at (4.4,1.2) {Noise\\Residual};
-\node[method] (m3) at (2.8,-2.7) {DCT Block\\Artifacts};
-\node[method] (m4) at (-2.8,-2.7) {Chromatic\\Aberration};
-\node[method] (m5) at (-4.4,1.2) {Spectral Nyquist\\Analysis};
+\node[method] (m1) at (0,2.8) {Metadata};
+\node[method] (m2) at (4.2,1.1) {Noise Residual};
+\node[method] (m3) at (2.6,-2.5) {DCT Block};
+\node[method] (m4) at (-2.6,-2.5) {Chromatic Ab.};
+\node[method] (m5) at (-4.2,1.1) {Spectral Nyquist};
 \foreach \x in {m1,m2,m3,m4,m5} \draw[arrow] (\x) -- (sv);
 \end{tikzpicture}
-\caption{Năm phương pháp trọng tâm dùng trong SourceVerify}
+\caption{Năm phương pháp đóng góp vào điểm AI chung}
 \label{fig:five-methods}
 \end{figure}
 
-% =====================================================================
+\section{Năm phương pháp trọng tâm}
+
 \subsection{Metadata Analysis}
-\subsubsection{Nguyên lý}
-Metadata là tập thông tin mô tả đi kèm tệp ảnh, ví dụ EXIF, thiết bị chụp, thời gian tạo, phần mềm xử lý, profile màu và các trường liên quan đến nguồn gốc tệp. Trong digital forensics, metadata thường được dùng như một lớp bằng chứng ban đầu để truy vết lịch sử hình thành tệp \cite{farid,c2pa}.
+Metadata là thông tin mô tả đi kèm tệp ảnh: thiết bị chụp, thời gian, phần mềm xử lý, profile màu, các trường EXIF... \cite{farid,c2pa}. Nếu trong đó thấy tên phần mềm tạo ảnh như Midjourney, Stable Diffusion hay DALL\textperiodcentered E thì gần như chắc chắn ảnh không phải chụp từ máy ảnh. Ngược lại, nếu có thông tin camera hợp lý thì ảnh nhiều khả năng là thật.
 
-Đối với ảnh AI, metadata có thể cung cấp tín hiệu rất trực tiếp. Nếu tệp ghi nhận được tạo bởi Midjourney, Stable Diffusion, DALL\textperiodcentered E, Adobe Firefly hoặc phần mềm sinh ảnh, đây là chỉ báo mạnh cho thấy ảnh không phải ảnh chụp gốc từ camera. Ngược lại, metadata camera hợp lý có thể ủng hộ giả thuyết ảnh thật, mặc dù không đủ để kết luận tuyệt đối.
-
-\subsubsection{Thuật toán trong SourceVerify}
-Hàm \texttt{analyzeMetadata} hoạt động theo nguyên tắc bằng chứng phân tầng (tiered evidence). Hệ thống khởi tạo điểm trung tính 50, sau đó lần lượt kiểm tra các bằng chứng theo thứ tự ưu tiên giảm dần. Điểm quan trọng là phương pháp \textit{loại trừ} các trường thông tin tệp cơ bản (File Name, File Size, MIME Type, Last Modified, Format) khi đếm số trường EXIF thật, tránh việc các trường này gây nhiễu kết luận.
+Trong code, hàm \texttt{analyzeMetadata} bắt đầu ở điểm 50 rồi kiểm tra theo thứ tự ưu tiên (Bảng \ref{tab:metadata-rules}). Một điểm em chú ý là phải bỏ qua các trường cơ bản như tên tệp, dung lượng, định dạng khi đếm EXIF thật, nếu không sẽ đếm nhầm.
 
 \begin{table}[H]
 \centering
-\caption{Bảng quy tắc tính điểm của Metadata Analysis}
+\caption{Cách tính điểm của Metadata Analysis}
 \label{tab:metadata-rules}
-\begin{tabularx}{\textwidth}{p{0.40\textwidth}p{0.13\textwidth}Y}
+\begin{tabularx}{\textwidth}{p{0.45\textwidth}p{0.10\textwidth}Y}
 \toprule
-\textbf{Điều kiện phát hiện} & \textbf{Điểm} & \textbf{Diễn giải} \\
+\textbf{Điều kiện} & \textbf{Điểm} & \textbf{Ý nghĩa} \\
 \midrule
-Có chữ ký phần mềm AI trong tên tệp hoặc EXIF & 95 & Bằng chứng AI rất mạnh \\
-Có chữ ký camera thật trong EXIF & 10 & Bằng chứng ảnh thật mạnh \\
-$\geq 3$ trường EXIF camera thật & 18 & Nhiều khả năng ảnh camera \\
-$1$--$2$ trường EXIF camera & 35 & Có một phần EXIF \\
-Không có trường EXIF camera & 50 & Trung tính (ảnh web thường thiếu EXIF) \\
+Có chữ ký phần mềm AI & 95 & Rất nghi AI \\
+Có chữ ký camera thật & 10 & Rất giống ảnh thật \\
+$\geq 3$ trường EXIF camera & 18 & Khả năng ảnh thật \\
+$1$--$2$ trường EXIF & 35 & Có một phần EXIF \\
+Không có EXIF camera & 50 & Chưa rõ \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-Mã giả của thuật toán được trình bày trong Thuật toán \ref{alg:metadata}.
+Metadata mạnh khi còn nguyên, nhưng rất dễ bị xóa hoặc sửa, ví dụ khi ảnh được tải lên mạng xã hội hay chụp màn hình. Vì vậy em không dùng nó làm bằng chứng duy nhất, chỉ coi như một lớp thông tin về nguồn gốc tệp.
 
-\begin{figure}[H]
-\centering
-\fbox{\begin{minipage}{0.92\textwidth}
-\small\ttfamily
-\textbf{Algorithm 1: analyzeMetadata(metadata, exifData)}\\
-\rule{\linewidth}{0.4pt}
-score $\leftarrow$ 50\\
-fileName $\leftarrow$ lowercase(metadata.fileName)\\
-allValues $\leftarrow$ lowercase(join(values(exifData)))\\
-\textbf{for} sig \textbf{in} AI\_SOFTWARE\_SIGNATURES \textbf{do}\\
-\hspace{1em}\textbf{if} fileName chứa sig \textbf{or} allValues chứa sig \textbf{then}\\
-\hspace{2em}score $\leftarrow$ 95; \textbf{break}\\
-\textbf{if} score = 50 \textbf{then}\\
-\hspace{1em}\textbf{for} cam \textbf{in} REAL\_CAMERA\_SIGNATURES \textbf{do}\\
-\hspace{2em}\textbf{if} allValues chứa cam \textbf{then} score $\leftarrow$ 10; \textbf{break}\\
-\textbf{if} score = 50 \textbf{then}\\
-\hspace{1em}realKeys $\leftarrow$ keys(exifData) \textbackslash{} BASIC\_FILE\_INFO\_KEYS\\
-\hspace{1em}\textbf{if} |realKeys| $\geq$ 3 \textbf{then} score $\leftarrow$ 18\\
-\hspace{1em}\textbf{else if} |realKeys| $\geq$ 1 \textbf{then} score $\leftarrow$ 35\\
-\textbf{return} \{score, weight = 1.5\}
-\end{minipage}}
-\caption{Mã giả phương pháp Metadata Analysis}
-\label{alg:metadata}
-\end{figure}
-
-\subsubsection{Vai trò trong tổng hợp điểm}
-Metadata Analysis có trọng số 1.5 nhưng còn được dùng làm \textit{cơ chế ghi đè quyết định} (definitive override) trong bộ tổng hợp: nếu điểm metadata $\geq 90$, điểm AI tổng được cộng thêm 25; nếu điểm metadata $\leq 15$, điểm AI tổng bị trừ 25. Điều này phản ánh thực tế rằng một chữ ký phần mềm AI rõ ràng là bằng chứng có sức nặng vượt trội so với các tín hiệu thống kê.
-
-\subsubsection{Ưu điểm và hạn chế}
-Ưu điểm của phương pháp này là dễ triển khai, dễ giải thích và hữu ích khi metadata còn nguyên vẹn. Hạn chế lớn nhất là metadata có thể bị xóa, sửa hoặc mất khi ảnh được tải lên mạng xã hội, chụp màn hình hoặc nén lại. Vì vậy SourceVerify chỉ xem Metadata Analysis là một nguồn bằng chứng, không dùng làm cơ sở duy nhất.
-
-% =====================================================================
 \subsection{Noise Residual}
-\subsubsection{Nguyên lý}
-Noise Residual dựa trên ý tưởng tách phần nhiễu còn lại sau khi loại bỏ thành phần mượt của ảnh. Ở ảnh chụp thật, nhiễu cảm biến có liên hệ với phần cứng camera, điều kiện ánh sáng, mức ISO và pipeline xử lý ảnh. Các nghiên cứu về sensor pattern noise và camera identification của Lukas, Fridrich và Goljan là nền tảng quan trọng cho nhóm phương pháp này \cite{lukas,fridrich2009}.
+Ảnh chụp thật luôn có một chút nhiễu từ cảm biến, và nhiễu này thay đổi theo độ sáng, ISO, ánh sáng \cite{lukas,fridrich2009}. Một điểm hay là nhiễu thật thường tỉ lệ với căn bậc hai độ sáng ($\sigma\propto\sqrt{I}$), tức là vùng sáng nhiễu nhiều hơn vùng tối. Ảnh AI hay bị quá sạch hoặc nhiễu đều đều, không theo quy luật đó.
 
-Một tính chất vật lý quan trọng là \textit{shot noise} (nhiễu Poisson) của cảm biến tỉ lệ với căn bậc hai của độ sáng: $\sigma_{noise} \propto \sqrt{I}$. Nghĩa là vùng sáng có nhiễu lớn hơn vùng tối một cách hợp lý. Ảnh AI thường không tái tạo được mối liên hệ này: nhiễu của chúng quá đều hoặc gần như không phụ thuộc độ sáng.
-
-\subsubsection{Thuật toán trong SourceVerify}
-Hàm \texttt{analyzeNoiseResidual} chia ảnh thành các khối $32\times32$, sau đó với mỗi khối tính residual qua bộ lọc Laplacian rời rạc:
+Hàm \texttt{analyzeNoiseResidual} chia ảnh thành các khối $32\times32$, lọc Laplacian để lấy phần nhiễu:
 \[
-L(x,y)=4\,I(x,y)-I(x{-}1,y)-I(x{+}1,y)-I(x,y{-}1)-I(x,y{+}1)
+L(x,y)=4I(x,y)-I(x{-}1,y)-I(x{+}1,y)-I(x,y{-}1)-I(x,y{+}1)
 \]
-Với mỗi khối, hệ thống tính bốn đại lượng: độ lệch chuẩn residual ($\sigma$), độ sáng trung bình, và kurtosis của residual. Từ tập các khối, ba chỉ số toàn cục được rút ra:
-\begin{itemize}
-  \item \textbf{Hệ số biến thiên} $CV=\sigma_{\text{between-block}}/\mu$: đo mức độ \textit{không đều} của nhiễu giữa các vùng. Ảnh thật $CV\approx1.0$, ảnh AI $CV\approx0.73$.
-  \item \textbf{Tương quan shot noise} $\rho_{BN}$: hệ số tương quan Pearson giữa độ sáng khối và mức nhiễu khối. Ảnh thật có $\rho_{BN}>0$ (nhiễu tăng theo độ sáng).
-  \item \textbf{Độ lệch kurtosis} $|k-3|$: nhiễu Gauss của cảm biến thật có kurtosis $\approx3$; ảnh AI thường lệch xa giá trị này.
-\end{itemize}
-
-\begin{table}[H]
-\centering
-\caption{Đóng góp điểm của từng chỉ số trong Noise Residual}
-\label{tab:noise-rules}
-\begin{tabularx}{\textwidth}{p{0.24\textwidth}p{0.30\textwidth}Y}
-\toprule
-\textbf{Chỉ số} & \textbf{Khoảng giá trị} & \textbf{Điều chỉnh điểm} \\
-\midrule
-Tương quan shot $\rho_{BN}$ & $>0.45$ (rất mạnh) & $-18$ (nghiêng ảnh thật) \\
- & $<-0.15$ (âm) & $+15$ (nghiêng AI) \\
-Hệ số biến thiên $CV$ & $<0.2$ (rất đều) & $+22$ (nghiêng AI) \\
- & $>1.0$ (rất không đều) & $-18$ (nghiêng ảnh thật) \\
-Mức nhiễu trung bình & $<3.0$ (quá sạch) & $+12$ (nghiêng AI) \\
- & $>15.0$ (nhiễu cao) & $-18$ (nghiêng ảnh thật) \\
-Độ lệch kurtosis $|k-3|$ & $>3.0$ (xa Gauss) & $+8$ (nghiêng AI) \\
- & $<0.5$ (rất Gauss) & $-4$ (nghiêng ảnh thật) \\
-\bottomrule
-\end{tabularx}
-\end{table}
-
-Hình \ref{fig:noise-shot} minh họa sự khác biệt mối quan hệ nhiễu--độ sáng giữa ảnh thật và ảnh AI.
+rồi tính ba chỉ số: độ không đều của nhiễu giữa các khối ($CV$), tương quan giữa độ sáng và mức nhiễu ($\rho$), và độ lệch kurtosis so với nhiễu Gauss. Ảnh thật có $CV$ cao, $\rho>0$; ảnh AI thì $CV$ thấp và $\rho$ gần 0 (Hình \ref{fig:noise-shot}).
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.95]
-\draw[->,thick] (0,0)--(6.2,0) node[right,font=\small]{Độ sáng khối};
-\draw[->,thick] (0,0)--(0,4.2) node[above,font=\small]{Mức nhiễu $\sigma$};
-% real: increasing trend (sqrt) with scatter
-\foreach \x/\y in {0.6/0.9,1.2/1.3,1.8/1.5,2.4/1.9,3.0/2.1,3.6/2.5,4.2/2.7,4.8/3.0,5.4/3.3,1.0/1.0,2.0/1.7,3.2/2.3,4.4/2.9,5.0/3.1}
-  \fill[Green] (\x,\y) circle (1.6pt);
-\draw[Green,thick,domain=0.4:5.6,samples=40] plot (\x,{1.35*sqrt(\x)});
-\node[Green,font=\small\bfseries] at (4.7,3.7) {Ảnh thật ($\rho{>}0$)};
-% ai: flat noise around 1.0
-\foreach \x/\y in {0.6/1.05,1.2/0.95,1.8/1.1,2.4/0.9,3.0/1.05,3.6/0.95,4.2/1.1,4.8/0.92,5.4/1.0,2.0/1.0,3.2/0.98,4.4/1.03}
-  \fill[Purple] (\x,\y) circle (1.6pt);
-\draw[Purple,thick,dashed] (0.4,1.0)--(5.6,1.0);
-\node[Purple,font=\small\bfseries] at (4.6,0.55) {Ảnh AI ($\rho{\approx}0$)};
+\begin{tikzpicture}[scale=0.85]
+\draw[->,thick] (0,0)--(6.0,0) node[right,font=\scriptsize]{Độ sáng};
+\draw[->,thick] (0,0)--(0,3.8) node[above,font=\scriptsize]{Nhiễu $\sigma$};
+\foreach \x/\y in {0.6/0.9,1.2/1.3,1.8/1.5,2.4/1.9,3.0/2.1,3.6/2.5,4.2/2.7,4.8/3.0,1.0/1.0,2.0/1.7,3.2/2.3,4.4/2.9}
+  \fill[Green] (\x,\y) circle (1.5pt);
+\draw[Green,thick,domain=0.4:5.2,samples=40] plot (\x,{1.3*sqrt(\x)});
+\node[Green,font=\scriptsize\bfseries] at (4.4,3.4) {Ảnh thật};
+\foreach \x/\y in {0.6/1.05,1.2/0.95,1.8/1.1,2.4/0.9,3.0/1.05,3.6/0.95,4.2/1.1,4.8/0.92,2.0/1.0,3.2/0.98}
+  \fill[Purple] (\x,\y) circle (1.5pt);
+\draw[Purple,thick,dashed] (0.4,1.0)--(5.2,1.0);
+\node[Purple,font=\scriptsize\bfseries] at (4.4,0.55) {Ảnh AI};
 \end{tikzpicture}
-\caption{Quan hệ nhiễu--độ sáng: ảnh thật theo quy luật $\sigma\propto\sqrt{I}$, ảnh AI gần như phẳng}
+\caption{Ảnh thật: nhiễu tăng theo độ sáng; ảnh AI: nhiễu gần như phẳng}
 \label{fig:noise-shot}
 \end{figure}
 
-\subsubsection{Vai trò trong tổng hợp điểm}
-Noise Residual có trọng số 3.5 -- cao nhất trong 5 phương pháp -- vì nó khai thác một dấu vết vật lý khó làm giả và tương đối độc lập với metadata. Trong cơ chế chống dương tính giả (anti false-positive guard) của bộ tổng hợp, các phương pháp có trọng số $\geq3.0$ như Noise Residual được dùng làm tín hiệu \enquote{nặng ký}: nếu có $\geq2$ tín hiệu nặng nghiêng ảnh thật và không tín hiệu nặng nào nghiêng AI, điểm AI tổng bị giảm thêm.
+Noise Residual được gán trọng số cao nhất (3.5) vì nó khai thác dấu vết vật lý khó làm giả. Hạn chế là nó nhạy với nén mạnh, resize và bộ lọc làm đẹp, nên một ảnh thật đã chỉnh nhiều cũng có thể bị coi là quá sạch.
 
-\subsubsection{Ưu điểm và hạn chế}
-Ưu điểm của Noise Residual là khai thác dấu vết khó thấy bằng mắt thường và bổ sung tốt cho metadata. Tuy nhiên, phương pháp này nhạy với nén ảnh, resize, lọc làm đẹp và hậu kỳ. Một ảnh thật đã qua xử lý mạnh cũng có thể bị đánh giá là thiếu nhiễu tự nhiên, vì vậy cần kết hợp với các tín hiệu khác.
-
-% =====================================================================
 \subsection{DCT Block Artifacts}
-\subsubsection{Nguyên lý}
-JPEG là định dạng ảnh phổ biến và sử dụng biến đổi DCT theo từng khối $8\times8$. Quá trình lượng tử hóa trong JPEG tạo ra các artifact về biên khối, phân bố hệ số tần số và mức độ mất mát thông tin. Các nghiên cứu về phát hiện chỉnh sửa ảnh thông qua dấu vết nén JPEG, double JPEG compression và inconsistency trong miền DCT là nền tảng cho phương pháp này \cite{popescu,farid,fridrich2009}.
+JPEG nén ảnh theo từng khối $8\times8$ bằng biến đổi DCT rồi lượng tử hóa, để lại vết ở biên các khối. Đây là cơ sở của nhiều kỹ thuật forensic về nén ảnh \cite{popescu,fridrich2009}. Ảnh JPEG thật từ máy ảnh thường có biên khối rõ; ảnh AI lưu PNG thì gần như không có, còn ảnh AI lưu lại JPEG thì vết khối quá đều.
 
-Biến đổi DCT hai chiều của một khối $8\times8$ được định nghĩa:
+Thay vì tính DCT đầy đủ cho tốn kém, em đo trực tiếp tỉ lệ năng lượng ở biên khối so với bên trong khối:
 \[
-F(u,v)=\tfrac{1}{4}C(u)C(v)\sum_{x=0}^{7}\sum_{y=0}^{7} f(x,y)\cos\!\frac{(2x{+}1)u\pi}{16}\cos\!\frac{(2y{+}1)v\pi}{16}
+\text{blockRatio}=\frac{\overline{E}_{\text{biên}}}{\overline{E}_{\text{trong}}}
 \]
-với $C(0)=1/\sqrt2$ và $C(k)=1$ khi $k>0$. Sau lượng tử hóa, các giá trị tại biên khối $8\times8$ có bước nhảy nhỏ đặc trưng -- gọi là blocking artifact.
-
-\subsubsection{Thuật toán trong SourceVerify}
-Thay vì tính DCT đầy đủ (tốn kém), \texttt{analyzeDCTBlockArtifacts} đo trực tiếp \textit{năng lượng biên khối} so với \textit{năng lượng nội khối} trên lưới $8\times8$:
-\[
-\text{blockRatio}=\frac{\overline{E}_{\text{boundary}}}{\overline{E}_{\text{interior}}}
-\]
-Ảnh JPEG thật từ camera có biên khối nổi rõ hơn nội khối ($\text{ratio}>1.2$). Ảnh AI lưu PNG không có biên khối ($\text{ratio}\approx1.0$). Ngoài ra, hệ thống đo \textit{độ đồng đều không gian} của artifact bằng hệ số biến thiên $\text{regionCV}$ trên 5 vùng (4 góc + tâm): ảnh thật có artifact biến đổi theo độ phức tạp nội dung ($\text{regionCV}>0.2$), ảnh AI tái nén có artifact quá đều ($\text{regionCV}<0.1$).
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}[scale=0.5]
-% 8x8 grid representing blocks
-\foreach \i in {0,...,6}{
-  \foreach \j in {0,...,4}{
-    \draw[gray!50] (\i*1.4,\j*1.4) rectangle (\i*1.4+1.4,\j*1.4+1.4);
-  }
-}
-% highlight boundaries
-\foreach \i in {1,...,6}{ \draw[Red,very thick] (\i*1.4,0)--(\i*1.4,7); }
-\foreach \j in {1,...,4}{ \draw[Red,very thick] (0,\j*1.4)--(9.8,\j*1.4); }
-\node[font=\small,Red] at (4.9,-0.8) {Biên khối $8{\times}8$ (đo năng lượng cao $\Rightarrow$ JPEG thật)};
-\node[font=\small] at (4.9,8) {Lưới khối DCT};
-\end{tikzpicture}
-\caption{Lưới khối $8\times8$ và biên khối nơi đo blocking artifact}
-\label{fig:dct-grid}
-\end{figure}
+Ảnh JPEG thật có $\text{blockRatio}>1.2$. Em còn đo độ đều của vết khối trên 5 vùng ($\text{regionCV}$): ảnh thật thay đổi theo nội dung nên $\text{regionCV}$ cao, ảnh AI tái nén thì rất đều (Bảng \ref{tab:dct-rules}).
 
 \begin{table}[H]
 \centering
-\caption{Quy tắc tính điểm của DCT Block Artifacts}
+\caption{Cách tính điểm của DCT Block Artifacts}
 \label{tab:dct-rules}
-\begin{tabularx}{\textwidth}{p{0.30\textwidth}p{0.22\textwidth}Y}
+\begin{tabularx}{\textwidth}{p{0.30\textwidth}p{0.24\textwidth}Y}
 \toprule
-\textbf{Chỉ số} & \textbf{Điều kiện} & \textbf{Điều chỉnh điểm} \\
+\textbf{Chỉ số} & \textbf{Điều kiện} & \textbf{Điều chỉnh} \\
 \midrule
-blockRatio & $<0.95$ (không có biên khối) & $+20$ (AI / PNG) \\
- & $>1.30$ (biên khối mạnh) & $-20$ (JPEG thật) \\
- & $>1.10$ & $-10$ \\
+blockRatio & $<0.95$ (không có vết khối) & $+20$ (AI/PNG) \\
+ & $>1.30$ (vết khối mạnh) & $-20$ (JPEG thật) \\
 regionCV & $<0.08$ (quá đều) & $+15$ (AI tái nén) \\
- & $>0.40$ (rất không đều) & $-15$ (camera thật) \\
+ & $>0.40$ (không đều) & $-15$ (camera thật) \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\subsubsection{Vai trò và hạn chế}
-DCT Block Artifacts có trọng số 2.0, đặc biệt hữu ích với ảnh JPEG phổ biến ngoài thực tế. Hạn chế là hiệu quả giảm với PNG, WebP hoặc ảnh đã resize/re-encode nhiều lần. Do đó, DCT không nên được xem là bằng chứng tuyệt đối mà nên được dùng như tín hiệu bổ trợ cho metadata, nhiễu và miền tần số.
+Phương pháp này hợp với ảnh JPEG phổ biến, nhưng yếu với PNG, WebP hoặc ảnh đã resize nhiều lần, nên cũng chỉ là tín hiệu bổ trợ.
 
-% =====================================================================
 \subsection{Chromatic Aberration}
-\subsubsection{Nguyên lý}
-Chromatic Aberration là hiện tượng lệch màu nhỏ giữa các kênh RGB do ống kính vật lý gây ra. Các bước sóng ánh sáng khác nhau không hội tụ hoàn toàn tại cùng một điểm trên cảm biến, dẫn đến viền màu nhẹ ở vùng biên tương phản cao, rõ nhất ở rìa ảnh. Johnson và Farid đã chỉ ra rằng sự không nhất quán của chromatic aberration có thể hỗ trợ phát hiện ảnh giả hoặc vùng ảnh bị ghép \cite{johnson2006}.
-
-\subsubsection{Thuật toán trong SourceVerify}
-Hàm \texttt{analyzeChromaticAberration} tập trung vào vùng biên ảnh (border) rộng khoảng 5\% cạnh ngắn. Tại mỗi điểm, hệ thống so sánh độ lệch ngang của kênh đỏ và kênh xanh lam:
-\[
-\text{shift}(x,y)=\big|\,|R(x){-}R(x{+}1)|-|B(x){-}B(x{+}1)|\,\big|
-\]
-Giá trị trung bình $\overline{\text{shift}}$ trên toàn vùng biên phản ánh mức độ lệch màu. Ống kính thật tạo $\overline{\text{shift}}$ lớn (viền màu rõ), còn ảnh AI thường không có lệch màu vật lý này.
+Ống kính thật làm các màu hội tụ lệch nhau một chút, tạo ra viền màu nhẹ ở rìa ảnh hoặc vùng tương phản cao \cite{johnson2006}. Ảnh AI không đi qua ống kính nên thường thiếu dấu vết này. Hàm \texttt{analyzeChromaticAberration} đo độ lệch giữa kênh đỏ và xanh lam ở vùng biên ảnh; lệch càng nhiều thì càng giống ảnh chụp thật (Bảng \ref{tab:chromatic-rules}).
 
 \begin{table}[H]
 \centering
-\caption{Ánh xạ độ lệch màu sang điểm trong Chromatic Aberration}
+\caption{Ánh xạ độ lệch màu sang điểm}
 \label{tab:chromatic-rules}
-\begin{tabularx}{\textwidth}{p{0.34\textwidth}p{0.16\textwidth}Y}
+\begin{tabularx}{\textwidth}{p{0.34\textwidth}p{0.12\textwidth}Y}
 \toprule
-\textbf{$\overline{\text{shift}}$ trung bình} & \textbf{Điểm} & \textbf{Diễn giải} \\
+\textbf{Độ lệch trung bình} & \textbf{Điểm} & \textbf{Ý nghĩa} \\
 \midrule
-$<0.5$ & 82 & Không có lệch màu $\Rightarrow$ nghi AI \\
-$0.5$--$1.0$ & 68 & Lệch màu rất yếu \\
-$1.0$--$2.0$ & 52 & Trung tính \\
+$<0.5$ & 82 & Không có lệch màu, nghi AI \\
 $2.0$--$4.0$ & 35 & Có lệch màu \\
-$4.0$--$7.0$ & 20 & Lệch màu rõ $\Rightarrow$ ống kính thật \\
-$>7.0$ & 10 & Lệch màu mạnh $\Rightarrow$ ảnh thật \\
+$>7.0$ & 10 & Lệch rõ, ống kính thật \\
 \bottomrule
 \end{tabularx}
 \end{table}
 
-\subsubsection{Vai trò và hạn chế}
-Chromatic Aberration có trọng số thấp nhất (0.5) vì độ tin cậy của nó hạn chế: không phải mọi ảnh thật đều có sai lệch màu rõ ràng; ống kính chất lượng cao, phần mềm sửa lỗi quang học hoặc ảnh thiếu biên tương phản có thể làm tín hiệu yếu đi. Tuy vậy, nó vẫn đóng góp một góc nhìn \textit{vật lý} bổ sung cho các phương pháp thống kê.
+Phương pháp này có trọng số thấp nhất (0.5) vì không phải ảnh thật nào cũng có viền màu rõ, ống kính tốt hoặc phần mềm chỉnh có thể làm mất dấu vết. Tuy vậy em vẫn giữ nó để có thêm một góc nhìn vật lý.
 
-% =====================================================================
 \subsection{Spectral Nyquist Analysis}
-\subsubsection{Nguyên lý}
-Spectral Nyquist Analysis quan sát ảnh trong miền tần số, đặc biệt ở vùng tần số cao gần ngưỡng Nyquist. Các mô hình sinh ảnh và các thao tác upsampling có thể tạo ra artifact lặp, phân bố phổ bất thường hoặc dấu vết không giống quá trình lấy mẫu tự nhiên. Durall và cộng sự đã chỉ ra rằng ảnh sinh bởi CNN/GAN có thể để lại khác biệt đáng kể trong miền phổ so với ảnh thật \cite{durall2020}. Nghiên cứu của Wang và cộng sự cũng cho thấy artifact của CNN có thể giúp nhận diện ảnh tổng hợp trên nhiều kiến trúc sinh ảnh \cite{wang2020}.
-
-\subsubsection{Thuật toán trong SourceVerify}
-Hàm \texttt{analyzeSpectralNyquist} cắt vùng trung tâm $256\times256$, chuyển sang ảnh xám rồi tính phổ năng lượng theo hàng và cột bằng DFT 1D:
+Phương pháp này nhìn ảnh trong miền tần số. Khi mô hình AI sinh ảnh hoặc phóng to ảnh, nó hay để lại các đỉnh bất thường ở tần số cao mà mắt không thấy được \cite{durall2020,wang2020}. Hàm \texttt{analyzeSpectralNyquist} cắt vùng giữa $256\times256$, đổi sang ảnh xám rồi tính phổ năng lượng theo hàng và cột:
 \[
 P(k)=\Big(\sum_{n} f(n)\cos\tfrac{2\pi kn}{N}\Big)^2+\Big(\sum_{n} f(n)\sin\tfrac{2\pi kn}{N}\Big)^2
 \]
-Sau khi lấy log, ba chỉ số được rút ra: \textbf{peak ratio} (tỉ lệ năng lượng tại đỉnh Nyquist so với lân cận), \textbf{quarter ratio} (đỉnh phụ tại $N/4$ do upsampling), và \textbf{rolloff ratio} (tỉ lệ năng lượng tần số cao trên tần số thấp). Ảnh AI có đỉnh Nyquist nhô cao và rolloff lớn (năng lượng tần số cao bất thường), trong khi ảnh thật có phổ suy giảm mượt.
+Ảnh thật có phổ giảm mượt khi lên tần số cao; ảnh AI thường nhô lên ở gần ngưỡng Nyquist hoặc ở $N/4$ (Hình \ref{fig:spectral-curve}). Nếu ảnh có dấu hiệu đã bị resize, em giảm bớt ảnh hưởng của phương pháp này để tránh báo nhầm.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[scale=0.95]
-\draw[->,thick] (0,0)--(6.4,0) node[right,font=\small]{Tần số $k$};
-\draw[->,thick] (0,0)--(0,4.0) node[above,font=\small]{$\log P(k)$};
-\node[font=\scriptsize] at (5.9,-0.35) {Nyquist};
-% real: smooth decay
-\draw[Green,thick,domain=0.2:5.9,samples=60] plot (\x,{3.4*exp(-0.42*\x)+0.25});
-\node[Green,font=\small\bfseries] at (3.4,2.0) {Ảnh thật (rolloff thấp)};
-% ai: decay + peak at nyquist
-\draw[Purple,thick,domain=0.2:5.5,samples=60] plot (\x,{2.6*exp(-0.30*\x)+0.45});
-\draw[Purple,thick] (5.5,1.0)--(5.9,2.3);
-\fill[Purple] (5.9,2.3) circle (2pt);
-\node[Purple,font=\small\bfseries] at (3.0,3.3) {Ảnh AI (đỉnh Nyquist + rolloff cao)};
-\draw[Purple,dashed] (3.0,0)--(3.0,1.2);
-\fill[Purple] (3.0,1.45) circle (1.6pt);
-\node[Purple,font=\scriptsize] at (3.0,-0.35) {$N/4$};
+\begin{tikzpicture}[scale=0.85]
+\draw[->,thick] (0,0)--(6.2,0) node[right,font=\scriptsize]{Tần số $k$};
+\draw[->,thick] (0,0)--(0,3.6) node[above,font=\scriptsize]{$\log P(k)$};
+\node[font=\scriptsize] at (5.7,-0.3) {Nyquist};
+\draw[Green,thick,domain=0.2:5.7,samples=60] plot (\x,{3.0*exp(-0.42*\x)+0.25});
+\node[Green,font=\scriptsize\bfseries] at (3.3,1.8) {Ảnh thật};
+\draw[Purple,thick,domain=0.2:5.3,samples=60] plot (\x,{2.4*exp(-0.30*\x)+0.45});
+\draw[Purple,thick] (5.3,1.0)--(5.7,2.1); \fill[Purple] (5.7,2.1) circle (2pt);
+\node[Purple,font=\scriptsize\bfseries] at (3.0,3.0) {Ảnh AI};
 \end{tikzpicture}
-\caption{Phổ năng lượng: ảnh AI có đỉnh tại Nyquist và $N/4$, ảnh thật suy giảm mượt}
+\caption{Phổ năng lượng: ảnh AI nhô lên ở tần số cao, ảnh thật giảm mượt}
 \label{fig:spectral-curve}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\caption{Quy tắc tính điểm của Spectral Nyquist Analysis}
-\label{tab:spectral-rules}
-\begin{tabularx}{\textwidth}{p{0.26\textwidth}p{0.26\textwidth}Y}
-\toprule
-\textbf{Chỉ số} & \textbf{Điều kiện} & \textbf{Điều chỉnh điểm} \\
-\midrule
-peak ratio (Nyquist) & $>1.5$ & $+20$ (AI) \\
- & $<0.9$ & $-15$ (ảnh thật) \\
-quarter ratio ($N/4$) & $>1.3$ & $+10$ (AI upsampling) \\
-rolloff ratio & $>0.5$ & $+15$ (AI) \\
- & $<0.15$ & $-15$ (ảnh thật) \\
-\bottomrule
-\end{tabularx}
-\end{table}
+Đây là phương pháp duy nhất trong nhóm nhắm thẳng vào dấu vết của mô hình sinh ảnh. Hạn chế là dễ bị ảnh hưởng bởi resize, crop, nén lại và hơi khó giải thích cho người dùng phổ thông.
 
-Một chi tiết kỹ thuật đáng chú ý: nếu kích thước ảnh gợi ý đã bị resize bởi CDN (không phải lũy thừa 2 và không tròn trăm), hệ thống \textit{giảm} mức đóng góp dương của phương pháp này xuống còn 30\%, vì resize có thể tạo artifact tần số giả gây dương tính giả.
-
-\subsubsection{Vai trò và hạn chế}
-Spectral Nyquist có trọng số 1.5 và là phương pháp duy nhất trong nhóm 5 nhắm trực tiếp vào \textit{dấu vết kiến trúc mạng sinh}. Hạn chế là kết quả dễ bị ảnh hưởng bởi resize, crop, nén lại và các bộ lọc hậu kỳ; ngoài ra kết quả miền tần số khó giải thích với người dùng phổ thông nếu không có phần diễn giải phù hợp.
-
-\section{Tổng hợp nguồn học thuật cho từng phương pháp}
-\begin{longtable}{p{0.22\textwidth}p{0.34\textwidth}p{0.36\textwidth}}
-\caption{Nguồn học thuật chính cho 5 phương pháp}\label{tab:method-sources}\\
-\toprule
-\textbf{Phương pháp} & \textbf{Nguồn tham khảo chính} & \textbf{Vai trò trong báo cáo} \\
-\midrule
-\endfirsthead
-\toprule
-\textbf{Phương pháp} & \textbf{Nguồn tham khảo chính} & \textbf{Vai trò trong báo cáo} \\
-\midrule
-\endhead
-Metadata Analysis & Farid \cite{farid}; C2PA \cite{c2pa} & Truy vết nguồn gốc tệp, EXIF, provenance và phần mềm tạo ảnh. \\
-Noise Residual & Lukas et al. \cite{lukas}; Fridrich \cite{fridrich2009} & Nền tảng về sensor pattern noise và dấu vết cảm biến. \\
-DCT Block Artifacts & Popescu and Farid \cite{popescu}; Farid \cite{farid} & Dấu vết nén JPEG, re-encode và bất thường miền DCT. \\
-Chromatic Aberration & Johnson and Farid \cite{johnson2006} & Kiểm tra tính nhất quán của sai lệch màu do hệ quang học. \\
-Spectral Nyquist Analysis & Durall et al. \cite{durall2020}; Wang et al. \cite{wang2020} & Phát hiện artifact tần số của ảnh sinh bởi mô hình học sâu. \\
-\bottomrule
-\end{longtable}
-
-\section{So sánh năm phương pháp}
-Bảng \ref{tab:method-compare} so sánh 5 phương pháp theo loại dấu vết, độ bền với hậu kỳ và khả năng giải thích. Có thể thấy không có phương pháp nào vượt trội ở mọi tiêu chí, củng cố lý do phải kết hợp chúng.
+\section{So sánh và kết luận chương}
+Năm phương pháp bổ sung cho nhau theo các góc nhìn khác nhau (Bảng \ref{tab:method-compare}). Không có cái nào mạnh ở mọi mặt: metadata dễ bị xóa, nhiễu nhạy với hậu kỳ, DCT phụ thuộc định dạng, chromatic aberration không phải lúc nào cũng rõ, còn phổ tần số dễ bị resize làm sai. Chính vì vậy em mới gộp cả 5 lại thay vì tin vào một cái. Chương sau trình bày cách tổ chức chúng thành một hệ thống hoàn chỉnh.
 
 \begin{table}[H]
 \centering
-\caption{So sánh năm phương pháp trọng tâm}
+\caption{So sánh năm phương pháp}
 \label{tab:method-compare}
-\begin{tabularx}{\textwidth}{p{0.20\textwidth}Y Y Y}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.16\textwidth}Y Y}
 \toprule
-\textbf{Phương pháp} & \textbf{Độ bền với nén/resize} & \textbf{Khả năng giải thích} & \textbf{Độ độc lập tín hiệu} \\
+\textbf{Phương pháp} & \textbf{Trọng số} & \textbf{Bền với nén/resize} & \textbf{Dễ giải thích} \\
 \midrule
-Metadata & Thấp (dễ bị xóa) & Rất cao & Cao \\
-Noise Residual & Trung bình & Trung bình & Cao \\
-DCT Block & Thấp với PNG/WebP & Cao & Trung bình \\
-Chromatic Aberration & Trung bình & Cao & Cao \\
-Spectral Nyquist & Thấp với resize & Thấp & Trung bình \\
+Metadata & 1.5 & Thấp & Rất cao \\
+Noise Residual & 3.5 & Trung bình & Trung bình \\
+DCT Block & 2.0 & Thấp (PNG) & Cao \\
+Chromatic Aberration & 0.5 & Trung bình & Cao \\
+Spectral Nyquist & 1.5 & Thấp (resize) & Thấp \\
 \bottomrule
 \end{tabularx}
 \end{table}
-
-\section{Kết luận chương}
-Không có phương pháp nào đủ mạnh để kết luận tuyệt đối trong mọi trường hợp. Metadata dễ bị xóa, nhiễu nhạy với hậu kỳ, DCT phụ thuộc định dạng, chromatic aberration có thể yếu và phổ tần số dễ bị ảnh hưởng bởi resize. Tuy nhiên, khi kết hợp 5 phương pháp trên, SourceVerify có được một khung phân tích đa chiều, có khả năng giải thích và phù hợp với mục tiêu tìm hiểu công nghệ của Project I. Chương tiếp theo trình bày cách các phương pháp này được tổ chức thành một hệ thống phần mềm hoàn chỉnh.
