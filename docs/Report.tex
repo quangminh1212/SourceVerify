@@ -1,10 +1,18 @@
 \documentclass[12pt,a4paper]{article}
 
-\usepackage{fontspec}
-\usepackage[vietnamese]{babel}
-\setmainfont{Times New Roman}
-\setsansfont{Arial}
-\setmonofont{Consolas}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+  \usepackage{lmodern}
+\else
+  \usepackage{fontspec}
+  \usepackage[vietnamese]{babel}
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont{Consolas}
+\fi
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{setspace}
 \usepackage{longtable}
@@ -36,6 +44,7 @@
 \titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
 
 \begin{document}
+\pagenumbering{gobble}
 
 \begin{titlepage}
 \centering
@@ -57,6 +66,7 @@ Ngày báo cáo: & 07 tháng 04 năm 2026 \\
 {\large SourceVerify -- Báo cáo tổng quan đề tài 07/04/2026\par}
 \end{titlepage}
 
+\pagenumbering{arabic}
 \tableofcontents
 \clearpage
 
@@ -97,7 +107,8 @@ Triển khai & Vercel & Hosting toàn cầu, CI/CD tự động \\
   \item Phân tích hình ảnh -- phát hiện ảnh AI qua nhiều phương pháp (phân tích pixel, tần số, texture, metadata, dấu vết GAN/Diffusion).
   \item Phân tích văn bản -- phát hiện văn bản AI qua nhiều phương pháp (entropy, phong cách viết, dấu vân tay mô hình ngôn ngữ).
   \item Phân tích video -- phát hiện video AI qua nhiều phương pháp (phân tích từng khung hình + lip sync, motion artifact).
-  \item REST API -- cho phép tích hợp vào hệ thống khác qua endpoint \texttt{POST /api/analyze}.
+  \item REST API -- cho phép tích hợp vào hệ thống khác qua endpoint \\
+        \texttt{POST /api/analyze}.
   \item Giao diện người dùng -- kéo thả file, nhập URL hoặc văn bản; hiển thị kết quả dạng điểm số và biểu đồ.
   \item Đa ngôn ngữ -- hỗ trợ Tiếng Việt, Tiếng Anh, Hàn, Nhật, Trung.
   \item Benchmark tự động -- đo độ chính xác từng phương pháp trên bộ dữ liệu kiểm thử, công bố kết quả công khai.
