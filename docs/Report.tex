@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper,oneside]{report}
 
 \usepackage{iftex}
 \ifPDFTeX
@@ -13,8 +13,10 @@
   \setsansfont{Arial}
   \setmonofont{Consolas}
 \fi
+
 \usepackage[a4paper,margin=2.5cm]{geometry}
 \usepackage{setspace}
+\usepackage{graphicx}
 \usepackage{longtable}
 \usepackage{array}
 \usepackage{enumitem}
@@ -22,207 +24,69 @@
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
 
 \onehalfspacing
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{6pt}
 \setlist[itemize]{leftmargin=1.25cm,itemsep=2pt,topsep=4pt}
 \setlist[enumerate]{leftmargin=1.25cm,itemsep=2pt,topsep=4pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
 
 \definecolor{Navy}{RGB}{18,52,86}
+\definecolor{LightBlue}{RGB}{227,239,255}
+\definecolor{LightGray}{RGB}{244,244,244}
+\definecolor{Blue}{RGB}{52,120,246}
+\definecolor{Green}{RGB}{44,140,90}
+\definecolor{Orange}{RGB}{232,140,44}
+\definecolor{Purple}{RGB}{132,84,201}
+\definecolor{Red}{RGB}{201,64,64}
 
-\hypersetup{hidelinks,pdftitle={SourceVerify -- Bao cao tong quan de tai},pdfauthor={Bach Minh Quang}}
+\hypersetup{
+  hidelinks,
+  pdftitle={SourceVerify -- Báo cáo Project I},
+  pdfauthor={Bạch Minh Quang},
+  pdfsubject={Phát hiện ảnh do AI tạo bằng digital image forensics}
+}
 
 \setlength{\headheight}{14pt}
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\small\textit{SourceVerify -- Báo cáo tổng quan đề tài}}
-\fancyhead[R]{\small\textit{07/04/2026}}
+\fancyhead[L]{\small\textit{SourceVerify -- Báo cáo Project I}}
+\fancyhead[R]{\small\textit{06/2026}}
 \fancyfoot[C]{\thepage}
 
-\titleformat{\section}{\normalfont\Large\bfseries\color{Navy}}{\thesection.}{0.5em}{}
-\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection.}{0.5em}{}
+\titleformat{\chapter}{\normalfont\Huge\bfseries\color{Navy}}{\thechapter}{0.6em}{}
+\titleformat{\section}{\normalfont\Large\bfseries\color{Navy}}{\thesection}{0.5em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{0.5em}{}
 
 \begin{document}
 \pagenumbering{gobble}
 
-\begin{titlepage}
-\centering
-{\Large\bfseries ĐẠI HỌC BÁCH KHOA HÀ NỘI\par}
-\vspace{1cm}
-{\Large\bfseries BÁO CÁO TỔNG QUAN ĐỀ TÀI\par}
-\vspace{0.8cm}
-{\Huge\bfseries SourceVerify\par}
-\vspace{0.4cm}
-{\Large Hệ thống Phát hiện Nội dung do Trí tuệ Nhân tạo Tạo ra\par}
-\vspace{1.5cm}
-\begin{tabular}{rl}
-Sinh viên: & Bạch Minh Quang \\
-MSSV: & 202490077 \\
-Lớp: & CNTT VB2 CQ \\
-Ngày báo cáo: & 07 tháng 04 năm 2026 \\
-\end{tabular}
-\vfill
-{\large SourceVerify -- Báo cáo tổng quan đề tài 07/04/2026\par}
-\end{titlepage}
-
-\pagenumbering{arabic}
-\tableofcontents
+\input{sections/00-preface}
+\clearpage
+\input{sections/01-summary}
 \clearpage
 
-\section{Tổng quan đề tài}
-\textbf{Lưu ý:} Bạn có thể xem tổng quan trực tuyến tại \url{https://sourceverify.vercel.app}.
+\pagenumbering{arabic}
+\setcounter{page}{1}
 
-\textbf{Tên đề tài:} SourceVerify -- Hệ thống phát hiện nội dung do Trí tuệ Nhân tạo tạo ra.
-
-\textbf{Mục tiêu:}
-\begin{itemize}
-  \item Xây dựng ứng dụng web phát hiện nội dung AI cho ba loại đầu vào: hình ảnh, video và văn bản.
-  \item Toàn bộ phân tích chạy trực tiếp trên trình duyệt -- không gửi dữ liệu lên máy chủ, đảm bảo quyền riêng tư.
-  \item Các phương pháp phân tích dựa trên bài báo khoa học đã công bố (paper-faithful).
-  \item Cung cấp REST API để tích hợp vào hệ thống khác.
-  \item Hỗ trợ đa ngôn ngữ: Tiếng Việt, Tiếng Anh và một số ngôn ngữ khác.
-\end{itemize}
-
-\section{Công nghệ và Nền tảng}
-\begin{longtable}{|p{3cm}|p{4cm}|p{6cm}|}
-\hline
-\textbf{Tầng} & \textbf{Công nghệ} & \textbf{Mục đích} \\
-\hline
-Framework & Next.js 16 (App Router) & Nền tảng web, routing, SSR/SSG \\
-\hline
-Ngôn ngữ & TypeScript 5 & An toàn kiểu dữ liệu, dễ bảo trì \\
-\hline
-Giao diện & Tailwind CSS 4 & Styling nhẹ, hiệu suất cao \\
-\hline
-Runtime & React 19 & UI component, Concurrent features \\
-\hline
-Triển khai & Vercel & Hosting toàn cầu, CI/CD tự động \\
-\hline
-\end{longtable}
-\begin{center}Bảng 1: Tech Stack sử dụng\end{center}
-
-\section{Các chức năng và Mô-đun dự kiến}
-\begin{enumerate}
-  \item Phân tích hình ảnh -- phát hiện ảnh AI qua nhiều phương pháp (phân tích pixel, tần số, texture, metadata, dấu vết GAN/Diffusion).
-  \item Phân tích văn bản -- phát hiện văn bản AI qua nhiều phương pháp (entropy, phong cách viết, dấu vân tay mô hình ngôn ngữ).
-  \item Phân tích video -- phát hiện video AI qua nhiều phương pháp (phân tích từng khung hình + lip sync, motion artifact).
-  \item REST API -- cho phép tích hợp vào hệ thống khác qua endpoint \\
-        \texttt{POST /api/analyze}.
-  \item Giao diện người dùng -- kéo thả file, nhập URL hoặc văn bản; hiển thị kết quả dạng điểm số và biểu đồ.
-  \item Đa ngôn ngữ -- hỗ trợ Tiếng Việt, Tiếng Anh, Hàn, Nhật, Trung.
-  \item Benchmark tự động -- đo độ chính xác từng phương pháp trên bộ dữ liệu kiểm thử, công bố kết quả công khai.
-\end{enumerate}
-
-\section{Kế hoạch tuần tiếp theo}
-\begin{itemize}
-  \item Hoàn thiện REST API: thêm rate limiting và logging.
-  \item Hoàn thành bản dịch KO, JA, ZH cho toàn bộ giao diện.
-  \item Chạy benchmark văn bản trên corpus thực tế.
-  \item Tinh chỉnh trọng số tổng hợp điểm.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 2}
-Phạm vi cập nhật: từ ngày 08/04/2026 đến ngày 12/04/2026.
-\subsection{Công việc đã làm}
-\begin{itemize}
-  \item Hoàn thiện API phân tích tại endpoint \texttt{POST /api/analyze}.
-  \item Bổ sung middleware xử lý CORS và rate limiting cho API.
-  \item Hoàn thiện hỗ trợ đa ngôn ngữ cho các ngôn ngữ chính như Việt, Anh, Trung, Nhật và Hàn.
-  \item Thiết lập script benchmark để đo và lưu kết quả các phương pháp phân tích.
-  \item Bắt đầu tinh chỉnh cách tổng hợp điểm để cải thiện kết quả cuối cùng.
-\end{itemize}
-\subsection{Khó khăn và tồn tại}
-\begin{itemize}
-  \item Rate limiting hiện vẫn dùng bộ nhớ tạm trong tiến trình, chưa phù hợp cho hệ thống lớn.
-  \item Benchmark văn bản chưa dùng nhiều dữ liệu thực tế.
-  \item Benchmark video hiện mới đánh giá chủ yếu theo từng khung hình.
-\end{itemize}
-
-\section{Kế hoạch tuần thứ 3}
-\begin{itemize}
-  \item Thêm logging cho API.
-  \item Chạy benchmark với dữ liệu thực tế hơn cho văn bản và video.
-  \item Tiếp tục tinh chỉnh trọng số và ngưỡng tổng hợp điểm.
-  \item Rà soát lại phần bản dịch trên toàn bộ hệ thống.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 3}
-Phạm vi cập nhật: từ ngày 13/04/2026 đến ngày 18/04/2026.
-\begin{itemize}
-  \item Đã thêm logging cơ bản cho API để theo dõi request và lỗi.
-  \item Đã chạy benchmark văn bản và video với dữ liệu thực tế hơn.
-  \item Đã tinh chỉnh thêm trọng số tổng hợp điểm để kết quả ổn định hơn.
-  \item Đã rà soát và sửa một số lỗi dịch trên giao diện đa ngôn ngữ.
-\end{itemize}
-
-\section{Kế hoạch tuần thứ 4}
-\begin{itemize}
-  \item Hoàn thiện phần báo cáo học thuật cho các phương pháp phân tích.
-  \item Tiếp tục rà soát dữ liệu và bản dịch giữa các ngôn ngữ.
-  \item Ổn định benchmark và các tham số đánh giá.
-  \item Sửa các lỗi nội bộ còn lại liên quan API logging và hiển thị.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 4}
-Phạm vi cập nhật: từ ngày 19/04/2026 đến ngày 24/04/2026.
-\begin{itemize}
-  \item Đã tiếp tục hoàn thiện nội dung học thuật cho các phương pháp phân tích văn bản, bổ sung mô tả theo hướng bám sát tài liệu nghiên cứu và chuẩn hoá cách trình bày.
-  \item Đã rà soát, cập nhật thêm dữ liệu và bản dịch cho các trang phương pháp nhằm cải thiện độ đầy đủ và tính nhất quán giữa các ngôn ngữ.
-  \item Đã tiếp tục kiểm tra, tinh chỉnh phần benchmark và các tham số liên quan để kết quả đánh giá ổn định và dễ đối chiếu hơn.
-  \item Đã sửa một số lỗi nội bộ và cải thiện chất lượng mã nguồn ở các phần liên quan đến API logging, benchmark và nội dung hiển thị.
-\end{itemize}
-
-\section{Kế hoạch tuần thứ 5}
-\begin{itemize}
-  \item Tiếp tục rà soát và hoàn thiện các hạng mục đã triển khai.
-  \item Ổn định lại các phần nội dung, cấu hình và kết quả hiển thị.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 5}
-Phạm vi cập nhật: từ ngày 25/04/2026 đến ngày 01/05/2026.
-\begin{itemize}
-  \item Tiếp tục duy trì và rà soát các hạng mục đã hoàn thiện ở các tuần trước.
-  \item Đã tập trung kiểm tra tính ổn định của các phần API, benchmark và nội dung phương pháp.
-\end{itemize}
-
-\section{Kế hoạch tuần thứ 6}
-\begin{itemize}
-  \item Tiếp tục tối ưu độ ổn định chung của hệ thống ở các phần đã hoàn thiện.
-  \item Rà soát tính nhất quán giữa dữ liệu, nội dung và kết quả hiển thị.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 6}
-Phạm vi cập nhật: từ ngày 02/05/2026 đến ngày 08/05/2026.
-\begin{itemize}
-  \item Đã tiếp tục rà soát và giữ ổn định các hạng mục đã hoàn thành.
-  \item Đã tiếp tục kiểm tra sự nhất quán của các phần chức năng và nội dung liên quan.
-\end{itemize}
-
-\section{Kế hoạch tuần thứ 7}
-\begin{itemize}
-  \item Tiếp tục hoàn thiện các chi tiết còn dở ở phần nội dung và cấu hình.
-  \item Tiếp tục chuẩn hoá cách trình bày và tính nhất quán giữa các phần.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 7}
-Phạm vi cập nhật: từ ngày 09/05/2026 đến ngày 15/05/2026.
-\begin{itemize}
-  \item Đã tiếp tục rà soát và giữ ổn định các hạng mục đã hoàn thành.
-  \item Đã tiếp tục tinh chỉnh các chi tiết nhỏ để nội dung và kết quả hiển thị đồng đều hơn.
-\end{itemize}
-
-\section{Kế hoạch tuần thứ 8}
-\begin{itemize}
-  \item Tiếp tục hoàn thiện các phần còn lại để tổng thể hệ thống đồng bộ hơn.
-  \item Rà soát lại các mục hiển thị để đảm bảo cách trình bày gọn và nhất quán.
-\end{itemize}
-
-\section{Báo cáo tiến độ tuần thứ 8}
-Phạm vi cập nhật: từ ngày 16/05/2026 đến ngày 23/05/2026.
-\begin{itemize}
-  \item Đã tiếp tục hoàn thiện các hạng mục còn lại ở mức chi tiết để hệ thống ổn định hơn.
-  \item Đã rà soát và chuẩn hoá thêm cách trình bày ở các phần liên quan nhằm tăng tính nhất quán chung.
-\end{itemize}
+\input{sections/02-introduction}
+\clearpage
+\input{sections/03-theory}
+\clearpage
+\input{sections/04-system-design}
+\clearpage
+\input{sections/05-implementation-results}
+\clearpage
+\input{sections/06-conclusion}
+\clearpage
+\input{sections/07-references}
 
 \end{document}
