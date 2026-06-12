@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SourceVerify — Slide thuyết trình Project I</title>
+<style>
+  :root{
+    --navy:#123456; --blue:#3478f6; --light:#e3efff; --gray:#f4f4f4;
+    --green:#2c8c5a; --orange:#e88c2c; --purple:#8454c9; --red:#c94040;
+    --ink:#15263a;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{height:100%;background:#0b1622;overflow:hidden;font-family:"Segoe UI",Arial,sans-serif;}
+  #stage{
+    position:absolute;top:50%;left:50%;width:1280px;height:720px;
+    transform-origin:center center;background:#fff;overflow:hidden;
+    box-shadow:0 0 60px rgba(0,0,0,.6);
+  }
+  .slide{
+    position:absolute;inset:0;padding:64px 80px;display:none;
+    flex-direction:column;color:var(--ink);
+  }
+  .slide.active{display:flex;}
+  h1{font-size:64px;color:var(--navy);line-height:1.1;}
+  h2{font-size:42px;color:var(--navy);margin-bottom:24px;border-bottom:4px solid var(--blue);padding-bottom:10px;}
+  h3{font-size:28px;color:var(--blue);margin:10px 0;}
+  p,li{font-size:26px;line-height:1.5;}
+  ul{margin-left:34px;margin-top:8px;}
+  li{margin-bottom:14px;}
+  .sub{color:#5a6b80;font-size:22px;}
+  .tag{display:inline-block;background:var(--light);color:var(--navy);
+    padding:6px 16px;border-radius:20px;font-size:20px;font-weight:600;margin-bottom:18px;}
+  .center{align-items:center;justify-content:center;text-align:center;}
+  .fill{flex:1;display:flex;flex-direction:column;justify-content:center;}
+  .two{display:flex;gap:40px;flex:1;}
+  .two>div{flex:1;}
+  .card{background:var(--gray);border-radius:16px;padding:24px 28px;border-left:8px solid var(--blue);}
+  .card.green{border-color:var(--green);} .card.orange{border-color:var(--orange);}
+  .card.purple{border-color:var(--purple);} .card.red{border-color:var(--red);}
+  .pill{font-size:19px;background:var(--navy);color:#fff;border-radius:8px;padding:3px 10px;}
+  table{width:100%;border-collapse:collapse;font-size:23px;margin-top:10px;}
+  th,td{border:1px solid #cdd6e0;padding:10px 14px;text-align:left;}
+  th{background:var(--navy);color:#fff;}
+  tr:nth-child(even){background:#f6f9ff;}
+  .muted{color:#7a8aa0;}
+  /* footer */
+  .foot{position:absolute;bottom:22px;left:80px;right:80px;display:flex;
+    justify-content:space-between;align-items:center;font-size:16px;color:#8aa;}
+  .foot .bar{flex:1;height:4px;background:#e3e8ee;margin:0 18px;border-radius:2px;overflow:hidden;}
+  .foot .bar i{display:block;height:100%;background:var(--blue);width:0;transition:width .3s;}
+  /* method circle diagram */
+  .hub{position:relative;flex:1;}
+  .node{position:absolute;background:var(--light);border:3px solid var(--navy);
+    border-radius:14px;padding:12px 18px;font-weight:700;font-size:22px;color:var(--navy);text-align:center;}
+  .core{background:var(--navy);color:#fff;border-radius:50%;width:200px;height:200px;
+    display:flex;align-items:center;justify-content:center;font-size:26px;
+    left:50%;top:50%;transform:translate(-50%,-50%);position:absolute;text-align:center;line-height:1.2;}
+  /* bars */
+  .barrow{display:flex;align-items:center;margin:14px 0;font-size:24px;}
+  .barrow .lbl{width:280px;}
+  .barrow .track{flex:1;background:#e9eef5;border-radius:8px;height:34px;position:relative;margin:0 14px;}
+  .barrow .track i{position:absolute;left:0;top:0;height:100%;border-radius:8px;}
+  .barrow .val{width:70px;text-align:right;font-weight:700;}
+  .ref{position:absolute;top:-6px;bottom:-6px;border-left:2px dashed var(--red);}
+  .badge{font-size:20px;color:#fff;background:var(--green);border-radius:8px;padding:4px 12px;display:inline-block;}
+  .hint{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);
+    color:#7e93a8;font-size:14px;font-family:Arial;}
+  kbd{background:#1c2c3e;color:#cfe0f5;border-radius:4px;padding:2px 7px;font-size:13px;}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- 1 TITLE -->
+  <section class="slide active center">
+    <div class="tag">Báo cáo Project I — Trường CNTT &amp; Truyền thông, ĐHBK Hà Nội</div>
+    <h1>SourceVerify</h1>
+    <h3 style="font-size:32px;margin-top:18px;">Công cụ hỗ trợ kiểm chứng ảnh do AI tạo ra</h3>
+    <p class="sub" style="margin-top:36px;">Sinh viên: Bạch Minh Quang &nbsp;•&nbsp; Học kỳ II, 2025–2026</p>
+    <p class="sub" style="margin-top:8px;">Hướng tiếp cận: <b>Digital Image Forensics</b> (giám định ảnh số)</p>
+  </section>
+
+  <!-- 2 PROBLEM -->
+  <section class="slide">
+    <h2>1. Vấn đề</h2>
+    <div class="fill">
+      <p>Các công cụ AI tạo ảnh phát triển rất nhanh — chỉ cần vài câu mô tả là có ảnh trông như thật.</p>
+      <ul>
+        <li>Nhìn bằng mắt ngày càng khó phân biệt ảnh chụp và ảnh máy tạo.</li>
+        <li>Ảnh giả, ảnh sai nguồn gốc dễ lan truyền và gây hiểu lầm.</li>
+        <li>Người dùng thường chỉ tin vào cảm giác, mà cảm giác thì dễ sai.</li>
+      </ul>
+      <div class="card red" style="margin-top:24px;">
+        <b>Cần có công cụ hỗ trợ</b> chỉ ra dấu hiệu đáng nghi, kèm lý do — chứ không chỉ là một con số.
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 GOAL -->
+  <section class="slide">
+    <h2>2. Mục tiêu &amp; phạm vi</h2>
+    <div class="two">
+      <div>
+        <h3>Mục tiêu</h3>
+        <ul>
+          <li>Hiểu bài toán phát hiện ảnh AI.</li>
+          <li>Tìm hiểu 5 phương pháp forensic tiêu biểu.</li>
+          <li>Thiết kế hệ thống phân tích &amp; giải thích.</li>
+          <li>Làm sản phẩm web minh họa.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Phạm vi (Project I)</h3>
+        <ul>
+          <li>Tập trung vào <b>ảnh</b> (nhiều dấu vết dễ giải thích).</li>
+          <li>Đi sâu <b>5 phương pháp</b>, không dàn trải.</li>
+          <li>Không dùng mô hình học sâu cỡ lớn.</li>
+          <li>Mục tiêu: hỗ trợ tham khảo, không phán quyết tuyệt đối.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 APPROACH -->
+  <section class="slide">
+    <h2>3. Ý tưởng cốt lõi</h2>
+    <div class="two">
+      <div class="fill">
+        <p>Ảnh thật đi qua <b>chuỗi vật lý</b>: ống kính → cảm biến → xử lý → nén → metadata. Mỗi bước để lại một dấu vết.</p>
+        <p style="margin-top:18px;">Ảnh AI <b>sinh thẳng từ mô hình</b> rồi mới lưu tệp, nên thiếu hoặc làm sai các dấu vết đó.</p>
+        <div class="card green" style="margin-top:22px;">
+          Giống <b>khám nghiệm hiện trường</b>: không xét ảnh đẹp hay xấu, mà tìm vết tích người làm giả bỏ sót.
+        </div>
+      </div>
+      <div class="fill">
+        <div class="card">
+          <h3 style="margin-top:0;">Vì sao dùng nhiều phương pháp?</h3>
+          <p>Không dấu vết nào đúng mọi lúc: metadata bị xóa, nhiễu bị nén làm mờ...</p>
+          <p style="margin-top:14px;">→ Cho nhiều phương pháp cùng chấm điểm, khi <b>đồng thuận</b> thì kết luận đáng tin hơn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 FIVE METHODS HUB -->
+  <section class="slide">
+    <h2>4. Năm phương pháp trọng tâm</h2>
+    <div class="hub">
+      <div class="core">SourceVerify<br/>AI Score</div>
+      <div class="node" style="left:50%;top:8px;transform:translateX(-50%);border-color:var(--orange);">Metadata<br/><span class="sub">siêu dữ liệu</span></div>
+      <div class="node" style="right:40px;top:40%;transform:translateY(-50%);border-color:var(--green);">Noise Residual<br/><span class="sub">nhiễu dư · w=3.5</span></div>
+      <div class="node" style="right:120px;bottom:20px;border-color:var(--blue);">DCT Block<br/><span class="sub">vết khối nén</span></div>
+      <div class="node" style="left:120px;bottom:20px;border-color:var(--red);">Chromatic Ab.<br/><span class="sub">quang sai màu</span></div>
+      <div class="node" style="left:40px;top:40%;transform:translateY(-50%);border-color:var(--purple);">Spectral Nyquist<br/><span class="sub">phổ tần số</span></div>
+    </div>
+    <p class="muted" style="text-align:center;">Mỗi phương pháp soi một loại dấu vết khác nhau → cộng điểm có trọng số.</p>
+  </section>
+
+  <!-- 6 Metadata -->
+  <section class="slide">
+    <h2>PP1 — Metadata Analysis <span class="sub">(phân tích siêu dữ liệu)</span></h2>
+    <div class="two">
+      <div class="fill">
+        <p>“Lý lịch” của bức ảnh: máy chụp, thời gian, phần mềm, EXIF...</p>
+        <ul>
+          <li>Thấy tên phần mềm AI (Midjourney, DALL·E...) → rất nghi AI.</li>
+          <li>Có thông tin camera hợp lý → nghiêng ảnh thật.</li>
+          <li>Bỏ qua trường cơ bản (tên tệp, dung lượng) khi đếm EXIF.</li>
+        </ul>
+      </div>
+      <div class="fill">
+        <table>
+          <tr><th>Điều kiện</th><th>Điểm</th></tr>
+          <tr><td>Có chữ ký phần mềm AI</td><td>95</td></tr>
+          <tr><td>Có chữ ký camera thật</td><td>10</td></tr>
+          <tr><td>≥ 3 trường EXIF camera</td><td>18</td></tr>
+          <tr><td>Không có EXIF</td><td>50</td></tr>
+        </table>
+        <p class="muted" style="margin-top:14px;">Mạnh nhưng dễ bị xóa → chỉ là 1 lớp bằng chứng.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 Noise -->
+  <section class="slide">
+    <h2>PP2 — Noise Residual <span class="sub">(nhiễu dư · trọng số cao nhất 3.5)</span></h2>
+    <div class="two">
+      <div class="fill">
+        <p>Nhiễu cảm biến thật tỉ lệ với độ sáng (<b>shot noise</b>): vùng sáng nhiễu nhiều hơn.</p>
+        <ul>
+          <li>Ảnh thật: nhiễu không đều, tăng theo độ sáng.</li>
+          <li>Ảnh AI: quá sạch hoặc nhiễu đều đều mọi nơi.</li>
+        </ul>
+        <p class="sub">Lọc Laplacian theo khối 32×32 → đo CV, tương quan ρ, độ nhọn.</p>
+      </div>
+      <div class="fill">
+        <svg viewBox="0 0 360 240" style="width:100%;">
+          <line x1="40" y1="200" x2="340" y2="200" stroke="#333" stroke-width="2"/>
+          <line x1="40" y1="200" x2="40" y2="20" stroke="#333" stroke-width="2"/>
+          <text x="180" y="232" font-size="15" fill="#555">Độ sáng</text>
+          <text x="6" y="110" font-size="15" fill="#555" transform="rotate(-90 12,110)">Nhiễu</text>
+          <path d="M50,180 Q190,90 330,60" stroke="#2c8c5a" stroke-width="3" fill="none"/>
+          <line x1="50" y1="150" x2="330" y2="150" stroke="#8454c9" stroke-width="3" stroke-dasharray="6"/>
+          <text x="250" y="55" font-size="15" fill="#2c8c5a">Ảnh thật</text>
+          <text x="250" y="142" font-size="15" fill="#8454c9">Ảnh AI</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 DCT -->
+  <section class="slide">
+    <h2>PP3 — DCT Block Artifacts <span class="sub">(vết khối nén DCT)</span></h2>
+    <div class="two">
+      <div class="fill">
+        <p>JPEG nén theo ô vuông 8×8 → để lại “vết khối” ở biên các ô.</p>
+        <ul>
+          <li>JPEG thật: vết khối rõ (blockRatio &gt; 1.2).</li>
+          <li>Ảnh AI lưu PNG: gần như không có vết khối.</li>
+          <li>Ảnh AI tái nén: vết khối <b>quá đều</b> mọi vùng.</li>
+        </ul>
+        <p class="sub">Đo tỉ lệ năng lượng biên/trong khối + độ đều trên 5 vùng.</p>
+      </div>
+      <div class="fill center">
+        <svg viewBox="0 0 240 200" style="width:80%;">
+          <g stroke="#bbb" stroke-width="1" fill="none">
+            <rect x="20" y="20" width="160" height="120"/>
+            <line x1="60" y1="20" x2="60" y2="140"/><line x1="100" y1="20" x2="100" y2="140"/>
+            <line x1="140" y1="20" x2="140" y2="140"/>
+            <line x1="20" y1="60" x2="180" y2="60"/><line x1="20" y1="100" x2="180" y2="100"/>
+          </g>
+          <g stroke="#c94040" stroke-width="2.5">
+            <line x1="60" y1="20" x2="60" y2="140"/><line x1="100" y1="20" x2="100" y2="140"/>
+            <line x1="140" y1="20" x2="140" y2="140"/>
+            <line x1="20" y1="60" x2="180" y2="60"/><line x1="20" y1="100" x2="180" y2="100"/>
+          </g>
+          <text x="100" y="170" font-size="14" fill="#c94040" text-anchor="middle">Biên khối 8×8</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 Chromatic -->
+  <section class="slide">
+    <h2>PP4 — Chromatic Aberration <span class="sub">(quang sai màu · w=0.5)</span></h2>
+    <div class="fill">
+      <p>Ống kính thật làm các màu hội tụ lệch nhau → viền màu nhẹ ở rìa ảnh, vùng tương phản cao.</p>
+      <ul>
+        <li>Ảnh AI không qua ống kính → thường thiếu viền màu này.</li>
+        <li>Đo độ lệch giữa kênh đỏ và xanh lam ở vùng biên: lệch nhiều → ảnh thật.</li>
+        <li>Trọng số thấp vì không phải ảnh thật nào cũng có viền màu rõ.</li>
+      </ul>
+      <div class="card orange" style="margin-top:20px;">
+        Vai trò: bổ sung một <b>góc nhìn vật lý</b> (quang học) bên cạnh các phương pháp thống kê.
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 Spectral -->
+  <section class="slide">
+    <h2>PP5 — Spectral Nyquist <span class="sub">(phân tích phổ tần số)</span></h2>
+    <div class="two">
+      <div class="fill">
+        <p>Nhìn ảnh trong miền tần số: vùng mịn = tần số thấp, chi tiết nhỏ = tần số cao.</p>
+        <ul>
+          <li>Ảnh thật: phổ giảm mượt khi lên tần số cao.</li>
+          <li>Ảnh AI: nhô lên bất thường gần ngưỡng Nyquist / N/4.</li>
+        </ul>
+        <p class="sub">Phát hiện dấu vết của bước phóng to (upsampling) trong mô hình.</p>
+      </div>
+      <div class="fill">
+        <svg viewBox="0 0 360 240" style="width:100%;">
+          <line x1="40" y1="200" x2="340" y2="200" stroke="#333" stroke-width="2"/>
+          <line x1="40" y1="200" x2="40" y2="20" stroke="#333" stroke-width="2"/>
+          <text x="300" y="220" font-size="13" fill="#555">Nyquist</text>
+          <path d="M50,60 Q150,170 330,190" stroke="#2c8c5a" stroke-width="3" fill="none"/>
+          <path d="M50,90 Q160,175 300,185 L320,120" stroke="#8454c9" stroke-width="3" fill="none"/>
+          <circle cx="320" cy="120" r="5" fill="#8454c9"/>
+          <text x="120" y="60" font-size="15" fill="#2c8c5a">Ảnh thật</text>
+          <text x="150" y="110" font-size="15" fill="#8454c9">Ảnh AI (đỉnh bất thường)</text>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 SCORING -->
+  <section class="slide">
+    <h2>5. Cách tổng hợp điểm</h2>
+    <div class="two">
+      <div class="fill">
+        <p>Mỗi phương pháp cho điểm 0–100 (≈50 là chưa rõ). Lấy <b>trung bình có trọng số</b>:</p>
+        <p style="font-size:30px;margin:18px 0;text-align:center;">Điểm AI = Σ(điểm × trọng số) / Σ(trọng số)</p>
+        <ul>
+          <li>≥ 55 → <span class="pill">ai</span> &nbsp; ≤ 40 → <span class="pill">real</span> &nbsp; giữa → <span class="pill">uncertain</span></li>
+          <li>Có bước ưu tiên metadata rõ + chống báo nhầm.</li>
+        </ul>
+      </div>
+      <div class="fill">
+        <table>
+          <tr><th>Phương pháp</th><th>Điểm</th><th>×w</th></tr>
+          <tr><td>Metadata</td><td>50</td><td>75</td></tr>
+          <tr><td>Noise Residual</td><td>72</td><td>252</td></tr>
+          <tr><td>DCT Block</td><td>65</td><td>130</td></tr>
+          <tr><td>Chromatic</td><td>68</td><td>34</td></tr>
+          <tr><td>Spectral</td><td>60</td><td>90</td></tr>
+          <tr><td colspan="2"><b>Điểm AI ≈ 581/9</b></td><td><b>≈ 65</b></td></tr>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 ARCHITECTURE -->
+  <section class="slide">
+    <h2>6. Kiến trúc hệ thống</h2>
+    <div class="fill center">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;font-size:22px;">
+        <div class="card" style="border-color:var(--blue);">Giao diện<br/><span class="sub">React/Next.js</span></div>
+        <span style="font-size:30px;color:var(--navy);">→</span>
+        <div class="card" style="border-color:var(--navy);">Phân tích<br/><span class="sub">analyzer.ts</span></div>
+        <span style="font-size:30px;color:var(--navy);">→</span>
+        <div class="card green">5 phương pháp<br/><span class="sub">chấm điểm</span></div>
+        <span style="font-size:30px;color:var(--navy);">→</span>
+        <div class="card orange">Tổng hợp điểm<br/><span class="sub">+ giải thích</span></div>
+      </div>
+      <div class="card" style="margin-top:34px;max-width:900px;border-color:var(--green);">
+        <b>Chạy hoàn toàn phía trình duyệt (client-side)</b> — ảnh không gửi lên máy chủ → bảo vệ quyền riêng tư.
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 RESULTS -->
+  <section class="slide">
+    <h2>7. Kết quả benchmark <span class="sub">(120 ảnh thật + 120 ảnh AI)</span></h2>
+    <div class="fill">
+      <div class="barrow"><span class="lbl">Noise Residual</span><span class="track"><i style="width:67.5%;background:var(--green);"></i><span class="ref" style="left:50%;"></span></span><span class="val">67.5%</span></div>
+      <div class="barrow"><span class="lbl">DCT Block</span><span class="track"><i style="width:54.6%;background:var(--blue);"></i><span class="ref" style="left:50%;"></span></span><span class="val">54.6%</span></div>
+      <div class="barrow"><span class="lbl">Chromatic Ab.</span><span class="track"><i style="width:50.4%;background:var(--orange);"></i><span class="ref" style="left:50%;"></span></span><span class="val">50.4%</span></div>
+      <div class="barrow"><span class="lbl">Spectral Nyquist</span><span class="track"><i style="width:50%;background:var(--purple);"></i><span class="ref" style="left:50%;"></span></span><span class="val">50.0%</span></div>
+      <p class="muted" style="margin-top:10px;">Đường đứt đỏ = mốc đoán ngẫu nhiên 50% · chỉ số strict accuracy.</p>
+      <ul style="margin-top:6px;">
+        <li>Noise Residual tốt nhất → trọng số cao nhất là hợp lý.</li>
+        <li>Resize 320px làm yếu phương pháp tần số &amp; viền màu → cần kết hợp nhiều phương pháp.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 14 DEMO -->
+  <section class="slide">
+    <h2>8. Sản phẩm minh họa</h2>
+    <div class="two">
+      <div class="fill">
+        <ul>
+          <li>Kéo-thả ảnh, phân tích ngay trên trình duyệt.</li>
+          <li>Hiện điểm AI, nhãn (verdict) và độ tin cậy.</li>
+          <li>Liệt kê từng tín hiệu kèm <b>giải thích vì sao</b>.</li>
+          <li>Trang tài liệu cho các phương pháp (đa ngôn ngữ).</li>
+        </ul>
+      </div>
+      <div class="fill">
+        <div style="border:3px solid var(--navy);border-radius:12px;overflow:hidden;">
+          <div style="background:var(--navy);color:#fff;padding:8px 14px;font-size:18px;">SourceVerify</div>
+          <div style="padding:16px;">
+            <div class="badge" style="background:var(--green);">VERDICT: AI-GENERATED</div>
+            <p style="font-size:20px;margin:10px 0;">AI Score: <b>68/100</b> · Tin cậy 64%</p>
+            <div class="barrow" style="margin:6px 0;font-size:18px;"><span class="lbl" style="width:150px;">Noise</span><span class="track" style="height:20px;"><i style="width:72%;background:var(--orange);"></i></span><span class="val">72</span></div>
+            <div class="barrow" style="margin:6px 0;font-size:18px;"><span class="lbl" style="width:150px;">DCT</span><span class="track" style="height:20px;"><i style="width:65%;background:var(--orange);"></i></span><span class="val">65</span></div>
+            <div class="barrow" style="margin:6px 0;font-size:18px;"><span class="lbl" style="width:150px;">Spectral</span><span class="track" style="height:20px;"><i style="width:60%;background:var(--orange);"></i></span><span class="val">60</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 CONCLUSION -->
+  <section class="slide">
+    <h2>9. Kết luận &amp; hướng phát triển</h2>
+    <div class="two">
+      <div>
+        <h3>Đã làm được</h3>
+        <ul>
+          <li>Hiểu bài toán &amp; 5 phương pháp.</li>
+          <li>Thiết kế hệ thống có giải thích.</li>
+          <li>Sản phẩm web minh họa + benchmark.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Hướng phát triển</h3>
+        <ul>
+          <li>Dữ liệu lớn hơn, benchmark nghiêm túc.</li>
+          <li>Kết hợp heuristic + học máy nhẹ.</li>
+          <li>Mở rộng video &amp; văn bản, tích hợp C2PA.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="border-color:var(--navy);">
+      Giá trị lớn nhất: một cách tiếp cận <b>đa bằng chứng, luôn giải thích được</b> — đúng tinh thần Project I.
+    </div>
+  </section>
+
+  <!-- 16 THANKS -->
+  <section class="slide center">
+    <h1>Cảm ơn thầy/cô<br/>đã lắng nghe!</h1>
+    <p class="sub" style="margin-top:30px;">SourceVerify — Kiểm chứng ảnh do AI tạo · Project I</p>
+    <p class="sub" style="margin-top:8px;">Rất mong nhận được góp ý ạ.</p>
+  </section>
+
+  <div class="foot">
+    <span id="title">SourceVerify</span>
+    <span class="bar"><i id="prog"></i></span>
+    <span><span id="cur">1</span> / <span id="total">16</span></span>
+  </div>
+</div>
+
+<div class="hint">Điều hướng: <kbd>←</kbd> <kbd>→</kbd> / <kbd>Space</kbd> · Toàn màn hình: <kbd>F</kbd></div>
+
+<script>
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const stage = document.getElementById('stage');
+  let i = 0;
+  const total = slides.length;
+  document.getElementById('total').textContent = total;
+
+  function show(n){
+    i = Math.max(0, Math.min(total-1, n));
+    slides.forEach((s,k)=>s.classList.toggle('active', k===i));
+    document.getElementById('cur').textContent = i+1;
+    document.getElementById('prog').style.width = ((i+1)/total*100)+'%';
+  }
+  function next(){ show(i+1); }
+  function prev(){ show(i-1); }
+
+  document.addEventListener('keydown', e=>{
+    if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){ next(); e.preventDefault(); }
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){ prev(); }
+    else if(e.key==='Home'){ show(0); }
+    else if(e.key==='End'){ show(total-1); }
+    else if(e.key.toLowerCase()==='f'){ toggleFs(); }
+  });
+  stage.addEventListener('click', e=>{ if(e.clientX < window.innerWidth/2) prev(); else next(); });
+
+  function toggleFs(){
+    if(!document.fullscreenElement) document.documentElement.requestFullscreen();
+    else document.exitFullscreen();
+  }
+
+  // scale stage to fit window, keep 16:9
+  function fit(){
+    const s = Math.min(window.innerWidth/1280, window.innerHeight/720);
+    stage.style.transform = `translate(-50%,-50%) scale(${s})`;
+  }
+  window.addEventListener('resize', fit);
+  fit(); show(0);
+</script>
+</body>
+</html>
