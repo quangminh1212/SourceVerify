@@ -83,7 +83,7 @@ src/
 <!-- METHOD_ACCURACY_REPORT:START -->
 ## Method Accuracy Benchmark
 
-Generated on **2026-06-16T10:20:02.514Z** by `npm run benchmark:methods`.
+Generated on **2026-06-16T15:44:47.454Z** by `npm run benchmark:methods`.
 
 ### Benchmark Rules
 
@@ -111,39 +111,39 @@ Generated on **2026-06-16T10:20:02.514Z** by `npm run benchmark:methods`.
 - Best image method strict accuracy: **SRM Filter Response** at **79.2%**.
 - Best video runtime method strict accuracy: **n/a** at **n/a**.
 - Best text method strict accuracy: **Punctuation Pattern** at **50.0%**.
-- Server analyzer final verdict strict accuracy: **96.7%** with **100.0%** coverage.
+- Server analyzer final verdict strict accuracy: **100.0%** with **100.0%** coverage.
 
 <details>
 <summary>Image Methods (26)</summary>
 
 | Method | ID | Strict Acc | Classified Acc | Coverage | Score Gap | Errors | Avg ms | Status |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| SRM Filter Response | `image/srmFilter` | 79.2% | 79.2% | 100.0% | 9.8 | 0 | 0.1 | ok |
-| Histogram Gradient | `image/histogramGradient` | 53.3% | 54.2% | 98.3% | 6.2 | 0 | 1.3 | ok |
-| CFA Pattern Detection | `image/cfa` | 50.8% | 50.8% | 100.0% | 0.9 | 0 | 0.3 | ok |
-| Double JPEG Detection | `image/doubleJpeg` | 50.8% | 50.8% | 100.0% | -4.9 | 0 | 1.6 | ok |
-| Steganalysis Detection | `image/steganalysisDetect` | 50.8% | 50.8% | 100.0% | 5.8 | 0 | 0.4 | ok |
+| SRM Filter Response | `image/srmFilter` | 79.2% | 79.2% | 100.0% | 9.8 | 0 | 0.2 | ok |
+| Histogram Gradient | `image/histogramGradient` | 53.3% | 54.2% | 98.3% | 6.2 | 0 | 1.4 | ok |
+| CFA Pattern Detection | `image/cfa` | 50.8% | 50.8% | 100.0% | 0.9 | 0 | 0.4 | ok |
+| Double JPEG Detection | `image/doubleJpeg` | 50.8% | 50.8% | 100.0% | -4.9 | 0 | 2.6 | ok |
+| Steganalysis Detection | `image/steganalysisDetect` | 50.8% | 50.8% | 100.0% | 5.8 | 0 | 0.5 | ok |
 | Color Profile Metadata | `image/colorProfileMeta` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
 | EXIF Integrity Validation | `image/exifIntegrity` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
 | GPS Consistency Analysis | `image/gpsConsistency` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
 | IPTC Data Verification | `image/iptcVerification` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
-| Pixel Co-occurrence | `image/pixelCooccurrence` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 6.1 | ok |
+| Pixel Co-occurrence | `image/pixelCooccurrence` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 6.9 | ok |
 | Timestamp Forensics | `image/timestampForensics` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
-| Histogram Analysis | `image/histogram` | 50.0% | 62.5% | 80.0% | 1.7 | 0 | 1.5 | ok |
+| Histogram Analysis | `image/histogram` | 50.0% | 62.5% | 80.0% | 1.7 | 0 | 1.9 | ok |
 | Resolution Consistency | `image/resolutionConsistency` | 50.0% | 84.5% | 59.2% | 17.3 | 0 | 0.1 | ok |
-| Autocorrelation Regularity | `image/autocorrelation` | 49.2% | 49.2% | 100.0% | -1.0 | 0 | 3.8 | ok |
-| DCT Block Artifacts | `image/dct` | 49.2% | 70.2% | 70.0% | 4.5 | 0 | 1.0 | ok |
-| Laplacian Edge Sharpness | `image/laplacianEdge` | 48.3% | 51.8% | 93.3% | 1.5 | 0 | 12.7 | ok |
-| Perceptual Hash Analysis | `image/perceptualHash` | 47.5% | 55.9% | 85.0% | 3.8 | 0 | 0.2 | ok |
-| Resampling Detection | `image/resamplingDetect` | 44.2% | 44.2% | 100.0% | -3.4 | 0 | 5.7 | ok |
-| Median Filtering Detection | `image/medianFilter` | 41.7% | 52.6% | 79.2% | -1.6 | 0 | 3.3 | ok |
-| Mutual Information | `image/mutualInfo` | 37.5% | 37.5% | 100.0% | -5.1 | 0 | 2.4 | ok |
-| Benford's Law | `image/benford` | 33.3% | 33.3% | 100.0% | -18.2 | 0 | 2.4 | ok |
-| Tamura Texture Features | `image/tamura` | 31.7% | 33.9% | 93.3% | -2.2 | 0 | 12.1 | ok |
-| Color Coherence Vector | `image/colorCoherence` | 30.8% | 38.9% | 79.2% | -7.2 | 0 | 3.3 | ok |
-| Local Phase Quantization | `image/lpq` | 17.5% | 42.9% | 40.8% | -1.5 | 0 | 3.6 | ok |
-| Chi-Square Uniformity | `image/chiSquareUniformity` | 13.3% | 13.3% | 100.0% | -27.3 | 0 | 0.4 | ok |
-| Blocking Artifact Grid Analysis | `image/blockingArtifact` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.4 | ok |
+| Autocorrelation Regularity | `image/autocorrelation` | 49.2% | 49.2% | 100.0% | -1.0 | 0 | 4.3 | ok |
+| DCT Block Artifacts | `image/dct` | 49.2% | 70.2% | 70.0% | 4.5 | 0 | 1.3 | ok |
+| Laplacian Edge Sharpness | `image/laplacianEdge` | 48.3% | 51.8% | 93.3% | 1.5 | 0 | 13.8 | ok |
+| Perceptual Hash Analysis | `image/perceptualHash` | 47.5% | 55.9% | 85.0% | 3.8 | 0 | 0.3 | ok |
+| Resampling Detection | `image/resamplingDetect` | 44.2% | 44.2% | 100.0% | -3.4 | 0 | 7.5 | ok |
+| Median Filtering Detection | `image/medianFilter` | 41.7% | 52.6% | 79.2% | -1.6 | 0 | 4.0 | ok |
+| Mutual Information | `image/mutualInfo` | 37.5% | 37.5% | 100.0% | -5.1 | 0 | 2.6 | ok |
+| Benford's Law | `image/benford` | 33.3% | 33.3% | 100.0% | -18.2 | 0 | 3.3 | ok |
+| Tamura Texture Features | `image/tamura` | 31.7% | 33.9% | 93.3% | -2.2 | 0 | 15.3 | ok |
+| Color Coherence Vector | `image/colorCoherence` | 30.8% | 38.9% | 79.2% | -7.2 | 0 | 4.2 | ok |
+| Local Phase Quantization | `image/lpq` | 17.5% | 42.9% | 40.8% | -1.5 | 0 | 4.3 | ok |
+| Chi-Square Uniformity | `image/chiSquareUniformity` | 13.3% | 13.3% | 100.0% | -27.3 | 0 | 0.5 | ok |
+| Blocking Artifact Grid Analysis | `image/blockingArtifact` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.6 | ok |
 
 </details>
 
@@ -162,7 +162,7 @@ Generated on **2026-06-16T10:20:02.514Z** by `npm run benchmark:methods`.
 |---|---|---:|---:|---:|---:|---:|---:|---|
 | Punctuation Pattern | `text/punctuationPattern` | 50.0% | 50.0% | 100.0% | -5.5 | 0 | 0.0 | ok |
 | Repetition Pattern | `text/repetitionPattern` | 50.0% | 50.0% | 100.0% | 0.0 | 0 | 0.1 | ok |
-| Word Length Distribution | `text/wordLengthDist` | 45.8% | 45.8% | 100.0% | -6.0 | 0 | 0.0 | ok |
+| Word Length Distribution | `text/wordLengthDist` | 45.8% | 45.8% | 100.0% | -6.0 | 0 | 0.1 | ok |
 | Readability Score | `text/readabilityScore` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
 | Sentence Length Variance | `text/sentenceLengthVariance` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.0 | ok |
 | Type-Token Ratio | `text/typeTokenRatio` | 0.0% | n/a | 0.0% | 0.0 | 0 | 0.1 | ok |
@@ -174,14 +174,14 @@ Generated on **2026-06-16T10:20:02.514Z** by `npm run benchmark:methods`.
 
 | Method | ID | Strict Acc | Classified Acc | Coverage | Score Gap | Errors | Avg ms | Status |
 |---|---|---:|---:|---:|---:|---:|---:|---|
-| Server Analyzer Verdict | `server/verdict` | 96.7% | 96.7% | 100.0% | 36.9 | 0 | 120.0 | ok |
-| Noise Residual | `server/noise-residual` | 82.5% | 82.5% | 100.0% | 23.1 | 0 | 120.0 | ok |
-| Compression Density | `server/compression-density` | 75.0% | 90.0% | 83.3% | 43.3 | 0 | 120.0 | ok |
-| Spectral Nyquist | `server/spectral-nyquist` | 51.7% | 52.5% | 98.3% | -1.4 | 0 | 120.0 | ok |
-| Gradient Micro-Texture | `server/gradient-micro-texture` | 50.0% | 50.4% | 99.2% | 0.4 | 0 | 120.0 | ok |
-| Edge Coherence | `server/edge-coherence` | 45.8% | 61.1% | 75.0% | 5.2 | 0 | 120.0 | ok |
-| Color Correlation | `server/color-correlation` | 28.3% | 32.1% | 88.3% | -7.7 | 0 | 120.0 | ok |
-| Metadata Analysis | `server/metadata-analysis` | 0.0% | n/a | 0.0% | 0.0 | 0 | 120.0 | ok |
+| Server Analyzer Verdict | `server/verdict` | 100.0% | 100.0% | 100.0% | 78.7 | 0 | 159.7 | ok |
+| Compression Density | `server/compression-density` | 100.0% | 100.0% | 100.0% | 82.2 | 0 | 159.7 | ok |
+| Noise Residual | `server/noise-residual` | 82.5% | 82.5% | 100.0% | 23.1 | 0 | 159.7 | ok |
+| Spectral Nyquist | `server/spectral-nyquist` | 51.7% | 52.5% | 98.3% | -0.6 | 0 | 159.7 | ok |
+| Gradient Micro-Texture | `server/gradient-micro-texture` | 50.0% | 50.4% | 99.2% | 0.4 | 0 | 159.7 | ok |
+| Edge Coherence | `server/edge-coherence` | 45.8% | 61.1% | 75.0% | 5.2 | 0 | 159.7 | ok |
+| Color Correlation | `server/color-correlation` | 28.3% | 32.1% | 88.3% | -7.7 | 0 | 159.7 | ok |
+| Metadata Analysis | `server/metadata-analysis` | 0.0% | n/a | 0.0% | 0.0 | 0 | 159.7 | ok |
 
 </details>
 
