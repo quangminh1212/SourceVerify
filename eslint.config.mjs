@@ -6,7 +6,7 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    files: ["scripts/**/*.{js,cjs}", "bench/**/*.js"],
+    files: ["*.{js,cjs}", "scripts/**/*.{js,cjs}", "bench/**/*.js"],
     languageOptions: {
       sourceType: "commonjs",
     },

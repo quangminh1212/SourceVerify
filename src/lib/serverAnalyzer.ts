@@ -12,6 +12,12 @@ export interface ServerAnalysisResult {
     imageInfo: { width: number; height: number; format: string };
 }
 
+interface ImageStats {
+    width: number;
+    height: number;
+    fileSize: number;
+}
+
 const MAX_DIM = 1024;
 const AI_SIGS = ["midjourney", "dall-e", "dalle", "stable diffusion", "comfyui", "automatic1111", "novelai", "civitai", "adobe firefly", "firefly", "bing image creator", "leonardo ai", "flux", "sora", "runway", "pika", "ideogram", "recraft", "grok", "gemini", "imagen", "copilot designer", "meta ai", "stability ai", "sdxl", "sd3"];
 const CAM_SIGS = ["canon", "nikon", "sony", "fujifilm", "olympus", "panasonic", "leica", "hasselblad", "pentax", "samsung", "apple", "google pixel", "huawei", "xiaomi"];
@@ -21,7 +27,7 @@ function analyzeMetadata(fileName: string) {
     const fn = fileName.toLowerCase();
     for (const sig of AI_SIGS) { if (fn.includes(sig)) { score = 95; break; } }
     if (score === 50) { for (const cam of CAM_SIGS) { if (fn.includes(cam)) { score = 10; break; } } }
-    return { name: "Metadata Analysis", score, weight: 1.5 };
+    return { name: "Metadata Analysis", score, weight: 0.1 };
 }
 
 function analyzeNoiseResidual(pixels: Uint8ClampedArray, w: number, h: number) {
@@ -70,7 +76,7 @@ function analyzeEdgeCoherence(pixels: Uint8ClampedArray, w: number, h: number) {
     let score = 50;
     if (p50 < 4 && edgeRange < 25) score += 28; else if (p50 < 6) score += 18; else if (p50 < 10) score += 8; else if (p50 > 25) score -= 20; else if (p50 > 18) score -= 10;
     if (sharpR < 2.5) score += 12; else if (sharpR < 4) score += 5; else if (sharpR > 10) score -= 12; else if (sharpR > 7) score -= 5;
-    return { name: "Edge Coherence", score: Math.max(5, Math.min(95, score)), weight: 1.5 };
+    return { name: "Edge Coherence", score: Math.max(5, Math.min(95, score)), weight: 0.5 };
 }
 
 function analyzeSpectralNyquist(pixels: Uint8ClampedArray, w: number, h: number) {
@@ -141,35 +147,72 @@ function analyzeColorCorrelation(pixels: Uint8ClampedArray, w: number, h: number
     let score = 50;
     if (avgC > 0.995) score += 10; else if (avgC > 0.92 && avgC < 0.99) score -= 12; else if (avgC < 0.75) score += 15; else if (avgC < 0.85) score += 8;
     if (cSpread > 0.15) score -= 5; else if (cSpread < 0.03) score += 8;
-    return { name: "Color Correlation", score: Math.max(10, Math.min(90, score)), weight: 2.0 };
+    return { name: "Color Correlation", score: Math.max(10, Math.min(90, score)), weight: 0.25 };
+}
+
+function analyzeCompressionDensity(stats: ImageStats) {
+    const totalPixels = stats.width * stats.height;
+    if (totalPixels <= 0 || stats.fileSize <= 0) {
+        return { name: "Compression Density", score: 50, weight: 0 };
+    }
+    const bpp = (stats.fileSize * 8) / totalPixels;
+    let score = 50;
+    if (bpp > 4.2) score += 38;
+    else if (bpp > 3.4) score += 30;
+    else if (bpp > 2.6) score += 22;
+    else if (bpp > 1.9) score += 12;
+    else if (bpp > 1.4) score += 4;
+    else if (bpp < 0.45) score -= 32;
+    else if (bpp < 0.7) score -= 22;
+    else if (bpp < 1.0) score -= 10;
+    return { name: "Compression Density", score: Math.max(8, Math.min(92, score)), weight: 1.6 };
 }
 
 function calculateVerdict(signals: { name: string; score: number; weight: number }[]) {
-    let tw = 0, ws = 0;
-    for (const s of signals) { tw += s.weight; ws += s.score * s.weight; }
-    let aiScore = Math.round(tw > 0 ? ws / tw : 50);
-    let alw = 0, rlw = 0, sai = 0, sr = 0, vsai = 0, vsr = 0;
-    for (const s of signals) {
-        if (s.score > 50) alw += s.weight; if (s.score < 50) rlw += s.weight;
-        if (s.score >= 65) sai++; if (s.score <= 35) sr++;
-        if (s.score >= 78) vsai++; if (s.score <= 22) vsr++;
+    const noise = signals.find((signal) => signal.name === "Noise Residual");
+    const spectral = signals.find((signal) => signal.name === "Spectral Nyquist");
+    const gradient = signals.find((signal) => signal.name === "Gradient Micro-Texture");
+    const compression = signals.find((signal) => signal.name === "Compression Density");
+
+    const primarySignals = [compression, noise].filter(
+        (signal): signal is NonNullable<typeof signal> => Boolean(signal && signal.weight > 0),
+    );
+    const primaryWeight = primarySignals.reduce((sum, signal) => sum + signal.weight, 0);
+    let aiScore = primaryWeight > 0
+        ? Math.round(primarySignals.reduce((sum, signal) => sum + signal.score * signal.weight, 0) / primaryWeight)
+        : 50;
+
+    const softPenaltySignals = [spectral, gradient]
+        .filter((signal): signal is NonNullable<typeof signal> => Boolean(signal))
+        .map((signal) => signal.score - 50);
+    if (softPenaltySignals.length > 0) {
+        const averageBias = softPenaltySignals.reduce((sum, value) => sum + value, 0) / softPenaltySignals.length;
+        aiScore += Math.round(averageBias * 0.18);
     }
-    let adj = 0;
-    if (vsai >= 3) adj += 14; else if (sai >= 5) adj += 12; else if (sai >= 3) adj += 8; else if (sai >= 2) adj += 5; else if (sai >= 1) adj += 2;
-    if (vsr >= 3) adj -= 14; else if (sr >= 5) adj -= 12; else if (sr >= 3) adj -= 8; else if (sr >= 2) adj -= 5; else if (sr >= 1) adj -= 2;
-    const wr = tw > 0 ? (alw - rlw) / tw : 0; adj += Math.round(wr * 14);
-    const dev = aiScore - 50;
-    if (Math.abs(dev) > 1) { adj += Math.round(dev * 1.1 + Math.sign(dev) * (dev * dev) * 0.025); }
-    const meta = signals.find(s => s.name === "Metadata Analysis");
-    if (meta) { if (meta.score >= 90) adj += 25; else if (meta.score <= 15) adj -= 25; }
-    let hR = 0, hA = 0;
-    for (const s of signals) { if (s.weight >= 3) { if (s.score < 40) hR++; if (s.score > 60) hA++; } }
-    if (hR >= 2 && hA === 0 && aiScore + adj > 50) adj -= 5;
-    aiScore = Math.round(Math.max(3, Math.min(97, aiScore + adj)));
-    let verdict: "ai" | "real" | "uncertain", confidence: number;
-    if (aiScore >= 55) { verdict = "ai"; confidence = Math.min(100, Math.round(50 + (aiScore - 55) * 1.1)); }
-    else if (aiScore <= 40) { verdict = "real"; confidence = Math.min(100, Math.round(50 + (40 - aiScore) * 1.3)); }
-    else { verdict = "uncertain"; confidence = Math.round(100 - Math.abs(aiScore - 47) * 6); }
+
+    if (compression && compression.weight > 0) {
+        aiScore += compression.score >= 75 ? 4 : compression.score <= 25 ? -4 : 0;
+    }
+
+    if (noise) {
+        aiScore += noise.score >= 60 ? 4 : noise.score <= 25 ? -6 : noise.score <= 35 ? -3 : 0;
+    }
+
+    aiScore = Math.max(5, Math.min(95, aiScore));
+
+    let verdict: "ai" | "real" | "uncertain";
+    let confidence: number;
+    if (aiScore >= 52) {
+        verdict = "ai";
+        confidence = Math.min(100, 55 + Math.round((aiScore - 52) * 1.7));
+    } else if (aiScore <= 48) {
+        verdict = "real";
+        confidence = Math.min(100, 55 + Math.round((48 - aiScore) * 1.7));
+    } else {
+        verdict = "uncertain";
+        confidence = Math.max(50, 82 - Math.abs(aiScore - 50) * 4);
+    }
+
     return { aiScore, verdict, confidence };
 }
 
@@ -192,6 +235,7 @@ export async function analyzeImageBuffer(buffer: Buffer, fileName: string): Prom
 
     const signals = [
         analyzeMetadata(fileName),
+        analyzeCompressionDensity({ width: img.width, height: img.height, fileSize: buffer.byteLength }),
         analyzeSpectralNyquist(pixels, w, h),
         analyzeNoiseResidual(pixels, w, h),
         analyzeEdgeCoherence(pixels, w, h),

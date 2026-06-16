@@ -58,6 +58,13 @@ export function loadSettings(): AnalysisSettings {
     } catch { return DEFAULT_SETTINGS; }
 }
 
+function getInitialTheme() {
+    if (typeof window === 'undefined') return false;
+    const stored = localStorage.getItem("sv_theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    return stored ? stored === "dark" : prefersDark;
+}
+
 export default function Header() {
     const pathname = usePathname();
     const router = useRouter();
@@ -65,7 +72,7 @@ export default function Header() {
     const [langOpen, setLangOpen] = useState(false);
     const [userMenuOpen, setUserMenuOpen] = useState(false);
     const [user, setUser] = useState<GoogleUser | null>(null);
-    const [isDark, setIsDark] = useState(false);
+    const [isDark, setIsDark] = useState(getInitialTheme);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [showTransition, setShowTransition] = useState(false);
     const [mounted, setMounted] = useState(false);
@@ -137,15 +144,15 @@ export default function Header() {
 
     // Dark mode + settings initialization + mark as mounted
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration after mount
         setMounted(true);
-        const stored = localStorage.getItem("sv_theme");
-        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-        const dark = stored ? stored === "dark" : prefersDark;
         // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
-        setIsDark(dark);
-        document.documentElement.classList.toggle("dark", dark);
         setSettings(loadSettings());
     }, []);
+
+    useEffect(() => {
+        document.documentElement.classList.toggle("dark", isDark);
+    }, [isDark]);
 
     const toggleTheme = () => {
         const next = !isDark;
