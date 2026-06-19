@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { createPortal } from "react-dom";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -62,8 +62,6 @@ export default function Header() {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const [langOpen, setLangOpen] = useState(false);
-    const [userMenuOpen, setUserMenuOpen] = useState(false);
-    const [user, setUser] = useState<GoogleUser | null>(null);
     const [isDark, setIsDark] = useState(getInitialTheme);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [showTransition, setShowTransition] = useState(false);
@@ -153,81 +151,11 @@ export default function Header() {
         localStorage.setItem("sv_theme", next ? "dark" : "light");
     };
 
-    const handleCredential = useCallback(async (credential: string) => {
-        try {
-            const res = await fetch("/api/auth", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ credential }),
-            });
-            const data = await res.json();
-            if (data.success) {
-                const userData: GoogleUser = {
-                    name: data.data.name,
-                    email: data.data.email,
-                    picture: data.data.picture,
-                    apiKey: data.data.apiKey,
-                };
-                setUser(userData);
-                localStorage.setItem("sv_user", JSON.stringify(userData));
-            }
-        } catch (e) {
-            console.error("Auth error:", e);
-        }
-    }, []);
-
-    // Open Google OAuth popup (Implicit Flow)
-    const openGoogleLogin = useCallback(() => {
-        if (!GOOGLE_CLIENT_ID) {
-            alert("Google Sign-In is not configured.");
-            return;
-        }
-        const redirectUri = `${window.location.origin}/api/auth/callback/google`;
-        const nonce = Math.random().toString(36).substring(2);
-        const params = new URLSearchParams({
-            client_id: GOOGLE_CLIENT_ID,
-            redirect_uri: redirectUri,
-            response_type: "id_token",
-            scope: "openid email profile",
-            nonce,
-        });
-        const url = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
-        const w = 480, h = 640;
-        const left = (screen.width - w) / 2, top = (screen.height - h) / 2;
-        window.open(url, "google_login", `width=${w},height=${h},left=${left},top=${top}`);
-    }, []);
-
-    useEffect(() => {
-        // Restore user from localStorage
-        const saved = localStorage.getItem("sv_user");
-        if (saved) {
-            // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time hydration from localStorage
-            try { setUser(JSON.parse(saved)); } catch { /* ignore */ }
-        }
-
-        // Listen for OAuth callback message from popup
-        const onMessage = (e: MessageEvent) => {
-            if (e.origin !== window.location.origin) return;
-            if (e.data?.type === "google-auth" && e.data.id_token) {
-                handleCredential(e.data.id_token);
-            }
-        };
-        window.addEventListener("message", onMessage);
-        return () => window.removeEventListener("message", onMessage);
-    }, [handleCredential]);
-
-    const logout = () => {
-        setUser(null);
-        setUserMenuOpen(false);
-        localStorage.removeItem("sv_user");
-    };
-
     // Close dropdowns on outside click
     useEffect(() => {
         const handler = (e: MouseEvent) => {
             const target = e.target as HTMLElement;
             if (!target.closest(".lang-switcher")) setLangOpen(false);
-            if (!target.closest(".user-menu-wrapper")) setUserMenuOpen(false);
         };
         document.addEventListener("click", handler);
         return () => document.removeEventListener("click", handler);
@@ -344,55 +272,15 @@ export default function Header() {
                             )}
                         </div>
 
-                        {/* Google Sign-In / User Menu */}
-                        {user ? (
-                            <div className="user-menu-wrapper">
-                                <button
-                                    className="user-avatar-btn"
-                                    onClick={() => setUserMenuOpen(!userMenuOpen)}
-                                    aria-label="User menu"
-                                >
-                                    {user.picture ? (
-                                        // eslint-disable-next-line @next/next/no-img-element
-                                        <img src={user.picture} alt="" className="user-avatar-img" referrerPolicy="no-referrer" />
-                                    ) : (
-                                        <span className="user-avatar-fallback">{user.name?.[0] || "U"}</span>
-                                    )}
-                                </button>
-                                {userMenuOpen && (
-                                    <div className="user-dropdown">
-                                        <div className="user-dropdown-header">
-                                            <div className="user-dropdown-name">{user.name}</div>
-                                            <div className="user-dropdown-email">{user.email}</div>
-                                        </div>
-                                        <Link href="/api-docs" className="user-dropdown-item" onClick={() => setUserMenuOpen(false)}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="settings-icon-inline"><path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4" /></svg>
-                                            {t("header.apiKey")}
-                                        </Link>
-                                        <button className="user-dropdown-item" onClick={() => { setSettingsOpen(true); setUserMenuOpen(false); }}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="settings-icon-inline"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
-                                            {t("header.settings")}
-                                        </button>
-                                        <button className="user-dropdown-item user-dropdown-logout" onClick={logout}>
-                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="settings-icon-inline"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><polyline points="16 17 21 12 16 7" /><line x1="21" y1="12" x2="9" y2="12" /></svg>
-                                            {t("header.signOut")}
-                                        </button>
-                                    </div>
-                                )}
-                            </div>
-                        ) : (
-                            <button
-                                className="header-signin-fallback"
-                                onClick={openGoogleLogin}
-                            >
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                                    <polyline points="10 17 15 12 10 7" />
-                                    <line x1="15" y1="12" x2="3" y2="12" />
-                                </svg>
-                                {t("header.signIn")}
-                            </button>
-                        )}
+                        {/* Settings */}
+                        <button
+                            className="theme-toggle-btn"
+                            onClick={() => setSettingsOpen(true)}
+                            aria-label={t("header.settings")}
+                            title={t("header.settings")}
+                        >
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z" /></svg>
+                        </button>
                     </div>
 
                     {/* Mobile hamburger */}
@@ -415,29 +303,10 @@ export default function Header() {
                                 {t(link.key)}
                             </Link>
                         ))}
-                        {/* Mobile user section */}
-                        {user ? (
-                            <div className="mobile-user-section">
-                                <div className="mobile-user-info">
-                                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    {user.picture && <img src={user.picture} alt="" className="mobile-user-avatar" referrerPolicy="no-referrer" />}
-                                    <span className="mobile-user-name">{user.name}</span>
-                                </div>
-                                <Link href="/api-docs" className="header-mobile-link" onClick={() => setOpen(false)}>{t("header.apiKey")}</Link>
-                                <button className="header-mobile-link mobile-logout-btn" onClick={() => { logout(); setOpen(false); }}>{t("header.signOut")}</button>
-                            </div>
-                        ) : (
-                            <div className="mobile-google-wrapper">
-                                <button className="header-mobile-link mobile-signin-btn" onClick={() => { openGoogleLogin(); setOpen(false); }}>
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                                        <polyline points="10 17 15 12 10 7" />
-                                        <line x1="15" y1="12" x2="3" y2="12" />
-                                    </svg>
-                                    {t("header.signIn")}
-                                </button>
-                            </div>
-                        )}
+                        {/* Mobile settings */}
+                        <div className="mobile-user-section">
+                            <button className="header-mobile-link" onClick={() => { setSettingsOpen(true); setOpen(false); }}>{t("header.settings")}</button>
+                        </div>
                         {/* Mobile theme toggle */}
                         <div className="mobile-settings-section">
                             <button
