@@ -366,3 +366,127 @@ Người dùng có thể xem chi tiết từng phương pháp để hiểu tại
 ---
 
 *Em xin cảm ơn thầy cô và các bạn đã lắng nghe. Em sẵn sàng trả lời câu hỏi.*
+
+---
+
+## QnA — CÂU HỎI THƯỜNG GẶP KHI BẢO VỆ
+
+### Q1: SourceVerify khác gì so với các công cụ AI detection khác như GPTZero hay Originality.ai?
+
+Các công cụ như GPTZero, Originality.ai là **hộp đen** — bạn upload ảnh lên server của họ, họ chạy mô hình ML của họ và trả về kết quả. Bạn **không biết tại sao** họ ra kết luận đó.
+
+SourceVerify khác ở **ba điểm**:
+1. **Chạy hoàn toàn trên browser** — không gửi dữ liệu đi đâu, bảo vệ quyền riêng tư
+2. **Giải thích được** — mỗi tín hiệu đều có giải thích nguyên nhân tại sao dẫn đến kết luận
+3. **Đa phương pháp** — kết hợp nhiều góc nhìn pháp y thay vì một mô hình duy nhất
+
+Nói ngắn gọn: các công cụ kia trả lời "có hay không", còn SourceVerify giải thích **"tại sao"**.
+
+### Q2: Tại sao không dùng machine learning cho bài toán này?
+
+Machine learning có ưu điểm nhưng cũng có nhược điểm:
+- **Cần tập dữ liệu lớn** — phải có hàng chục nghìn ảnh thật và ảnh AI để huấn luyện, và ảnh AI mới ra mỗi ngày
+- **Overfitting** — mô hình có thể chỉ giỏi nhận dạng ảnh của một số model cũ, không bắt kịp model mới
+- **Hộp đen** — không giải thích được, khó thuyết phục người dùng
+- **Tài nguyên** — Project I chưa đủ điều kiện để train và deploy mô hình
+
+SourceVerify chọn hướng **heuristic + giải thích được** vì phù hợp với quy mô Project I và triết lý minh bạch. Tuy nhiên trong tương lai hoàn toàn có thể kết hợp thêm ML để tăng độ chính xác.
+
+### Q3: Độ chính xác 100% của Server Analyzer là thật hay ảo?
+
+100% là trên **tập kiểm thử của nhóm tự xây dựng** (120 ảnh thật + 120 ảnh AI). Đây là tập nhỏ, được kiểm soát, chưa phải benchmark độc lập. Con số này cho thấy **tiềm năng của cách tiếp cận đa phương pháp** khi các tín hiệu bổ sung cho nhau.
+
+Trong thực tế, độ chính xác sẽ thấp hơn vì:
+- Ảnh ngoài tự nhiên đa dạng, nhiễu hơn
+- Ảnh đã qua xử lý (resize, crop, re-compress) làm mất dấu vết
+- Có ảnh AI được hậu kỳ cẩn thận để che giấu dấu hiệu
+
+### Q4: Tại sao chọn 5 phương pháp này? Không thêm phương pháp khác?
+
+5 phương pháp được chọn để đại diện cho **5 nhóm dấu vết khác nhau**:
+- Metadata → dấu vết **nguồn gốc tệp**
+- Noise Residual → dấu vết **cảm biến vật lý**
+- DCT Block → dấu vết **nén ảnh**
+- Chromatic Aberration → dấu vết **quang học**
+- Spectral Nyquist → dấu vết **tần số / upsampling**
+
+Mỗi phương pháp bổ sung một góc nhìn, phủ được nhiều kịch bản khác nhau. Nếu chỉ dùng một phương pháp, hệ thống sẽ dễ bị đánh lừa. Việc chọn 5 phương pháp là đủ để minh họa cho cách tiếp cận đa phương pháp mà không quá lan man.
+
+### Q5: Noise Residual có thực sự đáng tin cậy không? Điều gì xảy ra nếu ảnh thật bị xử lý nhiễu?
+
+Noise Residual là phương pháp **mạnh nhất** trong 5 phương pháp (accuracy 67.5% trên benchmark) nhưng vẫn có giới hạn:
+
+- **Ảnh thật bị xử lý nhiễu** (qua filter làm mịn, denoise): nhiễu gốc bị phá hủy → hệ thống có thể đánh giá sai thành AI
+- **Ảnh AI được thêm nhiễu nhân tạo**: có thể đánh lừa phương pháp này
+- **Ảnh thiếu sáng**: ảnh thật chụp thiếu sáng có nhiễu rất mạnh nhưng đều — dễ nhầm với AI
+
+Đây là lý do tại sao **không dùng một phương pháp duy nhất** mà phải kết hợp nhiều phương pháp. Nếu Noise Residual không rõ ràng, các phương pháp khác (Metadata, DCT Block) sẽ bù vào.
+
+### Q6: Ảnh đã qua mạng xã hội (Facebook, Zalo...) bị nén lại thì còn phân tích được không?
+
+Có thể phân tích được nhưng độ chính xác sẽ giảm, cụ thể:
+- **Metadata**: gần như **mất trắng** — mạng xã hội xóa metadata khi tối ưu ảnh
+- **DCT Block**: vẫn còn nhưng **bị méo mó** vì nén lại nhiều lần
+- **Noise Residual**: **vẫn còn** vì nhiễu cảm biến là thuộc tính pixel, khó bị xóa hoàn toàn
+- **Spectral Nyquist**: **vẫn còn** vì dấu vết upsampling tồn tại ở cấp độ pixel
+
+Kết luận: ảnh qua mạng xã hội **vẫn phân tích được** nhưng độ tin cậy giảm. Hệ thống sẽ hiển thị điểm Uncertain thay vì khẳng định chắc chắn.
+
+### Q7: Dùng công nghệ gì cho phần web? Sao không dùng Python?
+
+SourceVerify dùng **Next.js (React + TypeScript)** ở phía frontend. Lý do chính:
+1. **WASM (WebAssembly)** — các thuật toán xử lý ảnh (DCT, DFT, Laplacian filter) viết bằng C++/Rust, được compile sang WASM và chạy native trên browser
+2. **Canvas API** — để đọc và phân tích từng pixel của ảnh
+3. **File API** — để đọc metadata (EXIF) trực tiếp từ tệp
+
+Không dùng Python backend vì yêu cầu **0 upload** — mọi xử lý phải ở client. Python không chạy được trên browser thuần. WASM là lựa chọn tối ưu để vừa chạy trên browser vừa có hiệu năng cao.
+
+### Q8: Hướng phát triển tiếp theo của SourceVerify là gì?
+
+Có ba hướng chính:
+
+1. **Tăng độ chính xác**: xây dựng bộ dữ liệu chuẩn lớn hơn, thử nghiệm thêm phương pháp (ELA — Error Level Analysis, CFA — Color Filter Array), kết hợp ML nhẹ ngay trên browser qua TensorFlow.js
+
+2. **Mở rộng phạm vi**: hỗ trợ phát hiện ảnh ghép (splicing), ảnh chỉnh sửa cục bộ (inpainting), mở rộng sang video deepfake
+
+3. **Tích hợp C2PA**: đây là chuẩn xác thực nội dung đang được các hãng lớn (Adobe, Microsoft, Intel) đẩy mạnh, cho phép "ký số" vào ảnh ngay từ khâu tạo ra. SourceVerify có thể kiểm tra chứng nhận C2PA như một lớp bằng chứng bổ sung
+
+### Q9: SourceVerify có thể bị đánh lừa không? Nếu có thì bằng cách nào?
+
+Có. Không có công cụ nào là bất khả chiến bại. Các cách đánh lừa điển hình:
+
+1. **Xóa metadata** — dễ nhất, làm PP-01 mất tác dụng
+2. **Thêm nhiễu nhân tạo** — có thể làm rối PP-02
+3. **Lưu ảnh AI dưới dạng JPEG chất lượng thấp** — tạo vết khối DCT giả, đánh lừa PP-03
+4. **Thêm quang sai màu hậu kỳ** — có thể qua mặt PP-04
+5. **Resize lại ảnh** — phá dấu vết upsampling của PP-05
+6. **Chụp màn hình ảnh AI** — đây là kịch bản khó nhất, vì ảnh lúc này đã đi qua màn hình → camera → cảm biến thật, gần như mọi dấu vết AI đều bị xóa
+
+Tuy nhiên, để qua mặt được **cả 5 phương pháp cùng lúc** là rất khó. Đây là triết lý **phòng thủ theo chiều sâu** (defense in depth) của SourceVerify.
+
+### Q10: Thời gian phân tích một bức ảnh mất bao lâu?
+
+Trung bình **2–5 giây** cho ảnh ~12MP (thông thường) tùy thuộc vào cấu hình máy. Trong đó:
+- Metadata: < 0.1 giây
+- DCT Block: ~0.3 giây
+- Chromatic Aberration: ~0.5 giây
+- Spectral Nyquist: ~1–2 giây (có DFT)
+- Noise Residual: ~1–2 giây (nặng nhất vì phải tính toán trên từng ô)
+
+Toàn bộ xử lý trên JavaScript/WASM, chỉ dùng CPU — không cần GPU. Với máy yếu hơn có thể lâu hơn nhưng vẫn dưới 10 giây.
+
+### Q11: Có thể phân biệt được ảnh do Midjourney tạo với ảnh do DALL·E tạo không?
+
+Ở phiên bản hiện tại, SourceVerify chỉ trả lời **có hoặc không phải AI**, không phân loại cụ thể model nào. Lý do:
+
+- Metadata có thể cho biết tên software (ví dụ "Midjourney v6") nếu còn — nhưng thường bị xóa
+- Dấu vết pháp y ở mức pixel giữa các model là rất khác nhau và không có mẫu chung
+- Để phân loại model cần có model ML riêng được huấn luyện trên từng dòng AI
+
+Đây là hướng có thể phát triển trong tương lai nhưng nằm ngoài phạm vi Project I.
+
+### Q12: Từ "pháp y" (forensics) ở đây có nghĩa là gì?
+
+"Pháp y ảnh số" (Digital Image Forensics) là một lĩnh vực trong khoa học máy tính — không liên quan đến cảnh sát hay tội phạm. Nó có nghĩa là **áp dụng phương pháp khoa học và kỹ thuật để phân tích tính xác thực và nguồn gốc của ảnh số**.
+
+Giống như pháp y sinh học phân tích ADN, pháp y ảnh số phân tích **dấu vết để lại trong quá trình hình thành ảnh**. Các dấu vết này bao gồm: nhiễu cảm biến, vết nén, quang sai màu, metadata — tất cả đều là đối tượng của pháp y ảnh số.
