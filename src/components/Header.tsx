@@ -27,14 +27,6 @@ const SCROLL_NAV_KEYS = [
 ];
 
 const LOCALES: Locale[] = ["en", "zh", "vi", "ja", "ko", "es"];
-const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "";
-
-interface GoogleUser {
-    name: string;
-    email: string;
-    picture: string;
-    apiKey?: string;
-}
 
 export interface AnalysisSettings {
     enabledMethods: string[];
