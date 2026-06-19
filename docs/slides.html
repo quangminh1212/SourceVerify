@@ -334,47 +334,59 @@
   </section>
 
   <!-- 5 — 5 PHƯƠNG PHÁP -->
-  <section class="slide">
+  <section class="slide" id="s5">
     <div class="num">05 — PHƯƠNG PHÁP</div>
     <h2>Năm phương pháp — năm loại dấu vết</h2>
-    <div class="mgrid" style="grid-template-columns:repeat(5,1fr);">
+
+    <!-- 5 method cards -->
+    <div class="mgrid" style="grid-template-columns:repeat(5,1fr);flex:none;">
       <div class="mc sa">
         <div class="id">PP-01</div>
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><circle cx="7" cy="7" r="1" fill="currentColor"/></svg></div>
         <div class="nm">Metadata</div>
-        <div class="ds">Siêu dữ liệu EXIF, tên phần mềm AI</div>
+        <div class="ds">Đọc "lý lịch" tệp ảnh — tên phần mềm AI, thiếu thông tin camera</div>
         <div class="wt">w = 1.5</div>
       </div>
       <div class="mc sg">
         <div class="id">PP-02</div>
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></div>
         <div class="nm">Noise Residual</div>
-        <div class="ds">Nhiễu dư Laplacian — tín hiệu mạnh nhất</div>
+        <div class="ds">Nhiễu cảm biến — ảnh thật có, ảnh AI thường quá sạch</div>
         <div class="wt">w = 3.5</div>
       </div>
       <div class="mc sb">
         <div class="id">PP-03</div>
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg></div>
         <div class="nm">DCT Block</div>
-        <div class="ds">Vết nén JPEG ô vuông 8×8</div>
+        <div class="ds">Vết nén JPEG ô vuông 8×8 ở ảnh chụp thật</div>
         <div class="wt">w = 2.0</div>
       </div>
       <div class="mc sr">
         <div class="id">PP-04</div>
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/></svg></div>
         <div class="nm">Chromatic Ab.</div>
-        <div class="ds">Quang sai màu — viền đỏ/xanh ở rìa ảnh</div>
+        <div class="ds">Viền màu đỏ/xanh ở rìa do ống kính thật gây ra</div>
         <div class="wt">w = 0.5</div>
       </div>
       <div class="mc sp">
         <div class="id">PP-05</div>
         <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
         <div class="nm">Spectral Nyquist</div>
-        <div class="ds">Phổ tần số — đỉnh bất thường ở tần số cao</div>
+        <div class="ds">Phổ tần số — ảnh AI để lại đỉnh bất thường</div>
         <div class="wt">w = 1.5</div>
       </div>
     </div>
-    <p style="font-size:13px;text-align:center;color:var(--soft);margin-top:14px;">Mỗi phương pháp cho điểm 0–100 → cộng điểm có trọng số → tổng hợp thành verdict</p>
+
+    <!-- Simple aggregation flow -->
+    <div class="pipeline" style="margin-top:20px;">
+      <div class="node accent"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg></div><b>5 phương pháp</b><span>mỗi cái cho điểm 0–100</span></div>
+      <div class="arrow">→</div>
+      <div class="node accent"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><b>Cộng có trọng số</b><span>w = 0.5 → 3.5</span></div>
+      <div class="arrow">→</div>
+      <div class="node accent"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg></div><b>Kết luận</b><span>Thật · AI · Chưa rõ</span></div>
+    </div>
+
+    <p style="font-size:13px;text-align:center;color:var(--soft);margin-top:14px;">Phương pháp càng đáng tin → trọng số càng cao. Noise Residual mạnh nhất (w = 3.5).</p>
   </section>
 
   <!-- 6 — METADATA -->
