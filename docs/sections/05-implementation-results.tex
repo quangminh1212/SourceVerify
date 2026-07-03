@@ -23,6 +23,27 @@ Triển khai & Vercel \\
 \section{Cách đánh giá}
 Để đo thử hiệu quả, em viết một script benchmark (chương trình kiểm thử chuẩn) chạy trên tập ảnh nhỏ gồm 120 ảnh thật và 120 ảnh AI, resize (thu nhỏ) tối đa 320px cho dễ lặp lại. Em dùng \textit{strict accuracy} (độ chính xác nghiêm ngặt: điểm 50 tính là sai vì phương pháp không dám quyết), \textit{classified accuracy} (độ chính xác chỉ tính trên những ảnh được phân loại) và \textit{coverage} (độ phủ, tức tỉ lệ ảnh không bị bỏ trung tính).
 
+\subsection{Các Metrics Đánh Giá}
+\textbf{Strict Accuracy} là độ chính xác khi coi điểm 50 (trung tính) là sai:
+\[
+\text{Strict Acc} = \frac{\text{Số ảnh phân loại đúng}}{\text{Tổng số ảnh (bao gồm trung tính)}}
+\]
+Metric này nghiêm ngặt vì nó trừng phạt phương pháp khi không dám quyết.
+
+\textbf{Classified Accuracy} chỉ tính trên ảnh được phân loại (không phải 50):
+\[
+\text{Classified Acc} = \frac{\text{Số ảnh phân loại đúng}}{\text{Số ảnh được phân loại (không trung tính)}}
+\]
+Metric này cho thấy khi phương pháp dám quyết thì có chính xác không.
+
+\textbf{Coverage} là tỉ lệ ảnh không bị bỏ trung tính:
+\[
+\text{Coverage} = \frac{\text{Số ảnh được phân loại}}{\text{Tổng số ảnh}}
+\]
+Coverage cao nghĩa là phương pháp dám quyết nhiều, nhưng có thể sai nhiều. Coverage thấp nghĩa là phương pháp thận trọng, nhưng ít đưa ra kết quả.
+
+\textbf{Mốc ngẫu nhiên} là 50\% vì nếu đoán bừa thì có 50\% cơ hội đúng. Phương pháp nào có accuracy cao hơn 50\% thì tốt hơn ngẫu nhiên.
+
 \section{Kết quả 5 phương pháp}
 Kết quả benchmark của 5 phương pháp trọng tâm như Bảng \ref{tab:five-bench} và Hình \ref{fig:acc-bar}.
 

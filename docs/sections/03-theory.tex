@@ -216,6 +216,435 @@ P(k)=\Big(\sum_{n} f(n)\cos\tfrac{2\pi kn}{N}\Big)^2+\Big(\sum_{n} f(n)\sin\tfra
 
 Đây là phương pháp duy nhất trong nhóm nhắm thẳng vào dấu vết của mô hình sinh ảnh. Hạn chế là dễ bị ảnh hưởng bởi resize, crop, nén lại và hơi khó giải thích cho người dùng phổ thông.
 
+\section{Lý thuyết nền tảng của các phương pháp}
+
+\subsection{DCT (Discrete Cosine Transform - Biến đổi Cosine Rời rạc)}
+DCT là một biến đổi toán học chuyển tín hiệu từ miền không gian (spatial domain) sang miền tần số (frequency domain) \\(cite{popescu,fridrich2009}). Trong xử lý ảnh, DCT được dùng rộng rãi trong nén JPEG vì nó có khả năng nén năng lượng ảnh vào một số hệ số nhỏ.
+
+Công thức DCT 2D cho một khối ảnh $8\times8$ là:
+\[
+F(u,v)=\frac{1}{4}C(u)C(v)\sum_{x=0}^{7}\sum_{y=0}^{7}f(x,y)\cos\frac{(2x+1)u\pi}{16}\cos\frac{(2y+1)v\pi}{16}
+\]
+với $C(0)=\frac{1}{\sqrt{2}}$ và $C(k)=1$ cho $k>0$. Ở đây $f(x,y)$ là giá trị pixel tại vị trí $(x,y)$, còn $F(u,v)$ là hệ số tần số.
+
+Ý nghĩa của DCT trong forensic:
+\begin{itemize}
+  \item Hệ số $F(0,0)$ (DC) chứa thông tin độ sáng trung bình của khối
+  \item Các hệ số AC (Alternating Current) chứa thông tin chi tiết và biên
+  \item JPEG nén bằng lượng tử hóa các hệ số AC, để lại vết ở biên khối
+  \item Ảnh tái nén nhiều lần có vết khối quá đều đặn, khác với ảnh thật
+\end{itemize}
+
+\subsection{Laplacian Filter và Phát hiện Biên}
+Bộ lọc Laplacian là một toán tử đạo hàm bậc hai dùng để phát hiện các vùng có thay đổi nhanh (biên) trong ảnh \\(cite{fridrich2009}). Công thức Laplacian rời rạc:
+\[
+\nabla^2 f(x,y)=f(x+1,y)+f(x-1,y)+f(x,y+1)+f(x,y-1)-4f(x,y)
+\]
+hoặc viết dưới dạng tích chập với kernel:
+\[
+\begin{bmatrix}
+0 & 1 & 0 \\
+1 & -4 & 1 \\
+0 & 1 & 0
+\end{bmatrix}
+\]
+
+Trong SourceVerify, em dùng Laplacian để tách nhiễu vì:
+\begin{itemize}
+  \item Nhiễu thường là thay đổi ngẫu nhiên giữa pixel liền kề
+  \item Laplacian nhạy với thay đổi cục bộ, nên chiết xuất được phần nhiễu
+  \item Ảnh mịn (AI) có Laplacian nhỏ, ảnh có nhiễu thật có Laplacian lớn
+\end{itemize}
+
+\subsection{Fourier Transform và Phân tích Tần số}
+Fourier Transform chuyển tín hiệu từ miền thời gian/không gian sang miền tần số, cho phép phân tích các thành phần tần số của tín hiệu \\(cite{durall2020,wang2020}). Công thức DFT (Discrete Fourier Transform):
+\[
+F(k)=\sum_{n=0}^{N-1}f(n)e^{-i2\pi kn/N}
+\]
+với $f(n)$ là tín hiệu gốc, $F(k)$ là phổ tần số, $N$ là số mẫu.
+
+Phổ năng lượng được tính là:
+\[
+P(k)=|F(k)|^2=\Big(\sum_{n} f(n)\cos\tfrac{2\pi kn}{N}\Big)^2+\Big(\sum_{n} f(n)\sin\tfrac{2\pi kn}{N}\Big)^2
+\]
+
+Trong forensic ảnh:
+\begin{itemize}
+  \item Ảnh thật có phổ giảm mượt theo tần số (tự nhiên)
+  \item Ảnh AI có đỉnh bất thường ở tần số cao (do upsampling)
+  \item Resize tạo ra đỉnh giả ở tần số Nyquist
+\end{itemize}
+
+\subsection{Shot Noise và Nhiễu Cảm biến}
+Shot noise (nhiễu lượng tử ánh sáng) là nhiễu sinh ra do tính hạt của ánh sáng \\(cite{lukas}). Khi photon đến cảm biến, số photon thực tế tuân theo phân phối Poisson với trung bình tỉ lệ với độ sáng $I$. Độ lệch chuẩn của shot noise là:
+\[
+\sigma_{\text{shot}}=\sqrt{I}
+\]
+
+Đặc điểm của shot noise:
+\begin{itemize}
+  \item Tỉ lệ với căn bậc hai độ sáng ($\sigma\propto\sqrt{I}$)
+  \item Vùng sáng có nhiễu nhiều hơn vùng tối
+  \item Là dấu vết vật lý khó làm giả
+\end{itemize}
+
+Ảnh AI thường thiếu shot noise vì:
+\begin{itemize}
+  \item Mô hình sinh ảnh cố tạo ra ảnh mịn đẹp
+  \item Nhiễu thêm vào thường đồng nhất, không theo quy luật $\sqrt{I}$
+  \item Upsampling làm mất cấu trúc nhiễu tự nhiên
+\end{itemize}
+
+\subsection{Kurtosis và Thống kê Phân Phối}
+Kurtosis là thước đo độ nhọn (peakedness) của phân phối so với phân phối Gauss chuẩn \\(cite{fridrich2009}). Công thức:
+\[
+\text{Kurtosis}=\frac{E[(X-\mu)^4]}{\sigma^4}-3
+\]
+với $\mu$ là trung bình, $\sigma$ là độ lệch chuẩn.
+
+Ý nghĩa trong forensic:
+\begin{itemize}
+  \item Kurtosis = 0: phân phối Gauss chuẩn
+  \item Kurtosis > 0: phân phối nhọn hơn, đuôi dày hơn (heavy-tailed)
+  \item Kurtosis < 0: phân phối bẹt hơn
+  \item Nhiễu thật thường có kurtosis khác 0 (không hoàn toàn Gauss)
+  \item Nhiễu AI thường quá gần Gauss (quá "tối ưu")
+\end{itemize}
+
+\subsection{Nyquist Frequency và Lý thuyết Lấy Mẫu}
+Nyquist frequency là tần số cao nhất có thể biểu diễn chính xác khi lấy mẫu với tốc độ $f_s$ (sampling rate) \\(cite{durall2020}). Theo định lý Nyquist-Shannon:
+\[
+f_{\text{Nyquist}}=\frac{f_s}{2}
+\]
+
+Nếu tín hiệu có tần số cao hơn $f_{\text{Nyquist}}$, sẽ xảy ra aliasing (lệch tần số).
+
+Trong forensic ảnh:
+\begin{itemize}
+  \item Ảnh có kích thước $N\times N$ pixel có tần số Nyquist tại $k=N/2$
+  \item Upsampling (phóng to) tạo đỉnh giả ở gần Nyquist
+  \item Resize xuống làm mất thông tin tần số cao
+  \item Phân tích phổ tại Nyquist giúp phát hiện dấu vết upsampling
+\end{itemize}
+
+\subsection{Mô hình Sinh Ảnh AI: GANs và Diffusion Models}
+\textbf{GANs (Generative Adversarial Networks)} \\(cite{goodfellow}) gồm hai mạng:
+\begin{itemize}
+  \item Generator: sinh ảnh từ noise ngẫu nhiên
+  \item Discriminator: phân biệt ảnh thật và ảnh giả
+\end{itemize}
+Hai mạng cạnh tranh nhau qua quá trình training, giúp generator tạo ảnh ngày càng thật.
+
+\textbf{Diffusion Models} \\(cite{ho}) hoạt động theo hai giai đoạn:
+\begin{enumerate}
+  \item Forward: thêm noise dần dần vào ảnh thật
+  \item Reverse: học cách khử noise để khôi phục ảnh từ noise
+\end{enumerate}
+
+Đặc điểm ảnh từ các mô hình này:
+\begin{itemize}
+  \item Không đi qua chuỗi vật lý (ống kính, cảm biến)
+  \item Thường thiếu shot noise tự nhiên
+  \item Có vết tần số ở vùng cao (do upsampling latent)
+  \item Metadata thường không có thông tin camera
+\end{itemize}
+
+\subsection{EXIF Metadata Chi Tiết}
+EXIF (Exchangeable Image File Format) là tiêu chuẩn lưu trữ metadata trong ảnh JPEG \\(cite{farid,c2pa}). Các trường EXIF quan trọng:
+
+\begin{table}[H]
+\centering
+\caption{Các trường EXIF quan trọng trong forensic}
+\label{tab:exif-fields}
+\begin{tabularx}{\textwidth}{p{0.30\textwidth}Y}
+\toprule
+\textbf{Trường} & \textbf{Ý nghĩa trong forensic} \\
+\midrule
+Make / Model & Hãng và model máy ảnh \\
+Software & Phần mềm xử lý ảnh \\
+DateTime & Thời gian chụp \\
+ExposureTime / FNumber & Thông số chụp (tiêu cự, ISO) \\
+Orientation & Hướng ảnh \\
+GPSInfo & Vị trí địa lý (nếu có) \\
+Artist / Copyright & Thông tin tác giả \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Chữ ký phần mềm AI thường xuất hiện ở:
+\begin{itemize}
+  \item Software field: "Stable Diffusion", "Midjourney", "DALL-E"
+  \item Artist field: tên mô hình hoặc platform
+  \item Thiếu các trường camera quan trọng (Make, Model, ExposureTime)
+\end{itemize}
+
+\section{Công nghệ triển khai}
+Để hiện thực hóa các phương pháp phân tích trên, em sử dụng một số công nghệ web hiện đại (Bảng \ref{tab:tech-theory}). Việc chọn công nghệ dựa trên tiêu chí: dễ phát triển, hỗ trợ TypeScript, có thể chạy phân tích phía client, và dễ triển khai.
+
+\begin{table}[H]
+\centering
+\caption{Công nghệ triển khai và vai trò}
+\label{tab:tech-theory}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}Y}
+\toprule
+\textbf{Công nghệ} & \textbf{Vai trò trong hệ thống} \\
+\midrule
+Next.js & Framework React với SSR và API routes \\
+React & Thư viện UI component-based \\
+TypeScript & Ngôn ngữ với static typing \\
+Canvas API & Đọc và xử lý pixel ảnh trên trình duyệt \\
+Tailwind CSS & Framework CSS utility-first \\
+Vercel & Platform triển khai Next.js \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Next.js và React}
+\textbf{React} là một thư viện JavaScript để xây dựng giao diện người dùng theo hướng component-based (dựa trên thành phần) \cite{react}. Thay vì viết một tệp HTML lớn, React chia giao diện thành các component nhỏ, mỗi component quản lý state (trạng thái) của riêng mình. Khi state thay đổi, React tự động cập nhật DOM một cách hiệu quả thông qua Virtual DOM.
+
+Các khái niệm cốt lõi của React:
+\begin{itemize}
+  \item \textbf{Component}: Hàm hoặc class trả về JSX (HTML-like syntax)
+  \item \textbf{State}: Dữ liệu nội bộ của component, khi thay đổi sẽ re-render
+  \item \textbf{Props}: Dữ liệu truyền từ component cha xuống component con
+  \item \textbf{Virtual DOM}: Bản sao nhẹ của DOM thật, React so sánh để tối ưu cập nhật
+  \item \textbf{Hooks}: Hàm đặc biệt để dùng state và lifecycle trong functional component (useState, useEffect, useMemo...)
+\end{itemize}
+
+\textbf{Next.js} là framework xây dựng trên React, cung cấp thêm các tính năng như Server-Side Rendering (SSR), Static Site Generation (SSG), API routes và tối ưu hóa tự động \cite{nextjs}. Kiến trúc Next.js bao gồm:
+
+\begin{itemize}
+  \item \textbf{File-based Routing}: Tự động tạo route từ cấu trúc thư mục pages/ hoặc app/
+  \item \textbf{SSR (Server-Side Rendering)}: Render HTML trên server mỗi request, tốt cho SEO
+  \item \textbf{SSG (Static Site Generation)}: Pre-render HTML tại build time, tối ưu performance
+  \item \textbf{API Routes}: Tạo API endpoints trong cùng dự án Next.js
+  \item \textbf{Image Optimization}: Tự động resize, format ảnh (WebP, AVIF)
+  \item \textbf{Code Splitting}: Tự động chia code theo route, giảm bundle size
+\end{itemize}
+
+Trong SourceVerify, em dùng Next.js vì:
+\begin{itemize}
+  \item Hỗ trợ TypeScript tốt với type checking
+  \item Có sẵn cấu hình tối ưu cho production (minification, compression)
+  \item API routes để xử lý request nếu cần (hiện tại dùng client-side processing)
+  \item Dễ dàng triển khai trên Vercel với zero-config
+  \item Tích hợp sẵn React 19 với các tính năng mới
+\end{itemize}
+
+\subsection{TypeScript}
+TypeScript là một superset của JavaScript thêm static typing (kiểu dữ liệu tĩnh) \cite{typescript}. Điều này giúp phát hiện lỗi tại thời điểm viết code thay vì runtime, đặc biệt hữu ích cho các thuật toán phân tích phức tạp.
+
+Các tính năng chính của TypeScript:
+\begin{itemize}
+  \item \textbf{Static Typing}: Khai báo kiểu dữ liệu (string, number, boolean, object, array...)
+  \item \textbf{Interface/Type}: Định nghĩa cấu trúc dữ liệu, giúp code rõ ràng hơn
+  \item \textbf{Generics}: Viết hàm/component tái sử dụng với nhiều kiểu dữ liệu
+  \item \textbf{Type Inference}: TypeScript tự động suy luận kiểu khi có thể
+  \item \textbf{Null Checking}: Phát hiện lỗi null/undefined tại compile time
+\end{itemize}
+
+Ví dụ trong SourceVerify, em định nghĩa interface cho kết quả phân tích:
+\begin{verbatim}
+interface AnalysisMethod {
+  name: string;
+  score: number;        // 0-100
+  weight: number;
+  explanation: string;
+}
+\end{verbatim}
+
+TypeScript đảm bảo:
+\begin{itemize}
+  \item Các tham số đúng kiểu số trong hàm phân tích nhiễu
+  \item Tránh lỗi do type coercion (ví dụ: "5" + 3 = "53" trong JS)
+  \item IDE hỗ trợ autocomplete và refactoring tốt hơn
+  \item Dễ bảo trì khi dự án mở rộng
+\end{itemize}
+
+\subsection{Canvas API}
+Canvas API là một phần của HTML5 cho phép vẽ và thao tác với đồ họa 2D trên trình duyệt \cite{canvas}. Canvas cung cấp một bức vẽ (bitmap) có thể lập trình thông qua JavaScript.
+
+Các phương thức chính của Canvas:
+\begin{itemize}
+  \item \textbf{getContext('2d')}: Lấy context 2D để vẽ
+  \item \textbf{drawImage()}: Vẽ ảnh hoặc video lên canvas
+  \item \textbf{getImageData()}: Đọc dữ liệu pixel (RGBA) từ canvas
+  \item \textbf{putImageData()}: Ghi dữ liệu pixel vào canvas
+  \item \textbf{toDataURL()}: Chuyển canvas thành URL ảnh (base64)
+\end{itemize}
+
+Cấu trúc dữ liệu pixel từ \texttt{getImageData()}:
+\begin{verbatim}
+ImageData {
+  data: Uint8ClampedArray,  // [R, G, B, A, R, G, B, A, ...]
+  width: number,
+  height: number
+}
+\end{verbatim}
+
+Trong SourceVerify, em dùng Canvas để:
+\begin{itemize}
+  \item Đọc pixel từ ảnh tải lên thông qua \texttt{getImageData()}
+  \item Truy xuất từng kênh màu (R, G, B, Alpha) theo chỉ số mảng
+  \item Tính toán các chỉ số như độ sáng, độ tương phản, nhiễu
+  \item Chuyển đổi không gian màu (RGB sang grayscale nếu cần)
+\end{itemize}
+
+Việc xử lý ảnh trên Canvas có lợi điểm:
+\begin{itemize}
+  \item Không cần gửi ảnh lên server, bảo vệ quyền riêng tư
+  \item Tận dụng GPU của trình duyệt để tăng tốc
+  \item Tương thích với mọi trình duyệt hiện đại
+  \item Có thể xử lý ảnh lớn với Web Workers (nếu cần)
+\end{itemize}
+
+\subsection{Tailwind CSS}
+Tailwind CSS là một framework CSS utility-first, cung cấp các class nhỏ để xây dựng giao diện nhanh chóng \cite{tailwind}. Thay vì viết CSS tùy chỉnh, em dùng các class như \texttt{flex}, \texttt{p-4}, \texttt{bg-blue-500} để định layout.
+
+Cách hoạt động của Tailwind:
+\begin{itemize}
+  \item \textbf{Utility Classes}: Mỗi class làm một việc cụ thể (ví dụ: \texttt{p-4} = padding 1rem)
+  \item \textbf{Responsive Design}: Thêm prefix cho breakpoint (\texttt{md:flex}, \texttt{lg:w-1/2})
+  \item \textbf{Dark Mode}: Hỗ trợ dark mode với class \texttt{dark:}
+  \item \textbf{Customization}: Cấu hình qua tailwind.config.js
+  \item \textbf{Purge CSS}: Tự động xóa CSS không dùng trong production
+\end{itemize}
+
+Các nhóm class chính trong Tailwind:
+\begin{itemize}
+  \item \textbf{Layout}: flex, grid, block, inline, hidden...
+  \item \textbf{Spacing}: m (margin), p (padding), gap...
+  \item \textbf{Sizing}: w (width), h (height), max-w, min-h...
+  \item \textbf{Typography}: text, font, leading, tracking...
+  \item \textbf{Colors}: bg (background), text (text color), border...
+  \item \textbf{Effects}: shadow, rounded, opacity, blur...
+\end{itemize}
+
+Cách này giúp code CSS nhất quán và dễ bảo trì vì:
+\begin{itemize}
+  \item Không cần đặt tên class tùy chỉnh
+  \item Tái sử dụng được cross-project
+  \item Dễ đọc và hiểu ngay từ class name
+  \item Tránh CSS bloat (file CSS quá lớn)
+\end{itemize}
+
+\subsection{Vercel}
+Vercel là platform cloud chuyên cho Next.js, cung cấp hạ tầng serverless và edge computing \cite{nextjs}. Vercel được tạo bởi đội ngũ phát triển Next.js nên tích hợp sâu với framework này.
+
+Các tính năng chính của Vercel:
+\begin{itemize}
+  \item \textbf{Zero-Config Deployment}: Tự động phát hiện Next.js project và deploy
+  \item \textbf{CI/CD Tự động}: Mỗi lần push code sẽ tự động build và deploy
+  \item \textbf{Edge Network}: CDN toàn cầu với 100+ data centers
+  \item \textbf{HTTPS Tự động}: SSL certificate miễn phí cho mọi domain
+  \item \textbf{Serverless Functions}: API routes chạy trên serverless infrastructure
+  \item \textbf{Preview Deployments}: Tạo preview URL cho mỗi pull request
+  \item \textbf{Analytics}: Tích hợp analytics để theo dõi performance
+\end{itemize}
+
+Quy trình deploy trên Vercel:
+\begin{enumerate}
+  \item Connect GitHub repository
+  \item Vercel tự động detect Next.js project
+  \item Build process chạy (npm run build)
+  \item Deploy automatic lên edge network
+  \item Domain được cấp (hoặc custom domain)
+\end{enumerate}
+
+SourceVerify được deploy trên Vercel để tận dụng:
+\begin{itemize}
+  \item Không cần quản lý server thủ công
+  \item Tự động scaling theo traffic
+  \item Performance tốt nhờ edge network
+  \item Dễ rollback nếu có lỗi
+  \item Miễn phí cho personal use
+\end{itemize}
+
+\section{Các công nghệ mở rộng cho Video và Văn bản}
+
+\subsection{C2PA (Coalition for Content Provenance and Authenticity)}
+C2PA là một tiêu chuẩn mở giúp xác thực nguồn gốc nội dung số \cite{c2pa}. Nó cung cấp cơ chế để gắn "chữ ký số" vào nội dung (ảnh, video, văn bản) để theo dõi lịch sử chỉnh sửa.
+
+\textbf{Cách hoạt động của C2PA:}
+\begin{itemize}
+  \item \textbf{Manifest}: Tệp JSON chứa thông tin về người tạo, công cụ dùng, lịch sử chỉnh sửa
+  \item \textbf{Digital Signature}: Chữ ký số bảo đảm manifest không bị sửa đổi
+  \item \textbf{Embedding}: Manifest được nhúng vào tệp (EXIF cho ảnh, metadata cho video)
+  \item \textbf{Validation}: Người dùng có thể kiểm tra chữ ký để xác thực nguồn gốc
+\end{itemize}
+
+\textbf{Ứng dụng trong forensic:}
+\begin{itemize}
+  \item Nếu ảnh có chữ ký C2PA hợp lệ từ camera → Rất có thể là ảnh thật
+  \item Nếu ảnh có chữ ký từ phần mềm AI → Chắc chắn là ảnh AI
+  \item Nếu không có chữ ký → Không thể kết luận, cần dùng các phương pháp khác
+\end{itemize}
+
+\subsection{Optical Flow (Luồng Chuyển Động)}
+Optical flow là trường vector mô tả chuyển động của từng pixel giữa hai khung hình liên tiếp trong video. Nó được dùng để phát hiện deepfake video vì video AI thường có chuyển động không tự nhiên.
+
+\textbf{Cơ sở toán học:}
+Giả sử pixel tại $(x,y)$ ở thời điểm $t$ di chuyển đến $(x+dx, y+dy)$ ở thời điểm $t+dt$. Optical flow $(u,v)$ với $u=dx/dt$, $v=dy/dt$ thỏa phương trình optical flow constraint:
+\[
+I_x u + I_y v + I_t = 0
+\]
+với $I_x, I_y, I_t$ là đạo hàm của ảnh theo $x, y, t$.
+
+\textbf{Dấu vết deepfake trong optical flow:}
+\begin{itemize}
+  \item \textbf{Inconsistency}: Khuôn hình chuyển động không đồng nhất với nền
+  \item \textbf{Unnatural motion}: Chuyển động quá mượt hoặc quá giật
+  \item \textbf{Boundary artifacts}: Vết bất thường ở biên khuôn được thay thế
+\end{itemize}
+
+\subsection{Lip-Sync (Đồng Bộ Khẩu Hình)}
+Lip-sync kiểm tra độ đồng bộ giữa chuyển động môi và âm thanh trong video. Deepfake thường làm sai lệch đồng bộ này vì khó tái tạo chính xác chuyển động môi theo giọng nói.
+
+\textbf{Cách đo lip-sync:}
+\begin{itemize}
+  \item \textbf{Audio feature}: Trích xuất đặc trưng từ âm thanh (MFCC, pitch)
+  \item \textbf{Visual feature}: Trích xuất đặc trưng từ chuyển động môi (landmark points)
+  \item \textbf{Sync score}: Tính tương quan giữa audio và visual features
+\end{itemize}
+
+\textbf{Dấu hiệu deepfake:}
+\begin{itemize}
+  \item Môi đóng khi đang nói
+  \item Môi mở khi không có âm thanh
+  \item Chuyển động môi không khớp với nhịp điệu giọng
+\end{itemize}
+
+\subsection{Perplexity (Độ Bối Rối)}
+Perplexity là metric dùng để đánh giá mô hình ngôn ngữ, đo mức độ "bất ngờ" của một chuỗi văn bản theo mô hình. Công thức:
+\[
+\text{PPL}(W) = \exp\left(-\frac{1}{N}\sum_{i=1}^{N}\log P(w_i|w_1,\ldots,w_{i-1})\right)
+\]
+với $W$ là chuỗi văn bản, $N$ là số từ, $P(w_i|w_1,\ldots,w_{i-1})$ là xác suất từ $w_i$ theo mô hình.
+
+\textbf{Trong phát hiện văn bản AI:}
+\begin{itemize}
+  \item Văn bản AI thường có perplexity thấp (quá "dự đoán được")
+  \item Văn bản người viết thường có perplexity cao hơn (tính sáng tạo)
+  \item Mô hình AI khác nhau có perplexity khác nhau
+\end{itemize}
+
+\subsection{Burstiness (Độ Bùng Nổ)}
+Burstiness đo mức độ biến đổi trong cấu trúc câu và độ dài câu của văn bản. Văn bản người thường có burstiness cao (câu ngắn xen kẽ câu dài), còn văn bản AI thường quá đồng nhất.
+
+\textbf{Cách đo burstiness:}
+\begin{itemize}
+  \item Tính độ lệch chuẩn của độ dài câu
+  \item Đo sự thay đổi giữa các câu liên tiếp
+  \item Phân tích sự đa dạng của cấu trúc ngữ pháp
+\end{itemize}
+
+\textbf{Dấu hiệu văn bản AI:}
+\begin{itemize}
+  \item Độ dài câu quá đồng nhất
+  \item Cấu trúc câu lặp lại
+  \item Thiếu sự biến đổi tự nhiên của văn bản người
+\end{itemize}
+
 \section{So sánh và kết luận chương}
 Năm phương pháp bổ sung cho nhau theo các góc nhìn khác nhau (Bảng \ref{tab:method-compare}). Không có cái nào mạnh ở mọi mặt: metadata dễ bị xóa, nhiễu nhạy với hậu kỳ, DCT phụ thuộc định dạng, chromatic aberration không phải lúc nào cũng rõ, còn phổ tần số dễ bị resize làm sai. Chính vì vậy em mới gộp cả 5 lại thay vì tin vào một cái. Chương sau trình bày cách tổ chức chúng thành một hệ thống hoàn chỉnh.
 

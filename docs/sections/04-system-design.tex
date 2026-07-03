@@ -8,6 +8,30 @@ Về yêu cầu phi chức năng, em ưu tiên ba thứ: dễ mở rộng (thêm
 \section{Kiến trúc tổng thể}
 Em thiết kế hệ thống theo hướng đơn giản trước, đúng tinh thần Project I. Hệ thống chia thành các lớp như Hình \ref{fig:system-architecture}: giao diện nhận ảnh, lớp ứng dụng điều phối, lớp phân tích gọi các phương pháp, lớp tổng hợp điểm, rồi trả kết quả về giao diện kèm phần giải thích.
 
+\subsection{Kiến trúc Client-Side Processing}
+Hệ thống SourceVerify sử dụng kiến trúc client-side processing, tức là toàn bộ phân tích ảnh diễn ra trên trình duyệt của người dùng thay vì gửi lên server. Đây là một quyết định có chủ đích vì:
+
+\textbf{Ưu điểm của client-side processing:}
+\begin{itemize}
+  \item \textbf{Quyền riêng tư}: Ảnh không bao giờ rời khỏi máy người dùng
+  \item \textbf{Chi phí thấp}: Không cần server mạnh để xử lý ảnh
+  \item \textbf{Khả năng mở rộng}: Không bị giới hạn bởi server resources
+  \item \textbf{Tốc độ}: Không có latency do network request
+\end{itemize}
+
+\textbf{Hạn chế và giải pháp:}
+\begin{itemize}
+  \item \textbf{Performance}: Máy yếu có thể chậm → Giới hạn kích thước ảnh (max 320px cho benchmark)
+  \item \textbf{Browser compatibility}: Cần trình duyệt hiện đại → Chỉ hỗ trợ Chrome, Firefox, Safari, Edge mới
+  \item \textbf{Code size}: Bundle lớn hơn → Dùng code splitting và tree shaking
+\end{itemize}
+
+\textbf{So sánh với Server-Side Processing:}
+\begin{itemize}
+  \item Server-side: Có thể dùng GPU mạnh, nhưng tốn chi phí và lo privacy
+  \item Client-side: Tận dụng GPU của user, miễn phí, nhưng phụ thuộc device
+\end{itemize}
+
 \begin{figure}[H]
 \centering
 \begin{tikzpicture}[
