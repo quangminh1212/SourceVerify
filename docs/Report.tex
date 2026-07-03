@@ -69,45 +69,6 @@
 
 \begin{document}
 
-% === 00-topic.tex ===
-\begin{titlepage}
-\centering
-{\Large\bfseries ĐẠI HỌC BÁCH KHOA HÀ NỘI\par}
-\vspace{0.35cm}
-{\large Trường Công nghệ Thông tin và Truyền thông\par}
-\vspace{1.8cm}
-{\Large\bfseries ĐỀ TÀI TỐT NGHIỆP\par}
-\vspace{0.8cm}
-{\Huge\bfseries SourceVerify\par}
-\vspace{0.35cm}
-{\Large Nền tảng hỗ trợ kiểm chứng ảnh số có khả năng được tạo bởi AI\par}
-\vspace{1.6cm}
-\begin{tabular}{rl}
-Sinh viên thực hiện: & Bạch Minh Quang \\
-Mã số sinh viên: & 202490077 \\
-Lớp: & CNTT VB2 CQ \\
-Ngành: & Công nghệ thông tin \\
-\end{tabular}
-\vspace{1.5cm}
-\textbf{Giảng viên hướng dẫn:}
-\vspace{0.5cm}
-\begin{tabular}{rl}
-Họ và tên: & Phạm Quang Hiếu \\
-Học hàm, học vị: & Thạc sĩ \\
-Đơn vị công tác: & Trường Công nghệ Thông tin và Truyền thông \\
-\end{tabular}
-\vspace{1.5cm}
-\begin{tabular}{rl}
-Đề tài được giao ngày: & ........................................ \\
-Đề tài hoàn thành ngày: & 12 tháng 06 năm 2026 \\
-\end{tabular}
-\vfill
-{\large Hà Nội, 2026\par}
-\end{titlepage}
-
-\clearpage
-\pagenumbering{gobble}
-
 % === 00-preface.tex ===
 \begin{titlepage}
 \centering
@@ -133,21 +94,6 @@ Ngày nộp báo cáo: & 12 tháng 06 năm 2026 \\
 \vfill
 {\large Hà Nội, 2026\par}
 \end{titlepage}
-
-\chapter*{Lời cam đoan}
-\addcontentsline{toc}{chapter}{Lời cam đoan}
-Em xin cam đoan đồ án tốt nghiệp này là kết quả của nghiên cứu và thực hiện dưới sự hướng dẫn của giảng viên hướng dẫn. Các số liệu, kết quả nêu trong báo cáo là trung thực và chưa được sử dụng để làm cơ sở công bố các công trình khoa học khác.
-
-Nếu phát hiện sai trái, em xin chịu trách nhiệm theo quy định của Trường Đại học Bách Khoa Hà Nội.
-
-\begin{flushright}
-Hà Nội, ngày 12 tháng 06 năm 2026\\
-\vspace{1cm}
-Sinh viên thực hiện\\
-\textit{(Ký và ghi rõ họ tên)}
-\end{flushright}
-
-\clearpage
 
 \chapter*{Lời nói đầu}
 \addcontentsline{toc}{chapter}{Lời nói đầu}
@@ -301,6 +247,38 @@ Spectral Nyquist & 60 & 1.5 & 90 \\
 \bottomrule
 \end{tabularx}
 \end{table}
+
+\section{Phân bố trọng số giữa các phương pháp}
+Việc gán trọng số cho từng phương pháp không phải ngẫu nhiên mà dựa trên độ tin cậy, tính ổn định và khả năng kháng nhiễu của từng phương pháp (Bảng \ref{tab:weight-rationale}). Nguyên tắc chung là: phương pháp nào khai thác dấu vết vật lý khó làm giả thì được trọng số cao; phương pháp nào dễ bị ảnh hưởng bởi nén, resize hoặc phụ thuộc vào định dạng tệp thì được trọng số thấp hơn.
+
+\begin{table}[H]
+\centering
+\caption{Phân bố trọng số và lý do chọn}
+\label{tab:weight-rationale}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth}p{0.12\textwidth}Y}
+\toprule
+\textbf{Phương pháp} & \textbf{Trọng số} & \textbf{Lý do chọn} \\
+\midrule
+Noise Residual & 3.5 & Dấu vết vật lý (shot noise) khó làm giả, ổn định trên nhiều loại ảnh \\
+DCT Block Artifacts & 2.0 & Vết nén JPEG rõ ràng, nhưng phụ thuộc định dạng tệp \\
+Metadata Analysis & 1.5 & Bằng chứng mạnh khi còn nguyên, nhưng dễ bị xóa/sửa \\
+Spectral Nyquist & 1.5 & Nhắm thẳng vào dấu vết upsampling AI, nhưng nhạy với resize \\
+Chromatic Aberration & 0.5 & Dấu vết ống kính, nhưng không phải ảnh thật nào cũng có \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Noise Residual (3.5)} được trọng số cao nhất vì nó khai thác shot noise - một dấu vết vật lý từ cảm biến ảnh mà mô hình AI rất khó tái tạo chính xác. Shot noise tuân theo quy luật $\sigma\propto\sqrt{I}$ (nhiễu tỉ lệ với căn bậc hai độ sáng), là đặc điểm vốn có của quá trình chụp ảnh. Mô hình AI thường sinh ra ảnh quá mịn hoặc nhiễu đồng nhất, không tuân theo quy luật này. Do đó, khi Noise Residual chỉ ra sự bất thường trong cấu trúc nhiễu, đây là tín hiệu đáng tin cậy.
+
+\textbf{DCT Block Artifacts (2.0)} có trọng số cao vì vết khối nén JPEG là dấu vết rõ ràng của quá trình nén ảnh từ máy ảnh. Ảnh AI thường được lưu dưới dạng PNG (không nén lossy) hoặc được tái nén với vết khối quá đều đặn. Tuy nhiên, phương pháp này yếu với ảnh PNG, WebP hoặc ảnh đã resize nhiều lần, nên trọng số thấp hơn Noise Residual.
+
+\textbf{Metadata Analysis (1.5)} có thể là bằng chứng rất mạnh nếu bắt được đúng chữ ký phần mềm AI (Midjourney, Stable Diffusion, DALL-E) hoặc thông tin camera hợp lý. Tuy nhiên, metadata rất dễ bị xóa khi ảnh tải lên mạng xã hội, chụp màn hình hoặc chỉnh sửa bằng phần mềm. Do đó, em chỉ cho trọng số trung bình và dùng nó như một lớp thông tin bổ trợ.
+
+\textbf{Spectral Nyquist (1.5)} là phương pháp duy nhất nhắm thẳng vào dấu vết của quá trình sinh ảnh AI (upsampling từ latent space). Khi mô hình AI phóng to ảnh, nó thường để lại đỉnh bất thường ở vùng tần số cao gần ngưỡng Nyquist. Tuy nhiên, resize hoặc crop ảnh cũng tạo ra đỉnh tần số giả, nên phương pháp này dễ bị báo nhầm nếu ảnh đã được chỉnh sửa kích thước.
+
+\textbf{Chromatic Aberration (0.5)} có trọng số thấp nhất vì không phải ảnh thật nào cũng có viền màu rõ ràng. ống kính cao cấp hoặc phần mềm chỉnh sửa có thể làm giảm hoặc loại bỏ quang sai màu. Ngược lại, một số ảnh AI có thể được thêm hiệu ứng giả vết ống kính. Do đó, phương pháp này chỉ là tín hiệu phụ trợ, không đủ để kết luận.
+
+Tổng trọng số của 5 phương pháp là 9.0, đảm bảo không có phương pháp nào chi phối quá nhiều kết quả cuối cùng. Cách phân bố này giúp hệ thống cân bằng giữa độ nhạy phát hiện AI và khả năng tránh báo nhầm.
 
 Thư viện SourceVerify thực ra có hơn 500 phương pháp, nhưng phần lớn còn ở mức thử nghiệm. Em chọn ra 5 phương pháp để đi sâu vì chúng có cơ sở lý thuyết rõ, được trích dẫn nhiều, đại diện cho các nhóm dấu vết khác nhau và đều đã chạy được trong sản phẩm. Hình \ref{fig:five-methods} cho thấy 5 phương pháp này cùng đóng góp vào điểm chung.
 
@@ -1104,6 +1082,55 @@ Metric này cho thấy khi phương pháp dám quyết thì có chính xác khô
 Coverage cao nghĩa là phương pháp dám quyết nhiều, nhưng có thể sai nhiều. Coverage thấp nghĩa là phương pháp thận trọng, nhưng ít đưa ra kết quả.
 
 \textbf{Mốc ngẫu nhiên} là 50\% vì nếu đoán bừa thì có 50\% cơ hội đúng. Phương pháp nào có accuracy cao hơn 50\% thì tốt hơn ngẫu nhiên.
+
+\subsection{Chi tiết tập dữ liệu test}
+Tập dữ liệu benchmark gồm 240 ảnh: 120 ảnh thật và 120 ảnh AI (Bảng \ref{tab:dataset-details}). Việc chọn số lượng này nhằm đảm bảo cân bằng giữa hai lớp để tránh bias trong đánh giá.
+
+\begin{table}[H]
+\centering
+\caption{Chi tiết tập dữ liệu benchmark}
+\label{tab:dataset-details}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth}Y Y}
+\toprule
+\textbf{Loại ảnh} & \textbf{Số lượng} & \textbf{Nguồn} \\
+\midrule
+Ảnh thật & 120 & Được chụp từ các máy ảnh khác nhau (điện thoại, máy ảnh kỹ thuật số) \\
+Ảnh AI & 120 & Được tạo từ các mô hình AI phổ biến (Stable Diffusion, Midjourney, DALL-E) \\
+\midrule
+\textbf{Tổng} & \textbf{240} & \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\textbf{Ảnh thật (120 ảnh)} được thu thập từ nhiều nguồn khác nhau để đảm bảo tính đa dạng:
+\begin{itemize}
+  \item Ảnh chụp từ điện thoại thông minh (iPhone, Android) với các điều kiện ánh sáng khác nhau
+  \item Ảnh chụp từ máy ảnh kỹ thuật số (DSLR, mirrorless) với các ống kính khác nhau
+  \item Ảnh có nội dung phong phú: chân dung, phong cảnh, đồ vật, kiến trúc
+  \item Ảnh ở các trạng thái: gốc (chưa chỉnh sửa), đã nén JPEG, đã resize
+\end{itemize}
+
+Đa dạng này giúp đảm bảo các phương pháp forensic không chỉ hoạt động tốt trên một loại ảnh cụ thể mà phải làm việc được với nhiều tình huống thực tế.
+
+\textbf{Ảnh AI (120 ảnh)} được tạo từ các mô hình AI phổ biến hiện nay:
+\begin{itemize}
+  \item Stable Diffusion (khoảng 40 ảnh): Mô hình open-source phổ biến, tạo ảnh chất lượng cao
+  \item Midjourney (khoảng 40 ảnh): Mô hình thương mại, nổi tiếng với ảnh nghệ thuật
+  \item DALL-E (khoảng 40 ảnh): Mô hình từ OpenAI, tạo ảnh từ văn bản
+\end{itemize}
+
+Các ảnh AI được chọn với nhiều chủ đề khác nhau tương tự như ảnh thật để tránh bias theo nội dung. Mỗi ảnh AI được lưu ở định dạng gốc từ mô hình (thường là PNG) để giữ nguyên các đặc điểm của quá trình sinh ảnh.
+
+\textbf{Quy trình chuẩn bị dữ liệu:}
+\begin{enumerate}
+  \item Thu thập ảnh thật từ nhiều nguồn và thiết bị khác nhau
+  \item Tạo ảnh AI từ các mô hình với các prompt khác nhau
+  \item Resize tất cả ảnh tối đa 320px ở cạnh dài hơn để đảm bảo tốc độ benchmark
+  \item Chia tập dữ liệu thành hai lớp cân bằng (120 thật, 120 AI)
+  \item Lưu nhãn ground truth để so sánh với kết quả phân tích
+\end{enumerate}
+
+Việc resize xuống 320px là một sự đánh đổi: nó giúp benchmark chạy nhanh hơn trên trình duyệt, nhưng cũng làm mất một số dấu vết tần số cao và chi tiết nhỏ. Điều này giải thích tại sao các phương pháp như Spectral Nyquist và Chromatic Aberration có kết quả kém hơn trên tập dữ liệu này so với ảnh gốc kích thước lớn.
 
 \section{Kết quả 5 phương pháp}
 Kết quả benchmark của 5 phương pháp trọng tâm như Bảng \ref{tab:five-bench} và Hình \ref{fig:acc-bar}.
