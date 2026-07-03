@@ -96,65 +96,19 @@ Một điều cần nói thẳng là không phương pháp nào đạt độ ch�
 Để thấy hệ thống chạy thế nào, em mô tả lại một lần phân tích một ảnh nghi là AI. Sau khi tải ảnh lên, hệ thống đọc metadata (không thấy thông tin máy ảnh, cũng không thấy phần mềm AI nên Metadata cho 50 điểm trung tính), rồi chạy các phương pháp pixel. Noise Residual thấy nhiễu quá đều nên cho 72 điểm; DCT thấy gần như không có vết khối JPEG nên cho 65; Spectral thấy hơi nhô ở tần số cao nên cho 60; Chromatic thấy thiếu viền màu nên cho 68. Cộng lại theo trọng số (giống Bảng \ref{tab:vidu-diem} ở Chương 2), điểm tổng khoảng 65--68, vượt ngưỡng 55 nên hệ thống kết luận \texttt{AI-GENERATED} với độ tin cậy khoảng 64\%. Quan trọng là người dùng nhìn vào danh sách tín hiệu sẽ hiểu vì sao, chứ không chỉ nhận một con số khô khan.
 
 \section{Sản phẩm}
-Hiện tại SourceVerify đã có giao diện kéo-thả ảnh, trang kết quả hiện điểm AI cùng danh sách tín hiệu, và trang tài liệu cho các phương pháp. Hình \ref{fig:homepage-mockup} mô tả giao diện trang chủ, và Hình \ref{fig:ui-mockup} mô tả bố cục trang kết quả.
+Hiện tại SourceVerify đã có giao diện kéo-thả ảnh, trang kết quả hiện điểm AI cùng danh sách tín hiệu, và trang tài liệu cho các phương pháp. Hình \ref{fig:homepage-mockup} và Hình \ref{fig:ui-mockup} mô tả giao diện thực tế của hệ thống.
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[font=\scriptsize]
-% Background
-\draw[fill=white,draw=gray!30] (0,0) rectangle (12,6.5);
-% Header
-\draw[fill=Navy] (0,5.8) rectangle (12,6.5);
-\node[white,font=\large\bfseries] at (1.5,6.15) {SourceVerify};
-\node[white,font=\scriptsize] at (10.5,6.15) {Nền tảng kiểm chứng ảnh số AI};
-% Main content area
-\draw[fill=LightBlue!20,draw=Blue,thick,dashed] (1.0,2.5) rectangle (5.0,5.2);
-\node[align=center,Blue,font=\small\bfseries] at (3.0,4.0) {Kéo-thả ảnh\\để phân tích};
-\node[align=center,gray,font=\tiny] at (3.0,3.5) {Hệ thống sẽ chạy 5 phương pháp\\forensic để kiểm tra ảnh};
-% Result card
-\draw[fill=white,draw=Green,thick] (5.5,2.5) rectangle (11.0,5.2);
-\node[Green,font=\bfseries] at (8.25,4.8) {VERDICT: AI-GENERATED};
-\node[gray,font=\small] at (8.25,4.4) {AI Score: 68/100};
-\node[gray,font=\small] at (8.25,4.0) {Độ tin cậy: 64\%};
-% Method signals
-\node[align=left,font=\scriptsize\bfseries,gray] at (1.0,2.0) {Tín hiệu phân tích:};
-\foreach \y/\name/\val/\desc in {1.6/{Noise Residual}/72/{Nhiễu quá đều}, 1.2/{DCT Block}/65/{Không vết khối}, 0.8/{Spectral Nyq.}/60/{Phổ nhô cao}, 0.4/{Chromatic Ab.}/68/{Thiếu viền màu}, 0.0/{Metadata}/50/{Không EXIF}}{
-  \node[align=left,font=\scriptsize] at (1.0,\y) {\name};
-  \draw[draw=gray!50] (3.5,\y-0.08) rectangle (7.0,\y+0.08);
-  \pgfmathsetmacro\fillw{\val/100*3.5}
-  \draw[fill=Orange!60] (3.5,\y-0.08) rectangle (3.5+\fillw,\y+0.08);
-  \node[font=\scriptsize] at (7.2,\y) {\val};
-  \node[align=left,font=\tiny,gray] at (7.8,\y) {\desc};
-}
-% Footer
-\draw[fill=gray!10] (0,0) rectangle (12,0.5);
-\node[gray,font=\tiny] at (6,0.25) {© 2026 Bạch Minh Quang - Project I - Đại học Bách Khoa Hà Nội};
-\end{tikzpicture}
-\caption{Giao diện trang chủ SourceVerify}
+\includegraphics[width=0.9\textwidth]{resource/image.png}
+\caption{Giao diện SourceVerify với khu vực kéo-thả ảnh và kết quả phân tích}
 \label{fig:homepage-mockup}
 \end{figure}
 
 \begin{figure}[H]
 \centering
-\begin{tikzpicture}[font=\scriptsize]
-\draw[draw=Navy,thick,rounded corners] (0,0) rectangle (12,6.2);
-\draw[fill=Navy] (0,5.6) rectangle (12,6.2);
-\node[white] at (1.4,5.9) {SourceVerify};
-\draw[draw=Blue,dashed,thick,fill=LightBlue] (0.4,3.4) rectangle (5.6,5.2);
-\node[align=center] at (3.0,4.3) {\bfseries Kéo-thả ảnh};
-\draw[draw=Green,thick,fill=Green!10] (6.0,3.4) rectangle (11.6,5.2);
-\node[Green] at (8.8,4.8) {\bfseries VERDICT: AI-GENERATED};
-\node at (8.8,4.2) {AI Score: 68/100 -- Tin cậy: 64\%};
-\node[align=left,font=\scriptsize\bfseries] at (1.5,2.9) {Tín hiệu:};
-\foreach \y/\name/\val in {2.5/{Noise Residual}/72, 2.0/{DCT Block}/65, 1.5/{Spectral Nyquist}/60, 1.0/{Chromatic Ab.}/68, 0.5/{Metadata}/50}{
-  \node[align=left] at (2.0,\y) {\name};
-  \draw[draw=gray] (5.0,\y-0.1) rectangle (10.5,\y+0.1);
-  \pgfmathsetmacro\fillw{\val/100*5.5}
-  \draw[fill=Orange!50] (5.0,\y-0.1) rectangle (5.0+\fillw,\y+0.1);
-  \node at (11.0,\y) {\val};
-}
-\end{tikzpicture}
-\caption{Bố cục trang kết quả phân tích}
+\includegraphics[width=0.9\textwidth]{resource/image.png}
+\caption{Giao diện SourceVerify hiển thị kết quả phân tích chi tiết}
 \label{fig:ui-mockup}
 \end{figure}
 
