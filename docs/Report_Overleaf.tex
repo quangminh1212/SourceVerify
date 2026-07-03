@@ -1,0 +1,736 @@
+\documentclass[14pt,a4paper,oneside]{report}
+
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[utf8]{inputenc}
+  \usepackage[T5]{fontenc}
+  \usepackage[vietnamese]{babel}
+  \usepackage{newtxtext,newtxmath}
+\else
+  \usepackage{fontspec}
+  \usepackage[vietnamese]{babel}
+  \setmainfont{Times New Roman}
+  \setsansfont{Arial}
+  \setmonofont{Consolas}
+\fi
+
+\usepackage[a4paper,left=3.5cm,right=2cm,top=2.5cm,bottom=2.5cm]{geometry}
+\usepackage{setspace}
+\setstretch{1.2}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,shapes.geometric}
+
+\onehalfspacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\setlist[itemize]{leftmargin=1.25cm,itemsep=2pt,topsep=4pt}
+\setlist[enumerate]{leftmargin=1.25cm,itemsep=2pt,topsep=4pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\definecolor{Navy}{RGB}{18,52,86}
+\definecolor{LightBlue}{RGB}{227,239,255}
+\definecolor{LightGray}{RGB}{244,244,244}
+\definecolor{Blue}{RGB}{52,120,246}
+\definecolor{Green}{RGB}{44,140,90}
+\definecolor{Orange}{RGB}{232,140,44}
+\definecolor{Purple}{RGB}{132,84,201}
+\definecolor{Red}{RGB}{201,64,64}
+
+\hypersetup{
+  hidelinks,
+  pdftitle={SourceVerify -- Báo cáo Project I},
+  pdfauthor={Bạch Minh Quang},
+  pdfsubject={Phát hiện ảnh do AI tạo bằng digital image forensics}
+}
+
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\textit{SourceVerify -- Báo cáo Project I}}
+\fancyhead[R]{\small\textit{06/2026}}
+\fancyfoot[R]{\thepage}
+
+\titleformat{\chapter}{\normalfont\Large\bfseries\color{Navy}}{\thechapter}{0.2em}{}
+\titleformat{\section}{\normalfont\large\bfseries\color{Navy}}{\thesection}{0.2em}{}
+\titleformat{\subsection}{\normalfont\normalsize\bfseries}{\thesubsection}{0.2em}{}
+
+\begin{document}
+\pagenumbering{gobble}
+
+% === 00-preface.tex ===
+\begin{titlepage}
+\centering
+{\Large\bfseries ĐẠI HỌC BÁCH KHOA HÀ NỘI\par}
+\vspace{0.35cm}
+{\large Trường Công nghệ Thông tin và Truyền thông\par}
+\vspace{1.8cm}
+{\Large\bfseries BÁO CÁO CUỐI KỲ PROJECT I\par}
+\vspace{0.8cm}
+{\Huge\bfseries SourceVerify\par}
+\vspace{0.35cm}
+{\Large Nền tảng hỗ trợ kiểm chứng ảnh số có khả năng được tạo bởi AI\par}
+\vspace{1.6cm}
+\begin{tabular}{rl}
+Sinh viên thực hiện: & Bạch Minh Quang \\
+Mã số sinh viên: & 202490077 \\
+Lớp: & CNTT VB2 CQ \\
+Học phần: & Project I \\
+Giảng viên hướng dẫn: & Thạc sĩ Phạm Quang Hiếu \\
+Thời gian thực hiện: & Học kỳ II năm học 2025--2026 \\
+Ngày nộp báo cáo: & 12 tháng 06 năm 2026 \\
+\end{tabular}
+\vfill
+{\large Hà Nội, 2026\par}
+\end{titlepage}
+
+\chapter*{Lời cam đoan}
+\addcontentsline{toc}{chapter}{Lời cam đoan}
+Em xin cam đoan đồ án tốt nghiệp này là kết quả của nghiên cứu và thực hiện dưới sự hướng dẫn của giảng viên hướng dẫn. Các số liệu, kết quả nêu trong báo cáo là trung thực và chưa được sử dụng để làm cơ sở công bố các công trình khoa học khác.
+
+Nếu phát hiện sai trái, em xin chịu trách nhiệm theo quy định của Trường Đại học Bách Khoa Hà Nội.
+
+\begin{flushright}
+Hà Nội, ngày 12 tháng 06 năm 2026\\
+\vspace{1cm}
+Sinh viên thực hiện\\
+\textit{(Ký và ghi rõ họ tên)}
+\end{flushright}
+
+\clearpage
+
+\chapter*{Lời nói đầu}
+\addcontentsline{toc}{chapter}{Lời nói đầu}
+Mấy năm gần đây, các công cụ AI tạo ảnh phát triển rất nhanh. Chỉ cần gõ một câu mô tả là đã có thể tạo ra bức ảnh trông như thật, nên nhiều khi em nhìn bằng mắt cũng khó nói được đâu là ảnh chụp và đâu là ảnh do máy tạo. Việc này có mặt tốt là hỗ trợ học tập, sáng tạo và truyền thông, nhưng mặt khác cũng làm cho ảnh giả, ảnh sai nguồn gốc dễ lan truyền hơn trước.
+
+Từ thực tế đó, em chọn tìm hiểu đề tài \textbf{SourceVerify} cho học phần Project I. Đây là một công cụ web thử nghiệm giúp kiểm tra xem một ảnh có khả năng do AI tạo ra hay không. Em đi theo hướng \textit{digital image forensics} (giám định ảnh số), tức là tìm các dấu vết kỹ thuật còn lại trong ảnh thay vì chỉ đoán bằng cảm giác. Vì đây là Project I nên em không đặt mục tiêu khẳng định chắc chắn ảnh nào thật hay giả, mà tập trung vào việc hiểu bài toán, trình bày cơ sở lý thuyết, thiết kế hệ thống và làm được một sản phẩm minh họa.
+
+Trong báo cáo, em chỉ đi sâu vào 5 phương pháp tiêu biểu. Với mỗi phương pháp, em cố gắng nêu rõ ý tưởng và dẫn nguồn tài liệu tham khảo, vừa để bảo đảm tính học thuật, vừa làm cơ sở cho việc phát triển tiếp về sau. Em cũng xin cảm ơn thầy/cô hướng dẫn đã góp ý cho em trong quá trình làm đề tài này.
+
+\clearpage
+
+% === 01-summary.tex ===
+\chapter*{Tóm tắt đề tài}
+\addcontentsline{toc}{chapter}{Tóm tắt đề tài}
+SourceVerify là một công cụ web thử nghiệm giúp kiểm tra xem một ảnh có khả năng do AI tạo ra hay không. Thay vì dùng một mô hình đoán duy nhất, em cho nhiều phương pháp cùng phân tích ảnh rồi cộng điểm lại để ra kết quả cuối. Trong phạm vi Project I, em chỉ đi sâu vào 5 phương pháp tiêu biểu: \textit{Metadata Analysis} (phân tích siêu dữ liệu), \textit{Noise Residual} (phân tích nhiễu dư), \textit{DCT Block Artifacts} (vết khối nén DCT), \textit{Chromatic Aberration} (quang sai màu của ống kính) và \textit{Spectral Nyquist Analysis} (phân tích phổ tần số Nyquist).
+
+Báo cáo trình bày bối cảnh và lý do chọn đề tài, cơ sở lý thuyết của 5 phương pháp, cách thiết kế hệ thống và kết quả khi chạy thử trên một tập ảnh nhỏ. Với mỗi phương pháp em cố gắng nói rõ ý tưởng, cách tính điểm, ưu điểm và hạn chế. Kết quả cho thấy SourceVerify hợp với mục tiêu Project I: hiểu được bài toán, biết cách tiếp cận và làm được một sản phẩm minh họa có giải thích, dù chưa thể kết luận chắc chắn trong mọi trường hợp.
+
+\textbf{Từ khóa:} ảnh AI, digital image forensics (giám định ảnh số), metadata (siêu dữ liệu), noise residual (nhiễu dư), DCT (biến đổi cosine rời rạc), chromatic aberration (quang sai màu), phân tích tần số.
+
+\begin{flushright}
+Hà Nội, ngày 12 tháng 06 năm 2026\\
+\vspace{1cm}
+Sinh viên thực hiện\\
+\textit{(Ký và ghi rõ họ tên)}
+\end{flushright}
+
+\tableofcontents
+\listoffigures
+\listoftables
+\clearpage
+
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% === 02-introduction.tex ===
+\chapter{GIỚI THIỆU ĐỀ TÀI}
+
+\section{Bối cảnh và lý do chọn đề tài}
+Trước đây muốn có một bức ảnh đẹp, thuyết phục thì cần máy ảnh, kỹ năng và thời gian chỉnh sửa. Bây giờ chỉ cần vài câu mô tả là các công cụ AI đã tạo ra được ảnh trông rất thật. Điều này tiện cho học tập và sáng tạo, nhưng cũng làm xuất hiện nhiều ảnh không rõ nguồn gốc.
+
+Vấn đề là khi ảnh AI ngày càng giống thật thì nhìn bằng mắt rất khó phân biệt. Một bức ảnh giả có thể bị dùng để minh họa cho một sự việc không có thật, gây hiểu lầm cho người xem. Vì vậy em thấy cần có một công cụ hỗ trợ kiểm tra, ít nhất là chỉ ra được những dấu hiệu đáng nghi để người dùng cẩn thận hơn.
+
+SourceVerify ra đời với mục đích đó. Em không cố làm một công cụ phán quyết tuyệt đối, mà làm một công cụ hỗ trợ phân tích: nó chạy nhiều phương pháp khác nhau trên ảnh, rồi cho biết tín hiệu nào nghiêng về AI, tín hiệu nào nghiêng về ảnh thật và vì sao.
+
+\section{Tính cấp thiết}
+Về mặt xã hội, ảnh giả lan truyền nhanh trên mạng và có thể ảnh hưởng tới nhận thức của nhiều người. Khi không có công cụ kiểm tra, người dùng thường chỉ tin vào cảm giác, mà cảm giác thì dễ sai.
+
+Về mặt kỹ thuật, đây là một bài toán mở và còn nhiều thứ để tìm hiểu. Các mô hình tạo ảnh ngày càng tốt, còn các dấu vết để phát hiện thì ngày càng khó thấy. Với một sinh viên, đề tài này vừa sức để làm quen công nghệ mà vẫn có ý nghĩa thực tế, không nhất thiết phải dùng tới mô hình học sâu cỡ lớn.
+
+\section{Mục tiêu và phạm vi}
+Mục tiêu chính của đề tài gồm:
+\begin{itemize}
+  \item Hiểu được bài toán phát hiện ảnh do AI tạo và các rủi ro liên quan.
+  \item Tìm hiểu và trình bày 5 phương pháp forensic tiêu biểu cho ảnh.
+  \item Thiết kế được kiến trúc hệ thống nhận ảnh, phân tích và hiển thị kết quả.
+  \item Làm một sản phẩm web minh họa bằng Next.js và TypeScript.
+\end{itemize}
+
+Về phạm vi, hệ thống có hướng mở rộng cho cả ảnh, video và văn bản, nhưng trong báo cáo này em tập trung vào ảnh vì ảnh có nhiều dấu vết dễ giải thích nhất. Em cũng chỉ chọn 5 phương pháp nổi bật để đi sâu, thay vì liệt kê dàn trải.
+
+\section{Cách làm}
+Em thực hiện đề tài theo năm bước như Hình \ref{fig:research-process}: tìm hiểu bài toán, chọn phương pháp, thiết kế hệ thống, làm thử và đánh giá. Các bước này không hoàn toàn tuần tự mà có quay lại điều chỉnh khi cần.
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[
+  node distance=1.05cm,
+  processstep/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,minimum width=3.0cm,minimum height=0.85cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[processstep] (s1) {1. Tìm hiểu\\bài toán};
+\node[processstep,right=of s1] (s2) {2. Chọn\\phương pháp};
+\node[processstep,right=of s2] (s3) {3. Thiết kế\\hệ thống};
+\node[processstep,below=of s3] (s4) {4. Làm thử};
+\node[processstep,left=of s4] (s5) {5. Đánh giá\\và chỉnh};
+\draw[arrow] (s1) -- (s2);
+\draw[arrow] (s2) -- (s3);
+\draw[arrow] (s3) -- (s4);
+\draw[arrow] (s4) -- (s5);
+\end{tikzpicture}
+\caption{Các bước thực hiện đề tài}
+\label{fig:research-process}
+\end{figure}
+
+\clearpage
+
+% === 03-theory.tex ===
+\chapter{CƠ SỞ LÝ THUYẾT}
+
+\section{Vì sao có thể phát hiện ảnh AI}
+Ảnh chụp thật và ảnh do AI tạo ra được hình thành theo hai cách khác nhau. Ảnh thật đi qua một chuỗi vật lý dài: ánh sáng qua ống kính, vào cảm biến, rồi máy ảnh xử lý nội suy màu, chỉnh gamma, nén JPEG và ghi metadata. Mỗi bước để lại một loại dấu vết riêng. Ảnh AI thì được sinh thẳng từ mô hình rồi mới lưu thành tệp, nên nó không đi qua chuỗi đó (Hình \ref{fig:pipeline-compare}).
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  real/.style={rectangle,draw=Green,rounded corners,fill=Green!10,align=center,font=\scriptsize,minimum width=2.0cm,minimum height=0.7cm},
+  ai/.style={rectangle,draw=Purple,rounded corners,fill=Purple!10,align=center,font=\scriptsize,minimum width=2.0cm,minimum height=0.7cm},
+  arrow/.style={-{Latex[length=1.6mm]},thick}
+]
+\node[align=left,font=\small\bfseries,Green] at (-6.2,1.4) {Ảnh thật};
+\node[real] (r1) at (-4.6,1.4) {Ống kính};
+\node[real] (r2) at (-2.1,1.4) {Cảm biến};
+\node[real] (r3) at (0.4,1.4) {Xử lý + Gamma};
+\node[real] (r4) at (2.9,1.4) {Nén JPEG};
+\node[real] (r5) at (5.3,1.4) {EXIF / Tệp};
+\draw[arrow,Green] (r1)--(r2); \draw[arrow,Green] (r2)--(r3);
+\draw[arrow,Green] (r3)--(r4); \draw[arrow,Green] (r4)--(r5);
+\node[align=left,font=\small\bfseries,Purple] at (-6.2,-0.4) {Ảnh AI};
+\node[ai] (a1) at (-4.6,-0.4) {Latent};
+\node[ai] (a2) at (-2.1,-0.4) {Generator};
+\node[ai] (a3) at (0.4,-0.4) {Upsampling};
+\node[ai] (a4) at (2.9,-0.4) {Decode RGB};
+\node[ai] (a5) at (5.3,-0.4) {Lưu tệp};
+\draw[arrow,Purple] (a1)--(a2); \draw[arrow,Purple] (a2)--(a3);
+\draw[arrow,Purple] (a3)--(a4); \draw[arrow,Purple] (a4)--(a5);
+\end{tikzpicture}
+\caption{So sánh cách hình thành ảnh thật và ảnh AI}
+\label{fig:pipeline-compare}
+\end{figure}
+
+Digital image forensics (giám định ảnh số) là lĩnh vực tìm các dấu vết kỹ thuật còn lại trong ảnh để kiểm tra tính xác thực \cite{farid,verdoliva}. Có thể hình dung nó giống như khám nghiệm hiện trường: thám tử không nhìn xem bức ảnh "đẹp hay xấu" mà đi tìm những vết tích nhỏ mà người làm giả thường bỏ sót. Ý tưởng của em là: ảnh AI tuy trông giống thật nhưng thường thiếu hoặc làm sai một vài dấu vết vật lý, ví dụ nhiễu cảm biến, vết nén hay sai lệch quang học. Mỗi phương pháp sẽ soi một loại dấu vết, và khi gộp lại thì kết quả đáng tin hơn là chỉ dựa vào một dấu hiệu.
+
+Lý do em phải dùng nhiều phương pháp là vì không có dấu vết nào đúng trong mọi trường hợp. Một bức ảnh thật bị nén lại nhiều lần có thể mất sạch metadata; một ảnh AI được chỉnh sửa thêm có thể trông giống ảnh thật ở vài khía cạnh. Nếu chỉ tin vào một phương pháp thì rất dễ kết luận sai. Khi nhiều phương pháp độc lập cùng chỉ về một hướng, em mới yên tâm hơn với kết luận.
+
+\section{Cách tổng hợp điểm}
+Mỗi phương pháp trả về một điểm từ 0 đến 100: gần 100 nghĩa là nghiêng về AI, gần 0 nghĩa là nghiêng về ảnh thật, còn khoảng 50 là chưa rõ. Hệ thống lấy trung bình có trọng số để ra điểm cuối:
+\[
+Score_{AI}=\frac{\sum_{i=1}^{n} score_i \times weight_i}{\sum_{i=1}^{n} weight_i}
+\]
+Phương pháp nào đáng tin hơn thì được gán trọng số lớn hơn. Cách làm này giống ý tưởng gộp nhiều ý kiến lại: từng phương pháp có thể sai, nhưng nếu nhiều phương pháp khác nhau cùng nghiêng về một phía thì khả năng đúng cao hơn.
+
+Để dễ hình dung, giả sử một ảnh được 5 phương pháp chấm điểm như trong Bảng \ref{tab:vidu-diem}. Em nhân mỗi điểm với trọng số, cộng lại rồi chia cho tổng trọng số. Kết quả khoảng 65 điểm, nghĩa là ảnh nghiêng về AI.
+
+\begin{table}[H]
+\centering
+\caption{Ví dụ tính điểm tổng hợp cho một ảnh}
+\label{tab:vidu-diem}
+\begin{tabularx}{\textwidth}{p{0.30\textwidth}Y Y Y}
+\toprule
+\textbf{Phương pháp} & \textbf{Điểm} & \textbf{Trọng số} & \textbf{Điểm $\times$ trọng số} \\
+\midrule
+Metadata Analysis & 50 & 1.5 & 75 \\
+Noise Residual & 72 & 3.5 & 252 \\
+DCT Block Artifacts & 65 & 2.0 & 130 \\
+Chromatic Aberration & 68 & 0.5 & 34 \\
+Spectral Nyquist & 60 & 1.5 & 90 \\
+\midrule
+\textbf{Tổng} & & \textbf{9.0} & \textbf{581} \\
+\multicolumn{4}{l}{Điểm AI $= 581 / 9.0 \approx 65 \Rightarrow$ nghiêng về AI} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Thư viện SourceVerify thực ra có hơn 500 phương pháp, nhưng phần lớn còn ở mức thử nghiệm. Em chọn ra 5 phương pháp để đi sâu vì chúng có cơ sở lý thuyết rõ, được trích dẫn nhiều, đại diện cho các nhóm dấu vết khác nhau và đều đã chạy được trong sản phẩm. Hình \ref{fig:five-methods} cho thấy 5 phương pháp này cùng đóng góp vào điểm chung.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  method/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.0cm,minimum height=0.8cm},
+  center/.style={circle,draw=Navy,fill=LightGray,align=center,minimum size=2.0cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[center] (sv) at (0,0) {SourceVerify\\AI Score};
+\node[method] (m1) at (0,2.8) {Metadata};
+\node[method] (m2) at (4.2,1.1) {Noise Residual};
+\node[method] (m3) at (2.6,-2.5) {DCT Block};
+\node[method] (m4) at (-2.6,-2.5) {Chromatic Ab.};
+\node[method] (m5) at (-4.2,1.1) {Spectral Nyquist};
+\foreach \x in {m1,m2,m3,m4,m5} \draw[arrow] (\x) -- (sv);
+\end{tikzpicture}
+\caption{Năm phương pháp đóng góp vào điểm AI chung}
+\label{fig:five-methods}
+\end{figure}
+
+\section{Năm phương pháp trọng tâm}
+
+\subsection{Metadata Analysis (Phân tích siêu dữ liệu)}
+Metadata (siêu dữ liệu) là thông tin mô tả đi kèm tệp ảnh: thiết bị chụp, thời gian, phần mềm xử lý, profile màu, các trường EXIF... \cite{farid,c2pa}. Có thể hiểu nó giống như "lý lịch" của bức ảnh. Ví dụ một ảnh chụp từ điện thoại thường ghi rõ hãng máy, model, tiêu cự, ISO, thời gian chụp; còn một ảnh xuất từ phần mềm tạo ảnh có thể ghi tên phần mềm đó hoặc không có thông tin máy ảnh nào cả.
+
+Nếu trong metadata thấy tên phần mềm tạo ảnh như Midjourney, Stable Diffusion hay DALL\textperiodcentered E thì gần như chắc chắn ảnh không phải chụp từ máy ảnh. Ngược lại, nếu có thông tin camera hợp lý thì ảnh nhiều khả năng là thật.
+
+Trong code, hàm \texttt{analyzeMetadata} bắt đầu ở điểm 50 rồi kiểm tra theo thứ tự ưu tiên (Bảng \ref{tab:metadata-rules}). Một điểm em chú ý là phải bỏ qua các trường cơ bản như tên tệp, dung lượng, định dạng khi đếm EXIF thật, vì những trường này tệp nào cũng có, không nói lên điều gì về nguồn gốc. Nếu không bỏ qua thì sẽ đếm nhầm và tưởng ảnh có nhiều thông tin camera.
+
+\begin{table}[H]
+\centering
+\caption{Cách tính điểm của Metadata Analysis}
+\label{tab:metadata-rules}
+\begin{tabularx}{\textwidth}{p{0.45\textwidth}p{0.10\textwidth}Y}
+\toprule
+\textbf{Điều kiện} & \textbf{Điểm} & \textbf{Ý nghĩa} \\
+\midrule
+Có chữ ký phần mềm AI & 95 & Rất nghi AI \\
+Có chữ ký camera thật & 10 & Rất giống ảnh thật \\
+$\geq 3$ trường EXIF camera & 18 & Khả năng ảnh thật \\
+$1$--$2$ trường EXIF & 35 & Có một phần EXIF \\
+Không có EXIF camera & 50 & Chưa rõ \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Metadata mạnh khi còn nguyên, nhưng rất dễ bị xóa hoặc sửa, ví dụ khi ảnh được tải lên mạng xã hội hay chụp màn hình. Vì vậy em không dùng nó làm bằng chứng duy nhất, chỉ coi như một lớp thông tin về nguồn gốc tệp.
+
+\subsection{Noise Residual (Phân tích nhiễu dư)}
+Ảnh chụp thật luôn có một chút nhiễu từ cảm biến, và nhiễu này thay đổi theo độ sáng, ISO, ánh sáng \cite{lukas,fridrich2009}. Có thể tưởng tượng nhiễu giống như "hạt" li ti trên ảnh, nhất là ảnh chụp thiếu sáng. Một điểm hay là nhiễu thật thường tỉ lệ với căn bậc hai độ sáng ($\sigma\propto\sqrt{I}$), gọi là shot noise (nhiễu lượng tử ánh sáng), tức là vùng sáng có nhiều hạt nhiễu hơn vùng tối một cách tự nhiên. Ảnh AI hay bị quá sạch hoặc nhiễu đều đều ở mọi vùng, không theo quy luật đó, vì mô hình thường cố tạo ra ảnh mịn đẹp.
+
+Hàm \texttt{analyzeNoiseResidual} chia ảnh thành các khối $32\times32$, rồi dùng bộ lọc Laplacian để tách lấy phần nhiễu (phần thay đổi nhanh giữa các pixel cạnh nhau):
+\[
+L(x,y)=4I(x,y)-I(x{-}1,y)-I(x{+}1,y)-I(x,y{-}1)-I(x,y{+}1)
+\]
+Sau đó em tính ba chỉ số: độ không đều của nhiễu giữa các khối ($CV$), tương quan giữa độ sáng và mức nhiễu ($\rho$), và độ lệch kurtosis (độ nhọn của phân bố) so với nhiễu Gauss. Ảnh thật có $CV$ cao (nhiễu chỗ nhiều chỗ ít) và $\rho>0$ (vùng sáng nhiễu nhiều hơn); ảnh AI thì $CV$ thấp và $\rho$ gần 0. Hình \ref{fig:noise-shot} minh họa rõ điều này: các chấm của ảnh thật đi lên theo độ sáng, còn ảnh AI nằm ngang.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85]
+\draw[->,thick] (0,0)--(6.0,0) node[right,font=\scriptsize]{Độ sáng};
+\draw[->,thick] (0,0)--(0,3.8) node[above,font=\scriptsize]{Nhiễu $\sigma$};
+\foreach \x/\y in {0.6/0.9,1.2/1.3,1.8/1.5,2.4/1.9,3.0/2.1,3.6/2.5,4.2/2.7,4.8/3.0,1.0/1.0,2.0/1.7,3.2/2.3,4.4/2.9}
+  \fill[Green] (\x,\y) circle (1.5pt);
+\draw[Green,thick,domain=0.4:5.2,samples=40] plot (\x,{1.3*sqrt(\x)});
+\node[Green,font=\scriptsize\bfseries] at (4.4,3.4) {Ảnh thật};
+\foreach \x/\y in {0.6/1.05,1.2/0.95,1.8/1.1,2.4/0.9,3.0/1.05,3.6/0.95,4.2/1.1,4.8/0.92,2.0/1.0,3.2/0.98}
+  \fill[Purple] (\x,\y) circle (1.5pt);
+\draw[Purple,thick,dashed] (0.4,1.0)--(5.2,1.0);
+\node[Purple,font=\scriptsize\bfseries] at (4.4,0.55) {Ảnh AI};
+\end{tikzpicture}
+\caption{Ảnh thật: nhiễu tăng theo độ sáng; ảnh AI: nhiễu gần như phẳng}
+\label{fig:noise-shot}
+\end{figure}
+
+Noise Residual được gán trọng số cao nhất (3.5) vì nó khai thác dấu vết vật lý khó làm giả. Hạn chế là nó nhạy với nén mạnh, resize và bộ lọc làm đẹp, nên một ảnh thật đã chỉnh nhiều cũng có thể bị coi là quá sạch.
+
+\subsection{DCT Block Artifacts (Vết khối nén DCT)}
+JPEG nén ảnh theo từng khối $8\times8$ bằng biến đổi DCT (biến đổi cosine rời rạc) rồi lượng tử hóa, và quá trình này để lại vết ở biên các khối. Đây là cơ sở của nhiều kỹ thuật forensic về nén ảnh \cite{popescu,fridrich2009}. Nói đơn giản, vì JPEG xử lý từng ô vuông $8\times8$ riêng rẽ nên ở chỗ giáp ranh giữa hai ô hay có một bước nhảy nhỏ về màu, gọi là vết khối. Ảnh JPEG thật từ máy ảnh thường có vết khối khá rõ; ảnh AI lưu dưới dạng PNG thì gần như không có vết khối; còn ảnh AI lưu lại thành JPEG thì vết khối lại quá đều đặn ở mọi vùng.
+
+Tính biến đổi DCT đầy đủ khá tốn kém, nên thay vì vậy em đo trực tiếp tỉ lệ năng lượng ở biên khối so với bên trong khối:
+\[
+\text{blockRatio}=\frac{\overline{E}_{\text{biên}}}{\overline{E}_{\text{trong}}}
+\]
+Ảnh JPEG thật có $\text{blockRatio}>1.2$ (biên nổi rõ hơn bên trong). Em còn đo độ đều của vết khối trên 5 vùng khác nhau của ảnh ($\text{regionCV}$): ảnh thật có nội dung phong phú nên vết khối thay đổi nhiều giữa các vùng, còn ảnh AI tái nén thì vết khối ở đâu cũng giống nhau (Bảng \ref{tab:dct-rules}).
+
+\begin{table}[H]
+\centering
+\caption{Cách tính điểm của DCT Block Artifacts}
+\label{tab:dct-rules}
+\begin{tabularx}{\textwidth}{p{0.30\textwidth}p{0.24\textwidth}Y}
+\toprule
+\textbf{Chỉ số} & \textbf{Điều kiện} & \textbf{Điều chỉnh} \\
+\midrule
+blockRatio & $<0.95$ (không có vết khối) & $+20$ (AI/PNG) \\
+ & $>1.30$ (vết khối mạnh) & $-20$ (JPEG thật) \\
+regionCV & $<0.08$ (quá đều) & $+15$ (AI tái nén) \\
+ & $>0.40$ (không đều) & $-15$ (camera thật) \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Phương pháp này hợp với ảnh JPEG phổ biến, nhưng yếu với PNG, WebP hoặc ảnh đã resize nhiều lần, nên cũng chỉ là tín hiệu bổ trợ.
+
+\subsection{Chromatic Aberration (Quang sai màu)}
+Ống kính thật làm các màu hội tụ lệch nhau một chút, tạo ra viền màu nhẹ ở rìa ảnh hoặc vùng tương phản cao \cite{johnson2006}. Ảnh AI không đi qua ống kính nên thường thiếu dấu vết này. Hàm \texttt{analyzeChromaticAberration} đo độ lệch giữa kênh đỏ và xanh lam ở vùng biên ảnh; lệch càng nhiều thì càng giống ảnh chụp thật (Bảng \ref{tab:chromatic-rules}).
+
+\begin{table}[H]
+\centering
+\caption{Ánh xạ độ lệch màu sang điểm}
+\label{tab:chromatic-rules}
+\begin{tabularx}{\textwidth}{p{0.34\textwidth}p{0.12\textwidth}Y}
+\toprule
+\textbf{Độ lệch trung bình} & \textbf{Điểm} & \textbf{Ý nghĩa} \\
+\midrule
+$<0.5$ & 82 & Không có lệch màu, nghi AI \\
+$2.0$--$4.0$ & 35 & Có lệch màu \\
+$>7.0$ & 10 & Lệch rõ, ống kính thật \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+Phương pháp này có trọng số thấp nhất (0.5) vì không phải ảnh thật nào cũng có viền màu rõ, ống kính tốt hoặc phần mềm chỉnh có thể làm mất dấu vết. Tuy vậy em vẫn giữ nó để có thêm một góc nhìn vật lý.
+
+\subsection{Spectral Nyquist Analysis (Phân tích phổ Nyquist)}
+Phương pháp này nhìn ảnh trong miền tần số thay vì nhìn từng pixel. "Tần số" ở đây hiểu nôm na là mức độ thay đổi nhanh hay chậm của các chi tiết: vùng trời mịn là tần số thấp, vùng nhiều chi tiết nhỏ là tần số cao. Khi mô hình AI sinh ảnh hoặc phóng to ảnh, nó hay để lại các đỉnh bất thường ở vùng tần số cao mà mắt thường không thấy được \cite{durall2020,wang2020}.
+
+Hàm \texttt{analyzeSpectralNyquist} cắt vùng giữa ảnh cỡ $256\times256$, đổi sang ảnh xám rồi tính phổ năng lượng theo từng hàng và cột bằng phép biến đổi Fourier:
+\[
+P(k)=\Big(\sum_{n} f(n)\cos\tfrac{2\pi kn}{N}\Big)^2+\Big(\sum_{n} f(n)\sin\tfrac{2\pi kn}{N}\Big)^2
+\]
+Ảnh thật có phổ giảm mượt dần khi lên tần số cao; ảnh AI thì thường nhô lên một cục ở gần ngưỡng Nyquist (tần số cao nhất biểu diễn được) hoặc ở mức $N/4$, do bước phóng to trong mô hình tạo ra (Hình \ref{fig:spectral-curve}). Nếu phát hiện ảnh có dấu hiệu đã bị resize, em giảm bớt ảnh hưởng của phương pháp này vì resize cũng tạo ra đỉnh tần số giả, dễ làm báo nhầm.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.85]
+\draw[->,thick] (0,0)--(6.2,0) node[right,font=\scriptsize]{Tần số $k$};
+\draw[->,thick] (0,0)--(0,3.6) node[above,font=\scriptsize]{$\log P(k)$};
+\node[font=\scriptsize] at (5.7,-0.3) {Nyquist};
+\draw[Green,thick,domain=0.2:5.7,samples=60] plot (\x,{3.0*exp(-0.42*\x)+0.25});
+\node[Green,font=\scriptsize\bfseries] at (3.3,1.8) {Ảnh thật};
+\draw[Purple,thick,domain=0.2:5.3,samples=60] plot (\x,{2.4*exp(-0.30*\x)+0.45});
+\draw[Purple,thick] (5.3,1.0)--(5.7,2.1); \fill[Purple] (5.7,2.1) circle (2pt);
+\node[Purple,font=\scriptsize\bfseries] at (3.0,3.0) {Ảnh AI};
+\end{tikzpicture}
+\caption{Phổ năng lượng: ảnh AI nhô lên ở tần số cao, ảnh thật giảm mượt}
+\label{fig:spectral-curve}
+\end{figure}
+
+Đây là phương pháp duy nhất trong nhóm nhắm thẳng vào dấu vết của mô hình sinh ảnh. Hạn chế là dễ bị ảnh hưởng bởi resize, crop, nén lại và hơi khó giải thích cho người dùng phổ thông.
+
+\section{So sánh và kết luận chương}
+Năm phương pháp bổ sung cho nhau theo các góc nhìn khác nhau (Bảng \ref{tab:method-compare}). Không có cái nào mạnh ở mọi mặt: metadata dễ bị xóa, nhiễu nhạy với hậu kỳ, DCT phụ thuộc định dạng, chromatic aberration không phải lúc nào cũng rõ, còn phổ tần số dễ bị resize làm sai. Chính vì vậy em mới gộp cả 5 lại thay vì tin vào một cái. Chương sau trình bày cách tổ chức chúng thành một hệ thống hoàn chỉnh.
+
+\begin{table}[H]
+\centering
+\caption{So sánh năm phương pháp}
+\label{tab:method-compare}
+\begin{tabularx}{\textwidth}{p{0.22\textwidth}p{0.16\textwidth}Y Y}
+\toprule
+\textbf{Phương pháp} & \textbf{Trọng số} & \textbf{Bền với nén/resize} & \textbf{Dễ giải thích} \\
+\midrule
+Metadata & 1.5 & Thấp & Rất cao \\
+Noise Residual & 3.5 & Trung bình & Trung bình \\
+DCT Block & 2.0 & Thấp (PNG) & Cao \\
+Chromatic Aberration & 0.5 & Trung bình & Cao \\
+Spectral Nyquist & 1.5 & Thấp (resize) & Thấp \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\clearpage
+
+% === 04-system-design.tex ===
+\chapter{PHÂN TÍCH VÀ THIẾT KẾ HỆ THỐNG}
+
+\section{Yêu cầu hệ thống}
+Hệ thống cần làm được các việc chính sau: cho người dùng tải ảnh lên; kiểm tra tệp hợp lệ; đọc metadata và dữ liệu pixel; chạy các phương pháp phân tích; tổng hợp thành điểm AI, nhãn và độ tin cậy; và hiển thị từng tín hiệu kèm giải thích. Ngoài ra hệ thống cũng có trang tài liệu cho từng phương pháp.
+
+Về yêu cầu phi chức năng, em ưu tiên ba thứ: dễ mở rộng (thêm phương pháp mới mà không phải sửa lại toàn bộ), minh bạch (kết quả phải giải thích được chứ không chỉ là một con số), và quyền riêng tư (phân tích chạy ngay trên trình duyệt, ảnh không bị gửi lên máy chủ). Ảnh quá lớn được giới hạn kích thước để khỏi treo máy.
+
+\section{Kiến trúc tổng thể}
+Em thiết kế hệ thống theo hướng đơn giản trước, đúng tinh thần Project I. Hệ thống chia thành các lớp như Hình \ref{fig:system-architecture}: giao diện nhận ảnh, lớp ứng dụng điều phối, lớp phân tích gọi các phương pháp, lớp tổng hợp điểm, rồi trả kết quả về giao diện kèm phần giải thích.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=0.8cm and 1.0cm,
+  layer/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.3cm,minimum height=0.85cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[layer] (client) {Giao diện\\(React UI)};
+\node[layer,right=of client] (app) {Điều phối\\(Next.js)};
+\node[layer,right=of app] (analysis) {Phân tích\\(analyzer.ts)};
+\node[layer,below=of analysis] (methods) {Các phương pháp\\(image/text/video)};
+\node[layer,left=of methods] (score) {Tổng hợp điểm\\(calculateVerdict)};
+\node[layer,left=of score] (present) {Trình bày\\kết quả};
+\draw[arrow] (client) -- (app);
+\draw[arrow] (app) -- (analysis);
+\draw[arrow] (analysis) -- (methods);
+\draw[arrow] (methods) -- (score);
+\draw[arrow] (score) -- (present);
+\draw[arrow] (present) -- (client);
+\end{tikzpicture}
+\caption{Kiến trúc tổng thể của SourceVerify}
+\label{fig:system-architecture}
+\end{figure}
+
+Em chọn cách này (Next.js cộng module phân tích chạy phía client) thay vì làm microservice hay huấn luyện một mô hình học sâu, vì với phạm vi Project I thì nó dễ làm, dễ trình bày và không cần hạ tầng phức tạp. Cách chạy phía client cũng tiện cho quyền riêng tư vì ảnh không rời khỏi máy người dùng.
+
+\section{Phân rã chức năng và luồng xử lý}
+Hệ thống gồm năm khối chức năng (Hình \ref{fig:function-tree}). Khối quan trọng nhất là khối phân tích, nơi chứa 5 phương pháp đã nói ở Chương 2.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  root/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=3.6cm,minimum height=0.7cm},
+  child/.style={rectangle,draw=Blue,rounded corners,fill=white,align=center,font=\scriptsize,minimum width=2.4cm,minimum height=0.65cm},
+  arrow/.style={-{Latex[length=1.8mm]},thick,Blue}
+]
+\node[root] (root) at (0,0) {SourceVerify};
+\node[child] (upload) at (-5,-1.4) {Nhập dữ liệu};
+\node[child] (pre) at (-2.5,-1.4) {Tiền xử lý};
+\node[child] (method) at (0,-1.4) {Phân tích};
+\node[child] (score) at (2.6,-1.4) {Tổng hợp điểm};
+\node[child] (ui) at (5.2,-1.4) {Hiển thị};
+\foreach \x in {upload,pre,method,score,ui} \draw[arrow] (root) -- (\x);
+\end{tikzpicture}
+\caption{Phân rã chức năng của SourceVerify}
+\label{fig:function-tree}
+\end{figure}
+
+Luồng xử lý một lần phân tích ảnh diễn ra như Hình \ref{fig:data-flow}: người dùng tải ảnh lên, hệ thống kiểm tra tệp và lấy metadata cùng pixel, chạy 5 phương pháp, mỗi cái trả về một tín hiệu, rồi bộ tổng hợp cộng điểm và đưa ra kết quả kèm giải thích.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=0.7cm,
+  box/.style={rectangle,draw=Navy,rounded corners,fill=LightGray,align=center,font=\small,minimum width=2.9cm,minimum height=0.7cm},
+  data/.style={rectangle,draw=Green,rounded corners,align=center,font=\small,minimum width=2.9cm,minimum height=0.7cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[box] (a) {Tải ảnh};
+\node[box,right=of a] (b) {Kiểm tra tệp};
+\node[data,right=of b] (c) {Metadata + Pixel};
+\node[box,below=of c] (d) {Chạy 5 phương pháp};
+\node[data,left=of d] (e) {Danh sách tín hiệu};
+\node[box,left=of e] (f) {Tổng hợp điểm};
+\node[data,below=of f] (g) {Điểm AI / Nhãn};
+\node[box,right=of g] (h) {Giải thích};
+\draw[arrow] (a)--(b); \draw[arrow] (b)--(c); \draw[arrow] (c)--(d);
+\draw[arrow] (d)--(e); \draw[arrow] (e)--(f); \draw[arrow] (f)--(g); \draw[arrow] (g)--(h);
+\end{tikzpicture}
+\caption{Luồng xử lý một lần phân tích ảnh}
+\label{fig:data-flow}
+\end{figure}
+
+\section{Thiết kế dữ liệu}
+Để các phương pháp trả kết quả thống nhất, em dùng ba cấu trúc chính (Bảng \ref{tab:datamodel}). Nhờ vậy bộ tổng hợp chỉ cần đọc theo một chuẩn chung dù mỗi phương pháp hoạt động khác nhau.
+
+\begin{table}[H]
+\centering
+\caption{Các cấu trúc dữ liệu chính}
+\label{tab:datamodel}
+\begin{tabularx}{\textwidth}{p{0.24\textwidth}Y}
+\toprule
+\textbf{Cấu trúc} & \textbf{Nội dung chính} \\
+\midrule
+\texttt{AnalysisMethod} & Tên, điểm (0--100), trọng số, phần giải thích của một phương pháp \\
+\texttt{AnalysisResult} & Điểm AI cuối, nhãn (ai -- ảnh AI / real -- ảnh thật / uncertain -- chưa rõ), độ tin cậy, danh sách tín hiệu \\
+\texttt{FileMetadata} & Kích thước, định dạng, dữ liệu EXIF của tệp \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Bộ tổng hợp điểm}
+Bộ tổng hợp \texttt{calculateVerdict} không chỉ lấy trung bình có trọng số mà còn chỉnh thêm vài bước cho giống cách một người cân nhắc bằng chứng (Hình \ref{fig:verdict-flow}): đếm xem bao nhiêu phương pháp nghiêng mạnh về AI hay ảnh thật, khuếch đại khi nhiều phương pháp đồng thuận, ưu tiên metadata khi nó rất rõ, và có một bước chống báo nhầm.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[
+  node distance=0.45cm,
+  vstep/.style={rectangle,draw=Navy,rounded corners,fill=LightBlue,align=center,font=\small,minimum width=10.5cm,minimum height=0.65cm},
+  arrow/.style={-{Latex[length=2mm]},thick,Navy}
+]
+\node[vstep] (s1) {1. Trung bình có trọng số $\rightarrow$ điểm cơ sở};
+\node[vstep,below=of s1] (s2) {2. Đếm số phương pháp nghiêng mạnh AI / ảnh thật};
+\node[vstep,below=of s2] (s3) {3. Khuếch đại khi nhiều phương pháp đồng thuận};
+\node[vstep,below=of s3] (s5) {4. Ưu tiên metadata rõ ràng + chống báo nhầm};
+\node[vstep,below=of s5] (s6) {5. Ra nhãn theo ngưỡng 55/40 + tính độ tin cậy};
+\foreach \a/\b in {s1/s2,s2/s3,s3/s5,s5/s6} \draw[arrow] (\a)--(\b);
+\end{tikzpicture}
+\caption{Các bước của bộ tổng hợp điểm}
+\label{fig:verdict-flow}
+\end{figure}
+
+Ngưỡng cuối cùng đặt như sau: điểm $\geq 55$ là \texttt{ai} (ảnh AI), $\leq 40$ là \texttt{real} (ảnh thật), còn lại là \texttt{uncertain} (chưa rõ). Em để một vùng "chưa chắc" ở giữa thay vì ép buộc phải chọn ai hoặc real, vì với những ảnh không đủ bằng chứng thì trả lời "chưa rõ" trung thực hơn là đoán bừa. Độ tin cậy được tính dựa trên khoảng cách của điểm tới ngưỡng: điểm càng xa vùng giữa thì hệ thống càng chắc chắn. Ví dụ ảnh được 90 điểm sẽ có độ tin cậy cao hơn nhiều so với ảnh chỉ được 57 điểm, dù cả hai đều bị xếp là \texttt{ai}.
+
+Bước "ưu tiên metadata rõ ràng" đáng chú ý: nếu metadata bắt được đúng tên một phần mềm AI thì đây là bằng chứng rất mạnh, nên em cho nó cộng thẳng vào điểm cuối thay vì chỉ tính trung bình bình thường. Ngược lại, bước "chống báo nhầm" giúp tránh trường hợp nhiều phương pháp quan trọng đều nói ảnh thật mà hệ thống vẫn lỡ kết luận AI.
+
+\clearpage
+
+% === 05-implementation-results.tex ===
+\chapter{TRIỂN KHAI VÀ KẾT QUẢ}
+
+\section{Công nghệ sử dụng}
+Em làm SourceVerify bằng Next.js và React cho giao diện, TypeScript cho phần code phân tích, dùng Canvas để đọc pixel ảnh, và triển khai trên Vercel (Bảng \ref{tab:tech-stack}). Mỗi phương pháp là một hàm riêng nên dễ thử và dễ thêm bớt. Toàn bộ phân tích chạy ngay trên trình duyệt nên ảnh không phải tải lên máy chủ.
+
+\begin{table}[H]
+\centering
+\caption{Công nghệ sử dụng}
+\label{tab:tech-stack}
+\begin{tabularx}{\textwidth}{p{0.26\textwidth}Y}
+\toprule
+\textbf{Thành phần} & \textbf{Công nghệ} \\
+\midrule
+Giao diện & React 19 / Next.js 16, Tailwind CSS \\
+Ngôn ngữ & TypeScript 5 \\
+Xử lý ảnh & Canvas / Pixel buffer \\
+Phân tích & Module nội bộ + bộ tổng hợp điểm \\
+Triển khai & Vercel \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Cách đánh giá}
+Để đo thử hiệu quả, em viết một script benchmark (chương trình kiểm thử chuẩn) chạy trên tập ảnh nhỏ gồm 120 ảnh thật và 120 ảnh AI, resize (thu nhỏ) tối đa 320px cho dễ lặp lại. Em dùng \textit{strict accuracy} (độ chính xác nghiêm ngặt: điểm 50 tính là sai vì phương pháp không dám quyết), \textit{classified accuracy} (độ chính xác chỉ tính trên những ảnh được phân loại) và \textit{coverage} (độ phủ, tức tỉ lệ ảnh không bị bỏ trung tính).
+
+\section{Kết quả 5 phương pháp}
+Kết quả benchmark của 5 phương pháp trọng tâm như Bảng \ref{tab:five-bench} và Hình \ref{fig:acc-bar}.
+
+\begin{table}[H]
+\centering
+\caption{Kết quả benchmark (120 ảnh thật + 120 ảnh AI)}
+\label{tab:five-bench}
+\begin{tabularx}{\textwidth}{p{0.28\textwidth}Y Y Y}
+\toprule
+\textbf{Phương pháp} & \textbf{Strict} & \textbf{Classified} & \textbf{Coverage} \\
+\midrule
+Noise Residual & 67.5\% & 67.8\% & 99.6\% \\
+DCT Block Artifacts & 54.6\% & 71.6\% & 76.3\% \\
+Chromatic Aberration & 50.4\% & 50.4\% & 100\% \\
+Spectral Nyquist & 50.0\% & 50.0\% & 100\% \\
+Metadata & \multicolumn{3}{l}{Đo riêng, phụ thuộc EXIF của tệp} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.95]
+\def\maxw{8.5}
+\foreach \lbl/\val/\y/\col in {{Noise Residual}/67.5/3.0/Green, {DCT Block}/54.6/2.0/Blue, {Chromatic Ab.}/50.4/1.0/Orange, {Spectral Nyq.}/50.0/0.0/Purple}{
+  \pgfmathsetmacro\barlen{\val/100*\maxw}
+  \draw[fill=\col!25,draw=\col,thick] (0,\y) rectangle (\barlen,\y+0.55);
+  \node[left,font=\scriptsize] at (-0.1,\y+0.27) {\lbl};
+  \node[right,font=\scriptsize] at (\barlen+0.05,\y+0.27) {\val\%};
+}
+\pgfmathsetmacro\refx{50/100*\maxw}
+\draw[Red,dashed,thick] (\refx,-0.3)--(\refx,3.7) node[above,font=\scriptsize,Red]{50\%};
+\draw[->,thick] (0,-0.3)--(0,3.7);
+\draw[->,thick] (0,-0.3)--(9.0,-0.3) node[right,font=\scriptsize]{Strict Acc};
+\end{tikzpicture}
+\caption{Strict accuracy của 4 phương pháp ảnh so với mốc ngẫu nhiên 50\%}
+\label{fig:acc-bar}
+\end{figure}
+
+Vài điều em rút ra từ kết quả này:
+\begin{itemize}
+  \item Noise Residual đúng nhất (67.5\%) và gần như luôn dám quyết, nên em để trọng số cao nhất cho nó cũng hợp lý.
+  \item DCT Block khi dám phân loại thì khá đúng (71.6\%) nhưng hay bỏ trung tính với ảnh PNG hoặc đã resize. Coverage chỉ 76.3\% nghĩa là cứ 4 ảnh thì có khoảng 1 ảnh nó trả lời "chưa rõ".
+  \item Chromatic Aberration và Spectral Nyquist chỉ quanh 50\% trên tập 320px. Lý do là resize nhỏ làm mất dấu vết tần số cao và viền màu; với ảnh gốc lớn hơn thì hai cái này hữu ích hơn.
+\end{itemize}
+
+Một điều cần nói thẳng là không phương pháp nào đạt độ chính xác thật sự cao, kể cả cái tốt nhất cũng chỉ khoảng 67\%. Đó là lý do em không tin vào một phương pháp đơn lẻ mà phải cộng điểm nhiều phương pháp lại. Con số này cũng cho thấy bài toán phát hiện ảnh AI khó hơn nhiều so với cảm giác ban đầu, và phần benchmark còn phải làm kỹ hơn nữa thì kết quả mới thật sự đáng tin.
+
+\section{Ví dụ một lần phân tích}
+Để thấy hệ thống chạy thế nào, em mô tả lại một lần phân tích một ảnh nghi là AI. Sau khi tải ảnh lên, hệ thống đọc metadata (không thấy thông tin máy ảnh, cũng không thấy phần mềm AI nên Metadata cho 50 điểm trung tính), rồi chạy các phương pháp pixel. Noise Residual thấy nhiễu quá đều nên cho 72 điểm; DCT thấy gần như không có vết khối JPEG nên cho 65; Spectral thấy hơi nhô ở tần số cao nên cho 60; Chromatic thấy thiếu viền màu nên cho 68. Cộng lại theo trọng số (giống Bảng \ref{tab:vidu-diem} ở Chương 2), điểm tổng khoảng 65--68, vượt ngưỡng 55 nên hệ thống kết luận \texttt{AI-GENERATED} với độ tin cậy khoảng 64\%. Quan trọng là người dùng nhìn vào danh sách tín hiệu sẽ hiểu vì sao, chứ không chỉ nhận một con số khô khan.
+
+\section{Sản phẩm}
+Hiện tại SourceVerify đã có giao diện kéo-thả ảnh, trang kết quả hiện điểm AI cùng danh sách tín hiệu, và trang tài liệu cho các phương pháp. Hình \ref{fig:ui-mockup} mô tả bố cục trang kết quả.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[font=\scriptsize]
+\draw[draw=Navy,thick,rounded corners] (0,0) rectangle (12,6.2);
+\draw[fill=Navy] (0,5.6) rectangle (12,6.2);
+\node[white] at (1.4,5.9) {SourceVerify};
+\draw[draw=Blue,dashed,thick,fill=LightBlue] (0.4,3.4) rectangle (5.6,5.2);
+\node[align=center] at (3.0,4.3) {\bfseries Kéo-thả ảnh};
+\draw[draw=Green,thick,fill=Green!10] (6.0,3.4) rectangle (11.6,5.2);
+\node[Green] at (8.8,4.8) {\bfseries VERDICT: AI-GENERATED};
+\node at (8.8,4.2) {AI Score: 68/100 -- Tin cậy: 64\%};
+\node[align=left,font=\scriptsize\bfseries] at (1.5,2.9) {Tín hiệu:};
+\foreach \y/\name/\val in {2.5/{Noise Residual}/72, 2.0/{DCT Block}/65, 1.5/{Spectral Nyquist}/60, 1.0/{Chromatic Ab.}/68, 0.5/{Metadata}/50}{
+  \node[align=left] at (2.0,\y) {\name};
+  \draw[draw=gray] (5.0,\y-0.1) rectangle (10.5,\y+0.1);
+  \pgfmathsetmacro\fillw{\val/100*5.5}
+  \draw[fill=Orange!50] (5.0,\y-0.1) rectangle (5.0+\fillw,\y+0.1);
+  \node at (11.0,\y) {\val};
+}
+\end{tikzpicture}
+\caption{Bố cục trang kết quả phân tích}
+\label{fig:ui-mockup}
+\end{figure}
+
+Nhìn chung ở mức Project I, kết quả của SourceVerify nên hiểu là để tham khảo. Hệ thống chưa kết luận chắc chắn được mọi ảnh, nhưng được cái là minh bạch và giải thích được vì sao nó nghĩ vậy, điều mà một mô hình hộp đen khó làm.
+
+\clearpage
+
+% === 06-conclusion.tex ===
+\chapter{KẾT LUẬN VÀ HƯỚNG PHÁT TRIỂN}
+
+\section{Kết luận}
+Qua đề tài SourceVerify, em đã tìm hiểu được một bài toán khá thời sự là kiểm tra ảnh trong thời AI tạo sinh. Em chọn hướng digital image forensics thay vì dùng một mô hình học sâu lớn, vì hướng này giúp em hiểu rõ bản chất bài toán hơn và cũng vừa sức với Project I.
+
+Báo cáo đã trình bày được bối cảnh và lý do chọn đề tài, cơ sở lý thuyết của 5 phương pháp, cách thiết kế hệ thống và kết quả chạy thử. Em cũng làm được một sản phẩm web minh họa có thể phân tích ảnh và giải thích kết quả. Điều em thấy giá trị nhất không phải là khẳng định chắc chắn ảnh nào thật hay giả, mà là có được một cách tiếp cận hợp lý: dùng nhiều bằng chứng và luôn giải thích được lý do.
+
+\section{Hạn chế}
+Đề tài vẫn còn một số hạn chế:
+\begin{itemize}
+  \item Tập dữ liệu thử còn nhỏ và chưa thật đa dạng, nên kết quả mới chỉ mang tính tham khảo.
+  \item Một số phương pháp còn dựa trên ngưỡng heuristic (quy tắc kinh nghiệm), chưa được tinh chỉnh bằng dữ liệu lớn.
+  \item Kết quả dễ bị ảnh hưởng khi ảnh bị nén lại, resize (thu phóng) hoặc chỉnh sửa nhiều.
+  \item Phần video và văn bản mới dừng ở mức cấu trúc, chưa làm sâu.
+\end{itemize}
+
+\section{Hướng phát triển}
+Nếu có thời gian làm tiếp, em muốn:
+\begin{enumerate}
+  \item Xây một tập dữ liệu lớn hơn, gán nhãn rõ ràng để benchmark (đánh giá chuẩn) nghiêm túc và chỉnh lại trọng số cho hợp lý.
+  \item Thử kết hợp các phương pháp heuristic (quy tắc kinh nghiệm) với một mô hình học máy nhẹ để tăng độ chính xác mà vẫn giải thích được.
+  \item Mở rộng sang video (optical flow -- luồng chuyển động, lip-sync -- đồng bộ khẩu hình) và văn bản (perplexity -- độ bối rối, burstiness -- độ bùng nổ).
+  \item Tích hợp chuẩn nguồn gốc nội dung như C2PA (chuẩn xác thực nguồn gốc nội dung số) để kiểm tra ảnh có chữ ký xác thực.
+\end{enumerate}
+
+Tóm lại, SourceVerify đã đáp ứng được mục tiêu của Project I là làm quen công nghệ, biết đặt vấn đề và làm ra một sản phẩm minh họa. Em xem đây là bước khởi đầu để có thể phát triển tiếp ở các học phần hoặc đồ án sau.
+
+\clearpage
+
+% === 07-references.tex ===
+\begin{thebibliography}{15}
+\addcontentsline{toc}{chapter}{Tài liệu tham khảo}
+
+\bibitem{farid} H. Farid, \textit{Photo Forensics}. MIT Press, 2016.
+
+\bibitem{fridrich2009} J. Fridrich, ``Digital image forensics,'' \textit{IEEE Signal Processing Magazine}, vol. 26, no. 2, pp. 26--37, 2009.
+
+\bibitem{verdoliva} L. Verdoliva, ``Media forensics and deepfakes: An overview,'' \textit{IEEE Journal of Selected Topics in Signal Processing}, vol. 14, no. 5, pp. 910--932, 2020.
+
+\bibitem{popescu} A. C. Popescu and H. Farid, ``Exposing digital forgeries by detecting traces of resampling,'' \textit{IEEE Transactions on Signal Processing}, vol. 53, no. 2, pp. 758--767, 2005.
+
+\bibitem{lukas} J. Lukas, J. Fridrich and M. Goljan, ``Digital camera identification from sensor pattern noise,'' \textit{IEEE Transactions on Information Forensics and Security}, vol. 1, no. 2, pp. 205--214, 2006.
+
+\bibitem{johnson2006} M. K. Johnson and H. Farid, ``Exposing digital forgeries through chromatic aberration,'' in \textit{Proceedings of the 8th Workshop on Multimedia and Security}, pp. 48--55, 2006.
+
+\bibitem{durall2020} R. Durall, M. Keuper, F.-J. Pfreundt and J. Keuper, ``Unmasking deepfakes with simple features,'' \textit{arXiv preprint arXiv:1911.00686}, 2019.
+
+\bibitem{wang2020} S.-Y. Wang, O. Wang, R. Zhang, A. Owens and A. A. Efros, ``CNN-generated images are surprisingly easy to spot... for now,'' in \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition}, pp. 8695--8704, 2020.
+
+\bibitem{goodfellow} I. Goodfellow et al., ``Generative adversarial nets,'' in \textit{Advances in Neural Information Processing Systems}, 2014.
+
+\bibitem{ho} J. Ho, A. Jain and P. Abbeel, ``Denoising diffusion probabilistic models,'' in \textit{Advances in Neural Information Processing Systems}, 2020.
+
+\bibitem{c2pa} Coalition for Content Provenance and Authenticity, \textit{C2PA Specification}, version 2.1, 2024.
+
+\end{thebibliography}
+
+\end{document}
